@@ -1,16 +1,9 @@
 """Main-review cross-checks, separate from task checker implementations."""
-import argparse
-import importlib
 import itertools
 import json
 import math
-from pathlib import Path
-import sys
 from fractions import Fraction as F
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
-from mathbench.registry import INITIAL_TASKS, load_task
 
 
 def independent_quantity(task, s, config=None):
@@ -138,41 +131,3 @@ def broken(task, solution):
         key={'T044':'marks','T057':'set','T067':'codewords','N001':'words','T099':'tuple','T097':'chain'}[task]
         s[key][1]=s[key][0]
     return s
-
-
-def main():
-    p=argparse.ArgumentParser();p.add_argument('--runs',default='reports/witnesses');p.add_argument('--output',default='reports/independent_audit.json');args=p.parse_args()
-    results=[]
-    for task in INITIAL_TASKS:
-        checker=importlib.import_module('tasks.'+task.lower()+'.check')
-        for config in load_task(task)['configurations']:
-            s=json.loads((ROOT/args.runs/task/config['id']/'human/solution.json').read_text())
-            checked=checker.validate(s,config,strict=True)
-            quantity=independent_quantity(task,s,config)
-            key = {'T001':'radius','T005':'sum_radii','T014':'minimum_triangle_area',
-                   'T035':'order','T044':'span','T057':'ratio','T060':'blocks',
-                   'T066':'minimum_distance','T067':'codewords','T073':'energy',
-                   'T079':'exact_objective','T080':'exact_objective','T081':'exact_objective',
-                   'T082':'maximum_overlap','N001':'independent_words','T089':'absolute_determinant',
-                   'T099':'diameter','T097':'additions'}.get(task)
-            if key:
-                if checked['verification_status']=='exact':
-                    assert F(str(checked['objective']))==F(str(quantity[key]))
-                else:
-                    assert math.isclose(float(F(str(checked['objective']))),float(F(str(quantity[key]))),rel_tol=1e-14)
-            if task=='T009':
-                assert math.isclose(checked['objective'],float(quantity['minimum_angle_80_digits']),rel_tol=1e-14)
-            if task=='T002':
-                import sympy as sp
-                assert sp.simplify(sp.sympify(str(checked['objective']).replace('sqrt2','sqrt(2)'))-sp.sympify(quantity['bounding_side']))==0
-            try:checker.validate(broken(task,s),config,strict=True)
-            except (ValueError,TypeError):pass
-            else:raise AssertionError('broken construction accepted: '+task)
-            claimed=dict(s,objective=987654321)
-            assert checker.validate(claimed,config,strict=True)['objective']==checked['objective']
-            results.append({'task_id':task,'config_id':config['id'],'reviewer':'Sol main agent','independent_quantity':quantity,'broken_construction_rejected':True,'claimed_score_ignored':True})
-            print(task,config['id'],'independent audit passed',flush=True)
-    dest=ROOT/args.output;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n')
-
-
-if __name__=='__main__':main()

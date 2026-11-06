@@ -21,7 +21,55 @@
         "House of Graphs lists this as a known upper bound; it does not prove n(4,10) = 320.",
         "The source check covers House of Graphs and the cited paper and author repository, not every public source."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T035",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T035",
+          "config_id": "T035-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 320,
+          "verification_status": "exact",
+          "generation_time": 0.2651446461677551,
+          "verification_time": 0.26626112312078476,
+          "objective_value": 320,
+          "details": {
+            "degree": 4,
+            "girth": 10,
+            "girth_lower_bound": 10,
+            "vertices": 320,
+            "edges": 640,
+            "connected": true,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.5360014922916889,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t035/data/human_graph.json",
+        "independent_quantity": {
+          "order": 320,
+          "networkx_girth": 10
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the parameter match, author graph witness provenance and strict replay. NetworkX independently confirmed connected 4-regular order 320 and girth 10; damaged edges were rejected and forged objectives ignored.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-This repository contains a mathematical construction benchmark and its research records. `tasks/` holds task packages. `mathbench/` holds the runner, adapters, and replay tools. `tests/` holds shared tests. `reports/` holds acceptance results and saved witnesses. `research/` holds paired Markdown and JSON inventories grouped by subject (`discrete`, `geometry`, and `algebra_analysis`). Files ending in `_round2` contain a second research round. `research/sources/` contains source material. `research/baseline_examples/` contains recomputed examples.
+`tasks/` holds task definitions, checkers, sources, SOTA records, and saved best witnesses. `mathbench/` holds the runner and adapters. `tests/` holds shared tests. `scripts/` holds search and audit commands. `PLAN.md` is the only planning and research-summary document. Each task stores temporary output in its ignored `runs/` directory. Do not add top-level research or report inventories.
 
 ## Development & Validation
 
@@ -10,8 +10,8 @@ Use Python 3.11 or newer. The local validated environment is `.venv`. Dependenci
 
 ```sh
 .venv/bin/python -m pytest tests tasks -q
-.venv/bin/python scripts/independent_audit.py
-python3 -m json.tool research/configuration_selection.json > /dev/null
+python scripts/search.py audit
+python3 -m json.tool tasks/t073/task.json > /dev/null
 ```
 
 Replace the path with each modified JSON file. Review Markdown rendering and check that links, counts, and corresponding Markdown and JSON records remain consistent. For mathematical changes, independently recompute examples where possible and document the verification method and limitations.
@@ -22,8 +22,8 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 
 - 首批范围为 20 个任务。每个任务选 1–5 个配置，不要求数量相同。
 - 对照 SimpleTES、DREAM-RSI 和 Google DeepMind AlphaEvolve 的数学任务。记录任务与原论文、公开仓库和固定版本的对应关系。仅因更名或参数变化不新增任务数。
-- 当前配置选型以 `research/configuration_selection.json` 为准。配套说明见 `research/configuration_selection.md`。
-- 已接入的配置以各任务的 `task.json` 为准。已验收的证据见 `reports/acceptance.json`。选型清单不能自动加入运行目录。
+- 任务参数以各任务的 `task.json` 为准。计划和研究结论只更新 `PLAN.md`。
+- SOTA 来源和验证信息保存在各任务的 `sota.json`。自己的最佳见证保存在 `best/`。新配置须独立验收后接入。
 - 类别表示研究方向。任务固定数学目标与可行性规则。配置固定参数，例如正方形数量、码长或矩阵阶数。
 - 随机种子、重复运行、搜索时间和数学目标的单调变换不另算配置或任务。
 - 参数可以有无限多种取值。benchmark 只选有限个有代表性的实例。优先考虑不同规模、不同构造结构和可承担的验证成本。
@@ -75,15 +75,15 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 
 ## Content Style & Naming
 
-Use descriptive Markdown headings and concise explanations. Follow existing subject-based filenames, lowercase snake_case for multiword filenames and JSON keys, and stable kebab-case candidate IDs such as `graph-cage`. Preserve existing JSON structure and two-space indentation. Keep related Markdown and JSON inventories aligned; cite primary sources and identify exact parameters, objective direction, verification costs, and uncertainties.
+Use descriptive Markdown headings and concise explanations. Follow existing subject-based filenames, lowercase snake_case for multiword filenames and JSON keys, and stable kebab-case candidate IDs such as `graph-cage`. Preserve existing JSON structure and two-space indentation. Keep task metadata and PLAN.md consistent; cite primary sources and identify exact parameters, objective direction, verification costs, and uncertainties.
 
 ## Research & Testing Guidelines
 
-Apply the criteria in `research/benchmark_selection_principles.md`: distinguish feasible constructions from proofs of optimality, and distinguish verified baselines from unverified literature claims. Do not present sampling or floating-point checks as mathematical certificates. When adding a baseline, record its provenance and whether its witness and score have been independently verified. Preserve the distinction between accepted, conditional, and rejected candidates.
+Apply the criteria in `PLAN.md`: distinguish feasible constructions from proofs of optimality, and distinguish verified baselines from unverified literature claims. Do not present sampling or floating-point checks as mathematical certificates. When adding a baseline, record its provenance and whether its witness and score have been independently verified. Preserve the distinction between accepted, conditional, and rejected candidates.
 
 ## Commits & Pull Requests
 
-Git history is unavailable in this checkout, so no established commit convention can be inferred. Use a short, descriptive imperative commit subject. Pull requests should describe the research or data changes, cite relevant sources, identify changed inventories, and summarize validation and unresolved limitations. Link a related issue when available.
+Use a short, descriptive imperative commit subject. Pull requests should describe the research or data changes, cite relevant sources, identify changed inventories, and summarize validation and unresolved limitations. Link a related issue when available.
 
 ## Language
 

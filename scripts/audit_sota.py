@@ -28,9 +28,7 @@ def same_exact_value(left, right):
 
 
 def audit(task_ids):
-    destination = ROOT / 'reports/sota_acceptance.json'
-    report = json.loads(destination.read_text()) if destination.exists() else {
-        'date': '2026-11-05', 'reviewer': 'Sol main agent', 'configurations': {}}
+    report = {'configurations': {}}
     for tid in task_ids:
         folder = ROOT / 'tasks' / tid.lower()
         path = folder / 'sota.json'
@@ -38,15 +36,16 @@ def audit(task_ids):
             print(tid, 'awaiting task review', flush=True)
             continue
         records = json.loads(path.read_text())
+        report['configurations'].update({cid:record.get('verification',{}) for cid,record in records['configurations'].items()})
         checker = importlib.import_module(f'tasks.{tid.lower()}.check')
         for config in load_task(tid)['configurations']:
             cid = config['id']
-            record = records['configurations'][cid]
+            record = {k:v for k,v in records['configurations'][cid].items() if k!='verification'}
             program = record.get('program')
             if not program:
                 report['configurations'][cid] = dict(task_id=tid, status='pending_reproduction', record=record)
                 continue
-            output = ROOT / 'reports/sota_witnesses' / tid / cid
+            output = folder / 'runs' / 'sota' / cid
             result = evaluate_candidate(tid, folder / program, cid, strict=True, output_dir=output)
             if not result['validity']:
                 raise ValueError(f'{cid}: {result}')
@@ -90,7 +89,9 @@ def audit(task_ids):
                 independent_quantity=quantity, broken_construction_rejected=True,
                 claimed_score_ignored=True)
             print(cid, str(result['objective'])[:90], 'strict replay and independent check passed', flush=True)
-        destination.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+        for cid, record in records['configurations'].items():
+            record['verification'] = {k:v for k,v in report['configurations'].get(cid,{}).items() if k!='record'}
+        path.write_text(json.dumps(records, ensure_ascii=False, indent=2) + '\n')
     return report
 
 

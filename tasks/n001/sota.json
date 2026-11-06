@@ -48,11 +48,48 @@
       "matches_public_best": true,
       "comparison_tolerance": "0",
       "verification": {
-        "method": "The task checker validated symbol ranges, word lengths, uniqueness, and every unordered pair using exact integer arithmetic.",
-        "words_checked": 367,
-        "unordered_pairs_checked": 67161,
-        "verification_status": "exact",
-        "optimality_proved": false
+        "task_id": "N001",
+        "status": "reproduced",
+        "run": {
+          "task_id": "N001",
+          "config_id": "N001-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 367,
+          "verification_status": "exact",
+          "generation_time": 0.26505546644330025,
+          "verification_time": 0.26514125242829323,
+          "objective_value": 367,
+          "details": {
+            "word_count": 367,
+            "all_pairs_checked": true,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.5353132970631123,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/n001/data/human_reference.json",
+        "independent_quantity": {
+          "independent_words": 367,
+          "pairs": 67161
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked Polak–Schrijver fifth-power parameters and 367-word result, replayed the saved set, independently checked all 67,161 pairs and rejected duplicate words. A stronger same-parameter witness was not found in the checked public sources.",
+        "snapshot_date": "2026-11-05"
       },
       "limitations": [
         "This is a verified lower bound, not a proof that 367 is optimal; the cited contemporary survey records the upper bound 401.",

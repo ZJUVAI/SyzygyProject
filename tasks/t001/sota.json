@@ -38,6 +38,51 @@
           ],
           "next_grid_failure": "pair contacts 7-13, 8-14, and 11-16 overlap at radius + 1e-18"
         }
+      },
+      "verification": {
+        "task_id": "T001",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T001",
+          "config_id": "T001-C01",
+          "validity": 1.0,
+          "combined_score": 1.0000000000985863,
+          "objective": "192724678019/2000000000000",
+          "verification_status": "exact",
+          "generation_time": 0.26482735574245453,
+          "verification_time": 0.16461951285600662,
+          "objective_value": "192724678019/2000000000000",
+          "details": {
+            "n": 26,
+            "all_boundary_clearances_exact": true,
+            "all_pairwise_distances_exact": true,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.4346689060330391,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t001/data/sota_n26.json",
+        "independent_quantity": {
+          "radius": "192724678019/2000000000000",
+          "smallest_squared_pair_margin": "0"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Same-parameter Packomania source coordinates independently checked. Exact replay and independent geometric quantity agree. Radius is the largest feasible 1e-18-grid radius for the saved coordinates, bounded by the public radius; public-value gap remains explicit.",
+        "snapshot_date": "2026-11-05"
       }
     },
     "T001-C02": {
@@ -71,6 +116,51 @@
         "limiting_constraints": {
           "next_grid_failure": "pairs 22-23 and 25-30 overlap at radius + 1e-18"
         }
+      },
+      "verification": {
+        "task_id": "T001",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T001",
+          "config_id": "T001-C02",
+          "validity": 1.0,
+          "combined_score": 1.0000000113752745,
+          "objective": "2745567408981583/31250000000000000",
+          "verification_status": "exact",
+          "generation_time": 0.16611118987202644,
+          "verification_time": 0.1645311862230301,
+          "objective_value": "2745567408981583/31250000000000000",
+          "details": {
+            "n": 32,
+            "all_boundary_clearances_exact": true,
+            "all_pairwise_distances_exact": true,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.3344501443207264,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t001/data/sota_n32.json",
+        "independent_quantity": {
+          "radius": "2745567408981583/31250000000000000",
+          "smallest_squared_pair_margin": "56802630095361/244140625000000000000000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Same-parameter Packomania source coordinates independently checked. Exact replay and independent geometric quantity agree. Radius is the largest feasible 1e-18-grid radius for the saved coordinates, bounded by the public radius; public-value gap remains explicit.",
+        "snapshot_date": "2026-11-05"
       }
     },
     "T001-C03": {
@@ -104,6 +194,51 @@
         "limiting_constraints": {
           "next_grid_failure": "pairs 4-8 and 43-49 overlap at radius + 1e-18"
         }
+      },
+      "verification": {
+        "task_id": "T001",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T001",
+          "config_id": "T001-C03",
+          "validity": 1.0,
+          "combined_score": 1.000000001386797,
+          "objective": "71377103863985547/1000000000000000000",
+          "verification_status": "exact",
+          "generation_time": 0.16537723317742348,
+          "verification_time": 0.16462284699082375,
+          "objective_value": "71377103863985547/1000000000000000000",
+          "details": {
+            "n": 50,
+            "all_boundary_clearances_exact": true,
+            "all_pairwise_distances_exact": true,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.33452534303069115,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t001/data/sota_n50.json",
+        "independent_quantity": {
+          "radius": "71377103863985547/1000000000000000000",
+          "smallest_squared_pair_margin": "91215542575110791/250000000000000000000000000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Same-parameter Packomania source coordinates independently checked. Exact replay and independent geometric quantity agree. Radius is the largest feasible 1e-18-grid radius for the saved coordinates, bounded by the public radius; public-value gap remains explicit.",
+        "snapshot_date": "2026-11-05"
       }
     }
   },

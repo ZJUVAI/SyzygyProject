@@ -32,7 +32,57 @@
       "limitations": [
         "The archive attributes the 23-block improvement to Andrei Ochmat but does not state the construction method in its metadata.",
         "The covering repository reports a best known construction, not a proof that 23 is optimal."
-      ]
+      ],
+      "verification": {
+        "task_id": "T060",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T060",
+          "config_id": "T060-C01",
+          "validity": 1.0,
+          "combined_score": 2.6956521739130435,
+          "objective": 23,
+          "verification_status": "exact",
+          "generation_time": 0.2652539797127247,
+          "verification_time": 0.2151874043047428,
+          "objective_value": 23,
+          "details": {
+            "parameters": {
+              "v": 24,
+              "k": 14,
+              "t": 4
+            },
+            "blocks": 23,
+            "covered_four_subsets": 10626,
+            "total_four_subsets": 10626,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.48527121916413307,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t060/data/sota_witness.json",
+        "independent_quantity": {
+          "blocks": 23,
+          "four_subsets": 10626
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked Zenodo v1.2 provenance, independently compared the extracted C(24,14,4) array against the saved 0-based witness, and verified all 10,626 four-subsets using bit masks. Empty coverage is rejected and forged scores are ignored.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

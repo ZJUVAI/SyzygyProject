@@ -12,7 +12,7 @@ from mathbench.replay import replay
     ('dream_rsi_evaluator','T005','T005-C02')])
 def test_upstream_interface(adapter,task,config):
     import importlib
-    evaluate=importlib.import_module('examples.'+adapter).evaluate
+    evaluate=importlib.import_module('mathbench.'+adapter).evaluate
     result=evaluate(ROOT/'tasks'/task.lower()/'init_program.py')
     assert result['validity']==1 and result['config_id']==config
     assert result['verification_status'] in ('exact','certified')

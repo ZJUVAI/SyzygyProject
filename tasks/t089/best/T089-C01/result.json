@@ -1,0 +1,29 @@
+{
+  "task_id": "T089",
+  "config_id": "T089-C01",
+  "validity": 1.0,
+  "combined_score": 0.5632500374014077,
+  "objective": 669680366063559114752,
+  "verification_status": "exact",
+  "generation_time": 45.149125918745995,
+  "verification_time": 0.16441091522574425,
+  "objective_value": 669680366063559114752,
+  "details": {
+    "signed_determinant": -669680366063559114752,
+    "n": 29
+  },
+  "eval_time": 45.315855745226145,
+  "seed": 1,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.2",
+    "platform": "linux",
+    "worker_cpu": 0
+  }
+}

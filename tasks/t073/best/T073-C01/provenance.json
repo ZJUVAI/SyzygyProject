@@ -1,0 +1,11 @@
+{
+  "classification": "ai_assisted_local_search",
+  "status": "reviewed_by_sol",
+  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
+  "independent_quantity": {
+    "energy": 1082,
+    "lags": 99
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true
+}
