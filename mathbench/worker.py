@@ -25,13 +25,19 @@ def load(path):
     return module
 
 
-def main():
-    mode, module_path, config_path, output_path, seed, strict, memory, cpu = sys.argv[1:]
-    resource.setrlimit(resource.RLIMIT_AS, (int(memory), int(memory)))
+def set_limits(memory, cpu):
+    # macOS does not provide the Linux address-space limit used by this runner.
+    if sys.platform != "darwin":
+        resource.setrlimit(resource.RLIMIT_AS, (int(memory), int(memory)))
     resource.setrlimit(resource.RLIMIT_CPU, (int(cpu), int(cpu) + 1))
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     if hasattr(os, "sched_getaffinity"):
         os.sched_setaffinity(0, {min(os.sched_getaffinity(0))})
+
+
+def main():
+    mode, module_path, config_path, output_path, seed, strict, memory, cpu = sys.argv[1:]
+    set_limits(memory, cpu)
     config = json.loads(Path(config_path).read_text())
     os.environ["MATHBENCH_CONFIG_ID"] = config["id"]
     os.environ["MATHBENCH_SEED"] = seed

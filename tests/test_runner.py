@@ -35,3 +35,24 @@ def test_setup_errors_are_results():
     assert result["validity"] == 0
     assert result["combined_score"] == 0
     assert result["failed_phase"] == "setup"
+
+
+def test_macos_limits_do_not_set_linux_address_space(monkeypatch):
+    from mathbench import worker
+    calls = []
+    monkeypatch.setattr(worker.sys, 'platform', 'darwin')
+    monkeypatch.setattr(worker.resource, 'setrlimit', lambda kind, limits: calls.append(kind))
+    monkeypatch.delattr(worker.os, 'sched_getaffinity', raising=False)
+    worker.set_limits(4096, 5)
+    assert worker.resource.RLIMIT_AS not in calls
+    assert worker.resource.RLIMIT_CPU in calls
+
+
+def test_linux_limits_include_address_space(monkeypatch):
+    from mathbench import worker
+    calls = []
+    monkeypatch.setattr(worker.sys, 'platform', 'linux')
+    monkeypatch.setattr(worker.resource, 'setrlimit', lambda kind, limits: calls.append((kind, limits)))
+    monkeypatch.delattr(worker.os, 'sched_getaffinity', raising=False)
+    worker.set_limits(4096, 5)
+    assert (worker.resource.RLIMIT_AS, (4096, 4096)) in calls
