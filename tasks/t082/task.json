@@ -1,0 +1,38 @@
+{
+  "task_id": "T082",
+  "name": "Erdős minimum overlap, 51 steps",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T082-C01",
+      "parameters": {
+        "steps": 51,
+        "support": "[0,2]",
+        "range": "0≤f≤1",
+        "integral": 1
+      },
+      "direction": "minimize",
+      "human_reference": 0.38092685343308696
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  }
+}

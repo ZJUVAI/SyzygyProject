@@ -1,0 +1,127 @@
+{
+  "task_id": "T001",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T001-C01": {
+      "public_value": "0.096362339010",
+      "public_source": {
+        "url": "https://packomania.com/csq/",
+        "witness_url": "https://packomania.com/csq/txt/csq26.txt",
+        "configuration_url": "https://packomania.com/csq/csq26.html",
+        "table_update": "2026-11-03",
+        "evidence": "Packomania n=26 row lists this radius. It is not bold; the table reserves boldface for proven optima. The ASCII coordinates are the public witness. The table cites reference [13], whose paper attribution is not resolved in this task archive."
+      },
+      "reproduced_value": "192724678019/2000000000000",
+      "program": "sota.py",
+      "witness": "data/sota_n26.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "exact gap 1/2000000000000; source radius is provided to 12 decimal places",
+      "limitations": [
+        "Exact rational validation certifies this feasible radius, not global optimality.",
+        "The Packomania coordinates are rounded decimal data; the saved radius is the largest feasible value on a 1e-18 grid for these coordinates.",
+        "The immediately larger grid radius fails an exact boundary or pair-distance constraint.",
+        "The table's reference [13] is not resolved to a paper in this task archive."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania_n26_source.txt",
+        "algorithm": "Exact Fraction binary search for the smallest common decrement from the public radius on a 1e-18 grid; checks all four walls and all 325 center pairs.",
+        "minimal_grid_decrement": "1/2000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true,
+        "limiting_constraints": {
+          "active_pair_contacts_at_saved_radius": [
+            "7-13",
+            "8-14",
+            "11-16"
+          ],
+          "next_grid_failure": "pair contacts 7-13, 8-14, and 11-16 overlap at radius + 1e-18"
+        }
+      }
+    },
+    "T001-C02": {
+      "public_value": "0.087858157088",
+      "public_source": {
+        "url": "https://packomania.com/csq/",
+        "witness_url": "https://packomania.com/csq/txt/csq32.txt",
+        "configuration_url": "https://packomania.com/csq/csq32.html",
+        "table_update": "2026-11-03",
+        "evidence": "Packomania n=32 row lists this radius. It is not bold; the table reserves boldface for proven optima. The ASCII coordinates are the public witness. The table cites reference [14], whose paper attribution is not resolved in this task archive."
+      },
+      "reproduced_value": "2745567408981583/31250000000000000",
+      "program": "sota.py",
+      "witness": "data/sota_n32.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "exact gap 18417/31250000000000000; source radius is provided to 12 decimal places",
+      "limitations": [
+        "Exact rational validation certifies this feasible radius, not global optimality.",
+        "The Packomania coordinates are rounded decimal data; the saved radius is the largest feasible value on a 1e-18 grid for these coordinates.",
+        "The immediately larger grid radius fails an exact boundary or pair-distance constraint.",
+        "The table's reference [14] is not resolved to a paper in this task archive."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania_n32_source.txt",
+        "algorithm": "Exact Fraction binary search for the smallest common decrement from the public radius on a 1e-18 grid; checks all four walls and all 496 center pairs.",
+        "minimal_grid_decrement": "18417/31250000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true,
+        "limiting_constraints": {
+          "next_grid_failure": "pairs 22-23 and 25-30 overlap at radius + 1e-18"
+        }
+      }
+    },
+    "T001-C03": {
+      "public_value": "0.071377103865",
+      "public_source": {
+        "url": "https://packomania.com/csq/",
+        "witness_url": "https://packomania.com/csq/txt/csq50.txt",
+        "configuration_url": "https://packomania.com/csq/csq50.html",
+        "table_update": "2026-11-03",
+        "evidence": "Packomania n=50 row lists this radius. It is not bold; the table reserves boldface for proven optima. The ASCII coordinates are the public witness. The table cites reference [14], whose paper attribution is not resolved in this task archive."
+      },
+      "reproduced_value": "71377103863985547/1000000000000000000",
+      "program": "sota.py",
+      "witness": "data/sota_n50.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "exact gap 1014453/1000000000000000000; source radius is provided to 12 decimal places",
+      "limitations": [
+        "Exact rational validation certifies this feasible radius, not global optimality.",
+        "The Packomania coordinates are rounded decimal data; the saved radius is the largest feasible value on a 1e-18 grid for these coordinates.",
+        "The immediately larger grid radius fails an exact boundary or pair-distance constraint.",
+        "The table's reference [14] is not resolved to a paper in this task archive."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania_n50_source.txt",
+        "algorithm": "Exact Fraction binary search for the smallest common decrement from the public radius on a 1e-18 grid; checks all four walls and all 1225 center pairs.",
+        "minimal_grid_decrement": "1014453/1000000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true,
+        "limiting_constraints": {
+          "next_grid_failure": "pairs 4-8 and 43-49 overlap at radius + 1e-18"
+        }
+      }
+    }
+  },
+  "sol_review": {
+    "T001-C01": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T001-C02": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T001-C03": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

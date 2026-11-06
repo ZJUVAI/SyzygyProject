@@ -1,0 +1,78 @@
+{
+  "task_id": "T005",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T005-C01": {
+      "public_value": "2.635983084919",
+      "public_source": {
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv26.txt",
+        "checked_date": "2026-11-05",
+        "table_update": "2026-10-31",
+        "attribution": "Packomania attributes the N=26 best-known value to Haowei Lin [8], via packing_records / Jonathan Viquerat's policy-based optimization.",
+        "coordinate_provenance": "Official Packomania ASCII coordinate file; 26 circles in the unit square, centered-coordinate convention."
+      },
+      "reproduced_value": "658995771226364683/250000000000000000",
+      "program": "sota.py",
+      "witness": "data/sota26.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 3385317/250000000000000000 (1.3541268e-11)",
+      "limitations": [
+        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 260409/500000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
+        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
+        "The public table value is a best-known record, not a proof of optimality."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania26_source.txt",
+        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
+        "minimal_grid_decrement": "260409/500000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true
+      }
+    },
+    "T005-C02": {
+      "public_value": "2.939572771205",
+      "public_source": {
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv32.txt",
+        "checked_date": "2026-11-05",
+        "table_update": "2026-10-31",
+        "attribution": "Packomania lists reference [7], Sebastian Pokutta, for N=32; the page notes this value appeared on 25-Jul-2026. Attribution is based on the table reference, not independently established authorship of the coordinates.",
+        "coordinate_provenance": "Official Packomania ASCII coordinate file; 32 circles in the unit square, centered-coordinate convention."
+      },
+      "reproduced_value": "91861649099589859/31250000000000000",
+      "program": "sota.py",
+      "witness": "data/sota32.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 566391/31250000000000000 (1.8124512e-11)",
+      "limitations": [
+        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 566391/1000000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
+        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
+        "The public table value is a best-known record, not a proof of optimality."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania32_source.txt",
+        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
+        "minimal_grid_decrement": "566391/1000000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true
+      }
+    }
+  },
+  "sol_review": {
+    "T005-C01": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T005-C02": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "best_human": {
+    "value": {
+      "T009-C02": 0.9118367215999165
+    },
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "n": 16,
+      "space": "S2",
+      "objective": "minimum pairwise angle in radians"
+    },
+    "url": "https://spherical-codes.org/",
+    "provenance": "The human reference is the 16-point coordinate file linked by the spherical-codes.org table. The N=16 table row cites K. Schütte and B. L. van der Waerden (1951). Henry Cohn maintains the table and is not identified here as the construction's original author. The construction's maximum normalized pair cosine was independently recomputed from the downloaded coordinates.",
+    "evidence_state": "coordinate file archived and all 120 angles independently recomputed with interval-certified score"
+  },
+  "best_public": {
+    "value": {
+      "T009-C02": 0.9118367215999165
+    },
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "n": 16,
+      "space": "S2",
+      "reported_cosine": 0.612294616483
+    },
+    "url": "https://spherical-codes.org/",
+    "provenance": "The public table reports a minimum-angle cosine of 0.612294616483 for N=16. Its coordinate witness was downloaded and independently recomputed. No global-optimality claim is made.",
+    "evidence_state": "public construction reported; coordinate witness independently reproduced",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": {
+      "T009-C02": 0.9118367215999165
+    },
+    "date_reproduced": "2026-11-04",
+    "parameters": {
+      "n": 16,
+      "space": "S2",
+      "score": "minimum pairwise angular separation in radians"
+    },
+    "witness_file": "data/spherical_code_3_16.txt",
+    "provenance": "Recomputed from the public N=16 coordinates linked by spherical-codes.org. All 120 unordered pair comparisons were checked.",
+    "ai_provenance": "No AI-generated coordinates. The coordinate file was downloaded and its score recomputed for this task package.",
+    "actual_value": {
+      "T009-C02": 0.9118367215999165
+    },
+    "evidence_state": "all vectors nonzero and directions distinct; strict checker returns a conservative angle interval"
+  },
+  "historical_configuration": {
+    "id": "T009-C01",
+    "parameters": {
+      "n": 15,
+      "space": "S2"
+    },
+    "status": "replaced",
+    "reason": "The research audit confirmed a 2026 optimality proof for the 15-point case. This benchmark therefore uses 16 points from the same Tammes problem family. The old coordinates remain archived for provenance only.",
+    "historical_witness_file": "data/spherical_code_3_15.txt",
+    "historical_reported_cosine": 0.592605902925
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T009-C03": {
+      "parameters": {
+        "n": 17,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "best_human": {
+        "value": 0.8916944491515696,
+        "date_checked": "2026-11-04",
+        "url": "https://spherical-codes.org/data/3/17",
+        "provenance": "Public coordinates at spherical-codes.org; the n=17 source row cites Danzer (1986).",
+        "evidence_state": "coordinate list archived; score independently recomputed by exact-input interval checker",
+        "parameters": {
+          "n": 17,
+          "space": "S2",
+          "objective": "minimum pairwise angular separation in radians"
+        },
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 0.8916944491515696,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 17
+        },
+        "url": "https://spherical-codes.org/data/3/17",
+        "provenance": "Same-parameter public feasible construction. No optimality claim.",
+        "evidence_state": "all unordered pairs checked",
+        "origin_type": "human construction as attributed by source table"
+      },
+      "best_reproduced": {
+        "value": 0.8916944491515696,
+        "date_reproduced": "2026-11-04",
+        "witness_file": "data/spherical_code_3_17.txt",
+        "actual_value": 0.8916944491515696,
+        "verification_status": "certified",
+        "pairs_checked": 136,
+        "ai_provenance": "No AI-generated coordinates; public coordinates archived and rescored.",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "parameters": {
+          "n": 17,
+          "space": "S2",
+          "objective": "minimum pairwise angular separation in radians"
+        }
+      },
+      "limitations": [
+        "Rounded decimal coordinates are the exact inputs being scored. Feasible construction only; no proof of global optimality."
+      ],
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 0.8916944491515696,
+        "verification_status": "certified",
+        "witness": "reports/witnesses/T009/T009-C03/human/solution.json",
+        "independent_audit": "reports/independent_audit.json",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T009-C04": {
+      "parameters": {
+        "n": 19,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "best_human": {
+        "value": 0.8323809277763071,
+        "date_checked": "2026-11-04",
+        "url": "https://spherical-codes.org/data/3/19",
+        "provenance": "Public coordinates at spherical-codes.org; the n=19 source row cites Lazić, Šenk and Šeškar (1987).",
+        "evidence_state": "coordinate list archived; score independently recomputed by exact-input interval checker",
+        "parameters": {
+          "n": 19,
+          "space": "S2",
+          "objective": "minimum pairwise angular separation in radians"
+        },
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 0.8323809277763071,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 19
+        },
+        "url": "https://spherical-codes.org/data/3/19",
+        "provenance": "Same-parameter public feasible construction. No optimality claim.",
+        "evidence_state": "all unordered pairs checked",
+        "origin_type": "human construction as attributed by source table"
+      },
+      "best_reproduced": {
+        "value": 0.8323809277763071,
+        "date_reproduced": "2026-11-04",
+        "witness_file": "data/spherical_code_3_19.txt",
+        "actual_value": 0.8323809277763071,
+        "verification_status": "certified",
+        "pairs_checked": 171,
+        "ai_provenance": "No AI-generated coordinates; public coordinates archived and rescored.",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "parameters": {
+          "n": 19,
+          "space": "S2",
+          "objective": "minimum pairwise angular separation in radians"
+        }
+      },
+      "limitations": [
+        "Rounded decimal coordinates are the exact inputs being scored. Feasible construction only; no proof of global optimality."
+      ],
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 0.8323809277763071,
+        "verification_status": "certified",
+        "witness": "reports/witnesses/T009/T009-C04/human/solution.json",
+        "independent_audit": "reports/independent_audit.json",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  }
+}

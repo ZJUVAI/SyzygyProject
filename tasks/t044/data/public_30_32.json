@@ -1,0 +1,22 @@
+{
+  "T044-C02": {
+    "marks": [319, 331, 351, 358, 368, 401, 404, 419, 466, 485, 525, 526, 530, 605, 621, 629, 635, 663, 707, 718, 781, 794, 819, 848, 850, 871, 942, 964, 990, 999],
+    "construction": {
+      "type": "projective_plane_modular_ruler",
+      "prime_power": 29,
+      "multiplier": 71,
+      "modulus": 871,
+      "window_start": 5
+    }
+  },
+  "T044-C03": {
+    "marks": [481, 488, 496, 507, 509, 538, 593, 599, 617, 657, 658, 662, 692, 695, 739, 790, 799, 822, 870, 884, 937, 957, 993, 1009, 1063, 1109, 1152, 1177, 1226, 1243, 1253, 1265],
+    "construction": {
+      "type": "projective_plane_modular_ruler",
+      "prime_power": 31,
+      "multiplier": 116,
+      "modulus": 993,
+      "window_start": 10
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "task_id": "T082",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T082-C01": {
+      "public_value": "0.3809268534330870",
+      "public_source": {
+        "url": "https://arxiv.org/abs/1609.08000",
+        "author": "Jan Kristian Haugland",
+        "year": 2016,
+        "reported_value": "0.3809268534330870",
+        "parameters": "51 equal-width steps on [0,2], values in [0,1], integral 1",
+        "evidence": "The paper reports a 51-step construction and its upper-bound value, rounded upward. The printed coefficients are transcribed in data/human_t082.json."
+      },
+      "reproduced_value": "64757565083624785688821235069923/170000000000000000000000000000000",
+      "program": "sota.py",
+      "witness": "data/human_t082.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "The paper reports 0.3809268534330870 rounded to 16 decimal places; the exact rational transcription scores 0.38092685343308696, a difference of 4e-17 within the 5e-17 rounding interval. Both values refer to the same 51-step witness.",
+      "limitations": [
+        "This is the best located public construction for the fixed 51-step configuration, not a proof of optimality among all 51-step functions.",
+        "Later lower reported bounds for the limiting problem use finer discretizations or do not identify a 51-step witness. AlphaEvolve's construction has 95 steps (https://arxiv.org/abs/2601.16175 reports the comparison), TTT-Discover uses 600 steps (https://arxiv.org/abs/2601.16175), and SimpleTES reports a better discretized result without evidence that it uses 51 steps (https://arxiv.org/abs/2604.19341). A later 114688-step construction is listed at https://teorth.github.io/optimizationproblems/constants/1b.html. These results do not match T082-C01.",
+        "The source search does not establish an exhaustive survey of every public 51-step construction."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T082-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

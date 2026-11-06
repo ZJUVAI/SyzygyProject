@@ -1,0 +1,60 @@
+{
+  "task_id": "T081",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 1.5097201507458786,
+    "parameters": {
+      "steps": 208,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "signed_values_allowed": true,
+      "integral": 1
+    },
+    "authors": [
+      "Mate Matolcsi",
+      "Carlos Vinuesa"
+    ],
+    "year": 2009,
+    "url": "https://arxiv.org/abs/0907.1379",
+    "evidence_state": "published nonnegative 208-step coefficients transferred to the signed class and exactly recomputed",
+    "optimality": "No optimality or current-record claim",
+    "witness": "data/human_matolcsi_vinuesa.json"
+  },
+  "best_public": {
+    "value": 1.5097201507458786,
+    "parameters": {
+      "steps": 208,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "signed_values_allowed": true,
+      "integral": 1
+    },
+    "url": "https://arxiv.org/abs/0907.1379",
+    "evidence_state": "published nonnegative construction is admissible; local witness exactly recomputed",
+    "optimality": "not asserted; no latest signed record claimed",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 1.5097201507458786,
+    "exact_value": "6280435861361744576/4160000022692211721",
+    "parameters": {
+      "steps": 208,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "signed_values_allowed": true,
+      "integral": 1
+    },
+    "provenance": "published nonnegative human witness transferred to the signed class",
+    "evidence_state": "exact rational recomputation"
+  },
+  "scope_note": "The signed 150-step appendix construction is a distinct configuration. Its positive-only maximum 1.458105685768 is not an absolute score; its maximum-absolute score is about 2.426895802097. It is not used as this task's baseline.",
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class"
+}

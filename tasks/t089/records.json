@@ -1,0 +1,51 @@
+{
+  "task_id": "T089",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 1188957517256767569920,
+    "parameters": {
+      "n": 29,
+      "entries": "±1"
+    },
+    "authors": [
+      "William P. Orrick",
+      "Bruce Solomon",
+      "Roland Dowdeswell",
+      "Warren D. Smith"
+    ],
+    "year": 2003,
+    "url": "https://arxiv.org/abs/math/0304410",
+    "evidence_state": "published witness transcribed and exactly reproduced",
+    "optimality": "best-known construction; no proof of global optimality is claimed",
+    "witness": "data/human_order29.json"
+  },
+  "best_public": {
+    "value": 1188957517256767569920,
+    "parameters": {
+      "n": 29,
+      "entries": "±1"
+    },
+    "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+    "evidence_state": "source reports Solomon/Orrick construction and hosts Gram/decomposition data; task uses the printed sign matrix in Orrick et al.",
+    "optimality": "conjectural, not certified",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 1188957517256767569920,
+    "parameters": {
+      "n": 29,
+      "entries": "±1"
+    },
+    "provenance": "human published witness",
+    "evidence_state": "independently recomputed by integer Bareiss elimination"
+  },
+  "baseline_seed": {
+    "value": 7247757312,
+    "formula": "27*2^28",
+    "provenance": "deterministic seed 2I-J, constructed in init_program.py",
+    "evidence_state": "exact determinant; not attributed as a published record"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+}

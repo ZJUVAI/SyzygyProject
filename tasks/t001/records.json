@@ -1,0 +1,160 @@
+{
+  "best_human": {
+    "value": 0.09636233901,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "container": "unit square"
+    },
+    "url": "https://packomania.com/csq/csq26.html",
+    "provenance": "Packomania attributes the n=26 construction to reference [13], Nurmela and Östergård (1999). This is a feasible construction, not a proof of optimality.",
+    "evidence_state": "published coordinates directly exposed in the public per-configuration ASCII page"
+  },
+  "best_public": {
+    "value": 0.09636233901,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "container": "unit square"
+    },
+    "url": "https://packomania.com/csq/",
+    "evidence_state": "public record table; row is not bold, so the source does not mark it as proven optimal",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 0.096362339,
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "container": "unit square"
+    },
+    "url": "https://packomania.com/csq/txt/csq26.txt",
+    "provenance": "The public coordinate text was copied locally and translated from the centered unit square to [0,1]^2. The published decimal coordinates were retained. The common radius was reduced from 0.096362339010 to 0.09636233900 to account conservatively for coordinate rounding.",
+    "ai_provenance": "Coordinate transcription, translation, radius reduction, and exact rational verification performed for this task; the construction is attributed to Nurmela and Östergård (1999).",
+    "actual_value": 0.096362339,
+    "evidence_state": "local witness checked against exact rational boundary and pair-distance constraints"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T001-C02": {
+      "parameters": {
+        "n": 32,
+        "container": "unit square"
+      },
+      "best_human": {
+        "value": 0.087858157088,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/",
+        "provenance": "Packomania table; exact publication attribution not independently resolved.",
+        "evidence_state": "public table value, local saved human construction independently verified",
+        "origin_type": "human construction; attribution unresolved",
+        "parameters": {
+          "n": 32,
+          "container": "unit square"
+        }
+      },
+      "best_public": {
+        "value": 0.087858157088,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/csq32.html",
+        "evidence_state": "best-known table entry; no optimality claim made",
+        "origin_type": "source attribution unresolved",
+        "parameters": {
+          "n": 32,
+          "container": "unit square"
+        }
+      },
+      "best_reproduced": {
+        "actual_value": "10982269511/125000000000",
+        "date_reproduced": "2026-11-04",
+        "url": "https://packomania.com/csq/txt/csq32.txt",
+        "local_witness": "data/human_reference_n32.json",
+        "provenance": "Copied from the exact-rational witness saved for T005-C02. Coordinates are local to this task and checked under the equal-circle objective.",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "verification_status": "exact",
+        "parameters": {
+          "n": 32,
+          "container": "unit square"
+        },
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": "10982269511/125000000000",
+        "verification_status": "exact",
+        "witness": "reports/witnesses/T001/T001-C02/human/solution.json",
+        "independent_audit": "reports/independent_audit.json",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T001-C03": {
+      "parameters": {
+        "n": 50,
+        "container": "unit square"
+      },
+      "best_human": {
+        "value": 0.071377103865,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/",
+        "provenance": "Packomania table; table's reference [14] author and year were not resolved.",
+        "evidence_state": "public table value, local coordinate witness independently verified",
+        "origin_type": "human construction; detailed attribution unresolved",
+        "parameters": {
+          "n": 50,
+          "container": "unit square"
+        }
+      },
+      "best_public": {
+        "value": 0.071377103865,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/csq50.html",
+        "evidence_state": "best-known entry in checked source; no global optimum claim made",
+        "origin_type": "source attribution unresolved",
+        "parameters": {
+          "n": 50,
+          "container": "unit square"
+        }
+      },
+      "best_reproduced": {
+        "actual_value": "14275420753/200000000000",
+        "date_reproduced": "2026-11-04",
+        "url": "https://packomania.com/csq/txt/csq50.txt",
+        "local_witness": "data/packomania_n50.json",
+        "provenance": "Centered-square coordinate text translated by (1/2, 1/2) into [0,1]^2. Radius reduced from 0.071377103865 by 10^-10 before exact checking.",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "verification_status": "exact",
+        "parameters": {
+          "n": 50,
+          "container": "unit square"
+        },
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": "14275420753/200000000000",
+        "verification_status": "exact",
+        "witness": "reports/witnesses/T001/T001-C03/human/solution.json",
+        "independent_audit": "reports/independent_audit.json",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  }
+}

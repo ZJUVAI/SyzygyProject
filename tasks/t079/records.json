@@ -1,0 +1,57 @@
+{
+  "task_id": "T079",
+  "snapshot_date": "2026-11-03",
+  "best_human": {
+    "value": 1.5097201507458786,
+    "exact_value": "6280435861361744576/4160000022692211721",
+    "parameters": {
+      "steps": 208,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "authors": [
+      "Mate Matolcsi",
+      "Carlos Vinuesa"
+    ],
+    "year": 2009,
+    "url": "https://arxiv.org/abs/0907.1379",
+    "evidence_state": "published coefficients transcribed and exact score recomputed",
+    "optimality": "historical construction; no proof of global optimality is claimed",
+    "witness": "data/human_matolcsi_vinuesa.json"
+  },
+  "best_public": {
+    "value": 1.5097201507458786,
+    "parameters": {
+      "steps": 208,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "url": "https://arxiv.org/abs/0907.1379",
+    "evidence_state": "published human witness locally reproduced",
+    "optimality": "not asserted",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 1.5097201507458786,
+    "exact_value": "6280435861361744576/4160000022692211721",
+    "parameters": {
+      "steps": 208,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "provenance": "human published witness",
+    "evidence_state": "exact rational recomputation"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+}

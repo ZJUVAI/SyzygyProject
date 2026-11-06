@@ -1,0 +1,37 @@
+{
+  "task_id": "T079",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T079-C01": {
+      "public_value": "1.5097201507458786",
+      "public_source": {
+        "url": "https://arxiv.org/abs/0907.1379",
+        "authors": "Mate Matolcsi and Carlos Vinuesa",
+        "year": 2009,
+        "claim": "Best nonnegative step function then known, at n=208; coefficients published in the appendix.",
+        "url_pdf": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+        "same_configuration": true
+      },
+      "reproduced_value": "6280435861361744576/4160000022692211721",
+      "program": "sota.py",
+      "witness": "data/human_matolcsi_vinuesa.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "The printed public value is rounded to 16 decimal places; compare its decimal rounding with the exact rational checker value.",
+      "limitations": [
+        "This is the best located published witness for exactly 208 nonnegative coefficients, not a proof of optimality or an exhaustive survey.",
+        "AlphaEvolve reports 1.5053 and later 1.5032 for the continuous AC1 problem using a 600-part step function; those values are not a 208-coefficient witness for this configuration: https://arxiv.org/abs/2511.02864.",
+        "SimpleTES reports 1.503871 for continuous AC1; its representation and reported task score are not established as this fixed 208-step objective: https://arxiv.org/abs/2604.19341.",
+        "Later continuous-problem reports, including 1.5029, are outside the verified 208-step configuration. No corresponding 208-coefficient witness was located.",
+        "DREAM-RSI coverage records do not list AC1 as a DREAM-RSI task; its coverage comes from SimpleTES and AlphaEvolve."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T079-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

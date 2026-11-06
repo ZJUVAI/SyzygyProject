@@ -1,0 +1,164 @@
+{
+  "date": "2026-11-03",
+  "scope": "仅发现轨；不保留已解校准配置",
+  "rules": [
+    "已证明最优、匹配通用上/下界、或由简单构造达到理论极值的配置，全部排除。",
+    "整个任务的所有参数已有最优值定理，则整题排除；只有部分参数已解时保留家族、替换参数。",
+    "未证明最优仅说明尚未闭合，不保证能超过当前纪录；长期猜测已最优者标高风险。",
+    "入选具体配置必须有实际人类构造、同一数学定义下的单一标量、公开开放状态证据；待核项不得计入正式发现任务数。",
+    "human历史基线与截至检索时可能包含AI的现纪录分开；超过历史基线不等于新纪录。",
+    "不通过改变已解任务定义、任意罚函数、加大已解参数等方式凑数。"
+  ],
+  "excluded_tasks": [
+    {
+      "id": "T018",
+      "reason": "最大无空凸六边形点集=29；h(6)=30已在2024证明并形式验证。旧表误将精确30归于Gerken/Nicolas；两人2006证明的是存在有限阈值。",
+      "sources": [
+        "https://arxiv.org/abs/2403.00737",
+        "https://arxiv.org/abs/2403.17370"
+      ]
+    },
+    {
+      "id": "T050",
+      "reason": "当前定义为有限阿贝尔群；Green–Ruzsa已确定每个有限阿贝尔群的最大sum-free子集大小。",
+      "sources": [
+        "https://arxiv.org/abs/math/0307142"
+      ]
+    },
+    {
+      "id": "T091",
+      "reason": "2026年Sendov证明使当前标量C(n)=1；z^n−1已取等号。该定义下所有次数无纪录提升空间。",
+      "sources": [
+        "https://terrytao.wordpress.com/2026/08/12/a-digestion-of-the-proof-of-sendovs-conjecture/",
+        "https://github.com/teorth/sendov"
+      ]
+    }
+  ],
+  "excluded_configurations": [
+    {
+      "task": "T044",
+      "config": "Golomb标记数m<=28，包括上一版m=10,12",
+      "reason": "已证明最优，排除。m>28仅作替代候选，需逐项定位现纪录。",
+      "sources": [
+        "https://blogs.distributed.net/2022/11/"
+      ]
+    },
+    {
+      "task": "T073",
+      "config": "LABS能量长度N<=66，包括上一版N=66,E=257",
+      "reason": "Packebusch–Mertens给出精确最优结果；排除。更大长度是否近期已解另查。",
+      "sources": [
+        "https://arxiv.org/abs/1512.02475"
+      ]
+    },
+    {
+      "task": "T009",
+      "config": "Tammes球面S²点数N=8、12",
+      "reason": "已证明最优；排除。",
+      "sources": [
+        "https://cohn.mit.edu/spherical-codes/"
+      ]
+    },
+    {
+      "task": "T060",
+      "config": "C(8,4,3)=14，C(10,4,3)=30",
+      "reason": "Steiner四元系达到计数下界；排除，不能把构造库所有行都当未解。",
+      "sources": [
+        "https://dmgordon.org/covering-designs/"
+      ]
+    },
+    {
+      "task": "T066",
+      "config": "二元[23,12,7] Golay码，[15,7,5] BCH码",
+      "reason": "这些参数最优最小距离已确定；排除。",
+      "sources": [
+        "https://docs.magma-maths.org/CodingTheory/LinearCodes/best-codes.html"
+      ]
+    },
+    {
+      "task": "T014",
+      "config": "上一版Heilbronn正方形n=7、8",
+      "reason": "已知最优，排除。较新n=9状态需核查，不自动当open。",
+      "sources": [
+        "https://math.tejstead.com/heilbronn/square/"
+      ]
+    },
+    {
+      "task": "T090/T085",
+      "config": "维数8、24的最优球装填/匹配Cohn–Elkies上界",
+      "reason": "E8、Leech格已达最优；排除这些配置。",
+      "sources": [
+        "https://arxiv.org/abs/1603.04246",
+        "https://arxiv.org/abs/1603.06518"
+      ]
+    },
+    {
+      "task": "T075/T076",
+      "config": "奇素数p≡3 mod4的Legendre周期序列已达到能量p−1或PSL=1的情形",
+      "reason": "匹配奇长度非零周期自相关绝对值至少1的下界；排除这些配置。",
+      "sources": [
+        "https://arxiv.org/abs/1401.2530"
+      ]
+    },
+    {
+      "task": "T099",
+      "config": "MIT表k<=342标为optimal的配置，特别上一版k=50和100",
+      "reason": "公开数据JS的comments明确optimal；不能把已重算见证当作待突破纪录。未标optimal的行另查开放状态。",
+      "sources": [
+        "https://math.mit.edu/~primegaps/"
+      ]
+    },
+    {
+      "task": "T032",
+      "config": "order=21, primitive side=112",
+      "reason": "唯一最小阶简单完美平方分割；移除这一配置，order55另审。",
+      "sources": [
+        "https://www.squaring.net/sq/ss/spss/o21/spsso21.html"
+      ]
+    },
+    {
+      "task": "T038",
+      "config": "n=30,F={C4}边85；n=30,F={C3,C4}边76",
+      "reason": "Afzaly–McKay对应项标为精确极值，并非仅构造下界；移除这些小配置。",
+      "sources": [
+        "https://users.cecs.anu.edu.au/~bdm/data/extremal.html"
+      ]
+    },
+    {
+      "task": "T084",
+      "config": "正号sign uncertainty维数12的已知sharp配置",
+      "reason": "已达精确常数；不能把另一符号、不同维数或不同平方约定的值混用。",
+      "sources": [
+        "https://arxiv.org/abs/1712.04438",
+        "https://arxiv.org/abs/2608.15415"
+      ]
+    }
+  ],
+  "additional_exclusion_warning": {
+    "task": "矩阵乘法张量秩新候选",
+    "config": "F2与整数上的3×3 rank<23",
+    "reason": "2026年10月预印本声称形式化计算证明rank=23。保守移出可尝试配置，结论限该域及整数；不据此排除有理/实/复系数或其他形状。",
+    "sources": [
+      "https://arxiv.org/abs/2610.11823"
+    ]
+  },
+  "high_risk_configurations": [
+    {
+      "task": "T002",
+      "config": "n=17",
+      "reason": "2026维护项目仍标verified open，但已记录全局等号证明候选与Lean形式化声称。先暂停选入，优先n=26。",
+      "sources": [
+        "https://squaremath.org/cases/17.html",
+        "https://squaremath.org/cases/26.html"
+      ]
+    },
+    {
+      "task": "T014",
+      "config": "n=9,10",
+      "reason": "全局浮点求解报告已数值认证现构造在容差内最优；不是严格数学证明，也不宜优先期待突破。改用n>=11。",
+      "sources": [
+        "https://math.tejstead.com/heilbronn/square/"
+      ]
+    }
+  ]
+}

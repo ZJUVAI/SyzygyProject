@@ -1,0 +1,41 @@
+{
+  "task_id": "T081",
+  "name": "Signed step-function autoconvolution extremum, 208 steps",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T081-C02",
+      "parameters": {
+        "steps": 208,
+        "support": [
+          "-1/4",
+          "1/4"
+        ],
+        "signed_values_allowed": true,
+        "integral": 1
+      },
+      "direction": "minimize",
+      "human_reference": 1.5097201507458786
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "非负208步人类构造转用于有符号类别。150步正峰值不能作为绝对峰值成绩。"
+    ]
+  }
+}

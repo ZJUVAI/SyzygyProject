@@ -1,0 +1,104 @@
+{
+  "task_id": "T009",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T009-C02": {
+      "public_value": "0.9118367215995329533405163091901914357833",
+      "unit": "radians",
+      "public_metric": "minimum-angle cosine, as reported by the source",
+      "source_cosine": "0.612294616483",
+      "public_source": {
+        "url": "https://spherical-codes.org/",
+        "coordinates_url": "https://spherical-codes.org/data/3/16",
+        "title": "Table of spherical codes, dimension 3, 16 points",
+        "reported_metric": "cosine of minimum angle",
+        "reported_value": "0.612294616483",
+        "reported_decimal_places": 12,
+        "source_status": "unstarred numerical construction; no global optimality claim"
+      },
+      "reproduced_value": "0.9118367215999157",
+      "program": "sota.py",
+      "witness": "data/spherical_code_3_16.txt",
+      "matches_public_best": true,
+      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.91183672159953295334051630919019144, 0.91183672160079776797613397779950286], the arccos image of [0.612294616482, 0.612294616483].",
+      "limitations": [
+        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
+        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places.",
+        "The table lists a numerical construction and does not prove global optimality.",
+        "This comparison covers the cited source table, not every public source."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T009-C03": {
+      "public_value": "0.891694449150313201102736466822772753125",
+      "unit": "radians",
+      "public_metric": "minimum-angle cosine, as reported by the source",
+      "source_cosine": "0.628094415071",
+      "public_source": {
+        "url": "https://spherical-codes.org/",
+        "coordinates_url": "https://spherical-codes.org/data/3/17",
+        "title": "Table of spherical codes, dimension 3, 17 points",
+        "reported_metric": "cosine of minimum angle",
+        "reported_value": "0.628094415071",
+        "reported_decimal_places": 12,
+        "source_status": "unstarred numerical construction; no global optimality claim"
+      },
+      "reproduced_value": "0.8916944491515696",
+      "program": "sota.py",
+      "witness": "data/spherical_code_3_17.txt",
+      "matches_public_best": true,
+      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.89169444915031320110273646682277275, 0.89169444915159832161810806010730433], the arccos image of [0.628094415070, 0.628094415071].",
+      "limitations": [
+        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
+        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places; no claim of a record improvement is made.",
+        "The table lists a numerical construction and does not prove global optimality.",
+        "This comparison covers the cited source table, not every public source."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T009-C04": {
+      "public_value": "0.8323809277750249256455890523122749310175",
+      "unit": "radians",
+      "public_metric": "minimum-angle cosine, as reported by the source",
+      "source_cosine": "0.673116887561",
+      "public_source": {
+        "url": "https://spherical-codes.org/",
+        "coordinates_url": "https://spherical-codes.org/data/3/19",
+        "title": "Table of spherical codes, dimension 3, 19 points",
+        "reported_metric": "cosine of minimum angle",
+        "reported_value": "0.673116887561",
+        "reported_decimal_places": 12,
+        "source_status": "unstarred numerical construction; no global optimality claim"
+      },
+      "reproduced_value": "0.8323809277763071",
+      "program": "sota.py",
+      "witness": "data/spherical_code_3_19.txt",
+      "matches_public_best": true,
+      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.83238092777502492564558905231227493, 0.83238092777637712466412603023837871], the arccos image of [0.673116887560, 0.673116887561].",
+      "limitations": [
+        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
+        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places; no claim of a record improvement is made.",
+        "The table lists a numerical construction and does not prove global optimality.",
+        "This comparison covers the cited source table, not every public source."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T009-C02": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T009-C03": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T009-C04": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

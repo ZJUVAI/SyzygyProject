@@ -1,0 +1,44 @@
+{
+  "task_id": "T099",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 2340,
+    "parameters": {
+      "k": 343
+    },
+    "authors": [
+      "Thomas Engelsma"
+    ],
+    "year": 2013,
+    "url": "https://mathbases.org/d/narrow-admissible-tuples",
+    "evidence_state": "published tuple copied from the audited source artifact and independently checked for feasibility and diameter",
+    "optimality": "The source row is unmarked; optimality is not claimed.",
+    "witness": "data/human_343.json"
+  },
+  "best_public": {
+    "value": 2340,
+    "parameters": {
+      "k": 343
+    },
+    "url": "https://math.mit.edu/~primegaps/tuples/admissible_343_2340.txt",
+    "evidence_state": "source artifact reports k=343, diameter 2340, credited to Engelsma (2013); full tuple saved locally and checked",
+    "optimality": "No optimality claim; the source's missing marker is not a proof.",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 2340,
+    "parameters": {
+      "k": 343
+    },
+    "provenance": "human published witness",
+    "evidence_state": "independently validated against all 68 primes through 343 and exact integer diameter"
+  },
+  "baseline_seed": {
+    "value": "342 times the product of all primes through 343",
+    "provenance": "simple consecutive-multiples construction in init_program.py",
+    "evidence_state": "feasible by exact divisibility; not presented as a record"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+}

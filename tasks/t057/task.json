@@ -1,0 +1,39 @@
+{
+  "task_id": "T057",
+  "name": "Sum-difference I: normalized logarithmic ratio",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T057-C01",
+      "parameters": {
+        "max_cardinality": 512,
+        "integer_interval": [
+          -1000000,
+          1000000
+        ]
+      },
+      "direction": "maximize",
+      "human_reference": 1.0597930945472454
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  }
+}

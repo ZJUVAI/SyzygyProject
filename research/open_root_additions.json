@@ -1,0 +1,60 @@
+[
+  {
+    "id": "N001",
+    "name": "Shannon capacity: independent sets in strong powers of odd cycles",
+    "category": "极值图与超图",
+    "definition": "固定奇环C_q与幂d，构造其强积幂C_q^{⊠d}的独立集。提交Z_q^d中的互异词，每两词至少有一个坐标差不属于{0,1,−1}。",
+    "solution_format": "显式词集合；不接受只声明极限容量或数量。",
+    "scalar_objective": "number of independent words",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "q": 7,
+      "d": 5
+    },
+    "human_baseline": "Polak–Schrijver (2018/2019)给出367词，原论文附录显式列出；不是2026全局Shannon容量现纪录。",
+    "open_configuration": {
+      "q": 7,
+      "d": 5,
+      "historical_lower_bound": 367,
+      "published_upper_bound": 401,
+      "record_to_attempt": "368词；截至本次核查一手材料未见第五幂更大构造",
+      "status": "published_gap_located_witness_not_recomputed"
+    },
+    "primary_sources": [
+      "https://arxiv.org/abs/1808.07438",
+      "https://arxiv.org/html/1808.07438",
+      "https://arxiv.org/html/2607.21517v1",
+      "https://arxiv.org/abs/2608.30273"
+    ],
+    "verification_cost": "低：O(M²d)精确模整数运算；M约367。",
+    "risks": "2018论文的367是人类基线；2026容量改进来自第10/200/500幂，不可移作第五幂分数。没有全局证明367非最优，gap不保证368存在。",
+    "discovery_status": "open_configuration_evidence",
+    "baseline_audit": "explicit_appendix_located_not_recomputed",
+    "novelty": "原100项没有固定图强积幂的Shannon容量构造；不等于任意图最大独立数任务。",
+    "mvp_recommended": true,
+    "research_origin": "root_open_revision"
+  },
+  {
+    "id": "N002",
+    "name": "Smale mean value extremal constant",
+    "category": "矩阵、格与代数极值",
+    "definition": "固定degree n、复多项式p和非临界点a，对所有临界点ζ取|p(ζ)−p(a)|/(|p′(a)|·|ζ−a|)的最小值，再对提交对象最大化。",
+    "solution_format": "精确多项式与点a，所有临界点距离/函数值的区间证书。",
+    "scalar_objective": "min_{p′(ζ)=0} |p(ζ)−p(a)|/(|p′(a)| |ζ−a|)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "须再选未解次数，不能把小已解次数当open"
+    },
+    "human_baseline": "经典p(z)=z^n−z,a=0达到1−1/n；Smale猜想其最优。2026年Tao讨论Sendov后仍列该问题及现有上界。",
+    "primary_sources": [
+      "https://terrytao.wordpress.com/2026/08/12/a-digestion-of-the-proof-of-sendovs-conjecture/"
+    ],
+    "verification_cost": "中至高：代数/区间计算认证临界点与最小比值。",
+    "risks": "经典极难且现baseline被猜测已最优。没有证据说明能突破；仅补充研究池，不列MVP；具体未解次数未锁定。",
+    "discovery_status": "high_risk_conjectured_optimal_pending_configuration",
+    "baseline_audit": "formula_witness_available_configuration_pending",
+    "novelty": "与Sendov的根到临界点距离目标不同。",
+    "mvp_recommended": false,
+    "research_origin": "root_open_revision"
+  }
+]

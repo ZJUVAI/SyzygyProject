@@ -1,0 +1,41 @@
+{
+  "task_id": "T066",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T066-C01": {
+      "public_value": "24",
+      "public_source": {
+        "url": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
+        "database": "Magma BestKnownLinearCode database",
+        "calculator_url": "https://magma-maths.org/calc/",
+        "calculator_version": "2.30-1",
+        "query": "BestKnownLinearCode(GF(2),68,15)",
+        "has_code": true,
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "24",
+      "program": "sota.py",
+      "witness": "data/sota_generator.json",
+      "reproduction_script": "data/reproduce_sota.m",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "verification": {
+        "method": "The task validator checked matrix shape, binary entries, rank 15, and enumerated every nonzero linear combination.",
+        "codewords_checked": 32767,
+        "minimum_distance": 24
+      },
+      "limitations": [
+        "The published table gives a lower bound of 24 and an upper bound of 26, so this is a best-known construction, not a proof of optimality.",
+        "The matrix is reproduced from the Magma BKLC database; the source table does not attribute its construction to a specific human author."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T066-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

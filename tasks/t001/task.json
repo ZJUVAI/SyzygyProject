@@ -1,0 +1,76 @@
+{
+  "task_id": "T001",
+  "name": "Equal circles in a unit square",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T001-C01",
+      "parameters": {
+        "n": 26,
+        "container": "unit square"
+      },
+      "direction": "maximize",
+      "human_reference": 0.096362339
+    },
+    {
+      "id": "T001-C02",
+      "parameters": {
+        "n": 32,
+        "container": "unit square"
+      },
+      "direction": "maximize",
+      "human_reference": 0.087858156088,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T001-C03",
+      "parameters": {
+        "n": 50,
+        "container": "unit square"
+      },
+      "direction": "maximize",
+      "human_reference": 0.071377103765,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "GPT-6.1 Sol",
+    "implementation_agent": "/root/expand_t001",
+    "implementation_model": "gpt-6-luna",
+    "date": "2026-11-04",
+    "acceptance_status": "accepted_by_sol",
+    "configuration_ids": [
+      "T001-C02",
+      "T001-C03"
+    ],
+    "evidence": "reports/configuration_expansion.json",
+    "checks": [
+      "source and parameter review",
+      "four strict program runs per configuration",
+      "cold seed export",
+      "independent key quantity",
+      "damaged witness rejected",
+      "claimed score ignored"
+    ]
+  }
+}

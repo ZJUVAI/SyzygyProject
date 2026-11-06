@@ -1,0 +1,80 @@
+{
+  "task_id": "T097",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T097-C01": {
+      "public_value": "202",
+      "public_source": {
+        "url": "https://additionchains.com/LargeChains.html",
+        "title": "Short Addition Chains for Cryptographic Exponents",
+        "updated": "2026-11-02",
+        "entry": "NIST P-192 field inversion, 2^192-2^64-3; downloadable chain P-192_field_inverse_202.txt",
+        "classification": "best known listed on the source page; not a proof of optimality"
+      },
+      "reproduced_value": "202",
+      "program": "sota.py",
+      "witness": "data/sota_t097_c01.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The source reports a best-known construction, not a proof of minimum length."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T097-C02": {
+      "public_value": "230",
+      "public_source": {
+        "url": "https://additionchains.com/LargeChains.html",
+        "title": "Short Addition Chains for Cryptographic Exponents",
+        "updated": "2026-11-02",
+        "entry": "M-221 field inversion, 2^221-5; downloadable chain M-221_field_inverse_230.txt",
+        "classification": "best known listed on the source page; not a proof of optimality"
+      },
+      "reproduced_value": "230",
+      "program": "sota.py",
+      "witness": "data/sota_t097_c02.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The source reports a best-known construction, not a proof of minimum length."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T097-C03": {
+      "public_value": "532",
+      "public_source": {
+        "url": "https://additionchains.com/LargeChains.html",
+        "title": "Short Addition Chains for Cryptographic Exponents",
+        "updated": "2026-11-02",
+        "entry": "NIST P-521 field inversion, 2^521-3; downloadable chain P-521_field_inverse_532.txt",
+        "classification": "best known listed on the source page; not a proof of optimality"
+      },
+      "reproduced_value": "532",
+      "program": "sota.py",
+      "witness": "data/sota_t097_c03.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The source reports a best-known construction, not a proof of minimum length."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T097-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T097-C02": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T097-C03": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

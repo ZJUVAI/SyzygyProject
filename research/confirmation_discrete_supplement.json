@@ -1,0 +1,354 @@
+{
+  "title": "Discrete benchmark confirmation supplement (T061–T065, T068–T072)",
+  "date": "2026-11-03",
+  "scope": "Supplementary audit; one record per assigned task; unresolved evidence remains pending.",
+  "records": [
+    {
+      "task_id": "T061",
+      "parameters": {
+        "t": 3,
+        "k": 16,
+        "v": 2
+      },
+      "scalar": "minimum row count CAN(3,16,2)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": 17,
+        "author": "Jose Torres-Jimenez, Idelfonso Izquierdo-Marquez, and collaborators",
+        "year": 2016,
+        "description": "The non-isomorphic covering-array classification reports CAN(3,16,2)=17."
+      },
+      "current_record": {
+        "value": "CAN(3,16,2)=17",
+        "scope": "Proved exact by exhaustive non-isomorphic covering-array classification."
+      },
+      "open_evidence": "The primary 2016 classification paper reports CAN(3,16,2)=17. This configuration is solved and excluded.",
+      "witness_url": "https://doi.org/10.1142/S1793830916500336",
+      "primary_sources": [
+        "https://doi.org/10.1142/S1793830916500336",
+        "https://www.data2intelligence.de/ColbournTables/t3v2.html"
+      ],
+      "checks_performed": [
+        "The Colbourn-derived table lists a 17-row construction for 16 binary strength-three columns.",
+        "The primary-paper abstract explicitly reports CAN(3,16,2)=17.",
+        "Excluded this configuration because the exact minimum is published."
+      ],
+      "status": "excluded_config",
+      "remaining": "Replace with a larger CA cell only after verifying its construction and current lower bound.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T062",
+      "parameters": {
+        "N": 100,
+        "q": 10,
+        "t": 2,
+        "index": 1
+      },
+      "scalar": "maximum number k of columns in OA(100,k,10,2), equivalently 2 plus the number of MOLS of order 10",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 4,
+        "author": "Ernest T. Parker",
+        "year": 1959,
+        "description": "A published pair of orthogonal Latin squares of order 10 gives an OA(100,4,10,2)."
+      },
+      "current_record": {
+        "value": "4 ≤ k ≤ 8",
+        "scope": "MOLS(10) is known to have at least two and at most six squares; equivalently k=2+N(10)."
+      },
+      "open_evidence": "This orthogonal-array cell is equivalent to T065: an OA(100,k,10,2) of index 1 corresponds to k−2 mutually orthogonal Latin squares of order 10 (for k≥2). The recorded k=4 construction and 4≤k≤8 gap therefore duplicate the MOLS(10) family rather than providing an independent benchmark. Do not count T062 as a separate confirmed family. A distinct OA target with strength at least 3 or index greater than 1 still needs a public construction and an open bound gap.",
+      "witness_url": "https://www.pnas.org/doi/10.1073/pnas.45.6.859",
+      "primary_sources": [
+        "https://www.pnas.org/doi/10.1073/pnas.45.6.859",
+        "https://cs.uwaterloo.ca/~cbright/reports/myrvold-mols.pdf",
+        "https://cs.uwaterloo.ca/~cbright/reports/delisle-mols.pdf"
+      ],
+      "checks_performed": [
+        "Verified Parker’s published order-10 pair and its index-one strength-two OA interpretation.",
+        "Checked the published statement that N(10) is unknown, with interval 2 to 6 MOLS.",
+        "Translated the interval to k=4 to 8 OA columns.",
+        "Compared the OA(100,k,10,2), index-1 parameterization with the standard OA–MOLS correspondence: k columns correspond to k−2 MOLS of order 10. Identified full objective equivalence with T065."
+      ],
+      "status": "pending",
+      "remaining": "Choose an OA parameter cell not equivalent to T065, preferably strength at least 3 or index greater than 1; verify a public human construction and a nonzero published bound gap before promotion.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T063",
+      "parameters": {
+        "v": 22,
+        "k": 5,
+        "t": 2
+      },
+      "scalar": "maximum number of 5-subsets of a 22-set with no pair repeated, D(22,5,2)",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 21,
+        "author": "Finite-geometry construction: projective plane of order 4, restricted to 21 of the 22 points",
+        "year": 1938,
+        "description": "The 21 lines of PG(2,4) are 5-subsets with every pair occurring once; on a 22-set, leave one point unused."
+      },
+      "current_record": {
+        "value": "21 ≤ D(22,5,2) ≤ 23 by the elementary pair count",
+        "scope": "A current exact-parameter specialist table was not verified; a stronger upper bound or exact result may exist."
+      },
+      "open_evidence": "The projective-plane construction gives 21 blocks; counting pairs gives an upper bound floor(C(22,2)/C(5,2))=23. This is a gap, but current specialist bounds and exact status were not established, so this record remains pending.",
+      "witness_url": "https://mathworld.wolfram.com/ProjectivePlane.html",
+      "primary_sources": [
+        "https://mathworld.wolfram.com/ProjectivePlane.html",
+        "https://www.combinatorics.org/ojs/index.php/eljc/article/view/DS18"
+      ],
+      "checks_performed": [
+        "Replaced the solved D(19,4,2)=25 configuration.",
+        "Verified the order-4 projective plane has 21 points, 21 lines of size five, and every pair on one line.",
+        "Computed the elementary upper bound 23 by counting pairs.",
+        "Did not verify a current specialist table or rule out a stronger upper bound."
+      ],
+      "status": "pending",
+      "remaining": "Find a primary packing-number table or paper for D(22,5,2), verify current endpoints, and confirm the cell is not exact.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T064",
+      "parameters": {
+        "players": 30,
+        "group_size": 5,
+        "groups_per_round": 6
+      },
+      "scalar": "maximum number of rounds with no pair of players meeting twice",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 6,
+        "author": "Alice Miller, Ivaylo Valkov, and R. Julian R. Abel",
+        "year": 2025,
+        "description": "Their table gives a six-round construction for 30 players in six groups of five, from a uniformly resolvable design."
+      },
+      "current_record": {
+        "value": "6 ≤ optimum ≤ 7",
+        "scope": "The primary table gives a construction at r=6 and the elementary per-player bound MAX=7."
+      },
+      "open_evidence": "The 2025 primary paper lists 30 players, group size five, MAX=7 and a six-round construction. The bounds do not meet. It distinguishes optimal (no larger solution known) from maximal (proved impossible to improve).",
+      "witness_url": "https://arxiv.org/html/2507.23376v2",
+      "primary_sources": [
+        "https://arxiv.org/html/2507.23376v2"
+      ],
+      "checks_performed": [
+        "Verified the canonical 32-player, group-size-four instance is solved at 10 rounds and replaced it.",
+        "Checked Table 8 for v=30, K=5: MAX=7 and URD({30,5,2}) construction with r=6.",
+        "Checked the paper’s definitions distinguishing optimal and maximal schedules."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Extract the URD({30,5,2}) block list from the cited construction and verify pair uniqueness.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T065",
+      "parameters": {
+        "order": 10
+      },
+      "scalar": "maximum number N(10) of pairwise orthogonal Latin squares of order 10",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 2,
+        "author": "Ernest T. Parker",
+        "year": 1959,
+        "description": "Parker publishes a pair of orthogonal Latin squares of order 10, explicitly displayed in the paper."
+      },
+      "current_record": {
+        "value": "2 ≤ N(10) ≤ 6",
+        "scope": "Pair construction is known; an upper bound of 6 follows from Bruck's theorem. Whether a triple exists remains unresolved in the cited literature."
+      },
+      "open_evidence": "The Waterloo-hosted primary report on MOLS states the order-10 maximum is unknown; the cited classical construction gives at least two, and Bruck's bound gives at most six.",
+      "witness_url": "https://cs.uwaterloo.ca/~cbright/reports/delisle-mols.pdf",
+      "primary_sources": [
+        "https://www.pnas.org/doi/10.1073/pnas.45.6.859",
+        "https://cs.uwaterloo.ca/~cbright/reports/myrvold-mols.pdf"
+      ],
+      "checks_performed": [
+        "Reviewed the primary MOLS reports for the explicit pair and the current interval.",
+        "Confirmed the objective is a single integer and the available interval is nontrivial; did not retype or independently verify the Latin squares."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Retrieve and independently check the published pair before solver benchmarking.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T068",
+      "parameters": {
+        "n": 18,
+        "d": 6,
+        "w": 5
+      },
+      "scalar": "maximum size A(18,6,5) of a binary constant-weight code",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 69,
+        "author": "Hui Kheng Aw, Yeow Meng Chee, and Alan C. H. Ling",
+        "year": 2003,
+        "description": "Their paper constructs a binary constant-weight code with length 18, distance 6, weight 5, and 69 codewords."
+      },
+      "current_record": {
+        "value": "69 ≤ A(18,6,5) ≤ 72",
+        "scope": "Brouwer's specialist table gives lower bound 69 and upper bound 72."
+      },
+      "open_evidence": "Brouwer's table identifies the 69-code construction as ACL (2003) and gives upper bound 72; it states the table entries are lower and upper bounds and distinguishes exact values.",
+      "witness_url": "https://combinatorialpress.com/ars-articles/volume-067-ars-articles/six-new-constant-weight-binary-codes/",
+      "primary_sources": [
+        "https://aeb.win.tue.nl/codes/Andw.html",
+        "https://combinatorialpress.com/ars-articles/volume-067-ars-articles/six-new-constant-weight-binary-codes/"
+      ],
+      "checks_performed": [
+        "Checked the exact table cell and source legend: 69 lower bound, 72 upper bound, ACL author/year.",
+        "Verified the table defines A(n,d,w) and notes that single values denote known exact values; this cell has a gap.",
+        "Did not retrieve or replay the code words."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Fetch the paper's construction and independently check weight and pairwise distances.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T069",
+      "parameters": {
+        "q": 2,
+        "n": 8,
+        "k": 4,
+        "d": 4
+      },
+      "scalar": "maximum size A_2(8,4;4) of a constant-dimension subspace code",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 4801,
+        "author": "Daniel Heinlein, Michael Kiermaier, Sascha Kurz, and Alfred Wassermann (construction cited as [39] in the survey)",
+        "year": 2017,
+        "description": "A published automorphism-prescription construction gives an (8,4;4)_2 code of 4801 subspaces; a further public construction adds one codeword, giving at least 4802."
+      },
+      "current_record": {
+        "value": "4801 ≤ A_2(8,4;4) ≤ 6477",
+        "scope": "The Bayreuth specialist table (2019) lists the exact cell as the interval 4801–6477; the same source explains the table stores lower and upper bounds when the value is not known exactly."
+      },
+      "open_evidence": "The Bayreuth table lists A_2(8,4;4) as 4801–6477, a strict gap. Its survey describes the 4801 construction and a later extension to 4802. The construction baseline is public, while the optimum remains undetermined in the cited table.",
+      "witness_url": "https://subspacecodes.uni-bayreuth.de/table/2/8/4/4/",
+      "primary_sources": [
+        "https://epub.uni-bayreuth.de/4571/1/tables_subspace_codes.pdf",
+        "https://epub.uni-bayreuth.de/7398/1/chap_subspace_codes_arxiv.pdf",
+        "https://subspacecodes.uni-bayreuth.de/table/2/8/4/4/"
+      ],
+      "checks_performed": [
+        "Read the Bayreuth specialist table PDF at its binary n=8, k=4, d=4 cell: 4801–6477.",
+        "Read the survey discussion of the cell and its 4801 construction / extension to 4802.",
+        "Did not independently validate the subspace code."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Before solver use, obtain the public construction and independently validate its subspaces and pairwise distances.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T070",
+      "parameters": {
+        "n": 27,
+        "R": 1
+      },
+      "scalar": "minimum size K₂(27,1) of a binary length-27 radius-one covering code",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": 67108864,
+        "author": "Richard W. Hamming",
+        "year": 1950,
+        "description": "Puncturing four coordinates from the binary [31,26,3] Hamming code preserves radius at most one and gives a length-27 code of size 2^26."
+      },
+      "current_record": {
+        "value": "4,793,495 ≤ K₂(27,1) ≤ 67,108,864",
+        "scope": "Habsieger’s improved lower bound and the punctured Hamming-code construction give a finite gap."
+      },
+      "open_evidence": "Habsieger proved K(27,1)≥4,793,495. Puncturing a perfect binary Hamming code gives a feasible length-27 radius-one code of size 2^26. The cited sources do not state that these bounds coincide.",
+      "witness_url": "https://fpsac-archive.github.io/FPSAC95/ARTICLES/25.HABSIEGER.pdf",
+      "primary_sources": [
+        "https://fpsac-archive.github.io/FPSAC95/ARTICLES/25.HABSIEGER.pdf",
+        "https://old.sztaki.hu/~keri/codes/index.htm"
+      ],
+      "checks_performed": [
+        "Replaced the small length-10 radius-two candidate with length 27, radius one.",
+        "Verified Habsieger’s lower bound K(27,1)≥4,793,495.",
+        "Derived the 2^26 feasible upper bound by puncturing the [31,26,3] perfect Hamming code; puncturing preserves covering radius at most one.",
+        "Did not retrieve or replay a parity-check matrix."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Retrieve a public Hamming parity-check matrix and validate the punctured code’s covering radius and size.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T071",
+      "parameters": {
+        "n": 16,
+        "d": 13
+      },
+      "scalar": "maximum size M(16,13) of a permutation code in S16 with Hamming distance at least 13",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 1266,
+        "author": "Derek H. Smith and Roberto Montemanni",
+        "year": 2012,
+        "description": "Their table reports a 1266-word code constructed by iterative clique building on cycles of length 16."
+      },
+      "current_record": {
+        "value": "1266 ≤ M(16,13) ≤ 43,680",
+        "scope": "Primary table lists the constructed lower endpoint and an upper bound."
+      },
+      "open_evidence": "The primary table lists lower bound 1266 and upper bound 43,680; it labels these separately and makes no exact-value claim for the gap.",
+      "witness_url": "https://doi.org/10.1007/s10623-011-9551-8",
+      "primary_sources": [
+        "https://doi.org/10.1007/s10623-011-9551-8",
+        "https://iris.unimo.it/handle/11380/1176210"
+      ],
+      "checks_performed": [
+        "Checked Table 3 for n=16,d=13: lower bound 1266 and upper bound 43,680.",
+        "Checked the table legend: constructed codes are lower bounds and upper bounds are cited separately.",
+        "Did not retrieve or replay the permutation list."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Retrieve the code source and verify pairwise Hamming distances before solver use.",
+      "recomputed": false
+    },
+    {
+      "task_id": "T072",
+      "parameters": {
+        "q": 2,
+        "n": 31,
+        "t": 1
+      },
+      "scalar": "maximum size of a binary length-31 code correcting one deletion",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 67108864,
+        "author": "R. R. Varshamov and G. M. Tenengolts",
+        "year": 1965,
+        "description": "A VT checksum class modulo n+1 gives a single-deletion-correcting code; at n=31 its classes have size 2^26."
+      },
+      "current_record": {
+        "value": "67,108,864 ≤ A_del(31,1) ≤ 71,582,788",
+        "scope": "Lower endpoint is a length-31 VT class; upper endpoint is floor((2^31−2)/30) from the explicit non-asymptotic bound of Kulkarni and Kiyavash (2013). The paper identifies determining the largest single-deletion code as open and reports exact optimality only through n≤10."
+      },
+      "open_evidence": "The primary 2013 paper states that determining the largest single-deletion code is an open problem, reports exact optimality through lengths n≤10, and gives the general upper bound floor((2^n−2)/(n−1)) for binary codes. At n=31 this is 71,582,788, strictly above the VT construction size 67,108,864. The resulting published-source interval is nonzero.",
+      "witness_url": "https://doi.org/10.1007/s10623-023-01342-1",
+      "primary_sources": [
+        "https://publish.illinois.edu/kiyavash/files/2015/06/Kulkarni_it_trans_2013.pdf",
+        "https://doi.org/10.1007/s10623-023-01342-1"
+      ],
+      "checks_performed": [
+        "Verified the primary paper calls determination of the maximum single-deletion code an open problem and gives the binary upper bound (2^n−2)/(n−1).",
+        "Evaluated the bound at n=31: floor((2^31−2)/30)=71,582,788.",
+        "Counted all 32 checksum classes of sum(i*x_i) mod 32 by exact integer dynamic programming; each class has 67,108,864 words.",
+        "Checked the later primary paper for the stated VT optimality range; n=31 is beyond proved exact cases."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Before solver use, retrieve a compact public VT witness description and verify the deletion-correction property with a certificate or independent checker.",
+      "recomputed": false
+    }
+  ],
+  "status_counts": {
+    "confirmed_suitable": 7,
+    "excluded_config": 1,
+    "pending": 2
+  }
+}

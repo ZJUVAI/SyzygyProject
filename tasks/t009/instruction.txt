@@ -1,0 +1,1 @@
+Construct n distinct directions on S² and maximize their minimum pairwise angular separation in radians. Read `MATHBENCH_CONFIG_ID`: T009-C02 has n=16, T009-C03 has n=17, and T009-C04 has n=19. If unset, use C02. Return `{"points": [[x,y,z], ...]}` from `run_code()`. Coordinates may be nonunit but must be finite and nonzero. Do not read human or reference witness files.

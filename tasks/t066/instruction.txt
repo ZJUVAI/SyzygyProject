@@ -1,0 +1,4 @@
+Construct a binary linear code of length 68 and dimension 15 with maximum possible minimum Hamming distance. Return JSON with a 15 by 68 generator_matrix over {0,1}. The evaluator computes the rank over GF(2) and checks all 32767 nonzero codewords. Do not return a claimed objective as evidence.
+
+
+Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact or conservative interval verification. Compatibility feedback is J/H for maximization or H/J for minimization, where H is the frozen external reference. Start from the supplied initial program.
