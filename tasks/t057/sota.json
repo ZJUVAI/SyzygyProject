@@ -100,7 +100,60 @@
         "AlphaEvolve V2's 1.121936 is lower than the reproduced SimpleTES construction in the checked Dream-RSI comparison table. AlphaEvolve's separate asymptotic lower-bound constructions use 2003 or 54265 elements and do not meet T057's cardinality cap.",
         "This is a finite checked-source comparison, not a claim of a global optimum or a complete survey of all public results."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T057",
+        "status": "best_reproducible",
+        "run": {
+          "task_id": "T057",
+          "config_id": "T057-C01",
+          "validity": 1.0,
+          "combined_score": 1.0802928096096163,
+          "objective": "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+          "verification_status": "certified",
+          "generation_time": 2.7964449860155582,
+          "verification_time": 3.2485851161181927,
+          "objective_value": "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+          "details": {
+            "cardinality": 506,
+            "sumset_size": 3551,
+            "difference_set_size": 2775,
+            "objective_interval": [
+              "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+              "1.144886859713313385832227182707955296769446772249871299702294602807284509830961157769"
+            ],
+            "objective_lower_bound": "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+            "claimed_objective_mismatch": false,
+            "sumset_exact": true,
+            "difference_set_exact": true
+          },
+          "eval_time": 6.064447980374098,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t057/sota_witness.json",
+        "independent_quantity": {
+          "cardinality": 506,
+          "sumset": 3551,
+          "difference_set": 2775,
+          "ratio": 1.1448868597133133
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Pinned SimpleTES public asset independently fetched and compared byte for byte. All 506 values satisfy bounds; independent integer pair enumeration gives sumset3551 and diffset2775, matching the primary paper. Dream-RSI 1.145427 stays a separate unreproduced public report.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

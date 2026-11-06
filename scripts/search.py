@@ -27,7 +27,7 @@ def bounded_audit(task,solution,config):
 
 def run():
     ap=argparse.ArgumentParser();ap.add_argument('task');ap.add_argument('--label',default='');args=ap.parse_args();task=args.task.upper()
-    dest=ROOT/'reports/remaining_search'/(task.lower()+args.label);dest.mkdir(parents=True,exist_ok=False)
+    dest=ROOT/'tasks'/task.lower()/'runs'/('search'+args.label);dest.mkdir(parents=True,exist_ok=False)
     src=ROOT/'tasks'/task.lower(); program=src/'evolution.py'
     controls={'MATHBENCH_SEARCH_SECONDS':'45','MATHBENCH_EVOLUTION_SECONDS':'45'};os.environ.update(controls)
     hashes={}
@@ -59,7 +59,7 @@ def run():
             else: rejected=False
             try: independent=bounded_audit(task,solution,dict(config,id='search-check'))
             except Exception as exc: independent={'error':repr(exc)}
-            row.update(best=best,search_metadata={k:solution[k] for k in ('search','_evolution','search_iterations','search_method') if k in solution},replay_command=f'.venv/bin/python -m mathbench replay {task} {cd/best/"solution.json"} --config {cid}',replay=rp,claimed_score_ignored=tamper,malformed_rejected=rejected,independent_quantity=independent,status='reviewed_by_sol' if rp['validity']==1 and tamper and rejected and 'error' not in independent else 'pending_review')
+            row.update(best=best,search_metadata={k:solution[k] for k in ('search','_evolution','search_iterations','search_method') if k in solution},replay_command=f'.venv/bin/python -m mathbench replay {task} {cd/best/"solution.json"} --config {cid}',replay=rp,claimed_score_ignored=tamper,malformed_rejected=rejected,independent_quantity=independent,status='checks_passed_pending_review' if rp['validity']==1 and tamper and rejected and 'error' not in independent else 'pending_review')
         rows.append(row);save(dest/'summary.json',{'task_id':task,'configurations':rows})
     print('DONE',task,flush=True)
 
@@ -70,33 +70,38 @@ def summary():
     import json
     from fractions import Fraction
     from pathlib import Path
-    ROOT=Path(__file__).resolve().parents[1];base=ROOT/'reports/remaining_search';base.mkdir(parents=True,exist_ok=True)
-    public=json.loads((ROOT/'reports/sota_acceptance.json').read_text())['configurations']
+    ROOT=Path(__file__).resolve().parents[1];base=ROOT
+    public={cid:record.get('verification',{}) for path in (ROOT/'tasks').glob('*/sota.json') for cid,record in json.loads(path.read_text())['configurations'].items()}
+    def number(r):
+        try:return float(Fraction(str(r.get('objective_value',r.get('objective')))))
+        except (ValueError,TypeError,ZeroDivisionError):return None
     rows=[]
-    for p in sorted(base.glob('*/summary.json')):
-        if p.parent.name in ('t073','t014','t081','t082'):continue
+    for p in sorted(base.glob('tasks/*/runs/*/summary.json')):
         for row in json.loads(p.read_text())['configurations']:
             cid=row['config_id'];results=row['results'];key=row.get('best');best=results.get(key,{})
             baseline=results.get('baseline',{});reference=public.get(cid,{}).get('run',{})
-            def number(r):
-                try:return float(Fraction(str(r.get('objective_value',r.get('objective')))))
-                except (ValueError,TypeError,ZeroDivisionError):return None
             b,x,r=map(number,(baseline,best,reference))
             improved=(x<b if row['direction']=='minimize' else x>b) if b is not None and x is not None else None
             rows.append({'config_id':cid,'direction':row['direction'],'task_id':cid.split('-')[0],'status':row['status'],'baseline':b,'best':x,'raw_objective':best.get('objective'),'improved_baseline':improved,'frozen_verified_reference':r,'reference_date':'2026-11-05','summary':str(p.relative_to(ROOT))})
+    for path in (ROOT/'tasks').glob('*/best/*/result.json'):
+        best=json.loads(path.read_text());cid=path.parent.name;tid=path.parents[2].name.upper()
+        config=next(c for c in load_task(tid)['configurations'] if c['id']==cid)
+        provenance=json.loads((path.parent/'provenance.json').read_text())
+        numeric=best.get('objective_value',best.get('objective'))
+        rows.append({'config_id':cid,'direction':config['direction'],'task_id':tid,
+                     'status':provenance['status'],'baseline':None,
+                     'best':float(Fraction(str(numeric))), 'raw_objective':best['objective'],
+                     'improved_baseline':None,
+                     'frozen_verified_reference':number(public.get(cid,{}).get('run',{})),
+                     'reference_date':'2026-11-05','summary':str(path.relative_to(ROOT))})
     selected={}
     for row in rows:
         old=selected.get(row['config_id'])
         if old is None or (row['best'] is not None and (old['best'] is None or (row['best']<old['best'] if row['direction']=='minimize' else row['best']>old['best']))): selected[row['config_id']]=row
     rows=sorted(selected.values(),key=lambda r:r['config_id'])
-    report={'scope':'Sequential cold-start exploratory searches. No new public record claim. No cross-task aggregate score.','task_count':len({r['task_id'] for r in rows}),'configuration_count':len(rows),'configurations':rows}
-    (base/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
-    lines=['# Remaining task search results','','Public comparisons use the saved 2026-11-05 evidence. They are not a current public ranking. Each search has a 45-second target, a 300-second generation limit, a 60-second verification limit, 4 GiB memory, and one thread. Two seeds are run per configuration. Time-limited search depends on the machine. Exact raw values and errors are saved in each task summary. Historical acceptance is unchanged.','','| Configuration | Classical baseline | Search best | Frozen verified reference | Review |','|---|---:|---:|---:|---|']
-    for r in rows:
-        fmt=lambda v:'—' if v is None else f'{v:.12g}'
-        lines.append(f"| [{r['config_id']}]({Path(r['summary']).relative_to('reports/remaining_search')}) | {fmt(r['baseline'])} | {fmt(r['best'])} | {fmt(r['frozen_verified_reference'])} | {r['status']} |")
-    (base/'README.md').write_text('\n'.join(lines)+'\n')
-    print(report['task_count'],'tasks',len(rows),'configurations',sum(r['improved_baseline'] is True for r in rows),'improved')
+    report={'scope':'Saved constructions and exploratory searches; not an isolated model comparison. No public record claim or aggregate score.','task_count':len({r['task_id'] for r in rows}),'configuration_count':len(rows),'configurations':rows}
+    print(json.dumps(report,ensure_ascii=False,indent=2))
+
 
 
 def audit():
@@ -104,10 +109,10 @@ def audit():
     import hashlib,json,sys
     from fractions import Fraction as F
     from pathlib import Path
-    ROOT=Path(__file__).resolve().parents[1];base=ROOT/'reports/remaining_search';base.mkdir(parents=True,exist_ok=True)
+    ROOT=Path(__file__).resolve().parents[1];base=ROOT
     keys={'T001':'radius','T014':'minimum_triangle_area','T035':'order','T044':'span','T060':'blocks','T066':'minimum_distance','T067':'codewords','N001':'independent_words','T073':'energy','T079':'exact_objective','T080':'exact_objective','T081':'exact_objective','T082':'maximum_overlap','T089':'absolute_determinant','T099':'diameter','T097':'additions'}
     results=[]
-    for p in sorted(base.glob('*/summary.json')):
+    for p in sorted(base.glob('tasks/*/runs/*/summary.json')):
         d=json.loads(p.read_text());task=d['task_id'];folder=p.parent
         manifest=json.loads((folder/'manifest.json').read_text())
         hashes_ok=all(hashlib.sha256((folder/'sources'/name).read_bytes()).hexdigest()==value for name,value in manifest['source_sha256'].items())
@@ -136,8 +141,14 @@ def audit():
             for name in ('initial','human','baseline'):
                 if row['results'][name]['validity']!=1:errors.append(name+' failed')
             results.append({'attempt':folder.name,'config_id':cid,'passed':not errors,'errors':errors})
+    for path in (ROOT/'tasks').glob('*/best/*/result.json'):
+        expected=json.loads(path.read_text());cid=path.parent.name;task=path.parents[2].name.upper()
+        checked=replay(task,path.parent/'solution.json',cid,strict=True)
+        passed=checked['validity']==1 and checked['objective']==expected['objective']
+        results.append({'attempt':str(path.parent.relative_to(ROOT)), 'config_id':cid,
+                        'passed':passed,'errors':[] if passed else ['Saved best failed exact replay']})
     report={'checks':results,'passed':sum(r['passed'] for r in results),'failed':sum(not r['passed'] for r in results),'note':'Failed setup attempts are preserved. Main report selects corrected runs. Numeric independent checks for T009 and T057 support the exact or interval checker; they do not replace its certificate.'}
-    (base/'audit.json').write_text(json.dumps(report,indent=2)+'\n')
+    # Checks are printed; task-local run artifacts contain the evidence.
     print('Audit',report['passed'],'passed;',report['failed'],'failed attempt/configuration checks')
     for r in results:
         if not r['passed']:print(r['attempt'],r['config_id'],r['errors'])
@@ -152,15 +163,15 @@ def resume():
     sys.path.insert(0,str(ROOT))
     from mathbench.registry import load_task
     ORDER='T073 T080 T089 T014 T079 T081 T082 T001 T009 T002 T044 T060 T066 T067 N001 T057 T099 T097 T035'.split()
-    base=ROOT/'reports/remaining_search';base.mkdir(parents=True,exist_ok=True)
+    base=ROOT
     for task in ORDER:
         expected={c['id'] for c in load_task(task)['configurations']}
         completed=set()
-        for path in base.glob(task.lower()+'*/summary.json'):
+        for path in (ROOT/'tasks'/task.lower()/'runs').glob('*/summary.json'):
             data=json.loads(path.read_text())
-            completed.update(r['config_id'] for r in data['configurations'] if r.get('status')=='reviewed_by_sol')
+            completed.update(r['config_id'] for r in data['configurations'] if r.get('status') in ('reviewed_by_sol','checks_passed_pending_review'))
         if expected<=completed:
-            print(task,'already reviewed; skip',flush=True);continue
+            print(task,'checks already completed; skip',flush=True);continue
         label='_resume_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         print(task,'running all configurations in a new attempt',flush=True)
         subprocess.run([sys.executable,str(ROOT/'scripts/search.py'),'run',task,'--label',label],cwd=ROOT,check=True)

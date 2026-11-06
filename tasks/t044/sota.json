@@ -23,7 +23,49 @@
         "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
         "The archive is the cited public source checked for the same-parameter record."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T044",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T044",
+          "config_id": "T044-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 623,
+          "verification_status": "exact",
+          "generation_time": 0.5664435066282749,
+          "verification_time": 0.2660170719027519,
+          "objective_value": 623,
+          "details": {
+            "marks": 29,
+            "differences_checked": 406
+          },
+          "eval_time": 0.8415292724967003,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t044/data/public_29.json",
+        "independent_quantity": {
+          "distinct_positive_differences": 406,
+          "span": 623
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
+        "snapshot_date": "2026-11-05"
+      }
     },
     "T044-C02": {
       "public_value": "680",
@@ -46,7 +88,49 @@
         "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
         "The archive is the cited public source checked for the same-parameter record."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T044",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T044",
+          "config_id": "T044-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 680,
+          "verification_status": "exact",
+          "generation_time": 0.46590616926550865,
+          "verification_time": 0.4497265852987766,
+          "objective_value": 680,
+          "details": {
+            "marks": 30,
+            "differences_checked": 435
+          },
+          "eval_time": 0.9201054684817791,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t044/data/public_30_32.json",
+        "independent_quantity": {
+          "distinct_positive_differences": 435,
+          "span": 680
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
+        "snapshot_date": "2026-11-05"
+      }
     },
     "T044-C03": {
       "public_value": "784",
@@ -69,7 +153,49 @@
         "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
         "The archive is the cited public source checked for the same-parameter record."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T044",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T044",
+          "config_id": "T044-C03",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 784,
+          "verification_status": "exact",
+          "generation_time": 0.26512131467461586,
+          "verification_time": 0.2651984691619873,
+          "objective_value": 784,
+          "details": {
+            "marks": 32,
+            "differences_checked": 496
+          },
+          "eval_time": 0.5341822504997253,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t044/data/public_30_32.json",
+        "independent_quantity": {
+          "distinct_positive_differences": 496,
+          "span": 784
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

@@ -34,7 +34,7 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-04",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "reports/independent_audit.json",
+    "evidence": "PLAN.md",
     "checks": [
       "mathematical definition and direction",
       "replayed human witness",
@@ -60,7 +60,7 @@
       "T097-C02",
       "T097-C03"
     ],
-    "evidence": "reports/configuration_expansion.json",
+    "evidence": "PLAN.md",
     "checks": [
       "source and parameter review",
       "four strict program runs per configuration",

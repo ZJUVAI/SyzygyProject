@@ -24,7 +24,54 @@
         "Later continuous-problem reports, including 1.5029, are outside the verified 208-step configuration. No corresponding 208-coefficient witness was located.",
         "DREAM-RSI coverage records do not list AC1 as a DREAM-RSI task; its coverage comes from SimpleTES and AlphaEvolve."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T079",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T079",
+          "config_id": "T079-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "6280435861361744576/4160000022692211721",
+          "verification_status": "exact",
+          "generation_time": 0.31502126157283783,
+          "verification_time": 0.265011440962553,
+          "objective_value": "6280435861361744576/4160000022692211721",
+          "details": {
+            "steps": 208,
+            "coefficient_count": 208,
+            "max_convolution": "7548600794905943/5000000000000000",
+            "max_indices": [
+              321
+            ],
+            "normalization": "normalized to integral 1 before scoring"
+          },
+          "eval_time": 0.5838731750845909,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t079/data/human_matolcsi_vinuesa.json",
+        "independent_quantity": {
+          "exact_objective": "6280435861361744576/4160000022692211721",
+          "convolution_entries": 415
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Checked the Matolcsi-Vinuesa primary source and later AlphaEvolve reports. This is the strongest located public exactly-208 nonnegative-step witness; later cited stronger values use other discretizations. Exact convolution independently recomputed. Scope remains limited to checked sources.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

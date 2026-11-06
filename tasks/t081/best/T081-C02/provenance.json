@@ -1,0 +1,11 @@
+{
+  "classification": "ai_assisted_local_search",
+  "status": "reviewed_by_sol",
+  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
+  "independent_quantity": {
+    "exact_objective": "1141748901597204433/781250000000000000",
+    "convolution_entries": 415
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true
+}

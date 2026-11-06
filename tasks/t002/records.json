@@ -83,8 +83,8 @@
         "date": "2026-11-04",
         "actual_objective": "2966942899906512939318226046481160904289990651293931822604648091421/500000000000000000000000000000000000000000000000000000000000000000",
         "verification_status": "certified",
-        "witness": "reports/witnesses/T002/T002-C03/human/solution.json",
-        "independent_audit": "reports/independent_audit.json",
+        "witness": "tasks/t002/data/human_schadt_2025.json",
+        "independent_audit": "PLAN.md",
         "checks": [
           "all four programs strict valid",
           "independent key quantity",
@@ -139,8 +139,8 @@
         "date": "2026-11-04",
         "actual_objective": "6+1/2*sqrt2",
         "verification_status": "certified",
-        "witness": "reports/witnesses/T002/T002-C04/human/solution.json",
-        "independent_audit": "reports/independent_audit.json",
+        "witness": "tasks/t002/data/human_gobel_figure1.json",
+        "independent_audit": "PLAN.md",
         "checks": [
           "all four programs strict valid",
           "independent key quantity",

@@ -13,12 +13,7 @@ core.*
 *.pem
 .DS_Store
 
-# Reproducible outputs and local archives
-reports/*
-!reports/sota_acceptance.json
+# Local historical archives
+reports/
+research/
 website/
-research/sources/
-research/archive/
-scripts/run_remaining_queue.py
-scripts/retry_remaining_search.py
-scripts/refine_remaining_labs.py

@@ -1,0 +1,28 @@
+{
+  "task_id": "T014",
+  "config_id": "T014-C02",
+  "validity": 1.0,
+  "combined_score": 0.7806292997766474,
+  "objective": "1272381211705654475270902966948790156040411821/50000000000000000000000000000000000000000000000",
+  "verification_status": "exact",
+  "generation_time": 45.50684732571244,
+  "verification_time": 0.16451580077409744,
+  "objective_value": "1272381211705654475270902966948790156040411821/50000000000000000000000000000000000000000000000",
+  "details": {
+    "triangles_checked": 220
+  },
+  "eval_time": 45.67362194508314,
+  "seed": 1,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.2",
+    "platform": "linux",
+    "worker_cpu": 0
+  }
+}

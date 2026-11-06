@@ -1,0 +1,12 @@
+{
+  "status": "accepted_by_sol",
+  "classification": "ai_assisted_local_search",
+  "method": "Own topology search followed by high-precision contact refinement and exact rational repair",
+  "scope": "Warm-start follow-up; separate from cold-start and equal-budget model comparisons.",
+  "independent_audit": {
+    "objective": "2635983084917607783186569485443481730396676798274474857745757/1000000000000000000000000000000000000000000000000000000000000",
+    "minimum_wall_slack": "0",
+    "minimum_squared_pair_slack": "13924087011036143964513084822566964138088898539470038955983/500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "pair_checks": 325
+  }
+}

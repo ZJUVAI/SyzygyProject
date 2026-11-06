@@ -1,0 +1,12 @@
+{
+  "classification": "ai_assisted_local_search",
+  "status": "reviewed_by_sol",
+  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
+  "independent_quantity": {
+    "maximum_overlap": "161933713644708191/425000000000000000",
+    "integral": "1",
+    "knots_including_zero_exterior": 103
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true
+}

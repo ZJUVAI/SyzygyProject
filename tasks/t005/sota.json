@@ -30,6 +30,48 @@
         "minimal_grid_decrement": "260409/500000000000000000",
         "feasible_at_decrement": true,
         "infeasible_at_previous_grid_decrement": true
+      },
+      "verification": {
+        "task_id": "T005",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T005",
+          "config_id": "T005-C01",
+          "validity": 1.0,
+          "combined_score": 1.052111923576771,
+          "objective": "658995771226364683/250000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.7658373676240444,
+          "verification_time": 0.26498862355947495,
+          "objective_value": "658995771226364683/250000000000000000",
+          "details": {
+            "n": 26,
+            "pair_checks": 325,
+            "claimed_objective_mismatch": false
+          },
+          "eval_time": 1.0363761000335217,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t005/data/sota26.json",
+        "independent_quantity": {
+          "sum_radii": "658995771226364683/250000000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Packomania same-parameter public coordinates; exact strict and independent sum/constraints verified. Minimum 1e-18-grid radius reduction is certified; public-value gap is retained.",
+        "snapshot_date": "2026-11-05"
       }
     },
     "T005-C02": {
@@ -60,6 +102,48 @@
         "minimal_grid_decrement": "566391/1000000000000000000",
         "feasible_at_decrement": true,
         "infeasible_at_previous_grid_decrement": true
+      },
+      "verification": {
+        "task_id": "T005",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T005",
+          "config_id": "T005-C02",
+          "validity": 1.0,
+          "combined_score": 1.0455676876211686,
+          "objective": "91861649099589859/31250000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.21531439945101738,
+          "verification_time": 0.1648130789399147,
+          "objective_value": "91861649099589859/31250000000000000",
+          "details": {
+            "n": 32,
+            "pair_checks": 496,
+            "claimed_objective_mismatch": false
+          },
+          "eval_time": 0.383665319532156,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t005/data/sota32.json",
+        "independent_quantity": {
+          "sum_radii": "91861649099589859/31250000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Packomania same-parameter public coordinates; exact strict and independent sum/constraints verified. Minimum 1e-18-grid radius reduction is certified; public-value gap is retained.",
+        "snapshot_date": "2026-11-05"
       }
     }
   },

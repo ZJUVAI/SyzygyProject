@@ -133,7 +133,92 @@
           "parameter_note": "Its comparison table reports first autocorrelation, not the T080 second-autocorrelation task."
         }
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T080",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T080",
+          "config_id": "T080-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "108065664771600646574507764702/121527759800529249872686490775",
+          "verification_status": "exact",
+          "generation_time": 0.36552152782678604,
+          "verification_time": 0.3212709166109562,
+          "objective_value": "108065664771600646574507764702/121527759800529249872686490775",
+          "details": {
+            "objective_fraction": "108065664771600646574507764702/121527759800529249872686490775",
+            "objective_float": 0.8892261730897966,
+            "mass": "31622759/5000000",
+            "convolution": [
+              "16200962089/10000000000",
+              "6924067917/5000000000",
+              "2959251201/10000000000",
+              "0",
+              "0",
+              "0",
+              "0",
+              "67379419861/50000000000",
+              "40503942809/25000000000",
+              "16201132387/10000000000",
+              "40502981753/25000000000",
+              "81009009473/50000000000",
+              "40505047071/25000000000",
+              "16202011507/10000000000",
+              "1620227558389/1000000000000",
+              "32401128753/20000000000",
+              "324041345529/200000000000",
+              "405060144637/250000000000",
+              "162018415863/100000000000",
+              "202520914753/125000000000",
+              "30813452021/20000000000",
+              "762947736667/500000000000",
+              "1620371934517/1000000000000",
+              "810111703623/500000000000",
+              "2563492713/1600000000",
+              "151585626957/100000000000",
+              "3481058777873/2500000000000",
+              "29509494457/25000000000",
+              "999341930229/1000000000000",
+              "2033028209133/2500000000000",
+              "648635922753/1000000000000",
+              "616618372023/1250000000000",
+              "1801632696609/5000000000000",
+              "19222784457/78125000000",
+              "823227288187/5000000000000",
+              "246552776689/2500000000000",
+              "10994514677/200000000000",
+              "3064313241/125000000000",
+              "12272429961/1562500000000"
+            ],
+            "steps": 20
+          },
+          "eval_time": 0.6930502951145172,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t080/data/human_t080.json",
+        "independent_quantity": {
+          "exact_objective": "108065664771600646574507764702/121527759800529249872686490775",
+          "convolution_entries": 39
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed original Matolcsi-Vinuesa appendix and Boyer-Li2025 primary paper. The latter explicitly identifies the MV20, AE50 and BL575 grids. The strongest located same-20-step public witness is the archived MV coefficient list; its exact ratio is independently recomputed. This is a finite source comparison, not an optimality proof.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

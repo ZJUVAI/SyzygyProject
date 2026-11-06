@@ -20,9 +20,47 @@
       "matches_public_best": true,
       "comparison_tolerance": "0",
       "verification": {
-        "method": "The task validator checked matrix shape, binary entries, rank 15, and enumerated every nonzero linear combination.",
-        "codewords_checked": 32767,
-        "minimum_distance": 24
+        "task_id": "T066",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T066",
+          "config_id": "T066-C01",
+          "validity": 1.0,
+          "combined_score": 3.0,
+          "objective": 24,
+          "verification_status": "exact",
+          "generation_time": 0.46563340350985527,
+          "verification_time": 0.26752201467752457,
+          "objective_value": 24,
+          "details": {
+            "rank": 15,
+            "codewords_checked": 32767,
+            "claimed_objective_mismatch": false
+          },
+          "eval_time": 0.7397576831281185,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t066/data/sota_generator.json",
+        "independent_quantity": {
+          "codewords": 32768,
+          "minimum_distance": 24
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked Grassl BKLC [68,15] construction and bounds 24–26, replayed the saved matrix, independently enumerated its vector space, rejected rank damage, and confirmed forged scores have no effect.",
+        "snapshot_date": "2026-11-05"
       },
       "limitations": [
         "The published table gives a lower bound of 24 and an upper bound of 26, so this is a best-known construction, not a proof of optimality.",

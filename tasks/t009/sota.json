@@ -27,7 +27,55 @@
         "The table lists a numerical construction and does not prove global optimality.",
         "This comparison covers the cited source table, not every public source."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T009",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T009",
+          "config_id": "T009-C02",
+          "validity": 1.0,
+          "combined_score": 0.9999999999999991,
+          "objective": 0.9118367215999157,
+          "verification_status": "certified",
+          "generation_time": 0.2659095749258995,
+          "verification_time": 0.36613424494862556,
+          "objective_value": 0.9118367215999157,
+          "details": {
+            "n": 16,
+            "pairs_checked": 120,
+            "objective_name": "minimum_pairwise_angular_separation_radians",
+            "angle_interval": [
+              0.9118367215999157,
+              0.9118367215999172
+            ],
+            "claimed_objective_mismatch": false,
+            "directions_normalized_for_scoring": true
+          },
+          "eval_time": 0.6392436847090721,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t009/data/spherical_code_3_16.txt",
+        "independent_quantity": {
+          "minimum_angle_80_digits": "0.91183672159991657867556495135875727370020389094972398810269001155207616906690925"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
+        "snapshot_date": "2026-11-05"
+      }
     },
     "T009-C03": {
       "public_value": "0.891694449150313201102736466822772753125",
@@ -54,7 +102,55 @@
         "The table lists a numerical construction and does not prove global optimality.",
         "This comparison covers the cited source table, not every public source."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T009",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T009",
+          "config_id": "T009-C03",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 0.8916944491515696,
+          "verification_status": "certified",
+          "generation_time": 0.2651629112660885,
+          "verification_time": 0.31557371467351913,
+          "objective_value": 0.8916944491515696,
+          "details": {
+            "n": 17,
+            "pairs_checked": 136,
+            "objective_name": "minimum_pairwise_angular_separation_radians",
+            "angle_interval": [
+              0.8916944491515696,
+              0.8916944491515711
+            ],
+            "claimed_objective_mismatch": false,
+            "directions_normalized_for_scoring": true
+          },
+          "eval_time": 0.5853269621729851,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t009/data/spherical_code_3_17.txt",
+        "independent_quantity": {
+          "minimum_angle_80_digits": "0.89169444915157039700953132643851450209237252850061576674863950767610894655337686"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
+        "snapshot_date": "2026-11-05"
+      }
     },
     "T009-C04": {
       "public_value": "0.8323809277750249256455890523122749310175",
@@ -81,7 +177,55 @@
         "The table lists a numerical construction and does not prove global optimality.",
         "This comparison covers the cited source table, not every public source."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T009",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T009",
+          "config_id": "T009-C04",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 0.8323809277763071,
+          "verification_status": "certified",
+          "generation_time": 0.2149851657450199,
+          "verification_time": 0.3154233321547508,
+          "objective_value": 0.8323809277763071,
+          "details": {
+            "n": 19,
+            "pairs_checked": 171,
+            "objective_name": "minimum_pairwise_angular_separation_radians",
+            "angle_interval": [
+              0.8323809277763071,
+              0.8323809277763087
+            ],
+            "claimed_objective_mismatch": false,
+            "directions_normalized_for_scoring": true
+          },
+          "eval_time": 0.5349039547145367,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t009/data/spherical_code_3_19.txt",
+        "independent_quantity": {
+          "minimum_angle_80_digits": "0.83238092777630794287434797748825009419045593085015621313451565408646896818110132"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

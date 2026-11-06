@@ -115,8 +115,8 @@
         "date": "2026-11-04",
         "actual_objective": 0.8916944491515696,
         "verification_status": "certified",
-        "witness": "reports/witnesses/T009/T009-C03/human/solution.json",
-        "independent_audit": "reports/independent_audit.json",
+        "witness": "tasks/t009/data/verified_human_t009-c03.json",
+        "independent_audit": "PLAN.md",
         "checks": [
           "all four programs strict valid",
           "independent key quantity",
@@ -180,8 +180,8 @@
         "date": "2026-11-04",
         "actual_objective": 0.8323809277763071,
         "verification_status": "certified",
-        "witness": "reports/witnesses/T009/T009-C04/human/solution.json",
-        "independent_audit": "reports/independent_audit.json",
+        "witness": "tasks/t009/data/verified_human_t009-c04.json",
+        "independent_audit": "PLAN.md",
         "checks": [
           "all four programs strict valid",
           "independent key quantity",

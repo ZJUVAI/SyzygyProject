@@ -71,10 +71,48 @@
       "matches_public_best": false,
       "comparison_tolerance": "0",
       "verification": {
-        "method": "Enumerated all 4^4 octacode messages from the published Z4 generator matrix, applied the published Gray map, appended one zero coordinate, and checked all pairs with the exact T067 validator.",
-        "codewords_checked": 256,
-        "pairs_checked": 32640,
-        "minimum_distance": 6
+        "task_id": "T067",
+        "status": "best_reproducible",
+        "run": {
+          "task_id": "T067",
+          "config_id": "T067-C01",
+          "validity": 1.0,
+          "combined_score": 0.9922480620155039,
+          "objective": 256,
+          "verification_status": "exact",
+          "generation_time": 1.499611273407936,
+          "verification_time": 0.3162694051861763,
+          "objective_value": 256,
+          "details": {
+            "n": 17,
+            "minimum_pairwise_distance": 6,
+            "pairs_checked": 32640,
+            "claimed_objective_mismatch": false
+          },
+          "eval_time": 1.8259511590003967,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t067/data/sota_nordstrom_robinson_256.json",
+        "independent_quantity": {
+          "codewords": 256,
+          "minimum_distance": 6
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed the full public Forney-Sloane-Trott octacode paper and the Magma manual generator matrix and Gray map. Exact replay and independent all-pairs check give 256 words and distance6 after zero extension. Milshtein reported258 stays separate; no 258-word witness is claimed.",
+        "snapshot_date": "2026-11-05"
       },
       "highest_reported": {
         "value": "258",

@@ -6,7 +6,7 @@
 - `mathbench/`：公共运行器和评测接口。
 - `scripts/`：搜索入口及验收工具。
 - `tests/`：公共测试。任务测试与各任务放在一起。
-- `research/`：参数选型和来源记录。
+- `PLAN.md`：统一维护计划、研究结论和待办。
 
 ## 安装
 
@@ -31,7 +31,7 @@ python scripts/search.py audit           # 检查已有结果
 
 Linux 工作进程限制地址空间为 4 GiB。macOS 不执行此内存限制，结果的 `environment.memory_limit_enforced` 会记录为 `false`。两种平台均由独立验证器重算数学成绩。本次修改尚未在 Mac 实机上验证。
 
-结果写入 `reports/remaining_search/`，不纳入 Git。冻结比较输入 `reports/sota_acceptance.json` 和必要的基线见证予以保留。服务器旧结果仍在原服务器及迁移包中；新克隆会重新生成结果。
+临时结果写入各任务的 `runs/`，不上传。每个任务的 `sota.json` 保存公开结果、来源和验证信息，`data/` 保存必要见证。自己的最佳构造保存在 `best/<配置ID>/`，可以直接重放。
 
 ## 验证
 
@@ -40,4 +40,4 @@ python -m mathbench list
 python -m pytest tests tasks -q
 ```
 
-接口见 [tasks/CONTRACT.md](tasks/CONTRACT.md)，项目要求见 [AGENTS.md](AGENTS.md)。研究选型见 [research/configuration_selection.md](research/configuration_selection.md)。
+接口见 [tasks/CONTRACT.md](tasks/CONTRACT.md)，项目要求见 [AGENTS.md](AGENTS.md)。计划与状态只更新 [PLAN.md](PLAN.md)。

@@ -25,7 +25,48 @@
       "limitations": [
         "The witness establishes a feasible lower bound, not global optimality.",
         "AlphaEvolve's reported n=11 value above 0.0365 concerns a unit-area equilateral triangle, not the unit square; it has different domain parameters."
-      ]
+      ],
+      "verification": {
+        "task_id": "T014",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T014",
+          "config_id": "T014-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "1/27",
+          "verification_status": "exact",
+          "generation_time": 0.21497340500354767,
+          "verification_time": 0.16492857038974762,
+          "objective_value": "1/27",
+          "details": {
+            "triangles_checked": 165
+          },
+          "eval_time": 0.383570309728384,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t014/human.py",
+        "independent_quantity": {
+          "minimum_triangle_area": "1/27",
+          "triangles": 165
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
+        "snapshot_date": "2026-11-05"
+      }
     },
     "T014-C02": {
       "public_value": "unique real root of 64*A^3 + 80*A^2 + 28*A - 1 = 0 (0.0325988586918196982187640066235154080492419884...)",
@@ -49,7 +90,50 @@
       "limitations": [
         "The local witness interprets the published 30-decimal coordinate literals as exact rationals; it does not encode the source's exact algebraic coordinates.",
         "The witness establishes a feasible lower bound, not global optimality."
-      ]
+      ],
+      "verification": {
+        "task_id": "T014",
+        "status": "conservative_reproduction",
+        "run": {
+          "task_id": "T014",
+          "config_id": "T014-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+          "verification_status": "exact",
+          "generation_time": 0.16483891010284424,
+          "verification_time": 0.16492298990488052,
+          "objective_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+          "details": {
+            "triangles_checked": 220
+          },
+          "eval_time": 0.3337561562657356,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t014/human.py",
+        "independent_quantity": {
+          "minimum_triangle_area": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+          "triangles": 220
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
+        "public_value_approx": 0.0325988586918197,
+        "replay_minus_public": "-3.0001539101993535e-31",
+        "snapshot_date": "2026-11-05"
+      }
     },
     "T014-C03": {
       "public_value": "7/341",
@@ -72,7 +156,48 @@
       "comparison_tolerance": "0; exact rational equality",
       "limitations": [
         "The witness establishes a feasible lower bound, not global optimality."
-      ]
+      ],
+      "verification": {
+        "task_id": "T014",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T014",
+          "config_id": "T014-C03",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "7/341",
+          "verification_status": "exact",
+          "generation_time": 0.16517840698361397,
+          "verification_time": 0.1673881746828556,
+          "objective_value": "7/341",
+          "details": {
+            "triangles_checked": 560
+          },
+          "eval_time": 0.33581633120775223,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t014/human.py",
+        "independent_quantity": {
+          "minimum_triangle_area": "7/341",
+          "triangles": 560
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

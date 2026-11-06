@@ -1,0 +1,11 @@
+{
+  "classification": "ai_assisted_local_search",
+  "status": "reviewed_by_sol",
+  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
+  "independent_quantity": {
+    "minimum_triangle_area": "50336357086449248204323247580805692018611103/1562500000000000000000000000000000000000000000",
+    "triangles": 165
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true
+}

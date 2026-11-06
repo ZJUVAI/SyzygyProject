@@ -92,7 +92,56 @@
         "The public-best statement is limited to the cited and checked finite source set. Stronger absolute-peak public reports at 150, 300, 600, and 800 cells do not match the frozen 208-step configuration.",
         "AlphaEvolve 400-cell score 1.4557 uses the absolute value of the positive maximum, a distinct objective variant; it is excluded. The separate 800-cell one-sided result is also excluded."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T081",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T081",
+          "config_id": "T081-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "6280435861361744576/4160000022692211721",
+          "verification_status": "exact",
+          "generation_time": 0.26574528217315674,
+          "verification_time": 0.41733839362859726,
+          "objective_value": "6280435861361744576/4160000022692211721",
+          "details": {
+            "steps": 208,
+            "coefficient_count": 208,
+            "mass": "2039607811/100000000",
+            "max_abs_convolution": "7548600794905943/5000000000000000",
+            "max_abs_indices": [
+              321
+            ],
+            "normalization": "integral-one normalization; objective is invariant under nonzero scaling",
+            "objective_definition": "416 * max_k(abs(sum_i a_i*a_(k-i))) / (sum_i a_i)^2"
+          },
+          "eval_time": 0.7013038918375969,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t081/data/human_matolcsi_vinuesa.json",
+        "independent_quantity": {
+          "exact_objective": "6280435861361744576/4160000022692211721",
+          "convolution_entries": 415
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed the public208-step MV witness, corrected official AlphaEvolve signed150 construction, and primary bounds ledger listing300/600/800-step certificates. No stronger same208 public witness was located. The original nonnegative208 witness is admissible in the signed class. Local optimization is excluded; status is limited to the checked public-source comparison.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {

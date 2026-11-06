@@ -20,7 +20,48 @@
         "This is the published best-known feasible value in the cited sources, not a proof of global optimality.",
         "The source documents a conjectured Gram matrix and a lower-bound construction; the maximal determinant at order 29 remains uncertified."
       ],
-      "checked_at": "2026-11-05"
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T089",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T089",
+          "config_id": "T089-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 1188957517256767569920,
+          "verification_status": "exact",
+          "generation_time": 0.16500431299209595,
+          "verification_time": 0.1647857390344143,
+          "objective_value": 1188957517256767569920,
+          "details": {
+            "signed_determinant": -1188957517256767569920,
+            "n": 29
+          },
+          "eval_time": 0.33437300100922585,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t089/data/human_order29.json",
+        "independent_quantity": {
+          "absolute_determinant": "1188957517256767569920"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Brent order-29 source gives conjectured optimal Gram determinant (320*7^12*2^28)^2; original construction paper reviewed. Independent exact determinant matches, with no optimality claim.",
+        "snapshot_date": "2026-11-05"
+      }
     }
   },
   "sol_review": {
