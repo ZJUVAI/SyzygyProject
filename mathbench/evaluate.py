@@ -123,6 +123,7 @@ def evaluate_candidate(task_id, program_path, config_id=None, *, strict=False, s
     result["strict"] = strict
     result["budget"] = {"generation_seconds": generation_timeout, "verification_seconds": verification_timeout, "memory_bytes": memory_bytes, "threads": 1}
     result["environment"] = {"python": sys.version.split()[0], "platform": sys.platform,
+                              "memory_limit_enforced": sys.platform != "darwin",
                               "worker_cpu": min(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else None}
     if output_dir is not None:
         try:
