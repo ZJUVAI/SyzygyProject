@@ -1,0 +1,154 @@
+{
+  "best_human": {
+    "value": 5.621320343559642,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "unit_square_side": 1
+    },
+    "url": "https://erich-friedman.github.io/papers/squares/squares.html",
+    "provenance": "Erich Friedman, 1997, Section 3, Figure 9. The published construction family formula gives side (7+3√2)/2. The saved witness was reconstructed from that formula and the stated off-center construction.",
+    "evidence_state": "published construction reconstructed from its explicit formula and independently certified exactly"
+  },
+  "best_public": {
+    "value": 5.621320343559642,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "unit_square_side": 1
+    },
+    "url": "https://squaremath.org/cases/26.html",
+    "evidence_state": "publicly reported and marked verified upper bound; open interval 5.545 ≤ s(26) ≤ 5.62132034355964",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 5.621320343559642,
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "unit_square_side": 1
+    },
+    "witness_file": "data/human_friedman_1997.json",
+    "provenance": "Reconstructed from Friedman's 1997 Section 3 formula for (a,b)=(2,3): a 3×3 block of 45-degree squares, axis-aligned frame squares selected by exact separation checks, and the added column of five squares.",
+    "ai_provenance": "Reconstructed for this benchmark from the published formula; not represented as a verbatim transcription of the diagram.",
+    "actual_value": "(7+3*sqrt(2))/2",
+    "evidence_state": "all 26 squares, exact Q(sqrt(2)) corners, all 325 pair checks, and bounding square independently certified"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T002-C03": {
+      "id": "T002-C03",
+      "best_human": {
+        "value": 5.933885799813026,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 29,
+          "unit_square_side": 1
+        },
+        "url": "https://github.com/BalthasarStrauss/Squares-packing_S-29-_New-Record",
+        "provenance": "Thomas Schadt (2025) found this packing by simulated annealing. The source repository provides 105-decimal center/angle coordinates. The saved benchmark witness was reconstructed from the exact rational corners retained by jlevy/squares and converted to center plus rational half-angle form. This is Schadt, not the earlier Gensane–Ryckelynck packing.",
+        "evidence_state": "public human-computed construction; exact rational witness independently certified here",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 5.93383346267693,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 29,
+          "unit_square_side": 1
+        },
+        "url": "https://squaremath.org/cases/29.html",
+        "evidence_state": "current reported verified bound by Schadt and subsequent optimization; below this reproduced 2025 witness",
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "value": 5.933885799813026,
+        "date_reproduced": "2026-11-04",
+        "parameters": {
+          "n": 29,
+          "unit_square_side": 1
+        },
+        "witness_file": "data/human_schadt_2025.json",
+        "provenance": "Converted the exact rational corner witness witnesses/schadt-n029-2025-rational.yaml from jlevy/squares into center coordinates and rational t=tan(theta/2). The source pose is Schadt’s 2025 simulated-annealing result.",
+        "ai_provenance": "Source describes a human-written C++ simulated-annealing search; no AI assistance is reported.",
+        "actual_value": "2966942899906512939318226046481160904289990651293931822604648091421/500000000000000000000000000000000000000000000000000000000000000000",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "verification_status": "certified"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": "2966942899906512939318226046481160904289990651293931822604648091421/500000000000000000000000000000000000000000000000000000000000000000",
+        "verification_status": "certified",
+        "witness": "reports/witnesses/T002/T002-C03/human/solution.json",
+        "independent_audit": "reports/independent_audit.json",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T002-C04": {
+      "id": "T002-C04",
+      "best_human": {
+        "value": 6.707106781186548,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 38,
+          "unit_square_side": 1
+        },
+        "url": "https://erich-friedman.github.io/papers/squares/squares.html",
+        "provenance": "Friedman DS7 Figure 1 presents Göbel’s diagonal-strip construction, side 6+1/sqrt(2), and n=38.",
+        "evidence_state": "published human formula reconstructed and independently certified",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 6.707106781186548,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 38,
+          "unit_square_side": 1
+        },
+        "url": "https://squaremath.org/cases/38.html",
+        "evidence_state": "reported human construction; case remains open",
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "value": 6.707106781186548,
+        "date_reproduced": "2026-11-04",
+        "parameters": {
+          "n": 38,
+          "unit_square_side": 1
+        },
+        "witness_file": "data/human_gobel_figure1.json",
+        "provenance": "Reconstructed from Göbel’s diagonal-strip family as presented in Friedman DS7, Figure 1. At a=5 the exact count is 38 and the side is 6+sqrt(2)/2. The construction has two triangular staircases, two corner squares, and six 45-degree squares.",
+        "ai_provenance": "Formula-based reconstruction created for this benchmark; not a coordinate transcription of the figure.",
+        "actual_value": "6+1/2*sqrt2",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "verification_status": "certified"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": "6+1/2*sqrt2",
+        "verification_status": "certified",
+        "witness": "reports/witnesses/T002/T002-C04/human/solution.json",
+        "independent_audit": "reports/independent_audit.json",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  }
+}

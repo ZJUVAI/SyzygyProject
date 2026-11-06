@@ -1,0 +1,103 @@
+{
+  "task_id": "T009",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T009-C03",
+      "parameters": {
+        "n": 17,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "direction": "maximize",
+      "human_reference": 0.8916944491515696
+    },
+    {
+      "id": "T009-C04",
+      "parameters": {
+        "n": 19,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "direction": "maximize",
+      "human_reference": 0.8323809277763071
+    }
+  ],
+  "records": {
+    "T009-C03": {
+      "parameters": {
+        "n": 17,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "best_human": {
+        "value": 0.8916944491515696,
+        "date_checked": "2026-11-04",
+        "url": "https://spherical-codes.org/data/3/17",
+        "provenance": "Public coordinates at spherical-codes.org; the n=17 source row cites Danzer (1986).",
+        "evidence_state": "coordinate list archived; score independently recomputed by exact-input interval checker"
+      },
+      "best_public": {
+        "value": 0.8916944491515696,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 17
+        },
+        "url": "https://spherical-codes.org/data/3/17",
+        "provenance": "Same-parameter public feasible construction. No optimality claim.",
+        "evidence_state": "all unordered pairs checked",
+        "origin_type": "human construction as attributed by source table"
+      },
+      "best_reproduced": {
+        "value": 0.8916944491515696,
+        "date_reproduced": "2026-11-04",
+        "witness_file": "data/spherical_code_3_17.txt",
+        "actual_value": 0.8916944491515696,
+        "verification_status": "certified",
+        "pairs_checked": 136,
+        "ai_provenance": "No AI-generated coordinates; public coordinates archived and rescored."
+      },
+      "limitations": [
+        "Rounded decimal coordinates are the exact inputs being scored. Feasible construction only; no proof of global optimality."
+      ]
+    },
+    "T009-C04": {
+      "parameters": {
+        "n": 19,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "best_human": {
+        "value": 0.8323809277763071,
+        "date_checked": "2026-11-04",
+        "url": "https://spherical-codes.org/data/3/19",
+        "provenance": "Public coordinates at spherical-codes.org; the n=19 source row cites Lazić, Šenk and Šeškar (1987).",
+        "evidence_state": "coordinate list archived; score independently recomputed by exact-input interval checker"
+      },
+      "best_public": {
+        "value": 0.8323809277763071,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "n": 19
+        },
+        "url": "https://spherical-codes.org/data/3/19",
+        "provenance": "Same-parameter public feasible construction. No optimality claim.",
+        "evidence_state": "all unordered pairs checked",
+        "origin_type": "human construction as attributed by source table"
+      },
+      "best_reproduced": {
+        "value": 0.8323809277763071,
+        "date_reproduced": "2026-11-04",
+        "witness_file": "data/spherical_code_3_19.txt",
+        "actual_value": 0.8323809277763071,
+        "verification_status": "certified",
+        "pairs_checked": 171,
+        "ai_provenance": "No AI-generated coordinates; public coordinates archived and rescored."
+      },
+      "limitations": [
+        "Rounded decimal coordinates are the exact inputs being scored. Feasible construction only; no proof of global optimality."
+      ]
+    }
+  },
+  "authoritative_records": "records.json:configuration_records"
+}

@@ -1,0 +1,92 @@
+{
+  "task_id": "T044",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T044-C01": {
+      "public_value": "623",
+      "public_source": {
+        "url": "https://cube20.org/golomb/",
+        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
+        "archive": "cube20.org rulers-all-00, 5-999 marks",
+        "checked_at": "2026-11-05",
+        "record_parameters": {
+          "marks": 29
+        },
+        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      },
+      "reproduced_value": "623",
+      "program": "sota.py",
+      "witness": "data/public_29.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
+        "The archive is the cited public source checked for the same-parameter record."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T044-C02": {
+      "public_value": "680",
+      "public_source": {
+        "url": "https://cube20.org/golomb/",
+        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
+        "archive": "cube20.org rulers-all-00, 5-999 marks",
+        "checked_at": "2026-11-05",
+        "record_parameters": {
+          "marks": 30
+        },
+        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      },
+      "reproduced_value": "680",
+      "program": "sota.py",
+      "witness": "data/public_30_32.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
+        "The archive is the cited public source checked for the same-parameter record."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T044-C03": {
+      "public_value": "784",
+      "public_source": {
+        "url": "https://cube20.org/golomb/",
+        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
+        "archive": "cube20.org rulers-all-00, 5-999 marks",
+        "checked_at": "2026-11-05",
+        "record_parameters": {
+          "marks": 32
+        },
+        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      },
+      "reproduced_value": "784",
+      "program": "sota.py",
+      "witness": "data/public_30_32.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
+        "The archive is the cited public source checked for the same-parameter record."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T044-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T044-C02": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T044-C03": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "task_id": "T014",
+  "review_status": "passed_sol",
+  "checked_at": "2026-11-05",
+  "configurations": {
+    "T014-C01": {
+      "public_value": "1/27",
+      "public_source": {
+        "url": "https://math.tejstead.com/heilbronn/square/11/",
+        "data_url": "https://math.tejstead.com/heilbronn/square/11/points.json",
+        "title": "Heilbronn — Square, n = 11 record",
+        "credit": "Michael Goldberg, 1972",
+        "same_parameters": {
+          "n": 11,
+          "domain": "unit square"
+        },
+        "verification": "The source reports exact value 1/27 and exact-arithmetic verification of all 165 triples.",
+        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
+      },
+      "reproduced_value": "1/27",
+      "program": "sota.py",
+      "witness": "human.py",
+      "matches_public_best": true,
+      "comparison_tolerance": "0; exact rational equality",
+      "limitations": [
+        "The witness establishes a feasible lower bound, not global optimality.",
+        "AlphaEvolve's reported n=11 value above 0.0365 concerns a unit-area equilateral triangle, not the unit square; it has different domain parameters."
+      ]
+    },
+    "T014-C02": {
+      "public_value": "unique real root of 64*A^3 + 80*A^2 + 28*A - 1 = 0 (0.0325988586918196982187640066235154080492419884...)",
+      "public_source": {
+        "url": "https://math.tejstead.com/heilbronn/square/12/",
+        "data_url": "https://math.tejstead.com/heilbronn/square/12/points.json",
+        "title": "Heilbronn — Square, n = 12 record",
+        "credit": "F. Comellas and J. L. A. Yebra, December 2001",
+        "same_parameters": {
+          "n": 12,
+          "domain": "unit square"
+        },
+        "verification": "The current record page identifies the exact algebraic value from the published closed-form configuration and reports exact-arithmetic verification of all 220 triples.",
+        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
+      },
+      "reproduced_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+      "program": "sota.py",
+      "witness": "human.py",
+      "matches_public_best": true,
+      "comparison_tolerance": "absolute area difference <= 1e-30; human.py stores the published coordinates as 30-decimal rational literals, and its exact checked score differs from the public algebraic value by about 3.0001539101993535e-31",
+      "limitations": [
+        "The local witness interprets the published 30-decimal coordinate literals as exact rationals; it does not encode the source's exact algebraic coordinates.",
+        "The witness establishes a feasible lower bound, not global optimality."
+      ]
+    },
+    "T014-C03": {
+      "public_value": "7/341",
+      "public_source": {
+        "url": "https://math.tejstead.com/heilbronn/square/16/",
+        "data_url": "https://math.tejstead.com/heilbronn/square/16/points.json",
+        "title": "Heilbronn — Square, n = 16 record",
+        "credit": "Mark Beyleveld, August 2006",
+        "same_parameters": {
+          "n": 16,
+          "domain": "unit square"
+        },
+        "verification": "The source reports rational coordinates, exact value 7/341, and exact-arithmetic verification of all 560 triples.",
+        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
+      },
+      "reproduced_value": "7/341",
+      "program": "sota.py",
+      "witness": "human.py",
+      "matches_public_best": true,
+      "comparison_tolerance": "0; exact rational equality",
+      "limitations": [
+        "The witness establishes a feasible lower bound, not global optimality."
+      ]
+    }
+  },
+  "sol_review": {
+    "T014-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T014-C02": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T014-C03": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

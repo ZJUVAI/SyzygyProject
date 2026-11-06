@@ -1,0 +1,34 @@
+{
+  "task_id": "T035",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T035-C01": {
+      "public_value": "320",
+      "public_source": {
+        "url": "https://houseofgraphs.org/meta-directory/cages",
+        "title": "House of Graphs: Cages",
+        "claim": "n(4,10) ≤ 320; listed as an upper bound from Exoo et al. (2026).",
+        "supporting_paper_url": "https://arxiv.org/abs/2511.07247",
+        "witness_url": "https://github.com/AGT-Kulak/smallRegGirthGraphs/blob/main/genLifts/data/graphs/cage/n320_k4_g10.g6",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "320",
+      "program": "sota.py",
+      "witness": "data/human_graph.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "House of Graphs lists this as a known upper bound; it does not prove n(4,10) = 320.",
+        "The source check covers House of Graphs and the cited paper and author repository, not every public source."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T035-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

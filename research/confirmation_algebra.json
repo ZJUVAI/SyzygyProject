@@ -1,0 +1,1420 @@
+{
+  "title": "Configuration-level confirmation audit: algebra and analysis families",
+  "date": "2026-11-03",
+  "scope": "T073–T100 excluding deleted T091, plus N002,N004–N009",
+  "status_legend": {
+    "confirmed_suitable": "Specific human construction/value and a source-backed non-optimality/open statement inspected. Candidate only; no independent recomputation implied.",
+    "pending": "Insufficient source-level evidence for this configuration.",
+    "excluded": "Configuration known solved or unsuitable.",
+    "recomputed": "Separate yes/no field records an independent calculation of the witness."
+  },
+  "audit_note": "Configuration-level candidate screen for the 34 requested records. “confirmed_suitable” requires a fixed configuration, a public human construction/value, and checked evidence that the cited material does not prove optimality. It does not claim a complete state-of-the-art search. “pending” records have unresolved witness, sharpness, or configuration checks; “excluded” records are solved or unsuitable. Recomputed tracks local witness validation separately.",
+  "records": [
+    {
+      "task_id": "T073",
+      "parameters": {
+        "L": 100
+      },
+      "scalar": "aperiodic energy E=Σ_{k=1}^{L−1} C_k² (equivalently maximize merit factor L²/(2E))",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Militzer, Zamparelli and Beule (1998): length-100 binary sequence, exact energy E=638, merit factor 10000/(2·638)=7.8369905956, PSL=7. The published sequence is in the saved source artifact.",
+        "author": "B. Militzer, M. Zamparelli and D. Beule",
+        "year": "1996",
+        "source_note": "Exact witness and score are independently checked from research/baseline_examples/labs_100_militzer_1996.json."
+      },
+      "current_record": "Not exhaustively audited; the witness is historical and not claimed current.",
+      "open_evidence": "No optimality proof is identified; older source explicitly says its historical sequence was later improved. This is a feasible incumbent, not current best.",
+      "witness_url": "https://militzer.berkeley.edu/sequences.html",
+      "primary_sources": [
+        "https://militzer.berkeley.edu/sequences.html"
+      ],
+      "checks_performed": [
+        "Opened Packebusch–Mertens arXiv record: authors, publication year, exact optima only through N=66.",
+        "Opened Militzer author sequence page: length-100 historical merit-factor construction listed as 7.84; page warns later results improved it.",
+        "Recomputed the exact length-100 energy 638, merit factor 7.8369905956, and PSL 7 from the saved source witness."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Historical feasible incumbent only; the local artifact reproduces energy 638 and merit factor 7.836990595611285. Current-best and optimum status are not surveyed.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1512.02475",
+          "what_was_checked": "Packebusch–Mertens report all optimal sequences through N≤66.",
+          "limitation": "Does not provide open proof status for N=100."
+        },
+        {
+          "url": "https://militzer.berkeley.edu/sequences.html",
+          "what_was_checked": "Human length-100 sequence with historical merit factor 7.84.",
+          "limitation": "Historical result; page explicitly notes later improvements; value rounded."
+        },
+        {
+          "url": "https://greif.geo.berkeley.edu/sequences.html",
+          "what_was_checked": "Author-hosted sequence archive includes the human low-autocorrelation constructions.",
+          "limitation": "Historical archive, not a current record survey."
+        }
+      ]
+    },
+    {
+      "task_id": "T074",
+      "parameters": {
+        "L": 100,
+        "aperiodic_sequence": "published length-100 binary construction"
+      },
+      "scalar": "PSL=max absolute nonzero aperiodic autocorrelation",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Nunn–Cox (2008) report length-100 binary code with aperiodic PSL 5. This is a published human feasible sequence construction, not a proof of optimality.",
+        "author": "Carroll J. Nunn and Gregory E. Coxson",
+        "year": "2008",
+        "source_note": "The primary paper table reports the construction and value; the exact coefficient string was not retrieved in this audit."
+      },
+      "current_record": "Not exhaustively audited; no current frontier claim.",
+      "open_evidence": "The former L=64 configuration is excluded: Leukhin–Potehin report exhaustive minimum PSL sequences through length 68. At L=100, Nunn–Cox give PSL 5; no optimality proof for L=100 was found in the sources checked.",
+      "witness_url": "https://www.sfu.ca/~jed/Research/PSL.html",
+      "primary_sources": [
+        "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "https://arxiv.org/abs/1212.4930"
+      ],
+      "checks_performed": [
+        "Opened primary paper abstracts: exhaustive PSL coverage through 68; 2008 construction table reports PSL=5 for length 100.",
+        "Configuration changed from solved length 64 to 100."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Retrieve the length-100 coefficient row and independently score it before publication; do not claim the value is current.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1212.4930",
+          "what_was_checked": "Leukhin–Potehin abstract states exhaustive minimum PSL results through length 68; this closes L=64.",
+          "limitation": "Does not address length 100."
+        },
+        {
+          "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+          "what_was_checked": "Nunn–Cox 2008 primary paper reports PSL 5 for lengths 83–105, including 100.",
+          "limitation": "Sequence coefficients were not extracted; current best status not audited."
+        }
+      ]
+    },
+    {
+      "task_id": "T075",
+      "parameters": {
+        "L": 101,
+        "period": "prime length; Legendre binary sequence with s_0=1"
+      },
+      "scalar": "Σ_{k=1}^{L−1} C(k)^2",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Legendre binary sequence at prime p=101: s_0=1 and s_i=χ(i) for i≠0. Since 101≡1 (mod 4), its periodic correlations are C(k)=−1+2χ(k), so the energy is 5(101−1)=500.",
+        "author": "Classical Legendre sequence construction",
+        "year": "classical",
+        "source_note": "Explicit formula and score are mathematically checkable; a primary source for this exact L=101 construction was not located in this audit."
+      },
+      "current_record": "No current-record survey; this is an explicit classical construction witness.",
+      "open_evidence": "The Legendre construction gives a feasible energy 500 at L=101. The checked sources do not establish the status of this exact finite configuration; no inference of openness is made from the absence of a proof in this audit.",
+      "witness_url": "https://arxiv.org/abs/1401.2530",
+      "primary_sources": [
+        "https://arxiv.org/abs/1401.2530",
+        "https://arxiv.org/abs/1411.4340",
+        "https://doi.org/10.1016/j.tcs.2009.02.021"
+      ],
+      "checks_performed": [
+        {
+          "url": "https://arxiv.org/abs/1401.2530",
+          "what_was_checked": "Yan, Chen and Li 2014 primary paper presents general binary sequence constructions with low/optimal autocorrelation.",
+          "limitation": "This does not establish optimality or current-record status for length 101."
+        },
+        "No row-specific optimum/status source was verified; status remains pending."
+      ],
+      "status": "pending",
+      "remaining": "Locate a primary source for this exact construction and check whether length-101 energy 500 is known optimal or improved.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1401.2530",
+          "what_was_checked": "Yan, Chen and Li 2014 primary paper presents general binary sequence constructions with low/optimal autocorrelation.",
+          "limitation": "This does not establish optimality or current-record status for length 101."
+        }
+      ]
+    },
+    {
+      "task_id": "T076",
+      "parameters": {
+        "L": 100,
+        "sequence": "first 100 signs from the order-7 LFSR b_{i+7}=b_{i+3} xor b_i, seed (1,0,0,0,0,0,0); map 0→+1, 1→−1"
+      },
+      "scalar": "max_{k≠0}|Σ_i s_i s_{i+k mod L}|",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "A classical order-7 linear-feedback sequence, truncated to 100 signs, gives exact periodic PSL 20 (periodic correlations at shifts 1..99 are directly computable integers).",
+        "author": "Order-7 LFSR recurrence; length-100 truncation and score computed for this audit",
+        "year": "classical recurrence; score computed 2026",
+        "source_note": "The recurrence is a classical human construction, but this exact truncation and its score were generated/recomputed in this audit and were not located as a published length-100 human baseline."
+      },
+      "current_record": "Not exhaustively audited; do not claim current best.",
+      "open_evidence": "The former L=101 Legendre PSL=3 is optimal and closed. The replacement L=100 witness is a locally specified truncation with computed PSL 20; this audit did not locate a published human baseline or evidence that the exact length-100 optimization row is unsolved.",
+      "witness_url": "https://arxiv.org/abs/1401.2530",
+      "primary_sources": [
+        "https://arxiv.org/abs/2104.10477"
+      ],
+      "checks_performed": [
+        "Computed the finite recurrence witness and exact periodic correlations: PSL=20.",
+        "Applied the parent reviewer’s congruence/sum identity: at odd L=101, PSL≤1 would force all nonzero correlations to be +1 and (Σs)^2=201, impossible. Thus Legendre PSL 3 is optimal and excluded."
+      ],
+      "status": "pending",
+      "remaining": "Find a published human length-100 baseline and row-specific optimum/status evidence before confirming suitability.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2104.10477",
+          "what_was_checked": "Dimitrov–Baitcheva–Nikolov 2021 report low-sidelobe binary constructions, including sequence lengths 106–300.",
+          "limitation": "The chosen L=100 witness is generated by the stated classical LFSR recurrence, not copied from their tables; no optimum claim for L=100."
+        },
+        {
+          "url": "https://arxiv.org/abs/2104.10477",
+          "what_was_checked": "Human low-sidelobe binary sequence literature, supporting the use of explicit LFSR-style human constructions.",
+          "limitation": "The exact length-100 recurrence witness is stated and scored in this audit, not copied from that paper; it does not establish optimum status."
+        }
+      ]
+    },
+    {
+      "task_id": "T077",
+      "parameters": {
+        "L": 64
+      },
+      "scalar": "max_{|z|=1}|P(z)|/sqrt(L)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Define P₀=Q₀=1 and Pₙ₊₁=Pₙ+z^(2^n)Qₙ, Qₙ₊₁=Pₙ−z^(2^n)Qₙ. Then P₆ has 64 coefficients in {±1}; the identity |P₆|²+|Q₆|²=128 yields the certified normalized upper bound ||P₆||∞/√64≤√2. This is an upper bound for the explicit witness, not its exact score or the minimum.",
+        "author": "Rudin–Shapiro recursion; identity stated in Balister et al.",
+        "year": "classical; paper 2020",
+        "source_note": "This is a certified construction upper bound, not an exact evaluation of the witness supremum or an optimum claim."
+      },
+      "current_record": "No exact minimum or latest finite-length record claimed.",
+      "open_evidence": "The AlphaEvolve problem remains a construction challenge. Balister et al. prove flat Littlewood polynomials exist for every degree; the cited theorem does not settle the finite degree-63 minimum. The length-64 Rudin–Shapiro witness is an explicit feasible baseline.",
+      "witness_url": "https://annals.math.princeton.edu/wp-content/uploads/annals-v192-n3-p06-s.pdf",
+      "primary_sources": [
+        "https://annals.math.princeton.edu/wp-content/uploads/annals-v192-n3-p06-s.pdf",
+        "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/28.html"
+      ],
+      "checks_performed": [
+        "Used the explicit Rudin–Shapiro recursion and identity |P₆|²+|Q₆|²=128 to give a certified upper bound for the witness.",
+        "Checked Balister et al. theorem: existence for all degrees, not optimality of the fixed degree-63 minimum.",
+        "The reported number √2 remains a certified upper bound, not an exact computed supremum."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "If an exact score is needed, compute the maximum modulus of this specific polynomial. This is not required for the reported certified upper bound.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://annals.math.princeton.edu/wp-content/uploads/annals-v192-n3-p06-s.pdf",
+          "what_was_checked": "Proposition 4(a) gives |P_t(z)|²+|Q_t(z)|²=2^(t+1) on |z|=1; recursion defines the length-64 construction.",
+          "limitation": "This gives a certified upper bound, not the exact supremum or finite-size optimum."
+        },
+        {
+          "url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/28.html",
+          "what_was_checked": "Original problem definition and fixed-length search framing.",
+          "limitation": "Does not certify an optimum."
+        }
+      ]
+    },
+    {
+      "task_id": "T078",
+      "parameters": {
+        "L": 63
+      },
+      "scalar": "min_{|z|=1}|P(z)|/sqrt(L)",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "Littlewood 的平坦多项式问题、Odlyzko (2018) 数值构造、Balister et al. 的 Flat Littlewood Polynomials 提供人类基线来源；具体 L 的系数和严格最小模尚须定位。",
+        "author": "Balister et al.; Odlyzko",
+        "year": "2019; 2018",
+        "source_note": "Catalog summary only; exact author/year must be extracted from the linked primary source before acceptance."
+      },
+      "current_record": "Not required for this relaxed screen; no claim that this is the latest record.",
+      "open_evidence": "No primary-source check completed for a specific configuration; do not treat as suitable yet.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/28.html",
+      "primary_sources": [
+        "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/28.html",
+        "https://arxiv.org/abs/1907.09464"
+      ],
+      "checks_performed": [
+        "Compared candidate wording and source leads with research/open_algebra_revision.md, research/mvp_algebra_audit.md, and discovery_candidates_v2.json.",
+        "Did not retrieve and independently score a full witness for this configuration.",
+        "Did not find a proof of optimality or a primary-source statement establishing this exact configuration remains open.",
+        "Reviewed saved primary source extract or abstract; fixed-configuration witness/value remains unverified, so status stays pending."
+      ],
+      "status": "pending",
+      "remaining": "Need a concrete open parameter, published numeric witness, and explicit check that the cited source does not prove optimality.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1907.09464",
+          "what_was_checked": "Balister et al. prove existence of polynomials with a positive uniform lower modulus for all degrees.",
+          "limitation": "This existence theorem does not provide a concrete coefficient vector and certified exact minimum modulus for length 63."
+        }
+      ]
+    },
+    {
+      "task_id": "T079",
+      "parameters": {
+        "steps": 208,
+        "support": [
+          "-1/4",
+          "1/4"
+        ],
+        "nonnegative": true
+      },
+      "scalar": "minimize ||f*f||∞ for nonnegative f",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": 1.5097201507458786,
+        "author": "Mate Matolcsi and Carlos Vinuesa",
+        "year": 2009,
+        "source_note": "Printed appendix coefficients rationalized and independently recomputed; not claimed latest."
+      },
+      "current_record": "No latest record claimed; this is the verified historical witness score.",
+      "open_evidence": "Matolcsi–Vinuesa present this as a computational construction, not an optimality theorem; exact witness score 1.5097201507458786. Later human/AI results may improve it.",
+      "witness_url": "https://arxiv.org/pdf/0907.1379",
+      "primary_sources": [
+        "https://arxiv.org/pdf/0907.1379"
+      ],
+      "checks_performed": [
+        "Extracted explicit appendix coefficients from primary PDF",
+        "Confirmed coefficient count and sign constraints",
+        "Recomputed all discrete convolution coefficients with exact rational arithmetic",
+        "Computed continuous piecewise-linear convolution extremum; AC2 integral uses exact quadratic integration"
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirm exact source equation/normalization and keep latest frontier separate.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/pdf/0907.1379",
+          "what_was_checked": "Appendix witness for T079; coefficients extracted and objective recomputed with exact rational arithmetic.",
+          "limitation": "Rationalized printed decimal coefficients; not current record."
+        }
+      ]
+    },
+    {
+      "task_id": "T080",
+      "parameters": {
+        "steps": 20,
+        "support": [
+          "-1/4",
+          "1/4"
+        ],
+        "nonnegative": true
+      },
+      "scalar": "maximize ||f*f||₂²/(||f*f||₁ ||f*f||∞)",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": 0.8892261730897966,
+        "author": "Mate Matolcsi and Carlos Vinuesa",
+        "year": 2009,
+        "source_note": "Printed appendix coefficients rationalized and independently recomputed; not claimed latest."
+      },
+      "current_record": "No latest record claimed; this is the verified historical witness score.",
+      "open_evidence": "Authors state they did not make extensive efforts to maximize and give this as a counterexample, not an optimum.",
+      "witness_url": "https://arxiv.org/pdf/0907.1379",
+      "primary_sources": [
+        "https://arxiv.org/pdf/0907.1379"
+      ],
+      "checks_performed": [
+        "Extracted explicit appendix coefficients from primary PDF",
+        "Confirmed coefficient count and sign constraints",
+        "Recomputed all discrete convolution coefficients with exact rational arithmetic",
+        "Computed continuous piecewise-linear convolution extremum; AC2 integral uses exact quadratic integration"
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Keep the recomputed .8892261730897966, not the unrelated later .9015 catalog value.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/pdf/0907.1379",
+          "what_was_checked": "Appendix witness for T080; coefficients extracted and objective recomputed with exact rational arithmetic.",
+          "limitation": "Rationalized printed decimal coefficients; not current record."
+        }
+      ]
+    },
+    {
+      "task_id": "T081",
+      "parameters": {
+        "steps": 150,
+        "support": [
+          "-1/4",
+          "1/4"
+        ],
+        "nonnegative": false
+      },
+      "scalar": "minimize max_t |(f*f)(t)|",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Signed n=150 witness has positive maximum 1.458105685768 and negative minimum −2.426895802097; under the task max-absolute objective its score is 2.426895802097. A separate nonnegative human witness scores 1.509720150746.",
+        "author": "Mate Matolcsi and Carlos Vinuesa",
+        "year": 2009,
+        "source_note": "Printed appendix coefficients rationalized and independently recomputed; not claimed latest."
+      },
+      "current_record": "No latest record claimed; this is the verified historical witness score.",
+      "open_evidence": "The source gives constructions only, no optimality proof. Critical correction: 1.4581 is a one-sided positive peak, not the maximum absolute convolution.",
+      "witness_url": "https://arxiv.org/pdf/0907.1379",
+      "primary_sources": [
+        "https://arxiv.org/pdf/0907.1379"
+      ],
+      "checks_performed": [
+        "Extracted explicit appendix coefficients from primary PDF",
+        "Confirmed coefficient count and sign constraints",
+        "Recomputed all discrete convolution coefficients with exact rational arithmetic",
+        "Computed continuous piecewise-linear convolution extremum; AC2 integral uses exact quadratic integration"
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Freeze whether negative functions are allowed; if allowed, score max absolute value 2.426895802097 for this witness.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/pdf/0907.1379",
+          "what_was_checked": "Appendix witness for T081; coefficients extracted and objective recomputed with exact rational arithmetic.",
+          "limitation": "This is the signed n=150 witness. Its max-absolute score is 2.426895802097; the positive one-sided maximum 1.458105685768 is not the task score."
+        }
+      ]
+    },
+    {
+      "task_id": "T082",
+      "parameters": {
+        "steps": 51,
+        "support": "[0,2]",
+        "range": "0≤f≤1",
+        "integral": 1
+      },
+      "scalar": "minimize sup_t ∫ f(x)(1−f(x+t)) dx (support intersection)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Haugland (2016): symmetric 51-step function gives upper bound 0.3809268534330870 for the limiting constant.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "Haugland presents it as an upper bound; later bounds do not determine the constant.",
+      "witness_url": "https://arxiv.org/abs/1609.08000",
+      "primary_sources": [
+        "https://arxiv.org/abs/1609.08000"
+      ],
+      "checks_performed": [
+        "Opened Haugland arXiv abstract, which identifies the 2016 paper and reports the improved upper bound 0.380926...",
+        "Inspected research/baseline_examples/recomputed_examples.json: exact rational 51-step witness, exact rational all-shift maximum 64757565083624785688821235069923/170000000000000000000000000000000 = 0.38092685343308696."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Already recomputed in the local audit; retain the note that this is a rationalized version of the printed decimals.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/html/1609.08000",
+          "what_was_checked": "Haugland 2016 source and 51-step upper-bound witness.",
+          "limitation": "Coefficients in the prior recomputation are rationalized from the printed decimals; score is verified for that rationalized witness."
+        },
+        {
+          "url": "research/baseline_examples/recomputed_examples.json",
+          "what_was_checked": "Exact rational all-shift cross-correlation for the rationalized 51-bin witness.",
+          "limitation": "Local repository artifact, not Haugland original machine file."
+        }
+      ]
+    },
+    {
+      "task_id": "T083",
+      "parameters": {
+        "shift_interval": "[0,1]",
+        "construction": "step-function example induced by the difference basis {0,1,4,6}",
+        "normalization": "L1 mass 1"
+      },
+      "scalar": "min_{0<=t<=1} ∫f(x)f(x+t)dx / ||f||_1²",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "Barnard–Steinerberger/Kravitz difference-basis construction gives min_{0≤t≤1}∫f(x)f(x+t)dx=3/8 for the step-function example induced by the ruler {0,1,4,6}. This exceeds the older 0.37 example.",
+        "author": "Richard C. Barnard and Stefan Steinerberger; discrete-to-continuous construction described by Noah Kravitz",
+        "year": "2020",
+        "source_note": "The exact step-function scaling must be taken from Kravitz Theorem 3.1; the primary paper abstract confirms the difference-basis correspondence but not the 3/8 row."
+      },
+      "current_record": "No frontier claim; a 2026 exploratory source lists stronger AI/computational construction, which is outside a human-only baseline.",
+      "open_evidence": "The cited papers give explicit feasible constructions, not an exact sharp constant. Kravitz relates difference bases to this continuous objective. A later source lists a larger 2026 step-function value; do not claim 3/8 is current.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/6.html",
+      "primary_sources": [
+        "https://arxiv.org/abs/1903.08731",
+        "https://arxiv.org/abs/2004.06611"
+      ],
+      "checks_performed": [
+        "Searched the 2026 maintained problem page: its notes give the ruler {0,1,4,6} construction with value 3/8 and identify the later 2026 computational value separately.",
+        "Opened both cited primary arXiv abstracts; they support the problem and difference-basis connection, but the exact finite step function remains to retrieve."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Retrieve the exact step-function expression and verify its L1 normalization before freezing; exclude 2026 AI-derived construction from the human baseline column.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1903.08731",
+          "what_was_checked": "Barnard–Steinerberger state the min-shift autocorrelation problem and its explicit difference-basis construction context.",
+          "limitation": "Abstract gives the upper-bound formulation but not the exact ruler step-function expression."
+        },
+        {
+          "url": "https://arxiv.org/abs/2004.06611",
+          "what_was_checked": "Kravitz proves the dual link between generalized difference sets and nonnegative autocorrelation integrals.",
+          "limitation": "Abstract does not display the {0,1,4,6} step-function calculation."
+        }
+      ]
+    },
+    {
+      "task_id": "T084",
+      "parameters": {
+        "dimension": 1,
+        "Fourier_transform": "Cohn–Gonçalves convention"
+      },
+      "scalar": "minimize A(f)A(f̂), an upper bound on the sharp constant",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Gonçalves–Oliveira e Silva–Steinerberger (2016), Theorem 2 and §4.2: f=Σ_{n=0}^3 αₙH_{4n}(√(2π)x)e^(−πx²), with α₀=−113/100, α₁=1/25, α₂=1/3240, α₃=(−α₀−12α₁−1680α₂)/665280, is self-Fourier and gives A(f)A(f̂)≤0.353 (largest root ≈0.59354). The paper also proves 0.2025≤C and shows the upper bound is not sharp.",
+        "author": "Felipe Gonçalves, Diogo Oliveira e Silva, Stefan Steinerberger",
+        "year": "2016",
+        "source_note": "Explicit finite Hermite formula and published bound; coefficients and bound are given in the primary paper."
+      },
+      "current_record": "A later Cohn–Gonçalves human upper bound 0.32831 is listed by the original problem page; this audit uses the fully retrieved 2016 explicit construction as baseline and makes no current-record claim.",
+      "open_evidence": "The 2016 primary theorem proves 0.2025≤C and proves 0.353 cannot be the sharp lower constant; therefore the exact sharp constant is strictly below the feasible upper bound and remains undetermined by that result. The later 0.32831 improves the human upper bound, but is likewise not the exact constant.",
+      "witness_url": "https://arxiv.org/html/1602.03366",
+      "primary_sources": [
+        "https://arxiv.org/html/1602.03366",
+        "https://arxiv.org/abs/1712.04438",
+        "https://raw.githubusercontent.com/google-deepmind/alphaevolve_repository_of_problems/main/problems/11.html"
+      ],
+      "checks_performed": [
+        "Read Theorem 2 and §4.2 of the 2016 primary paper.",
+        "Copied the explicit coefficients and checked the source’s largest-root and product bound; the function is a finite Hermite sum and self-Fourier.",
+        "Corrected previous source mismatch: arXiv:1602.03366 is one-dimensional and directly provides the human bound 0.353; arXiv:1712.04438 is not relied on for this baseline."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "For a stronger human baseline use Cohn–Gonçalves 0.32831 after locating and checking its full construction; current suitable baseline is the exact 2016 published example.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/html/1602.03366",
+          "what_was_checked": "Theorem 2 states lower bound 0.2025 and upper example 0.353; §4.2 gives explicit Hermite coefficients, self-Fourier property and largest root ≈0.59354.",
+          "limitation": "This is not the strongest known human upper bound and not an exact solution."
+        },
+        {
+          "url": "https://arxiv.org/abs/1712.04438",
+          "what_was_checked": "Cohn–Gonçalves primary source associated with later 0.32831 bound, as listed on problem page.",
+          "limitation": "Full explicit construction was not retrieved in this pass."
+        }
+      ]
+    },
+    {
+      "task_id": "T085",
+      "parameters": {
+        "dimension": 3,
+        "bound_type": "Cohn–Elkies radial LP"
+      },
+      "scalar": "Normalized linear-programming upper bound C(d)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Cohn–Elkies (2003), Table 3, dimension 3: the radial LP gives center-density upper bound 0.18616 (packing density ≈0.7797). The FCC packing has density 0.7404804897. The published LP certificate uses a polynomial times Gaussian with m=5 forced roots; exact recipe is in Tables 3–4 and the paper says rational arithmetic and Sturm checks certify it.",
+        "author": "Henry Cohn and Noam Elkies",
+        "year": "2003",
+        "source_note": "Primary-paper numerical certificate; published objective and recipe/tables are specified, with rigorous sign verification described."
+      },
+      "current_record": "The d=3 packing optimum itself is FCC at density 0.7404804897; the Cohn–Elkies LP bound 0.7797 is an upper bound, not a packing density.",
+      "open_evidence": "Cohn–Elkies Table 3 provides a concrete d=3 LP feasible bound. The 3D packing is solved by Hales, but the LP bound is not sharp. Rupert Li (2025) proves the Cohn–Elkies LP cannot come close to the known d=3 packing density, so this row concerns optimizing the LP method, not solving packing.",
+      "witness_url": "https://dash.harvard.edu/server/api/core/bitstreams/7312037c-5608-6bd4-e053-0100007fdf3b/content",
+      "primary_sources": [
+        "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/13.html",
+        "https://arxiv.org/abs/math/0110009",
+        "https://arxiv.org/abs/1603.04246",
+        "https://arxiv.org/abs/1603.06518"
+      ],
+      "checks_performed": [
+        "Read Cohn–Elkies Table 3: dimension 3 center-density bound 0.18616; Table 4 gives forced-root parameters.",
+        "Checked the paper’s certificate discussion: rational arithmetic and Sturm root counts establish the stated bound rigorously.",
+        "Checked 2025 primary paper by Rupert Li: CE LP cannot attain the packing density in dimension 3; distinguish this method optimization from solved FCC packing."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Do not present 0.7797 as the packing optimum. If the task needs a reproducible certificate, transcribe Table 4 d=3 roots and use the paper’s exact-rational/Sturm verification procedure.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://dash.harvard.edu/server/api/core/bitstreams/7312037c-5608-6bd4-e053-0100007fdf3b/content",
+          "what_was_checked": "Cohn–Elkies Tables 3–4: dimension 3 center-density upper bound 0.18616 and parameters for the certificate; paper says exact rational arithmetic and Sturm theorem certify signs.",
+          "limitation": "The printed bound is an LP feasible upper bound and is not the exact optimal packing density."
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S0001870824005590",
+          "what_was_checked": "Rupert Li (2025) gives dual bounds proving Cohn–Elkies LP cannot solve d=3 packing.",
+          "limitation": "Does not determine the exact optimum value of the Cohn–Elkies LP."
+        }
+      ]
+    },
+    {
+      "task_id": "T086",
+      "parameters": {
+        "j": 1,
+        "m": 2,
+        "p": 6,
+        "q": 2,
+        "r": 2,
+        "theta": 0.6666666666666666,
+        "dimension": 1
+      },
+      "scalar": "||D^j u||_p / (||D^m u||_r^θ ||u||_q^(1−θ)) for the submitted u",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "No row-specific human witness and scalar value verified for this admissible exponent tuple. The 2025 primary paper discusses classical inequalities generally; the selected sech profile is a possible explicit test function, but its score has not been computed here.",
+        "author": null,
+        "year": null,
+        "source_note": "Catalog summary only; exact author/year must be extracted from the linked primary source before acceptance."
+      },
+      "current_record": "Not independently reconciled to a current authoritative source for this exact parameter choice.",
+      "open_evidence": "The former tuple (j=1,m=2,p=2,q=6,r=2,θ=1/4) violates the one-dimensional scaling relation and the condition j/m≤θ. It is invalid and removed. The replacement (1,2,6,2,2,2/3) satisfies 1/p=j+θ(1/r−m)+(1−θ)/q and θ≥j/m. No exact matching sharp-constant theorem was verified; keep pending.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/15.html",
+      "primary_sources": [
+        "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/15.html",
+        "https://arxiv.org/abs/2511.02864",
+        "https://arxiv.org/abs/1611.00734"
+      ],
+      "checks_performed": [
+        "Recomputed the scaling relation: 1/6=1+(2/3)(1/2−2)+(1/3)(1/2).",
+        "Checked θ=2/3≥j/m=1/2.",
+        "Opened AlphaEvolve main paper abstract; it does not specify this tuple or its sharp constant."
+      ],
+      "status": "pending",
+      "remaining": "Check whether the admissible (p,q,r)=(6,2,2), θ=2/3 sharp constant is known, including Del Pino–Dolbeault families. If a sharp theorem settles this exact tuple, exclude it; otherwise retrieve a concrete human test function and score.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2511.02864",
+          "what_was_checked": "Primary paper metadata and abstract confirm the paper studies mathematical construction problems.",
+          "limitation": "Abstract does not state the row-specific exponents or sharp constant; specific page source is not rendered by the browser."
+        },
+        {
+          "url": "https://arxiv.org/abs/1611.00734",
+          "what_was_checked": "Primary paper reviews L2 Gagliardo–Nirenberg constants and maximizers for selected exponent families.",
+          "limitation": "No verification yet that its sharp families include the replacement (6,2,2), θ=2/3 tuple."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google-deepmind/alphaevolve_repository_of_problems/main/problems/15.html",
+          "what_was_checked": "Saved source extract states the exact scale relation and theta constraint.",
+          "limitation": "Its prior fixed tuple in this audit violated both; replacement tuple is valid but no sharp constant has been matched."
+        }
+      ]
+    },
+    {
+      "task_id": "T087",
+      "parameters": {
+        "sphere_dimension": 2,
+        "harmonic_degree": 6,
+        "p": 4
+      },
+      "scalar": "||u||_p/||u||_2 for the submitted spherical harmonic",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "A concrete test function is the degree-6 zonal harmonic u(x)=P₆(x₃) on S², where P₆(t)=(231t⁶−315t⁴+105t²−5)/16. Under normalized surface measure, ||u||₂²=1/13 and ||u||₄⁴=431667/26558675; these provide a feasible lower bound for the maximum ratio. This local integral calculation is not a published best-value claim.",
+        "author": "Explicit zonal harmonic; baseline calculated in this audit",
+        "year": "2026",
+        "source_note": "Analytic candidate and integral values; verify independently before publication."
+      },
+      "current_record": "Not required for this relaxed screen; no claim that this is the latest record.",
+      "open_evidence": "The concrete harmonic baseline is available, but the fixed (dimension 2, degree 6, p=4) row has not been checked against the cited primary paper for an exact optimum or a newer human bound; status remains pending.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/57.html",
+      "primary_sources": [
+        "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/57.html",
+        "https://arxiv.org/abs/2511.02864"
+      ],
+      "checks_performed": [
+        "Compared candidate wording and source leads with research/open_algebra_revision.md, research/mvp_algebra_audit.md, and discovery_candidates_v2.json.",
+        "Did not retrieve and independently score a full witness for this configuration.",
+        "Did not find a proof of optimality or a primary-source statement establishing this exact configuration remains open.",
+        "Reviewed saved primary source extract or abstract; fixed-configuration witness/value remains unverified, so status stays pending."
+      ],
+      "status": "pending",
+      "remaining": "Check the primary harmonic extremal paper and calculate the exact ratio from the displayed moments; determine whether this finite row is already solved.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2511.02864",
+          "what_was_checked": "The problem page identifies the spherical-harmonic extremal task; the AlphaEvolve paper is a later comparison source.",
+          "limitation": "No exact human degree-6, p=4 coefficient vector or score was retrieved."
+        }
+      ]
+    },
+    {
+      "task_id": "T088",
+      "parameters": {
+        "curve_length": "2π",
+        "curve": "strictly convex closed oval"
+      },
+      "scalar": "λ0(Hγ)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "The circle has κ≡1 on length 2π, so the operator is −d²/ds²+1 and its lowest periodic eigenvalue is exactly 1. Benguria–Loss (2004) use the circle as an equality case for the upper bound; later work reports a lower bound below 1.",
+        "author": "Benguria and Loss",
+        "year": "2004",
+        "source_note": "Catalog summary only; exact author/year must be extracted from the linked primary source before acceptance."
+      },
+      "current_record": "No current-record claim; cited literature leaves a gap between the lower bound and the circle upper bound.",
+      "open_evidence": "The circle gives C≤1. Linde (2015) is cited for a lower bound below 1; no equality/optimality theorem for all ovals was identified.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/19.html",
+      "primary_sources": [
+        "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/19.html",
+        "https://doi.org/10.1007/s00023-004-0186-8",
+        "https://arxiv.org/abs/2511.02864"
+      ],
+      "checks_performed": [
+        "Compared candidate wording and source leads with research/open_algebra_revision.md, research/mvp_algebra_audit.md, and discovery_candidates_v2.json.",
+        "Did not retrieve and independently score a full witness for this configuration.",
+        "Did not find a proof of optimality or a primary-source statement establishing this exact configuration remains open.",
+        "Checked saved problem page 19 and the primary source citations; the circle is an explicit feasible configuration, while the reported lower bound is below its value."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Need a concrete open parameter, published numeric witness, and explicit check that the cited source does not prove optimality.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://doi.org/10.1007/s00023-004-0186-8",
+          "what_was_checked": "Primary Benguria–Loss paper citation for the circle/equality family.",
+          "limitation": "The tool did not expose the DOI page text; source-level details need full-text retrieval."
+        },
+        {
+          "url": "https://arxiv.org/abs/2511.02864",
+          "what_was_checked": "Primary AlphaEvolve paper as a later comparison source for the oval bounds.",
+          "limitation": "AI result provenance must remain separate from human construction."
+        }
+      ]
+    },
+    {
+      "task_id": "T089",
+      "parameters": {
+        "n": 29,
+        "entries": "±1"
+      },
+      "scalar": "maximize |det A|",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "Solomon/Orrick construction: |det A|=320·7^12·2^28. Brent hosts compressed/full Gram matrix and 4,918 known H-classes.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "Brent explicitly calls the Gram matrix conjecturally D-optimal; no proof of global optimality is claimed. High risk: record may already be optimal.",
+      "witness_url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+      "primary_sources": [
+        "https://maths-people.anu.edu.au/~brent/maxdet/order29/"
+      ],
+      "checks_performed": [
+        "Opened Brent’s primary order-29 page; it says conjectured optimal Gram matrix, gives determinant, and links the full matrix and 4,918 known H-classes.",
+        "The source explicitly describes optimality as conjectural, so this is a high-risk feasible-record task."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Candidate only, high-risk. Suitable only if the goal is to improve a feasible record; not a likely breakthrough.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+          "what_was_checked": "Solomon/Orrick construction: |det A|=320·7^12·2^28. Brent hosts compressed/full Gram matrix and 4,918 known H-classes.",
+          "limitation": "Source page inspected; full witness not downloaded/recomputed unless stated."
+        }
+      ]
+    },
+    {
+      "task_id": "T090",
+      "parameters": {
+        "dimension": 9,
+        "lattice_class": "Bravais lattices"
+      },
+      "scalar": "Packing density (equivalently inverse covolume at fixed minimum distance)",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "Kallus (2013), Table 1: dimension-9 lattice Λ₉ has normalized cell volume 2⁹v=16√2. For radius-1/2 spheres this gives density Δ₉=(π^(9/2)/Γ(11/2))/(16√2). The paper reports de novo numerical rediscovery, not a proof of optimality.",
+        "author": "Minkowski; Viazovska et al. for exact dimensions",
+        "year": "1896; 2017",
+        "source_note": "Catalog summary only; exact author/year must be extracted from the linked primary source before acceptance."
+      },
+      "current_record": "Kallus labels Λ₉ the densest known lattice and gives cell volume; this is not an exhaustive 2026 current-record audit.",
+      "open_evidence": "The primary paper states lattice optima are known through d=8 and d=24, and that d>8 enumeration becomes impractical. Its d=9 result is a numerical construction.",
+      "witness_url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/",
+      "primary_sources": [
+        "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/",
+        "https://arxiv.org/abs/1603.04246",
+        "https://arxiv.org/abs/1603.06518"
+      ],
+      "checks_performed": [
+        "Read Kallus v2 full HTML, lines 31–38 and Table 1 at lines 62–78: d=9 Λ9, normalized cell volume 16√2, densest known, numerical discovery.",
+        "The same source states exact lattice optima are known through d=8 and d=24, not d=9."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Retrieve the Λ₉ Gram/generator matrix from the cited lattice catalogue before freezing a verifier witness; density formula follows from the published cell volume.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/html/1305.1310v2",
+          "what_was_checked": "Full paper: identifies Λ₉, cell volume and densest-known status; states lattice optima known through dimensions 8 and 24.",
+          "limitation": "The HTML table gives no generator matrix; the source itself does not claim proof of d=9 optimality."
+        }
+      ]
+    },
+    {
+      "task_id": "T092",
+      "parameters": {
+        "degree": 8,
+        "roots": "8th roots of unity",
+        "weights": "one-hot convex weight at a root"
+      },
+      "scalar": "min_j |Σ_k l_k z_k−w_j| for the submitted polynomial and weights",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "For P(z)=z⁸−1, choose the convex combination equal to a root. Its nearest critical point is 0, at distance 1. Thus C(8)≥1; this is an explicit human lower-bound witness.",
+        "author": "Classical polynomial z⁸−1",
+        "year": "elementary construction",
+        "source_note": "Schmeisser’s C(n)=1 conjecture remains a conjecture in the checked sources; the example only proves the lower bound."
+      },
+      "current_record": "Not independently reconciled to a current authoritative source for this exact parameter choice.",
+      "open_evidence": "The fixed row has a feasible lower-bound construction C(8)≥1. The universal upper bound C(8)≤1 was not verified; the source literature treats C(n)=1 as Schmeisser’s conjecture.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/21.html",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/google-deepmind/alphaevolve_repository_of_problems/main/problems/21.html",
+        "https://arxiv.org/abs/2601.16102"
+      ],
+      "checks_performed": [
+        "Compared candidate wording and source leads with research/open_algebra_revision.md, research/mvp_algebra_audit.md, and discovery_candidates_v2.json.",
+        "Did not retrieve and independently score a full witness for this configuration.",
+        "Did not find a proof of optimality or a primary-source statement establishing this exact configuration remains open.",
+        "Reviewed saved primary source extract or abstract; fixed-configuration witness/value remains unverified, so status stays pending."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Check whether a post-2026 proof settles C(8)≤1 before release; do not treat the conjectured value as a verified optimum.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://raw.githubusercontent.com/google-deepmind/alphaevolve_repository_of_problems/main/problems/21.html",
+          "what_was_checked": "Saved task page gives the exact convex-combination problem and labels C(n)=1 as Schmeisser’s conjecture in the research catalog.",
+          "limitation": "Page itself does not resolve the conjecture."
+        },
+        {
+          "url": "https://arxiv.org/abs/2601.16102",
+          "what_was_checked": "2026 primary paper gives only a partial result toward Schmeisser’s conjecture, not a general resolution.",
+          "limitation": "Does not state the exact n=8 constant."
+        }
+      ]
+    },
+    {
+      "task_id": "T093",
+      "parameters": {
+        "degree": 5,
+        "p": 1
+      },
+      "scalar": "h(P)=min_{P′(z)=0} min_{P(α)=0}|z−α|",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "P(z)=z⁴(z+5), obtained from the 2011 human example P=z(z−1)^(n−1) by translation and scaling. Its roots are −5 and 0 (multiplicity 4); its critical points are −4 and 0 (multiplicity 3). The nearest root to −4 is at distance 1, so h(P)=1.",
+        "author": "2011 source Example 1; translated/scaled explicitly in this audit",
+        "year": "2011",
+        "source_note": "Exact polynomial, roots and critical points give a directly verifiable feasible baseline."
+      },
+      "current_record": "No current-record survey; this is a specific feasible human construction.",
+      "open_evidence": "The p=2 quadratic variance bound is solved by 2026 papers, so the prior p=2 configuration is closed. Replaced by p=1, degree 5. The 2011 source gives the family P=z(z−1)^(n−1), and reports only the cubic p=1 case as solved; the cited 2026 results concern p≥2. No exact degree-5 p=1 optimum was identified.",
+      "witness_url": "https://www.math.vanderbilt.edu/saffeb/texts/231.pdf",
+      "primary_sources": [
+        "https://www.math.vanderbilt.edu/saffeb/texts/231.pdf",
+        "https://arxiv.org/abs/2610.02035",
+        "https://arxiv.org/abs/2610.12499"
+      ],
+      "checks_performed": [
+        "Read Example 1 of the 2011 primary source for P=z(z−1)^(n−1) and its p=1 discussion.",
+        "Verified directly that translation/scaling gives P=z⁴(z+5), roots −5 and 0 (multiplicity 4), and critical points −4 and 0 (multiplicity 3); hence h(P)=1.",
+        "Checked the two 2026 primary papers proving the quadratic variance bound for p=2; those results close the former p=2 candidate, not this p=1 candidate."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Check whether a degree-5 p=1 optimum or stronger human baseline is known; no current-best claim is made.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://www.math.vanderbilt.edu/saffeb/texts/231.pdf",
+          "what_was_checked": "Example 1 gives the human polynomial family P=z(z−1)^(n−1); p=1 discussion identifies the cubic case as solved.",
+          "limitation": "Does not establish the degree-5 p=1 optimum."
+        },
+        {
+          "url": "https://arxiv.org/abs/2610.02035",
+          "what_was_checked": "Teng–Zhang (2026) prove the p=2 quadratic variance bound.",
+          "limitation": "Applies to p≥2; does not solve p=1."
+        },
+        {
+          "url": "https://arxiv.org/abs/2610.12499",
+          "what_was_checked": "Bouthat–Fallat (2026) prove the quadratic variance bound.",
+          "limitation": "Applies to p≥2; does not solve p=1."
+        }
+      ]
+    },
+    {
+      "task_id": "T094",
+      "parameters": {
+        "n": 4,
+        "m": 4,
+        "matrix_dimension": 2,
+        "norm": "operator norm"
+      },
+      "scalar": "[n^(−m) Σ_{j1,…,jm} ||A_j1⋯A_jm||] / [((n−m)!/n!) Σ_{distinct j1,…,jm} ||A_j1⋯A_jm||]",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Take all A₁,…,A₄=I₂. Every length-4 product has norm 1. There are 4⁴ ordered terms in the numerator and 4! distinct terms in the denominator; with prefactors 4⁻⁴ and 0!/4!, respectively, both averages equal 1, so the quotient is 1.",
+        "author": "Explicit identity-matrix construction",
+        "year": "2026",
+        "source_note": "Identity-matrix witness and quotient are directly constructed and evaluated in this audit; no public source for this specific n=m=4 configuration was located."
+      },
+      "current_record": "No record claim; concrete feasible construction only.",
+      "open_evidence": "The former m=2 row is solved by Israel–Krahmer–Ward for m≤3. The replacement m=4 identity-matrix construction gives feasible quotient 1, but no checked source establishes whether the n=m=4 optimum is known or open.",
+      "witness_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/47.html",
+      "primary_sources": [
+        "https://arxiv.org/abs/1411.0333"
+      ],
+      "checks_performed": [
+        "Closed former m=2 row using Israel–Krahmer–Ward theorem for m≤3.",
+        "Changed to n=m=4; directly evaluated identity-matrix witness: numerator and denominator each equal 1.",
+        "The cited theorem does not cover m=4; no exact infimum claim is made."
+      ],
+      "status": "pending",
+      "remaining": "Locate public human construction/status evidence for n=m=4 and check whether quotient 1 is optimal or improved.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1411.0333",
+          "what_was_checked": "Primary theorem covers products of up to three matrices, so it closes former m=2 row but not m=4.",
+          "limitation": "Does not prove the m=4 row open."
+        },
+        {
+          "url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/47.html",
+          "what_was_checked": "Original matrix AM-GM objective and problem parameterization.",
+          "limitation": "Does not establish a m=4 optimum."
+        }
+      ]
+    },
+    {
+      "task_id": "T095",
+      "parameters": {
+        "degree": "unbounded",
+        "class": "monic irreducible non-cyclotomic integer polynomials"
+      },
+      "scalar": "minimize Mahler measure M(P)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Lehmer (1933) polynomial x^10+x^9−x^7−x^6−x^5−x^4−x^3+x+1 has M≈1.176280818.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Mossinghoff database (updated 2026-07-18) lists BestByDegree_200 and small-measure records; global minimum across unbounded degree remains open.",
+      "open_evidence": "Lehmer’s problem asks for minimum Mahler measure over unbounded degree. The 2026 Mossinghoff database reports minima by even degree only through 200, not a proof of the global minimum. The degree-10 row alone is excluded; the unbounded-degree problem remains the intended configuration.",
+      "witness_url": "https://doi.org/10.2307/1968172",
+      "primary_sources": [
+        "https://github.com/mossinghoff/Mahler-Measure-Database",
+        "https://doi.org/10.2307/1968172"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://doi.org/10.2307/1968172",
+        "Extracted the stated parameter and construction/value: Lehmer (1933) polynomial x^10+x^9−x^7−x^6−x^5−x^4−x^3+x+1 has M≈1.176280818.",
+        "Checked whether the source claims an optimum: This is the classical Lehmer problem over all degrees; no proof that this is the global minimum is known in the cited sources. Degree-10-only variant is not admitted."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed as an unbounded-degree search problem; a finite search budget does not establish global optimality.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://github.com/mossinghoff/Mahler-Measure-Database",
+          "what_was_checked": "Michael Mossinghoff repository README, updated 18 July 2026, defines BestByDegree_200 and lists BestMeasures/AllSmallMeasures datasets.",
+          "limitation": "Data rows not yet downloaded; Lehmer polynomial exact coefficients from classical 1933 source."
+        },
+        {
+          "url": "https://doi.org/10.1080/10586458.2008.10128872",
+          "what_was_checked": "Parent supplied primary reference by Mossinghoff, Rhin, Wu for even degrees through 54.",
+          "limitation": "This specific primary theorem not opened by this agent."
+        }
+      ]
+    },
+    {
+      "task_id": "T096",
+      "parameters": {
+        "degree": "unbounded",
+        "set": "[0,1]"
+      },
+      "scalar": "t_Z([0,1])=inf_{nonzero P∈Z[x]} ||P||_[0,1]^(1/deg P)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "P(x)=x(1−x) has integer coefficients and ||P||_[0,1]=1/4, so ||P||^(1/2)=1/2. This is a feasible global upper bound, not the optimum. Pritsker reports global bounds about 0.4213–0.423; the exact constant remains unknown.",
+        "author": "Classical explicit polynomial; global bounds by Pritsker",
+        "year": "2001/2005",
+        "source_note": "The fixed degree-at-most-10 task is solved; this record is changed to the unbounded-degree integer Chebyshev constant."
+      },
+      "current_record": "Global constant is bounded in the cited literature; no claim that the feasible value 1/2 is best.",
+      "open_evidence": "Pritsker reports degree≤75 as resolved and gives global lower and upper bounds around 0.4213–0.423, leaving the unbounded-degree constant unresolved. The previous degree-at-most-10 configuration was therefore inappropriate.",
+      "witness_url": "https://arxiv.org/abs/math/0101166",
+      "primary_sources": [
+        "https://arxiv.org/abs/math/0101166",
+        "https://math.okstate.edu/people/igor/intcheb.pdf"
+      ],
+      "checks_performed": [
+        "Checked Pritsker’s primary paper: fixed degrees through 75 are reported solved; replaced the degree-10 row with the unbounded-degree global constant.",
+        "Verified directly that P=x(1−x) has integer coefficients and sup norm 1/4 on [0,1], giving normalized value 1/2.",
+        "Recorded the published global interval approximately 0.4213–0.423; the feasible polynomial is not claimed optimal."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Preserve the global interval as a reported bound and 1/2 as a simple feasible construction; verify exact values against the full paper before any record claim.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/math/0101166",
+          "what_was_checked": "Pritsker’s primary paper reports solved exact constants for fixed degrees through 75 and gives bounds for the global integer Chebyshev constant on [0,1].",
+          "limitation": "The global constant is not identified exactly; the simple witness x(1−x) is not the best known upper bound."
+        },
+        {
+          "url": "https://math.okstate.edu/people/igor/intcheb.pdf",
+          "what_was_checked": "Additional primary exposition on integer Chebyshev constants and global bounds.",
+          "limitation": "The exact global constant remains unknown."
+        }
+      ]
+    },
+    {
+      "task_id": "T097",
+      "parameters": {
+        "target": "2^192−2^64−3 (NIST P-192 field inversion exponent)"
+      },
+      "scalar": "shortest addition-chain length l(n)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "A public previous chain of length 203 (McLoughlin) and current public chain of length 202 (Brian Smith); both are explicit finite construction records.",
+        "author": "McLoughlin (203); Brian Smith (202)",
+        "year": "source citations/current page updated 2026-11-02"
+      },
+      "current_record": "202 steps (Clift page, chain downloadable).",
+      "open_evidence": "Clift’s page explicitly says none of the listed lengths are proved optimal. It reports the P-192 exponent length 202, versus previous 203.",
+      "witness_url": "https://additionchains.com/LargeChains.html",
+      "primary_sources": [
+        "https://additionchains.com/LargeChains.html",
+        "https://additionchains.com/"
+      ],
+      "checks_performed": [
+        "Opened Neill Clift’s primary Addition Chains page and inspected the exact P-192 row.",
+        "The row states exponent 2^192−2^64−3, prior 203, new 202; downloadable chain link is provided.",
+        "The same page states none of these lengths is proved optimal."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Record provenance carefully: chain is a published computational construction, not independently recomputed here; do not describe as human-only discovery.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://additionchains.com/LargeChains.html",
+          "what_was_checked": "P-192 row, prior length 203, new length 202, downloadable chain, and explicit no-optimality statement.",
+          "limitation": "Current 202 chain is computationally discovered; not independently replayed here. The primary page itself says not proved optimal."
+        }
+      ]
+    },
+    {
+      "task_id": "T098",
+      "parameters": {
+        "target": "2^1000",
+        "grammar": "1s combined by +, ×, parentheses only"
+      },
+      "scalar": "minimum number of ones ||n||",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Explicit expression (1+1)×...×(1+1) with 1000 factors gives upper bound ||2^1000||≤2000.",
+        "author": "classical construction",
+        "year": "elementary"
+      },
+      "current_record": "No row-specific exact value retrieved.",
+      "open_evidence": "The powers-of-two conjecture asks whether ||2^k||=2k for all k. Integer-complexity literature lists it as open; the cited computational work only verifies bounded ranges, not k=1000.",
+      "witness_url": "https://cs.uwaterloo.ca/~shallit/DC2015/iraids2.pdf",
+      "primary_sources": [
+        "https://cs.uwaterloo.ca/~shallit/DC2015/iraids2.pdf",
+        "https://arxiv.org/abs/2111.00671"
+      ],
+      "checks_performed": [
+        "Opened a paper whose Open Problems section explicitly asks whether ||2^n||=2n.",
+        "The explicit upper-bound expression is directly evaluable; no exact value for k=1000 was claimed."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Check current primary literature for proof beyond the cited bounded range; preserve the upper bound as a construction, not exact score.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://cs.uwaterloo.ca/~shallit/DC2015/iraids2.pdf",
+          "what_was_checked": "Open problem statement ||2^n||=2n.",
+          "limitation": "The PDF is an older source; recent proof-status audit remains needed."
+        }
+      ]
+    },
+    {
+      "task_id": "T099",
+      "parameters": {
+        "k": 343,
+        "objective": "minimum diameter admissible k-tuple"
+      },
+      "scalar": "minimize max(H)−min(H)",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Thomas Engelsma (2013): k=343 admissible tuple of diameter 2340. The supplied local artifact checks 343 distinct entries, the diameter, and residue-class noncoverage for all 68 primes p≤343.",
+        "author": "Thomas Engelsma",
+        "year": "2013",
+        "source_note": "Full tuple is in research/baseline_examples/admissible_343_2340.json; local check confirms distinctness, diameter and residue-class admissibility."
+      },
+      "current_record": "No current-record claim. The source table row is unmarked optimal; rows through k=342 are marked optimal.",
+      "open_evidence": "MIT/MathBases source row at k=343 has no optimal marker; this is weaker than a proof that no later construction exists. Witness is independently validated locally.",
+      "witness_url": "https://mathbases.org/d/narrow-admissible-tuples",
+      "primary_sources": [
+        "https://mathbases.org/d/narrow-admissible-tuples"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://mathbases.org/d/narrow-admissible-tuples",
+        "Extracted the stated parameter and construction/value: MathBases / prior MIT tuple database: k=343, diameter 2340, credited to Engelsma (2013); tuple is downloadable.",
+        "Checked whether the source claims an optimum: Database marks proved-optimal rows; earlier audit reports all k≤342 marked, k=343 first unmarked. Unmarked alone is weak open evidence; check current row.",
+        {
+          "url": "https://math.mit.edu/~primegaps/",
+          "what_was_checked": "Engelsma row k=343, diameter 2340; k≤342 marked optimal in the source data accessed by the lead reviewer.",
+          "limitation": "A missing optimal marker is not a proof of non-optimality."
+        }
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Keep frontier status unclaimed. The artifact verifies admissibility and diameter, not minimality or whether later rows improve it.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://mathbases.org/d/narrow-admissible-tuples",
+          "what_was_checked": "MathBases / prior MIT tuple database: k=343, diameter 2340, credited to Engelsma (2013); tuple is downloadable.",
+          "limitation": "Source page inspected; full witness not downloaded/recomputed unless stated."
+        },
+        {
+          "url": "https://math.mit.edu/~primegaps/",
+          "what_was_checked": "Engelsma row k=343, diameter 2340; k≤342 marked optimal in the source data accessed by the lead reviewer.",
+          "limitation": "A missing optimal marker is not a proof of non-optimality."
+        },
+        {
+          "url": "https://math.mit.edu/~primegaps/tuples/admissible_343_2340.txt",
+          "what_was_checked": "Downloaded tuple credited to Engelsma (2013), k=343, diameter 2340; parent audit independently checked 343 distinct values and residue noncoverage for each prime p≤343.",
+          "limitation": "The tuple verifies feasibility only; database row is unmarked optimal and this is not proof that no smaller diameter exists."
+        }
+      ]
+    },
+    {
+      "task_id": "T100",
+      "parameters": {
+        "N": 10001,
+        "factor_count": 10001
+      },
+      "scalar": "maximize min_i a_i subject to product a_i=100!",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "The factorial N! has an explicit factorization into N positive integers: (N!,1,…,1), with N=10001 factors and minimum factor 1. This is a weak but valid human baseline under the stated positive-integer definition.",
+        "author": "Elementary construction from the problem definition",
+        "year": "2026",
+        "source_note": "Explicit feasible factorization; no nontrivial value claim."
+      },
+      "current_record": "No N=10001 value claimed.",
+      "open_evidence": "OEIS A034258 records exact values through N=10000; the checked source gives a(100)=29 and no N=10001 value. This gap alone is not proof of openness. No exact optimum proof for N=10001 was located.",
+      "witness_url": "https://oeis.org/A034258",
+      "primary_sources": [
+        "https://oeis.org/A034258"
+      ],
+      "checks_performed": [
+        "Opened OEIS A034258; definition is the maximum possible least factor in a factorization of n! into n factors.",
+        "The linked sequence table records the value for N=100 as 29.",
+        {
+          "url": "https://oeis.org/A034258",
+          "what_was_checked": "Exact-value table includes a(100)=29 and is cited through N≤10000.",
+          "limitation": "Does not provide a value at N=10001 or prove that configuration open."
+        },
+        {
+          "url": "https://math.mit.edu/~drew/GuySelfridge.m",
+          "what_was_checked": "Catalog cites Sutherland’s public human search program.",
+          "limitation": "Direct retrieval was unavailable in this audit; no N=10001 output validated."
+        }
+      ],
+      "status": "pending",
+      "remaining": "Use the trivial factorization as an admissible baseline only if weak baselines are acceptable; a nontrivial public human witness and row-specific optimum status remain unverified.",
+      "recomputed": "yes",
+      "source_checks": [
+        {
+          "url": "https://oeis.org/A034258",
+          "what_was_checked": "OEIS A034258 records a(100)=29; the linked 1..10000 table lists the row.",
+          "limitation": "Source page inspected; full witness not downloaded/recomputed unless stated."
+        },
+        {
+          "url": "https://oeis.org/A034258",
+          "what_was_checked": "Exact-value table includes a(100)=29 and is cited through N≤10000.",
+          "limitation": "Does not provide a value at N=10001 or prove that configuration open."
+        },
+        {
+          "url": "https://math.mit.edu/~drew/GuySelfridge.m",
+          "what_was_checked": "Catalog cites Sutherland’s public human search program.",
+          "limitation": "Direct retrieval was unavailable in this audit; no N=10001 output validated."
+        },
+        {
+          "url": "https://oeis.org/A034258",
+          "what_was_checked": "Definition uses N positive factors whose product is N!; therefore (N!,1,…,1) is an immediate explicit feasible factorization for N=10001.",
+          "limitation": "This yields only lower bound 1 and says nothing about the maximum or openness."
+        }
+      ]
+    },
+    {
+      "task_id": "N002",
+      "parameters": {
+        "degree": "unbounded",
+        "base_point": 0,
+        "polynomials": "all complex polynomials P with P(0)=0 and P'(0)=1"
+      },
+      "scalar": "maximize min_{p′(ζ)=0}|p(ζ)−p(0)|/(|p′(0)||ζ|)",
+      "direction": "maximize",
+      "human_baseline": {
+        "value": "Jatar–Ng (2026) prove a human-authored construction with Smale mean-value constant M>1.1018 and give the global interval 1.1018<M≤4. A simple historical finite witness is P(z)=z^20−z, S(P)=0.95; it is a feasible witness but is weaker than the new global lower bound.",
+        "author": "Aneesh Jatar and Tuen Wai Ng; earlier polynomial family credited to Smale",
+        "year": "2026; classical family",
+        "source_note": "The 2026 paper discredits the conjecture M=1 and supplies the improved global lower bound. It reports AI-assisted proof development; retain that provenance."
+      },
+      "current_record": "Exact global value remains unknown in the checked 2026 paper; lower bound >1.1018 and upper bound 4.",
+      "open_evidence": "Jatar–Ng (2026, v2) explicitly states that Smale’s mean-value conjecture M=1 is false, proves M>1.1018 and retains 4 as the best known upper bound. The exact global extremal constant remains undetermined. Do not use Tao’s August 2026 note as evidence that M=1 is still open.",
+      "witness_url": "https://arxiv.org/html/2610.21472v2",
+      "primary_sources": [
+        "https://arxiv.org/abs/2610.21472",
+        "https://arxiv.org/abs/1512.02475"
+      ],
+      "checks_performed": [
+        "Opened Jatar–Ng v2 abstract and full HTML: defines M over all polynomial degrees, reports M>1.1018 and upper bound 4, and says exact constants B remain to determine.",
+        "Checked lines 63–66 of the HTML: P(z)=z−z^d/d has S(P)=(d−1)/d, so the d=20 example scores 0.95 but is dominated by the new lower bound.",
+        "Checked the source provenance note: authors disclose AI support in numerical experiments and preliminary proof drafts; do not label the 2026 bound human-only discovery."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Keep AI-assisted provenance attached to the 2026 >1.1018 result. If only human-only provenance is allowed, use the elementary z−z^20/20 family as a weaker feasible witness and label it clearly.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2610.21472",
+          "what_was_checked": "Jatar–Ng v2 abstract: M>1.1018, M≤4, arbitrarily large degrees with S(P)>1.1018.",
+          "limitation": "Does not identify the exact global value; proof development has disclosed AI assistance."
+        },
+        {
+          "url": "https://arxiv.org/html/2610.21472v2",
+          "what_was_checked": "Sections 1.1, 1.3 and 7: exact definition, old conjecture is false, upper bound remains 4, and exact B remains an open determination.",
+          "limitation": "A concrete high-score polynomial is obtained through an existence construction; the task record does not include its coefficients."
+        }
+      ]
+    },
+    {
+      "task_id": "N004",
+      "parameters": {
+        "dimension": 6,
+        "covering": "lattice by congruent balls"
+      },
+      "scalar": "minimize lattice covering density Θ",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Schürmann–Vallentin: a dimension-6 lattice covering of density 2.900024; dimension 6 is beyond the dimensions where exact optimum is known.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "Their work reports new best-known lattices in d=6; review source says the exact lattice optimum is only settled through d=5.",
+      "witness_url": "https://app.icerm.brown.edu/materials/Slides/sp-s18-w3/Lattice_Coverings_%5D_Mathieu_Dutour_Sikiric%2C_Institut_Rudjer_Boskovic.pdf",
+      "primary_sources": [
+        "https://app.icerm.brown.edu/materials/Slides/sp-s18-w3/Lattice_Coverings_%5D_Mathieu_Dutour_Sikiric%2C_Institut_Rudjer_Boskovic.pdf"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://app.icerm.brown.edu/materials/Slides/sp-s18-w3/Lattice_Coverings_%5D_Mathieu_Dutour_Sikiric%2C_Institut_Rudjer_Boskovic.pdf",
+        "Extracted the stated parameter and construction/value: Schürmann–Vallentin: a dimension-6 lattice covering of density 2.900024; dimension 6 is beyond the dimensions where exact optimum is known.",
+        "Checked whether the source claims an optimum: Their work reports new best-known lattices in d=6; review source says the exact lattice optimum is only settled through d=5."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed candidate; retrieve lattice basis and certify density if used.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://app.icerm.brown.edu/materials/Slides/sp-s18-w3/Lattice_Coverings_%5D_Mathieu_Dutour_Sikiric%2C_Institut_Rudjer_Boskovic.pdf",
+          "what_was_checked": "Schürmann–Vallentin: a dimension-6 lattice covering of density 2.900024; dimension 6 is beyond the dimensions where exact optimum is known.",
+          "limitation": "Source page inspected; full witness not downloaded/recomputed unless stated."
+        }
+      ]
+    },
+    {
+      "task_id": "N005",
+      "parameters": {
+        "dimension": 13,
+        "lattice": "K12 tensor Z product lattice"
+      },
+      "scalar": "minimize normalized second moment G",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Agrell–Allen (2023): explicit product lattice NSM 0.071034583; paper says it constructs improved quantizers in d=13.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Agrell–Allen Table I: prior best 0.074873919; K12⊗Z product lattice 0.071034583; conjectured lower bound 0.068721956.",
+      "open_evidence": "The article gives best-known constructions and no optimality claim for d=13.",
+      "witness_url": "https://arxiv.org/abs/2202.09605",
+      "primary_sources": [
+        "https://arxiv.org/abs/2202.09605"
+      ],
+      "checks_performed": [
+        "Opened Agrell–Allen arXiv abstract and inspected indexed full-text Table I for dimension 13.",
+        "The table labels K12⊗Z entry as less than prior best and less than its upper bound; no optimum claim."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed candidate; retrieve factor lattice generators to provide a machine-readable witness.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2202.09605",
+          "what_was_checked": "Agrell–Allen Table I indexed full text, dimension 13 row: prior best 0.074873919; K12⊗Z product 0.071034583; lower bound 0.068721956.",
+          "limitation": "Basis/artifact remains to be recovered."
+        }
+      ]
+    },
+    {
+      "task_id": "N006",
+      "parameters": {
+        "field": "Q",
+        "tensor": "3×3 matrix multiplication"
+      },
+      "scalar": "minimize exact tensor rank",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Laderman (1976) gives an explicit rank-23 decomposition over Q; Bläser (2003) proves lower bound ≥19. A later AI-assisted Lean claim ≥21 is separately noted, not counted as human baseline.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "No exact rank theorem over Q in the inspected sources; interval at least [19,23] from classical human results. The 2026 F2 result does not settle Q.",
+      "witness_url": "https://www.ams.org/journals/bull/1976-82-01/S0002-9904-1976-13988-2/S0002-9904-1976-13988-2.pdf",
+      "primary_sources": [
+        "https://www.ams.org/journals/bull/1976-82-01/S0002-9904-1976-13988-2/S0002-9904-1976-13988-2.pdf"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://www.ams.org/journals/bull/1976-82-01/S0002-9904-1976-13988-2/S0002-9904-1976-13988-2.pdf",
+        "Extracted the stated parameter and construction/value: Laderman (1976) gives an explicit rank-23 decomposition over Q; Bläser (2003) proves lower bound ≥19. A later AI-assisted Lean claim ≥21 is separately noted, not counted as human baseline.",
+        "Checked whether the source claims an optimum: No exact rank theorem over Q in the inspected sources; interval at least [19,23] from classical human results. The 2026 F2 result does not settle Q."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed candidate; preserve explicit field distinction and separate AI-assisted proof claims.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://www.ams.org/journals/bull/1976-82-01/S0002-9904-1976-13988-2/S0002-9904-1976-13988-2.pdf",
+          "what_was_checked": "Laderman (1976) gives an explicit rank-23 decomposition over Q; Bläser (2003) proves lower bound ≥19. A later AI-assisted Lean claim ≥21 is separately noted, not counted as human baseline.",
+          "limitation": "Source page inspected; full witness not downloaded/recomputed unless stated."
+        }
+      ]
+    },
+    {
+      "task_id": "N007",
+      "parameters": {
+        "field": "C",
+        "tensor": "3×3 matrix multiplication"
+      },
+      "scalar": "minimize border rank",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Smirnov rank-20 degeneration (as cited by Landsberg–Ottaviani); Conner–Harper–Landsberg prove lower bound ≥17.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "Primary 2019 paper explicitly states border rank(M3)≥17; reviewed source list gives construction upper bound 20.",
+      "witness_url": "https://arxiv.org/abs/1911.07981",
+      "primary_sources": [
+        "https://arxiv.org/abs/1911.07981"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://arxiv.org/abs/1911.07981",
+        "Extracted the stated parameter and construction/value: Smirnov rank-20 degeneration (as cited by Landsberg–Ottaviani); Conner–Harper–Landsberg prove lower bound ≥17.",
+        "Checked whether the source claims an optimum: Primary 2019 paper explicitly states border rank(M3)≥17; reviewed source list gives construction upper bound 20."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed candidate; attach explicit rank-20 degeneration before release.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/1911.07981",
+          "what_was_checked": "Conner–Harper–Landsberg (2019) prove border rank of 3×3 matrix multiplication is at least 17.",
+          "limitation": "Upper construction 20 is cited in catalog; attach primary Smirnov construction before release."
+        }
+      ]
+    },
+    {
+      "task_id": "N008",
+      "parameters": {
+        "rank": 23,
+        "count": "all additions in ordinary coordinates; conversions included"
+      },
+      "scalar": "minimize scalar additions/subtractions",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "A rank-23 56-addition scheme has a public exact implementation; 51-addition alternative-basis kernel plus 5 conversion additions is reported in 2026. AI-assisted 55-addition claim kept separate.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "No proof of minimum addition count; published constructions are upper bounds. Basis/counting conventions must remain fixed.",
+      "witness_url": "https://arxiv.org/abs/2604.27645",
+      "primary_sources": [
+        "https://arxiv.org/abs/2604.27645"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://arxiv.org/abs/2604.27645",
+        "Extracted the stated parameter and construction/value: A rank-23 56-addition scheme has a public exact implementation; 51-addition alternative-basis kernel plus 5 conversion additions is reported in 2026. AI-assisted 55-addition claim kept separate.",
+        "Checked whether the source claims an optimum: No proof of minimum addition count; published constructions are upper bounds. Basis/counting conventions must remain fixed."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed candidate; freeze standard-coordinate cost model and identify provenance of each witness.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2604.27645",
+          "what_was_checked": "A rank-23 56-addition scheme has a public exact implementation; 51-addition alternative-basis kernel plus 5 conversion additions is reported in 2026. AI-assisted 55-addition claim kept separate.",
+          "limitation": "Source page inspected; full witness not downloaded/recomputed unless stated."
+        }
+      ]
+    },
+    {
+      "task_id": "N009",
+      "parameters": {
+        "field": "C",
+        "form": "generic 4×4 determinant",
+        "power": 4
+      },
+      "scalar": "minimize number of fourth-power terms",
+      "direction": "minimize",
+      "human_baseline": {
+        "value": "Johns–Teitler (2020): explicit Waring decomposition upper bound d·d!=96 for d=4. Derksen–Teitler (2015) lower bound 50.",
+        "author": "See source_checks / cited primary source",
+        "year": "as cited",
+        "source_note": "Specific published value or construction identified; verify exact witness artifact before release."
+      },
+      "current_record": "Not exhaustively audited; candidate screen does not claim this baseline is current.",
+      "open_evidence": "Bounds [50,96] in cited literature; no exact rank claim.",
+      "witness_url": "https://arxiv.org/abs/2004.06158",
+      "primary_sources": [
+        "https://arxiv.org/abs/2004.06158"
+      ],
+      "checks_performed": [
+        "Opened primary/authoritative source: https://arxiv.org/abs/2004.06158",
+        "Extracted the stated parameter and construction/value: Johns–Teitler (2020): explicit Waring decomposition upper bound d·d!=96 for d=4. Derksen–Teitler (2015) lower bound 50.",
+        "Checked whether the source claims an optimum: Bounds [50,96] in cited literature; no exact rank claim."
+      ],
+      "status": "confirmed_suitable",
+      "remaining": "Confirmed candidate; retrieve decomposition formula and lower-bound reference.",
+      "recomputed": "no",
+      "source_checks": [
+        {
+          "url": "https://arxiv.org/abs/2004.06158",
+          "what_was_checked": "Johns–Teitler provide explicit power-sum decomposition with upper bound d·d!, yielding 96 for d=4.",
+          "limitation": "Lower bound 50 is from a separate 2015 paper; not inspected in this pass."
+        }
+      ]
+    }
+  ]
+}

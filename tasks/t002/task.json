@@ -1,0 +1,73 @@
+{
+  "task_id": "T002",
+  "name": "Packing unit squares in a square",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T002-C01",
+      "parameters": {
+        "n": 26
+      },
+      "direction": "minimize",
+      "human_reference": 5.621320343559642
+    },
+    {
+      "id": "T002-C03",
+      "parameters": {
+        "n": 29
+      },
+      "direction": "minimize",
+      "human_reference": 5.933885799813026,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T002-C04",
+      "parameters": {
+        "n": 38
+      },
+      "direction": "minimize",
+      "human_reference": 6.707106781186548,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "GPT-6.1 Sol",
+    "implementation_agent": "/root/expand_t002",
+    "implementation_model": "gpt-6-luna",
+    "date": "2026-11-04",
+    "acceptance_status": "accepted_by_sol",
+    "configuration_ids": [
+      "T002-C03",
+      "T002-C04"
+    ],
+    "evidence": "reports/configuration_expansion.json",
+    "checks": [
+      "source and parameter review",
+      "four strict program runs per configuration",
+      "cold seed export",
+      "independent key quantity",
+      "damaged witness rejected",
+      "claimed score ignored"
+    ]
+  }
+}

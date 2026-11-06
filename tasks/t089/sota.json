@@ -1,0 +1,33 @@
+{
+  "task_id": "T089",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T089-C01": {
+      "public_value": "1188957517256767569920",
+      "public_source": {
+        "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+        "title": "Order 29, Hadamard maximal determinant problem",
+        "evidence": "Lists a conjectured D-optimal Gram matrix due to Bruce Solomon and gives its determinant as (320*7^12*2^28)^2; the corresponding sign-matrix determinant magnitude is 320*7^12*2^28.",
+        "supporting_witness_source": "https://arxiv.org/abs/math/0304410",
+        "supporting_witness_title": "New lower bounds for the maximal determinant problem"
+      },
+      "reproduced_value": "1188957517256767569920",
+      "program": "sota.py",
+      "witness": "data/human_order29.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "This is the published best-known feasible value in the cited sources, not a proof of global optimality.",
+        "The source documents a conjectured Gram matrix and a lower-bound construction; the maximal determinant at order 29 remains uncertified."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T089-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

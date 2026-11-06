@@ -1,0 +1,25 @@
+{
+  "task_id": "T073",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T073-C02",
+      "parameters": {
+        "L": 80
+      },
+      "direction": "minimize",
+      "human_reference": 352
+    },
+    {
+      "id": "T073-C03",
+      "parameters": {
+        "L": 120
+      },
+      "direction": "minimize",
+      "human_reference": 872
+    }
+  ],
+  "submission_status": "pending_sol_review",
+  "reviewer": "GPT-6.1 Sol",
+  "review_date": "2026-11-04"
+}

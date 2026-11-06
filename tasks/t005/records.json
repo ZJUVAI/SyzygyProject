@@ -1,0 +1,64 @@
+{
+  "best_human": {
+    "value": {
+      "T005-C01": 2.50542078826,
+      "T005-C02": 2.811460994816
+    },
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "container": "unit square",
+      "radii": "equal in source construction; variable in task"
+    },
+    "url": "https://packomania.com/csq/txt/csq26.txt",
+    "provenance": "The 26-circle source file supplies equal-radius coordinates with r=0.096362339010, attributed in the selected research summary to Nurmela–Östergård (1999). The 32-circle source file supplies r=0.087858157088; the selected research summary attributes that construction to D. W. Boll, J. Donovan, R. L. Graham, and B. D. Lubachevsky (2000). Each coordinate set is translated from a square centered at the origin. Every radius is reduced by 1/10^9 for exact feasibility after decimal rounding. These feasible equal-circle constructions are transferred to the variable-radius class; they do not establish variable-radius optimality.",
+    "evidence_state": "source coordinate files saved; conservative witnesses independently pass exact Fraction wall and pair-distance checks"
+  },
+  "best_public": {
+    "value": {
+      "T005-C01": 2.635983084919,
+      "T005-C02": 2.939572771205
+    },
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "container": "unit square",
+      "radii": "variable",
+      "n": {
+        "T005-C01": 26,
+        "T005-C02": 32
+      }
+    },
+    "url": "https://www.packomania.com/csqv/csqv.html",
+    "provenance": "Packomania variable-radius table, lastupdate2026-10-31, rows26 and32 report sums2.635983084919 and2.939572771205. Exact record witnesses were not replayed; frozen human baselines use equal-radius constructions.",
+    "evidence_state": "same-parameter primary table checked; best-public witness not reproduced",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": {
+      "T005-C01": 2.50542078826,
+      "T005-C02": 2.811460994816
+    },
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "container": "unit square",
+      "radii": "variable",
+      "n": {
+        "T005-C01": 26,
+        "T005-C02": 32
+      }
+    },
+    "witness_file": {
+      "T005-C01": "data/human26.json",
+      "T005-C02": "data/human32.json"
+    },
+    "provenance": "Recomputed from the saved Packomania equal-circle ASCII coordinates after translating centers by (1/2,1/2) and reducing each source radius by 1/10^9.",
+    "ai_provenance": "No AI-generated coordinates. The radius safety reduction and exact rational verification were performed for this benchmark.",
+    "actual_value": {
+      "T005-C01": 2.50542078826,
+      "T005-C02": 2.811460994816
+    },
+    "evidence_state": "saved witnesses pass exact rational wall, pairwise non-overlap, and objective checks"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class"
+}

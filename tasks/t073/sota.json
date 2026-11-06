@@ -1,0 +1,90 @@
+{
+  "task_id": "T073",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T073-C01": {
+      "public_value": "578",
+      "public_source": {
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "title": "Merit Factor Records",
+        "record": "L=100, energy 578; marked non-exhaustive",
+        "corroborating_source": "https://arxiv.org/html/2504.00987v2",
+        "corroboration": "The paper states its L=100 result is consistent with the previously reported best-known result.",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "578",
+      "program": "sota.py",
+      "witness": "data/human_labs100_record.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The record table marks this length with an asterisk; the value is not a proof of global optimality.",
+        "The checked sources do not identify the discoverer of this record."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T073-C02": {
+      "public_value": "352",
+      "public_source": {
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "title": "Merit Factor Records",
+        "record": "L=80, energy 352; marked non-exhaustive",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "352",
+      "program": "sota.py",
+      "witness": "data/human_labs80_record.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The record table marks this length with an asterisk; the value is not a proof of global optimality.",
+        "The checked sources do not identify the discoverer of this record."
+      ],
+      "checked_at": "2026-11-05"
+    },
+    "T073-C03": {
+      "public_value": "824",
+      "public_source": {
+        "url": "https://arxiv.org/html/2504.00987v2",
+        "title": "New Improvements in Solving Large LABS Instances Using Massively Parallelizable Memetic Tabu Search",
+        "authors": [
+          "Zhiwei Zhang",
+          "Jiayu Shen",
+          "Niraj Kumar",
+          "Marco Pistoia"
+        ],
+        "version_date": "2025-08-14",
+        "record": "Table 2 reports new energy 824 at L=120 and gives the sequence in hexadecimal.",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "824",
+      "program": "sota.py",
+      "witness": "data/sota_labs120.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The paper reports a heuristic result; it does not prove global optimality.",
+        "The Dantus record page still lists 872 for L=120; the later paper's explicit 824 result supersedes that entry for the checked sources.",
+        "The witness is decoded from the paper's hex sequence; its energy is independently recomputed with the task's exact checker."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T073-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T073-C02": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T073-C03": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

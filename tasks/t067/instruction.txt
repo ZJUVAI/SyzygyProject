@@ -1,0 +1,4 @@
+Construct a binary code of length 17 with minimum pairwise Hamming distance at least 6. Maximize the number of codewords. Return JSON with a non-empty `codewords` list. Each codeword must be either an integer from 0 through 131071 or a list of 17 integer bits. Do not return a claimed objective as evidence.
+
+
+Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact or conservative interval verification. Compatibility feedback is J/H for maximization or H/J for minimization, where H is the frozen external reference. Start from the supplied initial program.

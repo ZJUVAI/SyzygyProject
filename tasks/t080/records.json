@@ -1,0 +1,82 @@
+{
+  "task_id": "T080",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 0.8892261730897966,
+    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+    "parameters": {
+      "steps": 20,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "authors": [
+      "Mate Matolcsi",
+      "Carlos Vinuesa"
+    ],
+    "year": 2009,
+    "url": "https://arxiv.org/pdf/0907.1379",
+    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
+    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
+    "witness": "data/human_t080.json"
+  },
+  "best_public": {
+    "value": 0.8892261730897966,
+    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+    "parameters": {
+      "steps": 20,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "authors": [
+      "Mate Matolcsi",
+      "Carlos Vinuesa"
+    ],
+    "year": 2009,
+    "url": "https://arxiv.org/pdf/0907.1379",
+    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
+    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
+    "witness": "data/human_t080.json",
+    "survey_scope": "Fixed20step witness checked. Later0.962694report has unmatched step count and is archived separately.",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 0.8892261730897966,
+    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+    "parameters": {
+      "steps": 20,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "provenance": "task-local copy of the printed Matolcsi-Vinuesa appendix coefficients",
+    "evidence_state": "exact rational convolution and objective recomputation"
+  },
+  "baseline_seed": {
+    "provenance": "seeded positive integer coefficients generated in init_program.py",
+    "evidence_state": "valid initial point; not a published result"
+  },
+  "other_configurations": [
+    {
+      "value": 0.962694,
+      "parameters": {
+        "steps": null,
+        "support": "not matched to this fixed 20-step configuration"
+      },
+      "url": "https://arxiv.org/abs/2604.19341",
+      "evidence_state": "later report listed in research coverage; exact witness and matching step count not independently reproduced",
+      "optimality": "reported public result; not comparable to T080-C01 until configuration and witness are matched",
+      "origin_type": "AI-assisted SimpleTES report; parameter mismatch"
+    }
+  ],
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+}

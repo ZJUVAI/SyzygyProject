@@ -1,0 +1,148 @@
+{
+  "task_id": "T080",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T080-C01": {
+      "public_value": "0.88922",
+      "public_source": {
+        "url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+        "title": "Improved bounds on the supremum of autoconvolutions",
+        "authors": [
+          "Mate Matolcsi",
+          "Carlos Vinuesa"
+        ],
+        "year": 2009,
+        "reported_same_parameter_best": "0.88922... at n=20",
+        "notes": "The paper explicitly calls this the best step-function example then known for the second autoconvolution inequality at n=20 and prints all 20 nonnegative coefficients in the online appendix. The support is [-1/4, 1/4]. Boyer and Li (2025, arXiv:2506.16750, Sections 2-3) independently transcribe the same 20 coefficients, state n=20, and recompute the score as 0.889226. The local checker recomputes the exact rational score from the printed finite decimals. The 2009 paper says the example was not extensively optimized; it does not claim a global optimum over 20-step functions."
+      },
+      "reproduced_value": "108065664771600646574507764702/121527759800529249872686490775",
+      "display_value": "0.8892261730897966",
+      "reproduced_exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+      "program": "sota.py",
+      "witness": "data/human_t080.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "Witness-level identity: coefficients match the 20-entry Matolcsi-Vinuesa appendix witness as independently transcribed by Boyer-Li. The source prints only 0.88922...; the exact local score is recomputed from those printed finite decimal coefficients.",
+      "limitations": [
+        "Best located same-parameter public construction, not a proof of optimality among all 20-step functions. Matolcsi-Vinuesa state they did not make extensive efforts to optimize this example.",
+        "This is a finite source comparison of the original Matolcsi-Vinuesa appendix and later directly relevant AlphaEvolve, Boyer-Li, Jaech-Joseph, SimpleTES, and DREAM-RSI reports. It does not establish that every public source has been surveyed.",
+        "The Matolcsi-Vinuesa appendix gives decimal coefficients rather than exact rational coefficients. Exactness here means exact arithmetic on those printed finite decimals, not recovery of hidden higher-precision values.",
+        "The inspected DREAM-RSI paper reports its first autocorrelation inequality result, not a separate result for the second autocorrelation inequality (T080).",
+        "The 2009 source does not describe the numerical search algorithm, random seed, or compute budget that produced its 20-step coefficients. This reproduction uses the printed witness directly and does not invent those missing details."
+      ],
+      "reproduction_method": {
+        "method": "Read the 20 printed decimal heights from the Matolcsi-Vinuesa appendix witness file and rescore them with the T080 exact rational checker.",
+        "random_seed": null,
+        "search_budget": null,
+        "source_search_details": "The paper reports a numerical search and states it did not make extensive efforts to optimize this example; it gives no algorithm, seed, or budget. No new search result is claimed here."
+      },
+      "best_located_same_parameter": {
+        "value": "108065664771600646574507764702/121527759800529249872686490775",
+        "display_value": "0.8892261730897966",
+        "steps": 20,
+        "source_reported_value": "0.88922...",
+        "source": "Matolcsi-Vinuesa 2009 online appendix; 20 printed coefficients; coefficient list and score independently confirmed by Boyer-Li 2025, arXiv:2506.16750"
+      },
+      "highest_located_report_any_step_count": {
+        "value": "0.962694",
+        "system": "SimpleTES",
+        "url": "https://arxiv.org/abs/2604.19341",
+        "parameter_note": "The paper reports the AC2 result and describes the AC2 search as FFT plus L-BFGS-B over sparse witnesses. It does not specify a 20-step witness; this is a different-resolution result, not T080-C01."
+      },
+      "comparison_scope": [
+        {
+          "source": "Matolcsi-Vinuesa 2009, online appendix",
+          "value": "0.88922...",
+          "steps": 20,
+          "parameter_match": true,
+          "witness_available": true,
+          "url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+          "evidence": "Authors call this the best 20-step example then known and print 20 coefficients."
+        },
+        {
+          "source": "AlphaEvolve, Mathematical exploration and discovery at scale",
+          "value": "0.8962",
+          "steps": 50,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2511.02864",
+          "evidence": "Boyer-Li directly identify the AlphaEvolve witness as 50 equal intervals."
+        },
+        {
+          "source": "Boyer-Li, An improved example for an autoconvolution inequality",
+          "value": "0.901562",
+          "steps": 575,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2506.16750",
+          "evidence": "Theorem 1 and Appendix A give 575 coefficients; Section 3 compares the n=20 Matolcsi-Vinuesa witness and reports its recomputed score 0.889226."
+        },
+        {
+          "source": "Jaech-Joseph, Further Improvements to the Lower Bound for an Autoconvolution Inequality",
+          "value": "0.94136",
+          "steps": 2236,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2508.02803",
+          "evidence": "Abstract states 2,399 intervals for one construction and obtains 0.94136 by 4x upsampling a 559-interval optimizer (2,236 intervals)."
+        },
+        {
+          "source": "AlphaEvolve V2, reported in SimpleTES Appendix O.1",
+          "value": "0.961000",
+          "steps": 50000,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2604.19341",
+          "evidence": "SimpleTES Appendix O.1 table reports the value; TTT-Discover's related-work summary identifies the AlphaEvolve V2 construction as 50,000 pieces."
+        },
+        {
+          "source": "SimpleTES, Structured Scaling of AI Discovery Across Diverse Scientific Domains",
+          "value": "0.962694",
+          "steps": null,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2604.19341",
+          "evidence": "Appendix O.1 reports AC2 score and says its best program uses FFT evaluation and L-BFGS-B refinement on sparse witnesses; the paper does not report a 20-step witness."
+        },
+        {
+          "source": "DREAM-RSI, Recursive Self-Improvement through Evolving Worlds",
+          "value": null,
+          "steps": null,
+          "parameter_match": false,
+          "witness_available": false,
+          "url": "https://arxiv.org/abs/2609.14858",
+          "evidence": "Its paper reports the first autocorrelation inequality, with lower-is-better scores around 1.45; it does not report a T080 second-autocorrelation score."
+        }
+      ],
+      "related_public_reports": [
+        {
+          "system": "AlphaEvolve V2",
+          "value": "0.9610",
+          "url": "https://arxiv.org/abs/2511.02864",
+          "parameter_note": "Reported using a 50,000-piece step function; not 20 steps. Earlier AlphaEvolve result was 0.8962 with 50 steps."
+        },
+        {
+          "system": "SimpleTES",
+          "value": "0.962694",
+          "url": "https://arxiv.org/abs/2604.19341",
+          "parameter_note": "Reported for AC2 without a matching 20-step specification; its published search description is FFT and L-BFGS-B over sparse witnesses."
+        },
+        {
+          "system": "DREAM-RSI",
+          "value": null,
+          "url": "https://arxiv.org/abs/2609.14858",
+          "parameter_note": "Its comparison table reports first autocorrelation, not the T080 second-autocorrelation task."
+        }
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T080-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05",
+      "public_sources_only": true,
+      "highest_reported_reproduced": true
+    }
+  }
+}

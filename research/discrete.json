@@ -1,0 +1,967 @@
+[
+  {
+    "id": "graph-cage",
+    "name": "(d,g)-cage order",
+    "category": "graph theory",
+    "definition": "For fixed degree d and girth g, find the smallest order n of a d-regular graph of girth exactly g.",
+    "solution_format": "Adjacency list/matrix of a d-regular graph with a verifiable girth certificate; objective is vertex count.",
+    "scalar_objective": "number of vertices n",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "degree": "d",
+      "girth": "g"
+    },
+    "human_baseline": "Exoo, Jajcay, Goedgebeur et al. (2025 preprint) improved eleven upper bounds; e.g. n(4,10)≤320. Exoo–Jajcay (2013) survey distinguishes known cages from upper-bound constructions; optimality is proved only for some parameter pairs.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2511.07247",
+      "https://www.combinatorics.org/ojs/index.php/eljc/article/view/DS16"
+    ],
+    "verification_cost": "Medium for a supplied graph; high to prove global minimality.",
+    "risks": "Report incumbent order separately from proven minimum; exact optimality certificates are often absent.",
+    "recommendation": "accept",
+    "reason": "Natural scalar objective, rich named record tables, and independently checkable graph witnesses."
+  },
+  {
+    "id": "degree-diameter",
+    "name": "Degree–diameter problem",
+    "category": "graph theory",
+    "definition": "For maximum degree d and diameter k, maximize the order of a simple graph.",
+    "solution_format": "Graph adjacency list plus proof/check of maximum degree and diameter; objective vertex count.",
+    "scalar_objective": "number of vertices n",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "maximum_degree": "d",
+      "diameter": "k"
+    },
+    "human_baseline": "The large degree/diameter graph table (Miller, Širáň and contributors; updated tables) records best known orders and marks the few proven optimal cases; Moore bound is an upper bound, not an attained baseline.",
+    "primary_sources": [
+      "https://doi.org/10.17632/d75dzbjd4k.3"
+    ],
+    "verification_cost": "Medium for witness; exact optimum usually unknown.",
+    "risks": "Must label best-known vs proven; table updates and graph conventions (regular vs maximum degree) need freezing.",
+    "recommendation": "accept",
+    "reason": "A clear extremal objective and extensive human constructions; feasible to score witness size."
+  },
+  {
+    "id": "classical-ramsey",
+    "name": "Classical Ramsey number lower-bound construction",
+    "category": "graph theory",
+    "definition": "For fixed s,t, construct the largest N-vertex graph with neither an s-clique nor an independent t-set, equivalently improve the lower bound R(s,t)≥N+1.",
+    "solution_format": "Graph adjacency list; independently verify forbidden-clique/independent-set conditions; scalar N.",
+    "scalar_objective": "number of vertices N",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "clique_size": "s",
+      "independent_set_size": "t"
+    },
+    "human_baseline": "Exoo et al. (1997) catalogued 656 nonisomorphic (5,5,42)-graphs, implying R(5,5)≥43; Radziszowski Dynamic Survey rev. 18 (2026) records 43≤R(5,5)≤46, with the upper bound by Angeltveit–McKay (2024).",
+    "primary_sources": [
+      "https://www.cs.rit.edu/~spr/ElJC/ejcram18.pdf",
+      "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+      "https://arxiv.org/abs/2409.15709"
+    ],
+    "verification_cost": "High; exact clique and independence checks scale exponentially, though certificates are finite and reproducible.",
+    "risks": "A one-unit increase is meaningful but only if exact validation is performed; do not score heuristic estimates or claim exact Ramsey values from a lower-bound witness.",
+    "recommendation": "conditional",
+    "reason": "Excellent human baseline and natural scalar, but restrict to modest s,t and require exact verifier/certificate."
+  },
+  {
+    "id": "generalized-ramsey",
+    "name": "Graph Ramsey number R(G,H)",
+    "category": "graph theory",
+    "definition": "Minimum N such that every red/blue coloring of K_N contains red G or blue H; candidates can instead give certified lower-bound colorings on N−1 vertices.",
+    "solution_format": "Edge coloring of K_N−1; objective largest certified coloring order.",
+    "scalar_objective": "coloring order N−1",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "forbidden_graphs": "fixed finite graphs G,H"
+    },
+    "human_baseline": "Radziszowski Dynamic Survey DS1 (rev. 18, 2026) and Exoo construction tables contain published values and lower-bound colorings.",
+    "primary_sources": [
+      "https://www.cs.rit.edu/~spr/ElJC/ejcram18.pdf",
+      "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html"
+    ],
+    "verification_cost": "High but finite for lower-bound witness; exact value requires separate upper-bound proof.",
+    "risks": "Overlaps classical Ramsey task; keep only non-clique forbidden graphs if parameterized as a distinct task family. Exact score cannot be claimed from coloring alone.",
+    "recommendation": "conditional",
+    "reason": "Strong literature, but merge with classical Ramsey unless benchmark specifically fixes arbitrary graph pairs."
+  },
+  {
+    "id": "turán-clique",
+    "name": "Turán number ex(n,K_r)",
+    "category": "graph theory",
+    "definition": "Maximize edges in an n-vertex K_r-free graph.",
+    "solution_format": "Simple graph adjacency list; objective edge count.",
+    "scalar_objective": "number of edges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "vertices": "n",
+      "forbidden_clique": "r"
+    },
+    "human_baseline": "Turán's theorem (1941) exactly gives the balanced complete (r−1)-partite graph and edge count for all n,r; a calibration item with a formula, not a frontier challenge.",
+    "primary_sources": [
+      "https://people.math.osu.edu/nguyen.1261/6501/Note-extremal.pdf"
+    ],
+    "verification_cost": "Low for candidate graph; proving optimality is theorem-level but formula is known.",
+    "risks": "Too formulaic for a discovery benchmark; use only calibration, not novelty leaderboard.",
+    "recommendation": "conditional",
+    "reason": "Natural scalar and exact human baseline, but classic cases have closed-form solutions."
+  },
+  {
+    "id": "zaran-bipartite",
+    "name": "Zarankiewicz number Z_{s,t}(m,n)",
+    "category": "graph theory",
+    "definition": "Maximize edges in a bipartite graph with part sizes m,n containing no K_{s,t}.",
+    "solution_format": "Bipartite adjacency matrix; objective number of 1 entries.",
+    "scalar_objective": "number of edges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "part_sizes": "m,n",
+      "forbidden_biclique": "s,t"
+    },
+    "human_baseline": "Published exact values and bounds are surveyed in the extremal graph literature; small square cases have SAT-verified tables (Mubayi et al. / 2022 SAT study corrects known table errors). Explicit finite-field constructions give human lower bounds.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2203.02283",
+      "https://arxiv.org/abs/2202.05507",
+      "https://www.math.ias.edu/~avi/PUBLICATIONS/MYPAPERS/BGKRSW96/bgkrsw96.pdf"
+    ],
+    "verification_cost": "Medium for forbidden biclique and edge count; optimality high.",
+    "risks": "Older tables contain errors; pin a source version and instance. General asymptotics remain open.",
+    "recommendation": "accept",
+    "reason": "Clean extremal scalar, abundant constructions, and small instances admit exact machine checks."
+  },
+  {
+    "id": "turan-hypergraph",
+    "name": "Hypergraph Turán number ex_r(n,F)",
+    "category": "hypergraph theory",
+    "definition": "Maximize edges in an r-uniform n-vertex hypergraph avoiding a fixed forbidden r-graph F.",
+    "solution_format": "List of r-subsets; objective edge count.",
+    "scalar_objective": "number of hyperedges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "uniformity": "r",
+      "vertices": "n",
+      "forbidden_hypergraph": "F"
+    },
+    "human_baseline": "Keevash's survey and the Erdős problems archive record open cases and constructions. The 3-uniform K4 problem has Turán's construction at density 5/9, but exact density remains open; finite n entries can have exact/conjectured distinctions.",
+    "primary_sources": [
+      "https://people.maths.ox.ac.uk/keevash/papers/turan-survey.pdf",
+      "https://mathweb.ucsd.edu/~erdosproblems/erdos/newproblems/ExactHypergraphTuranT3n4.html"
+    ],
+    "verification_cost": "High; checking F-freeness is manageable for small n, global optimality is difficult.",
+    "risks": "Do not blur finite exact values with asymptotic Turán density; choose frozen small n and explicit F.",
+    "recommendation": "accept",
+    "reason": "Canonical research problem with natural edge-count objective and published constructions/bounds."
+  },
+  {
+    "id": "saturation",
+    "name": "Graph saturation number sat(n,F)",
+    "category": "graph theory",
+    "definition": "Minimize edges in an n-vertex F-saturated graph: it is F-free, but adding any missing edge creates F.",
+    "solution_format": "Graph adjacency list; objective edge count.",
+    "scalar_objective": "number of edges",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "vertices": "n",
+      "forbidden_graph": "F"
+    },
+    "human_baseline": "Bollobás (1965) initiated the problem; for cliques, classical constructions and recent papers give exact formulas for many ranges. Current papers state the standard definition and bounds.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2605.07179"
+    ],
+    "verification_cost": "Medium for candidate; exact optimum often requires proof.",
+    "risks": "Newer specific F parameter results must be checked against publication status; easy families have formulaic answers.",
+    "recommendation": "conditional",
+    "reason": "Natural minimization objective with established theory; curate a small frozen set of nontrivial F,n cases."
+  },
+  {
+    "id": "ramsey-graph-max-order",
+    "name": "Maximum order of a Ramsey (s,t)-graph",
+    "category": "graph theory",
+    "definition": "For fixed s,t, maximize n such that a graph on n vertices has clique number <s and independence number <t.",
+    "solution_format": "Graph adjacency matrix; objective order n.",
+    "scalar_objective": "number of vertices",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "clique_size": "s",
+      "independence_size": "t"
+    },
+    "human_baseline": "McKay's ANU computational Ramsey database includes explicit graphs and describes the largest known Ramsey graphs; the optimum is R(s,t)−1.",
+    "primary_sources": [
+      "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+      "https://www.cs.rit.edu/~spr/ElJC/ejcram18.pdf"
+    ],
+    "verification_cost": "High for maximality; graph witness checks can be expensive.",
+    "risks": "Equivalent to classical Ramsey lower-bound construction; merge into that row to avoid duplicate benchmark.",
+    "recommendation": "reject",
+    "reason": "Duplicate formulation of the same Ramsey objective; retain one canonical task."
+  },
+  {
+    "id": "cage-nonregular",
+    "name": "Small regular graph of given girth (cage variants)",
+    "category": "graph theory",
+    "definition": "Construct a small d-regular graph of girth at least g, possibly with extra restrictions such as bipartite or vertex-transitive.",
+    "solution_format": "Graph; minimize order.",
+    "scalar_objective": "number of vertices",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "degree": "d",
+      "minimum_girth": "g",
+      "optional_graph_restriction": "fixed restriction"
+    },
+    "human_baseline": "Exoo–Jajcay dynamic cage survey and House of Graphs record tables catalog constructions, with restrictions treated separately in papers.",
+    "primary_sources": [
+      "https://www.combinatorics.org/files/Surveys/ds16/ds16v3-2013.pdf",
+      "https://hog.grinvin.org/"
+    ],
+    "verification_cost": "Medium.",
+    "risks": "This is the cage family; do not count variants as separate tasks unless added restriction is canonical and independently studied.",
+    "recommendation": "reject",
+    "reason": "Parameter/restriction variants of the cage task should be merged."
+  },
+  {
+    "id": "graph-girth-maxedges",
+    "name": "Maximum edges under prescribed girth",
+    "category": "graph theory",
+    "definition": "For fixed n and girth threshold g, maximize edges in an n-vertex graph with girth at least g.",
+    "solution_format": "Graph adjacency list; objective edge count.",
+    "scalar_objective": "number of edges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "vertices": "n",
+      "minimum_girth": "g"
+    },
+    "human_baseline": "Erdős–Sachs (1963) established existence of regular graphs of prescribed degree and girth; the cage survey provides named extremal records, but exact max-edge records for this broader fixed-n formulation were not curated in this pass.",
+    "primary_sources": [
+      "https://www.renyi.hu/~p_erdos/1963-16.pdf",
+      "https://doi.org/10.1112/jlms/s1-38.1.423"
+    ],
+    "verification_cost": "Medium for girth and edge count; optimum difficult.",
+    "risks": "A general problem family with sparse centralized records; source and exact instance baseline still need checking.",
+    "recommendation": "reject",
+    "reason": "Broad formulation lacks a verified standard human record table; cage records cover the stronger canonical family."
+  },
+  {
+    "id": "independence-extremal",
+    "name": "Maximum independence number under graph constraints",
+    "category": "graph theory",
+    "definition": "Given a fixed graph class or forbidden subgraph family and order n, maximize alpha(G).",
+    "solution_format": "Graph witness; objective independence number.",
+    "scalar_objective": "independence number",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "vertices": "n",
+      "graph_class_or_forbidden_family": "fixed class"
+    },
+    "human_baseline": "Many individual extremal results exist, but no unified, verified baseline database for arbitrary constraints was established in this survey pass.",
+    "primary_sources": [
+      "https://www.cs.rit.edu/~spr/ElJC/ejcram18.pdf"
+    ],
+    "verification_cost": "High: exact maximum independent set is NP-hard; validating claimed alpha needs a matching upper certificate.",
+    "risks": "Too broad; do not score a heuristic alpha estimate as exact.",
+    "recommendation": "reject",
+    "reason": "No single canonical family or practical human baseline; verification burden is high."
+  },
+  {
+    "id": "graph-saturation-general",
+    "name": "Saturated graph construction for fixed F",
+    "category": "graph theory",
+    "definition": "Find an F-saturated graph with few edges on n vertices.",
+    "solution_format": "Graph witness; objective edge count.",
+    "scalar_objective": "number of edges",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "n": "n",
+      "F": "fixed graph"
+    },
+    "human_baseline": "See sat(n,F) literature, but duplicates the saturation number task.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2605.07179"
+    ],
+    "verification_cost": "Medium.",
+    "risks": "Duplicate formulation.",
+    "recommendation": "reject",
+    "reason": "Merge into canonical saturation-number task."
+  },
+  {
+    "id": "covering-design",
+    "name": "Covering number C(v,k,t)",
+    "category": "design theory",
+    "definition": "Find the fewest k-subsets of a v-set such that every t-subset is included in at least one selected block.",
+    "solution_format": "List of k-subsets; objective block count.",
+    "scalar_objective": "number of blocks",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "v": "points",
+      "k": "block size",
+      "t": "covering strength"
+    },
+    "human_baseline": "La Jolla Combinatorics Repository (Dan Gordon; frozen 2026) stores tens of thousands of best-known covers and lower bounds; individual construction records identify contributors/methods.",
+    "primary_sources": [
+      "https://dmgordon.org/ljcr/",
+      "https://ljcr.dmgordon.org/cover.html"
+    ],
+    "verification_cost": "Low-medium for coverage; proving minimum needs lower bound.",
+    "risks": "Repository baseline may be best-known rather than optimum; freeze data snapshot and preserve authorship metadata.",
+    "recommendation": "accept",
+    "reason": "One of the strongest candidates: standardized finite objects, natural scalar, and large human record corpus."
+  },
+  {
+    "id": "covering-array",
+    "name": "Covering array CAN(t,k,v)",
+    "category": "design theory",
+    "definition": "Minimize rows N of a k-column v-ary array so every t selected columns contain every v^t tuple at least once.",
+    "solution_format": "N×k array over v symbols; objective N.",
+    "scalar_objective": "number of rows N",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "strength": "t",
+      "columns": "k",
+      "levels": "v"
+    },
+    "human_baseline": "NIST Covering Array Library lists actual arrays for strengths 2–6 and 2–6 levels, plus best-known sizes to 20,000 columns (strength 2) and 10,000 (strengths 3–6); NIST and Colbourn records are human constructions/bounds.",
+    "primary_sources": [
+      "https://csrc.nist.gov/Projects/Automated-Combinatorial-Testing-for-Software/Covering-Array-Library",
+      "https://math.nist.gov/coveringarrays/coveringarray.html"
+    ],
+    "verification_cost": "Low for explicit array; minimum proof varies.",
+    "risks": "Keep uniform alphabet case separate from variable-strength/general mixed-level variants; NIST best-known size tables do not always include arrays.",
+    "recommendation": "accept",
+    "reason": "Excellent benchmark corpus and easily verifiable scalar optimization."
+  },
+  {
+    "id": "orthogonal-array",
+    "name": "Orthogonal array minimum-run construction",
+    "category": "design theory",
+    "definition": "For fixed strength t, levels and columns, construct an orthogonal array with the fewest rows (or maximize columns for fixed rows), each t-column tuple appearing equally often.",
+    "solution_format": "Array with explicit index lambda; objective rows or columns, with one direction fixed per instance.",
+    "scalar_objective": "number of rows N (fixed columns/levels/strength/index)",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "strength": "t",
+      "levels": "s or mixed-level vector",
+      "columns": "k",
+      "index": "lambda"
+    },
+    "human_baseline": "Neil Sloane's library contains 200+ explicit arrays; Eendebak–Schoen catalogue complete non-isomorphic arrays for selected small parameters. OA( N,k,s,t) must meet divisibility/Rao bounds.",
+    "primary_sources": [
+      "https://neilsloane.com/oadir/index.html"
+    ],
+    "verification_cost": "Low for explicit array; minimality moderate/high.",
+    "risks": "Do not conflate OA existence, maximum columns, and minimum-run objectives; fix one scalar per instance. Strength-2 binary OAs are essentially Hadamard matrices.",
+    "recommendation": "accept",
+    "reason": "Curated human constructions and simple exact validator; good if objective/configuration are fixed consistently."
+  },
+  {
+    "id": "steiner-system",
+    "name": "Steiner system block construction S(t,k,v)",
+    "category": "design theory",
+    "definition": "Construct k-subsets so each t-subset occurs in exactly one block; the number of blocks is forced by parameters when divisibility holds.",
+    "solution_format": "Block list; scalar objective may be block count only if allowing a relaxed/partial design.",
+    "scalar_objective": "none for exact Steiner existence (block count is forced)",
+    "direction": "not applicable",
+    "configuration_parameters": {
+      "t": "strength",
+      "k": "block size",
+      "v": "points"
+    },
+    "human_baseline": "La Jolla repository links Steiner systems; classical systems (projective planes, Witt designs) have named constructions and authors.",
+    "primary_sources": [
+      "https://ljcr.dmgordon.org/cover.html",
+      "https://dmgordon.org/ljcr/"
+    ],
+    "verification_cost": "Low for incidence verification.",
+    "risks": "Exact existence is boolean and has no optimization scalar; block count is fixed by counting.",
+    "recommendation": "reject",
+    "reason": "Fails scalar optimization requirement; can be included only as validation/calibration, not scored task."
+  },
+  {
+    "id": "packing-design",
+    "name": "Packing number D(v,k,t)",
+    "category": "design theory",
+    "definition": "Maximize the number of k-subsets on v points such that no t-subset is contained in more than one block.",
+    "solution_format": "List of blocks; objective block count.",
+    "scalar_objective": "number of blocks",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "v": "points",
+      "k": "block size",
+      "t": "packing strength"
+    },
+    "human_baseline": "La Jolla covering repository focuses on coverings, while classical packing bounds and constructions are published; candidate instance-level records require dedicated database/source review.",
+    "primary_sources": [
+      "https://dmgordon.org/ljcr/"
+    ],
+    "verification_cost": "Low for packing property.",
+    "risks": "No unified current record table confirmed in this pass; may overlap partial Steiner designs.",
+    "recommendation": "conditional",
+    "reason": "Good scalar and verification, but human-record baseline needs further curation."
+  },
+  {
+    "id": "social-golfer",
+    "name": "Social golfer maximum schedule length",
+    "category": "design theory",
+    "definition": "Partition players into groups of fixed size each round, avoiding any pair meeting twice; maximize number of rounds.",
+    "solution_format": "Round-by-round partitions; objective number of rounds.",
+    "scalar_objective": "number of rounds",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "players": "P",
+      "group_size": "g",
+      "groups_per_round": "fixed/implied"
+    },
+    "human_baseline": "CSPLib problem 010 defines the canonical 32 golfers in groups of four and its generalization; published constraint-programming literature reports solved/optimal schedules for small parameter sets, but benchmark records need per-instance capture.",
+    "primary_sources": [
+      "https://csplib.github.io/csplib-PR-builds/PR-21/Problems/prob010/",
+      "https://www.csplib.org/Problems/prob010/"
+    ],
+    "verification_cost": "Low for pair uniqueness; maximality requires a bound/proof.",
+    "risks": "Could degenerate into mere feasibility when target rounds fixed; use maximize rounds and instances with documented human optima.",
+    "recommendation": "conditional",
+    "reason": "Natural schedule objective and benchmark tradition, but require verified per-instance baseline."
+  },
+  {
+    "id": "latin-mols",
+    "name": "Maximum number of mutually orthogonal Latin squares",
+    "category": "design theory",
+    "definition": "For order n, maximize the number of pairwise orthogonal Latin squares (MOLS).",
+    "solution_format": "List of Latin squares; objective count.",
+    "scalar_objective": "number of MOLS",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order": "n"
+    },
+    "human_baseline": "Bruck–Ryser–Chowla gives nonexistence restrictions; complete values are known for several small orders, while the standard MOLS tables record constructions and bounds.",
+    "primary_sources": [
+      "https://doi.org/10.4153/CJM-1949-009-2"
+    ],
+    "verification_cost": "Low for square/orthogonality checks; maximality often hard.",
+    "risks": "Exact optimum open for some n; source table version and proof status must be frozen.",
+    "recommendation": "accept",
+    "reason": "Canonical extremal design quantity, simple verifier, and substantive human theory."
+  },
+  {
+    "id": "hadamard-order",
+    "name": "Maximum Hadamard matrix order under a bound",
+    "category": "design theory",
+    "definition": "For a fixed search bound M, find the largest order h≤M for which a ±1 matrix has mutually orthogonal rows.",
+    "solution_format": "Hadamard matrix; scalar order h.",
+    "scalar_objective": "matrix order h",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order_bound": "M",
+      "optional_structural_class": "e.g. circulant, fixed separately"
+    },
+    "human_baseline": "Sloane maintains a library of Hadamard matrices and known orders; Hadamard's determinant bound requires order 1,2 or divisible by 4 above 2, and many orders are constructed by Sylvester/Paley methods.",
+    "primary_sources": [
+      "https://neilsloane.com/hadamard/"
+    ],
+    "verification_cost": "Low for witness; proving no larger allowed order is number-theoretic or exhaustive.",
+    "risks": "Avoid fixed-order existence boolean benchmark; choose maximize order under a fixed cap and compare with curated library.",
+    "recommendation": "reject",
+    "reason": "Fixed-instance feasibility is boolean; maximizing order under an arbitrary cap is not a natural standalone optimization benchmark."
+  },
+  {
+    "id": "projective-plane",
+    "name": "Projective plane order search",
+    "category": "design theory",
+    "definition": "For a fixed cap q≤Q, find the largest order q for which a projective plane exists.",
+    "solution_format": "Incidence matrix; scalar order q.",
+    "scalar_objective": "plane order q",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order_cap": "Q"
+    },
+    "human_baseline": "Prime-power orders have finite-field constructions; Bruck–Ryser (1949) excludes some orders; Lam, Thiel & Swiercz (1989) computationally proved no plane of order 10 exists.",
+    "primary_sources": [
+      "https://doi.org/10.4153/CJM-1949-009-2",
+      "https://doi.org/10.4153/CJM-1989-049-4"
+    ],
+    "verification_cost": "Low for candidate incidence structure; nonexistence proof can be extremely expensive.",
+    "risks": "Underlying task often asks existence at fixed q, a boolean; bounded maximize-q wrapper is artificial and dominated by known prime-power formula.",
+    "recommendation": "reject",
+    "reason": "Mostly existence and known algebraic construction; poor natural scalar task."
+  },
+  {
+    "id": "golomb-ruler",
+    "name": "Optimal Golomb ruler length",
+    "category": "additive/combinatorial design",
+    "definition": "For m integer marks, place distinct marks so all positive pairwise differences are distinct and minimize the largest mark.",
+    "solution_format": "Increasing integer mark list starting at 0; objective final mark.",
+    "scalar_objective": "ruler length",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "marks": "m"
+    },
+    "human_baseline": "Shearer (1990) exhaustively proved optimal lengths 127,151,177 for m=14,15,16; distributed.net completed proof of optimality through m=28 (2022 records), and CSPLib has the standard benchmark. Distinguish proven optima from larger-m best known rulers.",
+    "primary_sources": [
+      "https://research.ibm.com/publications/some-new-optimum-golomb-rulers",
+      "https://csplib.github.io/csplib-PR-builds/PR-21/Problems/prob006/",
+      "https://distributed.net/ogr/"
+    ],
+    "verification_cost": "Low for ruler; optimality proof high for large m.",
+    "risks": "Open sizes beyond proven range must be scored as incumbent length, not as proven optimum; preserve provenance and certificate status.",
+    "recommendation": "accept",
+    "reason": "Ideal scalar objective, a standard benchmark and exceptionally clear historical human record."
+  },
+  {
+    "id": "difference-triangle",
+    "name": "Difference triangle sets",
+    "category": "additive/combinatorial design",
+    "definition": "Construct several rows of marks with all within-row positive differences distinct globally; minimize maximum span under fixed row/mark counts.",
+    "solution_format": "Rows of integer marks; objective maximum row span.",
+    "scalar_objective": "maximum span",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "rows": "r",
+      "marks_per_row": "m"
+    },
+    "human_baseline": "Published difference-triangle-set constructions and tabu search literature report best-known spans; Golomb rulers are the one-row special case.",
+    "primary_sources": [
+      "https://doi.org/10.1016/j.cor.2004.11.002",
+      "https://cs.uwaterloo.ca/~vanbeek/Publications/sillito.pdf"
+    ],
+    "verification_cost": "Low for a witness.",
+    "risks": "Overlaps Golomb ruler at r=1; careful definition variants (all differences vs row-tagged) must be frozen.",
+    "recommendation": "conditional",
+    "reason": "A legitimate adjacent optimization family with published records, but merge one-row case into Golomb rulers."
+  },
+  {
+    "id": "sidon-interval",
+    "name": "Largest Sidon set in [n]",
+    "category": "additive combinatorics",
+    "definition": "Find the largest subset of {1,…,n} whose pairwise sums of distinct elements are all different (equivalently distinct positive differences).",
+    "solution_format": "Sorted integer set; objective cardinality.",
+    "scalar_objective": "set cardinality",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "interval_length": "n"
+    },
+    "human_baseline": "Erdős–Turán (1941) prove the maximum Sidon-set size in [n] is asymptotic to √n; Bose–Chowla (1962) give finite-field constructions. Specific finite-n exact maxima are not asserted here; use a verified construction/bound table before scoring exactness.",
+    "primary_sources": [
+      "https://users.renyi.hu/~p_erdos/1944-02.pdf",
+      "https://doi.org/10.1007/BF02566968"
+    ],
+    "verification_cost": "Low for witness; proof of maximum can be difficult.",
+    "risks": "Terminology differs on allowing repeated summands; specify pairwise sums of distinct elements and distinct differences explicitly. Exact small-n baseline table still needs verification.",
+    "recommendation": "conditional",
+    "reason": "Very natural scalar and classical constructions; source-level exact benchmark table needs checking."
+  },
+  {
+    "id": "cap-set",
+    "name": "Maximum cap set in F_3^n",
+    "category": "additive combinatorics",
+    "definition": "Find a largest subset of the vector space F_3^n containing no affine line (three distinct points summing to zero).",
+    "solution_format": "Point list in F_3^n; objective cardinality.",
+    "scalar_objective": "number of points",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "dimension": "n"
+    },
+    "human_baseline": "Pellegrino (1970) proved maximum 20 for n=4. Kleinberg–Sawin–Speyer (2016) gave constructions and Ellenberg–Gijswijt (2017) exponential upper bound; human lower-bound records are published for higher n, with exact values limited.",
+    "primary_sources": [
+      "https://doi.org/10.4007/annals.2017.185.1.8",
+      "https://arxiv.org/abs/1605.09223"
+    ],
+    "verification_cost": "Low for witness and no-line property; proving optimality difficult.",
+    "risks": "Modern record tables may have changed; distinguish exact small dimensions from best-known lower bounds.",
+    "recommendation": "accept",
+    "reason": "Canonical additive extremal problem, clear point-count objective, and unusually visible human construction frontier."
+  },
+  {
+    "id": "progression-free",
+    "name": "Largest 3-term-progression-free subset of [n]",
+    "category": "additive combinatorics",
+    "definition": "Find a largest subset of {1,…,n} containing no nontrivial 3-term arithmetic progression.",
+    "solution_format": "Integer set; objective cardinality.",
+    "scalar_objective": "set cardinality",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "interval_length": "n"
+    },
+    "human_baseline": "Behrend (1946) gave classical constructions; exact small-n values are known computationally and Roth's theorem gives qualitative upper bounds. Pin exact-value source/version for each n.",
+    "primary_sources": [
+      "https://doi.org/10.1073/pnas.32.12.331"
+    ],
+    "verification_cost": "Low for witness, exponential for maximality.",
+    "risks": "Closely related to cap sets but distinct ambient group; avoid treating parameter variants as different tasks.",
+    "recommendation": "conditional",
+    "reason": "Natural cardinality objective, but benchmark exact records need authoritative tables and manageable n."
+  },
+  {
+    "id": "difference-basis",
+    "name": "Minimum difference basis for [n]",
+    "category": "additive combinatorics",
+    "definition": "Find a smallest set A of integers such that every integer 1,…,n is a difference of two elements of A.",
+    "solution_format": "Sorted integer set; objective cardinality (or span if a different canonical version is chosen).",
+    "scalar_objective": "number of elements of A",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "target_interval": "n",
+      "ambient_domain": "integer interval, fixed convention"
+    },
+    "human_baseline": "Difference-basis literature has asymptotic bounds and specific constructions (Rédei–Rényi; Leech), but this pass did not verify an accessible modern exact-record table.",
+    "primary_sources": [],
+    "verification_cost": "Low for coverage; proving minimality difficult.",
+    "risks": "Several inequivalent definitions (difference set vs difference basis, interval endpoint, signed differences); human baseline source requires additional research.",
+    "recommendation": "conditional",
+    "reason": "Natural minimum-cardinality task but needs definition and authoritative record table curation."
+  },
+  {
+    "id": "additive-basis",
+    "name": "Minimum additive basis of order h for [n]",
+    "category": "additive combinatorics",
+    "definition": "Find a smallest A⊂[0,m] or minimum largest element such that every target integer up to n is a sum of h elements of A (convention fixed).",
+    "solution_format": "Integer set; objective cardinality or maximum element (choose one).",
+    "scalar_objective": "requires canonical convention",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "order": "h",
+      "target_range": "n",
+      "sum convention": "repetitions allowed or not"
+    },
+    "human_baseline": "Classical additive-basis literature studies several nonequivalent variants; a specific finite database and baseline were not verified in this pass.",
+    "primary_sources": [],
+    "verification_cost": "Low-medium for witness; proof of optimality hard.",
+    "risks": "Too many incompatible objectives/conventions; no source-backed fixed record table.",
+    "recommendation": "reject",
+    "reason": "Insufficiently canonical and no verified human baseline."
+  },
+  {
+    "id": "sum-free",
+    "name": "Maximum sum-free subset of a finite group",
+    "category": "additive combinatorics",
+    "definition": "Maximize |A| in a fixed finite abelian group subject to no x,y,z∈A with x+y=z (convention fixed).",
+    "solution_format": "Element list; objective cardinality.",
+    "scalar_objective": "set cardinality",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "group": "fixed finite abelian group"
+    },
+    "human_baseline": "For integers [n], the maximum is floor((n+1)/2), giving an exact calibration; finite group extremal classifications are known in many cases.",
+    "primary_sources": [
+      "https://doi.org/10.3792/pja/1195520891",
+      "https://doi.org/10.1112/jlms/s1-44.1.131"
+    ],
+    "verification_cost": "Low for witness, exact optimum varies.",
+    "risks": "Integer interval is formulaic; broad finite-group versions need more specific literature and are not one task.",
+    "recommendation": "conditional",
+    "reason": "Useful calibration only for interval case; broader version lacks canonical benchmark instances."
+  },
+  {
+    "id": "sum-difference-set",
+    "name": "Sum-difference sets in finite groups",
+    "category": "additive combinatorics",
+    "definition": "For a fixed finite group G and target coverage convention, find a small set A with A+A−A=G or maximize prescribed sum/difference coverage.",
+    "solution_format": "Subset A; scalar size or uncovered count only if established optimization target.",
+    "scalar_objective": "not fixed across literature conventions",
+    "direction": "varies",
+    "configuration_parameters": {
+      "group": "G",
+      "coverage convention": "must be specified"
+    },
+    "human_baseline": "Several related sum-difference problems occur in additive combinatorics, but no canonical single finite optimization record/database was verified here.",
+    "primary_sources": [],
+    "verification_cost": "Low for a fixed definition.",
+    "risks": "Name covers inequivalent problems; would risk inventing a benchmark objective.",
+    "recommendation": "reject",
+    "reason": "No canonical objective or verifiable standard human baseline found."
+  },
+  {
+    "id": "costas-array",
+    "name": "Costas array maximal order",
+    "category": "combinatorial design",
+    "definition": "Find a largest order n with a permutation whose displacement vectors are all distinct (Costas array).",
+    "solution_format": "Permutation; objective order n under a fixed search bound.",
+    "scalar_objective": "array order n",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order_bound": "N"
+    },
+    "human_baseline": "Costas arrays are tabulated by order and constructions (Welch, Golomb) are published; finite existence records are maintained by specialist databases.",
+    "primary_sources": [
+      "https://doi.org/10.1109/TIT.1974.1055329",
+      "https://doi.org/10.1109/TIT.1984.1056984"
+    ],
+    "verification_cost": "Low for witness; proving nonexistence at larger order is difficult.",
+    "risks": "Fixed-order form is boolean; bounded maximize-order form may collapse to known constructions. Need a verified authoritative record table.",
+    "recommendation": "reject",
+    "reason": "Fixed-instance feasibility is boolean; maximizing order under an arbitrary cap is not a natural standalone optimization benchmark."
+  },
+  {
+    "id": "difference-set",
+    "name": "Cyclic difference set construction",
+    "category": "combinatorial design",
+    "definition": "Find a k-subset of a cyclic group of order v whose nonzero differences cover each nonzero group element exactly lambda times.",
+    "solution_format": "Residue set; no free scalar because v,k,lambda determine size.",
+    "scalar_objective": "none for fixed parameters",
+    "direction": "not applicable",
+    "configuration_parameters": {
+      "v": "group order",
+      "k": "subset size",
+      "lambda": "difference multiplicity"
+    },
+    "human_baseline": "La Jolla hosts difference-set data and classical Singer constructions provide examples.",
+    "primary_sources": [
+      "https://dmgordon.org/ljcr/"
+    ],
+    "verification_cost": "Low.",
+    "risks": "Fixed-parameter existence is boolean; parameters determine the construction size.",
+    "recommendation": "reject",
+    "reason": "No natural optimization scalar for fixed parameters."
+  },
+  {
+    "id": "weighing-matrix",
+    "name": "Maximum order weighing matrix under bound",
+    "category": "design theory",
+    "definition": "For a fixed order cap and weight ratio/structural class, find the largest order of a weighing matrix W with WWᵀ=kI.",
+    "solution_format": "Matrix entries 0,±1; scalar order.",
+    "scalar_objective": "matrix order",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order_bound": "N",
+      "weight": "k",
+      "class": "general/circulant, fixed"
+    },
+    "human_baseline": "Dan Gordon's La Jolla data include circulant weighing matrices and record constructions.",
+    "primary_sources": [
+      "https://dmgordon.org/ljcr/"
+    ],
+    "verification_cost": "Low for witness; existence/nonexistence frontier varies.",
+    "risks": "Different matrix classes and weights must be separated; database data scope needs review.",
+    "recommendation": "reject",
+    "reason": "Fixed-instance feasibility is boolean; maximizing order under an arbitrary cap is not a natural standalone optimization benchmark."
+  },
+  {
+    "id": "max-matching-hypergraph",
+    "name": "Maximum matching-free hypergraph extremal number",
+    "category": "hypergraph theory",
+    "definition": "Maximize edges in an r-uniform n-vertex hypergraph with matching number below fixed s.",
+    "solution_format": "Hyperedge list; objective edge count.",
+    "scalar_objective": "number of hyperedges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "uniformity": "r",
+      "vertices": "n",
+      "matching_limit": "s"
+    },
+    "human_baseline": "Erdős matching conjecture and extensive exact results give canonical bounds; recent papers prove exact ranges, but there is no single table verified in this pass.",
+    "primary_sources": [
+      "https://www.sciencedirect.com/science/article/pii/S0097316514000041",
+      "https://arxiv.org/abs/2602.19230"
+    ],
+    "verification_cost": "Medium for matching number at small n; optimum proof hard.",
+    "risks": "Be careful whether Berge matching or disjoint hyperedges; family has multiple conventions.",
+    "recommendation": "conditional",
+    "reason": "Natural extremal scalar, but needs a canonical instance table and definition pinning."
+  },
+  {
+    "id": "hypergraph-ramsey",
+    "name": "Hypergraph Ramsey lower-bound construction",
+    "category": "hypergraph theory",
+    "definition": "For fixed uniformity and target monochromatic hypergraphs, construct a large coloring avoiding both, maximizing vertex/order count.",
+    "solution_format": "Coloring of complete uniform hypergraph; objective number of vertices.",
+    "scalar_objective": "number of vertices",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "uniformity": "r",
+      "colors": "q",
+      "forbidden_hypergraphs": "fixed list"
+    },
+    "human_baseline": "Radziszowski's Dynamic Survey records classical hypergraph Ramsey values and bounds.",
+    "primary_sources": [
+      "https://www.cs.rit.edu/~spr/ElJC/ejcram18.pdf"
+    ],
+    "verification_cost": "Very high for larger instances; exhaustive edge coloring verification grows rapidly.",
+    "risks": "Overlaps general Ramsey construction; high validation cost and sparse human records.",
+    "recommendation": "reject",
+    "reason": "Merge with Ramsey task and restrict if retained; poor standalone scalability."
+  },
+  {
+    "id": "covering-code",
+    "name": "Minimum covering code size K_q(n,R)",
+    "category": "coding/design theory",
+    "definition": "Find the fewest q-ary length-n words whose Hamming balls of radius R cover the whole space.",
+    "solution_format": "Codeword list; objective code size.",
+    "scalar_objective": "number of codewords",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "alphabet": "q",
+      "length": "n",
+      "radius": "R"
+    },
+    "human_baseline": "Published covering-code tables (Hill, Heden and collaborators) record lower and upper bounds and constructions; an authoritative unified current database was not verified in this pass.",
+    "primary_sources": [
+      "https://www.mathonline.dk/coding-theory/covering-codes/",
+      "https://doi.org/10.1007/978-1-4614-1684-2"
+    ],
+    "verification_cost": "Low for full coverage at small n; proof of minimum difficult.",
+    "risks": "Source table needs primary-source verification; coding theory scope may overlap another benchmark category.",
+    "recommendation": "conditional",
+    "reason": "Excellent finite scalar optimization, but baseline database must be sourced and frozen."
+  },
+  {
+    "id": "max-clique-graph-instance",
+    "name": "Maximum clique on standard named graph instances",
+    "category": "graph theory",
+    "definition": "Find a maximum clique in a fixed published graph instance.",
+    "solution_format": "Vertex set; objective clique cardinality.",
+    "scalar_objective": "clique size",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "graph": "fixed named graph instance"
+    },
+    "human_baseline": "DIMACS challenge graph collection and exact solver literature contain known optimum values for instances.",
+    "primary_sources": [
+      "https://dimacs.rutgers.edu/archive/Challenges/"
+    ],
+    "verification_cost": "High; membership proves lower bound but maximum requires certificate.",
+    "risks": "Generic algorithmic benchmark rather than mathematical construction discovery; graph names/instances are inputs, not a coherent theorem family.",
+    "recommendation": "reject",
+    "reason": "Optimization is canonical but fails the intended construction-discovery flavor and exact upper-certificate burden."
+  },
+  {
+    "id": "max-independent-set-instance",
+    "name": "Maximum independent set on standard named graph instances",
+    "category": "graph theory",
+    "definition": "Find a maximum independent vertex set in a fixed graph from a published benchmark suite.",
+    "solution_format": "Vertex set; objective cardinality.",
+    "scalar_objective": "independence number",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "graph": "fixed named graph instance"
+    },
+    "human_baseline": "DIMACS challenge collection and exact graph algorithms provide incumbent and optimum records for selected instances.",
+    "primary_sources": [
+      "https://dimacs.rutgers.edu/archive/Challenges/"
+    ],
+    "verification_cost": "High for optimality certificate.",
+    "risks": "Generic solver task, not a named mathematical construction family.",
+    "recommendation": "reject",
+    "reason": "Does not fit mathematical construction benchmark goal; duplicates optimization contest category."
+  },
+  {
+    "id": "fractional-repetition-extremal",
+    "name": "Extremal linear hypergraph with forbidden configuration",
+    "category": "hypergraph theory",
+    "definition": "Maximize edges in a linear r-uniform hypergraph avoiding a fixed small configuration, e.g. a linear cycle.",
+    "solution_format": "Hyperedge list; objective edge count.",
+    "scalar_objective": "number of hyperedges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "uniformity": "r",
+      "vertices": "n",
+      "forbidden_linear_configuration": "F"
+    },
+    "human_baseline": "Keevash's survey and published linear-cycle Turán results give exact large-n ranges and constructions for many r,F.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1302.2387",
+      "https://people.maths.ox.ac.uk/keevash/papers/turan-survey.pdf"
+    ],
+    "verification_cost": "Medium for F-free check.",
+    "risks": "Broad family; choose a single standard F such as linear cycle and verify exact finite-n human records.",
+    "recommendation": "conditional",
+    "reason": "Natural optimization with active research, though overlaps broad hypergraph Turán task."
+  },
+  {
+    "id": "max-partial-steiner",
+    "name": "Maximum partial Steiner triple system",
+    "category": "design theory",
+    "definition": "Choose as many triples on v points as possible with no pair repeated; equivalently packing number D(v,3,2).",
+    "solution_format": "Triple list; objective number of triples.",
+    "scalar_objective": "number of triples",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "points": "v"
+    },
+    "human_baseline": "Classical packing theory gives near-perfect packings and leave classifications; should be merged with the general packing-design family and source exact records per v.",
+    "primary_sources": [
+      "https://ljcr.dmgordon.org/cover.html"
+    ],
+    "verification_cost": "Low.",
+    "risks": "Equivalent to packing design with t=2,k=3; do not count as separate benchmark.",
+    "recommendation": "reject",
+    "reason": "Parameter specialization of packing-design task."
+  },
+  {
+    "id": "maximal-arc",
+    "name": "Largest cap/arc in finite projective plane",
+    "category": "finite geometry",
+    "definition": "For a fixed finite projective plane, maximize a point set meeting each line in at most a prescribed number of points (arc/cap variants).",
+    "solution_format": "Point set; cardinality objective.",
+    "scalar_objective": "number of points",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "plane": "fixed plane/order",
+      "line-intersection bound": "fixed"
+    },
+    "human_baseline": "Finite geometry literature and databases catalogue arcs/caps and complete classifications for small orders; no specific public primary database was verified in this pass.",
+    "primary_sources": [
+      "https://doi.org/10.1007/978-1-4614-1684-2"
+    ],
+    "verification_cost": "Low for witness; maximality high.",
+    "risks": "Terminology and projective plane choice vary; needs specific named family and baseline records.",
+    "recommendation": "conditional",
+    "reason": "Promising finite-geometry extremal objective but evidence/source curation incomplete."
+  },
+  {
+    "id": "orthogonal-latin-square-existence",
+    "name": "Orthogonal Latin square existence",
+    "category": "design theory",
+    "definition": "Find a pair of orthogonal Latin squares of fixed order n.",
+    "solution_format": "Pair of squares; no free scalar.",
+    "scalar_objective": "none",
+    "direction": "not applicable",
+    "configuration_parameters": {
+      "order": "n"
+    },
+    "human_baseline": "Known constructions and nonexistence results are published; Euler's 36 officers problem is a named nonexistence example.",
+    "primary_sources": [
+      "https://doi.org/10.1007/978-1-4614-1684-2"
+    ],
+    "verification_cost": "Low for positive witness.",
+    "risks": "Fixed-order feasibility has no scalar objective.",
+    "recommendation": "reject",
+    "reason": "Boolean existence task violates scalar-objective constraint."
+  },
+  {
+    "id": "complete-mols-count",
+    "name": "Complete MOLS count by order",
+    "category": "design theory",
+    "definition": "For each order n, report the maximum number N(n) of mutually orthogonal Latin squares.",
+    "solution_format": "List of MOLS; objective count.",
+    "scalar_objective": "number of MOLS",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order": "n"
+    },
+    "human_baseline": "Same mathematical quantity as maximum MOLS, with standard constructions and Bruck–Ryser–Chowla restrictions.",
+    "primary_sources": [
+      "https://doi.org/10.1090/S0002-9939-1950-0037974-5"
+    ],
+    "verification_cost": "Low for witness, maximality hard.",
+    "risks": "Duplicate naming of MOLS task.",
+    "recommendation": "reject",
+    "reason": "Merge with maximum mutually orthogonal Latin squares."
+  },
+  {
+    "id": "anti-ramsey",
+    "name": "Anti-Ramsey coloring number",
+    "category": "graph theory",
+    "definition": "For fixed graph H and host K_n, maximize distinct edge colors while requiring every H-copy to be rainbow-free (or the converse standard anti-Ramsey convention).",
+    "solution_format": "Edge coloring; objective number of colors.",
+    "scalar_objective": "number of colors",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "host_order": "n",
+      "pattern": "H",
+      "convention": "fixed anti-Ramsey definition"
+    },
+    "human_baseline": "Anti-Ramsey literature gives exact results for selected host/pattern families, but a unified record table and canonical convention were not verified.",
+    "primary_sources": [],
+    "verification_cost": "Medium for fixed finite coloring.",
+    "risks": "Definition conventions vary; no verified broad human baseline.",
+    "recommendation": "reject",
+    "reason": "Insufficiently canonical and weak baseline evidence for benchmark curation."
+  }
+]

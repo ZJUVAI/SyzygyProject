@@ -1,0 +1,25 @@
+{
+  "task_id": "T014",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T014-C02",
+      "parameters": {
+        "n": 12
+      },
+      "direction": "maximize",
+      "human_reference": 0.0325988586918197
+    },
+    {
+      "id": "T014-C03",
+      "parameters": {
+        "n": 16
+      },
+      "direction": "maximize",
+      "human_reference": 0.020527859237536656
+    }
+  ],
+  "submission_status": "pending_sol_review",
+  "reviewer": "GPT-6.1 Sol",
+  "review_date": "2026-11-04"
+}

@@ -1,0 +1,455 @@
+[
+  {
+    "id": "schur-number",
+    "name": "Schur number S(k) lower-bound coloring",
+    "category": "additive combinatorics / Ramsey",
+    "definition": "For fixed k colors, construct a coloring of [N] with no monochromatic x+y=z; maximize N, the certified lower bound for S(k).",
+    "solution_format": "Color assignment [N]→[k] with exact check of all x+y=z; scalar N.",
+    "scalar_objective": "largest colorable N",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "colors": "k"
+    },
+    "human_baseline": "Heule (AAAI 2018) proved S(5)=160 using a DRAT-certified SAT computation; S(6)≥536 and S(7)≥1680 are cited constructions by Fredricksen–Sweet (2000). Schur numbers S(1..4)=1,4,13,44 are exact.",
+    "primary_sources": [
+      "https://ojs.aaai.org/index.php/AAAI/article/download/12209/12068",
+      "https://www.cs.utexas.edu/~marijn/Schur/"
+    ],
+    "verification_cost": "Low for lower-bound coloring; proving exact value needs a large SAT/DRAT proof.",
+    "risks": "Score a coloring's N only, not an exact S(k) claim absent an upper proof; weak Schur numbers are a separate convention and should be excluded/merged only by explicit scope.",
+    "recommendation": "accept",
+    "reason": "Canonical extremal coloring task with explicit human witnesses, exact small values, and strong proof artifacts."
+  },
+  {
+    "id": "van-der-waerden-lower",
+    "name": "van der Waerden number lower-bound coloring",
+    "category": "additive combinatorics / Ramsey",
+    "definition": "For fixed r colors and AP length k, construct the longest r-coloring of [N] with no monochromatic k-term arithmetic progression.",
+    "solution_format": "Coloring of [N]; scalar N.",
+    "scalar_objective": "largest AP-free coloring order N",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "colors": "r",
+      "progression_length": "k"
+    },
+    "human_baseline": "Marijn Heule's 2005 EJC survey/paper tables W(2,5)=178, W(2,6)=1132 and many best known lower-bound colorings; Berlekamp (1968) and later recurrence constructions provide explicit records.",
+    "primary_sources": [
+      "https://www.cs.utexas.edu/~marijn/publications/waerden.pdf",
+      "https://arxiv.org/abs/1705.09673",
+      "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v18i1p64"
+    ],
+    "verification_cost": "Low for a coloring witness by enumerating arithmetic progressions; upper/exact proof is costly.",
+    "risks": "Closely related to Ramsey lower-bound construction but a distinct named AP-avoidance family; freeze coloring convention and don't label lower bounds as exact W(r,k).",
+    "recommendation": "accept",
+    "reason": "Natural construction objective with published numerical records and cheap witness validation."
+  },
+  {
+    "id": "erdos-discrepancy-finite",
+    "name": "Longest finite sequence with discrepancy at most C",
+    "category": "additive combinatorics",
+    "definition": "For a fixed discrepancy cap C, find the largest prefix length N of a ±1 sequence such that every homogeneous initial segment along every arithmetic progression has absolute sum at most C.",
+    "solution_format": "Sign sequence of length N; exact scalar N.",
+    "scalar_objective": "sequence length N",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "discrepancy_cap": "C"
+    },
+    "human_baseline": "Konev–Lisitsa (2015) reported a discrepancy-3 sequence of length 127,645, improving 17,000, with inductive construction rules; Tao (2015) proved the infinite Erdős discrepancy conjecture.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1407.2510",
+      "https://arxiv.org/abs/1509.05363"
+    ],
+    "verification_cost": "Low for a supplied finite sequence; proving maximality requires exhaustive/combinatorial upper certificates.",
+    "risks": "The unbounded infinite theorem itself is not a finite optimization task; freeze exact prefix discrepancy convention and evaluate witness length only.",
+    "recommendation": "accept",
+    "reason": "A named finite extremal version has a concrete human record and exact scalar witness."
+  },
+  {
+    "id": "ruzsa-szemeredi",
+    "name": "Ruzsa–Szemerédi (6,3) graph extremal number",
+    "category": "graph theory / additive combinatorics",
+    "definition": "For fixed n, maximize the number of triples in a 3-uniform hypergraph on n vertices such that no six vertices contain three hyperedges (the Brown–Erdős–Sós (6,3) formulation).",
+    "solution_format": "3-uniform hyperedge list; objective number of hyperedges.",
+    "scalar_objective": "number of hyperedges",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "vertices": "n"
+    },
+    "human_baseline": "Ruzsa–Szemerédi (1976/1978) proved the maximum size of a 3-uniform (6,3)-free system is o(n²); Behrend-type constructions give n² exp(−O(√log n)) lower bounds. These are asymptotic human bounds; no exact finite record table asserted.",
+    "primary_sources": [
+      "https://www.cambridge.org/core/books/abs/surveys-in-combinatorics-2013/graph-removal-lemmas/09C09AB33F6DC2EC895C460F6A31A353",
+      "https://www.renyi.hu/~szemered/pub.html"
+    ],
+    "verification_cost": "Medium for triangle incidence checks; extremality proof is difficult.",
+    "risks": "Use the explicit hypergraph (6,3) definition: every three distinct edges span at least seven vertices. This avoids ambiguity with graph encodings where every edge belongs to a unique triangle.",
+    "recommendation": "conditional",
+    "reason": "Canonical active extremal problem with natural scalar, pending verified instance-level numerical records."
+  },
+  {
+    "id": "sum-product-growth",
+    "name": "Finite-set sum–product growth minimization",
+    "category": "additive combinatorics",
+    "definition": "For a fixed size m and a fixed ambient integer interval [B], find A⊂[B], |A|=m minimizing max(|A+A|,|A·A|), with operations in the integers.",
+    "solution_format": "Finite integer set A; objective the larger of sumset/product-set cardinalities.",
+    "scalar_objective": "max(|A+A|,|A·A|)",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "set_size": "m",
+      "ambient_bound": "B"
+    },
+    "human_baseline": "Erdős–Szemerédi (1983) established a power-growth theorem for integer sets; later Solymosi and others improve exponents. No canonical exact finite-n construction table for this min-max objective was verified in this pass.",
+    "primary_sources": [
+      "https://annals.math.princeton.edu/2003/157-3/p07",
+      "https://arxiv.org/abs/math/0402285"
+    ],
+    "verification_cost": "Low for a finite set and exact integer operations; global optimum hard.",
+    "risks": "Integer interval bound B affects the problem substantially and may be artificial; no verified human optimum table. Restrict to conditional exploratory instances only.",
+    "recommendation": "conditional",
+    "reason": "A real finite optimization scalar, but a standardized published finite benchmark frontier was not confirmed."
+  },
+  {
+    "id": "bh-ruler-higher",
+    "name": "Minimum diameter of a B_h set of integers, h≥3",
+    "category": "additive combinatorics",
+    "definition": "For fixed m and h≥3, choose m integers with all h-term sums (repetition convention fixed) distinct, minimizing the diameter.",
+    "solution_format": "Sorted integer set; objective maximum minus minimum.",
+    "scalar_objective": "diameter",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "set_size": "m",
+      "sum order": "h≥3",
+      "repetitions": "fixed by benchmark"
+    },
+    "human_baseline": "Bose–Chowla (1962) give finite-field B_h constructions; modern additive-combinatorics papers provide bounds. The h=2 case is the Golomb/Sidon ruler task and is deliberately excluded here as a duplicate.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF02566968",
+      "https://arxiv.org/abs/2104.12711"
+    ],
+    "verification_cost": "Low for witness; exact optimum difficult.",
+    "risks": "Must distinguish unordered multisets with repetitions from distinct-element sums and from modular B_h sets; h=2 merges with Golomb rulers.",
+    "recommendation": "conditional",
+    "reason": "Natural generalization with human algebraic constructions; finite exact baselines need dedicated verification."
+  },
+  {
+    "id": "finite-kakeya",
+    "name": "Minimum finite-field Kakeya set size",
+    "category": "finite geometry",
+    "definition": "For fixed finite field F_q and dimension d, minimize |K| over K⊂F_q^d containing a full affine line in every direction.",
+    "solution_format": "Point list or characteristic function; objective |K|.",
+    "scalar_objective": "number of points",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "field_order": "q",
+      "dimension": "d"
+    },
+    "human_baseline": "Dvir (2009) proved |K|≥c_d q^d by the polynomial method; explicit constructions are known. An October 2026 exposition reports an exact exhaustive result |K|=13 for F_3^3, but that source is secondary, so require primary-paper confirmation before adopting this numeric record.",
+    "primary_sources": [
+      "https://arxiv.org/abs/0803.2336",
+      "https://arxiv.org/abs/1503.06639"
+    ],
+    "verification_cost": "Low for candidate set; exact minimum needs exhaustive or mathematical lower bound.",
+    "risks": "Small finite cases and field characteristic matter; separate proven minimum from construction upper bound; record 2026 claim as pending primary confirmation.",
+    "recommendation": "conditional",
+    "reason": "Natural finite extremal objective with strong theory, but exact record data are currently thin."
+  },
+  {
+    "id": "arithmetic-kakeya",
+    "name": "Arithmetic Kakeya covering-set size",
+    "category": "additive combinatorics",
+    "definition": "For a precisely fixed k-AP covering formulation, minimize the initial-segment count |A∩[N]| subject to A containing a translate of every required k-term arithmetic progression pattern/direction.",
+    "solution_format": "Integer set with finite certificate for a specified range; score cardinality or growth exponent only if canonical formulation is chosen.",
+    "scalar_objective": "not yet canonical for finite instances",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "progression_length": "k",
+      "covering convention": "must be specified"
+    },
+    "human_baseline": "Katz–Tao introduced the arithmetic Kakeya conjecture; recent work on sparse k-AP covering sets (2026 preprint) disproves a conjecture for k≥6. No standard finite benchmark record is established here.",
+    "primary_sources": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC6528801/",
+      "https://arxiv.org/abs/2609.02041"
+    ],
+    "verification_cost": "Potentially high and dependent on finite truncation.",
+    "risks": "As stated in literature this is an asymptotic conjecture, not one settled finite optimization problem; avoid inventing an arbitrary bound.",
+    "recommendation": "reject",
+    "reason": "No canonical finite scalar benchmark or record table verified."
+  },
+  {
+    "id": "furstenberg-sarkozy",
+    "name": "Largest square-difference-free subset of [N]",
+    "category": "additive combinatorics",
+    "definition": "Maximize |A| for A⊂[N] with no distinct a,b∈A such that |a−b| is a perfect square.",
+    "solution_format": "Integer set; objective cardinality.",
+    "scalar_objective": "number of elements",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "interval_length": "N"
+    },
+    "human_baseline": "Ruzsa (1984) gave an explicit construction of square-difference-free sets; Green–Sawhney (preprint 2024, updated 2025) prove |A|≪N exp(−c√log N). These are asymptotic bounds, not exact finite-N maxima.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF02454169",
+      "https://arxiv.org/abs/2411.17448"
+    ],
+    "verification_cost": "Low for a finite set; proof of maximum difficult.",
+    "risks": "Asymptotic rather than exact finite record frontier; parameters N give highly correlated instances.",
+    "recommendation": "conditional",
+    "reason": "Strong named extremal family and human constructions, but current upper-bound citation needs verification and finite record table."
+  },
+  {
+    "id": "no-three-in-line",
+    "name": "No-three-in-line maximum on an n×n grid",
+    "category": "discrete geometry",
+    "definition": "Select as many lattice points as possible from [n]×[n] with no three collinear.",
+    "solution_format": "Grid point list; objective cardinality.",
+    "scalar_objective": "number of selected points",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "grid_order": "n"
+    },
+    "human_baseline": "Dudeney posed the problem; constructions of 2n points are known for many n, but the universal 2n conjecture remains open. Wolfram/House of Graphs style databases list configurations; exact finite maxima are only known for selected small n, so a primary record source must be frozen.",
+    "primary_sources": [
+      "https://mathworld.wolfram.com/No-Three-in-LineProblem.html",
+      "https://arxiv.org/abs/2209.01447"
+    ],
+    "verification_cost": "Low for collinearity checks; optimum proof hard.",
+    "risks": "Recent preprints and recreational databases may contain construction records without optimality proofs; label upper/lower status carefully.",
+    "recommendation": "conditional",
+    "reason": "Clear scalar and established construction tradition, but candidate records need more authoritative curation."
+  },
+  {
+    "id": "no-isosceles-grid",
+    "name": "Maximum no-isosceles-triangle subset of a grid",
+    "category": "discrete geometry",
+    "definition": "Maximize points in an n×n integer grid subject to no three selected points forming an isosceles triangle (definition includes/excludes collinear triples explicitly).",
+    "solution_format": "Point list; objective cardinality.",
+    "scalar_objective": "number of selected points",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "grid_order": "n",
+      "degenerate-triples": "fixed convention"
+    },
+    "human_baseline": "A primary literature source and maintained numerical record table were not verified in this pass; related integer-grid triangle counting papers do not establish the exact extremal problem's record series.",
+    "primary_sources": [
+      "https://mathweb.ucsd.edu/~asuk/solymosi.pdf"
+    ],
+    "verification_cost": "Low for finite witness; optimum likely difficult.",
+    "risks": "Could be a nonstandard problem formulation; no human baseline evidence yet.",
+    "recommendation": "reject",
+    "reason": "Insufficient evidence of a canonical published optimization family and record baseline."
+  },
+  {
+    "id": "happy-ending",
+    "name": "Erdős–Szekeres happy-ending number f(k)",
+    "category": "discrete geometry",
+    "definition": "Find the minimum N such that every N points in general position in the plane contain k points in convex position.",
+    "solution_format": "For lower-bound witness, coordinates of N−1 points with no convex k-gon; score N−1. Exact f(k) only with matching upper proof.",
+    "scalar_objective": "largest point-set size avoiding a convex k-gon",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "convex_subset_size": "k"
+    },
+    "human_baseline": "Erdős–Szekeres (1935) proved finiteness and conjectured f(k)=2^{k−2}+1; exact f(3)=3 through f(6)=17 are known, with Peters (2006) computer proof for f(6)=17. Suk (2017) gives f(k)=2^{k+o(k)}.",
+    "primary_sources": [
+      "https://doi.org/10.1112/jlms/s1-10.1.14",
+      "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/0EC7876789232266D60439A4C00D86D9/S144618110000300Xa.pdf/computer_solution_to_the_17point_erdosszekeres_problem.pdf",
+      "https://arxiv.org/abs/1604.08657"
+    ],
+    "verification_cost": "Geometric general-position and convexity checks are low with exact coordinates; upper proof is difficult.",
+    "risks": "A lower-bound point set is finite and checkable but does not prove f(k); coordinates may be algebraic and need exact predicates.",
+    "recommendation": "accept",
+    "reason": "Named geometric extremal problem with clear scalar and well-documented historic constructions/proof boundary."
+  },
+  {
+    "id": "unit-distance",
+    "name": "Erdős maximum unit distances for n planar points",
+    "category": "discrete geometry",
+    "definition": "Maximize the number of unit-distance pairs among n distinct points in the Euclidean plane.",
+    "solution_format": "Exact-coordinate point set; objective unit-distance pair count.",
+    "scalar_objective": "number of unit-distance pairs",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "points": "n"
+    },
+    "human_baseline": "Alexeev, Mixon & Parshall (2024/2025) report that for n≤21 their upper bounds match best-known lower bounds and fully enumerate densest unit-distance graphs; exact values are thus recorded through 21. No claim about AI-generated or later constructions is used as human baseline.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2412.11914"
+    ],
+    "verification_cost": "Witness edge count is checkable with exact algebraic coordinates; global maximum is hard beyond small n.",
+    "risks": "Distinguish exact n≤21 values from open larger n and avoid scoring floating-point near-unit distances; freeze the 2024/2025 paper version and accompanying data.",
+    "recommendation": "conditional",
+    "reason": "Strong finite exact table through n=21, but a changing frontier and exact-coordinate validation are material."
+  },
+  {
+    "id": "crossing-kn",
+    "name": "Crossing number cr(K_n)",
+    "category": "graph theory / discrete geometry",
+    "definition": "Minimize the number of edge crossings over all plane drawings of the complete graph K_n.",
+    "solution_format": "Drawing or combinatorial rotation/certificate; objective crossing count.",
+    "scalar_objective": "number of crossings",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "vertices": "n"
+    },
+    "human_baseline": "Guy's conjectured formula is attained by standard drawings and exact values are known only for small n; the general crossing number remains open. Crossing Number project resources survey published lower/upper records.",
+    "primary_sources": [
+      "https://uwspace.uwaterloo.ca/items/9b70c74f-2866-459f-a663-7749b4be9bc9",
+      "https://www.crossingnumbers.org/"
+    ],
+    "verification_cost": "High: validating a drawing is straightforward; proving minimality is hard.",
+    "risks": "Must score candidate drawing upper bound, not claim optimum; topological drawings and rectilinear drawings are distinct tasks.",
+    "recommendation": "conditional",
+    "reason": "Natural scalar with long record history, but supplied witness is easy while exact scoring frontier is sparse."
+  },
+  {
+    "id": "rectilinear-crossing-kn",
+    "name": "Rectilinear crossing number of K_n",
+    "category": "graph theory / discrete geometry",
+    "definition": "Place n points in general position in the plane and minimize the number of crossings in the straight-line drawing of K_n.",
+    "solution_format": "Exact coordinates or order type; objective number of crossing edge pairs.",
+    "scalar_objective": "number of crossings",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "vertices": "n"
+    },
+    "human_baseline": "Exact values are known through small orders (K_9=36, K_10=62 and published tables extend further); Ábrego–Fernández-Merchant and collaborators maintain best-known bounds and constructions; all exact statuses must be frozen from the survey.",
+    "primary_sources": [
+      "https://arxiv.org/abs/cs/0009023",
+      "https://www.csun.edu/~sf70713/publications/survey.pdf",
+      "https://www.crossingnumbers.org/projects/crossingconstants/rectilinear.php"
+    ],
+    "verification_cost": "Medium for exact coordinates/order type; proving minimum hard.",
+    "risks": "Do not merge with topological crossing number; numerical optimization coordinates need exact orientation tests.",
+    "recommendation": "accept",
+    "reason": "Standard well-defined geometric optimization with published record configurations and scalar objective."
+  },
+  {
+    "id": "algebraic-connectivity",
+    "name": "Maximum algebraic connectivity for fixed n,m",
+    "category": "spectral graph theory",
+    "definition": "Among simple graphs on n vertices and m edges, maximize the second-smallest Laplacian eigenvalue λ₂.",
+    "solution_format": "Graph adjacency list; objective λ₂, represented by an exact algebraic number or certified interval.",
+    "scalar_objective": "second Laplacian eigenvalue λ₂",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "vertices": "n",
+      "edges": "m"
+    },
+    "human_baseline": "Fiedler introduced algebraic connectivity (1973), and extremal results exist for restricted graph classes; no broad finite n,m record database or canonical exact baseline was verified here.",
+    "primary_sources": [
+      "https://www.dml.cz/handle/10338.dmlcz/101168"
+    ],
+    "verification_cost": "Medium for numerical eigenvalue; exact comparison of algebraic eigenvalues can be expensive.",
+    "risks": "The source currently supports the invariant, not the fixed-(n,m) extremal table; arbitrary finite optimization may be an algorithm benchmark rather than mathematical construction benchmark.",
+    "recommendation": "reject",
+    "reason": "No verified human extremal record database for the proposed unrestricted configuration."
+  },
+  {
+    "id": "finite-group-sumfree",
+    "name": "Maximum sum-free set in a specified finite abelian group",
+    "category": "additive combinatorics",
+    "definition": "For a given finite abelian group G, maximize |A| subject to no x,y,z∈A with x+y=z, with convention allowing x=y.",
+    "solution_format": "Group element list; objective cardinality.",
+    "scalar_objective": "set cardinality",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "group": "explicit finite abelian group G"
+    },
+    "human_baseline": "Diananda–Yap (1969) classified maximum sum-free set sizes for finite abelian groups; for cyclic groups of odd order the maximum is (|G|−1)/3, while even-order cases can attain |G|/2. Exact extremal structures are known in many cases.",
+    "primary_sources": [
+      "https://doi.org/10.3792/pja/1195520891",
+      "https://doi.org/10.1112/jlms/s1-44.1.131",
+      "https://academic.oup.com/qjmath/article/75/3/1057/7732560"
+    ],
+    "verification_cost": "Low for witness; proving maximum uses group-specific theorems.",
+    "risks": "Do not count separately from the first-round broad sum-free candidate; replace that entry with this canonical group formulation if accepted.",
+    "recommendation": "conditional",
+    "reason": "Natural finite-group cardinality optimization and classical results, but overlaps existing sum-free family and many orders have direct formulas."
+  },
+  {
+    "id": "ruzsa-sum-difference",
+    "name": "Finite-set sum-versus-difference extremal ratios (Ruzsa problems)",
+    "category": "additive combinatorics",
+    "definition": "Ruzsa's papers study several distinct questions comparing |A+B|, |A−B|, and related sumsets under constraints such as |A+B|≤K|A|; each requires a separately stated finite extremal objective.",
+    "solution_format": "Not specified as a single common witness because the cited papers pose multiple inequivalent questions.",
+    "scalar_objective": "no canonical shared scalar",
+    "direction": "varies",
+    "configuration_parameters": {
+      "sets": "A,B in a specified abelian group",
+      "constraint": "paper-specific"
+    },
+    "human_baseline": "Gyarmati–Hennecart–Ruzsa (2009) bound |A−B| under a small-sumset condition; Bergelson–Ruzsa (2009) address density and difference-set containment. These are theorem questions, not one finite benchmark record series.",
+    "primary_sources": [
+      "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+      "https://people.dm.unipi.it/dinasso/ULTRABIBLIO/Bergelson_Ruzsa%20-%20Sumsets%20in%20difference%20sets%20%282009%29.pdf"
+    ],
+    "verification_cost": "Depends on reformulation.",
+    "risks": "Do not invent 'Sum-difference I/II/III' labels or turn a theorem statement into a finite optimization task without checking original named questions.",
+    "recommendation": "reject",
+    "reason": "The referenced Ruzsa sum/difference results are distinct inequalities/theorem problems, not a single canonical scalar construction family."
+  },
+  {
+    "id": "distinct-distances",
+    "name": "Minimum distinct distances among n planar points",
+    "category": "discrete geometry",
+    "definition": "Choose n distinct points in the plane minimizing the number of distinct pairwise Euclidean distances.",
+    "solution_format": "Exact-coordinate point set; objective number of distinct distances.",
+    "scalar_objective": "number of distinct distances",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "points": "n"
+    },
+    "human_baseline": "Erdős (1946) gave the square-lattice upper construction; Guth–Katz (2010) proved a lower bound Ω(n/log n). Exact values generally unknown; the lattice gives a concrete human candidate for each n.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1011.4105",
+      "https://petruconstantinescu.github.io/part3_essay.pdf"
+    ],
+    "verification_cost": "Medium for exact algebraic distance equality; proving optimum hard.",
+    "risks": "Score a realized upper-bound count; distinguish this min-distance-count problem from maximum multiplicity of one unit distance.",
+    "recommendation": "conditional",
+    "reason": "Canonical geometric optimization with constructions and bounds, but no broad exact record table."
+  },
+  {
+    "id": "heilbronn",
+    "name": "Heilbronn triangle problem in the unit square",
+    "category": "discrete geometry",
+    "definition": "Place n points in the unit square maximizing the minimum area of a triangle determined by any three points.",
+    "solution_format": "Exact coordinates; scalar minimum triangle area.",
+    "scalar_objective": "minimum triangle area",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "points": "n",
+      "container": "unit square"
+    },
+    "human_baseline": "Chen–Zeng proved the optimal 7-point value after a computer-assisted subdivision; specialist tables collect best-known configurations for several n, including coordinates. The square, triangle and disk formulations are separate container choices, not separate tasks here.",
+    "primary_sources": [
+      "https://math.tejstead.com/heilbronn/",
+      "https://oeis.org/A343851"
+    ],
+    "verification_cost": "Low for exact coordinates; global optimum proof high beyond small n.",
+    "risks": "Some online tables are community maintained; verify each baseline from cited paper and use exact arithmetic, not floating tolerance.",
+    "recommendation": "conditional",
+    "reason": "Very clear continuous-geometric scalar and known explicit configurations, but the current record table source is secondary; verify cited primary results per n before acceptance."
+  },
+  {
+    "id": "erdos-rogers",
+    "name": "Erdős–Rogers function f_{s,t}(n)",
+    "category": "graph theory",
+    "definition": "For fixed 2≤s<t, maximize the independence number α(G) over n-vertex K_s-free graphs G.",
+    "solution_format": "Graph witness and independent set; score α(G).",
+    "scalar_objective": "independence number",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "vertices": "n",
+      "forbidden_clique": "s",
+      "independent_set_forbidden_size": "t (target alpha < t)"
+    },
+    "human_baseline": "Erdős–Rogers introduced the function; extensive probabilistic and explicit bounds are surveyed in recent graph Ramsey literature. Specific finite graph records need source-level validation before use.",
+    "primary_sources": [
+      "https://www.cs.rit.edu/~spr/ElJC/ejcram18.pdf"
+    ],
+    "verification_cost": "High: candidate independent set gives lower bound, but certifying α(G) and maximality is hard.",
+    "risks": "Carefully define f_{s,t}(n) and distinguish exact α(G) from a supplied independent-set lower bound; may overlap Ramsey graph tasks at t fixed.",
+    "recommendation": "conditional",
+    "reason": "A recognized graph extremal function with natural scalar, but poor witness-only evaluation and no curated finite database confirmed."
+  }
+]

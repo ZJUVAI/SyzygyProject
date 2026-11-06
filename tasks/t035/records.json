@@ -1,0 +1,40 @@
+{
+  "best_human": {
+    "value": 320,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "degree": 4,
+      "girth": 10
+    },
+    "url": "https://arxiv.org/abs/2511.07247v2",
+    "provenance": "Exoo, Goedgebeur, Jooken, Stubbe, and Van den Eede report n(4,10) <= 320. Their paper does not claim equality.",
+    "evidence_state": "published construction; witness downloaded from authors' public repository"
+  },
+  "best_public": {
+    "value": 320,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "degree": 4,
+      "girth": 10
+    },
+    "url": "https://houseofgraphs.org/meta-directory/cages",
+    "evidence_state": "publicly reported upper bound; not an optimality proof",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 320,
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "degree": 4,
+      "girth": 10
+    },
+    "url": "https://github.com/AGT-Kulak/smallRegGirthGraphs/blob/main/genLifts/data/graphs/cage/n320_k4_g10.g6",
+    "provenance": "The graph6 file from the paper authors' repository was decoded into data/human_graph.json. The task checker verifies the resulting graph directly.",
+    "ai_provenance": "Conversion and independent verification performed for this task; graph construction is attributed to the cited paper authors.",
+    "actual_value": 320,
+    "evidence_state": "witness and order replayed; checker verifies simple connected 4-regularity and exact girth 10"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+}

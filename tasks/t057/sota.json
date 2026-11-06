@@ -1,0 +1,115 @@
+{
+  "task_id": "T057",
+  "review_status": "partial_sol",
+  "configurations": {
+    "T057-C01": {
+      "public_value": "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+      "public_source": {
+        "url": "https://github.com/wq-will/SimpleTES/blob/47d3413da1d85dc24341219d47452d2601e56a57/best_results/mathematics_discovery/sum_difference_problem/sum_difference_problem_best_construction.json",
+        "title": "SimpleTES published best sum-difference construction",
+        "location": "best_results/mathematics_discovery/sum_difference_problem/sum_difference_problem_best_construction.json at commit 47d3413da1d85dc24341219d47452d2601e56a57",
+        "method": "Published GPT-OSS-120B SimpleTES construction, identified in the paper as the post-trained result 1.144887",
+        "git_blob_sha1": "e8d7aac0678bf7f7b36bdd448d03aa1990372785",
+        "asset_byte_sha256": "d5cbe4aff970312ecf17f049bbee7fbcfe5ee2ca4b87d44790855d862b4051a5",
+        "license": "GNU Affero General Public License v3 or later; source repository LICENSE copied to LICENSE.SimpleTES",
+        "license_url": "https://github.com/wq-will/SimpleTES/blob/47d3413da1d85dc24341219d47452d2601e56a57/LICENSE",
+        "reported_precision": "Paper rounds to six decimal places; the exact set is independently rescored below.",
+        "paper_url": "https://arxiv.org/abs/2604.19341",
+        "paper_location": "Appendix O.2, Sum-Difference Problem; Figure 10 caption reports |A|=506, |A+A|=3551, |A-A|=2775; Table 12 reports 1.143975 and states post-training improves it to 1.144887",
+        "matching_configuration": "The paper states |A|<=512 and A subset [-10^6,10^6]; SimpleTES evaluator uses C(A)=log(|A+A|/|A|)/log(|A-A|/|A|)."
+      },
+      "reproduced_value": "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+      "program": "sota.py",
+      "witness": "sota_witness.json",
+      "matches_public_best": false,
+      "matches_best_reproducible_public": true,
+      "comparison_tolerance": "No tolerance is needed for this source witness: the score is recomputed from exact integer sumset and difference-set cardinalities. The paper's 1.144887 is the six-decimal rounding of the certified objective interval.",
+      "highest_reported": {
+        "value": "1.145427",
+        "source": {
+          "url": "https://arxiv.org/abs/2609.14858",
+          "title": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+          "location": "Table 1, Sum Diff column; §4.2 reports the result and says Appendix B.3 contains formal definitions. The accessible task configuration is independently confirmed by the code repository task README and its fetch script.",
+          "method": "Dream-RSI, Gemini-3.1-Pro, 10 rounds",
+          "reported_precision": "Rounded to six decimal places",
+          "project_page": "https://www.dream-rsi.com/",
+          "paper_repo": "https://github.com/zhengkid/Dream-RSI",
+          "paper_repo_revision": "b92bc1ea39e8186f9756e038c39e33de68adda74",
+          "paper_repo_branches": [
+            "main"
+          ],
+          "paper_repo_releases": [],
+          "paper_repo_commit_history_count": 5,
+          "paper_repo_contents": "README, citation metadata, image assets, and paper PDF; release plan says discovered programs are being prepared.",
+          "code_repo": "https://github.com/google-research/dream-rsi",
+          "code_repo_revision": "8ec35bd2538220517ce1bfca4282db21b8c518db",
+          "code_repo_branches": [
+            "main"
+          ],
+          "code_repo_releases": [],
+          "code_repo_commit_history": [
+            "8ec35bd2538220517ce1bfca4282db21b8c518db",
+            "3fc442ef302c8e1e022619860acb3d1c10a2eeb9"
+          ],
+          "code_repo_artifact_status": "The code repository contains launch scripts and evaluator setup but no generated run outputs or sums_diffs best-construction file; its fetch_tasks.sh downloads task scaffolding from SimpleTES.",
+          "configuration_confirmation": {
+            "task_readme": "https://github.com/google-research/dream-rsi/blob/8ec35bd2538220517ce1bfca4282db21b8c518db/tasks/README.md",
+            "task_readme_git_blob_sha1": "a124ecd1d4f2bede51e4e62896cff70687f27816",
+            "task_readme_claim": "C(A)=log(|A+A|/|A|)/log(|A-A|/|A|); 2 to 512 distinct integers in [-10^6,10^6].",
+            "fetch_script": "https://github.com/google-research/dream-rsi/blob/8ec35bd2538220517ce1bfca4282db21b8c518db/scripts/fetch_tasks.sh",
+            "simpletes_task_commit": "47d3413da1d85dc24341219d47452d2601e56a57"
+          },
+          "reproduction_status": "witness_not_released",
+          "search_notes": "Checked Dream-RSI arXiv v2 and Appendix B.3, dream-rsi.com Results section, the arXiv-linked zhengkid/Dream-RSI repository's full tree and all five commits, and the linked google-research/dream-rsi code repository's full tree and both commits. Both repositories have one main branch and no releases. No sums_diffs best program or witness was found."
+        }
+      },
+      "best_reproducible_source": "Same as public_source: the pinned SimpleTES construction JSON above.",
+      "best_reproducible": {
+        "value": "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+        "source": "Pinned SimpleTES public best-construction JSON, asset SHA-256 d5cbe4aff970312ecf17f049bbee7fbcfe5ee2ca4b87d44790855d862b4051a5",
+        "program": "sota.py",
+        "witness": "sota_witness.json",
+        "reproduction_status": "recomputed_with_T057_exact_integer_checker"
+      },
+      "unmatched_reports": [
+        {
+          "value": "1.1901774219",
+          "source": "https://arxiv.org/abs/2606.06473",
+          "location": "Table 2, Sums differences problems 1",
+          "method": "MLEvolve",
+          "reason_not_compared_as_T057": "The paper does not specify the cardinality and integer interval for this row, and the public MLEvolve tree has no result witness. Its AlphaEvolve comparator is 1.1479889651; AlphaEvolve reports a U1 construction with 2003 elements for an asymptotic lower bound, outside T057's 512-element cap. That connection suggests a different task scope, but the released MLEvolve record does not let us establish its exact constraints."
+        }
+      ],
+      "independent_recomputation": {
+        "cardinality": 506,
+        "sumset_size": 3551,
+        "difference_set_size": 2775,
+        "minimum": -487,
+        "maximum": 1298,
+        "all_distinct": true,
+        "within_integer_interval": true,
+        "checker": "tasks/t057/check.py; exact integer enumeration followed by an outward-rounded mpmath interval",
+        "objective_interval": [
+          "1.144886859713313385832227182707955296769446772249871299702294602807284509830961151444",
+          "1.144886859713313385832227182707955296769446772249871299702294602807284509830961157769"
+        ]
+      },
+      "limitations": [
+        "The highest located report for the matching T057 configuration is Dream-RSI 1.145427. Its witness is unavailable, so the reproduced SimpleTES score 1.1448868597 is not claimed to reach or exceed it.",
+        "MLEvolve reports 1.1901774219 for a task called Sums differences problems 1, but its paper does not state matching cardinality and integer bounds, its released repository contains no witness, and its AlphaEvolve comparator 1.1479889651 corresponds to a 2003-element construction that violates T057's cardinality cap. It is therefore not entered as a same-configuration public value.",
+        "AlphaEvolve V2's 1.121936 is lower than the reproduced SimpleTES construction in the checked Dream-RSI comparison table. AlphaEvolve's separate asymptotic lower-bound constructions use 2003 or 54265 elements and do not meet T057's cardinality cap.",
+        "This is a finite checked-source comparison, not a claim of a global optimum or a complete survey of all public results."
+      ],
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T057-C01": {
+      "status": "best_reproducible",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05",
+      "public_sources_only": true,
+      "highest_reported_reproduced": false
+    }
+  }
+}

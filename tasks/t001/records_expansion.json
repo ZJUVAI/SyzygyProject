@@ -1,0 +1,66 @@
+{
+  "task_id": "T001",
+  "acceptance_status": "accepted_by_sol",
+  "survey_cutoff": "2026-11-04",
+  "configurations": {
+    "T001-C02": {
+      "parameters": {
+        "n": 32,
+        "container": "unit square"
+      },
+      "best_human": {
+        "value": 0.087858157088,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/",
+        "provenance": "Packomania table; exact publication attribution not independently resolved.",
+        "evidence_state": "public table value, local saved human construction independently verified",
+        "origin_type": "human construction; attribution unresolved"
+      },
+      "best_public": {
+        "value": 0.087858157088,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/csq32.html",
+        "evidence_state": "best-known table entry; no optimality claim made",
+        "origin_type": "source attribution unresolved"
+      },
+      "best_reproduced": {
+        "actual_value": "10982269511/125000000000",
+        "date_reproduced": "2026-11-04",
+        "url": "https://packomania.com/csq/txt/csq32.txt",
+        "local_witness": "data/human_reference_n32.json",
+        "provenance": "Copied from the exact-rational witness saved for T005-C02. Coordinates are local to this task and checked under the equal-circle objective.",
+        "evidence_state": "exact rational boundary and all 496 pair checks passed"
+      }
+    },
+    "T001-C03": {
+      "parameters": {
+        "n": 50,
+        "container": "unit square"
+      },
+      "best_human": {
+        "value": 0.071377103865,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/",
+        "provenance": "Packomania table; table's reference [14] author and year were not resolved.",
+        "evidence_state": "public table value, local coordinate witness independently verified",
+        "origin_type": "human construction; detailed attribution unresolved"
+      },
+      "best_public": {
+        "value": 0.071377103865,
+        "date_checked": "2026-11-04",
+        "url": "https://packomania.com/csq/csq50.html",
+        "evidence_state": "best-known entry in checked source; no global optimum claim made",
+        "origin_type": "source attribution unresolved"
+      },
+      "best_reproduced": {
+        "actual_value": "14275420753/200000000000",
+        "date_reproduced": "2026-11-04",
+        "url": "https://packomania.com/csq/txt/csq50.txt",
+        "local_witness": "data/packomania_n50.json",
+        "provenance": "Centered-square coordinate text translated by (1/2, 1/2) into [0,1]^2. Radius reduced from 0.071377103865 by 10^-10 before exact checking.",
+        "evidence_state": "exact rational boundary and all 1225 pair checks passed"
+      }
+    }
+  },
+  "authoritative_records": "records.json:configuration_records"
+}

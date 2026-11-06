@@ -1,0 +1,988 @@
+[
+  {
+    "id": "aa01",
+    "name": "First Autocorrelation Inequality (AC1)",
+    "category": "analysis / autoconvolution",
+    "definition": "Find nonnegative integrable f supported on [-1/4,1/4], integral 1, minimizing max_{t in [-1/2,1/2]} (f*f)(t).",
+    "solution_format": "Exact piecewise-polynomial or rational step function with proof of support, positivity and unit mass.",
+    "scalar_objective": "Phi1=max_t(f*f)(t)",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "support": "fixed [-1/4,1/4]",
+      "representation": "piecewise polynomial degree and breakpoints; configure separately"
+    },
+    "human_baseline": "SimpleTES (2026 paper table 11 reports human 1.509730; AI-assisted results separate: AlphaEvolve 1.505300; SimpleTES 1.503871). Human attribution cites prior sources [15,82,147], which should be independently checked before benchmark release.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2604.19341"
+    ],
+    "verification_cost": "Medium/high: exact convolution per polynomial segment, certify global maximum via roots/interval arithmetic.",
+    "risks": "Sampling the continuum maximum is not a proof; enforce exact mass and nonnegativity. Human baseline provenance needs citation-level audit.",
+    "recommendation": "accept",
+    "reason": "Named established objective, human record and one scalar; strict certificate possible with piecewise-polynomial representation."
+  },
+  {
+    "id": "aa02",
+    "name": "Second Autocorrelation Inequality (AC2)",
+    "category": "analysis / autoconvolution",
+    "definition": "Find nonnegative integrable f supported on [-1/4,1/4], integral 1, maximizing ||f*f||_2^2/(||f*f||_1 ||f*f||_infinity).",
+    "solution_format": "Exact piecewise-polynomial or rational step function with proof of support, positivity and unit mass.",
+    "scalar_objective": "Phi2=||f*f||_2^2/(||f*f||_1||f*f||_infinity)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "support": "fixed [-1/4,1/4]",
+      "representation": "piecewise polynomial degree and breakpoints; configure separately"
+    },
+    "human_baseline": "SimpleTES (2026 table 11) reports best human 0.901500; AI-assisted: AlphaEvolve V2 0.961000; SimpleTES 0.962694.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2604.19341"
+    ],
+    "verification_cost": "High: exact convolution and certified L2/L1/L-infinity evaluation; maximum requires root isolation/interval methods.",
+    "risks": "A sampled supremum gives unsound scores; human record citation chain needs audit. Objective's denominator conventions must be fixed.",
+    "recommendation": "accept",
+    "reason": "Explicit published extremal objective with named human and AI baselines; admits rigorous certificates using algebraic pieces."
+  },
+  {
+    "id": "aa03",
+    "name": "Third Autocorrelation Inequality (AC3)",
+    "category": "analysis / autoconvolution",
+    "definition": "Find real integrable f supported on [-1/4,1/4], integral 1, minimizing max_t |(f*f)(t)| over [-1/2,1/2].",
+    "solution_format": "Exact piecewise-polynomial or rational step function, with exact integral and certified global supremum.",
+    "scalar_objective": "Phi3=max_t |(f*f)(t)|",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "support": "fixed [-1/4,1/4]",
+      "representation": "piecewise polynomial degree and breakpoints; configure separately"
+    },
+    "human_baseline": "SimpleTES (2026 table 11) reports best human 1.458100; AI-assisted results include AlphaEvolve 1.455700 and SimpleTES 1.453675. Paper flags some AI comparisons as using a corrected verifier.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2604.19341"
+    ],
+    "verification_cost": "High: exact convolution; certify absolute maximum by polynomial critical-point isolation or interval arithmetic.",
+    "risks": "Continuum maximum cannot be sampled; verifier versions differed in prior AI comparisons; audit human sources.",
+    "recommendation": "accept",
+    "reason": "Named objective, scalar and human baseline are directly tabulated; exact semialgebraic witnesses can be certified."
+  },
+  {
+    "id": "aa04",
+    "name": "Erdős Minimum Overlap",
+    "category": "analysis / extremal combinatorics",
+    "definition": "Let f:[0,2]→[0,1] be a step function with ∫_0^2 f(x)dx=1. Define g(x)=1−f(x) for x∈[0,2] and g(x)=0 outside [0,2]. Minimize Ψ(f)=sup_{t∈R} ∫_R f(x)g(x+t)dx = sup_{t∈R} ∫_[0,2]∩[-t,2-t] f(x)(1−f(x+t))dx. Both f and g are zero outside [0,2]; this is essential. Include both shift directions and do not use finite M(N) as the same score.",
+    "solution_format": "Exact rational step function with breakpoints and values, exact mass, and a rigorous maximization over all shifts s (piecewise polynomial plus root isolation/interval arithmetic).",
+    "scalar_objective": "Ψ(f)=sup_{t∈R}∫_R f(x)g(x+t)dx, where f,g are supported on [0,2] and g=1−f on [0,2] (lower is better). Equivalent to the intersection-range integral; both positive and negative shifts are included.",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "step_count": "number of equal-width intervals on [0,2] (e.g. 15 or 51); representation setting, not a separate task"
+    },
+    "human_baseline": "Haugland (2016) reports human step-function upper-bound witnesses for this continuous normalized objective: 15 steps gives 0.38153155 (rounded upward); 51 steps gives 0.3809268534330870. These are reported construction scores, not independently reproduced here. AI-assisted results are separate.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2201.05704",
+      "https://arxiv.org/abs/2604.19341"
+    ],
+    "verification_cost": "Finite exact task low/medium; limiting witness high (integral/profile derivation and rigorous discretization error certificate).",
+    "risks": "Both f and its complement g must be supported on [0,2], with g=1−f only inside [0,2] and zero outside. If 1−f is incorrectly zero-extended as a function equal to 1 outside, endpoint shifts spuriously score 1. Use sup over all real t, equivalently include both positive and negative shifts; a nonsymmetric candidate cannot be scored using only one shift direction. Certify the piecewise functional over every shift interval, not on a grid. The finite partition M(N)/N is related but not the same candidate score.",
+    "recommendation": "accept",
+    "reason": "Named limiting extremal problem with Haugland continuous step-function upper-bound constructions and a natural scalar. The support convention for both f and g makes the score well-defined and comparable to the published 0.38 values."
+  },
+  {
+    "id": "aa05",
+    "name": "Hadamard Maximum Determinant, order 29",
+    "category": "matrices / maxdet",
+    "definition": "Find A in {−1,+1}^{29x29} maximizing |det A|.",
+    "solution_format": "29x29 sign matrix; exact determinant certificate; optionally a proving upper-bound certificate if optimality is claimed.",
+    "scalar_objective": "|det A| (equivalently the normalized determinant in the cited benchmark)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "order": 29
+    },
+    "human_baseline": "Orrick and Solomon's classical record, as reported by Ye et al. (2026): |det|=320·7^12·2^28 (normalized 0.935673). SimpleTES recovers it; this is AI-assisted and is not the human baseline.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2604.19341",
+      "https://caramba.inria.fr/sem-slides/200904301100.pdf"
+    ],
+    "verification_cost": "Low: Bareiss exact determinant; optimality verification is separate and harder.",
+    "risks": "Do not score only existence of Hadamard; exact determinant is the natural scalar. Published value is a best-known lower bound, not necessarily proved global maximum.",
+    "recommendation": "accept",
+    "reason": "Explicit known scalar record, human construction, exact cheap evaluator; fixed order is configuration."
+  },
+  {
+    "id": "aa06",
+    "name": "Best minimum distance of linear codes",
+    "category": "coding theory / linear codes",
+    "definition": "For fixed (n,k,q), construct a q-ary linear [n,k] code with maximum minimum Hamming distance d.",
+    "solution_format": "Generator matrix over GF(q), with independently checked rank and minimum distance.",
+    "scalar_objective": "Minimum Hamming distance d(C)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "block length",
+      "k": "dimension",
+      "q": "finite-field order; use distinct benchmark rows, not one task per q/n"
+    },
+    "human_baseline": "Human-computed database: Markus Grassl, John Cannon and Greg White's Magma BKLC tables; Magma reports 33,152 best-known binary codes, all binary entries through n=31 optimal. Row-wise d and construction need retrieval from the database. This is historical human computation, not AI.",
+    "primary_sources": [
+      "https://docs.magma-maths.org/CodingTheory/LinearCodes/best-codes.html",
+      "https://codetables.de/"
+    ],
+    "verification_cost": "Medium for small k (enumerate q^k codewords); high beyond that. Restrict benchmark to enumerable dimensions or certificate-backed distance.",
+    "risks": "Minimum-distance inner enumeration grows exponentially; restrict k (and n) and verify row construction. Database values are best-known, not all proven optimal. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "accept",
+    "reason": "Canonical construction problem and extensively maintained human table, with one exact scalar and matrix output."
+  },
+  {
+    "id": "aa07",
+    "name": "Best length of a linear code at fixed dimension and distance",
+    "category": "coding theory / linear codes",
+    "definition": "For fixed (k,d,q), construct a q-ary linear code having dimension k, distance at least d and minimum possible block length n.",
+    "solution_format": "Generator matrix over GF(q), with exact rank/distance check.",
+    "scalar_objective": "Block length n",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "k": "dimension",
+      "d": "minimum distance constraint",
+      "q": "finite-field order"
+    },
+    "human_baseline": "Magma BKLC handbook documents BestLengthLinearCode(K,k,d), implementing the human best-known table; specific row score/construction is configuration-dependent and must be looked up. Historical human database, not AI.",
+    "primary_sources": [
+      "https://docs.magma-maths.org/CodingTheory/LinearCodes/best-codes.html",
+      "https://codetables.de/"
+    ],
+    "verification_cost": "Medium/high: minimum distance certification can require q^k enumeration.",
+    "risks": "Distance lower-bound validity versus optimality of length; only small k rows are straightforward to verify. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Natural scalar and human tables exist; candidate selection must limit inner codeword enumeration and select open rows."
+  },
+  {
+    "id": "aa08",
+    "name": "Maximum dimension of a linear code at fixed length and distance",
+    "category": "coding theory / linear codes",
+    "definition": "For fixed (n,d,q), construct a q-ary linear code of length n and distance at least d with maximum dimension k.",
+    "solution_format": "Generator matrix, exact rank and verified minimum distance.",
+    "scalar_objective": "Dimension k",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "block length",
+      "d": "minimum distance constraint",
+      "q": "finite-field order"
+    },
+    "human_baseline": "Magma BKLC handbook documents BestDimensionLinearCode and Grassl's tables of known bounds/constructions; pin a finite row for an executable baseline. Human-computed, not AI.",
+    "primary_sources": [
+      "https://docs.magma-maths.org/CodingTheory/LinearCodes/best-codes.html",
+      "https://codetables.de/"
+    ],
+    "verification_cost": "Medium/high, exponential in k for naive minimum-distance check.",
+    "risks": "Same underlying code family as aa06/aa07; likely redundant task formulation unless leaderboard deliberately tests the three dual parameter queries. Restrict k. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Scalar is natural and database-supported, but consolidate with aa06 unless the task suite explicitly wants complementary fixed-parameter views."
+  },
+  {
+    "id": "aa09",
+    "name": "Maximum size of a binary code A(n,d)",
+    "category": "coding theory / nonlinear codes",
+    "definition": "Construct a subset C of {0,1}^n with pairwise Hamming distance at least d and maximum cardinality.",
+    "solution_format": "List of binary words; verify distinctness and pairwise distances.",
+    "scalar_objective": "|C|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "block length",
+      "d": "minimum distance"
+    },
+    "human_baseline": "A. E. Brouwer's classical tables and ongoing bounds; specific construction/value must be fixed per row. Human literature/database; no AI baseline assumed.",
+    "primary_sources": [
+      "https://www.win.tue.nl/~aeb/codes/",
+      "https://doi.org/10.1016/0012-365X(90)90309-4"
+    ],
+    "verification_cost": "O(|C|^2 n) for lower-bound witness; proving optimality substantially harder.",
+    "risks": "Many instances have only bounds, not exact optimum; select a published construction row and compare witness cardinality, not claim optimality.",
+    "recommendation": "conditional",
+    "reason": "Canonical extremal scalar and substantial human research; requires careful row selection and verifiable explicit witnesses."
+  },
+  {
+    "id": "aa10",
+    "name": "Constant-weight code A(n,d,w)",
+    "category": "coding theory / constant-weight codes",
+    "definition": "Find a largest family of w-subsets of an n-set with pairwise symmetric difference at least d.",
+    "solution_format": "List of w-subsets/bitmasks; verify all weights and pairwise Hamming distances.",
+    "scalar_objective": "Code size |C|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "ambient length",
+      "d": "minimum Hamming distance",
+      "w": "constant word weight"
+    },
+    "human_baseline": "Brouwer, Shearer, Sloane and Smith (1990) compiled bounds; many later explicit constructions and improved bounds. Pin row and construction before benchmark inclusion; human baseline, no AI assumed.",
+    "primary_sources": [
+      "https://doi.org/10.1016/0012-365X(90)90309-4",
+      "https://doi.org/10.3934/amc.2016.10.525"
+    ],
+    "verification_cost": "Low/medium: O(|C|^2 n), often under a second for small instances.",
+    "risks": "Do not confuse lower-bound construction with known optimum; duplicate of general nonlinear code only if constant-weight constraint is not central. Fixed rows needed. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "accept",
+    "reason": "Named classical family, explicit construction tables and a cheap exact scalar verifier."
+  },
+  {
+    "id": "aa11",
+    "name": "Constant-dimension subspace code A_q(n,d;k)",
+    "category": "coding theory / subspace codes",
+    "definition": "Find the largest set of k-dimensional subspaces of GF(q)^n with pairwise subspace distance at least d.",
+    "solution_format": "Basis matrices/RREFs for subspaces; exact rank/intersection verification.",
+    "scalar_objective": "Code size |C|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "q": "field order",
+      "n": "ambient dimension",
+      "k": "subspace dimension",
+      "d": "minimum subspace distance"
+    },
+    "human_baseline": "Heinlein, Kiermaier, Kurz and Wassermann (2016, updated 2019) maintain Tables of Subspace Codes; the paper explicitly describes best lower/upper bounds and constructions. Fix an exact table row for score/construction.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1601.02864",
+      "https://subspacecodes.uni-bayreuth.de/"
+    ],
+    "verification_cost": "Medium: pairwise intersection ranks O(|C|^2 n^3) with finite-field linear algebra.",
+    "risks": "Many rows are intervals rather than exact optima; select modest dimensions and public construction records. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "accept",
+    "reason": "Canonical research objective, maintained human database and exact simple witness verifier."
+  },
+  {
+    "id": "aa12",
+    "name": "Mixed-dimension subspace code A_q(n,d)",
+    "category": "coding theory / subspace codes",
+    "definition": "Find the largest collection of subspaces of GF(q)^n, with unrestricted dimensions, having minimum subspace distance at least d.",
+    "solution_format": "List of basis matrices for subspaces; verify all pairwise distances.",
+    "scalar_objective": "Code size |C|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "q": "field order",
+      "n": "ambient dimension",
+      "d": "minimum subspace distance"
+    },
+    "human_baseline": "Heinlein et al. (2016/2019) subspace-code tables cover mixed-dimension codes and constructions; specific row must be fixed.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1601.02864",
+      "https://subspacecodes.uni-bayreuth.de/"
+    ],
+    "verification_cost": "Medium, pairwise finite-field rank calculations.",
+    "risks": "Overlap with constant-dimension task; mixed-dimension design is a distinct published problem but sparse exact human baselines need screening.",
+    "recommendation": "conditional",
+    "reason": "One scalar and database exist, but a good fixed row with comparable human construction is needed."
+  },
+  {
+    "id": "aa13",
+    "name": "Partial spread size",
+    "category": "coding theory / finite geometry",
+    "definition": "Construct the largest collection of pairwise disjoint k-dimensional subspaces of GF(q)^n (partial k-spread).",
+    "solution_format": "List of subspaces; verify pairwise zero intersection.",
+    "scalar_objective": "Number of subspaces",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "q": "field order",
+      "n": "ambient dimension",
+      "k": "subspace dimension"
+    },
+    "human_baseline": "Beutelspacher (1975) established constructions/results; modern best-known constructions are catalogued in subspace-code tables. Fix an exact row for a numerical baseline.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF01214740",
+      "https://arxiv.org/abs/1601.02864"
+    ],
+    "verification_cost": "Medium, exact pairwise rank/intersection checks.",
+    "risks": "Special case of constant-dimension code at distance 2k; consolidate rather than count independently if benchmark has aa11 at those parameters. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Well-studied scalar, but mathematically a special case of constant-dimension codes and likely duplicate."
+  },
+  {
+    "id": "aa14",
+    "name": "Rank-metric code size",
+    "category": "coding theory / rank-metric codes",
+    "definition": "For fixed matrix dimensions, field size and minimum rank distance, construct the largest matrix code with pairwise rank distance at least δ.",
+    "solution_format": "List of matrices over GF(q); verify pairwise ranks of differences.",
+    "scalar_objective": "Code size |C|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "q": "field order",
+      "m,n": "matrix dimensions",
+      "delta": "minimum rank distance"
+    },
+    "human_baseline": "Delsarte (1978) established rank-metric bounds and constructions; Gabidulin (1985) gave maximum-rank-distance codes attaining the Singleton bound for standard parameters. These provide explicit human constructions and optimal cardinality in MRD rows.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF01576918",
+      "https://doi.org/10.1007/BF01054462"
+    ],
+    "verification_cost": "Medium: pairwise matrix-rank checks; manageable for small configurations.",
+    "risks": "Many canonical MRD instances are already solved exactly, so discovery headroom is limited; choose nontrivial non-MRD rows.",
+    "recommendation": "conditional",
+    "reason": "Strong human baseline and exact scalar, but standard benchmark rows are closed-form solved."
+  },
+  {
+    "id": "aa15",
+    "name": "Quantum stabilizer code distance",
+    "category": "coding theory / quantum codes",
+    "definition": "For fixed n,k,q, construct a stabilizer quantum code with maximum distance d.",
+    "solution_format": "Stabilizer/check matrix over finite field with commutation constraint; provide distance certificate or exhaustive low-n check.",
+    "scalar_objective": "Distance d",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "physical length",
+      "k": "logical dimension",
+      "q": "qudit dimension"
+    },
+    "human_baseline": "Grassl, Beth and Rötteler (2004) and Markus Grassl's maintained quantum-code bounds/tables provide human constructions and best-known bounds; row-wise baseline must be retrieved.",
+    "primary_sources": [
+      "https://arxiv.org/abs/quant-ph/0312164",
+      "https://codetables.de/"
+    ],
+    "verification_cost": "High: distance search over stabilizer normalizer; limit n and k or use certified search.",
+    "risks": "Distance verifier is substantially more complex than classical linear codes; do not treat a bound/table entry as a verified distance without construction.",
+    "recommendation": "conditional",
+    "reason": "Clear scalar and human tables, but reliable independent verification is costly."
+  },
+  {
+    "id": "aa16",
+    "name": "Self-dual binary code minimum distance",
+    "category": "coding theory / self-dual codes",
+    "definition": "For fixed even length n, construct a binary self-dual code maximizing its minimum distance.",
+    "solution_format": "Generator/check matrix; verify self-orthogonality, dimension n/2 and minimum distance.",
+    "scalar_objective": "Minimum distance d",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "even block length",
+      "code_type": "Type I or Type II"
+    },
+    "human_baseline": "Conway and Sloane (1990) developed extremal self-dual codes and bounds; later classification tables report best distances by length. Need pin down an explicit row and matrix.",
+    "primary_sources": [
+      "https://doi.org/10.1016/0097-3165(90)90057-4",
+      "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/self_dual_codes/"
+    ],
+    "verification_cost": "Medium for small n: enumerate 2^{n/2} codewords.",
+    "risks": "Type I/II and length regime matter; ensure human table source and exact matrix are accessible. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Natural scalar with historical human constructions; candidate fixed instances can be exactly checked at modest n."
+  },
+  {
+    "id": "aa17",
+    "name": "LCD binary code minimum distance",
+    "category": "coding theory / LCD codes",
+    "definition": "For fixed binary [n,k] parameters, construct a linear code C with C∩C^perp={0} maximizing minimum distance.",
+    "solution_format": "Generator matrix; verify rank, LCD condition and distance.",
+    "scalar_objective": "Minimum distance d(C)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "length",
+      "k": "dimension"
+    },
+    "human_baseline": "Massey introduced LCD codes (1992); later papers construct LCD codes and bound their parameters. Specific best-known row/result requires source audit; no numeric baseline asserted here.",
+    "primary_sources": [
+      "https://doi.org/10.1109/18.179379",
+      "https://arxiv.org/abs/1608.02170"
+    ],
+    "verification_cost": "Medium for small k; LCD test is a matrix-rank check.",
+    "risks": "Published constructions may target asymptotic existence rather than finite best d; row-specific human baseline required. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Promising structural constraint and scalar, but current finite baseline evidence is not yet pinned down."
+  },
+  {
+    "id": "aa18",
+    "name": "Covering code size",
+    "category": "coding theory / covering codes",
+    "definition": "For fixed binary length n and covering radius R, construct a smallest set C whose radius-R Hamming balls cover the whole cube.",
+    "solution_format": "List of codewords; verify full coverage by exhaustive enumeration for small n.",
+    "scalar_objective": "Code size |C|",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "n": "length",
+      "R": "covering radius"
+    },
+    "human_baseline": "Cohen, Honkala, Litsyn and Lobstein (1997) survey and tabulate covering codes; select a small open/nontrivial instance and recover explicit construction.",
+    "primary_sources": [
+      "https://doi.org/10.1017/CBO9780511524919"
+    ],
+    "verification_cost": "Low for small n (2^n point coverage), exponential and unsuitable for large n.",
+    "risks": "Inner covering check scales exponentially; exact optimum often unknown. Only small finite instances qualify.",
+    "recommendation": "conditional",
+    "reason": "Natural one-scalar design task with historical constructions, but verifier cost bounds useful scale."
+  },
+  {
+    "id": "aa19",
+    "name": "Orthogonal-array strength",
+    "category": "combinatorial designs / arrays",
+    "definition": "For fixed alphabet size q and number of columns n, construct an orthogonal array with maximum strength t at a prescribed index λ (or minimize λ for fixed t; choose one convention).",
+    "solution_format": "Finite array; exact count each t-column symbol pattern.",
+    "scalar_objective": "Strength t (or index λ, but not both in one task)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "q": "alphabet size",
+      "n": "columns",
+      "lambda": "index when fixed"
+    },
+    "human_baseline": "Hedayat, Sloane and Stufken (1999) compile constructions and bounds; choose a concrete table row. Baseline currently pending row-level verification.",
+    "primary_sources": [
+      "https://doi.org/10.1007/978-1-4612-1478-6"
+    ],
+    "verification_cost": "Low/medium: enumerate column subsets and symbol tuples for small arrays.",
+    "risks": "Objective must fix index or strength; broad parameterization risks conflating different design problems.",
+    "recommendation": "conditional",
+    "reason": "Construction output and finite exact scalar are suitable, but exact row and direction need normalization."
+  },
+  {
+    "id": "aa20",
+    "name": "Best-known binary linear code database reconstruction",
+    "category": "coding theory / reproducibility",
+    "definition": "Given a selected [n,k] entry from Grassl/Magma, reconstruct a generator matrix attaining the tabulated best-known distance.",
+    "solution_format": "Generator matrix plus exact distance certificate.",
+    "scalar_objective": "Minimum distance d(C)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "length",
+      "k": "dimension",
+      "q": 2
+    },
+    "human_baseline": "Cannon, Grassl and White's Magma BKLC database; e.g. handbook gives [23,12,7] as optimal, with all best-known binary codes through length 31 optimal.",
+    "primary_sources": [
+      "https://docs.magma-maths.org/CodingTheory/LinearCodes/best-codes.html"
+    ],
+    "verification_cost": "Low for k=12 (4096 codewords) and selected low-dimension entries.",
+    "risks": "Duplicates aa06 by design; use only if benchmark specifically values rediscovery of a named explicit construction.",
+    "recommendation": "reject",
+    "reason": "Same underlying objective as aa06 and should not be double-counted."
+  },
+  {
+    "id": "aa21",
+    "name": "LABS minimum aperiodic autocorrelation energy",
+    "category": "sequences / binary autocorrelation",
+    "definition": "For s_i in {±1}, length L, minimize E=Σ_{k=1}^{L−1}(Σ_{i=1}^{L−k}s_i s_{i+k})².",
+    "solution_format": "Binary sign sequence.",
+    "scalar_objective": "E (equivalently merit factor L²/(2E))",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "L": "sequence length; select fixed rows, do not count lengths as separate task families"
+    },
+    "human_baseline": "Bošković, Brglez and Brest (2014; arXiv 2014 / journal 2017) report best-known merit-factor tables and exact optima known through L≤60 at time of publication; Joshua Knauer's solution tables are referenced. Human historical records are distinct from later AI.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1406.5301",
+      "https://www.sciencedirect.com/science/article/pii/S1568494617301023"
+    ],
+    "verification_cost": "Low: O(L²) integer arithmetic.",
+    "risks": "Energy and merit factor are strictly monotone transforms for fixed L, so they are the same task and must not be counted twice. Best known versus proven optimum must be labeled.",
+    "recommendation": "accept",
+    "reason": "Canonical researched objective, explicit human sequence tables, extremely cheap exact scalar verifier."
+  },
+  {
+    "id": "aa22",
+    "name": "LABS peak sidelobe level (PSL)",
+    "category": "sequences / binary autocorrelation",
+    "definition": "For binary sign sequence s of length L, minimize max_{1≤k<L}|Σ_{i=1}^{L−k}s_i s_{i+k}|.",
+    "solution_format": "Binary sign sequence.",
+    "scalar_objective": "PSL=max absolute nonzero aperiodic autocorrelation",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "L": "sequence length"
+    },
+    "human_baseline": "Dmitriev and Jedwab (2005) studied typical PSL; later Best-Known Peak Sidelobe Level Values (2021) reports constructed sequences and search results. Retrieve row-specific construction before instantiation.",
+    "primary_sources": [
+      "https://doi.org/10.3934/dcds.2005.12.315",
+      "https://doi.org/10.1109/TSP.2021.3078834"
+    ],
+    "verification_cost": "Low O(L²).",
+    "risks": "PSL optima can conflict with LABS energy; do not present as interchangeable with merit factor. Current row baseline needed.",
+    "recommendation": "accept",
+    "reason": "Independent standard objective with its own human literature and one exact integer score."
+  },
+  {
+    "id": "aa23",
+    "name": "LABS merit factor maximization",
+    "category": "sequences / binary autocorrelation",
+    "definition": "For a binary sign sequence length L with energy E as above, maximize F=L²/(2E).",
+    "solution_format": "Binary sign sequence.",
+    "scalar_objective": "Merit factor F",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "L": "sequence length"
+    },
+    "human_baseline": "Bošković, Brglez and Brest (2014) compare solvers and historical human merit-factor records; known exact optimality was reported only up to length 60 at that time, while best-known sequences extended to L=304 and beyond.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1406.5301",
+      "https://militzer.berkeley.edu/sequences.html"
+    ],
+    "verification_cost": "Low O(L²), exact rational score.",
+    "risks": "For fixed L this is an exact monotone reparameterization of aa21 energy; merge with aa21 rather than count separately.",
+    "recommendation": "reject",
+    "reason": "Duplicate objective with LABS energy at fixed length."
+  },
+  {
+    "id": "aa24",
+    "name": "Periodic binary autocorrelation energy",
+    "category": "sequences / periodic autocorrelation",
+    "definition": "For s∈{±1}^L, minimize the sum of squares of nonzero periodic autocorrelations C(k)=Σ_i s_i s_{i+k mod L}.",
+    "solution_format": "Binary sign sequence.",
+    "scalar_objective": "Σ_{k=1}^{L−1} C(k)^2",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "L": "period length"
+    },
+    "human_baseline": "Golay (1949) studied complementary series and periodic autocorrelation; standard sequence-design literature includes explicit constructions. A benchmark row and numerical human construction are pending verification.",
+    "primary_sources": [
+      "https://doi.org/10.1109/JRPROC.1949.232969",
+      "https://doi.org/10.1109/ICASSP.1990.115796"
+    ],
+    "verification_cost": "Low O(L²).",
+    "risks": "Be precise about periodic versus aperiodic correlation and normalization; known perfect sequences may make selected cases trivial.",
+    "recommendation": "conditional",
+    "reason": "Natural scalar and mature literature, but needs row-specific open headroom and cited human record."
+  },
+  {
+    "id": "aa25",
+    "name": "Golay complementary pair merit",
+    "category": "sequences / complementary sequences",
+    "definition": "Construct a pair of equal-length unimodular sequences minimizing the maximum absolute sum of their aperiodic autocorrelations over nonzero shifts.",
+    "solution_format": "Pair of sign or polyphase sequences; coefficients and alphabet fixed as configuration.",
+    "scalar_objective": "Peak summed aperiodic autocorrelation sidelobe",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "L": "sequence length",
+      "alphabet": "binary or q-phase, one family per configuration"
+    },
+    "human_baseline": "Golay (1949) introduced complementary series; Davis and Jedwab (1999) give constructions for generalized Boolean functions. Exact zero sidelobe is known for many lengths, giving direct human constructions.",
+    "primary_sources": [
+      "https://doi.org/10.1109/JRPROC.1949.232969",
+      "https://doi.org/10.1109/18.796380"
+    ],
+    "verification_cost": "Low O(L²).",
+    "risks": "Many instances attain zero exactly and therefore offer little discovery signal; constrain to lengths/alphabet where optimum is unknown, if found.",
+    "recommendation": "conditional",
+    "reason": "Well-defined scalar and human constructions, but conventional complementary-pair rows are solved exactly."
+  },
+  {
+    "id": "aa26",
+    "name": "Barker sequence maximum length",
+    "category": "sequences / binary autocorrelation",
+    "definition": "Determine the largest length of a binary sequence whose every nontrivial aperiodic autocorrelation has absolute value at most 1.",
+    "solution_format": "Binary sequence witness; nonexistence claims need a proof for larger lengths.",
+    "scalar_objective": "Maximum feasible length L",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "alphabet": "{±1}",
+      "sidelobe_bound": 1
+    },
+    "human_baseline": "Known Barker sequences have lengths 2,3,4,5,7,11,13; Turyn and Storer (1961) proved no odd Barker sequence length >13; broader nonexistence remains unresolved in classic formulations.",
+    "primary_sources": [
+      "https://doi.org/10.1016/0022-0000(61)90018-2",
+      "https://doi.org/10.1109/TIT.1965.1053768"
+    ],
+    "verification_cost": "Low to verify a witness; excluding longer lengths is a deep proof obligation.",
+    "risks": "Existence-threshold task, not a smooth construction score; might violate benchmark scalar criterion if only boolean instances are used.",
+    "recommendation": "reject",
+    "reason": "Primarily a yes/no existence problem and no practical comparable scalar witness score for fixed parameters."
+  },
+  {
+    "id": "aa27",
+    "name": "Polyphase low-autocorrelation merit factor",
+    "category": "sequences / complex autocorrelation",
+    "definition": "For unit-modulus complex sequence z of length L, maximize L² divided by twice the aperiodic autocorrelation energy.",
+    "solution_format": "Exact cyclotomic/algebraic unit-modulus entries or rigorously certified complex values.",
+    "scalar_objective": "Polyphase merit factor",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "L": "length",
+      "phase_order": "root-of-unity alphabet size"
+    },
+    "human_baseline": "Jedwab, Schmidt and collaborators have studied merit-factor problems and special constructions; best row-level finite sequences and exact score remain待核实 for a standard task.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1512.02475",
+      "https://doi.org/10.1109/18.796380"
+    ],
+    "verification_cost": "Medium: exact algebraic arithmetic if roots of unity; numeric-only candidates need interval certificates.",
+    "risks": "Not the binary LABS problem; benchmark can duplicate it if alphabet distinctions are not made explicit. Human baseline must be row-specific.",
+    "recommendation": "conditional",
+    "reason": "A genuinely different phase alphabet and standard scalar, but require concrete record and exact arithmetic protocol."
+  },
+  {
+    "id": "aa28",
+    "name": "Maximum determinant of sign matrices, general order",
+    "category": "matrices / maxdet",
+    "definition": "For each fixed order n, maximize |det A| over A∈{±1}^{n×n}.",
+    "solution_format": "Sign matrix with exact determinant; optional upper-bound proof.",
+    "scalar_objective": "|det A|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "matrix order; residue class n mod 4 is material"
+    },
+    "human_baseline": "Hadamard's bound and Ehlich/Wojtas bounds; Orrick's maximal-determinant tables report human constructions. Order 29 has human lower-bound 320·7^12·2^28 (AA05); other selected rows require table extraction.",
+    "primary_sources": [
+      "https://caramba.inria.fr/sem-slides/200904301100.pdf",
+      "https://doi.org/10.1016/j.disc.2008.09.025"
+    ],
+    "verification_cost": "Low exact determinant; global maximum proof high.",
+    "risks": "General family includes aa05 order 29, so do not count both as independent tasks. Best-known construction does not imply proven optimum. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Broad objective is canonical but fixed finite order instances are required; consolidate with order-29 entry in a 100-task list."
+  },
+  {
+    "id": "aa29",
+    "name": "D-optimal design determinant",
+    "category": "matrices / experimental design",
+    "definition": "Construct an n-run, m-factor design matrix under a fixed alphabet/design constraint maximizing determinant of its information matrix XᵀX.",
+    "solution_format": "Design matrix with exact entries; verify constraints and exact determinant.",
+    "scalar_objective": "det(XᵀX) (or |det X| for square designs; choose one formulation)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "runs",
+      "m": "factors",
+      "alphabet": "design levels and constraints"
+    },
+    "human_baseline": "Kiefer (1959) and later D-optimal design literature provide explicit constructions and bounds; row-specific baseline not yet verified.",
+    "primary_sources": [
+      "https://doi.org/10.1214/aoms/1177706379",
+      "https://doi.org/10.1016/j.disc.2008.09.025"
+    ],
+    "verification_cost": "Low/medium for exact small integer matrices.",
+    "risks": "Maxdet ±1 matrices are a special case; overlaps aa28 if formulation identical. Need a non-equivalent design constraint and explicit row.",
+    "recommendation": "conditional",
+    "reason": "Research-rich construction goal, but task must avoid being a mere rewording of sign-matrix maxdet."
+  },
+  {
+    "id": "aa30",
+    "name": "Weighing matrix maximal order",
+    "category": "matrices / weighing designs",
+    "definition": "For fixed weight w, construct a weighing matrix W with entries 0,±1, WWᵀ=wI, maximizing order n among admissible matrices (or fix n and maximize w; choose one).",
+    "solution_format": "Integer matrix with exact orthogonality certificate.",
+    "scalar_objective": "Order n at fixed w",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "w": "weight",
+      "n": "order when using fixed-order alternative"
+    },
+    "human_baseline": "Geramita and Seberry (1979) and subsequent weighing-matrix literature give constructions and tables; exact modern row needs verification.",
+    "primary_sources": [
+      "https://doi.org/10.1016/0012-365X(79)90002-7"
+    ],
+    "verification_cost": "Low: exact matrix multiplication.",
+    "risks": "Mixed objective conventions (maximize order versus weight); many existence-table cells are binary yes/no. Need row with meaningful scalar gap.",
+    "recommendation": "conditional",
+    "reason": "Natural exact matrix constraints, but public numerical record and optimization convention need pinning down."
+  },
+  {
+    "id": "aa31",
+    "name": "Near-orthogonal sign matrix Gram defect",
+    "category": "matrices / discrepancy",
+    "definition": "For fixed n, construct A∈{±1}^{n×n} minimizing a standard Gram-matrix defect such as ||AAᵀ−nI||_F²; use only if the cited literature has this same target objective.",
+    "solution_format": "Sign matrix.",
+    "scalar_objective": "Frobenius Gram defect",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "n": "order"
+    },
+    "human_baseline": "待核实: maxdet constructions are often near-orthogonal but the Gram defect is not thereby a separately established human optimization target.",
+    "primary_sources": [
+      "https://arxiv.org/abs/2604.19341"
+    ],
+    "verification_cost": "Low exact integer arithmetic.",
+    "risks": "Do not invent an objective from a convenient penalty; not shown to be an independently studied target.",
+    "recommendation": "reject",
+    "reason": "No verified literature/baseline for this exact objective; explicitly avoid proxy penalties."
+  },
+  {
+    "id": "aa32",
+    "name": "Ultraflat Littlewood polynomial construction",
+    "category": "polynomials / harmonic analysis",
+    "definition": "For degree N, find coefficients ε_j∈{±1} so that |P(e^{it})| is uniformly close to √N on the full unit circle, minimizing the worst normalized flatness error.",
+    "solution_format": "Exact ±1 coefficient polynomial plus rigorous supremum certificate using Bernstein/interval bounds or exact root isolation for squared modulus.",
+    "scalar_objective": "sup_t ||P(e^{it})|/√N−1|",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "N": "degree/length",
+      "representation": "exact coefficients; certification method separate"
+    },
+    "human_baseline": "Erdős posed the ultraflat Littlewood problem (1962); Bombieri and Bourgain (2009) studied Kahane's ultraflat polynomials in the unimodular class. For real Littlewood coefficients, uniform asymptotic ultraflatness is unresolved in classic literature; modern 2026 claims require independent review.",
+    "primary_sources": [
+      "https://doi.org/10.1112/blms/23.3.261",
+      "https://doi.org/10.1090/S0894-0347-08-00618-5",
+      "https://github.com/openai/math/tree/main/preprints/Ultraflat-real-Littlewood-polynomials-October-5-2026"
+    ],
+    "verification_cost": "High: continuum supremum certification; exact trigonometric polynomial interval bounds.",
+    "risks": "Do not sample the unit circle as a strict certificate. Distinguish real ±1 from arbitrary unimodular coefficients; newest claimed results need independent specialist validation.",
+    "recommendation": "conditional",
+    "reason": "Named and scalarized classical construction challenge, but baseline status and continuous verifier demand rigorous review."
+  },
+  {
+    "id": "aa33",
+    "name": "Littlewood polynomial L4 norm / merit factor",
+    "category": "polynomials / harmonic analysis",
+    "definition": "For P(z)=Σ_{j=0}^{N−1} ε_j z^j with ε_j∈{±1}, minimize its normalized L4 norm on the unit circle, equivalently maximize the binary aperiodic merit factor.",
+    "solution_format": "±1 coefficient list.",
+    "scalar_objective": "Integral_0^{2π}|P(e^{it})|^4 dt normalized by N² (equivalent fixed-length LABS energy)",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "N": "coefficient length"
+    },
+    "human_baseline": "This is mathematically equivalent to LABS merit-factor optimization; Bošković et al. (2014) provide human records/tables. No separate baseline is appropriate.",
+    "primary_sources": [
+      "https://arxiv.org/abs/1406.5301",
+      "https://arxiv.org/abs/1512.02475"
+    ],
+    "verification_cost": "Low O(N²) using correlation identity.",
+    "risks": "Exact duplicate of aa21/aa23 under coefficient correspondence.",
+    "recommendation": "reject",
+    "reason": "Merge with LABS; do not count equivalent polynomial and sequence representations separately."
+  },
+  {
+    "id": "aa34",
+    "name": "Minimum Mahler measure of noncyclotomic integer polynomials",
+    "category": "polynomials / number theory",
+    "definition": "For fixed degree bound d, find a noncyclotomic monic integer polynomial minimizing Mahler measure M(P)=∏ max(1,|root|).",
+    "solution_format": "Integer polynomial with irreducibility/noncyclotomic proof and certified roots/Mahler measure.",
+    "scalar_objective": "Mahler measure M(P)",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "degree_bound": "d",
+      "class": "monic integer, irreducible, noncyclotomic"
+    },
+    "human_baseline": "Lehmer (1933) exhibited the degree-10 polynomial with Mahler measure ≈1.176280818; it remains a classical smallest-known example and motivates Lehmer's problem.",
+    "primary_sources": [
+      "https://doi.org/10.1112/jlms/s1-8.4.242",
+      "https://doi.org/10.1007/978-3-642-36206-1_6"
+    ],
+    "verification_cost": "Medium/high: irreducibility and roots/Mahler measure require exact algebraic certification.",
+    "risks": "For degree bounded and broad coefficient sizes the search space is ill-defined; specify coefficient/degree constraints and distinguish known lower bound from conjectured minimum.",
+    "recommendation": "conditional",
+    "reason": "Famous named scalar challenge and human construction, but parameterization and exact certification need careful design."
+  },
+  {
+    "id": "aa35",
+    "name": "Newman polynomial minimum root radius",
+    "category": "polynomials / complex roots",
+    "definition": "For fixed degree N, construct a polynomial with coefficients in {0,1}, constant and leading coefficients 1, minimizing the maximum modulus of its roots.",
+    "solution_format": "Integer coefficient polynomial; exact root-radius upper bound and certified root isolation/lower bound as needed.",
+    "scalar_objective": "Maximum root modulus",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "N": "degree",
+      "coefficient_constraints": "Newman polynomial convention"
+    },
+    "human_baseline": "Newman (1970) initiated the study; Boyd (1981) and later authors give constructions and bounds. Specific best polynomial at chosen N is待核实.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF01395666",
+      "https://doi.org/10.1007/BF01395681"
+    ],
+    "verification_cost": "Medium: certified complex root bounds.",
+    "risks": "Trivial construction x^N+1 attains objective 1 under this definition; would need a different cited objective before reconsidering.",
+    "recommendation": "reject",
+    "reason": "The proposed definition is trivial: X^N+1 is a Newman polynomial whose roots all have modulus 1, and the product of root moduli is 1, so its maximum root modulus cannot be below 1. This is not a meaningful search objective as stated."
+  },
+  {
+    "id": "aa36",
+    "name": "Chebyshev minimax polynomial approximation",
+    "category": "analysis / polynomial approximation",
+    "definition": "For fixed continuous function g and degree d, find a degree-d polynomial minimizing ||g-p||∞ on a specified interval.",
+    "solution_format": "Polynomial coefficients with exact or certified uniform-error bound.",
+    "scalar_objective": "Uniform approximation error ||g-p||∞",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "g": "target function",
+      "d": "degree",
+      "interval": "compact interval"
+    },
+    "human_baseline": "Chebyshev's equioscillation theorem gives the classical minimax characterization; many reference functions have standard human polynomials and errors.",
+    "primary_sources": [
+      "https://doi.org/10.1090/S0002-9904-1934-05817-5",
+      "https://dlmf.nist.gov/3.11"
+    ],
+    "verification_cost": "Medium: certify extrema of error polynomial/analytic function.",
+    "risks": "Often solved by standard algorithms with known exact/near-exact answers; likely tests numerical approximation rather than mathematical construction discovery.",
+    "recommendation": "reject",
+    "reason": "Too routine/closed-form for the intended construction-discovery benchmark; viable only as a calibration task."
+  },
+  {
+    "id": "aa37",
+    "name": "Quadrature rule maximal degree of exactness",
+    "category": "analysis / numerical integration",
+    "definition": "For fixed node count m and a prescribed node/domain/weight class, construct nodes and weights maximizing polynomial degree of exactness.",
+    "solution_format": "Exact algebraic nodes and weights with moment identities.",
+    "scalar_objective": "Degree of exactness",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "m": "node count",
+      "weight": "measure and constraints"
+    },
+    "human_baseline": "Gaussian quadrature theory (Gauss, 1814; standard numerical-analysis literature) gives degree 2m−1 for positive-weight rules, an exact human optimum.",
+    "primary_sources": [
+      "https://dlmf.nist.gov/3.5",
+      "https://doi.org/10.1007/978-3-540-70529-1"
+    ],
+    "verification_cost": "Low/medium for algebraic identities.",
+    "risks": "For standard positive-weight rules the optimum is known exactly and construction is formulaic; altered constraints would need separate literature.",
+    "recommendation": "reject",
+    "reason": "Closed-form solved benchmark with little construction discovery headroom."
+  },
+  {
+    "id": "aa38",
+    "name": "Turán power-sum minimum",
+    "category": "analysis / harmonic analysis",
+    "definition": "For specified integer frequencies and number of unit-circle points, minimize the maximum of a prescribed trigonometric power sum over the unit circle.",
+    "solution_format": "Finite set of phases, preferably roots of unity/algebraic points, with certified global extremum.",
+    "scalar_objective": "Specified sup norm of trigonometric power sum",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "number_of_terms": "m",
+      "frequencies": "integer set",
+      "weights": "fixed coefficients"
+    },
+    "human_baseline": "Turán (1937) introduced extremal power-sum problems and developed bounds; exact construction/score depends heavily on variant and needs verification.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF01456843",
+      "https://doi.org/10.1007/978-3-642-36206-1_6"
+    ],
+    "verification_cost": "High: continuum supremum with algebraic/trigonometric certification.",
+    "risks": "Problem family contains multiple inequivalent formulations; scalar and human baseline cannot be assigned until one canonical variant is selected.",
+    "recommendation": "conditional",
+    "reason": "Longstanding extremal analysis with natural scalar, but current formulation is too broad for direct acceptance."
+  },
+  {
+    "id": "aa39",
+    "name": "Minkowski lattice packing density",
+    "category": "analysis / geometry of numbers",
+    "definition": "For a fixed dimension and specified lattice class, construct a lattice packing maximizing sphere-packing density.",
+    "solution_format": "Basis matrix plus rigorous determinant/minimum-vector-length certificate.",
+    "scalar_objective": "Packing density (equivalently inverse covolume at fixed minimum distance)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "dimension": "d",
+      "lattice_class": "all lattices or specified symmetry"
+    },
+    "human_baseline": "Minkowski (1896) introduced the problem; human constructions include root lattices, with exact densest lattice results known in some low dimensions (e.g. dimension 8 and 24 via Viazovska and collaborators for all packings). Row-specific lattice optima vary.",
+    "primary_sources": [
+      "https://doi.org/10.1007/978-3-642-36206-1_3",
+      "https://doi.org/10.4007/annals.2017.185.3.8",
+      "https://doi.org/10.4007/annals.2017.185.3.10"
+    ],
+    "verification_cost": "High: shortest-vector and determinant certification; dimension-dependent.",
+    "risks": "May be closed in famous dimensions or difficult to verify in open dimensions; source domain is geometric construction, suitable only with exact finite certificates.",
+    "recommendation": "conditional",
+    "reason": "A single meaningful continuous scalar and extensive human constructions, but certificates and open-instance screening are demanding."
+  },
+  {
+    "id": "aa40",
+    "name": "Hermite constant lattice construction",
+    "category": "analysis / geometry of numbers",
+    "definition": "For fixed dimension d, construct a lattice maximizing shortest-vector length divided by covolume^(1/d), i.e. attaining a large Hermite invariant.",
+    "solution_format": "Exact Gram/basis matrix and rigorous shortest-vector certificate.",
+    "scalar_objective": "Hermite invariant γ(L)",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "d": "lattice dimension"
+    },
+    "human_baseline": "Hermite constants have classical human values/constructions from Minkowski and root lattices; exact values are known in several dimensions, including 8 and 24 via sphere-packing work.",
+    "primary_sources": [
+      "https://doi.org/10.4007/annals.2017.185.3.8",
+      "https://doi.org/10.4007/annals.2017.185.3.10"
+    ],
+    "verification_cost": "High: exact shortest-vector enumeration and determinant arithmetic.",
+    "risks": "Equivalent to lattice packing density at fixed dimension, so merge with aa39 if same lattice class/objective.",
+    "recommendation": "reject",
+    "reason": "Duplicate parameterization of lattice packing density; merge rather than count separately."
+  },
+  {
+    "id": "aa41",
+    "name": "Erdős–Ko–Rado intersecting family size",
+    "category": "extremal set theory",
+    "definition": "For fixed n,r, construct a largest family of r-subsets of [n] in which every two members intersect.",
+    "solution_format": "List of r-subsets; verify pairwise intersections.",
+    "scalar_objective": "Family cardinality",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "ground-set size",
+      "r": "subset size"
+    },
+    "human_baseline": "Erdős, Ko and Rado (1961) prove the extremal size for n≥2r; the star construction attains it.",
+    "primary_sources": [
+      "https://doi.org/10.1016/0001-8708(61)90002-1"
+    ],
+    "verification_cost": "Low for explicit family, O(|F|² r).",
+    "risks": "Classical theorem completely solves standard parameter regime; no headroom, and boundary cases can be trivial.",
+    "recommendation": "reject",
+    "reason": "Closed-form solved construction with no competitive discovery challenge."
+  },
+  {
+    "id": "aa42",
+    "name": "Maximum determinant of a 0/1 matrix",
+    "category": "matrices / determinant extremum",
+    "definition": "For fixed n, maximize |det A| over A∈{0,1}^{n×n}.",
+    "solution_format": "0/1 matrix and exact determinant.",
+    "scalar_objective": "|det A|",
+    "direction": "maximize",
+    "configuration_parameters": {
+      "n": "order"
+    },
+    "human_baseline": "Barba and Ehlich/Wojtas developed upper bounds; explicit constructions and tables exist. Specific n and human record require checking a primary table before inclusion.",
+    "primary_sources": [
+      "https://doi.org/10.1016/0012-365X(79)90002-7",
+      "https://caramba.inria.fr/sem-slides/200904301100.pdf"
+    ],
+    "verification_cost": "Low exact determinant; proof of maximum may be difficult.",
+    "risks": "Related by normalization to sign maxdet but not identical; avoid counting as separate unless public target records and matrix family distinction are clear. Parent deduplication note: AA06/07/08 are alternate parameter views of best linear-code parameters; AA10, AA16 and AA17 are constraint-specific code variants/configurations; AA13 is a special case of AA11; AA28 contains AA05; AA42 is related to sign maxdet and should not be counted separately unless an independently studied 0/1 objective/table is established.",
+    "recommendation": "conditional",
+    "reason": "Natural scalar objective, but baseline and distinction from sign-matrix maxdet require verification."
+  },
+  {
+    "id": "aa43",
+    "name": "Fekete polynomial minimum sup norm",
+    "category": "polynomials / harmonic analysis",
+    "definition": "For a fixed prime p, construct a sign polynomial from Legendre symbols (or a clearly stated admissible class) minimizing its supremum norm on the unit circle.",
+    "solution_format": "Exact coefficient polynomial and certified circle supremum.",
+    "scalar_objective": "||P||∞/√p",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "p": "prime degree/length",
+      "coefficient_rule": "Legendre sign convention"
+    },
+    "human_baseline": "Fekete (1912) and subsequent analytic number theory give explicit character-sum polynomial constructions and bounds. Exact best finite value is not asserted and needs source verification.",
+    "primary_sources": [
+      "https://doi.org/10.1007/BF01456843",
+      "https://doi.org/10.1007/BF02567595"
+    ],
+    "verification_cost": "High: global circle supremum certification.",
+    "risks": "If coefficients are prescribed by Legendre symbols there may be no search; if free, this merges into general Littlewood polynomial optimization. Objective's admissible class is unclear.",
+    "recommendation": "reject",
+    "reason": "Current formulation either has no construction choice or duplicates Littlewood sup-norm tasks."
+  },
+  {
+    "id": "aa44",
+    "name": "Maximum merit factor for ternary sequences",
+    "category": "sequences / autocorrelation",
+    "definition": "For fixed length L and alphabet {−1,0,1} under a stated fixed zero-count or energy constraint, minimize aperiodic autocorrelation energy (equivalently maximize merit factor).",
+    "solution_format": "Ternary sequence with exact autocorrelation computation.",
+    "scalar_objective": "Aperiodic autocorrelation energy or equivalent normalized merit factor",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "L": "length",
+      "zero_count": "fixed density/weight constraint"
+    },
+    "human_baseline": "Binary LABS theory is extensive; ternary variants are studied in radar/sequence design, but a specific primary-source human record and canonical constraint were not verified in this pass.",
+    "primary_sources": [
+      "https://doi.org/10.1109/ICASSP.1990.115796",
+      "https://doi.org/10.1109/TSP.2021.3078834"
+    ],
+    "verification_cost": "Low O(L²).",
+    "risks": "Admissible coefficient constraint changes the problem materially; current sources are not sufficient to substantiate this exact ternary objective.",
+    "recommendation": "reject",
+    "reason": "No verified canonical research target or human baseline for this exact variant."
+  },
+  {
+    "id": "aa45",
+    "name": "Binary sequence maximum out-of-phase autocorrelation (periodic merit)",
+    "category": "sequences / periodic autocorrelation",
+    "definition": "For fixed length L, construct a binary sequence minimizing the maximum absolute nonzero periodic autocorrelation.",
+    "solution_format": "Binary sign sequence.",
+    "scalar_objective": "max_{k≠0}|Σ_i s_i s_{i+k mod L}|",
+    "direction": "minimize",
+    "configuration_parameters": {
+      "L": "period length"
+    },
+    "human_baseline": "Liu and Fan (1990) and later sequence-design studies report low periodic autocorrelation sequences and bounds; a specific row-level human record remains to be retrieved.",
+    "primary_sources": [
+      "https://doi.org/10.1109/ICASSP.1990.115796",
+      "https://doi.org/10.1109/TIT.1965.1053768"
+    ],
+    "verification_cost": "Low O(L²).",
+    "risks": "Related but distinct from aperiodic PSL; ensure periodic definition and cited baseline align exactly.",
+    "recommendation": "conditional",
+    "reason": "Natural exact scalar and historical research, but needs a fixed, sourced comparison row."
+  }
+]

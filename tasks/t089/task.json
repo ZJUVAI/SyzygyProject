@@ -1,0 +1,36 @@
+{
+  "task_id": "T089",
+  "name": "Maximum determinant of sign matrices, order 29",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T089-C01",
+      "parameters": {
+        "n": 29,
+        "entries": "±1"
+      },
+      "direction": "maximize",
+      "human_reference": 1188957517256767569920
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  }
+}

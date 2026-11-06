@@ -1,0 +1,36 @@
+{
+  "task_id": "T067",
+  "name": "Maximum size of a binary code A(n,d)",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T067-C01",
+      "parameters": {
+        "n": 17,
+        "distance": 6
+      },
+      "direction": "maximize",
+      "human_reference": 258
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "reports/independent_audit.json",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开方法对照128码字。公开258码字见证未取到。"
+    ]
+  }
+}

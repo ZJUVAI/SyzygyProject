@@ -1,0 +1,41 @@
+{
+  "task_id": "T099",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T099-C01": {
+      "public_value": "2340",
+      "public_source": {
+        "url": "https://math.mit.edu/~primegaps/tuples/admissible_343_2340.txt",
+        "database_url": "https://mathbases.org/d/narrow-admissible-tuples",
+        "title": "Narrow admissible tuples",
+        "author_credit": "Thomas Engelsma",
+        "database_updated": "2026-07-14",
+        "evidence": "The MIT source artifact contains the complete k=343 tuple with diameter 2340. MathBases describes its database as the narrowest known tuples for k=2..5000 and reports an update on 2026-07-14. The k=343 row remains unmarked as proven optimal in the source table."
+      },
+      "reproduced_value": "2340",
+      "program": "sota.py",
+      "witness": "data/human_343.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The source lists the tuple as a record, but does not prove that diameter 2340 is optimal.",
+        "The public-record survey covers the MIT Prime Gaps artifact and MathBases metadata available on 2026-11-05; it is not an exhaustive survey of all unpublished or unindexed results.",
+        "The locally saved witness is identical to the tuple published by the MIT source artifact. Exact checking verifies feasibility and diameter, not global optimality."
+      ],
+      "verification": {
+        "method": "Run sota.py and validate its tuple with tasks/t099/check.py using exact integer arithmetic.",
+        "prime_count_checked": 68,
+        "checked_through": 343,
+        "checked_at": "2026-11-05"
+      },
+      "checked_at": "2026-11-05"
+    }
+  },
+  "sol_review": {
+    "T099-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}
