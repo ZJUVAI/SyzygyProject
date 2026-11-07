@@ -56,7 +56,7 @@
           "sphere": "S^2"
         },
         "program": "reference.py",
-        "witness": "data/reference/highest_weight_degree20.json",
+        "witness": "data/human/highest_weight_degree20.json",
         "witness_sha256": "9b0df1bac229ada5412a85446fef29f09f03dceed2b69d963c2faa5e24191d0b",
         "verification_status": "certified",
         "evidence_state": "Exact harmonic Laplacian and exact rational M2/M4 sphere moments; fourth root enclosed by rational interval.",
@@ -121,7 +121,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",

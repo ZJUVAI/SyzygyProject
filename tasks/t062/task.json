@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定N42025，最大化[1,N]子集大小，禁止任意两元素正平方差。范围不是模群，且不是立方差。",
       "primary_source": "Sol亲自读取Lewko2015 EJC22(1)P1.32 Section3及Table1，逐一核对12个模205剩余类。独立重建全部1+a+205b，b0..204，共2460，最小8最大42020，与归档逐项一致。另核全部132个有向非零剩余差均非平方剩余。",

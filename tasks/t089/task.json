@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "One dimension, all finite rational polynomials p(t),t=pi*x^2, no degree cap. f=p(t)exp(-t), Fourier q independently recomputed. Require STRICT p0<0,q0<0 and eventual nonnegativity; minimize actual A(f)A(fhat), certified conservative rational upper endpoint retained.",
       "human_source": "Goncalves/OliveiraeSilva/Steinerberger1602.03366 and2017JMAA doi10.1016/j.jmaa.2017.02.030 Hermite eigenfunction method, locally reconstructed p=t^2-3t/2-1/1000 with q=p. Positive tail root3/4+sqrt(1127/2000), score about.477676941636177. This weak fixed method reconstruction is distinguished from reported unpublished.3102 whose family membership is not established.",

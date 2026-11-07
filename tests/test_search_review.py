@@ -57,3 +57,55 @@ def test_candidate_only_review_still_rejects_a_failed_selected_witness(tmp_path,
     with pytest.raises(ValueError, match='valid construction'):
         module.review(path, candidate_only=True)
     assert json.loads(path.read_text()) == summary
+
+
+@pytest.mark.parametrize('snapshot', [{}, {'configuration_capture_stage': 'sol_review'}])
+def test_acceptance_requires_admission_snapshot(tmp_path, monkeypatch, snapshot):
+    import json
+    import scripts.accept_task as module
+
+    directory = tmp_path / 'tasks/example'
+    run = directory / 'runs/checked'
+    run.mkdir(parents=True)
+    config = {'id': 'EXAMPLE-C01'}
+    if snapshot:
+        snapshot = {**snapshot, 'configuration': config}
+    evidence = {'status': 'checks_passed_pending_source_review', 'source_sha256': {},
+                'configurations': {config['id']: snapshot}}
+    (run / 'review.json').write_text(json.dumps(evidence))
+    (directory / 'task.json').write_text(json.dumps({'configurations': [config]}))
+    for name in ('sota.json', 'records.json'):
+        (directory / name).write_text('{}')
+    monkeypatch.setattr(module, 'ROOT', tmp_path)
+
+    with pytest.raises(ValueError, match='Fresh admission'):
+        module.accept('EXAMPLE', 'checked', {'source': 'Reviewed.'})
+    assert not (directory / 'best').exists()
+
+
+@pytest.mark.parametrize('mutation', ['bytes', 'objective', 'configuration', None])
+def test_selected_witness_is_bound_to_strict_replay(tmp_path, monkeypatch, mutation):
+    import hashlib
+    import scripts.accept_task as module
+
+    raw = b'{"points":[[0,0]]}\n'
+    path = tmp_path / 'solution.json'
+    path.write_bytes(raw if mutation != 'bytes' else b'{}')
+    result = {'task_id': 'T001', 'config_id': 'T001-C01', 'validity': 1, 'objective': 1}
+    checked = {'run': result, 'solution_sha256': hashlib.sha256(raw).hexdigest()}
+
+    def strict_replay(task, staged, cid, *, strict):
+        assert strict and staged != path and staged.read_bytes() == raw
+        actual = dict(result)
+        if mutation == 'objective':
+            actual['objective'] = 2
+        if mutation == 'configuration':
+            actual['config_id'] = 'T001-C02'
+        return actual
+
+    monkeypatch.setattr(module, 'replay', strict_replay)
+    if mutation:
+        with pytest.raises(ValueError, match='selected witness'):
+            module._checked_witness('T001', {}, 'T001-C01', tmp_path, checked)
+    else:
+        assert module._checked_witness('T001', {}, 'T001-C01', tmp_path, checked) == (raw, result)

@@ -1,12 +1,3 @@
-"""Replay a task-local public record witness for the selected config."""
-import json
-import os
-from pathlib import Path
+"""Replay the shared witness for the public reference role."""
 
-_FILES = {"T001-C01": "packomania_n26.json", "T001-C02": "human_reference_n32.json",
-          "T001-C03": "packomania_n50.json"}
-
-
-def run_code():
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T001-C01")
-    return json.loads((Path(__file__).parent / "data" / _FILES[cid]).read_text())
+from tasks.t001.human import run_code as run_code

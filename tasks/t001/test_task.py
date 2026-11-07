@@ -35,10 +35,10 @@ def test_human_and_reference_are_exact(cid, monkeypatch):
 def test_seed_feasible_and_claim_ignored(cid, monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", cid)
     candidate = run_seed()
-    candidate["objective"] = -10
-    result = validate(candidate, CONFIGS[cid], strict=True)
-    assert result["details"]["claimed_objective_mismatch"]
-    assert result["objective"] != "-10"
+    expected = validate(candidate, CONFIGS[cid], strict=True)
+    for claim in (-10, {"invalid": True}):
+        candidate["objective"] = claim
+        assert validate(candidate, CONFIGS[cid], strict=True) == expected
 
 
 @pytest.mark.parametrize("cid", ["T001-C02", "T001-C03"])

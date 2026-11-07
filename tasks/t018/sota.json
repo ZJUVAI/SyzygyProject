@@ -59,8 +59,7 @@
           "absolute_determinant": "1188957517256767569920"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "review_status": "accepted_by_sol"
     },
@@ -121,7 +120,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c02.json",
         "witness_sha256": "79cf1b3e84f2799a01a2c4f90c5a863b19f9fc82a14573c1f2347e01d461b98b"
       },

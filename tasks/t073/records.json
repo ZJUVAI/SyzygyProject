@@ -44,7 +44,7 @@
           "sphere": "S^3",
           "design_strength": 5
         },
-        "witness_file": "data/reference/d4_24cell.json",
+        "witness_file": "data/human/d4_24cell.json",
         "witness_sha256": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
         "provenance": "Rebuilt from signed coordinate axes and the sign cube with coordinates ±1/2.",
         "ai_provenance": "Traditional construction, reconstructed in this task.",

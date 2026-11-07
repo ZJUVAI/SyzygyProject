@@ -71,7 +71,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定Q9，最大化诱导路径的边数L，顶点数L+1；未把闭合coil或其他维数分别计成新任务。",
       "primary_sources": "亲自读取Wynn1201.1647v1 SectionVI及完整190步列表，另读Orland等2607.15270v3（2026-09-30）§6、§8和AppendixE。主代理重新下载两篇原始HTML，逐个匹配全部190/191个转移索引，再从0逐步翻位重放，生成的191/192个顶点与保存列表完全一致。",
@@ -86,7 +85,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximize edge count of an induced path in Q_d. Keep d=9 and add10/11. No repeated vertices or nonconsecutive cube neighbors. Coils and snakepits are different objectives.",
       "primary_source": "Sol read Orland et al. arXiv2607.15270v3 Table1, exact optima known through dimension8, current paper constructions379 and746. The table footnote credits later750 to Echols2026a; it remains reported only in this archive. Paper discloses LLM assistance for search code. No global optimality proof for10/11 was found in checked sources.",

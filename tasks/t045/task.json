@@ -38,7 +38,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "官方无权无向gd96a图，1096顶点1676边，对顶点作双射排列，最小化全部边跨度和；不是最小化最大跨度或最大化最小跨度。",
       "official_input": "主代理重新下载Petit官方jpetit-extra.tar.gz，从CodeJEA/Graphs/gd96a.rmf取出原图，字节与保存图完全一致，SHAa3f6f97b8c084f41b6312a02544d71b293bfb8e809f627e4c5e7a04495061f4c。冷导出仅含该原图，不含参考排列、H或源记录。",

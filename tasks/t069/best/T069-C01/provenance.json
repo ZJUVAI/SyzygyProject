@@ -51,6 +51,5 @@
     "search_seconds_cutoff": null
   },
   "solution_sha256": "489f808108b0c0ea6d93bdb3b11fcc04b8420363c735d211b6aed7c10afb9978",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T069 tasks/t069/best/T069-C01/solution.json --config T069-C01"
 }

@@ -44,7 +44,7 @@
         "parameters": {
           "dimension": 10
         },
-        "witness_file": "data/reference/lambda10_gram.json",
+        "witness_file": "data/human/lambda10_gram.json",
         "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
         "provenance": "Transcribed from the author-hosted catalogue HTML, whose raw bytes are frozen under data/source; exact Gram checks were recomputed locally.",
         "ai_provenance": "Not disclosed by the catalogue; no AI use is inferred.",

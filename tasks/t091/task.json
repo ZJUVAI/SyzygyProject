@@ -45,7 +45,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Binary strength-four orthogonal arrays with 63 columns; minimize positive row count, repeated rows allowed. No linearity restriction in the checker.",
       "primary_source": "Root read Carlet, Kiss and Nagy DOI10.1007/s10623-022-01105-4, Remark5 BCH-dual reconstruction, Proposition10 and Remark11 shortened Kerdock2048 with unknown optimality. Rao2017 and divisibility16 imply2032, leaving16-row gap. Closed15-column128-row case excluded. Current same-parameter proof search found no closure.",

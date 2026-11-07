@@ -71,6 +71,5 @@
     }
   },
   "solution_sha256": "952df51172260e1b4ae986734391deb21b21af846be8a39b0e1f747c0e2b45a7",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T060 tasks/t060/best/T060-C01/solution.json --config T060-C01"
 }

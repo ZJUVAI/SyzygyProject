@@ -21,7 +21,7 @@
         "decoding_condition": "distinct codewords have disjoint sets of length-15 deletion outputs",
         "objective": "number of codewords"
       },
-      "witness": "data/reference/vt16_3856.json",
+      "witness": "data/human/vt16_3856.json",
       "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
       "known_bounds": {
         "lower_bound": 3856,
@@ -99,8 +99,7 @@
           "method": "independent string slicing at each deletion index, with per-word duplicates removed"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

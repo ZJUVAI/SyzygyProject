@@ -100,7 +100,7 @@
       "reproduced_value": 36,
       "program": "reference.py",
       "reference": "reference.py",
-      "witness": "data/sota_witness_C02.json",
+      "witness": "data/search_reference_C02.json",
       "reproduction_command": "MATHBENCH_CONFIG_ID=T008-C02 .venv/bin/python -m mathbench evaluate T008 tasks/t008/sota.py --strict --config T008-C02",
       "matches_public_best": true,
       "comparison_tolerance": 0,
@@ -159,8 +159,7 @@
           "subset_size": 4
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "acceptance_status": "accepted_by_sol",
       "review_status": "accepted_by_sol"

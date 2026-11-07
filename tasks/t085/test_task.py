@@ -20,7 +20,7 @@ CONFIG = {"id": "T085-C01", "parameters": PARAMETERS, "direction": "maximize", "
 
 def test_human_and_reference_patch_exactly_cover_radius_seven_halves():
     witness = human_run()
-    saved = json.loads((TASK_DIR / "data/reference/kershner_triangular_patch21.json").read_text())
+    saved = json.loads((TASK_DIR / "data/human/kershner_triangular_patch21.json").read_text())
     assert witness == saved == reference_run()
     result = validate(witness, CONFIG, strict=True)
     assert result["objective"] == "7/2"

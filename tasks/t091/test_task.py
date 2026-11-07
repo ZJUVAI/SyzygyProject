@@ -20,7 +20,7 @@ CONFIG = {"id": "T091-C01", "parameters": PARAMETERS, "direction": "minimize", "
 
 def test_human_and_reference_bch_witness_recompute_exactly():
     witness = human_run()
-    saved = json.loads((TASK_DIR / "data/reference/bch_dual_oa4096.json").read_text())
+    saved = json.loads((TASK_DIR / "data/human/bch_dual_oa4096.json").read_text())
     assert witness == reference_run() == saved
     result = validate(witness, CONFIG, strict=True)
     assert result["objective"] == result["objective_value"] == 4096

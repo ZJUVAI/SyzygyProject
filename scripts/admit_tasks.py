@@ -16,6 +16,16 @@ from mathbench.replay import replay
 from scripts.audits.independent_audit import independent_quantity, broken
 
 
+REQUIRED_PROGRAMS = ('init_program', 'baseline', 'human', 'reference', 'evolution')
+
+
+def record_program(record):
+    filename = record.get('program', 'reference.py')
+    if filename not in ('human.py', 'reference.py', 'sota.py'):
+        raise ValueError(f'Unsupported public record program: {filename}')
+    return Path(filename).stem
+
+
 def save(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
@@ -31,6 +41,7 @@ def review(task, label):
     # Include draft configurations only in this admission process.
     released_load_task = registry.load_task
     registry.load_task = lambda task_id: metadata if task_id == task else released_load_task(task_id)
+    records = json.loads((directory / 'sota.json').read_text())['configurations']
     checker = importlib.import_module(f'tasks.{task.lower()}.check')
     destination = directory / 'runs' / label
     destination.mkdir(parents=True, exist_ok=False)
@@ -41,14 +52,15 @@ def review(task, label):
         cid = config['id']
         folder = destination / cid
         results = {}
-        for program in ('init_program', 'baseline', 'human', 'reference', 'evolution'):
+        for program in dict.fromkeys((*REQUIRED_PROGRAMS, record_program(records[cid]))):
             output = folder / ('initial' if program == 'init_program' else program)
             result = evaluate_candidate(task, directory / (program + '.py'), cid,
                                         strict=True, seed=0, output_dir=output)
             save(output / 'result.json', result)
             if result['validity'] != 1:
                 raise AssertionError((task, cid, program, result))
-            solution = json.loads((output / 'solution.json').read_text())
+            raw = (output / 'solution.json').read_bytes()
+            solution = json.loads(raw)
             checked = checker.validate(solution, config, strict=True)
             modified = copy.deepcopy(solution)
             modified.update(objective=987654321, score=-1, claimed_score=987654321)
@@ -64,7 +76,9 @@ def review(task, label):
             check_quantity(task, quantity, result)
             replayed = replay(task, output / 'solution.json', cid, strict=True)
             assert replayed['validity'] == 1 and replayed['objective'] == result['objective']
+            assert (output / 'solution.json').read_bytes() == raw
             results[program] = {'run': result, 'independent_quantity': quantity,
+                                'solution_sha256': hashlib.sha256(raw).hexdigest(),
                                 'claimed_score_ignored': True,
                                 'damaged_construction_rejected': True,
                                 'strict_replay_passed': True}
@@ -94,7 +108,7 @@ def review(task, label):
         str(path.relative_to(directory)): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted(directory.rglob('*'))
         if path.is_file() and not {'runs', '__pycache__', 'best'} & set(path.relative_to(directory).parts)
-        and path.name not in ('acceptance.json', 'task.json', 'sota.json')}
+        and path.name not in ('task.json', 'sota.json')}
     evidence['status'] = 'checks_passed_pending_source_review'
     save(destination / 'review.json', evidence)
     return evidence

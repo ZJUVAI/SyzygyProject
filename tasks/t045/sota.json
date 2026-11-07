@@ -127,8 +127,7 @@
           "original_edges_checked": 1676
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "limitations": [
         "The reported 95,242 ordering was not recovered. The fixed reference is the weaker verified value 147,653.",

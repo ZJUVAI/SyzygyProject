@@ -75,8 +75,7 @@
           "method": "Newton complete-symmetric identity h3=(p1^3+3p1*p2+2p3)/6, exact sparse polynomial coefficients all equal one"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

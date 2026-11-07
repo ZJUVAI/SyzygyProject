@@ -126,8 +126,7 @@
           "arithmetic_progressions_checked": 1140833
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "review_status": "accepted_by_sol"
     }

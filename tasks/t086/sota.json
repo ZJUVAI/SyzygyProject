@@ -174,8 +174,7 @@
           "method": "SymPy complex matrices and trace(M.H*M); independent exact product norms and finer rational root enclosures"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

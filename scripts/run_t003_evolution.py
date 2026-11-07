@@ -34,6 +34,49 @@ def independent_audit(solution):
             'minimum_squared_pair_slack': str(min(pairs)), 'pair_checks': len(pairs)}
 
 
+def audit_witness(solution_path, objective):
+    solution = json.loads(solution_path.read_text())
+    audit = independent_audit(solution)
+    config = load_config('T003', 'T003-C01')
+    modified = copy.deepcopy(solution)
+    modified['objective'] = '999999'
+    tampered = validate(modified, config, strict=True)
+    damaged = copy.deepcopy(solution)
+    damaged['circles'][1] = dict(damaged['circles'][0])
+    try:
+        validate(damaged, config, strict=True)
+    except ValueError:
+        rejected = True
+    else:
+        rejected = False
+    replayed = replay('T003', solution_path, 'T003-C01', strict=True,
+                      output_dir=solution_path.parents[1]/'replay')
+    ignored = tampered['objective'] == audit['objective']
+    passed = (rejected and ignored and replayed['validity'] == 1
+              and audit['objective'] == objective == replayed['objective'])
+    return {'passed': passed, 'independent_audit': audit,
+            'damaged_witness_rejected': rejected, 'claimed_score_ignored': ignored}
+
+
+def archive_sources(destination, names):
+    hashes = {}
+    for name in names:
+        content = (ROOT / name).read_bytes()
+        target = destination / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(content)
+        hashes[name] = hashlib.sha256(content).hexdigest()
+    return hashes
+
+
+def experiment_environment():
+    import numpy
+    import scipy
+
+    return {'python': sys.version, 'platform': platform.platform(),
+            'numpy': numpy.__version__, 'scipy': scipy.__version__}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path)
@@ -51,28 +94,19 @@ def main():
     os.environ.update(controls)
     sources = destination / 'sources'
     sources.mkdir()
-    hashes = {}
-    for name in ('tasks/t003/evolution.py', 'tasks/t003/init_program.py',
+    hashes = archive_sources(sources, ('tasks/t003/evolution.py', 'tasks/t003/init_program.py',
                  'tasks/t003/check.py', 'tasks/t003/task.json',
                  'scripts/run_t003_evolution.py', 'mathbench/evaluate.py',
-                 'mathbench/worker.py', 'mathbench/replay.py', 'mathbench/registry.py'):
-        content = (ROOT / name).read_bytes()
-        target = sources / name
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(content)
-        hashes[name] = hashlib.sha256(content).hexdigest()
+                 'mathbench/worker.py', 'mathbench/replay.py', 'mathbench/registry.py'))
     command = [sys.executable, 'scripts/run_t003_evolution.py', '--output', str(destination)+'-rerun',
                '--seed', str(args.seed), '--generations', str(args.generations),
                '--population', str(args.population)]
-    import numpy
-    import scipy
     manifest = {'task_id': 'T003', 'config_id': 'T003-C01', 'seed': args.seed,
                 'started_utc': datetime.now(timezone.utc).isoformat(), 'controls': controls,
                 'source_sha256': hashes, 'reproduce_command': shlex.join(command),
                 'replay_command': shlex.join([sys.executable, '-m', 'mathbench', 'replay',
                     'T003', str(destination / 'evolution/solution.json'), '--config', 'T003-C01']),
-                'environment': {'python': sys.version, 'platform': platform.platform(),
-                    'machine': platform.machine(), 'numpy': numpy.__version__, 'scipy': scipy.__version__},
+                'environment': dict(experiment_environment(), machine=platform.machine()),
                 'scope': 'Construction evolution for one public configuration; no optimality claim.',
                 'isolation': 'Local resource limits only; not a security sandbox.'}
     (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
@@ -84,34 +118,16 @@ def main():
         print(label, json.dumps(results[label]), flush=True)
         if results[label]['validity'] != 1 or 'artifact_error' in results[label]:
             raise RuntimeError(f'{label} failed; see saved result')
-    solution_path = destination/'evolution/solution.json'
-    solution = json.loads(solution_path.read_text())
-    audit = independent_audit(solution)
-    config = load_config('T003', 'T003-C01')
-    modified = copy.deepcopy(solution)
-    modified['objective'] = '999999'
-    tampered = validate(modified, config, strict=True)
-    damaged = copy.deepcopy(solution)
-    damaged['circles'][1] = dict(damaged['circles'][0])
-    try:
-        validate(damaged, config, strict=True)
-    except ValueError:
-        rejected = True
-    else:
-        rejected = False
-    replayed = replay('T003', solution_path, 'T003-C01', strict=True,
-                      output_dir=destination/'replay')
-    passed = (audit['objective'] == results['evolution']['objective'] == tampered['objective']
-              == replayed['objective'] and replayed['validity'] == 1 and rejected
-              and Fraction(audit['objective']) >= Fraction(results['initial']['objective']))
-    summary = {'passed': passed, 'independent_audit': audit, 'damaged_witness_rejected': rejected,
-               'claimed_score_ignored': tampered['objective'] == audit['objective'],
-               'initial_objective': results['initial']['objective'],
-               'improvement': str(Fraction(audit['objective'])-Fraction(results['initial']['objective'])),
-               'verification_scope': 'Exact rational feasibility and attained value; no global optimality proof.'}
+    summary = audit_witness(destination/'evolution/solution.json', results['evolution']['objective'])
+    objective = Fraction(summary['independent_audit']['objective'])
+    initial = Fraction(results['initial']['objective'])
+    summary.update(passed=summary['passed'] and objective >= initial,
+                   initial_objective=results['initial']['objective'],
+                   improvement=str(objective - initial),
+                   verification_scope='Exact rational feasibility and attained value; no global optimality proof.')
     (destination/'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     print(json.dumps(summary, indent=2))
-    if not passed:
+    if not summary['passed']:
         raise RuntimeError('Experiment audit failed')
 
 

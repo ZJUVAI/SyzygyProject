@@ -22,7 +22,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "固定Gset G70的10000顶点9999条单位权边，最大化二分割的跨边权重。",
       "人类方法来源": "冻结H8616是公开单顶点FLIP邻域的本地四起点复现，种子0，实耗8774次翻转。它不是文献原始8616纪录，也不是完整BLS复现。",

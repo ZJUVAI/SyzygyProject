@@ -37,4 +37,4 @@ Witness file SHA-256 values are recorded in `records.json` and `sota.json`. C02 
 
 ## Validation
 
-Run `.venv/bin/python -m pytest tasks/t076 -q`. Tests retain C01's checks and cover the new configurations' data hashes, full exact subset-sum counts, parameter binding, five program entries, invalid sets, and ignored claim fields. The new configurations passed independent Sol review. See acceptance.json.
+Run `.venv/bin/python -m pytest tasks/t076 -q`. Tests retain C01's checks and cover the new configurations' data hashes, full exact subset-sum counts, parameter binding, five program entries, invalid sets, and ignored claim fields. The new configurations passed independent Sol review. See records.json.

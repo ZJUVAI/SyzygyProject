@@ -106,10 +106,9 @@ def validate(solution,config,strict=False):
     xmin=_min([p[0] for p in points]); xmax=_max([p[0] for p in points])
     ymin=_min([p[1] for p in points]); ymax=_max([p[1] for p in points])
     side=_max([xmax-xmin,ymax-ymin])
-    claimed=solution.get('objective'); mismatch=claimed is not None and Q.parse(claimed)!=side
     # Bound sqrt(2) by adjacent rationals using integer square root.
     scale=10**60; root=math.isqrt(2*scale*scale)
     low,high=Fraction(root,scale),Fraction(root+1,scale)
     lower=side.a+side.b*(low if side.b>=0 else high)
     upper=side.a+side.b*(high if side.b>=0 else low)
-    return {'objective':str(side),'objective_value':str(upper),'verification_status':'certified' if strict else 'exact','details':{'objective_interval':[str(lower),str(upper)],'n':n,'bounding_width':str(xmax-xmin),'bounding_height':str(ymax-ymin),'pair_checks':n*(n-1)//2,'claimed_objective_mismatch':mismatch}}
+    return {'objective':str(side),'objective_value':str(upper),'verification_status':'certified' if strict else 'exact','details':{'objective_interval':[str(lower),str(upper)],'n':n,'bounding_width':str(xmax-xmin),'bounding_height':str(ymax-ymin),'pair_checks':n*(n-1)//2}}

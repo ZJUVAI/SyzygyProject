@@ -90,11 +90,10 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "e9f5bc338725dbaf3512189b7ec39b7028dc9dbd2dfa8d88dc38b72513c4bab2"
       },
-      "witness": "data/reference/monalisa_5757191.tour",
+      "witness": "data/human/monalisa_5757191.tour",
       "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88"
     }
   }

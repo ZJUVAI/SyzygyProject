@@ -7,7 +7,7 @@ Status: `accepted_by_sol`.
 - Input: `data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json`.
 - Input SHA-256: `f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92`.
 - It contains one 15-vertex container, 44 item types, and `sum(quantity)=50`. The exact source-value coordinates and translations are integers. The container turn check has no nonpositive turns; its polygon is convex.
-- Public solution: `data/source/shadoks2304.json`, SHA-256 `f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1`. `data/reference/shadoks2304.json` is an identical frozen copy. These are comparison assets and must not be exported with the cold initial program.
+- Public solution: `data/source/shadoks2304.json`, SHA-256 `f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1`. `data/source/shadoks2304.json` is an identical frozen copy. These are comparison assets and must not be exported with the cold initial program.
 - The official CG:SHOP page states the packing objective and forbids rotation. The Shadoks paper says the task uses translations and describes integer programming and heuristic search. Its public instance page names Shadoks as the best team for this instance. The solution page lists 2304, 2268, and 2105. The exact 2304 solution JSON is replayed and validated here.
 - The source file metadata says “before digopt optimization.” The source does not disclose whether AI tools were used. The record keeps this uncertainty.
 - Source check on 2026-11-06 did not find an optimality proof for this fixed instance. This is a limited source check, not an exhaustive survey.

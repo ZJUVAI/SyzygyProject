@@ -36,7 +36,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定100000个正整数因子乘积100000!，最大化最小因子；无因子≤N额外约束，无最大最小比值替代。",
       "primary_source": "主代理读取2503.20170v4定义、Theorem1.3、§1.1及固定978e4802dd413356e7e0ff97a44db803ab9596eb仓库t_large_n_bounds.txt与生成语义。43632配置Fig12已闭合14545，排除并改100000。",

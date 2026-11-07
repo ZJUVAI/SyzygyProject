@@ -22,7 +22,7 @@
       },
       "reproduced_witness": {
         "value": 2304,
-        "file": "data/reference/shadoks2304.json",
+        "file": "data/source/shadoks2304.json",
         "sha256": "f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1",
         "provenance": "Public Shadoks witness. Exact integer translations and source polygon coordinates were used.",
         "evidence_state": "exact simple-polygon triangulation, exact rational clipping, and objective recomputation"
@@ -124,7 +124,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "0530a2a715a45afbd19d0f27941337eb054054bb51df2d18e7053fb8ae9b3ad7"
       }

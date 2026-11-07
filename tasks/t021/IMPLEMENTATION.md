@@ -57,10 +57,10 @@ three task metadata files. The human witness returned the certified interval
 `[4122612746505293102359058597/10000000000000000000000000,
 4122612746505293102359059093/10000000000000000000000000]`, which is
 approximately `[412.2612746505293102359058597,
-412.2612746505293102359059093]`. Sol review passed. See acceptance.json.
+412.2612746505293102359059093]`. Sol review passed. See records.json.
 
 Sol repeated the checks and accepted this configuration on 2026-11-06.
-See acceptance.json for independent energy intervals and runner evidence.
+See records.json for independent energy intervals and runner evidence.
 
 ## Added configurations accepted by Sol on 2026-11-07
 

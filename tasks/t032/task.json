@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "固定14×19二元矩阵，禁止全1的3×3子矩阵，最大化1的数量。此约束区别于一般图无四环。",
       "人类方法来源": "Saurabh2026 v1附录矩阵126已逐项核对。原文明确传统kicked-greedy，无语言模型或学习模块；NOVA自主选择单元、运行和整理。未声称人工手工发现，也未重跑原随机搜索。",

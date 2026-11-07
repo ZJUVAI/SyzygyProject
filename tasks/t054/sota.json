@@ -46,7 +46,7 @@
         "date_checked": "2026-11-06",
         "provenance": "Published traditional computer search. Their Table 2 says the N=100 code has PSL=5 and compares it with an earlier same-length PSL=7 code.",
         "evidence_state": "The full N=100 code is printed as hexadecimal and has been independently decoded and verified. The source does not prove global optimality.",
-        "witness": "data/reference/nunn_coxson_length100.json",
+        "witness": "data/source/nunn_coxson_length100.json",
         "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
       },
       "best_reproduced": {
@@ -64,7 +64,7 @@
         "program": "reference.py",
         "verification_status": "exact",
         "verification_method": "Decode the printed 100-bit hexadecimal code; compute each C[k]=sum(s[i]*s[i+k]) for k=1,...,99 and take max(abs(C[k])).",
-        "witness": "data/reference/nunn_coxson_length100.json",
+        "witness": "data/source/nunn_coxson_length100.json",
         "origin_type": "published traditional search witness, exactly reproduced",
         "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
       },
@@ -331,7 +331,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "1dc9115f1ad56ca1f3d8632dc04ebff1786247d8a26757b63cdb7025a3360e6f"
       }
@@ -377,7 +376,7 @@
         "date_checked": "2026-11-07",
         "provenance": "Published traditional search construction.",
         "evidence_state": "Reproduced; not a proof of optimality.",
-        "witness": "data/reference/nunn_coxson_length101.json"
+        "witness": "data/source/nunn_coxson_length101.json"
       },
       "best_reproduced": {
         "value": 5,
@@ -390,7 +389,7 @@
           ],
           "correlation": "aperiodic"
         },
-        "witness": "data/reference/nunn_coxson_length101.json",
+        "witness": "data/source/nunn_coxson_length101.json",
         "verification_status": "exact",
         "verification_method": "Compute all 100 nonzero-shift correlations by exact integer sums.",
         "review_status": "accepted_by_sol"
@@ -646,7 +645,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c02.json",
         "witness_sha256": "0a0e80d30d6f1ea3e5f69a8f467103a4f7a1487ca3626c750e47566afbeeb002"
       }
@@ -692,7 +690,7 @@
         "date_checked": "2026-11-07",
         "provenance": "Published traditional search construction.",
         "evidence_state": "Reproduced; not a proof of optimality.",
-        "witness": "data/reference/nunn_coxson_length102.json"
+        "witness": "data/source/nunn_coxson_length102.json"
       },
       "best_reproduced": {
         "value": 5,
@@ -705,7 +703,7 @@
           ],
           "correlation": "aperiodic"
         },
-        "witness": "data/reference/nunn_coxson_length102.json",
+        "witness": "data/source/nunn_coxson_length102.json",
         "verification_status": "exact",
         "verification_method": "Compute all 101 nonzero-shift correlations by exact integer sums.",
         "review_status": "accepted_by_sol"
@@ -963,7 +961,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c03.json",
         "witness_sha256": "f299eddc82ebec2ce9ca093b8f2141d7f171966a2af31fa5b7135f329b9a6cd9"
       }

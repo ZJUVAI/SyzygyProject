@@ -45,7 +45,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Four freely translated and independently rotated unit equilateral triangles inside an axis-aligned square, interiors disjoint, minimize side. Dense Q(sqrt3) translations and rational unit directions preserve the unrestricted real infimum via shrink-about-centroids, approximation and rescaling. No coordinate cap.",
       "primary_source": "Friedman triinsqu n4, found1996 side1+sqrt3/3, source image t4.gif. Root separately reconstructed exact pinwheel vertices from the diagram and checked12 unit sides, containment and6 pair separations. This is reconstructed geometry, not original author coordinate bytes. The n3 proof listed October2026 does not settle4.",

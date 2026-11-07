@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Ten-dimensional positive definite symmetric rational Gram matrix, every nonzero integer vector has squared norm at least4, minimize exact Gram determinant. Full lattice problem at fixed sphere radius1; nonlattice P10c scores are not lattice records.",
       "primary_source": "Nebe-Sloane Catalogue LAMBDA10 GRAM section, frozen10728-byte HTML SHA10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a. Independently downloaded and transcribed10x10 matrix, determinant768, minimum squared norm4,336 shortest vectors.",

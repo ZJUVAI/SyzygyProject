@@ -58,7 +58,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "primary_source": "Ota, Osa and Harada, arXiv:2610.11609, Proposition 3.1 and Section 4; exact ancillary word lists, with parity extension identity.",
       "open_bounds": "Brouwer table: 84–150 at (23,10) and 196–466 at (25,10). No proof of optimality found.",

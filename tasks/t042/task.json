@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定[1,212]整数子集，最大化不含非平凡三项等差数列的基数。与七维三元仿射cap的域、约束不同，不是参数变体。",
       "human_method": "Odlyzko–Stanley1978的三进制仅0/1公式，经平移1并取5位得到32点、最大122。独立重建32项并穷举两端点；最低不同三进制位也给无三项等差的直接证明。仅作弱同参数传统方法复现，未冒称32为文献最优记录。",

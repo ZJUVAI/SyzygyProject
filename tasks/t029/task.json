@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "最小化有理数域上3×3矩阵乘法的双线性乘积数。允许非整数有理系数。27项只作资源上限。",
       "人类来源": "Lille保存的Laderman1976张量设置参数lambda=1，按来源约定转置第三因子。重建23项。",

@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定17个互异平面点，最大化含恰好3个输入点的不同直线数；4点或更多共线不计。共同实代数域可覆盖有限实点incidence模式，不限制特定三次曲线。",
       "primary_source": "Sol亲自读取Green–Tao1208.4714v3 §2 Theorem2.5后acnodal y²=x²(x−1)的cot参数化和Proposition2.6有限子群计数。取k/17，原齐次[sinθ,cosθ,sin³θ]交换后两坐标，odd17的cosθ非零，得(tanθ,tan³θ/(1+tan²θ))。Pegg2018只作同参数40线公开证据，不声称所保存坐标与其图片相同。",

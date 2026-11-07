@@ -22,7 +22,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "FixedCGSHOP2024 random_cf2_74ae2d30_50,44item types50available copies15-vertexconvexcontainer. Integertranslations only, no rotation, contact allowed; maximize total selected value. Arbitrary source simple concave item shapes allowed.",
       "primary_source": "Rootread2026authorsCGSHOP24.pdf section1integertranslationrules and section5heuristicresults; officialinput SHA f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92. PublicauthorviewerShadoks2304,SmartPlacer2268,CGA2105. Samefixedinstanceoptimalityproofnotfound in current checked sources; no exhaustive negativeproofclaim.",

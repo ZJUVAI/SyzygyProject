@@ -48,6 +48,5 @@
     "reference_data_read": false
   },
   "solution_sha256": "93edac5a6a6818539687e32bab2b62a6f05628bb4ef677b348a5f97f79184c21",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T076 tasks/t076/best/T076-C01/solution.json --config T076-C01"
 }

@@ -54,6 +54,5 @@
     "fallback": "all marks 0..6166 if no restart completed"
   },
   "solution_sha256": "25908723a6d38579333c2c84f8d3af4a65a7105371073e4cc4398e10ab38da7b",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T047 tasks/t047/best/T047-C01/solution.json --config T047-C01"
 }

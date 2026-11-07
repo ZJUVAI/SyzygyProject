@@ -126,7 +126,7 @@ def test_source_assets_are_frozen_and_the_page_reports_the_same_parameter():
     assert b"<font size=+2>12.</font>" in page
     assert b"5 + 2&radic;3" in page
     assert b"Ingo Rechenberg" in page
-    assert hashlib.sha256((TASK / "data/reference/rechenberg12_rational.json").read_bytes()).hexdigest() == (
+    assert hashlib.sha256((TASK / "data/human/rechenberg12_rational.json").read_bytes()).hexdigest() == (
         "ec135111b953a7eca739c733a3bdb4ee5d38fa7a90250d491220260e7b566e5b"
     )
 

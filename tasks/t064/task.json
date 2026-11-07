@@ -35,7 +35,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定ortho_40_56a6f463输入40点无额外约束，最小化非钝角完整剖分的额外Steiner点数；仅完全合法非钝角构造进入排名，不把少量钝角惩罚作正式解。",
       "primary_source": "Sol亲读SoCG2025.79 Figure10的该实例19点记录，重取固定77920a0e578e5bff13c710f988ec1c52d61dcfd8仓库merged_summaries_3.zip内对应完整解，核对官方输入SHA f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7。另阅读SoCG2025.80正交多边形网格传统方法，独立在同参重建弱人类129点。",

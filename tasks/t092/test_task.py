@@ -20,7 +20,7 @@ CONFIG = {"id": "T092-C01", "parameters": PARAMETERS, "direction": "maximize", "
 
 def test_human_and_reference_rebuild_highest_weight_harmonic_exactly():
     witness = human_run()
-    saved = json.loads((TASK_DIR / "data/reference/highest_weight_degree20.json").read_text())
+    saved = json.loads((TASK_DIR / "data/human/highest_weight_degree20.json").read_text())
     assert witness == reference_run() == saved
     result = validate(witness, CONFIG, strict=True)
     assert result["verification_status"] == "certified"

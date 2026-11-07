@@ -50,6 +50,5 @@
     "best_family_score": "4"
   },
   "solution_sha256": "a9e6721fd3ce5c42d472d75265c4b64b47e3065c01b714669a22bc5f4d231cf7",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T041 tasks/t041/best/T041-C01/solution.json --config T041-C01"
 }

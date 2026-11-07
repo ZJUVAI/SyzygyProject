@@ -49,7 +49,6 @@
               0.9118367215999157,
               0.9118367215999172
             ],
-            "claimed_objective_mismatch": false,
             "directions_normalized_for_scoring": true
           },
           "eval_time": 0.6392436847090721,
@@ -124,7 +123,6 @@
               0.8916944491515696,
               0.8916944491515711
             ],
-            "claimed_objective_mismatch": false,
             "directions_normalized_for_scoring": true
           },
           "eval_time": 0.5853269621729851,
@@ -199,7 +197,6 @@
               0.8323809277763071,
               0.8323809277763087
             ],
-            "claimed_objective_mismatch": false,
             "directions_normalized_for_scoring": true
           },
           "eval_time": 0.5349039547145367,

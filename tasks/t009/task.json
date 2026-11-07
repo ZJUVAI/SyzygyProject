@@ -61,7 +61,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximize minimum nonzero codeword weight of a k-dimensional binary linear code of length n. Retain[68,15] and add[80,20] and[100,20].",
       "primary_source": "Sol checked exact-parameter Grassl BKLC pages, [80,20] gives25–30 and [100,20] gives34–40. Compared every stored generator polynomial exponent to the source. Both construct from Chen Zhi1994 quasi-cyclic polynomials. C02 builds 3x27 blocks and punctures coordinate81; C03 builds 3x33 blocks and appends a zero coordinate. Source vintage is recorded; no matching optimality proof was found in checked sources.",

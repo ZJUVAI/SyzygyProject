@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Twelve arbitrary distinct rational points in the plane minimize maximum squared pair distance divided by minimum squared pair distance. No collinearity or bounding-box constraint. Density and continuity preserve the real-coordinate infimum.",
       "primary_source": "Friedman maxmin n12 page attributes Rechenberg2006 value5+2sqrt3 without optimality proof. Root read the source diagram and independently reconstructed Q(sqrt3) coordinates: all66 pairs have minimum squared distance1 and maximum5+2sqrt3, with21 minimum pairs. Exact rational approximation to sqrt3 yields the formally reproduced slightly weaker ratio; it is not identified with the exact irrational record.",

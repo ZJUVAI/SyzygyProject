@@ -26,7 +26,7 @@ def _human_saved():
 def test_human_and_reference_rebuild_the_same_public_15_piece_cover():
     human = human_run()
     reference = reference_run()
-    saved = json.loads((TASK_DIR / "data/reference/socg_fixed92_15.json").read_text())
+    saved = json.loads((TASK_DIR / "data/human/socg_fixed92_15.json").read_text())
     assert human["polygons"] == reference["polygons"] == saved["polygons"]
     result = validate(reference, CONFIG, strict=True)
     assert result["objective"] == result["objective_value"] == 15

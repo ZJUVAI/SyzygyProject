@@ -1264,6 +1264,5 @@
     ]
   },
   "solution_sha256": "5fef5d0483ae4591997d7fa5260cd2f50f29d946849048ae206c8c1834dad459",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T003 tasks/t003/best/T003-C03/solution.json --config T003-C03"
 }

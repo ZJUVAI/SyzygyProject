@@ -95,7 +95,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "b145238401b715b4a103bf3786e0caafe082daf4415be3c249c07fa247fe85aa"
       },
@@ -198,7 +197,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c02.json",
         "witness_sha256": "8f70dcfb9036f8dfc38cfe013826443c5edce38d0972cdfe0ec2c35777a42c94"
       },
@@ -300,7 +298,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c03.json",
         "witness_sha256": "3ddf6b6494799b18006180099af12cc9a0266b793686909fd677cb2f3c8bc942"
       },

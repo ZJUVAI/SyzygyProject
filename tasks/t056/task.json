@@ -40,7 +40,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Taillard ta41，30工件20机器、每工件各自固定机器顺序、非抢占、最小化makespan。不同机器可用不同工件顺序，与T028 permutation flowshop不同。",
       "primary_sources": "Sol重新下载Taillard官方tai30_20.txt与Shylo公开2006排程HTML，逐字节匹配源快照；全部600个machine/duration操作及20条机器工件排列逐项匹配保存JSON。原始实例SHA256 fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9。",

@@ -46,7 +46,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Fixed degree20 real homogeneous harmonic polynomial on S2, maximize normalized L4/L2. Full231-coefficient rational dense kernel, dimension41, no magnitude cap. Corrects old Rudin-minimum naming to actual maximum direction.",
       "primary_source": "Root checked Stanton-Weinstein1981 DOI10.1017/S0305004100058229 local maximality of real highest-weight harmonic; global finite20 optimum not proved there. Sogge asymptotic order and2026Rudin bounded holomorphic bases do not prove this constant. Current finite20 closure search found none.",

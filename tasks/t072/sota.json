@@ -138,8 +138,7 @@
           "unordered_pairs_with_replacement": 528
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

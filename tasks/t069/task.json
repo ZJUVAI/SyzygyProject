@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Fixed 100000-city TSPLIB MonaLisa100K minimum closed Hamiltonian tour, integer EUC_2D distances. The scalar is the sum of individually rounded edges, not the rounded sum of real distances.",
       "source": "Read official live page: Nagata genetic algorithm March17 2009 tour5757191, reported Concorde lower5757084 July27 2012, gap107. Cook, Helsgaun, Hougardy and Schroeder2024 Local elimination DOI10.1007/s12532-024-00262-y §3.1 explicitly calls this instance unproved. No full Concorde lower-bound recertification claimed.",

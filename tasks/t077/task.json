@@ -48,7 +48,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximize ln|A-A|/ln|A+A| for2..512 distinct integers in[-1000000,1000000]. This raw ratio differs from T012 normalized ratio. Root checked explicit ordering reversal with n8/s26/d25 and its separated two-copy extension n16/s78/d75; they rank oppositely under the two objectives.",
       "human_source": "Gyarmati/Hennecart/Ruzsa May30 2008 manuscript section2 equations13-15, finite simplex vectors and projection weights. Frozen human m6L5 has462 elements, max555555, s8008,d39733 and exact ratio about1.1782049454. Asymptotic1.27155 is not claimed as this finite score.",

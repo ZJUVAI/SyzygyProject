@@ -147,6 +147,5 @@
     "reference_data_read": false
   },
   "solution_sha256": "7ad92f3d7a6e2fd542d7e342c8fd5725c5942969fb311cd7b64bffe32e6a76ef",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T054 tasks/t054/best/T054-C01/solution.json --config T054-C01"
 }

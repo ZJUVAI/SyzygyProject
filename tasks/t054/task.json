@@ -62,7 +62,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Binary aperiodic PSL. C01 length100 retained, new C02 length101 and C03 length102. Minimize the maximum absolute off-zero correlation, with all signs exactly +/-1.",
       "primary_source": "Sol downloaded https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf and read Table2 (Codes with PSL=5). Its 101 and102 rows are exactly 1A5048216CCF18F83E910DD4C5 and2945A4F11CE44FF664850D182A. The trailing7 is the previous comparison result, not the reported score of these witnesses.",

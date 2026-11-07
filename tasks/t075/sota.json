@@ -17,7 +17,7 @@
         "doi": "10.1112/jlms.12722",
         "section": "6.3, page 27",
         "construction": "Frankl-Furedi H6 and iterated blow-up",
-        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
         "witness_sha256": "c1bc2f13395033be14f69bb0fd4700a2b82654acc355dcfa227875083841db13",
         "same_parameters": true,
         "ai_provenance": "The reviewed paper does not state whether AI tools were used.",
@@ -46,7 +46,7 @@
           "forbidden_hypergraph": "K4^-"
         },
         "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
-        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
         "evidence_state": "Finite n=36 specialization of the published H6 iterated blow-up, independently checked to have 2,220 edges and no forbidden four-set.",
         "ai_provenance": "The source does not state whether AI tools were used.",
         "optimality": "Not proved for finite n=36."
@@ -59,7 +59,7 @@
           "forbidden_hypergraph": "K4^-"
         },
         "program": "reference.py",
-        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
         "evidence_state": "Exact task checker recomputes 2,220 edges and checks every four-vertex set.",
         "verification_status": "exact"
       },
@@ -140,7 +140,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "lower_bound": {
         "value": 2220,
@@ -205,8 +205,7 @@
           "method": "all vertex links triangle-free, independent of formal four-set loads"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

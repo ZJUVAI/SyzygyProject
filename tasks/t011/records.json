@@ -74,7 +74,7 @@
           "q": 7,
           "power": 4
         },
-        "witness": "data/reference_C7_4_100.json",
+        "witness": "data/human_product_C7_4_100.json",
         "evidence_state": "exactly verified; weaker than public report",
         "review_status": "reviewed_by_sol"
       },
@@ -105,7 +105,7 @@
           "q": 7,
           "power": 6
         },
-        "witness": "data/reference/CC_6_7_1120.txt",
+        "witness": "data/source/CC_6_7_1120.txt",
         "evidence_state": "exact local verification; pending Sol review",
         "review_status": "reviewed_by_sol"
       },

@@ -117,8 +117,7 @@
           "strict_lower_bound": 116
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

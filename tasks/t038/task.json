@@ -34,7 +34,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "固定12阶，最大化两两正交拉丁方阵数量。每行每列恰好含0至11，每对方阵产生全部144个有序符号对。",
       "人类来源": "Sage 10.10固定提交cb359e4c6e3b52e1bfc7f4f152e7db3ebd5f5d03，将显式五方阵归于Brendan McKay。主代理从原函数M字面字符串重建720个符号并逐项匹配，不执行外部代码。1992年相关论文作者是Charles E. Roberts，两种归属分开。",

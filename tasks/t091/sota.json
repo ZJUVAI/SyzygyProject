@@ -24,7 +24,7 @@
       "best_reproduced": {
         "value": 4096,
         "program": "reference.py",
-        "witness": "data/reference/bch_dual_oa4096.json",
+        "witness": "data/human/bch_dual_oa4096.json",
         "verification_status": "exact"
       },
       "best_own_search": {
@@ -91,7 +91,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "review_status": "accepted_by_sol",
       "verification": {
@@ -143,8 +143,7 @@
           "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

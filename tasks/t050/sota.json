@@ -139,8 +139,7 @@
           "analytic_edge_upper_bound": 286
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T050-C02": {
@@ -253,8 +252,7 @@
           "analytic_edge_upper_bound": 567
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T050-C03": {
@@ -359,8 +357,7 @@
           "analytic_edge_upper_bound": 1125
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

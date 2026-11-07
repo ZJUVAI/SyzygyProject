@@ -9,7 +9,7 @@ Status: `accepted_by_sol`.
 - Section 6.3, page 27, gives `H6={123,234,345,145,125,136,356,256,246,146}`, attributes it to Frankl and Füredi (1984), notes each vertex link is a 5-cycle, and states that blow-ups and iterated blow-ups are `K4^-`-free.
 - The same section states that the ordinary Turán density of `K4^-` is unknown and cites the `2/7` conjecture. Its codegree results concern a different constrained extremal problem.
 - Current-source queries on 2026-11-06 did not find a finite `n=36` exact result or proof that 2,220 is optimal. The 2026 exact result for the uniform Turán density of complete `K4^(3)` is a different forbidden hypergraph and a different density notion.
-- Public H6 template is archived at `data/source/h6_template.json`. The derived 2,220-edge witness is archived at `data/reference/h6_iterated_blowup_n36.json`.
+- Public H6 template is archived at `data/source/h6_template.json`. The derived 2,220-edge witness is archived at `data/human/h6_iterated_blowup_n36.json`.
 
 ## Construction and checker
 

@@ -42,7 +42,7 @@
         "parameters": {
           "order": 38
         },
-        "witness_file": "data/reference/williams_38_352A.bkp",
+        "witness_file": "data/source/williams_38_352A.bkp",
         "provenance": "Bouwkamp code parsed by exact integer skyline reconstruction.",
         "ai_provenance": "Task-local independent reproduction of a published human construction.",
         "actual_value": 352,
@@ -54,7 +54,7 @@
         "parameters": {
           "order": 38
         },
-        "witness_file": "data/reference/williams_38_352A.bkp",
+        "witness_file": "data/source/williams_38_352A.bkp",
         "provenance": "Exact rebuild of the published Williams 38 352A B-code."
       },
       "highest_reported": {

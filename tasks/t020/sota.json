@@ -13,7 +13,7 @@
       },
       "reproduced_value": "202",
       "program": "sota.py",
-      "witness": "data/sota_t020_c01.json",
+      "witness": "data/human_t020.json",
       "matches_public_best": true,
       "comparison_tolerance": "0",
       "limitations": [
@@ -55,7 +55,7 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t020/data/sota_t020_c01.json",
+        "witness": "tasks/t020/data/human_t020.json",
         "independent_quantity": {
           "additions": 202,
           "target": "6277101735386680763835789423207666416083908700390324961277"
@@ -83,7 +83,7 @@
       },
       "reproduced_value": "230",
       "program": "sota.py",
-      "witness": "data/sota_t020_c02.json",
+      "witness": "data/human_t020_c02.json",
       "matches_public_best": true,
       "comparison_tolerance": "0",
       "limitations": [
@@ -125,7 +125,7 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t020/data/sota_t020_c02.json",
+        "witness": "tasks/t020/data/human_t020_c02.json",
         "independent_quantity": {
           "additions": 230,
           "target": "3369993333393829974333376885877453834204643052817571560137951281147"
@@ -153,7 +153,7 @@
       },
       "reproduced_value": "532",
       "program": "sota.py",
-      "witness": "data/sota_t020_c03.json",
+      "witness": "data/human_t020_c03.json",
       "matches_public_best": true,
       "comparison_tolerance": "0",
       "limitations": [
@@ -195,7 +195,7 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t020/data/sota_t020_c03.json",
+        "witness": "tasks/t020/data/human_t020_c03.json",
         "independent_quantity": {
           "additions": 532,
           "target": "6864797660130609714981900799081393217269435300143305409394463459185543183397656052122559640661454554977296311391480858037121987999716643812574028291115057149"

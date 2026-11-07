@@ -261,8 +261,7 @@
           "minimum_distance": 10
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "limitations": [
         "The upper bound is larger than the reproduced lower bound; optimality is not proved.",
@@ -345,8 +344,7 @@
           "minimum_distance": 10
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "limitations": [
         "The upper bound is larger than the reproduced lower bound; optimality is not proved.",

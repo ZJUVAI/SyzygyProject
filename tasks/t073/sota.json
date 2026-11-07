@@ -21,7 +21,7 @@
         "objective": "number of distinct points",
         "coordinate_domain": "real algebraic coordinates in one common real algebraic number field"
       },
-      "witness": "data/reference/d4_24cell.json",
+      "witness": "data/human/d4_24cell.json",
       "witness_sha256": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
       "independent_certificate": {
         "file": "data/reference/d4_rational24_independent_certificate.json",
@@ -112,8 +112,7 @@
           "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

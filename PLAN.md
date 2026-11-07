@@ -10,7 +10,7 @@ v1.0 正式目录有 **100 题、139 个配置**。18 题有 3 个配置，3 题
 2. 有相同参数的公开最佳记录和可重放的人类对照。公开报告值与复算值分开记录。
 3. 在所查来源中没有最优性证明。发现证明后，退役该配置并保留历史记录。
 
-[注册表](mathbench/registry.py) 保存 T001–T100 正式任务名单。各题的 `task.json` 保存参数，`records.json` 和 `sota.json` 保存公开来源与结果，`acceptance.json` 保存验收证据，`best/` 保存自有最佳构造。
+[注册表](mathbench/registry.py) 保存 T001–T100 正式任务名单。各题的 `task.json` 保存参数，`records.json` 和 `sota.json` 保存公开来源与结果，`best/` 保存自有最佳构造。 完整验收日志写入各任务的 `runs/`，不随发行版保存。
 
 ```sh
 python -m mathbench list

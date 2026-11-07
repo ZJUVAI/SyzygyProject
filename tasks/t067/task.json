@@ -45,7 +45,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定A(17,4,5)，长度17、权5、任意两码字Hamming距至少4，最大化码字数。等价packing D(17,5,4)，因此T063合并重复候选，不再增加任务数。",
       "primary_source": "Sol亲读Milshtein Springer DOI10.1007/s12095-022-00611-5摘要，明确传统Generic Scuba Search的计算搜索由441改444，在线2022-10-08、卷15(2023)p443–453。Brouwer作者邮件原文件8070字节SHA bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a，Sol重新下载全部444行并逐行比对human输出。2023 correction仅改公式编号和引文，没有改444构造。",

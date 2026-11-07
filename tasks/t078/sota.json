@@ -21,7 +21,7 @@
         "minimum_squared_norm": "at least 4 on nonzero integer vectors",
         "objective": "determinant of the Gram matrix"
       },
-      "witness": "data/reference/lambda10_gram.json",
+      "witness": "data/human/lambda10_gram.json",
       "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
       "source_snapshot": {
         "file": "data/source/lambda10.html",
@@ -94,8 +94,7 @@
           "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

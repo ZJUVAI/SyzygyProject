@@ -48,7 +48,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Exactly21 unit disks, arbitrary unbounded rational centers, maximize positive rational radius of a concentric covered disk. Duplicate centers allowed. Contracting centers and target, then rational approximation, preserves the continuous supremum.",
       "human_source": "Classical Kershner1939 triangular lattice covering method, finite19-site hexagonal patch with2 repeated origins. This local finite-method reconstruction covers7/2; it is not claimed as a separately published21-circle score. Tan2018 reported radius3.804 remains an unreproduced best public value in reviewed Friedman sources.",

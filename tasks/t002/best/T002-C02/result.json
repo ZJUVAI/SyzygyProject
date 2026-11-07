@@ -16,8 +16,7 @@
     "n": 29,
     "bounding_width": "6",
     "bounding_height": "5",
-    "pair_checks": 406,
-    "claimed_objective_mismatch": false
+    "pair_checks": 406
   },
   "eval_time": 59.99440233781934,
   "seed": 0,

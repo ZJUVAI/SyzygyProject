@@ -58,7 +58,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximum independent word count in the strong powers of C7. Keep power5 and add powers4 and6; adjacency is coordinatewise equality or cyclic distance1 in every coordinate.",
       "power4_record": "Sol read Itty et al. arXiv2607.21517v2 section2, explicitly reports fourth power alpha unknown and lower108, attributed to Vesel-Zerovnik2002. The exact108-word list was not recovered from the figure. The local confirmed traditional comparator is a Cartesian product of two verified10-word independent sets in C7^2, giving100. Report108 remains a separate source record; no claimed exact replay of108.",

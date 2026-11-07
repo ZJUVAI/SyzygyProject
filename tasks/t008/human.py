@@ -11,7 +11,7 @@ DELETED = {1, 8, 13, 15, 16, 24, 28, 31}
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T008-C01")
     if config_id == "T008-C02":
-        return json.loads((Path(__file__).parent / "data" / "sota_witness_C02.json").read_text())
+        return json.loads((Path(__file__).parent / "data" / "search_reference_C02.json").read_text())
     if config_id != "T008-C01":
         raise ValueError("unsupported configuration")
     points = sorted(set(range(32)) - DELETED)

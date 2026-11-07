@@ -41,7 +41,7 @@
         "parameters": {
           "vertices": 120
         },
-        "witness_file": "data/reference/6fan_120.json",
+        "witness_file": "data/source/ubc_6fan_120.json",
         "provenance": "Task-local rebuild of the UBC 6-fan rule; certified with rational chord and path intervals.",
         "ai_provenance": "Benchmark reconstruction of a published human method.",
         "actual_value": "481669373744614531460135/332305777911042658732591",
@@ -53,7 +53,7 @@
         "parameters": {
           "vertices": 120
         },
-        "witness_file": "data/reference/6fan_120.json",
+        "witness_file": "data/source/ubc_6fan_120.json",
         "provenance": "Rebuilt UBC 6-fan construction; upward-rounded certified upper endpoint."
       },
       "highest_reported": {

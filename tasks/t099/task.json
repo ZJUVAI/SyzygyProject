@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定P1 11格形状：底行5格，上方两行各3格。采用标准正方格点模型，允许D4八种旋转反射及整数平移。对任意正整数边长矩形，最小化铺满所需的块数；未把区域固定为54乘55。",
       "primary_source": "Sol核对polyominoes.org/data/11P1的order<=270及smallest known rectangle、MIT Tiling Search data113/K12的270块54乘55记录。后者说明来自Karl Dahlke1997与Wichmann图案档案；不将网站版权年份当作发现年份。270是可行上界，没有匹配最小阶证明。",

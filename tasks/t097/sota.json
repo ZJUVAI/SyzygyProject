@@ -24,7 +24,7 @@
       "best_reproduced": {
         "value": 15,
         "program": "reference.py",
-        "witness": "data/reference/socg_fixed92_15.json",
+        "witness": "data/human/socg_fixed92_15.json",
         "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
         "verification_status": "certified"
       },
@@ -91,7 +91,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "review_status": "accepted_by_sol",
       "verification": {
@@ -140,8 +140,7 @@
           "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

@@ -28,7 +28,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximum absolute determinant of n-by-n unrestricted +/-1 matrices. Existing n29 and new n27. Integer Bareiss formal score, no float determinant used for ranking.",
       "public_source": "Sol reviewed Brent order27 page https://maths-people.anu.edu.au/~brent/maxdet/order27/ and the authors paper/table https://maths-people.anu.edu.au/~brent/pd/Brent-maxdet-RMIT.pdf. They attribute the conjectured Gram matrix to Tamura2005 and give feasible determinant546*6^11*2^26 with an Ehlich upper ratio strictly below565, leaving a gap.",

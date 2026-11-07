@@ -47,6 +47,5 @@
     "seed": 0
   },
   "solution_sha256": "001d9f490a901c70c14dd696a1729c335e5f1a606f9fdbe805f36c12061f95b4",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T009 tasks/t009/best/T009-C03/solution.json --config T009-C03"
 }

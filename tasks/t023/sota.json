@@ -138,7 +138,6 @@
         "claimed_score_ignored": true,
         "reviewer": "Sol main agent",
         "date": "2026-11-06",
-        "evidence": "acceptance.json",
         "source_review": "Sol independently checked the same-parameter sources and the limits listed in PLAN.md.",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "a9b09b9e631f14596dee31ed0535d44172d09b0cd5afa7c5617582923541944e"

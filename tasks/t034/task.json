@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "两色连续正整数前缀，禁止同色七项正公差等差数列，最大化前缀长度。已解W(2,6)排除。",
       "人类方法来源": "Herwig等2007表中prime617、不zip的3703构造，以Rabung幂剩余方法重建。旧预印本日期2005与正式出版日期分开。Monroe代码固定提交f1223097f4adc0a41ccb92ace51ebafd2b996fb1，未跑上游分布式搜索。",

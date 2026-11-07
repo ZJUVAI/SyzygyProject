@@ -43,6 +43,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "b75dd3e60097e5ff01517ed1971c1383163aa628351acc41c92c2646b36ef30b",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T095 tasks/t095/best/T095-C01/solution.json --config T095-C01"
 }

@@ -32,7 +32,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "固定QAPLIB tai256c的两份256阶整数矩阵。最小化65536项二次指派成本。",
       "人类来源": "QAPLIB将44759294归于ANT，并在1997年历史中记载Stützle。复现归档排列，不声称重跑原搜索。",

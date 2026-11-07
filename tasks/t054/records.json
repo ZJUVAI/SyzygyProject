@@ -43,7 +43,7 @@
         "source": "Nunn and Coxson (2008), Table 2; 2026 v2 survey still cites this table for lengths 71-105.",
         "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
         "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim.",
-        "witness": "data/reference/nunn_coxson_length100.json",
+        "witness": "data/source/nunn_coxson_length100.json",
         "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
       },
       "best_reproduced": {
@@ -53,7 +53,7 @@
           "length": 100,
           "correlation": "aperiodic"
         },
-        "witness": "data/reference/nunn_coxson_length100.json",
+        "witness": "data/source/nunn_coxson_length100.json",
         "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384",
         "verification_status": "exact",
         "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums.",
@@ -126,7 +126,7 @@
         "source": "Nunn and Coxson (2008), Table 2, row N=101.",
         "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
         "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim.",
-        "witness": "data/reference/nunn_coxson_length101.json",
+        "witness": "data/source/nunn_coxson_length101.json",
         "witness_sha256": "c334b13ff4f803f956a993944ba2e77b30b1f04b9ca9aa0c721820736e7b2780"
       },
       "best_reproduced": {
@@ -136,7 +136,7 @@
           "length": 101,
           "correlation": "aperiodic"
         },
-        "witness": "data/reference/nunn_coxson_length101.json",
+        "witness": "data/source/nunn_coxson_length101.json",
         "witness_sha256": "c334b13ff4f803f956a993944ba2e77b30b1f04b9ca9aa0c721820736e7b2780",
         "verification_status": "exact",
         "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums.",
@@ -194,7 +194,7 @@
         "source": "Nunn and Coxson (2008), Table 2, row N=102.",
         "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
         "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim.",
-        "witness": "data/reference/nunn_coxson_length102.json",
+        "witness": "data/source/nunn_coxson_length102.json",
         "witness_sha256": "33e7a6c64c2e3ac444ebeb9ef02daaa32ea47a097fd7602d50f0949fd691d763"
       },
       "best_reproduced": {
@@ -204,7 +204,7 @@
           "length": 102,
           "correlation": "aperiodic"
         },
-        "witness": "data/reference/nunn_coxson_length102.json",
+        "witness": "data/source/nunn_coxson_length102.json",
         "witness_sha256": "33e7a6c64c2e3ac444ebeb9ef02daaa32ea47a097fd7602d50f0949fd691d763",
         "verification_status": "exact",
         "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums.",

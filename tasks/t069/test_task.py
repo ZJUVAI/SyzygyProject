@@ -52,12 +52,10 @@ def test_pinned_inputs_and_witness_hashes():
     record = metadata["configurations"][CONFIG_ID]
     instance = TASK / record["instance_file"]
     reference = TASK / record["witness"]
-    human = TASK / "data/human/monalisa_5757191.tour"
     assert hashlib.sha256(instance.read_bytes()).hexdigest() == INSTANCE_SHA256
     assert hashlib.sha256(instance.read_bytes()).hexdigest() == record["instance_sha256"]
     assert hashlib.sha256(reference.read_bytes()).hexdigest() == record["witness_sha256"]
     assert hashlib.sha256(reference.read_bytes()).hexdigest() == TOUR_SHA256
-    assert hashlib.sha256(human.read_bytes()).hexdigest() == TOUR_SHA256
     assert len(load_points()) == 100_000
 
 

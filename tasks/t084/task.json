@@ -18,7 +18,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "31 arbitrary distinct integers, all unordered triple sums with repetition unique, minimize diameter. No coordinate cap. Translation to nonnegative integers preserves feasibility and score. h2 Golomb is T007; h3 is a separate generalized constraint.",
       "primary_source": "Martos/Delgado/Trujillo2021 IEEEAccess DOI10.1109/ACCESS.2021.3106617 Table3 SGq31,m31,19407. Root independently transcribed the author-rendered list, matches agent list, exactly5456 unique triple sums and diameter19407. Source calls near-optimal; conclusion only certifies optimal small B3 sets through7.",

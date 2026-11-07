@@ -1,8 +1,3 @@
 """Fixed public reference witness, stored as task-local data."""
-import json
-from pathlib import Path
 
-
-def run_code():
-    witness = json.loads((Path(__file__).parent / "data" / "human_witness.json").read_text())
-    return {"adjacency": witness["adjacency"]}
+from tasks.t022.human import run_code as run_code

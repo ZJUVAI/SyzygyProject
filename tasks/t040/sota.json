@@ -88,8 +88,7 @@
           "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T040-C02": {
@@ -232,8 +231,7 @@
           "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T040-C03": {
@@ -376,8 +374,7 @@
           "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

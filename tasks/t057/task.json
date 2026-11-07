@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定CVRPLIB X-n1001-k43，1000客户+1仓库、容量131、每客户恰一次，所有路线起止仓库，最小化总整数EUC_2D距离。主代理读取DIMACS正式规则，无路线数限制，43仅实例名。总需求5557给至少43路。",
       "primary_sources": "Sol重新下载官方instance/257、bound/3162当前72332及bound/254历史72355的原始文件；输入SHA256 97c950e592d8a63d4f81669f1fda9762de2a79e4a213f9e7401c699a754dc492。当前官方instances表Opt=no，bounds/257记2026-10-24 Vizzolini在既有BKS上改进得72332。",

@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Fixed arc130 simple undirected graph with130vertices715edges. Minimize maximum number of edges crossing any proper prefix of a vertex permutation. Distinct from bandwidth maximum label gap and minimum linear arrangement sum label gaps.",
       "primary_source": "Root read Marti et al2013 COR manuscript AppendixTable9 and currentofficialOptsicom instance/XLS. GraphSHA256be272e3c2b11280c2c8335ae966c3d14ecef94fb4cb8fc2b049ecd7d676734a8, maxdegree124. Reported62<=OPT<=202; public202ordering not recovered. Current same-instance cutwidth searches did not identify a proof closing gap; bandwidth63closed belongs different objective.",

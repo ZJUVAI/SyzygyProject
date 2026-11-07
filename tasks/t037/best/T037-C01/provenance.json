@@ -49,6 +49,5 @@
     "budget": "fixed iteration count; shared runner hard limit applies"
   },
   "solution_sha256": "205e2535250c57a147001664516289bc25daff066b58311bd49763e488851faf",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T037 tasks/t037/best/T037-C01/solution.json --config T037-C01"
 }

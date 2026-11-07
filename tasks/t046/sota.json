@@ -103,8 +103,7 @@
           "audit_scope": "Analytic norm of saved factor-family witnesses, not a restriction on candidate inputs"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }
