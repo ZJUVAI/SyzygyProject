@@ -51,7 +51,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximize theta=1+(ln|U-U|-ln|U+U|)/ln(2maxU+1), for distinct nonnegative integers U containing0, cardinality2..512, max<=1000000, and strict d<q. This is the finite certificate parameter for a two-set asymptotic lemma, not the one-set objectives T012/T077. Exact finite ranking reversals checked distinguish both objectives.",
       "primary_source": "Root downloaded and read GHR May30 2008 manuscript pp4-6, the lemma, strict d<q hypothesis, and formulas13-15. Human m6L5 reconstructs462 integers,s8008,d39733,q1111111. Theta1.11506040374114. Published asymptotic constructions and optimum cardinality<=11 are not proofs for this finite domain.",

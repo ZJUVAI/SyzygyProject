@@ -48,7 +48,7 @@
           "strength": 4
         },
         "program": "reference.py",
-        "witness": "data/reference/bch_dual_oa4096.json",
+        "witness": "data/human/bch_dual_oa4096.json",
         "witness_sha256": "5e0d4a8af8c61f51e155197ba9b6a392ac2d1cfc575f5b856daf2acef1eec7c9",
         "verification_status": "exact",
         "evidence_state": "Independent parity-character checker confirms exact strength 4.",
@@ -119,7 +119,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",

@@ -56,7 +56,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定17输入比较排序网络，最小化compare-exchange个数；不限制深度，不将已证最优深度10当作本任务目标。",
       "primary_sources": "亲自核对Dobbelaere当前表及固定SorterHunter提交8ba90df607cbdc339409e0b173b5a2ffd60fc911；重新下载固定原始HTML，与本地快照逐字节一致，SHAfb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6。逐一解析71个比较器，与保存参考一致；该大小匹配Valsalam–Miikkulainen2013传统进化搜索，但网络深度已由17变12，没有声称是2013同一网络。",
@@ -72,7 +71,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Minimize comparator count of an ascending sorting network; retain17 wires, add18 and19. Depth is reported separately and is not the objective.",
       "primary_source": "Sol read Dobbelaere SorterHunter table at https://bertdobbelaere.github.io/sorting_networks.html. Live size intervals are68–77 for18 and73–85 for19; lowest listed depth is a separate field. Exact77/85 comparator lists archived from pinned author revision8ba90df607cbdc339409e0b173b5a2ffd60fc911. AI-use status is not disclosed.",

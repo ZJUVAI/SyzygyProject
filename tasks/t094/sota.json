@@ -16,7 +16,7 @@
       },
       "reproduced_witness": {
         "value": "481669373744614531460135/332305777911042658732591",
-        "file": "data/reference/6fan_120.json",
+        "file": "data/source/ubc_6fan_120.json",
         "sha256": "2db7e3a33a5a3b9c9e1b494b58e3a6cf2a2428a6d9f22a222d3a36c967ed7a2f",
         "provenance": "Rebuilt UBC 6-fan; exact combinatorial check and rational interval distance evaluation.",
         "evidence_state": "objective enclosed by details.objective_interval"
@@ -82,7 +82,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "7d65c3d99f7ffe9dc3241a1583783ac1f26d7ecdfe6e1a29e23c325efb0a89b3"
       }

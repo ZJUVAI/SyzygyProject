@@ -70,8 +70,7 @@
           "sum_radii": "658995771226364683/250000000000000000"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "report_recheck": {
         "checked_at": "2026-11-06",
@@ -151,8 +150,7 @@
           "sum_radii": "91861649099589859/31250000000000000"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "report_recheck": {
         "checked_at": "2026-11-06",
@@ -233,8 +231,7 @@
           "sum_radii": "82309789314588599/25000000000000000"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

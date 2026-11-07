@@ -77,8 +77,7 @@
           "audit_scope": "Saved rational and triangular-lattice witnesses; checker permits all real algebraic fields"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

@@ -38,7 +38,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定DIMACS C2000.9，2000顶点1799532边，最大化两两邻接顶点集大小。补图独立集和点覆盖不再额外计数。",
       "primary_source": "Sol亲自读取Grosso–Locatelli–Pullan2005两页论文，先79再完整80顶点编号；逐一抄取80个零基编号，从CMU COLOR04官方下载19602828字节原始图，SHA256 aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16。独立图edge-set解码后全部3160对存在。",

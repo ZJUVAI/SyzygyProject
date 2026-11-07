@@ -29,7 +29,7 @@ Commands run:
 .venv/bin/python -m json.tool tasks/t045/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t045/sota.json > /dev/null
 .venv/bin/python -m json.tool tasks/t045/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t045/acceptance.json > /dev/null
+.venv/bin/python -m json.tool tasks/t045/records.json > /dev/null
 .venv/bin/python -m json.tool tasks/t045/data/reference/spectral_adjacent_ordering.json > /dev/null
 .venv/bin/python -m json.tool tasks/t045/best/seeded_rcm_adjacent_seed0.json > /dev/null
 ```

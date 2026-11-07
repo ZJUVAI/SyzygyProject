@@ -67,5 +67,12 @@
       "verification_status": "exact",
       "combined_score": 0.11904761904761904
     }
+  },
+  "admission_source_review": {
+    "mathematical_definition": "checked",
+    "same_parameter_human_source": "checked and reproduced",
+    "public_record": "checked within cited source scope",
+    "optimality": "No proof of optimality located for this configuration. See task sources and PLAN.md.",
+    "graph6_decode": "NetworkX independent decode confirmed 42 vertices and 425 edges"
   }
 }

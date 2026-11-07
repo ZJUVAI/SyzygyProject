@@ -30,4 +30,5 @@ def test_invalid_sets_rejected(values):
 def test_claimed_score_is_not_used():
     result = validate({**human(), "objective": -999}, CONFIG)
     assert result["details"]["sumset_size"] == 59
-    assert result["details"]["claimed_objective_mismatch"]
+    assert result == validate(human(), CONFIG)
+    assert result == validate({**human(), "objective": {}}, CONFIG)

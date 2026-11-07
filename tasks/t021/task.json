@@ -50,7 +50,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Thomson equal-unit-charge Coulomb energy on exact unit S2; retain n32 and add n40/n50. Minimize reciprocal pair distances with exact stereographic points.",
       "primary_sources": "Sol personally fetched CCD /Thomson/xyz/40.xyz and /50.xyz and compared exact saved bytes and SHA256. CCD /Thomson/table.html reports rounded energies660.6752788 and1055.1823147. Wales-Ulker2006 conventional optimization coordinates are reconstructed; the archive does not supply global certificates.",

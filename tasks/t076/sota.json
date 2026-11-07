@@ -99,8 +99,7 @@
           "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T076-C02": {
@@ -243,8 +242,7 @@
           "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T076-C03": {
@@ -387,8 +385,7 @@
           "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

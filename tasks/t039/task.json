@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "7行，每行6个整数标记；全部105个行内正差互不相同，最小化最大正差。论文(n,k)=(7,5)，不能按5个标记解释。",
       "primary_upper_bound": "逐字核对Shehadeh、Kingsford、Kschischang，JCD DOI10.1002/jcd.22009，表1和附录A全部42个标记；作者固定仓库给出相同112构造。755是各行跨度和，不是目标。",

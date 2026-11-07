@@ -26,7 +26,7 @@
           "forbidden_hypergraph": "K4^-"
         },
         "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
-        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
         "evidence_state": "Public H6 blow-up rule specialized to n=36; the finite witness is exactly verified.",
         "optimality": "Not proved for n=36 in reviewed sources."
       },
@@ -39,7 +39,7 @@
           "forbidden_hypergraph": "K4^-"
         },
         "program": "reference.py",
-        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
         "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
         "evidence_state": "All 58,905 four-vertex sets checked; exact edge count 2,220.",
         "origin_type": "Reproduction of a published construction, not an optimality proof.",
@@ -122,7 +122,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       }
     }
   },

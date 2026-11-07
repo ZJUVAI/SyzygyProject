@@ -16,7 +16,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "最大化一般位置平面点集基数，禁止任何凸七点子集。凸多边形不要求内部为空。",
       "人类方法来源": "按Erdős–Szekeres经典规则及Duque等v2整数实现递归重建32点，不从图片猜坐标。",

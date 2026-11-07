@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定100点简单无向图，禁止简单六环，要求每条缺边加入均产生简单六环；最小化边数。区别于T024最大C4-free边数，不能只检查无六环或重复顶点walk。",
       "primary_source": "Sol亲自读取Lan–Shi–Wang–Zhang2108.03910v3 Theorem1.5及Section2，并查看PDF第3页Figure1(a)的全部12条核心边。t33扩展30条三顶点路径，每条四边，再向y4接一叶，n100且12+120+1=133。2025正式论文DOI10.1016/j.disc.2025.114504。",

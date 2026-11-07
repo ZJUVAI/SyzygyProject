@@ -28,7 +28,7 @@ The author-hosted LAMBDA10 catalogue page was independently downloaded on
 Its page states dimension 10, determinant 768, minimum norm 4, kissing number
 336, and includes the exact integer Gram matrix. `human.py` parses this saved
 source's GRAM section. `reference.py` loads the separate transcription in
-`data/reference/lambda10_gram.json`.
+`data/human/lambda10_gram.json`.
 
 The source Gram file hash is
 `b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886`.

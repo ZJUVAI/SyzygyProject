@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "固定DSJC1000.5的1000顶点249826条边。最小化合法着色中不同颜色数。",
       "人类来源": "Titiloye–Crispin2012论文和作者证书提供82色。冻结对照仍用Loudni的86色。原长时间退火搜索未重跑。",

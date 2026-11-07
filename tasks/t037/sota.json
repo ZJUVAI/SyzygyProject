@@ -122,7 +122,7 @@
         "value": 40,
         "witness": "data/d5_roots.json",
         "sha256": "f5ac23ea0d52d6ec38f73792424fefea1eff30b664bf531b459a3a6ec49cc807",
-        "reproduction_status": "Exact shared-runner replay and independent Sol review passed; see acceptance.json."
+        "reproduction_status": "Exact shared-runner replay and independent Sol review passed; see records.json."
       },
       "own_search_record": {
         "value": 18,
@@ -184,7 +184,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "verification": {
         "status": "reviewed_by_sol",
@@ -228,8 +228,7 @@
           "primitive_integer_directions": 40
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "review_status": "accepted_by_sol"
     }

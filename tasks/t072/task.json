@@ -46,7 +46,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Choose32distinct unbounded positive integers; minimize max of exact sumset/productset cardinalities. No smoothness or coordinate-size constraint in validation. Search4096proposalbound is heuristic only.",
       "source": "Read O Bryant2411.08139v2 Table2 n32 states154/154and explicitly not known optimal. Rebuilt first35 5-smooth positiveintegers minus75,81,100. Primary2026smallsetsII2601.21828 proves10/11only and doesnotclose32; 2026realalgebraicintegerasymptoticcounterexamples notfinitepositiveintegeroptimum.",

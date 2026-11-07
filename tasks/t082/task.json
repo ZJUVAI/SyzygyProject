@@ -47,7 +47,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Two equal armies of standard queens on30x30, maximize each army size. Same-color attacks allowed; no opposite-color attacks. Empty armies valid. No line-color-template restriction.",
       "primary_source": "Kamenetsky2019 explicit n30 layout in OEIS A250000 author data a250000_3.txt. Root separately downloaded original10168 bytes SHAa5da2c9d852ecc24f8abcfcdc1b219d998e58d27ca6758cc4757041714fb4cfc and verified131 queens each with17161 nonattacking opposite-color pairs. Agent reconstruction matches.",

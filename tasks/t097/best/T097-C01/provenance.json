@@ -50,6 +50,5 @@
     "comparison_data_read": false
   },
   "solution_sha256": "a661afff17ae16052316a737a8cf574f679a51de2753eaa1ce5482da2b013f0f",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T097 tasks/t097/best/T097-C01/solution.json --config T097-C01"
 }

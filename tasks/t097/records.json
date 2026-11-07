@@ -58,7 +58,7 @@
           "overlap_allowed": true
         },
         "program": "reference.py",
-        "witness": "data/reference/socg_fixed92_15.json",
+        "witness": "data/human/socg_fixed92_15.json",
         "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
         "verification_status": "certified",
         "origin_type": "Same-count reconstruction from the published Shadoks viewer",
@@ -128,7 +128,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",

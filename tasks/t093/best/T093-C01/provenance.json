@@ -98,6 +98,5 @@
     "time_cutoff_enabled": false
   },
   "solution_sha256": "f9fcea2257eaf82500c5076feae24a826f19200448a5d3bdc8a56ce268cad7bf",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T093 tasks/t093/best/T093-C01/solution.json --config T093-C01"
 }

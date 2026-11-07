@@ -49,6 +49,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "7fe22877a4941f5ef2af9206a3bf042cf9ff987774c49ae752370857f1a06638",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T080 tasks/t080/best/T080-C01/solution.json --config T080-C01"
 }

@@ -49,7 +49,7 @@ def test_all_five_program_entries_and_reference_witness(monkeypatch):
     assert validated["objective"] == 130000
     assert validated["details"]["homogeneous_progression_prefixes_checked"] == prefix_count
     assert validated["details"]["discrepancy"] == maximum
-    witness = ROOT / "tasks/t051/data/reference/sequence_130000.txt"
+    witness = ROOT / "tasks/t051/data/source/sequence_130000.txt"
     assert hashlib.sha256(witness.read_bytes()).hexdigest() == (
         "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
     )

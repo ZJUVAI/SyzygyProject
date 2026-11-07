@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Exactregularconvex120gon, allstraightvertextriangulations, minovertriangulations maxoverdistinctvertexpairs shortestgraphpath/Euclideanchord. NoapproximatepointsetorSteinervertices.",
       "primary_source": "Rootchecked2026JoCG17(2)Fekete-Keldenich-Perkdoi10.20382/jocg.v17i2a1, computationregularn4..100only. UBC6fanrulefornmultiple6rebuilds120case. SattariIzadi2019universalregularpolygonupperbound1.4482appliesto120butneithera120optimalityproofnorareproducedspecificwitness. Currentfixed120proofsearchfoundnoclosure.",

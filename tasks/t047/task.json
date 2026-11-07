@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定N6166，最小化不同整数的有限集合基数，使每个1..6166均可表示为两个集合元素之差；允许元素和差值超出[0,6166]。未偷换为受限稀疏尺。",
       "primary_record": "亲自核对Banakh–Gavrylkiv1702.02631v6 Theorem4.1及Table3：历史人类上界128，表中仅≤，不是已证明最优。AlphaEvolve2025 Problem6.7再次列6166/128旧纪录，并将49109/360新AI纪录分开。",

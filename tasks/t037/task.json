@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "五维方向间夹角至少60度，最大化方向数。有理非零向量是精确归一化的证书表示，搜索候选的有限整数集合不是验证条件。",
       "人类方法来源": "主代理读Cohn–Rajagopal2026第2节的D5公式：五维选两个非零坐标，各取±1，共40。归于Korkine–Zolotareff1873，未取得原1873文献。",

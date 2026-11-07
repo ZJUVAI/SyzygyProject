@@ -55,7 +55,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Minimize the integer diameter max(A)-min(A) of a k-element admissible set. For each prime p<=k the residue set must omit at least one residue, and p>k is automatic by cardinality. Add k1000 and3000 alongside k343.",
       "primary_source": "Sol personally downloaded the MIT official tuple texts admissible_1000_7802.txt and admissible_3000_26606.txt, matched exact bytes to archives and JSON points in order. MathBases July14-2026 inventory marks proven cases; MIT accepted.log archived rows credit Engelsma and xfxie in 2013 and record the respective upper bounds7802/26606, with no optimal marker. For3000, older26622 row also marked current at submission, so choose smallest current recorded bound26606.",

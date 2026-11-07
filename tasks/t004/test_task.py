@@ -20,8 +20,8 @@ def test_claimed_score_does_not_change_recomputed_score(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID","T004-C02")
     sol=run_code(); a=validate(sol,config("T004-C02",17),strict=True)
     sol["objective"]="1/2"; b=validate(sol,config("T004-C02",17),strict=True)
-    assert a["objective"] == b["objective"]
-    assert b["details"]["claimed_objective_mismatch"]
+    assert a == b
+    assert a == validate(dict(sol, objective={}), config("T004-C02",17), strict=True)
 
 def test_rejects_damaged_duplicate_and_wrong_size(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID","T004-C03")

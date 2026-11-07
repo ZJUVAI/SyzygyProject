@@ -39,7 +39,7 @@
       "height_domain": "nonnegative rational"
     },
     "url": "https://github.com/techno-optimist/minimum-autocorrelation-bound/tree/b23f2d386eda9963e33c7531eeeb35c8f54cba37",
-    "witness": "data/reference/public_ai_certificate_n480.json",
+    "witness": "data/source/certificate_n480.json",
     "ai_provenance": "Public AI-assisted witness; CHRONOS disclosure is preserved from the source README and paper.",
     "evidence_state": "Exact independent recomputation gave 2378625/5958277, min autocorrelation 82459/13824000, and L1 norm 8801/72000.",
     "verification_status": "exact"
@@ -71,5 +71,13 @@
       "verification_status": "exact",
       "combined_score": 0.49091274559393805
     }
+  },
+  "admission_source_review": {
+    "definition": "480 nonnegative rational heights, width13/4800 and support13/10. Maximize exact minimum autocorrelation on shifts[0,1] divided by squared L1 mass. Piecewise linearity reduces full interval to nodes0..369 and exact endpoint interpolation at369+3/13.",
+    "human_source": "BarnardSteinerberger1903.08731v2 section2.3 modified arcsine formula, epsilon.025,480 midpoint values rounded to1/100000. Reconstructed weak finite-grid score15833948850637600/43788391811747427. Continuous paper score.37 is not assigned to these480 heights.",
+    "public_source": "Root downloaded pinned KevinRussell/CHRONOS certificate b23f2d386eda9963e33c7531eeeb35c8f54cba37 and verified original SHA25611cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa; repository exact bytes checked separately. Reproduced2378625/5958277 with minimum82459/13824000 and L1mass8801/72000. AI assisted, separate from human.",
+    "open_status": "ChenGu2610.18888v1 gives continuous.410377977432121 with atom-polynomial and atom removal, not this fixed480-grid witness. Continuous Fourier upper.410767488189405 is not attained proof for this grid. Reviewed sources do not establish grid optimum.",
+    "independent_method": "Root scales rational heights to integers, encodes polynomial and reversal in radix exceeding sum of squared heights, multiplies big integers and extracts correlation coefficients without carry. Independent of formal array pair products. Minimum nodes and exact endpoint computed with Fractions.",
+    "admission": "All5 strict runs, damaged all-zero heights, whole-return claim invariance, independent quantities, saved replay, cold export and program error/nonfinite/timeout passed. Initial30/169, baseline40960/135759, evolution3345600/10694437. Revised admission fixes root broken-fixture key heights; no checker relaxation."
   }
 }

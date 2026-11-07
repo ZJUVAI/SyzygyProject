@@ -126,7 +126,6 @@
         "claimed_score_ignored": true,
         "reviewer": "Sol main agent",
         "date": "2026-11-06",
-        "evidence": "acceptance.json",
         "source_review": "Sol independently checked the same-parameter sources and the limits listed in PLAN.md."
       },
       "review_status": "accepted_by_sol"

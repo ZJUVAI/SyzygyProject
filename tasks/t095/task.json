@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定CGSHOP2020的uniform-0000500-1，500个整数点。全部输入点作为平面直线图顶点，凸包边界固定，内部面为空凸多边形。最小化内部面数；不允许Steiner点或遗漏输入点。",
       "primary_source": "Sol亲读Cambazard作者页的定义与精确求解范围，以及Eder、Held、de Lorenzo、Palfrader的SoCG2020论文§2.2。后者从Delaunay三角剖分删边并保持凸性。该500点实例未在所查来源中找到最优性证明。",

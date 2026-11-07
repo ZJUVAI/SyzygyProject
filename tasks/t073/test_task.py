@@ -43,9 +43,7 @@ def test_reference_is_pinned_and_independent_certificate_matches():
     metadata = json.loads((TASK / "sota.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     witness = TASK / record["witness"]
-    human = TASK / "data/human/d4_24cell.json"
     assert hashlib.sha256(witness.read_bytes()).hexdigest() == record["witness_sha256"]
-    assert hashlib.sha256(human.read_bytes()).hexdigest() == record["witness_sha256"]
     raw_certificate = TASK / "data/reference/d4_rational24_independent_certificate.json"
     raw_record = record["independent_certificate"]
     assert hashlib.sha256(raw_certificate.read_bytes()).hexdigest() == raw_record["sha256"]

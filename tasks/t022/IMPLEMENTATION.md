@@ -24,4 +24,4 @@ python3 -m json.tool tasks/t022/records.json > /dev/null
 
 ## Acceptance evidence
 
-The task suite tests the seed, baseline metadata, published witness, independent objective, invalid clique and independent-set cases, malformed adjacency, NaN and infinite neighbor indices, empty and boundary graphs, a claimed score, and the proven upper-bound cutoff. The graph6 witness hash is recorded in `records.json`. Sol independently decoded and replayed the human graph, counted all five-vertex subsets, and checked the cold seed. The task passed review on 2026-11-06. See acceptance.json.
+The task suite tests the seed, baseline metadata, published witness, independent objective, invalid clique and independent-set cases, malformed adjacency, NaN and infinite neighbor indices, empty and boundary graphs, a claimed score, and the proven upper-bound cutoff. The graph6 witness hash is recorded in `records.json`. Sol independently decoded and replayed the human graph, counted all five-vertex subsets, and checked the cold seed. The task passed review on 2026-11-06. See records.json.

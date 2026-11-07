@@ -171,8 +171,7 @@
           "method": "sorted pair values and exact rational atanh series with geometric remainder, independent of mpmath intervals"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

@@ -5,5 +5,5 @@ from pathlib import Path
 
 
 def run_code():
-    path = Path(__file__).resolve().parent / "data/reference/6fan_120.json"
+    path = Path(__file__).resolve().parent / "data/source/ubc_6fan_120.json"
     return json.loads(path.read_text(encoding="utf-8"))

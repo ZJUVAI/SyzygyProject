@@ -27,7 +27,7 @@ def test_ordered_field_sign_and_arithmetic_are_exact():
 
 
 def test_human_and_reference_recompute_exact_side():
-    for witness in (human_run(), reference_run(), json.loads((TASK_DIR / "data/reference/friedman4_reconstructed.json").read_text())):
+    for witness in (human_run(), reference_run(), json.loads((TASK_DIR / "data/human/friedman4_formula.json").read_text())):
         result = validate(witness, CONFIG, strict=True)
         assert result["objective"] == "[1,1/3]"
         assert result["verification_status"] == "certified"

@@ -39,6 +39,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "6ec06dcb3c7de5f9e62449f543d32e2e62792ea86c265f8322697dc76a53b746",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T062 tasks/t062/best/T062-C01/solution.json --config T062-C01"
 }

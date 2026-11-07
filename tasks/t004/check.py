@@ -91,17 +91,11 @@ def validate(solution, config, strict=False):
         lo = math.nextafter(lo, -math.inf)
         hi = math.nextafter(hi, math.inf)
         if lo < 0: lo = 0.0
-    claimed = solution.get("objective")
-    mismatch = False
-    if claimed is not None:
-        qclaim = _q(claimed)
-        mismatch = not (Fraction.from_float(lo) <= qclaim <= Fraction.from_float(hi))
     return {
         "objective": lo if strict else (lo + hi) / 2,
         "verification_status": "certified" if strict else "numeric",
         "details": {"n": n_points, "pairs_checked": len(pair_data),
                     "objective_name": "minimum_pairwise_angular_separation_radians",
                     "angle_interval": [lo, hi],
-                    "claimed_objective_mismatch": mismatch,
                     "directions_normalized_for_scoring": True}
     }

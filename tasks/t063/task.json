@@ -46,7 +46,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "恰为100次、本原、不可约、非分圆的整数多项式最小Mahler测度；不限制互反、稀疏或单首项，与最大根模或Chebyshev范数不同。",
       "primary_source": "Sol核对Mossinghoff固定7e3798516710370a758e16eb5de6bccbee98bb6a的BestByDegree_200.txt第100行51个系数及报告值1.247365098370，互反展开101项。2026-10-21 Chervonyi–Gukov–Luong2610.30277v1仅列六个其他次数改进，100仍为旧记录；该工作AI协作已披露，不将全部新数据声称纯人类。旧100行逐条发现过程未详述，历史传统搜索归属与现代AI论文分开。",

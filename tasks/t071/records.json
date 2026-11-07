@@ -44,7 +44,7 @@
           "length": 16,
           "correctable_errors": "one deletion"
         },
-        "witness_file": "data/reference/vt16_3856.json",
+        "witness_file": "data/human/vt16_3856.json",
         "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
         "provenance": "Frozen VT_0(16) list independently compared with the checksum formula and fully verified.",
         "ai_provenance": "The 2026 paper reports an AI-assisted priority-function rediscovery equivalent to VT_0; this task's witness is generated from the classical formula.",

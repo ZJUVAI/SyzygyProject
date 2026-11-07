@@ -53,7 +53,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Fixedn=m4,d3 complex Hermitian PSD matrices, minimize mean of256 Frobenius product norms divided by mean of24 distinct-index product norms; positive denominator. Norm is inside each summation. Rational Hermitian matrices with positive-definite perturbations preserve infimum.",
       "primary_source": "AlphaEvolve2511.02864v1 section6.47 explicitly states m>=4 open and lists(4,4,3) and Schatten2 tests. Duchi2012 inside-sum variant and Israel/Krahmer/Ward2016 proof for3 distinguished from RechtRe outside-sum counterexamples and2026 outside-sum claims.",

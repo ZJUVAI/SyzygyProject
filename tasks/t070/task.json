@@ -49,7 +49,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Fixed1000-square integer axis-aligned dissection, minimize square count, side gcd1, repeated sizes and compound/subquilts permitted. Gcd1 does not impose source separate prime-dissection condition.",
       "source": "Root downloaded original40000-row Pegg2017 dataZIP SHAea43c7728ada8bec7fe93d4ffc3dfa88f3b37f0b6be9a36e1e8ea1b1b64bb98a; expandedtxt SHAec6b0f9b21eda14648de00317371cf6f07f456c72fab235fa9ecaaffe798c2e7. Frozen1000th row has identical source tokens, normalizedrow SHA011cbfe1a1933cf20ba51f78f4c721ca447636bc4e52d8ea1255b7cb92a5e880.",

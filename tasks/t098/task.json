@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "38个互异正整数边长正方形组成原始简单完美正方形；最大公因子1；排除含至少两块的真子矩形。最小化外正方形边长，不限制排列类型。",
       "source": "Williams2013的38阶352构造，squaring.net固定Bouwkamp文件SHA256 ec1858af8249dc4aba58e116f87646f31e3c240f1efdbcf030c72b4b603fcd5b。OEIS A129947明确将38至59阶数值称为上界；目录不完整，没有352匹配下界。",

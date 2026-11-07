@@ -39,6 +39,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "1e9cf703acf36f943f86e9b5c267fc3a9017e57353c3347ea8ca0d40bff972c3",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T010 tasks/t010/best/T010-C03/solution.json --config T010-C03"
 }

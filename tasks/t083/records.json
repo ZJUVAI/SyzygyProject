@@ -46,7 +46,7 @@
         },
         "program": "reference.py",
         "exact_value": "1+sqrt(3)/3",
-        "witness": "data/reference/friedman4_reconstructed.json",
+        "witness": "data/human/friedman4_formula.json",
         "verification_status": "certified",
         "evidence_state": "The trusted checker verifies the exact algebraic coordinates and returns a rational interval enclosing the exact side.",
         "origin_type": "published traditional construction reconstructed and verified locally",
@@ -110,7 +110,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",

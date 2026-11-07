@@ -179,6 +179,5 @@
     "time_cutoff_enabled": false
   },
   "solution_sha256": "60194a006971df68b4aaa052ffb7e220fee5b754e54a232f115e1db755b324bd",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T088 tasks/t088/best/T088-C01/solution.json --config T088-C01"
 }

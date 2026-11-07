@@ -27,7 +27,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "数学模型": "固定七符号，最小化包含全部5040排列连续子串的字符串长度。",
       "人类来源": "按Houston2014第1节重建Ashlock–Tillotson递归规则，得5913。公开5905来自Teodorescu2026-08-17附件，其AI使用情况未披露。",

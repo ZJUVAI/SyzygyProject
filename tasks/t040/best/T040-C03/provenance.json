@@ -50,6 +50,5 @@
     "feedback_objective": 2.7016763265680983
   },
   "solution_sha256": "a6619f98e92a5132cd224763fd3d3e19b44fc1e65391f1aa013a6a7f7f8cd858",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T040 tasks/t040/best/T040-C03/solution.json --config T040-C03"
 }

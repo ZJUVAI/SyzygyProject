@@ -23,7 +23,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Exactly64signs, periodic Ck=sum_i s_i*s_(i+k mod64), minimize sum_k1..63 Ck^2. Distinct from aperiodicT073; root saves explicit same-length strict ordering reversal under periodic/aperiodic energies.",
       "primary_human_source": "Root directly viewed PDF title andTable2, Tyler & Loftsson, Periodic Binary Sequences With Very Good Autocorrelation Properties, TDA ProgressReport42-82AprJune1985 pp143-158, JPL82O.PDF andNTRS19860000930. Original agent attributionKeston1980/URL was wrong and returned; now correctedallfiles and provenance. n64hexB24FEAE7E4529CF0, P4,M(240). TablefootnoteZZ citesJ.WatkinsJune1985communication; no invented named-discoverer claim.",

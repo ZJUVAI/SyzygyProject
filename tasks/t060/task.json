@@ -27,7 +27,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定M61=2305843009213693951，表达式树叶子仅1、内部仅加乘，最小化叶子数。重复文本单独计数，禁止DAG、减法、幂；与加法链目标不同。",
       "primary_source": "Sol亲自读取Altman2019综述导言及Theorem1.1，确认整数复杂度定义、Horner方法、Selfridge极值公式；同参重建三进制39位Horner表达式153个1。该153为弱传统方法基线，不声称文献最强。",

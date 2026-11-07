@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Binary length16 single-deletion correcting code; maximize distinct codewords with disjoint sets of length15 deletion outputs. No restriction to VTsyndrome family.",
       "human": "Reconstructed classical VT0 checksum modulo17 on all65536words, obtaining3856; root independently constructed same set before implementation. Modernsource2504.00613v2 §2.2 gives definition and classical attribution; AI rediscovery only matches the human family, no newcodebreakthroughclaim.",

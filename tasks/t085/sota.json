@@ -48,7 +48,7 @@
         "verification_status": "exact",
         "verification_method": "Exact enumeration of all restricted Voronoi vertices, pair-bisector boundary intersections, smooth boundary extrema, and fixed boundary points; 1,463 critical points checked.",
         "objective_value": 3.5,
-        "witness": "data/reference/kershner_triangular_patch21.json",
+        "witness": "data/human/kershner_triangular_patch21.json",
         "origin_type": "task-local exact reconstruction of a classical triangular-lattice covering method"
       },
       "best_own_search": {
@@ -103,7 +103,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",
@@ -155,8 +155,7 @@
           "method": "Analytic triangular tessellation radius; omitted-site norm lower bound and exact rational perturbation slack. Independent of formal restricted Voronoi enumeration."
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

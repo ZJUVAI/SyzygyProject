@@ -119,8 +119,7 @@
           "arithmetic": "exact uint32 conditional swaps"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "own_search_seed_0": {
         "value": 126,
@@ -244,8 +243,7 @@
           "arithmetic": "exact uint32 conditional swaps"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     },
     "T048-C03": {
@@ -354,8 +352,7 @@
           "arithmetic": "exact uint32 conditional swaps"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

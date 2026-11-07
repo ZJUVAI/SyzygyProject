@@ -62,6 +62,5 @@
     "budget": "fixed generations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds"
   },
   "solution_sha256": "3d6326606f895554b89fdfbb105a1098285c0de29a0f87fb589e55b86f0974e5",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T082 tasks/t082/best/T082-C01/solution.json --config T082-C01"
 }

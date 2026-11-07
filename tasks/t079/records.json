@@ -133,7 +133,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       }
     }
   },
@@ -145,5 +145,13 @@
       "verification_status": "exact",
       "combined_score": 0.2900540431673996
     }
+  },
+  "admission_source_review": {
+    "definition": "Minimum Kakeya set in F31^3, specified by one arbitrary affine line in each of993 projective directions. Taking union does not restrict the minimum: every Kakeya set contains such a choice and its union is no larger. No quadratic-template restriction in formal candidate domain.",
+    "human_source": "Classical odd-field quadratic residue construction as recorded in Bukh-Chao2021 section4. Root independently generates its membership predicate on all29791 points and matches human line union exactly:8641 =30*16^2+31^2.",
+    "public_reference": "Station/Dualverse Chung-Du-Wesley2608.23691v2 section6.1 S1 equation1, AI-generated construction. Root independently builds the quadratic membership set plus the rational one-pole plane boundary; formula(2p^3+7p^2+3)/8 gives8289 at31 and matches saved reference line union exactly. First-party notebook and paper archived. Non-primary8288 claim excluded; AlphaEvolve8290 remains a separately scoped un-reproduced report.",
+    "open_status": "Bukh-Chao leading constant1/4 is asymptotically sharp, not an exact finite31 optimum. Finite reported lower bound ceil(31^5/61^2)=7694, arithmetic recomputed; underlying general theorem cited. Station section6.1 explicitly leaves lower-order corrections open. No same-parameter optimality proof located.",
+    "independent_method": "Root projectivizes all29790 nonzero vectors and obtains993 directions, then iterates modular additions into a dense29791-byte bitmap. Formal checker uses a prescribed chart and sets of t-times-direction triples. Additional independent full-space membership reconstruction verifies both external formulas.",
+    "initial_search_and_admission": "Standalone all-lines-through-origin seed29791. Own generic baseline17574 and evolution15534; external human8641/reference8289 never read by candidate searches. All five strict runs, claim-invariant complete checker returns, duplicate-direction damage, replay, cold export and error/nonfinite/timeout controls passed."
   }
 }

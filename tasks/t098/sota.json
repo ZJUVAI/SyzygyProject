@@ -15,7 +15,7 @@
       },
       "reproduced_witness": {
         "value": 352,
-        "file": "data/reference/williams_38_352A.bkp",
+        "file": "data/source/williams_38_352A.bkp",
         "sha256": "ec1858af8249dc4aba58e116f87646f31e3c240f1efdbcf030c72b4b603fcd5b",
         "provenance": "Exact integer skyline reconstruction from the public Bouwkamp code; checker verifies order, area, containment, non-overlap, distinct sides, primitivity, and simplicity.",
         "evidence_state": "same-parameter witness reconstructed and independently validated"
@@ -85,7 +85,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "e68a881c5dffffd8d7640d45d41f86964924a00076819fc464a9737a423584aa"
       }

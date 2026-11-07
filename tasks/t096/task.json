@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定周长2π的光滑简单闭凸平面曲线。通过曲线和实周期试验函数的联合Rayleigh商最小化求原特征值下确界。正式分数为该商的有理认证上端；非圆构造不声称已求出其真实第一特征值。",
       "primary_source": "Sol亲读Denzler1301.6322定理1：最小者存在且为平面、解析、正曲率凸曲线；放宽问题的digon值为1。又读Suragan2609.10775v1§1，其报告下界约0.9618316523，明确最优1仍开放。撤回的2503.02431不作为闭合证据。",

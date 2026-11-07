@@ -56,6 +56,5 @@
     }
   },
   "solution_sha256": "274d198cc1273a3f6b5277213380f4478d7ee5944575bc2c52ec6097de2cad6e",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T044 tasks/t044/best/T044-C01/solution.json --config T044-C01"
 }

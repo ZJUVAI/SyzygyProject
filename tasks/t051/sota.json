@@ -38,7 +38,7 @@
         "date_checked": "2026-11-06",
         "provenance": "Published traditional SAT search; the paper reports the construction, not a proof that it is longest.",
         "evidence_state": "The paper and author page identify the 130000 unrestricted construction. The saved full witness was reconstructed from a public Wolfram Community notebook discussing this problem and independently verified.",
-        "witness": "data/reference/sequence_130000.txt",
+        "witness": "data/source/sequence_130000.txt",
         "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
       },
       "best_reproduced": {
@@ -52,7 +52,7 @@
         "program": "reference.py",
         "verification_status": "exact",
         "verification_method": "Integer arithmetic scans every homogeneous progression difference d and every prefix length k, checking |sum(x[d], x[2d], ..., x[kd])| <= 3.",
-        "witness": "data/reference/sequence_130000.txt",
+        "witness": "data/source/sequence_130000.txt",
         "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
         "origin_type": "published SAT construction recovered from a public Wolfram Community notebook; exact constraint verification, original compressed-file byte identity not established"
       },

@@ -56,6 +56,5 @@
     "budget": "fixed iteration cap; stop early at 1-flip local optimum"
   },
   "solution_sha256": "361a409c916bf4d12f9b92040854988281ae7af68fbd34559f39a2f0c251bdb2",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T033 tasks/t033/best/T033-C01/solution.json --config T033-C01"
 }

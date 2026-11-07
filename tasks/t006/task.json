@@ -28,7 +28,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Minimize connected simple regular graph order, fixing degree4 and girth at least10 in C01 or at least9 in new C02. The original degree4,girth10 formulation is preserved.",
       "primary_source": "Sol read Exoo et al. arXiv2511.07247v2 abstract and Table2, reporting new upper bound270 for(4,9), and De la Cruz-Pizana EJC33(1)P1.54 DOI10.37236/14471, Table2 and discussion of exhaustive exclusions161-164 establishing165. Moore bound is1+4*(1+3+9+27)=161, distinct from165.",

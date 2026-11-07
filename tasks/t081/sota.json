@@ -22,7 +22,7 @@
         "constraint": "all points are distinct",
         "objective": "maximum squared pair distance divided by minimum squared pair distance"
       },
-      "witness": "data/reference/rechenberg12_rational.json",
+      "witness": "data/human/rechenberg12_rational.json",
       "witness_sha256": "ec135111b953a7eca739c733a3bdb4ee5d38fa7a90250d491220260e7b566e5b",
       "source_snapshot": {
         "page_file": "data/source/index.html",
@@ -99,8 +99,7 @@
           "method": "exact Gram matrix identity for every pair, independently reconstructed from rational coordinates"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

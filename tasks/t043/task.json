@@ -39,7 +39,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定F2七维空间中的三维线性子空间，任意两子空间交维数≤1，即子空间距离≥4，最大化子空间数量。",
       "primary_reconstruction": "亲自解析Heinlein等arXiv1708.06224v5附录B/C：逐字匹配103个代表的721个数字和两个7×7生成矩阵的98个位。核对列编码a+2b+4c与轨道1^9 2^26 4^68，展开得到333个不同三维子空间。v5为2019-03-22，首版2017。",

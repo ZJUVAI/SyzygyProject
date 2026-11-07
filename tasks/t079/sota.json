@@ -130,7 +130,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "lower_bound": {
         "value": 7694,
@@ -192,8 +192,7 @@
           "method": "projectivize every nonzero vector; repeated modular additions and dense finite-space bitmap"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

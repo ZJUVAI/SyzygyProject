@@ -93,7 +93,7 @@
       "date_reproduced": "2026-11-07",
       "provenance": "LJCR record listing, exact local verification.",
       "evidence_state": "all 4,845 four-subsets covered",
-      "witness": "data/sota_witness_C02.json",
+      "witness": "data/search_reference_C02.json",
       "program": "sota.py"
     }
   },

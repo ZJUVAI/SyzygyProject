@@ -8,7 +8,7 @@
 
 ## 已知构造与界
 
-Frankl–Füredi 的 `H6` 有 6 个顶点和 10 条边。将顶点分成六个大小为 6 的部分：先按每条 `H6` 边加入跨三部分的全部 `6³` 条边，再在每个部分中放入一个 `H6`。所得构造有 `10×6³+6×10=2,220` 条边。精确见证保存在 `data/reference/h6_iterated_blowup_n36.json`；`human.py` 从公开模板独立重建。
+Frankl–Füredi 的 `H6` 有 6 个顶点和 10 条边。将顶点分成六个大小为 6 的部分：先按每条 `H6` 边加入跨三部分的全部 `6³` 条边，再在每个部分中放入一个 `H6`。所得构造有 `10×6³+6×10=2,220` 条边。精确见证保存在 `data/human/h6_iterated_blowup_n36.json`；`human.py` 从公开模板独立重建。
 
 Falgas-Ravry、Pikhurko、Vaughan 与 Volec 在 2023 年论文第 6.3 节给出 `H6` 的边集，并说明它的 blow-up 和迭代 blow-up 都是 `K4⁻`-free。该论文还指出普通 `K4⁻` Turán 密度未知，`2/7` 是猜想值。这里的固定 `n=36` 目标是普通有限边数问题。论文中的 codegree 结果及 2026 年关于 `K4^(3)` 完全四面体的 uniform Turán 结果都不等同于本配置。
 

@@ -56,7 +56,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "11个不同点精确位于单位S²，最大化凸包体积。文献允许至多11顶点，与本任务最优值一致：所有球面点均为凸包极点，增加不同球面点不会减小体积。",
       "primary_source": "亲自核对Hardin–Sloane–Smith1994主页3维11点行，公开值2.354634495069；原始33个小数经有理立体投影重建，精确体积约2.3546344950686153。重建见证和原始精确未舍入见证作区分。Mutoh较弱值未当作最高记录。",
@@ -70,7 +69,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Maximize Euclidean volume of the convex hull of n distinct points on the unit sphere S2. Keep11; add13 and15. Exact rational stereographic representation remains feasible and dense.",
       "primary_source": "Sol checked Hardin–Sloane–Smith Maximal Volume Spherical Codes author table at https://neilsloane.com/maxvolumes/index.html. It labels arrangements putatively optimal and gives2.612834152060 for13,2.804379381835 for15. Sol fetched both coordinate files and verified 39/45 decimal entries. Source files and reconstructed witnesses are hashed.",

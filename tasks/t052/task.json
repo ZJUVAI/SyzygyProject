@@ -45,7 +45,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "12元置换Hamming码，最小距离≥9，最大化码字数；d10虽已解但未选，d=n-1的MOLS等价配置未重复计数。",
       "primary_source": "主代理读取Smith–Montemanni作者上传论文全文，Table3 n12,d9明确1320–11880；§4 item22给PGL(2,11)群阶1320及内部距离10，并列出三个生成元。纠正任务文档原将item22误写为§5。",

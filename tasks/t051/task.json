@@ -21,7 +21,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "无乘法限制的±1序列；全部齐次等差子列的全部前缀绝对和≤3，最大化长度。C2与完全乘法C3已解结果均不属于此配置。",
       "primary_source": "主代理亲自读取1405.3097v2 §4 Theorem11后段及表1，并读取Konev作者edp数据页的unrestricted但前127600完全乘法一节。文字明确构造130000；表1的>130000未当成额外已验证长度。",

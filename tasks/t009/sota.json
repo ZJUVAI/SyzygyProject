@@ -153,13 +153,12 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c02.json",
         "witness_sha256": "1f433acc699b3181713572aee27e930eeacaf2c5b5a6ec0daea1f29f5c940097"
       },
       "acceptance_status": "accepted_by_sol",
       "review_status": "accepted_by_sol",
-      "witness": "data/sota_generator_C02.json",
+      "witness": "data/human_generator_C02.json",
       "witness_sha256": "68982b46a4cc81a38bc018c179161edf2f83c114ada7bbd7cd5c6ecb924e6189"
     },
     "T009-C03": {
@@ -239,13 +238,12 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c03.json",
         "witness_sha256": "04b727833f40c683322e8a0413d1611b3e4e945d914a56dba8302629dd90e898"
       },
       "acceptance_status": "accepted_by_sol",
       "review_status": "accepted_by_sol",
-      "witness": "data/sota_generator_C03.json",
+      "witness": "data/human_generator_C03.json",
       "witness_sha256": "9bf8dbee63eb97861252addea666efb5c5b9035208eb8b3a792fb9c27f924684"
     }
   },

@@ -49,7 +49,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Twelve points in a free convex planar domain; maximize minimum triangle area divided by convex hull area. This functional differs from fixed-square T005. No rational-coordinate magnitude cap; rational approximation preserves the continuous supremum by continuity on general-position configurations.",
       "primary_record": "Current Tejstead free-convex n12 archive gives 2/51, credited to David Cantrell June2007; source notes original Mathematica notebook received September2026. Local baseline independently rebuilds archived decimals by affine normalization and rational reconstruction; does not assert byte identity with the original notebook.",

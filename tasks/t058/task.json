@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "35人每轮分为7组各5人，任意两人至多同组一次，最大化轮数；35非MOLS等价的方形总人数配置。20人各4与32人各4的已解配置均排除。",
       "primary_source": "Sol亲自读取Miller–Valkov–Abel2026附表，v35,k5行明确MAX8、RTD(5,7)、r7；论文optimal仅指最佳已知，不是已证最大值。OEIS A107431当前comment明确T(7,5)为7或8。",

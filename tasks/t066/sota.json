@@ -94,8 +94,7 @@
           "no_four_collinear": "irreducible cubic has no line component"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

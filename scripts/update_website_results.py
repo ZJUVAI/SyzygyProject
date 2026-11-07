@@ -56,7 +56,7 @@ def visual(task, w, params, template):
         a = sorted(w['marks'])
         v.update(marks=a, matrix=[[abs(x-y) for y in a] for x in a])
     elif task == 'T008':
-        v.update(blocks=w['blocks'], matrix=[[int(i in b) for i in range(params['v'])] for b in w['blocks']])
+        v.update(v=params['v'], t=params['t'], blocks=w['blocks'], matrix=[[int(i in b) for i in range(params['v'])] for b in w['blocks']])
     elif task in ('T009', 'T010'):
         if task == 'T009':
             rows = w['generator_matrix']
@@ -107,7 +107,18 @@ def visual(task, w, params, template):
     return v
 
 
-def update(checkout):
+def active_assets(value):
+    if isinstance(value, str) and value.startswith('data/assets/'):
+        yield value
+    elif isinstance(value, dict):
+        for item in value.values():
+            yield from active_assets(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from active_assets(item)
+
+
+def update(checkout, initial_witnesses=None):
     dist = checkout/'dist'
     index = read(dist/'data/index.json')
     own_records = []
@@ -119,6 +130,7 @@ def update(checkout):
         return asset_bytes(encoded(value))
     from mathbench.registry import INITIAL_TASKS, load_task
     from scripts.result_table import display
+    from scripts.website_figures import project, grid
 
     def approximation(value):
         return float(display(value, digits=16))
@@ -150,6 +162,9 @@ def update(checkout):
                 'metric': old.get('metric', labels('')),
                 'category': old.get('category', labels(category)), 'configurations': []}
         tasks.append(task)
+        task_template = next((read(dist/c['asset']).get('drawing_template')
+                              for c in existing.values()
+                              if read(dist/c['asset']).get('drawing_template')), None)
         for config in metadata['configurations']:
             cid = config['id']
             params = config['parameters']
@@ -165,43 +180,43 @@ def update(checkout):
                     or result['validity'] != 1 or result['config_id'] != cid):
                 raise ValueError(f'Unreviewed saved result: {cid}')
 
-            def construction(run, program, witness_path, template_path=None):
-                witness = None
-                if witness_path and witness_path.is_file():
-                    witness = asset_bytes(witness_path.read_bytes(), 'jsonraw')
-                projection = {'kind': 'score', 'id': cid, 'objective': display(run['objective'], digits=10)}
-                if template_path and witness:
-                    projection = visual(tid, read(witness_path), params, read(dist/template_path))
+            template = data.get('drawing_template') or task_template
+
+            def construction(run, program, witness_path):
+                if not witness_path or not witness_path.is_file():
+                    raise ValueError(f'{cid}: missing {program} witness')
+                raw = witness_path.read_bytes()
+                witness = asset_bytes(raw, 'jsonraw')
+                solution = json.loads(raw)
+                if tid == 'T011' and len(solution['words'][0]) != 3:
+                    projection = grid(solution['words'], 'Independent-set words', '独立集的元组', categorical=True)
+                elif template:
+                    projection = visual(tid, solution, params, read(dist/template))
+                else:
+                    projection = project(tid, solution, params)
                 return score(run, program, witness=witness, visual=asset(projection))
 
-            template = data.get('drawing_template')
-            own = construction(result, 'own', best/'solution.json', template)
+            own = construction(result, 'own', best/'solution.json')
             own.update(result=asset(result), evidence=asset(provenance))
-            initial = initial_results.get(cid)
-            if initial and initial.get('validity') == 1:
-                if not runs or runs[0]['objective'] != str(initial['objective']):
-                    runs[:] = [construction(initial, 'init_program', None)]
+            initial = initial_results[cid]
+            if initial_witnesses:
+                initial_folder = initial_witnesses/cid
+                checked = read(initial_folder/'result.json')
+                if checked['validity'] != 1 or checked['objective'] != initial['objective']:
+                    raise ValueError(f'{cid}: initial witness does not match the release score')
+                initial_path = initial_folder/'solution.json'
+            else:
+                initial_path = dist/runs[0]['witness'] if runs and runs[0].get('witness') else None
+            runs[:] = [construction(initial, 'init_program', initial_path)]
             public = record['verification']['run']
             assert public['validity'] == 1, cid
-            witness_name = (record['verification'].get('witness') or record.get('witness')
-                            or record.get('best_reproduced', {}).get('witness'))
-            witness_path = folder/witness_name if isinstance(witness_name, str) else None
-            if not witness_path or not witness_path.is_file():
-                witness_path = next((p for p in sorted((folder/'runs').glob(f'*/{cid}/reference/solution.json'))
-                    if (p.parent/'result.json').is_file()
-                    and read(p.parent/'result.json').get('objective') == public['objective']), None)
-            matching_public = (cid in existing
-                               and previous_public.get('objective') == str(public['objective']))
-            if matching_public and previous_public.get('witness'):
-                public_run = score(public, 'sota', witness=previous_public['witness'],
-                                   visual=previous_public['visual'])
+            if previous_public.get('objective') == str(public['objective']) and previous_public.get('witness'):
+                witness_path = dist/previous_public['witness']
             else:
-                public_run = construction(public, 'sota', witness_path)
-            digest = record['verification'].get('witness_sha256') or record.get('witness_sha256')
-            if digest and witness_path and witness_path.is_file():
-                raw = witness_path.read_bytes()
-                if hashlib.sha256(raw).hexdigest() == digest:
-                    public_run['witness'] = asset_bytes(raw, 'jsonraw')
+                witness_name = (record['verification'].get('witness') or record.get('witness')
+                                or record.get('best_reproduced', {}).get('witness'))
+                witness_path = folder/witness_name if isinstance(witness_name, str) else None
+            public_run = construction(public, 'sota', witness_path)
             source = record.get('public_source') or record.get('best_public') or {}
             if isinstance(source, str):
                 source = {'source': source}
@@ -243,6 +258,14 @@ def update(checkout):
         rows.append(dict(task_id=r['task_id'],configuration=r['config_id'],program='own',direction=data['direction'],objective=r['objective'],score=r['combined_score'],verification=r['verification_status']))
     with csv_path.open('w', newline='') as f:
         writer=csv.DictWriter(f,fieldnames=fields,lineterminator=chr(10));writer.writeheader();writer.writerows(rows)
+    configurations = {c['asset'] for task in tasks for c in task['configurations']}
+    assets = set(active_assets(index))
+    for path in configurations:
+        assets.update(active_assets(read(dist/path)))
+    for folder, active in (('assets', assets), ('configurations', configurations)):
+        for path in (dist/'data'/folder).iterdir():
+            if path.is_file() and path.relative_to(dist).as_posix() not in active:
+                path.unlink()
     manifest = {str(p.relative_to(dist/'data')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((dist/'data').rglob('*')) if p.is_file() and p.name!='manifest.json'}
     (dist/'data/manifest.json').write_bytes(encoded(manifest))
     print(f'Updated {len(own_records)} verified best results and construction figures.')
@@ -251,4 +274,7 @@ def update(checkout):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--checkout',type=Path,default=ROOT/'website')
-    update(parser.parse_args().checkout)
+    parser.add_argument('--initial-witnesses', type=Path,
+                        help='Directory containing a checked initial result and solution for each config')
+    args = parser.parse_args()
+    update(args.checkout, args.initial_witnesses)

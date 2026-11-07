@@ -49,7 +49,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "通用partial MaxSAT的原生inconsistency-measurement竞赛输入；全部硬子句必须成立，最大化软满足权。649减未满足权只是同一目标换算，不另计任务。",
       "primary_sources": "Sol亲自读取Zenodo21358014 v1官方metadata、完整集合21283148的meta.db及原始WCNF。实例hash b4794d123e18a908924d3d33cdeeae3b，原始输入SHA256 cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195。1630变量、6150硬、649软、总软权649。",

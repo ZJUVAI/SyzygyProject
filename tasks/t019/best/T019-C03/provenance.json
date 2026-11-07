@@ -471,6 +471,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "f8602aaa1f808a94f63d7fbdc1c419a407e1bdf919f3e11b4d1889a1d0df6e49",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T019 tasks/t019/best/T019-C03/solution.json --config T019-C03"
 }

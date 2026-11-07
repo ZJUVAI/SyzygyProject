@@ -161,8 +161,7 @@
           "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

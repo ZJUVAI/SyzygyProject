@@ -41,6 +41,5 @@
     "method": "single-entry ascent with exact planar two-row proposals"
   },
   "solution_sha256": "4499cde89f3586ab1a2b09f5e90fd796ec5e2bb1487bfdd17f99c43c4381e000",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T018 tasks/t018/best/T018-C02/solution.json --config T018-C02"
 }

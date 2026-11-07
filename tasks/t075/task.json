@@ -28,7 +28,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "36-vertex three-uniform hypergraph, ordinary non-induced K4-minus forbidden: any four vertices span at most two triples. Maximize edge count. Complete four-edge hypergraphs also rejected.",
       "primary_source": "Falgas-Ravry, Pikhurko, Vaughan, Volec (JLMS2023 DOI10.1112/jlms.12722), section6.3 p27 explicitly lists ten H6 triples and permits iterated blow-ups. Ordinary density conjectured2/7 remains distinct from solved codegree and uniform-density tetrahedron problems. Source-level screening found no finite36 matching optimality proof.",

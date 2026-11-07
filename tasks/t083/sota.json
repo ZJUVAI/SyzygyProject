@@ -49,7 +49,7 @@
         "verification_status": "certified",
         "verification_method": "Exact Q(sqrt(3)) reconstruction, exact containment, and exact separating-axis checks for all six triangle pairs; objective interval has rational endpoints.",
         "exact_value": "1+sqrt(3)/3",
-        "witness": "data/reference/friedman4_reconstructed.json",
+        "witness": "data/human/friedman4_formula.json",
         "origin_type": "local exact reconstruction of the published traditional construction",
         "objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000"
       },
@@ -110,7 +110,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",
@@ -169,8 +169,7 @@
           "method": "SymPy algebraic expressions; exact polygon clipping and intersection area, independent of formal ordered-field separating axes"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

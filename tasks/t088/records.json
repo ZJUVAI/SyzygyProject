@@ -45,7 +45,7 @@
           "vertices": 130,
           "edges": 715
         },
-        "witness_file": "data/reference/grasp_reconstruction_229.json",
+        "witness_file": "data/source/human_reconstruction_229.json",
         "provenance": "Independent local reconstruction of the published GRASP construction and insertion local-search method family. This run does not claim to reproduce the paper's 202 ordering.",
         "ai_provenance": "benchmark reconstruction",
         "actual_value": 229,

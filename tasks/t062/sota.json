@@ -89,8 +89,7 @@
           "positive_square_shifts_checked": 204
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

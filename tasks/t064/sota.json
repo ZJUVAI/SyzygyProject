@@ -123,8 +123,7 @@
           "exact_doubled_area": "2711189126024"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

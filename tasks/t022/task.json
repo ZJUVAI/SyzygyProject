@@ -18,7 +18,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "checks": [
       "mathematical definition and direction",
       "same-parameter source and open status",

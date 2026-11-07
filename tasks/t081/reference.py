@@ -9,5 +9,5 @@ def run_code():
     chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C01")
     if chosen != "T081-C01":
         raise ValueError(f"unsupported configuration: {chosen}")
-    path = Path(__file__).parent / "data/reference/rechenberg12_rational.json"
+    path = Path(__file__).parent / "data/human/rechenberg12_rational.json"
     return {"points": json.loads(path.read_text(encoding="utf-8"))["points"]}

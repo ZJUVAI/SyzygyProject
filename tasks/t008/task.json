@@ -50,7 +50,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Minimum size of a collection of distinct k-subsets of [v] covering every t-subset. Keep C(24,14,4); add C(20,10,4).",
       "primary_source": "Sol downloaded Gordon LJCR Zenodo19735294 v1.2 coverdata.json; MD5 b2c626b07f216aac830d344eff5ad523 matches author release. Exact C(20,10,4) entry is size36, lower32; contributor Rade Belic 2001-05-03. Full block list saved from matching LJCR record and normalized from labels1..20 to0..19. Bounds32–36 leave a gap in checked sources.",

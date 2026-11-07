@@ -48,7 +48,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定100个互异平面点，最大化精确距离1的无序点对。任意共同实代数域表示不限制Moser格，单位距离模式是有理半代数系统，实可行模式有代数实可行解，有限坐标有共同本原元。",
       "primary_source": "Sol亲自读取Engel等2406.15317v3 Table2 n100行439/22同构类、Definition2.2中1与omega1三角格基及Section6.1 AI训练仅为未来方向。公开439的完整Figshare见证未取到，严格标未复现；不把弱261称文献最强纪录。原作者仓库固定3202dade2cd02b712c182368789a108db02e82c8。",

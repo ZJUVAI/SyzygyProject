@@ -14,7 +14,7 @@
 
 原问题是 Barnard 与 Steinerberger 2020 年论文中的连续常数，AlphaEvolve 将其列为问题 6.6。论文给出连续问题的下界 `>0.37`、上界 `≤0.411`，并描述经过小幅修改的反正弦函数。`human.py` 将该公式在本配置的 480 个格子中心取值，再四舍五入到 `1/100000`，得到一个独立的有理分段常数函数。它是方法重建，不是论文声称的 480 格见证。精确成绩为 `15833948850637600/43788391811747427`，约 `0.361601515732983`。
 
-`data/reference/public_ai_certificate_n480.json` 是 Kevin Russell / ProjectForty2 的 CHRONOS 辅助证书。其上游仓库固定在 commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`；证书原始字节 SHA-256 为 `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`。精确重算得 `J=2378625/5958277≈0.3992135645925827`。该构造是 AI 辅助结果，不能归入人类基线。
+`data/source/certificate_n480.json` 是 Kevin Russell / ProjectForty2 的 CHRONOS 辅助证书。其上游仓库固定在 commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`；证书原始字节 SHA-256 为 `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`。精确重算得 `J=2378625/5958277≈0.3992135645925827`。该构造是 AI 辅助结果，不能归入人类基线。
 
 2026-10-08 的 Chen 与 Gu 论文给出了更强的连续问题下界 `C≥0.410377977432121…`。该结果来自不同的原子加多项式函数及去原子论证，不是本配置的 480 格高度向量，不能直接记作本配置的分数。它没有证明连续问题或本有限维配置的最优值。我们截至 2026-11-06 未找到更强的同参数 480 格精确见证或最优性证明。
 
@@ -55,7 +55,7 @@ For `t=(k+θ)d`, autocorrelation is linear in `θ` between adjacent grid nodes. 
 
 The continuous problem is the minimum-autocorrelation constant studied by Barnard and Steinerberger (2020), and listed as Problem 6.6 by AlphaEvolve. Their paper gives the continuous bounds `>0.37` and `≤0.411` and describes a modified arcsine function. `human.py` samples that formula at the 480 cell centers and rounds heights to multiples of `1/100000`. This is a local reconstruction of the method, not a 480-cell witness claimed by the paper. Its exact score is `15833948850637600/43788391811747427`, about `0.361601515732983`.
 
-`data/reference/public_ai_certificate_n480.json` is the certificate by Kevin Russell / ProjectForty2, assisted by CHRONOS. The upstream repository is pinned to commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`. The certificate's raw-byte SHA-256 is `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`. Exact recomputation gives `J=2378625/5958277≈0.3992135645925827`. This is an AI-assisted result, not a human baseline.
+`data/source/certificate_n480.json` is the certificate by Kevin Russell / ProjectForty2, assisted by CHRONOS. The upstream repository is pinned to commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`. The certificate's raw-byte SHA-256 is `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`. Exact recomputation gives `J=2378625/5958277≈0.3992135645925827`. This is an AI-assisted result, not a human baseline.
 
 A paper by Chen and Gu, submitted 2026-10-08, gives a stronger bound `C≥0.410377977432121...` for the continuous problem. It uses a different atomic-polynomial profile and an atom-removal argument. It is not a 480-cell height vector for this configuration, so it is not recorded as this configuration's score. It does not prove the continuous or finite-dimensional optimum. As of 2026-11-06, we found no stronger exact witness on the same 480-cell grid and no proof of its optimum.
 

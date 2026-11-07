@@ -93,8 +93,7 @@
           "required_edges_found": 3160
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "review_status": "accepted_by_sol"
     }

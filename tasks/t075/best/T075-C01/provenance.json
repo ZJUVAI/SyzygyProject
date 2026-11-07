@@ -65,6 +65,5 @@
     }
   },
   "solution_sha256": "1da98fa5d4d5cfba31355950f598f57219d6b58f23d9e18ef4c54510e5c54608",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T075 tasks/t075/best/T075-C01/solution.json --config T075-C01"
 }

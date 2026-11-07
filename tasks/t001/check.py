@@ -49,14 +49,7 @@ def validate(solution, config, strict=False):
             x2, y2 = points[j]
             if (x1-x2)**2 + (y1-y2)**2 < required:
                 raise ValueError(f"centers {j} and {i} overlap")
-    claimed = solution.get("objective")
-    mismatch = False
-    if claimed is not None:
-        try:
-            mismatch = _q(claimed, "objective") != radius
-        except ValueError:
-            mismatch = True
     return {"objective": str(radius), "verification_status": "exact", "details": {
         "n": n["n"], "all_boundary_clearances_exact": True,
-        "all_pairwise_distances_exact": True, "claimed_objective_mismatch": mismatch,
+        "all_pairwise_distances_exact": True,
         "optimality_proved": False}}

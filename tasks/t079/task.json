@@ -48,7 +48,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Minimum Kakeya set in F31^3, specified by one arbitrary affine line in each of993 projective directions. Taking union does not restrict the minimum: every Kakeya set contains such a choice and its union is no larger. No quadratic-template restriction in formal candidate domain.",
       "human_source": "Classical odd-field quadratic residue construction as recorded in Bukh-Chao2021 section4. Root independently generates its membership predicate on all29791 points and matches human line union exactly:8641 =30*16^2+31^2.",

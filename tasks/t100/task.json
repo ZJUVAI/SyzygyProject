@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "固定50个标记顶点、700条简单无向边，最小化真实三角形数。允许全部一般图，不限多部图或H*家族。",
       "primary_source": "Sol读Liu–Pikhurko–Staden arxiv1712.00633v2 Definition1.1/Theorem1.9/Conjecture1.11。H*分部23,23,4共713条边，删去13条同一小部顶点的星边，恰700边；各删边消去23个三角形，得1817。",

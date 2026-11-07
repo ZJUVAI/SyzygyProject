@@ -30,7 +30,7 @@
       },
       "reproduced_witness": {
         "value": 229,
-        "file": "data/reference/grasp_reconstruction_229.json",
+        "file": "data/source/human_reconstruction_229.json",
         "sha256": "d72f6aad0998155bbe4254cf5c68aac142722489cd078abc185a8a245b22dd56",
         "provenance": "Seed-0 local reconstruction using randomized GRASP-style construction and bounded insertion local search; no comparison witness was read.",
         "evidence_state": "ordering and all 129 prefix cut sizes recomputed exactly"
@@ -345,7 +345,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "d064ae8004d38fb3d36a4bd3967f541ece9bba5279616e4225aefd500be2017b"
       }

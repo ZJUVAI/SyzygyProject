@@ -142,8 +142,7 @@
           "method": "exact interpolation matrix, 100 disjoint Gershgorin disks"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

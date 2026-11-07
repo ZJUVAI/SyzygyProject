@@ -42,7 +42,7 @@
         "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and data page.",
         "provenance": "Published SAT search. Reported construction is a lower bound, not an optimality result.",
         "evidence_state": "Full public-notebook witness independently checked for all 1550902 progression prefixes.",
-        "witness": "data/reference/sequence_130000.txt",
+        "witness": "data/source/sequence_130000.txt",
         "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
       },
       "best_reproduced": {
@@ -52,7 +52,7 @@
           "discrepancy_cap": 3,
           "sequence_type": "unrestricted"
         },
-        "witness": "data/reference/sequence_130000.txt",
+        "witness": "data/source/sequence_130000.txt",
         "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
         "verification_status": "exact",
         "verification_method": "Check every signed prefix sum in every homogeneous progression using Python integer arithmetic.",

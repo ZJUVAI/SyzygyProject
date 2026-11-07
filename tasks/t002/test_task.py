@@ -24,7 +24,8 @@ def test_human_entry_point_defaults_to_original_configuration(monkeypatch):
 def test_claim_is_ignored():
     x={**SEED,'objective':1}
     assert validate(x,CONFIG)['objective']=='6'
-    assert validate(x,CONFIG)['details']['claimed_objective_mismatch']
+    assert validate(x,CONFIG) == validate(SEED,CONFIG)
+    assert validate(dict(x, objective={}),CONFIG) == validate(SEED,CONFIG)
 
 def test_rejects_wrong_count_and_config():
     with __import__('pytest').raises(ValueError): validate({'squares':SEED['squares'][:-1]},CONFIG)
@@ -79,11 +80,10 @@ def test_staged_claimed_scores_cannot_change_recomputed_objective(n,cid,monkeypa
     monkeypatch.setenv('MATHBENCH_CONFIG_ID',cid)
     from tasks.t002.human import run_code
     witness=run_code()
-    actual=validate(witness,{'parameters':{'n':n}},strict=True)['objective']
+    actual=validate(witness,{'parameters':{'n':n}},strict=True)
     altered={**witness,'objective':-999}
     result=validate(altered,{'parameters':{'n':n}},strict=True)
-    assert result['objective']==actual
-    assert result['details']['claimed_objective_mismatch']
+    assert result == actual
 
 
 def test_sat_penalty_analytic_gradient(monkeypatch):

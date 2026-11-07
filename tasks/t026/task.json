@@ -17,7 +17,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "human_source": "Sol read Fredricksen–Sweet 2000 pp.2,6 and matched the six representative lists, including the 179/358 symmetry exception. The reconstructed six-color partition covers every integer 1..536.",
       "public_source": "Sol read arXiv:2610.31362v1 dated 2026-10-22: authors report a 537-element six-color partition and make no exact S(6) claim. Certificate commit 92a9d5f1336a5a064b2bfe6597d967f59191e365 is fixed. AI assistance remains undisclosed.",

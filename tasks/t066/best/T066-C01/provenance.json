@@ -50,6 +50,5 @@
     "search_seconds_cutoff": null
   },
   "solution_sha256": "cc4210e7ab7485ec046f92c4988bed7254cdfd191bc7caf82b8007743a452845",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T066 tasks/t066/best/T066-C01/solution.json --config T066-C01"
 }

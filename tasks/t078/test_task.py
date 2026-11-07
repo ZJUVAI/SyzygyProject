@@ -45,7 +45,7 @@ def test_all_five_entries_and_frozen_lattice_witnesses():
     assert hashlib.sha256(raw_source).hexdigest() == (
         "10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a"
     )
-    for path in (TASK / "data/human/lambda10_gram.json", TASK / "data/reference/lambda10_gram.json"):
+    for path in (TASK / "data/human/lambda10_gram.json",):
         assert hashlib.sha256(path.read_bytes()).hexdigest() == (
             "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886"
         )

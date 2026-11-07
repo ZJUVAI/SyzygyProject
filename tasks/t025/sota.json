@@ -112,8 +112,7 @@
           "affine_lines": 0
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "checked_at": "2026-11-06",
       "review_status": "accepted_by_sol"

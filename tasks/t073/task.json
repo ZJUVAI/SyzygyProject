@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Equal-weight spherical strength-5 designs of distinct unit points in R4; minimize point count. Full 126 monomial equations, not a sampled numerical design.",
       "primary_sources": "Bondarenko/Radchenko/Viazovska Annals2013 p444 gives 22 <= N(3,5) <= 24 and D4 design. Lindblad 2025 Designs Related Through Projective and Hopf Maps section3 still calls the 24-point design putatively optimal. 2026 S2 strength4 closure and odd-sphere construction results do not prove the S3 strength5 minimum.",

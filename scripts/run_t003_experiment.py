@@ -1,22 +1,17 @@
 """Archive one exploratory T003-C01 program with independent exact checks."""
 import argparse
-import copy
 from datetime import datetime, timezone
 import hashlib
 import json
 import os
 from pathlib import Path
-import platform
 import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from mathbench.evaluate import evaluate_candidate
-from mathbench.registry import load_config
-from mathbench.replay import replay
-from scripts.run_t003_evolution import independent_audit
-from tasks.t003.check import validate
+from scripts.run_t003_evolution import archive_sources, audit_witness, experiment_environment
 
 
 def write(path, data):
@@ -52,24 +47,16 @@ def main():
     source = args.program.resolve(strict=True)
     # Experimental programs must be standalone; no mutable local helper modules.
     shutil.copy2(source, sources/'program.py')
-    hashes = {}
-    for relative in ('tasks/t003/check.py', 'tasks/t003/task.json', 'mathbench/evaluate.py',
+    hashes = archive_sources(sources, ('tasks/t003/check.py', 'tasks/t003/task.json', 'mathbench/evaluate.py',
                      'mathbench/worker.py', 'mathbench/registry.py', 'mathbench/replay.py',
-                     'scripts/run_t003_evolution.py', 'scripts/run_t003_experiment.py'):
-        target = sources/relative
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(ROOT/relative, target)
-        hashes[relative] = hashlib.sha256(target.read_bytes()).hexdigest()
+                     'scripts/run_t003_evolution.py', 'scripts/run_t003_experiment.py'))
     hashes['program.py'] = hashlib.sha256((sources/'program.py').read_bytes()).hexdigest()
-    import numpy
-    import scipy
     manifest = {'task_id':'T003', 'config_id':'T003-C01', 'started_utc':datetime.now(timezone.utc).isoformat(),
                 'seed':args.seed, 'source_program':str(source), 'source_sha256':hashes,
                 'invocation_argv':[sys.executable, *sys.argv],
                 'controls':{'MATHBENCH_EXPERIMENT_STEPS':args.steps, 'MATHBENCH_SEARCH_SECONDS':args.search_seconds},
                 'budget':{'generation_seconds':args.generation_seconds, 'verification_seconds':60, 'memory_bytes':4*1024**3, 'threads':1},
-                'environment':{'cpu':args.cpu, 'python':sys.version, 'platform':platform.platform(),
-                               'numpy':numpy.__version__, 'scipy':scipy.__version__},
+                'environment':dict(experiment_environment(), cpu=args.cpu),
                 'scope':'Exploratory AI-designed search; separate from the previous fixed-budget comparison.'}
     write(dest/'manifest.json', manifest)
     result = evaluate_candidate('T003', sources/'program.py', 'T003-C01', strict=True,
@@ -78,32 +65,13 @@ def main():
     print(json.dumps(result), flush=True)
     if result['validity'] != 1 or 'artifact_error' in result:
         raise RuntimeError('Candidate failed; result saved')
-    solution_path = dest/'candidate/solution.json'
-    solution = json.loads(solution_path.read_text())
-    audit = independent_audit(solution)
-    config = load_config('T003', 'T003-C01')
-    altered = copy.deepcopy(solution)
-    altered['objective'] = '999999'
-    claimed = validate(altered, config, strict=True)
-    broken = copy.deepcopy(solution)
-    broken['circles'][1] = dict(broken['circles'][0])
-    try:
-        validate(broken, config, strict=True)
-    except ValueError:
-        rejected = True
-    else:
-        rejected = False
-    checked = replay('T003', solution_path, 'T003-C01', strict=True, output_dir=dest/'replay')
-    passed = (rejected and checked['validity'] == 1 and
-              audit['objective'] == result['objective'] == claimed['objective'] == checked['objective'])
-    summary = {'passed':passed, 'seed':args.seed, 'objective':result['objective'],
-               'independent_audit':audit, 'damaged_witness_rejected':rejected,
-               'claimed_score_ignored':claimed['objective']==audit['objective'],
-               'generation_seconds':result['generation_time'],
-               'verification_scope':'Exact rational feasibility and attained score; no optimality proof.'}
+    summary = audit_witness(dest/'candidate/solution.json', result['objective'])
+    summary.update(seed=args.seed, objective=result['objective'],
+                   generation_seconds=result['generation_time'],
+                   verification_scope='Exact rational feasibility and attained score; no optimality proof.')
     write(dest/'summary.json', summary)
     print(json.dumps(summary), flush=True)
-    if not passed:
+    if not summary['passed']:
         raise RuntimeError('Exact experiment audit failed')
 
 

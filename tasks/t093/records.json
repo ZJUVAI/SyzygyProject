@@ -49,7 +49,7 @@
           "item_types": 44,
           "available_items_total": 50
         },
-        "witness_file": "data/reference/shadoks2304.json",
+        "witness_file": "data/source/shadoks2304.json",
         "provenance": "The public Shadoks solution file was replayed and checked from its integer translations. No geometry values were rounded.",
         "ai_provenance": "not disclosed by the source",
         "actual_value": 2304,

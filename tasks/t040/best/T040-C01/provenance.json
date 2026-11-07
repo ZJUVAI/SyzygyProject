@@ -43,6 +43,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "67f86f517b309e1802cd597e86f419dd315603e09c76443d7dfc7736d63fbbc9",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T040 tasks/t040/best/T040-C01/solution.json --config T040-C01"
 }

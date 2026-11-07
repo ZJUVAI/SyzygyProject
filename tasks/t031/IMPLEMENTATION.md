@@ -20,7 +20,7 @@ Status: accepted by Sol on 2026-11-06.
 - `baseline.py` runs eight seeded randomized maximum-overlap greedy searches. It reads no comparison witness. Seed 0 produced a best word of length 6,240 in about 0.092 seconds on the implementation machine. The exact result, checker output, and run settings are saved in `best/greedy_seed0_*.json`.
 - `reference.py` reads the fixed 5,905 public attachment from `data/reference/public_5905_attachment.txt`. The 5,913 human witness is saved at `data/reference/human_ashlock_tillotson_5913.txt`. The `best/` directory contains only the task's own search result and its verification/provenance records. It is not imported by the initial seed or search baseline.
 - `evolution.py` exposes the required `run_code()` entry point.
-- The implementation-stage registry error was resolved by Sol admission. All five shared-runner entries and the complete control checks passed; see acceptance.json.
+- The implementation-stage registry error was resolved by Sol admission. All five shared-runner entries and the complete control checks passed; see records.json.
 
 ## Verification commands and results
 
@@ -31,7 +31,7 @@ Run from the repository root:
 .venv/bin/python -m json.tool tasks/t031/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t031/sota.json > /dev/null
 .venv/bin/python -m json.tool tasks/t031/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t031/acceptance.json > /dev/null
+.venv/bin/python -m json.tool tasks/t031/records.json > /dev/null
 ```
 
 The task test suite passed (7 tests in 0.54 seconds) and covers the exact 5,905 witness, the 5,913 human-method witness, the simple seed, a repeated valid word, a missing-window word, invalid symbols and types, altered configuration, ignored scores, deterministic seeded search, and generation error/timeout reporting. The JSON formatting commands all exited successfully.

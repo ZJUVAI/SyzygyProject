@@ -159,7 +159,6 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "evidence": "acceptance.json",
         "witness": "data/reference/public_c01.json",
         "witness_sha256": "6ba79de473c1c64f18d07e0c38fc9c5c9b73194ffa4e946fca4ac50744a6124c"
       },

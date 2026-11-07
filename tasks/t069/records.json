@@ -45,7 +45,7 @@
           "instance": "mona-lisa100K",
           "cities": 100000
         },
-        "witness_file": "data/reference/monalisa_5757191.tour",
+        "witness_file": "data/human/monalisa_5757191.tour",
         "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88",
         "provenance": "Official tour downloaded from the challenge page; node IDs converted from 1-based to 0-based in the reference program.",
         "ai_provenance": "Not stated by source beyond genetic algorithm attribution.",

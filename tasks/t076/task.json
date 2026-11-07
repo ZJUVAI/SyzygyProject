@@ -44,7 +44,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Exactly15 positive integers, all32768 subset sums distinct, minimize largest element. No artificial integer magnitude bound. Gray-traversal modular buckets in formal checker are only indices; all hash collisions resolved by exact integer sums.",
       "human_source": "Bohman1998 section2 Theorem2.1 classical Conway-Guy recurrence. Root independently recomputed recurrence and its15 elements, maximum8807, and all32768 sums.",
@@ -60,7 +59,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Minimum largest member among n distinct positive integers with all subset sums distinct. Retain15; add16 and17. No heuristic fingerprint is accepted as a certificate without exact collision resolution.",
       "primary_source": "Sol read Lunnon 1988 Integer Sets with Distinct Subset-Sums, DOI10.1090/S0025-5718-1988-0917837-5, Table1 w^2 column and formula(1.4). Published16 and17 maxima17072 and33531. Earlier provisional references17270 and34301 are weaker and archived separately. Reviewed newer Bohman general construction, whose limiting ratio does not by itself replace finite-size records. No stronger explicit finite source or optimality proof found in checked sources.",

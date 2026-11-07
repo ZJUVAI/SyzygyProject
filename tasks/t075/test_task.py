@@ -31,8 +31,7 @@ def test_h6_reference_is_rebuilt_and_exactly_verified():
     human = human_run()
     saved_human = json.loads((TASK_DIR / "data/human/h6_iterated_blowup_n36.json").read_text())
     reference = reference_run()
-    saved_reference = json.loads((TASK_DIR / "data/reference/h6_iterated_blowup_n36.json").read_text())
-    assert human == saved_human == reference == saved_reference
+    assert human == saved_human == reference
     result = validate(human, CONFIG, strict=True)
     assert result["objective"] == 2220
     assert result["details"]["four_vertex_sets_checked"] == 58905

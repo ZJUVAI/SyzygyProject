@@ -22,7 +22,7 @@ Command: `.venv/bin/python -m pytest tasks/t039 -q`
 
 Result: 18 passed. Tests cover the published witness, simple seed, search entries, exact objective recomputation, repeated differences, legal repeated marks across rows, malformed row sizes, bool and float marks, non-finite marks, negative marks, claimed-score tampering, deterministic seed behavior, program errors, and generation timeouts.
 
-JSON validation: `python3 -m json.tool` was run on `task.json`, `records.json`, `sota.json`, and `acceptance.json`.
+JSON validation: `python3 -m json.tool` was run on `task.json`, `records.json`, and `sota.json`.
 
 ## Status
 

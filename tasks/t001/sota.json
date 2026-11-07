@@ -56,7 +56,6 @@
             "n": 26,
             "all_boundary_clearances_exact": true,
             "all_pairwise_distances_exact": true,
-            "claimed_objective_mismatch": false,
             "optimality_proved": false
           },
           "eval_time": 0.4346689060330391,
@@ -134,7 +133,6 @@
             "n": 32,
             "all_boundary_clearances_exact": true,
             "all_pairwise_distances_exact": true,
-            "claimed_objective_mismatch": false,
             "optimality_proved": false
           },
           "eval_time": 0.3344501443207264,
@@ -212,7 +210,6 @@
             "n": 50,
             "all_boundary_clearances_exact": true,
             "all_pairwise_distances_exact": true,
-            "claimed_objective_mismatch": false,
             "optimality_proved": false
           },
           "eval_time": 0.33452534303069115,

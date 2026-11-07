@@ -27,4 +27,4 @@ python3 -m json.tool tasks/t024/records.json > /dev/null
 
 ## Review status and limitations
 
-Sol accepted this task on 2026-11-06 after full runner replay. See acceptance.json. The 132-edge construction is reproduced exactly. The public table gives no optimality proof for order 41. The live web table was checked on 2026-11-06; this implementation does not establish a complete literature survey.
+Sol accepted this task on 2026-11-06 after full runner replay. See records.json. The 132-edge construction is reproduced exactly. The public table gives no optimality proof for order 41. The live web table was checked on 2026-11-06; this implementation does not establish a complete literature survey.

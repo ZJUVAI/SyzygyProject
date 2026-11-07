@@ -151,7 +151,7 @@
         "date": "2026-11-04",
         "actual_objective": 532,
         "verification_status": "exact",
-        "witness": "tasks/t020/data/sota_t020_c03.json",
+        "witness": "tasks/t020/data/human_t020_c03.json",
         "independent_audit": "PLAN.md",
         "checks": [
           "all four programs strict valid",

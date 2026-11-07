@@ -48,7 +48,7 @@
         "claimed_score_ignored": true,
         "date_reproduced": "2026-11-06",
         "review_status": "reviewed_by_sol",
-        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see acceptance.json."
+        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see records.json."
       },
       "bounds": {
         "lower_bound": 3771,

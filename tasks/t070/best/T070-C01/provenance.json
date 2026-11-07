@@ -77,6 +77,5 @@
     }
   },
   "solution_sha256": "8b40319eeec82cbc084c1deb428895f18fb6e164b0797df7206fcde10b696645",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T070 tasks/t070/best/T070-C01/solution.json --config T070-C01"
 }

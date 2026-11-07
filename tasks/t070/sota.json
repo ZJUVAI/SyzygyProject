@@ -141,8 +141,7 @@
           "method": "independent pairwise exact rectangle separation plus full area"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

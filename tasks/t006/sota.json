@@ -67,8 +67,7 @@
           "networkx_girth": 10
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "review_status": "accepted_by_sol"
     },
@@ -138,8 +137,7 @@
           "networkx_girth": 9
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       },
       "lower_bound_source": {
         "value": "165",

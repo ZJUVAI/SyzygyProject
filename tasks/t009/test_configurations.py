@@ -68,9 +68,14 @@ def test_all_programs_support_new_configuration(config_id, n, distance, monkeypa
 
 
 def test_saved_witness_hashes_match_sota_records():
-    folder = Path(__file__).parent / "data"
+    import hashlib
+
+    folder = Path(__file__).parent
+    records = json.loads((folder / "sota.json").read_text())["configurations"]
     for config_id in ("T009-C02", "T009-C03"):
-        suffix = config_id[-3:]
-        saved = json.loads((folder / f"sota_generator_{suffix}.json").read_text())
+        record = records[config_id]
+        raw = (folder / record["witness"]).read_bytes()
+        assert hashlib.sha256(raw).hexdigest() == record["witness_sha256"]
+        saved = json.loads(raw)
         assert len(saved["matrix"]) == 20
         assert saved["construction"]["parameters"]["k"] == 20

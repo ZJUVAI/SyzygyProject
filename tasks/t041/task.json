@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "单位正方形内17个可任意旋转、正边长、内部不交的正方形，最大化边长和；边界接触合法。",
       "human_baseline": "从传统网格方法重建同参数17块：15个1/4和2个1/8，精确和4。不是把AI构造归为人类，也不声称这17个坐标原载于1975论文。",

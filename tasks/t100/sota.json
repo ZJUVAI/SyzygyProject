@@ -120,8 +120,7 @@
           "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   }

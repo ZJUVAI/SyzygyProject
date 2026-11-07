@@ -41,7 +41,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Variable positive radii, all circles contained in [0,1]^2 with disjoint interiors; maximize exact sum of radii. Keep26 and32, add40.",
       "primary_sources": "Sol checked Packomania variable-radius table last updated31-Oct-2026, row40 reports3.292391572608 and is not bold (the source marks proven optimal results in bold). Reference[8] credits Haowei Lin packing_records. Source method is not confirmed; public witness is separate from the confirmed historical human comparison. No optimality proof found in checked sources.",

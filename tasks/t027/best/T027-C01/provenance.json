@@ -54,6 +54,5 @@
     "reported_score": 45312726
   },
   "solution_sha256": "f094e1566891fa01ddfc6ff35c6ba012cceac539a0016aba99f7a57823095a79",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T027 tasks/t027/best/T027-C01/solution.json --config T027-C01"
 }

@@ -20,7 +20,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "Binary length 10, radius 1; minimize distinct centers covering all 1024 words. Independent direct minimum Hamming distances differ from formal bitset union.",
       "human": "Hamming 1950 parity-check reconstruction gives 16*8=128 centers; syndrome argument covers every prefix and suffix. Historical Östergård 1991 reports 120 independently of the separate 2020 OEIS witness.",

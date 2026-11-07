@@ -108,7 +108,7 @@
           "k": 20,
           "q": 2
         },
-        "witness_file": "data/sota_generator_C02.json",
+        "witness_file": "data/human_generator_C02.json",
         "program": "sota.py",
         "sha256": "68982b46a4cc81a38bc018c179161edf2f83c114ada7bbd7cd5c6ecb924e6189",
         "evidence_state": "rank and distance independently verified by exhaustive enumeration",
@@ -155,7 +155,7 @@
           "k": 20,
           "q": 2
         },
-        "witness_file": "data/sota_generator_C03.json",
+        "witness_file": "data/human_generator_C03.json",
         "program": "sota.py",
         "sha256": "9bf8dbee63eb97861252addea666efb5c5b9035208eb8b3a792fb9c27f924684",
         "evidence_state": "rank and distance independently verified by exhaustive enumeration",

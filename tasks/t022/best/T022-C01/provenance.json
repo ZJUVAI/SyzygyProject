@@ -48,6 +48,5 @@
     "vertex_cap": 45
   },
   "solution_sha256": "1012bbe4aa0724c0a1e405700d73a80ecea172eb599ddd885ec39ab429ef601a",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T022 tasks/t022/best/T022-C01/solution.json --config T022-C01"
 }

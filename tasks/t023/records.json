@@ -81,5 +81,11 @@
       "verification_status": "exact",
       "combined_score": 0.010490639122014202
     }
+  },
+  "admission_source_review": {
+    "human_baseline": "Sol independently reproduced NIST IPOG-F 65 rows after completing dash entries as zero.",
+    "reported_record": "Sol read the Colbourn mirror row: t=4,v=2,k=20,N=39, Hadamard (Colbourn-Keri) postop NCK. The 39-row witness is not reproduced.",
+    "optimality": "CAN(4,13,2)=32 proved in arXiv1711.10040v2 implies lower bound 32 by column deletion. No proof of optimality for 20 columns was found in the checked sources.",
+    "independent_quantity": "4845 column subsets and all 16 patterns in each subset checked separately from the bit-mask checker."
   }
 }

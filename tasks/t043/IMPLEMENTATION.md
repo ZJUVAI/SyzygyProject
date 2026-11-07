@@ -35,7 +35,7 @@ Commands run:
 .venv/bin/python -m json.tool tasks/t043/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/sota.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t043/acceptance.json > /dev/null
+.venv/bin/python -m json.tool tasks/t043/records.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/data/source/heinlein_2019_appendix_c.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/best/randomized_greedy_seed0.json > /dev/null
 ```

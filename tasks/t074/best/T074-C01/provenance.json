@@ -53,6 +53,5 @@
     "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds"
   },
   "solution_sha256": "0e3f1299bef58268fc1aa283166f47734b814977e81d7637deeff0ed34543fce",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T074 tasks/t074/best/T074-C01/solution.json --config T074-C01"
 }

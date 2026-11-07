@@ -19,7 +19,6 @@
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "acceptance.json",
     "source_review": {
       "definition": "480 nonnegative rational heights, width13/4800 and support13/10. Maximize exact minimum autocorrelation on shifts[0,1] divided by squared L1 mass. Piecewise linearity reduces full interval to nodes0..369 and exact endpoint interpolation at369+3/13.",
       "human_source": "BarnardSteinerberger1903.08731v2 section2.3 modified arcsine formula, epsilon.025,480 midpoint values rounded to1/100000. Reconstructed weak finite-grid score15833948850637600/43788391811747427. Continuous paper score.37 is not assigned to these480 heights.",

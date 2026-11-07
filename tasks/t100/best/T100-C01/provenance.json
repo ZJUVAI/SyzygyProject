@@ -47,6 +47,5 @@
     "comparison_data_read": false
   },
   "solution_sha256": "a9cc4d46db18ae738fd26a082a8227a77b360967a86b705d4f806aed39b9b835",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T100 tasks/t100/best/T100-C01/solution.json --config T100-C01"
 }

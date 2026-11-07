@@ -64,5 +64,13 @@
       "verification_status": "exact",
       "combined_score": 0.30303030303030304
     }
+  },
+  "admission_source_review": {
+    "human_source": "Afzaly–McKay source page and three original sparse6 records checked independently by Sol. All decode to 41 vertices and 132 edges.",
+    "lower_bound": 132,
+    "upper_bound": 133,
+    "upper_bound_proof": "The source gives ex(40,C4)=127 exactly. Summing the 41 vertex-deleted subgraphs gives 39m <= 41*127 = 5207, hence m <= 133.",
+    "open_status": "The primary table marks the 41-vertex edge count with >=; best located lower bound 132 and upper bound 133 differ.",
+    "exclusion": "The 38-vertex 117-edge row is exact; >= is only on the graph count. It was excluded."
   }
 }

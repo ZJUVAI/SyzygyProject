@@ -28,7 +28,7 @@
       "best_reproduced": {
         "value": "fourth_root(58188232951867590/10575651537777253)",
         "program": "reference.py",
-        "witness": "data/reference/highest_weight_degree20.json",
+        "witness": "data/human/highest_weight_degree20.json",
         "verification_status": "certified",
         "objective_interval": [
           "382888231240325373/250000000000000000",
@@ -93,7 +93,7 @@
             "worker_cpu": 0
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
       },
       "review_status": "accepted_by_sol",
       "verification": {
@@ -151,8 +151,7 @@
           "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "evidence": "acceptance.json"
+        "claimed_score_ignored": true
       }
     }
   },

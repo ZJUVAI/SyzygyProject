@@ -48,6 +48,5 @@
     "wall_clock_cutoff_seconds": null
   },
   "solution_sha256": "8df63db28e0d11ad10e6b800573d369e388349523c90cb7bf2b8a5d716c27306",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T023 tasks/t023/best/T023-C01/solution.json --config T023-C01"
 }

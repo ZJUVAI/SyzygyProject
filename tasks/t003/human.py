@@ -1,10 +1,19 @@
-"""Load fixed human constructions, including a cold geometric baseline for n=40."""
-import json, os
+"""Load the fixed human constructions for T003."""
+import json
+import os
 from pathlib import Path
 
+_SIZES = {"T003-C01": 26, "T003-C02": 32, "T003-C03": 40}
+
+
+def load_witness(prefix):
+    config = os.environ.get("MATHBENCH_CONFIG_ID", "T003-C01")
+    try:
+        size = _SIZES[config]
+    except KeyError:
+        raise ValueError(f"unsupported T003 configuration: {config}") from None
+    return json.loads((Path(__file__).parent / "data" / f"{prefix}{size}.json").read_text())
+
+
 def run_code():
-    config=os.environ.get('MATHBENCH_CONFIG_ID','T003-C01')
-    files={'T003-C01':'human26.json','T003-C02':'human32.json','T003-C03':'human40.json'}
-    try: name=files[config]
-    except KeyError: raise ValueError(f'unsupported T003 configuration: {config}') from None
-    return json.loads((Path(__file__).parent/'data'/name).read_text())
+    return load_witness("human")

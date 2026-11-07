@@ -209,6 +209,5 @@
   },
   "search_metadata": {},
   "solution_sha256": "f40d0ad5c8aa37bf0afdddda837fcac40ce065e6ceb5f476865994b77b37a326",
-  "acceptance_evidence": "../../acceptance.json",
   "replay_command": "python -m mathbench replay T019 tasks/t019/best/T019-C02/solution.json --config T019-C02"
 }
