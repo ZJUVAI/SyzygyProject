@@ -1,0 +1,1266 @@
+{
+  "task_id": "T021",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T021 --label expansion_20261107",
+  "configurations": {
+    "T021-C01": {
+      "configuration": {
+        "id": "T021-C01",
+        "parameters": {
+          "n": 32,
+          "space": "unit sphere S2",
+          "potential": "sum over unordered pairs 1 / Euclidean distance",
+          "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+        },
+        "direction": "minimize",
+        "human_reference": 412.2612746505293
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C01",
+            "validity": 1.0,
+            "combined_score": 0.9980527524419577,
+            "objective": "413065615661938261900002531/1000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.21445681154727936,
+            "verification_time": 0.22891408950090408,
+            "objective_value": "413065615661938261900002531/1000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "2065328078309691309500012407/5000000000000000000000000",
+                "413065615661938261900002531/1000000000000000000000000"
+              ],
+              "point_count": 32,
+              "pairs_checked": 496,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.4479118883609772,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "41306561566193826190000250593232423793/100000000000000000000000000000000000",
+              "41306561566193826190000250593232424289/100000000000000000000000000000000000"
+            ],
+            "pairs": 496,
+            "minimum_squared_distance": "150082567529471030918348482545425195554089248082449617841012129914683392/503829405272365777342047221296604339611825367820228984653044317087633201",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C01",
+            "validity": 1.0,
+            "combined_score": 0.9982605418149413,
+            "objective": "4129796354576887307637304251/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.6149966046214104,
+            "verification_time": 0.21489005163311958,
+            "objective_value": "4129796354576887307637304251/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "825959270915377461527460751/2000000000000000000000000",
+                "4129796354576887307637304251/10000000000000000000000000"
+              ],
+              "point_count": 32,
+              "pairs_checked": 496,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.8332458175718784,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "20648981772884436538186520022551164071/50000000000000000000000000000000000",
+              "20648981772884436538186520022551164319/50000000000000000000000000000000000"
+            ],
+            "pairs": 496,
+            "minimum_squared_distance": "16046696267995065542218533587479138275032262290228978436234280960/54474029763021923431633449379513769150451525249951028184026480121",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": "4122612746505293102359059093/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11434333026409149,
+            "verification_time": 0.16448622196912766,
+            "objective_value": "4122612746505293102359059093/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "4122612746505293102359058597/10000000000000000000000000",
+                "4122612746505293102359059093/10000000000000000000000000"
+              ],
+              "point_count": 32,
+              "pairs_checked": 496,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.28112073615193367,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "41226127465052931023590588506754257669/100000000000000000000000000000000000",
+              "8245225493010586204718117701350851633/20000000000000000000000000000000000"
+            ],
+            "pairs": 496,
+            "minimum_squared_distance": "68957043525439690228643976234025360/167904908538042646367432018085297321",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": "4122612746505293102359059093/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11417177692055702,
+            "verification_time": 0.16431688889861107,
+            "objective_value": "4122612746505293102359059093/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "4122612746505293102359058597/10000000000000000000000000",
+                "4122612746505293102359059093/10000000000000000000000000"
+              ],
+              "point_count": 32,
+              "pairs_checked": 496,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.281089223921299,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "41226127465052931023590588506754257669/100000000000000000000000000000000000",
+              "8245225493010586204718117701350851633/20000000000000000000000000000000000"
+            ],
+            "pairs": 496,
+            "minimum_squared_distance": "68957043525439690228643976234025360/167904908538042646367432018085297321",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C01",
+            "validity": 1.0,
+            "combined_score": 0.9982605418149413,
+            "objective": "4129796354576887307637304251/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.36515700444579124,
+            "verification_time": 0.16464779153466225,
+            "objective_value": "4129796354576887307637304251/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "825959270915377461527460751/2000000000000000000000000",
+                "4129796354576887307637304251/10000000000000000000000000"
+              ],
+              "point_count": 32,
+              "pairs_checked": 496,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.5323981121182442,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "20648981772884436538186520022551164071/50000000000000000000000000000000000",
+              "20648981772884436538186520022551164319/50000000000000000000000000000000000"
+            ],
+            "pairs": 496,
+            "minimum_squared_distance": "16046696267995065542218533587479138275032262290228978436234280960/54474029763021923431633449379513769150451525249951028184026480121",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T021",
+        "config_id": "T021-C01",
+        "validity": 1.0,
+        "combined_score": 0.9980527524419577,
+        "objective": "413065615661938261900002531/1000000000000000000000000",
+        "verification_status": "certified",
+        "generation_time": 0.11427070945501328,
+        "verification_time": 0.16457516327500343,
+        "objective_value": "413065615661938261900002531/1000000000000000000000000",
+        "details": {
+          "objective_interval": [
+            "2065328078309691309500012407/5000000000000000000000000",
+            "413065615661938261900002531/1000000000000000000000000"
+          ],
+          "point_count": 32,
+          "pairs_checked": 496,
+          "coordinate_model": "exact rational stereographic projection",
+          "sqrt_bound_scale": "10000000000000000000000000",
+          "energy_bound_scale": "1000000000000000000000000000000",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 0.2795756496489048,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T021",
+          "config_id": "T021-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t021/runs/expansion_20261107/T021-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.11493100598454475,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T021",
+          "config_id": "T021-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.2045852653682232,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T021",
+          "config_id": "T021-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.11489631608128548,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      },
+      "retained_own_incumbent": {
+        "task_id": "T021",
+        "config_id": "T021-C01",
+        "validity": 1.0,
+        "combined_score": 0.9982605418149413,
+        "objective": "4129796354576887307637304251/10000000000000000000000000",
+        "verification_status": "certified",
+        "generation_time": 0.214742761105299,
+        "verification_time": 0.26488256826996803,
+        "objective_value": "4129796354576887307637304251/10000000000000000000000000",
+        "details": {
+          "objective_interval": [
+            "825959270915377461527460751/2000000000000000000000000",
+            "4129796354576887307637304251/10000000000000000000000000"
+          ],
+          "point_count": 32,
+          "pairs_checked": 496,
+          "coordinate_model": "exact rational stereographic projection",
+          "sqrt_bound_scale": "10000000000000000000000000",
+          "energy_bound_scale": "1000000000000000000000000000000",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 0.48043062910437584,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      }
+    },
+    "T021-C02": {
+      "configuration": {
+        "id": "T021-C02",
+        "parameters": {
+          "n": 40,
+          "space": "unit sphere S2",
+          "potential": "sum over unordered pairs 1 / Euclidean distance",
+          "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+        },
+        "direction": "minimize",
+        "human_reference": 660.6752788,
+        "acceptance_status": "pending_sol_review"
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C02",
+            "validity": 1.0,
+            "combined_score": 0.9985925803740711,
+            "objective": "6616064366836294077244134279/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11433117464184761,
+            "verification_time": 0.16444206610321999,
+            "objective_value": "6616064366836294077244134279/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "6616064366836294077244133499/10000000000000000000000000",
+                "6616064366836294077244134279/10000000000000000000000000"
+              ],
+              "point_count": 40,
+              "pairs_checked": 780,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.2813699133694172,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "66160643668362940772441338951366964867/100000000000000000000000000000000000",
+              "66160643668362940772441338951366965647/100000000000000000000000000000000000"
+            ],
+            "pairs": 780,
+            "minimum_squared_distance": "1495917310373099623748764159800884896945129781675876913705370650966753280/6274497639441878218810084673777266365173933575950560598010031823336066549",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C02",
+            "validity": 1.0,
+            "combined_score": 0.9985924206806194,
+            "objective": "6616065424867712861346287097/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.4653681740164757,
+            "verification_time": 0.16452538594603539,
+            "objective_value": "6616065424867712861346287097/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "6616065424867712861346286317/10000000000000000000000000",
+                "6616065424867712861346287097/10000000000000000000000000"
+              ],
+              "point_count": 40,
+              "pairs_checked": 780,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.632355835288763,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "264642616994708514453851468774182741/400000000000000000000000000000000",
+              "6616065424867712861346286719354568603/10000000000000000000000000000000000"
+            ],
+            "pairs": 780,
+            "minimum_squared_distance": "27866904301333434648072507820574796822372422420770516490807934976/116871625919675049649480932154582397112492911134879151223077910969",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C02",
+            "validity": 1.0,
+            "combined_score": 0.9999999999475954,
+            "objective": "6606752788346224142901770129/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.1645716167986393,
+            "verification_time": 0.1647220104932785,
+            "objective_value": "6606752788346224142901770129/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "6606752788346224142901769349/10000000000000000000000000",
+                "6606752788346224142901770129/10000000000000000000000000"
+              ],
+              "point_count": 40,
+              "pairs_checked": 780,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.331950593739748,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "33033763941731120714508848697704510931/50000000000000000000000000000000000",
+              "33033763941731120714508848697704511321/50000000000000000000000000000000000"
+            ],
+            "pairs": 780,
+            "minimum_squared_distance": "7606344792003164950286248274514744244/25156724272106229178684246184038332631",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C02",
+            "validity": 1.0,
+            "combined_score": 0.9999999999475954,
+            "objective": "6606752788346224142901770129/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11441398784518242,
+            "verification_time": 0.16450082510709763,
+            "objective_value": "6606752788346224142901770129/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "6606752788346224142901769349/10000000000000000000000000",
+                "6606752788346224142901770129/10000000000000000000000000"
+              ],
+              "point_count": 40,
+              "pairs_checked": 780,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.28091903403401375,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "33033763941731120714508848697704510931/50000000000000000000000000000000000",
+              "33033763941731120714508848697704511321/50000000000000000000000000000000000"
+            ],
+            "pairs": 780,
+            "minimum_squared_distance": "7606344792003164950286248274514744244/25156724272106229178684246184038332631",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C02",
+            "validity": 1.0,
+            "combined_score": 0.9985924206806194,
+            "objective": "6616065424867712861346287097/10000000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.4655022770166397,
+            "verification_time": 0.1647546887397766,
+            "objective_value": "6616065424867712861346287097/10000000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "6616065424867712861346286317/10000000000000000000000000",
+                "6616065424867712861346287097/10000000000000000000000000"
+              ],
+              "point_count": 40,
+              "pairs_checked": 780,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.6327160745859146,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "264642616994708514453851468774182741/400000000000000000000000000000000",
+              "6616065424867712861346286719354568603/10000000000000000000000000000000000"
+            ],
+            "pairs": 780,
+            "minimum_squared_distance": "27866904301333434648072507820574796822372422420770516490807934976/116871625919675049649480932154582397112492911134879151223077910969",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T021",
+        "config_id": "T021-C02",
+        "validity": 1.0,
+        "combined_score": 0.9985925803740711,
+        "objective": "6616064366836294077244134279/10000000000000000000000000",
+        "verification_status": "certified",
+        "generation_time": 0.11416232958436012,
+        "verification_time": 0.164544515311718,
+        "objective_value": "6616064366836294077244134279/10000000000000000000000000",
+        "details": {
+          "objective_interval": [
+            "6616064366836294077244133499/10000000000000000000000000",
+            "6616064366836294077244134279/10000000000000000000000000"
+          ],
+          "point_count": 40,
+          "pairs_checked": 780,
+          "coordinate_model": "exact rational stereographic projection",
+          "sqrt_bound_scale": "10000000000000000000000000",
+          "energy_bound_scale": "1000000000000000000000000000000",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 0.2793290540575981,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T021",
+          "config_id": "T021-C02",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t021/runs/expansion_20261107/T021-C02/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.11480933427810669,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T021",
+          "config_id": "T021-C02",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20410679653286934,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T021",
+          "config_id": "T021-C02",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.11493484675884247,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    },
+    "T021-C03": {
+      "configuration": {
+        "id": "T021-C03",
+        "parameters": {
+          "n": 50,
+          "space": "unit sphere S2",
+          "potential": "sum over unordered pairs 1 / Euclidean distance",
+          "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+        },
+        "direction": "minimize",
+        "human_reference": 1055.1823147,
+        "acceptance_status": "pending_sol_review"
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C03",
+            "validity": 1.0,
+            "combined_score": 0.9988152955288554,
+            "objective": "330135586449100206889687567/312500000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11436113715171814,
+            "verification_time": 0.16455060616135597,
+            "objective_value": "330135586449100206889687567/312500000000000000000000",
+            "details": {
+              "objective_interval": [
+                "10564338766371206620470000919/10000000000000000000000000",
+                "330135586449100206889687567/312500000000000000000000"
+              ],
+              "point_count": 50,
+              "pairs_checked": 1225,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.2813821993768215,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "105643387663712066204700015307498664469/100000000000000000000000000000000000",
+              "52821693831856033102350007653749332847/50000000000000000000000000000000000"
+            ],
+            "pairs": 1225,
+            "minimum_squared_distance": "1464652624339462557109334387282703580615358339593320812444281167174172672/7676103246566240459226520165093345720023866718765156110390184110259150597",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C03",
+            "validity": 1.0,
+            "combined_score": 0.998815371188142,
+            "objective": "422573518645315440662588683/400000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.6149785742163658,
+            "verification_time": 0.1650681532919407,
+            "objective_value": "422573518645315440662588683/400000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "211286759322657720331294317/200000000000000000000000",
+                "422573518645315440662588683/400000000000000000000000"
+              ],
+              "point_count": 50,
+              "pairs_checked": 1225,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.7824146188795567,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "21128675932265772033129432892659432747/20000000000000000000000000000000000",
+              "660271122883305376035294777895607281/625000000000000000000000000000000"
+            ],
+            "pairs": 1225,
+            "minimum_squared_distance": "7009167617416016494704365961918872851631788213941432570729201664/36730012440205524428190259561500057745405930092676822861609780029",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C03",
+            "validity": 1.0,
+            "combined_score": 0.9999999999750792,
+            "objective": "1318977893407870123909587637/1250000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11436628922820091,
+            "verification_time": 0.16441939771175385,
+            "objective_value": "1318977893407870123909587637/1250000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "10551823147262960991276699871/10000000000000000000000000",
+                "1318977893407870123909587637/1250000000000000000000000"
+              ],
+              "point_count": 50,
+              "pairs_checked": 1225,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.2811748795211315,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "52759115736314804956383502432834465031/50000000000000000000000000000000000",
+              "105518231472629609912767004865668931287/100000000000000000000000000000000000"
+            ],
+            "pairs": 1225,
+            "minimum_squared_distance": "78358853833959038446511175657742792/318663032489717515816549389189712247",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C03",
+            "validity": 1.0,
+            "combined_score": 0.9999999999750792,
+            "objective": "1318977893407870123909587637/1250000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 0.11439107730984688,
+            "verification_time": 0.16440992057323456,
+            "objective_value": "1318977893407870123909587637/1250000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "10551823147262960991276699871/10000000000000000000000000",
+                "1318977893407870123909587637/1250000000000000000000000"
+              ],
+              "point_count": 50,
+              "pairs_checked": 1225,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.28110290318727493,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "52759115736314804956383502432834465031/50000000000000000000000000000000000",
+              "105518231472629609912767004865668931287/100000000000000000000000000000000000"
+            ],
+            "pairs": 1225,
+            "minimum_squared_distance": "78358853833959038446511175657742792/318663032489717515816549389189712247",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T021",
+            "config_id": "T021-C03",
+            "validity": 1.0,
+            "combined_score": 0.998815371188142,
+            "objective": "422573518645315440662588683/400000000000000000000000",
+            "verification_status": "certified",
+            "generation_time": 1.016138631850481,
+            "verification_time": 0.3147866241633892,
+            "objective_value": "422573518645315440662588683/400000000000000000000000",
+            "details": {
+              "objective_interval": [
+                "211286759322657720331294317/200000000000000000000000",
+                "422573518645315440662588683/400000000000000000000000"
+              ],
+              "point_count": 50,
+              "pairs_checked": 1225,
+              "coordinate_model": "exact rational stereographic projection",
+              "sqrt_bound_scale": "10000000000000000000000000",
+              "energy_bound_scale": "1000000000000000000000000000000",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.3333055414259434,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "energy_interval": [
+              "21128675932265772033129432892659432747/20000000000000000000000000000000000",
+              "660271122883305376035294777895607281/625000000000000000000000000000000"
+            ],
+            "pairs": 1225,
+            "minimum_squared_distance": "7009167617416016494704365961918872851631788213941432570729201664/36730012440205524428190259561500057745405930092676822861609780029",
+            "unit_sphere_equations_exact": true
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T021",
+        "config_id": "T021-C03",
+        "validity": 1.0,
+        "combined_score": 0.9988152955288554,
+        "objective": "330135586449100206889687567/312500000000000000000000",
+        "verification_status": "certified",
+        "generation_time": 0.21470414102077484,
+        "verification_time": 0.31517962738871574,
+        "objective_value": "330135586449100206889687567/312500000000000000000000",
+        "details": {
+          "objective_interval": [
+            "10564338766371206620470000919/10000000000000000000000000",
+            "330135586449100206889687567/312500000000000000000000"
+          ],
+          "point_count": 50,
+          "pairs_checked": 1225,
+          "coordinate_model": "exact rational stereographic projection",
+          "sqrt_bound_scale": "10000000000000000000000000",
+          "energy_bound_scale": "1000000000000000000000000000000",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 0.5307785458862782,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T021",
+          "config_id": "T021-C03",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t021/runs/expansion_20261107/T021-C03/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.21496209129691124,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T021",
+          "config_id": "T021-C03",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20371630415320396,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T021",
+          "config_id": "T021-C03",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.21639370545744896,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "7c9ea1e29c2d490b7ed1c69a700250ad01298a4dc7dad8d217bf34c93dc611da",
+    "README.md": "a87e17fc30b8dd3a88cfd130720adc0063b2e80ba276a0a25855a073481925a1",
+    "baseline.py": "4cf392d67cc6bd06b16877d8da1e65565ca28374979165088a149f4c626fc33d",
+    "check.py": "827d3f9bb72ebc36e71f67fcbf8d82d5a1a2c81fc982d1d42958e32d042bfbdc",
+    "data/ccd_32.xyz": "967ce3e92de2ab459a28d473cb80a501c6efb2c8dd274a66ab9634e7fd44456c",
+    "data/ccd_40.xyz": "9f880170e0e067b2f77021c5a662975f96246ab9f1994574e6f23e20f93c6842",
+    "data/ccd_50.xyz": "1f9f28accda198e1e1d377f5285f8241f1fb8156eb06e311c44da9241de6d851",
+    "data/ccd_added_sources.json": "f1e424454ae77ebf560819785ebbbcda16303704c53074e532351ce4429fe7bb",
+    "data/ccd_thomson_table.html": "5466173175b10a81d19e20763dffa64589f3ce5b92b09e827de14eb1fbb583e2",
+    "evaluator.py": "92a087b79a34b26981f5934e7b611dd8b6f3ac5a6bbd86e93cc77d0a1e87e5ea",
+    "evolution.py": "7e1cfb17153d49337dac5f632366d0cc3aba3d0ac1095771e28c8b344f869898",
+    "human.py": "9debcf640d0c3f633f9d91425b0f06580f77678f328437b08056fb603e598c45",
+    "init_program.py": "c552803493009837cc87e292257a3489e33b1ca2ae9e06ff917aaf6a153fbf2f",
+    "instruction.txt": "33e31a9779129c05ae387ed347b626948db78dd4a9f3d3b4635ba269dc6af717",
+    "records.json": "47e46a4edbd04763f340d53e39a0b2a73e067ddac12b288281233aa541d1d304",
+    "reference.py": "c7d75b839d23bd7b13b64ba0452469d333e1fe351e4928ea32ae49b421955ba0",
+    "test_task.py": "83185fcedbfc1fb5b532667b1dfa7c4c6fd6188b8a5cfc0d8e1da3b61d0f2c6f"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-07",
+  "source_review": {
+    "definition": "Thomson equal-unit-charge Coulomb energy on exact unit S2; retain n32 and add n40/n50. Minimize reciprocal pair distances with exact stereographic points.",
+    "primary_sources": "Sol personally fetched CCD /Thomson/xyz/40.xyz and /50.xyz and compared exact saved bytes and SHA256. CCD /Thomson/table.html reports rounded energies660.6752788 and1055.1823147. Wales-Ulker2006 conventional optimization coordinates are reconstructed; the archive does not supply global certificates.",
+    "open_status": "CCD and Chen-Mehta2014 status evidence reviewed; no proof for n40/50 was found in reviewed sources. Small-n solved cases do not establish these instances. No exhaustive claim.",
+    "independent_method": "Sol personally ran both human baselines and fixed references. Separate Fraction pair distances and integer-division-before-isqrt sums at scale1e35 enclose all780/1225 terms. Audit intervals fit formal scale1e25 bounds. Unit-sphere equations, distinctness, full claim invariance and corrupted points checked.",
+    "admission": "All five strict programs and replay,cold export,error,nonfinite,timeout controls passed for all3 configs; source metadata and exact reference scores reconciled before final acceptance. Isolated single-file -I generation tests pass. Own incumbent preserved when its replay is at least as good."
+  }
+}

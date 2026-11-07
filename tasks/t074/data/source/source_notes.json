@@ -1,0 +1,41 @@
+{
+  "record_page": {
+    "url": "https://math.tejstead.com/heilbronn/convex/12/",
+    "date_checked": "2026-11-06",
+    "reported_value": "2/51",
+    "credit": "David Cantrell, June 2007",
+    "page_statement": "The archive labels the entry as the n=12 free-convex record, reports 36 minimum triangles in 3 congruence classes, and says all 220 triples were checked in exact arithmetic.",
+    "coordinate_history": "The page says coordinates were supplied by an external contributor and re-verified; it cites a Cantrell Mathematica notebook from 2007 received in September 2026. The task does not attribute the locally rationalized coordinates to Cantrell as original coordinates."
+  },
+  "site_methods": {
+    "url": "https://math.tejstead.com/heilbronn/methods/",
+    "date_checked": "2026-11-06",
+    "relevant_notes": "The archive describes local reconstruction for some Cantrell records and says such reconstructions are not claimed as the original author's exact arrangement. It documents exact rational verification of all triples.",
+    "repository": "https://github.com/tejstead/heilbronn-site"
+  },
+  "source_coordinate_file": {
+    "path": "tejstead_convex_n12.json",
+    "url": "https://math.tejstead.com/heilbronn/convex/12/points.json",
+    "sha256": "c5eaf80a1b3f270b949fe891eb9777541f0330c6d33a33e7b3d1eaa267c03b27",
+    "description": "Archived 12-point decimal coordinate record, including current archive provenance and verification metadata."
+  },
+  "local_rational_reconstruction": {
+    "path": "../reference/cantrell_n12_rationalized.json",
+    "sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+    "method": "Read source decimal literals as exact base-10 rationals; affine-normalize the first three points to (0,0),(1,0),(0,1); apply Fraction.limit_denominator(100) to each normalized coordinate.",
+    "result": {
+      "point_count": 12,
+      "triangles_checked": 220,
+      "minimum_triangle_area": "1/4",
+      "convex_hull_area": "51/8",
+      "ratio": "2/51",
+      "hull_vertex_count": 9
+    }
+  },
+  "open_status": {
+    "survey_date": "2026-11-06",
+    "evidence": "The current archive lists 2/51 as the n=12 free-convex record. Its proof/optimality list does not include n=12; the cited 2026 free-convex proofs cover n=3 through n=8.",
+    "limitation": "No global optimality proof for the n=12 ratio was found in the checked sources. The record is a feasible construction."
+  },
+  "rational_density_note": "For any feasible real 12-point configuration, all 220 triangle determinants are nonzero. Small perturbations preserve these inequalities. Rational points are dense and the minimum triangle area and hull area are continuous, with positive hull area; therefore the rational and real feasible domains have the same supremum. This does not imply a real maximizer is rational."
+}

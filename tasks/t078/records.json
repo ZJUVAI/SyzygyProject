@@ -1,0 +1,85 @@
+{
+  "task_id": "T078",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T078-C01": {
+      "parameters": {
+        "dimension": 10,
+        "gram_entries": "exact rational numbers",
+        "gram_matrix": "symmetric positive definite 10x10 matrix",
+        "minimum_squared_norm": "at least 4 on nonzero integer vectors",
+        "objective": "determinant of the Gram matrix",
+        "direction": "minimize"
+      },
+      "best_human": {
+        "value": 768,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "LAMBDA10 catalog entry: dimension 10, determinant 768, minimum norm 4, kissing number 336, and exact integer Gram matrix",
+        "provenance": "Classical laminated lattice construction reproduced from the public catalogue page.",
+        "ai_provenance": "Historical mathematical construction; no AI attribution is reported or inferred.",
+        "actual_value": 768,
+        "evidence_state": "Exact arithmetic verifies positive definiteness, determinant 768, and no nonzero integer vector below squared norm 4. Exact enumeration finds 336 shortest vectors."
+      },
+      "best_public": {
+        "value": 768,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "Dimension 10 LAMBDA10 entry; determinant 768 and minimum norm 4",
+        "provenance": "The catalogue publishes the integer Gram matrix. Its exact determinant and minimum-norm constraint were independently recomputed.",
+        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
+        "evidence_state": "Public feasible witness, reproduced exactly. Optimality is open in sources checked on 2026-11-06."
+      },
+      "best_reproduced": {
+        "value": 768,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "witness_file": "data/reference/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "provenance": "Transcribed from the author-hosted catalogue HTML, whose raw bytes are frozen under data/source; exact Gram checks were recomputed locally.",
+        "ai_provenance": "Not disclosed by the catalogue; no AI use is inferred.",
+        "actual_value": 768,
+        "evidence_state": "Exact rational LDL decomposition and complete ellipsoid enumeration certify feasibility and determinant.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 768,
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "provenance": "Rebuilt from the frozen official catalogue page."
+      },
+      "highest_reported": {
+        "value": 768,
+        "metric": "determinant of a 10-dimensional Gram matrix with minimum squared norm at least 4",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "LAMBDA10 entry; exact published Gram matrix gives determinant 768",
+        "reproduction_status": "Published feasible construction reproduced and exactly checked. No exact dimension-10 optimum proof was found in the sources checked."
+      },
+      "optimality_status": {
+        "feasible_upper_bound": 768,
+        "state": "open; dimension 10 has no exact Hermite-constant result in sources checked on 2026-11-06"
+      }
+    }
+  },
+  "initial_results": {
+    "T078-C01": {
+      "objective": 1048576,
+      "objective_value": 1048576,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.000732421875
+    }
+  }
+}

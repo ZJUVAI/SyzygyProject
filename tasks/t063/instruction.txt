@@ -1,0 +1,10 @@
+Find an integer polynomial P(x) of exact degree 100 that minimizes its Mahler measure
+M(P) = |a_100| times the product over its complex roots z of max(1, |z|).
+
+The polynomial must be primitive, irreducible over Q, and non-cyclotomic. Coefficients need not be monic, reciprocal, or sparse. Return JSON with:
+- coefficients_ascending: 101 integers, from constant through leading coefficient;
+- root_disks: 100 disjoint disks with rational center_real, center_imag, and positive rational radius strings.
+
+The evaluator independently proves irreducibility, validates every disk with exact rational Rouché bounds, proves the disks are disjoint, and computes a conservative interval for the full Mahler measure. Floating-point roots may help propose disks but cannot establish validity or the score. The required relative interval width is at most 1e-10. Do not provide or rely on a claimed objective value.
+
+The configuration is fixed at degree 100. Begin with the simple standalone seed in init_program.py. Do not read the human or public reference files. The generation budget is 300 seconds; verification has a separate 60-second budget, 4 GiB memory, and one computational thread. Output only the construction data needed by the checker, plus optional search metadata.

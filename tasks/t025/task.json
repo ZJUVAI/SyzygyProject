@@ -1,0 +1,38 @@
+{
+  "task_id": "T025",
+  "name": "Maximum cap set in F_3^n",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T025-C01",
+      "parameters": {
+        "dimension": 7,
+        "field_order": 3,
+        "max_points": 288
+      },
+      "direction": "maximize",
+      "human_reference": 236
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "checks": [
+      "first-party matrix matched independently",
+      "same-parameter human baseline and open status",
+      "human/reference replay",
+      "valid cold seed export",
+      "traditional baseline replay",
+      "independent exhaustive triple check",
+      "claimed score ignored",
+      "damaged construction rejected",
+      "program error and timeout rejected"
+    ],
+    "limitations": [
+      "The fixed greedy extension baseline stays at the 128-point binary cap; it does not improve that seed.",
+      "Record claims are limited to checked sources."
+    ]
+  }
+}

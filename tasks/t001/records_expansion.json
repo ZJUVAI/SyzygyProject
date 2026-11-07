@@ -28,7 +28,7 @@
         "date_reproduced": "2026-11-04",
         "url": "https://packomania.com/csq/txt/csq32.txt",
         "local_witness": "data/human_reference_n32.json",
-        "provenance": "Copied from the exact-rational witness saved for T005-C02. Coordinates are local to this task and checked under the equal-circle objective.",
+        "provenance": "Copied from the exact-rational witness saved for T003-C02. Coordinates are local to this task and checked under the equal-circle objective.",
         "evidence_state": "exact rational boundary and all 496 pair checks passed"
       }
     },

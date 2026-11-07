@@ -1,15 +1,21 @@
-"""Independent reference witness loaded from task-local JSON data."""
-import json
-import os
+"""Read Comellas's fixed 2024 Coxeter-graph construction of order 70."""
+
 from pathlib import Path
 
 
+def _load_upper_triangle(path):
+    edges = set()
+    for raw_line in path.read_text(encoding="ascii").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        values = [int(value) for value in line.split()]
+        source, neighbors = values[0], values[1:]
+        for target in neighbors:
+            edges.add((min(source, target), max(source, target)))
+    return {"n": 70, "edges": [list(edge) for edge in sorted(edges)]}
+
+
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T044-C01")
-    filename = "public_29.json" if config_id == "T044-C01" else "public_30_32.json"
-    data = json.loads((Path(__file__).parent / "data" / filename).read_text())
-    if filename == "public_29.json":
-        return data
-    if config_id not in data:
-        raise ValueError(f"unknown T044 configuration: {config_id}")
-    return {"marks": data[config_id]["marks"]}
+    path = Path(__file__).parent / "data" / "reference" / "coxeter_70_adjlist_nx.txt"
+    return _load_upper_triangle(path)

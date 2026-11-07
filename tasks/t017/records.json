@@ -1,0 +1,68 @@
+{
+  "task_id": "T017",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 0.38092685343308696,
+    "exact_value": "64757565083624785688821235069923/170000000000000000000000000000000",
+    "parameters": {
+      "steps": 51,
+      "support": "[0,2]",
+      "range": "0≤f≤1",
+      "integral": 1
+    },
+    "authors": [
+      "Jan Kristian Haugland"
+    ],
+    "year": 2016,
+    "url": "https://arxiv.org/abs/1609.08000",
+    "evidence_state": "printed decimals transcribed as exact decimal rationals; exact mass and full real-shift objective independently recomputed",
+    "optimality": "feasible historical upper-bound witness; no optimality claim",
+    "witness": "data/human_t017.json"
+  },
+  "best_public": {
+    "value": 0.380926853433087,
+    "parameters": {
+      "steps": 51,
+      "support": "[0,2]",
+      "range": "0≤f≤1",
+      "integral": 1
+    },
+    "url": "https://arxiv.org/abs/1609.08000",
+    "evidence_state": "paper reports the 51-step value rounded upward; our rational transcription reproduces a slightly lower exact value",
+    "optimality": "published upper bound for the limiting constant; not an optimality proof",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 0.38092685343308696,
+    "exact_value": "64757565083624785688821235069923/170000000000000000000000000000000",
+    "parameters": {
+      "steps": 51,
+      "support": "[0,2]",
+      "range": "0≤f≤1",
+      "integral": 1
+    },
+    "provenance": "task-local rational transcription of the 51 printed decimal heights in Haugland (2016)",
+    "evidence_state": "exact 51-lag-pair correlation computed; piecewise linearity certifies all real shifts"
+  },
+  "baseline_seed": {
+    "provenance": "constant height 1/2 in init_program.py",
+    "evidence_state": "valid exact-mass initial point; not a published result"
+  },
+  "source_notes": [
+    "The 51 printed decimals sum to 25.5, so the corresponding 51 equal bins have exact integral (2/51)*25.5=1; no correction was applied.",
+    "The paper states a rounded-up value of 0.3809268534330870. Exact arithmetic on the decimal-rational transcription gives 0.38092685343308696.",
+    "The paper also discusses a 19-step construction with a smaller value; it does not match this fixed 51-step configuration."
+  ],
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "initial_results": {
+    "T017-C01": {
+      "objective": "1/2",
+      "objective_value": "1/2",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.7618537068661739
+    }
+  }
+}

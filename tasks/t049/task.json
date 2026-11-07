@@ -1,0 +1,32 @@
+{
+  "task_id": "T049",
+  "name": "Minimum distinct distances among 91 planar points",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T049-C01",
+      "parameters": {
+        "point_count": 91,
+        "ambient_space": "Euclidean plane R^2",
+        "coordinate_domain": "real algebraic coordinates in a common real algebraic number field"
+      },
+      "direction": "minimize",
+      "human_reference": 34
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "91个不同实平面点，最小化不同正欧氏距离的数量。输入为公共实代数域内的坐标，不声称可以表示超越实数；保存实代数构造足以保持任意实配置的可达到距离计数。",
+      "representation_review": "固定有限的距离相等/不等模式和点互异条件是有理系数的有限多项式方程及严格不等式。实闭域转移使每个实可行模式有实代数解；有限个坐标落于同一有限数域，特征0的本原元定理给Q(alpha)表示。检查器精确证明最小多项式不可约、Sturm区间恰有一实根，因此域余式相等当且仅当所选实嵌入中的值相等。",
+      "human_source": "Erdos–Fishburn1996 Maximum planar sets that determine k distances的Table1明确三角格六边形n91,k34,s6；按max(|i|,|j|,|i+j|)<=5重建91点，x=i+j/2,y=sqrt3*j/2。不是有理坐标近似，34为可行上界。",
+      "bounds_and_status": "由Erdos1946 Theorem1的n-1<=k(k+1)得n91下界9。所查主论文、有限少距离配置文献及OEIS均未找到n91的匹配最优值；一般不同距离问题仍开放，未把一般渐近界当成固定91已解或未解的单独证明。最新有限最优性检索范围明确保留。",
+      "independent_math": "对五种保存构造，以有理格/三角格的有序位移向量去重，再用u²+v²或u²+3v²精确计数，独立于正式检查器的通用多项式取余乘法。全部4095点对的距离计数一致；初始90、传统搜索/演化49、人类与参考34。",
+      "controls": "修改了不准确的arbitrary-real表示措辞、最优性来源编号及过弱下界记录。五种程序、重复点破坏、完整声明成绩不变性、严格回放、冷导出和三类运行失败检查通过。",
+      "limits": "独立格公式审计限于本次保存见证，正式检查器支持通用实代数数域。未进行全91点配置空间的最优性证明，未声称34为全局最小。"
+    }
+  }
+}

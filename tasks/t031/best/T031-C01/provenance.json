@@ -1,0 +1,58 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T031",
+    "config_id": "T031-C01",
+    "validity": 1.0,
+    "combined_score": 0.9475961538461538,
+    "objective": 6240,
+    "verification_status": "exact",
+    "generation_time": 0.26479119807481766,
+    "verification_time": 0.16465960070490837,
+    "objective_value": 6240,
+    "details": {
+      "symbols": 7,
+      "required_permutations": 5040,
+      "distinct_permutations_found": 5040,
+      "windows_checked": 6234,
+      "claimed_score_ignored": true,
+      "containment": "contiguous_substring"
+    },
+    "eval_time": 0.4327433817088604,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded randomized maximum-overlap greedy path through all permutations",
+    "configuration_id": "T031-C01",
+    "seed": 0,
+    "iterations": 8,
+    "iteration_limit": 8,
+    "wall_clock_cutoff_seconds": null,
+    "reference_data_read": false,
+    "budget": {
+      "iteration_limit": 8,
+      "wall_clock_cutoff_seconds": null
+    }
+  },
+  "solution_sha256": "b5c31ff86e0216367e69e48ad278476118a389903afbdd1e7e04f12f84d9127b",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T031 tasks/t031/best/T031-C01/solution.json --config T031-C01"
+}

@@ -1,0 +1,89 @@
+{
+  "task_id": "T055",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T055-C01": {
+      "parameters": {
+        "instance": "b4794d123e18a908924d3d33cdeeae3b",
+        "family": "inconsistency-measurement",
+        "variables": 1630,
+        "hard_clauses": 6150,
+        "soft_clauses": 649,
+        "soft_total_weight": 649,
+        "objective": "max_satisfied_soft_weight"
+      },
+      "best_human": {
+        "value": 360,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "b4794d123e18a908924d3d33cdeeae3b",
+          "hard_clauses": 6150,
+          "soft_total_weight": 649
+        },
+        "url": "https://doi.org/10.1145/368273.368557",
+        "source": "Davis, Logemann, and Loveland (1962), DPLL hard-SAT method; reconstructed with SymPy DPLL2 and exact local improvement.",
+        "provenance": "Traditional DPLL feasibility construction. This is a locally reproduced method baseline, not a score claimed by the source paper.",
+        "evidence_state": "Saved hard-SAT assignment independently checked against the fixed instance; objective 360.",
+        "witness": "data/reference/human_dpll_assignment.json",
+        "witness_sha256": "da78d29bc9625dd3f6fcae85ea8e990c66c02fb95243a9f4aa61d8e9f11e216f"
+      },
+      "best_public": {
+        "value": 587,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "b4794d123e18a908924d3d33cdeeae3b",
+          "hard_clauses": 6150,
+          "soft_total_weight": 649,
+          "track": "ANYTIME-UW",
+          "time_limit_seconds": 60
+        },
+        "url": "https://doi.org/10.5281/zenodo.21358014",
+        "source": "MaxSAT Evaluation 2026, official BouMS log and verified completion record; unsatisfied soft cost 62.",
+        "provenance": "The competition output names solver BouMS. The source release does not disclose whether AI assistance contributed; AI provenance is unknown.",
+        "evidence_state": "Official assignment saved, hash checked, and every hard and soft clause independently evaluated.",
+        "witness": "data/reference/mse2026_boums_60_assignment.json",
+        "witness_sha256": "c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543",
+        "reported_unsatisfied_soft_cost": 62
+      },
+      "best_reproduced": {
+        "value": 587,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "b4794d123e18a908924d3d33cdeeae3b",
+          "hard_clauses": 6150,
+          "soft_total_weight": 649
+        },
+        "witness": "data/reference/mse2026_boums_60_assignment.json",
+        "witness_sha256": "c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543",
+        "verification_status": "exact",
+        "verification_method": "Re-evaluate every clause from the assignment; hard clauses must all be true; count satisfied soft weights.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 360,
+        "witness_program": "human.py",
+        "witness": "data/reference/human_dpll_assignment.json",
+        "witness_sha256": "da78d29bc9625dd3f6fcae85ea8e990c66c02fb95243a9f4aa61d8e9f11e216f",
+        "note": "Traditional DPLL hard-SAT method with exact feasible one-variable hill climbing; distinct from the official 587 result."
+      },
+      "official_cost_metadata": {
+        "best_known_unsatisfied_soft_cost": 62,
+        "optimal_cost": "unknown",
+        "equivalent_max_satisfied_weight": 587,
+        "source": "MaxSAT Evaluation 2026 benchmark-metadata.csv and meta.db"
+      },
+      "ai_provenance": "unknown; official files do not state whether AI assisted the BouMS solver or this run",
+      "survey_scope_note": "Pinned to the official 2026 evaluation record and complete collection. The exact assignment was extracted from the indexed ANYTIME-UW/60/BouMS log, whose official completion record says cost 62 VERIFIED. No optimality proof is given. The 360 value is the frozen traditional-method baseline and is not asserted to be the strongest human-produced result for this instance."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T055-C01": {
+      "objective": 360,
+      "objective_value": 360,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 1.0
+    }
+  }
+}

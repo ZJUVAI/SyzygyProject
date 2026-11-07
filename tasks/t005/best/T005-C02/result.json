@@ -1,0 +1,29 @@
+{
+  "task_id": "T005",
+  "config_id": "T005-C02",
+  "validity": 1.0,
+  "combined_score": 0.9125567086826775,
+  "objective": "29748307194618676338125083236508022221253744507/1000000000000000000000000000000000000000000000000",
+  "verification_status": "exact",
+  "generation_time": 264.39933800697327,
+  "verification_time": 8.81466630846262,
+  "objective_value": "29748307194618676338125083236508022221253744507/1000000000000000000000000000000000000000000000000",
+  "details": {
+    "triangles_checked": 220
+  },
+  "eval_time": 274.8068154454231,
+  "seed": 9061034,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 48
+  }
+}

@@ -1,27 +1,33 @@
 {
   "task_id": "T005",
-  "name": "Unequal-circle packing in the unit square",
+  "name": "Heilbronn triangles",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T005-C01",
       "parameters": {
-        "n": 26,
-        "container": "unit square",
-        "radii": "variable"
+        "n": 11
       },
       "direction": "maximize",
-      "human_reference": 2.50542078826
+      "human_reference": 0.037037037037037035
     },
     {
       "id": "T005-C02",
       "parameters": {
-        "n": 32,
-        "container": "unit square",
-        "radii": "variable"
+        "n": 12
       },
       "direction": "maximize",
-      "human_reference": 2.811460994816
+      "human_reference": 0.0325988586918197,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T005-C03",
+      "parameters": {
+        "n": 16
+      },
+      "direction": "maximize",
+      "human_reference": 0.020527859237536656,
+      "acceptance_status": "accepted_by_sol"
     }
   ],
   "acceptance_review": {
@@ -41,7 +47,27 @@
       "same-parameter record provenance"
     ],
     "limitations": [
-      "等圆人类构造转用于变半径任务。公开变半径纪录坐标未复现。"
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "GPT-6.1 Sol",
+    "implementation_agent": "/root/expand_t005",
+    "implementation_model": "gpt-6-luna",
+    "date": "2026-11-04",
+    "acceptance_status": "accepted_by_sol",
+    "configuration_ids": [
+      "T005-C02",
+      "T005-C03"
+    ],
+    "evidence": "PLAN.md",
+    "checks": [
+      "source and parameter review",
+      "four strict program runs per configuration",
+      "cold seed export",
+      "independent key quantity",
+      "damaged witness rejected",
+      "claimed score ignored"
     ]
   }
 }

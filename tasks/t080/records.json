@@ -1,82 +1,119 @@
 {
   "task_id": "T080",
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 0.8892261730897966,
-    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-    "parameters": {
-      "steps": 20,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/pdf/0907.1379",
-    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
-    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
-    "witness": "data/human_t080.json"
-  },
-  "best_public": {
-    "value": 0.8892261730897966,
-    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-    "parameters": {
-      "steps": 20,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/pdf/0907.1379",
-    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
-    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
-    "witness": "data/human_t080.json",
-    "survey_scope": "Fixed20step witness checked. Later0.962694report has unmatched step count and is archived separately.",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 0.8892261730897966,
-    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-    "parameters": {
-      "steps": 20,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "provenance": "task-local copy of the printed Matolcsi-Vinuesa appendix coefficients",
-    "evidence_state": "exact rational convolution and objective recomputation"
-  },
-  "baseline_seed": {
-    "provenance": "seeded positive integer coefficients generated in init_program.py",
-    "evidence_state": "valid initial point; not a published result"
-  },
-  "other_configurations": [
-    {
-      "value": 0.962694,
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T080-C01": {
       "parameters": {
-        "steps": null,
-        "support": "not matched to this fixed 20-step configuration"
+        "min_cardinality": 2,
+        "max_cardinality": 512,
+        "contains_zero": true,
+        "integer_interval": [
+          0,
+          1000000
+        ],
+        "require_difference_size_lt_q": true,
+        "objective": "maximize 1+ln(|U-U|/|U+U|)/ln(2*max(U)+1)"
       },
-      "url": "https://arxiv.org/abs/2604.19341",
-      "evidence_state": "later report listed in research coverage; exact witness and matching step count not independently reproduced",
-      "optimality": "reported public result; not comparable to T080-C01 until configuration and witness are matched",
-      "origin_type": "AI-assisted SimpleTES report; parameter mismatch"
+      "best_human": {
+        "value": "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+        "parameters": {
+          "min_cardinality": 2,
+          "max_cardinality": 512,
+          "contains_zero": true,
+          "integer_interval": [
+            0,
+            1000000
+          ],
+          "require_difference_size_lt_q": true
+        },
+        "source": "Gyarmati, Hennecart, and Ruzsa, 2008 manuscript, Section 2, V(6,5) finite projection formula.",
+        "source_url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical formula. The exact finite witness is generated from the published general construction.",
+        "evidence_state": "Exact enumeration gives 462 elements, s=8008, d=39733, q=1111111; strict d<q holds.",
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json",
+        "witness_sha256": "39cb22a35e93fdd3a2431a121f3b8fa015c0b8ce5c84ca5304cfcb1c59777f39",
+        "origin_type": "published traditional finite projection construction"
+      },
+      "best_public": {
+        "value": "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+        "parameters": {
+          "min_cardinality": 2,
+          "max_cardinality": 512,
+          "contains_zero": true,
+          "integer_interval": [
+            0,
+            1000000
+          ],
+          "require_difference_size_lt_q": true
+        },
+        "source": "Public general projection formulas of Gyarmati, Hennecart, and Ruzsa, instantiated at m=6,L=5.",
+        "source_url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical construction; the exact score is rescored here from the formula-derived finite set.",
+        "evidence_state": "Witness and strict hypothesis are exactly verified. No optimality result for the benchmark range is claimed.",
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json",
+        "witness_sha256": "39cb22a35e93fdd3a2431a121f3b8fa015c0b8ce5c84ca5304cfcb1c59777f39"
+      },
+      "best_reproduced": {
+        "value": "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "min_cardinality": 2,
+          "max_cardinality": 512,
+          "contains_zero": true,
+          "integer_interval": [
+            0,
+            1000000
+          ],
+          "require_difference_size_lt_q": true
+        },
+        "program": "reference.py",
+        "verification_status": "certified",
+        "verification_method": "Exact pairwise counts for sums and differences, exact q and strict inequality, outward-rounded interval for the logarithmic objective.",
+        "objective_interval": [
+          "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+          "1.115060403741140735041045058838694409478537675104001271984446801146236339133304591057"
+        ],
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json",
+        "witness_sha256": "39cb22a35e93fdd3a2431a121f3b8fa015c0b8ce5c84ca5304cfcb1c59777f39",
+        "origin_type": "finite projection formula reconstructed from the paper",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+        "witness_program": "human.py",
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json",
+        "witness_sha256": "39cb22a35e93fdd3a2431a121f3b8fa015c0b8ce5c84ca5304cfcb1c59777f39",
+        "endpoint_policy": "Use the certified lower endpoint of the human witness as H for J/H."
+      },
+      "highest_reported": {
+        "value": "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+        "source": "Gyarmati, Hennecart, and Ruzsa, Section 2 finite projection formula, instantiated at m=6,L=5 and rescored.",
+        "url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+        "reproduction_status": "The exact finite construction and strict d<q condition are reproduced. The score is a certified lower endpoint for this witness; it is not a proof of maximal theta."
+      },
+      "objective_distinction": {
+        "evidence_file": "data/source/objective_distinction_examples.json",
+        "summary": "The file contains a T012/T080 ranking reversal and a separate T077/T080 ranking reversal, each based on exact finite set counts and certified logarithm intervals."
+      },
+      "optimality_status": {
+        "status": "open in sources checked",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The cited lemma provides an exponent for each U satisfying d<q; it does not maximize over the benchmark's bounded family. The small-set result at |U|<=11 does not cover all allowed sizes.",
+        "limitations": "The finite certificate score is not an asymptotic theorem value or a maximum proof."
+      },
+      "reproduced_value": "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949"
     }
-  ],
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T080-C01": {
+      "objective": "1.070156997794982411484200596369848431883442847231181525749168816720600498660948701749",
+      "objective_value": "1.070156997794982411484200596369848431883442847231181525749168816720600498660948701749",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9597300686173565
+    }
+  }
 }

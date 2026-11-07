@@ -1,0 +1,34 @@
+{
+  "primary_definition_and_recent_research": {
+    "title": "Constructions, bounds, and algorithms for peaceable queens",
+    "authors": ["Katie Clinch", "Matthew Drescher", "Tony Huynh", "Abdallah Saffidine"],
+    "url": "https://arxiv.org/abs/2406.06974",
+    "version": "v3; ALENEX 2025",
+    "survey_date": "2026-11-06",
+    "relevant_findings": [
+      "Defines peaceable queens as equal armies whose opposite-colored queens cannot attack.",
+      "Reports a local-search implementation that quickly finds the Ainley construction.",
+      "States a regular-board asymptotic upper bound for sufficiently large n; no threshold is used here to claim a bound at n=30."
+    ],
+    "open_instance_scope": "The paper does not give a proof that the 131-per-army n=30 construction is optimal."
+  },
+  "human_and_public_witness": {
+    "historical_attribution": "OEIS A250000 says Ainley found constructions for n<=30 that had not been surpassed, with an exception at n=27; n=30 is listed as 131.",
+    "layout_source": "Dmitry Kamenetsky, Best known solutions for 12 <= n <= 30, dated 2019-10-15.",
+    "layout_url": "https://oeis.org/A250000/a250000_3.txt",
+    "layout_sha256": "a5da2c9d852ecc24f8abcfcdc1b219d998e58d27ca6758cc4757041714fb4cfc",
+    "witness_path": "../reference/peaceable_queens_n30_131.json",
+    "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
+    "reconstruction": "The 30 chart rows after a(30)>=131 were parsed as a 30x30 grid. W and B cells were converted to zero-based [row,column] positions."
+  },
+  "current_exact_instance_correction": {
+    "source": "https://pubsonline.informs.org/doi/full/10.1287/ited.2024.0122",
+    "authors": ["Natalie DiMichele", "Michael Forbes"],
+    "finding": "A confirmed optimum 37 is reported at n=16. Some older OEIS text says only the first 15 terms are known; that statement is stale. This result does not settle n=30."
+  },
+  "finite_bound": {
+    "value": 225,
+    "proof": "Let rW,rB be the numbers of rows occupied by each color, and cW,cB the analogous column counts. Since opposite colors cannot share a row or column, rW+rB<=30 and cW+cB<=30. Each army is a set of distinct cells in its occupied-row by occupied-column rectangle, so m<=rW*cW and m<=rB*cB. Thus 2*sqrt(m)<=sqrt(rW*cW)+sqrt(rB*cB)<=sqrt((rW+rB)(cW+cB))<=30, hence m<=225.",
+    "gap": "131..225"
+  }
+}

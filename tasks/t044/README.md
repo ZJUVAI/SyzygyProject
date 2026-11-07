@@ -1,15 +1,31 @@
-# T044：Golomb 尺长度
+# T044: 最大度 3、直径至多 5 的图
 
-给定固定数量的整数标记。任意两标记之间的正差必须互不相同。目标是最小化尺长，即最大标记减最小标记。平移不改变尺长，检查器会按此定义计分。
+## 中文
 
-已接入的 C01 使用 29 个标记，公开人类基准长度为 623。C02、C03均通过Sol验收，分别有30、32个标记。cube20.org 的公开 `rulers-all-00` 数据给出长度 680、784 的构造；对应公开元数据记录射影平面模尺，素数幂29、31，乘数71、116。检查器会分别检查435、496个差。这些是可行构造，不是最优性证明。三个配置均已加入运行目录。
+配置 T044-C01 研究简单无向连通图。每个顶点的度至多为 3，任意两点间最短路径长度至多为 5。标量目标是顶点数 `n`，单位为个顶点，方向为最大化。程序以 `n` 和无向边列表提交图。检查器逐边检查无向简单图约束，并从每个顶点运行精确 BFS，重新计算连通性、最大度和直径。它不使用候选程序声明的分数。
 
-初始程序按 `MATHBENCH_CONFIG_ID` 读取标记数，从 0 开始，每次追加使新差不重复的最小位置。搜索基线用固定种子生成差集有效尺，并受时间预算限制。
+Comellas 的当前度直径表在 `(3,5)` 项列出 70。该项没有加粗，表示表未标为最优。Moore 上界为 94。因此当前证据是 `70 ≤ n_3(5) ≤ 94`，精确最大值仍未解决。详情页最后修改时间为 2026-10-14；主表截至 2026-11-06 仍显示 70。历史来源列出 von Conta (1983) 与 Alegre、Fiol、Yebra (1986)。任务保存并分别验证了来源页提供的 70 点邻接表。
 
-# T044: Golomb ruler length
+人类基线程序读取 Alegre–Fiol–Yebra 原始邻接列表，并重建 70 点图。固定参考程序读取 Comellas 2024 年从 28 点 Coxeter 图构造出的另一份 70 点邻接列表。两份数据的原始 SHA-256、来源位置和复算结果均保存在 `records.json`。它们都精确通过本任务的度数和直径检查。主表注明网站内容（若干 SageMath 脚本除外）不使用 AI；历史图归于1983/1986年来源。
 
-Choose the configured number of integer marks. Every positive pairwise difference must be unique. Minimize ruler length, defined as the largest mark minus the smallest. Translation does not change the score; the checker uses this definition.
+初始程序返回单点图。传统搜索从小图开始，用固定随机种子按配置模型抽取三正则图，拒绝自环、重边、不连通图和直径超过 5 的图。它不读取两份比较见证。默认尝试 384 次；可用 `MATHBENCH_SEARCH_SECONDS` 设置按时间截断的探索。
 
-Accepted C01 uses 29 marks and has a public human baseline of length 623. C02 and C03 passed Sol review, with 30 and 32 marks. The public cube20.org `rulers-all-00` data gives feasible rulers of lengths 680 and 784. Its metadata records projective-plane modular rulers with prime powers 29 and 31, and multipliers 71 and 116. The checker checks 435 and 496 differences. These constructions do not prove optimality. All three configurations are in the run registry.
+共享运行器默认给生成 300 秒，给验证 60 秒，内存 4 GiB，一个 CPU 线程。此配置仍为“已通过 Sol 验收（2026-11-06）”。Moore 上界用于限制候选输入规模，不用作精确最优性证明。
 
-The initializer reads the mark count from `MATHBENCH_CONFIG_ID`. It starts at zero and repeatedly adds the smallest position whose new differences are fresh. The search baseline uses a fixed seed to generate valid rulers under a time budget.
+## English
+
+Configuration T044-C01 studies simple undirected connected graphs. Every vertex has degree at most 3, and every pair of vertices has distance at most 5. The scalar objective is the order `n`, measured in vertices and maximized. A candidate returns `n` and an undirected edge list. The checker validates every edge and runs exact breadth-first search from every vertex to recompute connectivity, maximum degree, and diameter. It ignores candidate score claims.
+
+Comellas's current degree-diameter table lists 70 for `(3,5)`. The entry is not bold, so the table does not mark it optimal. The Moore bound is 94. The checked range is therefore `70 <= n_3(5) <= 94`, and the exact maximum remains open. The detail page was last modified on 2026-10-14. The main table still listed 70 on 2026-11-06. The historical source row cites von Conta (1983) and Alegre, Fiol, and Yebra (1986). This task saves and checks the 70-vertex adjacency list from that source page.
+
+The human baseline reads and rebuilds the original Alegre–Fiol–Yebra adjacency list. The fixed reference program reads a second 70-vertex adjacency list for Comellas's 2024 construction from the 28-vertex Coxeter graph. The raw file hashes, source locations, and exact check results are recorded in `records.json`. Both graphs pass the task's degree and diameter checks. The source page states that its contents are AI-free except for some SageMath scripts; it attributes the historical graph to the 1983/1986 sources.
+
+The initial program returns a one-vertex graph. The traditional search starts from small graphs and uses a fixed random seed to sample cubic graphs with the configuration model. It rejects loops, repeated edges, disconnected graphs, and graphs with diameter above 5. It does not read either comparison witness. The default budget is 384 attempts. `MATHBENCH_SEARCH_SECONDS` enables a wall-clock exploration cutoff.
+
+The shared runner allows 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread by default. This configuration is accepted by Sol on 2026-11-06. The Moore bound limits candidate input size; it is not used as a proof of the exact optimum.
+
+## Sources
+
+- [Current degree-diameter table](https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html), checked 2026-11-06.
+- [Details for degree 3, diameter 5](https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html), last modified 2026-10-14. It reports order 70, Moore bound 94, the vC/AFY references, the original adjacency file, and the Comellas 2024 Coxeter construction.
+- von Conta (1983), “Torus and other networks as communication networks with up to some hundred points,” *IEEE Transactions on Computers* 32, 657–666; and Alegre, Fiol, and Yebra (1986), “Some large graphs with given degree and diameter,” *Journal of Graph Theory* 10, 219–224, [DOI](https://doi.org/10.1002/jgt.3190100211).

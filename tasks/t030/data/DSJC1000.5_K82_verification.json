@@ -1,0 +1,12 @@
+{
+  "instance": "DSJC1000.5",
+  "vertices": 1000,
+  "edges_checked": 249826,
+  "distinct_colors_recomputed": 82,
+  "conflicting_edges": 0,
+  "verification_status": "exact",
+  "claimed_score_ignored": true,
+  "witness_sha256": "0e73778bb2934ee8a828b59cbd3b5deaaadc88716d5010af67ec7cdaec2c5109",
+  "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd",
+  "method": "Parse all 1000 integer labels from the author's certificate and compare endpoint labels on every fixed graph edge."
+}

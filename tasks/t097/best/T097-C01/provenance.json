@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T097",
+    "config_id": "T097-C01",
+    "validity": 1.0,
+    "combined_score": 0.5769230769230769,
+    "objective": 26,
+    "verification_status": "certified",
+    "generation_time": 4.171503759920597,
+    "verification_time": 5.47343036532402,
+    "objective_value": 26,
+    "details": {
+      "instance": "socg_fixed92",
+      "convex_polygon_count": 26,
+      "total_piece_vertices": 112,
+      "algebraic_field_degree": 1,
+      "verified_open_arrangement_cells": 2837,
+      "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+      "claimed_score_ignored": true
+    },
+    "eval_time": 9.64798105508089,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "construction": "seeded greedy convex-hull merges from the public polygon triangulation",
+    "seed": 0,
+    "sweeps": 65,
+    "sweep_limit": 200,
+    "candidate_pairs_checked": 2890,
+    "merges": 64,
+    "comparison_data_read": false
+  },
+  "solution_sha256": "a661afff17ae16052316a737a8cf574f679a51de2753eaa1ce5482da2b013f0f",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T097 tasks/t097/best/T097-C01/solution.json --config T097-C01"
+}

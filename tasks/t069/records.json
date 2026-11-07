@@ -1,0 +1,82 @@
+{
+  "task_id": "T069",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T069-C01": {
+      "parameters": {
+        "instance": "mona-lisa100K",
+        "cities": 100000,
+        "edge_weight_type": "EUC_2D; nearest-integer rounding",
+        "tour": "one Hamiltonian cycle through all cities"
+      },
+      "best_human": {
+        "value": 5757191,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "mona-lisa100K",
+          "cities": 100000
+        },
+        "witness_file": "data/human/monalisa_5757191.tour",
+        "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88",
+        "url": "https://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html",
+        "source_location": "March 17, 2009 entry credits Yuichi Nagata's genetic algorithm and links the 5757191 tour",
+        "provenance": "Publicly reported tour; reconstructed from the linked TSPLIB-format tour and independently rescored.",
+        "ai_provenance": "Genetic algorithm search by Nagata; no generative-AI provenance stated.",
+        "actual_value": 5757191,
+        "evidence_state": "Exact integer EUC_2D evaluation over a Hamiltonian cycle through all 100000 cities."
+      },
+      "best_public": {
+        "value": 5757191,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "mona-lisa100K",
+          "cities": 100000
+        },
+        "url": "https://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html",
+        "source_location": "Official current best-known tour listing",
+        "provenance": "Official Mona Lisa TSP Challenge page lists 5757191 and links the Nagata tour.",
+        "ai_provenance": "Traditional genetic algorithm; no generative-AI provenance stated.",
+        "evidence_state": "Local frozen witness is exactly rescored at 5757191."
+      },
+      "best_reproduced": {
+        "value": 5757191,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "mona-lisa100K",
+          "cities": 100000
+        },
+        "witness_file": "data/reference/monalisa_5757191.tour",
+        "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88",
+        "provenance": "Official tour downloaded from the challenge page; node IDs converted from 1-based to 0-based in the reference program.",
+        "ai_provenance": "Not stated by source beyond genetic algorithm attribution.",
+        "actual_value": 5757191,
+        "evidence_state": "Exact integer checker confirms all cities once and recomputes every closed-cycle edge.",
+        "review_status": "reviewed_by_sol"
+      },
+      "highest_reported": {
+        "value": 5757191,
+        "metric": "integer EUC_2D length of a Hamiltonian cycle",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html",
+        "source_location": "Current status lists Tour 5757191, Bound 5757084, Gap 107",
+        "reproduction_status": "Tour independently reproduced. The bound is a reported Concorde lower bound, not re-certified here."
+      },
+      "optimality_status": {
+        "best_tour": 5757191,
+        "reported_lower_bound": 5757084,
+        "reported_gap": 107,
+        "state": "open; 2024 paper §3.1 says this instance has not been solved to proven optimality"
+      }
+    }
+  },
+  "initial_results": {
+    "T069-C01": {
+      "objective": 991784778,
+      "objective_value": 991784778,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.005804879372730199
+    }
+  }
+}

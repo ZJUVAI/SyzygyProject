@@ -1,0 +1,68 @@
+{
+  "task_id": "T024",
+  "snapshot_date": "2026-11-06",
+  "best_human": {
+    "value": 132,
+    "parameters": {
+      "vertices": 41,
+      "forbidden_cycle_length": 4
+    },
+    "source": "Afzaly and McKay public extremal graph data; the first listed archive graph is a computationally found construction.",
+    "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+    "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6",
+    "date_checked": "2026-11-06",
+    "evidence_state": "The archive lists 41 vertices and at least 132 edges, and provides three witness graphs. The row has >=, so it does not establish optimality.",
+    "ai_provenance": "The first sparse6 graph was decoded and expanded; no individual discoverer is attributed."
+  },
+  "best_public": {
+    "value": 132,
+    "parameters": {
+      "vertices": 41,
+      "forbidden_cycle_length": 4
+    },
+    "url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+    "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6",
+    "evidence_state": "Public table reports at least 132 edges. Witness is reproduced; optimality is not proved by this entry.",
+    "date_checked": "2026-11-06"
+  },
+  "best_reproduced": {
+    "value": 132,
+    "parameters": {
+      "vertices": 41,
+      "forbidden_cycle_length": 4
+    },
+    "witness": "data/human_witness.json",
+    "verification_status": "exact",
+    "edge_count": 132,
+    "date_checked": "2026-11-06",
+    "archive_sha256": "900da21cbbb59d10c30f26feb35ebab4f0e3ef65f21429939584bda497768989"
+  },
+  "same_parameter_bounds": [
+    {
+      "value": 133,
+      "meaning": "upper bound on ex(41,C4), derived from the exact source value ex(40,C4)=127",
+      "parameters": {
+        "vertices": 41,
+        "forbidden_cycle_length": 4
+      },
+      "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+      "derivation": "For each of 41 vertex deletions, the remaining 40-vertex induced subgraph has at most 127 edges. Each original edge remains in 39 deletions, so 39m <= 41*127 and m <= floor(5207/39)=133.",
+      "evidence_state": "Exact finite double count from the table's unprefixed order-40 value. Combined with the reproduced 132-edge construction, the extremal number is either 132 or 133."
+    }
+  ],
+  "limitations": [
+    "The source marks the edge count with >= and does not prove that 132 is optimal.",
+    "The source page states that values without >= are exact; its 38-vertex value 117 is therefore solved and was excluded.",
+    "The literature check is limited to the source page and exact-parameter search described in IMPLEMENTATION.md."
+  ],
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T024-C01": {
+      "objective": 40,
+      "objective_value": 40,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.30303030303030304
+    }
+  }
+}

@@ -1,0 +1,396 @@
+{
+  "task_id": "T030",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T030 --label admission_20261106",
+  "configurations": {
+    "T030-C01": {
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T030",
+            "config_id": "T030-C01",
+            "validity": 1.0,
+            "combined_score": 0.086,
+            "objective": 1000,
+            "verification_status": "exact",
+            "generation_time": 0.6659765876829624,
+            "verification_time": 0.6655422784388065,
+            "objective_value": 1000,
+            "details": {
+              "instance": "DSJC1000.5",
+              "vertices": 1000,
+              "edges_checked": 249826,
+              "distinct_colors_recomputed": 1000,
+              "claimed_objective_ignored": true,
+              "claimed_score_ignored": true,
+              "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+            },
+            "eval_time": 1.335433952510357,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "color_count": 1000,
+            "within_color_pairs_checked": 0,
+            "original_dimacs_edges_matched": 249826
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T030",
+            "config_id": "T030-C01",
+            "validity": 1.0,
+            "combined_score": 0.7610619469026548,
+            "objective": 113,
+            "verification_status": "exact",
+            "generation_time": 1.5671168193221092,
+            "verification_time": 0.6656877994537354,
+            "objective_value": 113,
+            "details": {
+              "instance": "DSJC1000.5",
+              "vertices": 1000,
+              "edges_checked": 249826,
+              "distinct_colors_recomputed": 113,
+              "claimed_objective_ignored": true,
+              "claimed_score_ignored": true,
+              "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+            },
+            "eval_time": 2.2357003912329674,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "color_count": 113,
+            "within_color_pairs_checked": 4004,
+            "original_dimacs_edges_matched": 249826
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T030",
+            "config_id": "T030-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 86,
+            "verification_status": "exact",
+            "generation_time": 0.21553410589694977,
+            "verification_time": 0.6657086797058582,
+            "objective_value": 86,
+            "details": {
+              "instance": "DSJC1000.5",
+              "vertices": 1000,
+              "edges_checked": 249826,
+              "distinct_colors_recomputed": 86,
+              "claimed_objective_ignored": true,
+              "claimed_score_ignored": true,
+              "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+            },
+            "eval_time": 0.8853245638310909,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "color_count": 86,
+            "within_color_pairs_checked": 5432,
+            "original_dimacs_edges_matched": 249826
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T030",
+            "config_id": "T030-C01",
+            "validity": 1.0,
+            "combined_score": 1.048780487804878,
+            "objective": 82,
+            "verification_status": "exact",
+            "generation_time": 0.1648307889699936,
+            "verification_time": 0.715893104672432,
+            "objective_value": 82,
+            "details": {
+              "instance": "DSJC1000.5",
+              "vertices": 1000,
+              "edges_checked": 249826,
+              "distinct_colors_recomputed": 82,
+              "claimed_objective_ignored": true,
+              "claimed_score_ignored": true,
+              "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+            },
+            "eval_time": 0.8848899938166142,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "color_count": 82,
+            "within_color_pairs_checked": 5747,
+            "original_dimacs_edges_matched": 249826
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T030",
+            "config_id": "T030-C01",
+            "validity": 1.0,
+            "combined_score": 0.7610619469026548,
+            "objective": 113,
+            "verification_status": "exact",
+            "generation_time": 1.617344293743372,
+            "verification_time": 0.7664058469235897,
+            "objective_value": 113,
+            "details": {
+              "instance": "DSJC1000.5",
+              "vertices": 1000,
+              "edges_checked": 249826,
+              "distinct_colors_recomputed": 113,
+              "claimed_objective_ignored": true,
+              "claimed_score_ignored": true,
+              "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+            },
+            "eval_time": 2.388576280325651,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "color_count": 113,
+            "within_color_pairs_checked": 4004,
+            "original_dimacs_edges_matched": 249826
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T030",
+        "config_id": "T030-C01",
+        "validity": 1.0,
+        "combined_score": 0.086,
+        "objective": 1000,
+        "verification_status": "exact",
+        "generation_time": 0.16478094086050987,
+        "verification_time": 0.7159600146114826,
+        "objective_value": 1000,
+        "details": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges_checked": 249826,
+          "distinct_colors_recomputed": 1000,
+          "claimed_objective_ignored": true,
+          "claimed_score_ignored": true,
+          "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+        },
+        "eval_time": 0.8824642896652222,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T030",
+          "config_id": "T030-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t030/runs/admission_20261106/T030-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.1657695285975933,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T030",
+          "config_id": "T030-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20575128495693207,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T030",
+          "config_id": "T030-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.165671668946743,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      },
+      "configuration": {
+        "id": "T030-C01",
+        "parameters": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges": 249826,
+          "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+        },
+        "direction": "minimize",
+        "human_reference": 86
+      },
+      "configuration_capture_stage": "sol_review"
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "e1c3a0cdbd946fdb20e02a49634be42490ade74e0690f6993586b4bb94360598",
+    "README.md": "91a28cd0b4476aa29fc86cd99c13fc086fa0eecabce0e27d48381eaa1cd18c83",
+    "baseline.py": "f6019c37a476bd6f1f2b3758f6e2afc186d3573f7dcdee3c936531bf8cba66ec",
+    "check.py": "59c7acaa8d8901aaa0cf3aa4ddae9cad938a83b9de87527bf57a41bf19f3cb8b",
+    "data/DSJC1000.5_K82_verification.json": "34fd7befe178f2d770eebbd0757f4fc3b95d6e8f4bb523545cb87d6b5580b617",
+    "data/human_witness.json": "de1106b17304b59fb18809d285e91ad78f8414a892e2e5ea1e7fedbfaa630007",
+    "data/instance.json": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd",
+    "data/source/DSJC1000.5.col": "17b395030fbab1e2a6564396c3a161dbb3248423953e6b462377a018b8f4bb6c",
+    "data/source/DSJC1000.5.col.b": "4ef5f6ac499418afe4620fcd73c46df55dd83a867e5d9bd7e4fbac9655f88089",
+    "data/source/DSJC1000.5.sol": "4d77396da94d8a3427557fad4ff6dbc3ecc490670260bae22c3d646ab88248f0",
+    "data/source/DSJC1000.5_K82_col.txt": "0e73778bb2934ee8a828b59cbd3b5deaaadc88716d5010af67ec7cdaec2c5109",
+    "data/source/DSJC1000.5_K83.txt": "1b7deb4d7e6d376a76eb027f645262ee8ca35e57bec0f87ce547800de5b2aca7",
+    "evaluator.py": "77250b1a8afde2e3e5f73a4c8c21b0090ef94f1cecf998168c1dd18b0583d401",
+    "evolution.py": "31f0e87364dd1332d80cd63b285bd9a2eaab15e93fa25399a27c981d59b50c3c",
+    "human.py": "960822e761d1b8f975d3aa20448eb62938f15c170cddf9c090f0836b13ea0122",
+    "init_program.py": "cedccde4964c52290e3a13caa1d28574805d63e19c0160c28caa2c1a9e715ba7",
+    "instruction.txt": "b04fa7f8b6a82c5e3d6e604c041990d57f1e8bf6e1a5756dbaef5b92eb693cb9",
+    "records.json": "c76604636de02ac0b2c378204d5c8ca607415e3ca2d639e30b8a461abb6e296f",
+    "reference.py": "4c91aecbf540f7193aea45d2d1d65ddfd8c4dae38e1ca9f204abc4f61d9e36f0",
+    "test_task.py": "e593792d4a48e811bd38088d689fb4219697f9b52c982d6ba7f04fd5a60822dc"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "数学模型": "固定DSJC1000.5的1000顶点249826条边。最小化合法着色中不同颜色数。",
+    "人类来源": "Titiloye–Crispin2012论文和作者证书提供82色。冻结对照仍用Loudni的86色。原长时间退火搜索未重跑。",
+    "独立验算": "主代理解码官方二进制图，全部边与公开JSON和文本一致。另按同色顶点分组检查组内点对，独立于任务逐边检查。五程序及完整控制通过。",
+    "开放状态与限制": "Cazenave等2025表4题注说明色数未知。该表83只是其HEAD实验值，不能当公开最好。73下界只作文献报告，未本地重证。"
+  }
+}

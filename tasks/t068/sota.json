@@ -1,0 +1,105 @@
+{
+  "task_id": "T068",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T068-C01": {
+      "program": "reference.py",
+      "reproduced_value": 120,
+      "public_value": 120,
+      "highest_reported": {
+        "value": 120,
+        "source": "https://oeis.org/A000983/a000983.txt",
+        "source_location": "a(10)<=120, list of 120 ten-bit words; do not use the following a(11) entry",
+        "reproduction_status": "The 2020 OEIS file publishes an explicit length-10 list. The list is frozen and independently verified to cover all 1024 words within Hamming distance 1. This establishes an upper bound on the minimum, not optimality.",
+        "ai_provenance": "not stated by source"
+      },
+      "parameters": {
+        "length": 10,
+        "alphabet": "{0,1}",
+        "covering_radius": 1,
+        "universe": "all 1024 binary words of length 10",
+        "objective": "number of codewords"
+      },
+      "source_file": "data/source/oeis_a000983.txt",
+      "source_file_sha256": "d221fc00d230773ad7a696ec57b6cc1317d4492f2c594ecb8357477aa8d28900",
+      "known_bounds": {
+        "lower_bound": 107,
+        "upper_bound": 120,
+        "lower_bound_source": "https://doi.org/10.1002/jcd.20008",
+        "lower_bound_location": "Bertolo, Östergård, and Weakley (2004); also recorded in the current Kéri table",
+        "upper_bound_source": "https://oeis.org/A000983/a000983.txt",
+        "upper_bound_location": "a(10)<=120 with explicit list",
+        "status": "OEIS A000983 still lists the next value a(10) in the range 107-120; the checked Kéri table also gives 107-120. The exact value was not closed in sources checked on 2026-11-06."
+      },
+      "historical_construction": {
+        "source": "https://doi.org/10.1109/18.61135",
+        "source_location": "Östergård, A new binary code of length 10 and covering radius 1, IEEE Transactions on Information Theory 37 (1991), 179-180",
+        "reported_method": "A 60-word mixed F_4 x F_2^7 radius-one cover is transformed to a 120-word binary length-10 cover.",
+        "witness_identity": "No claim is made that the 2020 OEIS list is byte-for-byte or construction-equivalent to Östergård's code."
+      },
+      "checked_sources": [
+        "https://oeis.org/A000983",
+        "https://oeis.org/A000983/a000983.txt",
+        "https://old.sztaki.hu/~keri/codes/index.htm",
+        "https://old.sztaki.hu/~keri/codes/2_tables.pdf",
+        "https://doi.org/10.1002/jcd.20008",
+        "https://doi.org/10.1109/18.61135",
+        "https://users.aalto.fi/~pat/patric_pub.html"
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T068",
+          "config_id": "T068-C01",
+          "validity": 1.0,
+          "combined_score": 1.0666666666666667,
+          "objective": 120,
+          "verification_status": "exact",
+          "generation_time": 2.3968497179448605,
+          "verification_time": 0.5995572581887245,
+          "objective_value": 120,
+          "details": {
+            "length": 10,
+            "universe_size": 1024,
+            "codeword_count": 120,
+            "covered_word_count": 1024,
+            "radius": 1,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 3.002908121794462,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "code_size": 120,
+          "words_checked": 1024,
+          "maximum_distance": 1,
+          "sphere_bound": 94
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "e07521e6feffb3314ba311f6281141e98f139ef6fe56ab56a4b96babb3975612"
+      },
+      "witness": "data/reference/oeis_a000983_n10.json",
+      "witness_sha256": "65c8a7ec1574a64ef45e7334f8166966f70062cbf0ad09eb1499e5068842f8dd"
+    }
+  }
+}

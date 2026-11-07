@@ -1,0 +1,211 @@
+{
+  "task_id": "T041",
+  "survey_date": "2026-11-06",
+  "configuration_id": "T041-C01",
+  "parameter_match": {
+    "square_count": 17,
+    "container": "unit square",
+    "rotations": "unrestricted",
+    "side_lengths": "positive and variable",
+    "objective": "maximize the sum of side lengths"
+  },
+  "sources": [
+    {
+      "title": "Sprite143, erdos-106-counterexample",
+      "url": "https://github.com/Sprite143/erdos-106-counterexample",
+      "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+      "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+      "reported_closed_form_value": "2190452873/547596200",
+      "reported_search_certificate_value": "2000062156200269/500000000000000",
+      "ai_provenance": "ProbXiv record dated 2026-08-17 says Claude Opus 5 discovered the packing with human-led search infrastructure. The GitHub repository says it has not been checked by a human referee.",
+      "reproduction": "The pinned construct.py is archived. Its closed-form output was converted to exact rational square data and checked independently by tasks/t041/check.py.",
+      "status": "feasible lower-bound candidate, exact task-local reproduction, not an optimum proof"
+    },
+    {
+      "title": "ProbXiv, Erdős Problem #106",
+      "url": "https://probxiv.com/problems/erdos-106",
+      "version": "record checked 2026-11-06; added 2026-08-17",
+      "scope": "AI and machine-review provenance for the same n=17 construction",
+      "status": "record says no person has examined the submission. It reports a machine-checked Lean formalization and warns that this does not establish that the formalization matches the webpage claim."
+    },
+    {
+      "title": "DeepMind, Mathematical exploration and discovery at scale, Section 6.35",
+      "url": "https://arxiv.org/abs/2511.02864",
+      "version": "v1, 2025-11",
+      "sha256": "1944e56460842129c3f6148c15ade453d0ac6900751b70e69b54afefd2284c02",
+      "local_pdf": "data/source/deepmind_2511.02864v1.pdf",
+      "result": "AlphaEvolve reports a search result of 4 for n=17. This is not an upper bound and does not match the later public construction.",
+      "status": "AI search result; no optimality claim"
+    },
+    {
+      "title": "Baek, Koizumi, and Ueoro, A note on the Erdős conjecture about square packing",
+      "url": "https://arxiv.org/abs/2411.07274",
+      "version": "arXiv v1, 2024-11-11",
+      "scope": "axis-parallel square packings only",
+      "status": "not an upper bound for unrestricted rotations"
+    },
+    {
+      "title": "Erdős and Graham, On packing squares with equal squares",
+      "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+      "version": "Journal of Combinatorial Theory A 19 (1975), 119–123",
+      "sha256": "247d216a1125a0138a41af9742e633e6b6504c7d1edd1c5524d36521a8ba6738",
+      "local_pdf": "data/erdos_graham_1975.pdf",
+      "scope": "historical source for equal-square grid methods; the task's exact 17-square witness is reconstructed and not attributed to the paper"
+    }
+  ],
+  "bounds": {
+    "lower_bound": "2190452873/547596200",
+    "upper_bound": "sqrt(17)",
+    "upper_bound_derivation": "The squares have pairwise disjoint interiors in area 1, so the sum of squared side lengths is at most 1. Cauchy–Schwarz gives (sum side)^2 <= 17 * sum(side^2) <= 17.",
+    "status": "No matching upper bound located in the checked sources. The public witness is a feasible lower bound, not an optimum proof."
+  },
+  "frozen_comparison": {
+    "human_reference": "4",
+    "type": "same-parameter human-method reconstruction",
+    "compatibility_score": "raw objective / 4",
+    "limitation": "A score above 1 exceeds the frozen grid baseline only; it does not establish global optimality."
+  },
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T041-C01": {
+      "program": "reference.py",
+      "reproduced_value": "2190452873/547596200",
+      "public_value": "2190452873/547596200",
+      "highest_reported": {
+        "value": "2190452873/547596200",
+        "source": {
+          "value": {
+            "T041-C01": "2190452873/547596200"
+          },
+          "date_checked": "2026-11-06",
+          "parameters": {
+            "square_count": 17,
+            "container": "closed unit square [0,1]^2",
+            "orientation": "arbitrary",
+            "objective": "sum of side lengths"
+          },
+          "url": "https://github.com/Sprite143/erdos-106-counterexample",
+          "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+          "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+          "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+          "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+          "witness_file": "data/public_witness.json",
+          "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+        },
+        "reproduction_status": "Exact rational witness reproduced; independent Sol admission pending."
+      },
+      "human_reference": 4,
+      "best_human": {
+        "value": {
+          "T041-C01": "4"
+        },
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "square_count": 17,
+          "container": "closed unit square [0,1]^2",
+          "orientation": "arbitrary",
+          "objective": "sum of side lengths"
+        },
+        "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+        "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
+        "origin_type": "human mathematical construction, reconstructed for this task",
+        "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
+        "witness_file": "data/human_grid_witness.json",
+        "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
+      },
+      "best_public": {
+        "value": {
+          "T041-C01": "2190452873/547596200"
+        },
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "square_count": 17,
+          "container": "closed unit square [0,1]^2",
+          "orientation": "arbitrary",
+          "objective": "sum of side lengths"
+        },
+        "url": "https://github.com/Sprite143/erdos-106-counterexample",
+        "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+        "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+        "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+        "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+        "witness_file": "data/public_witness.json",
+        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+      },
+      "best_reproduced": {
+        "value": {
+          "T041-C01": "2190452873/547596200"
+        },
+        "date_reproduced": "2026-11-06",
+        "witness_file": "data/public_witness.json",
+        "source_files": [
+          "data/source/public_construct.py",
+          "data/source/CERTIFICATE_n17.json",
+          "data/source/repository.tar.gz"
+        ],
+        "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+        "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
+        "original_search_certificate_value": "2000062156200269/500000000000000",
+        "actual_value": {
+          "T041-C01": "2190452873/547596200"
+        },
+        "verification_status": "exact",
+        "pairs_checked": 136,
+        "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
+        "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
+        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T041",
+          "config_id": "T041-C01",
+          "validity": 1.0,
+          "combined_score": 1.0000310781009802,
+          "objective": "2190452873/547596200",
+          "verification_status": "exact",
+          "generation_time": 0.790732491761446,
+          "verification_time": 0.6489687003195286,
+          "objective_value": "2190452873/547596200",
+          "details": {
+            "square_count": 17,
+            "pairs_checked": 136,
+            "corners_checked": 68,
+            "objective_name": "sum_of_side_lengths",
+            "touching_allowed": true,
+            "arithmetic": "exact rational arithmetic",
+            "claimed_objective_ignored": true,
+            "strict": true
+          },
+          "eval_time": 1.4518382884562016,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "sum_sides": "2190452873/547596200",
+          "clipped_pairs": 136
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "36de013556d4f81ed0d59b099be71a1dd3578702ee1cba8dd6c2301087a1e453"
+      }
+    }
+  }
+}

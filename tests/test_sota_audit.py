@@ -12,3 +12,11 @@ def test_display_rounding_cannot_pass_exact_metadata_check():
 def test_exact_equivalent_forms_are_supported():
     assert same_exact_value('0.125', '1/8')
     assert same_exact_value('7/2+3/2*sqrt2', '(7+3*sqrt(2))/2')
+
+
+def test_radical_sum_archive_preserves_all_exact_terms():
+    assert same_exact_value('sqrt_sum:[2,8,7]', 'sqrt_sum:[7,2,8]')
+    assert not same_exact_value('sqrt_sum:[2,8,7]', 'sqrt_sum:[7,2,9]')
+    assert not same_exact_value('sqrt_sum:[true]', 'sqrt_sum:[1]')
+    assert same_exact_value('sqrt_sum:[1,4]', '3')
+    assert same_exact_value('sqrt_sum:[8]', '2*sqrt(2)')

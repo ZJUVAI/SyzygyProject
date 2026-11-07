@@ -1,0 +1,71 @@
+{
+  "task_id": "T029",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T029-C01": {
+      "best_human": {
+        "value": 23,
+        "parameters": {
+          "matrix_order": 3,
+          "field": "Q",
+          "bilinear": true
+        },
+        "source": "Julian D. Laderman (1976), A noncommutative algorithm for multiplying 3x3 matrices using 23 multiplications, Bulletin of the AMS 82(1), 126-128.",
+        "source_url": "https://doi.org/10.1090/S0002-9904-1976-13988-2",
+        "witness_url": "https://fmm.univ-lille.fr/3x3x3.html",
+        "evidence_state": "The published Laderman23-product construction was reconstructed from the Lille tensor source and passed exact task and independent Sol checks.",
+        "ai_provenance": "The task author transcribed a published machine-readable representation; no claim about authorship of Laderman's construction."
+      },
+      "best_public": {
+        "value": 23,
+        "parameters": {
+          "matrix_order": 3,
+          "field": "Q",
+          "bilinear": true
+        },
+        "source": "Laderman (1976); source data labeled ⟨3x3x3:23⟩ on the Fast Matrix Multiplication database at Université de Lille.",
+        "url": "https://fmm.univ-lille.fr/3x3x3.html",
+        "witness_url": "https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2",
+        "evidence_state": "Public tensor representation gives 23 triads. The source uses a nonzero parameter lambda; the saved rational witness sets lambda=1 and applies the documented output transpose. Exact local verification is recorded in IMPLEMENTATION.md.",
+        "date_checked": "2026-11-06",
+        "origin_type": "Human-authored bilinear algorithm; not an optimality proof over Q."
+      },
+      "best_reproduced": {
+        "value": 23,
+        "parameters": {
+          "matrix_order": 3,
+          "field": "Q",
+          "bilinear": true
+        },
+        "witness": "data/laderman_rank23.json",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Rebuild 23 factor triples from the first-party Maple tensor representation, set lambda=1, transpose the third factor as in the source evaluation expression, and compare all 729 rational tensor coefficients against matrix multiplication.",
+        "witness_sha256": "c1debbeebc30dd64034ae83e1cbe9f5f7f3f112cbe7fe8db54cb152313994977",
+        "claimed_score_ignored": true,
+        "date_reproduced": "2026-11-06",
+        "review_status": "reviewed_by_sol",
+        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see acceptance.json."
+      },
+      "bounds": {
+        "best_known_upper_bound": 23,
+        "best_known_lower_bound": 19,
+        "source_url": "https://arxiv.org/html/2610.11823v3",
+        "status": "open over characteristic-zero fields; exact rank over Q is not known"
+      },
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": []
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T029-C01": {
+      "objective": 27,
+      "objective_value": 27,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.8518518518518519
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "objective": 113,
+  "verification_status": "exact",
+  "details": {
+    "instance": "DSJC1000.5",
+    "vertices": 1000,
+    "edges_checked": 249826,
+    "distinct_colors_recomputed": 113,
+    "claimed_objective_ignored": true,
+    "claimed_score_ignored": true,
+    "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+  }
+}

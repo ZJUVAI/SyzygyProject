@@ -1,42 +1,91 @@
-import math
-import pytest
+import json
+from pathlib import Path
+import unittest
 from tasks.t009.check import validate
-from tasks.t009.human import run_code
+from tasks.t009.baseline import _distance, _mutate_parity
 
-def config(cid,n):
-    return {"id":cid,"parameters":{"n":n,"space":"S2","objective":"minimum pairwise angular separation in radians"}}
+class _FixedMutationRng:
+    def randint(self, a, b): return 1
+    def randrange(self, start, stop=None):
+        if stop is None: return 0
+        return start
 
-@pytest.mark.parametrize("cid,n,pairs",[("T009-C02",16,120),("T009-C03",17,136),("T009-C04",19,171)])
-def test_public_witness_strict_lower_bound_and_interval(cid,n,pairs,monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID",cid)
-    result=validate(run_code(),config(cid,n),strict=True)
-    assert result["verification_status"] == "certified"
-    lo,hi=result["details"]["angle_interval"]
-    assert 0 < lo <= hi <= math.pi
-    assert result["objective"] == lo
-    assert result["details"]["pairs_checked"] == pairs
+CONFIG={'id':'T009-C01','parameters':{'n':68,'k':15,'q':2}}
+DATA=Path(__file__).parent/'data'/'human_generator.json'
+SOTA_DATA=Path(__file__).parent/'data'/'sota_generator.json'
 
-def test_claimed_score_does_not_change_recomputed_score(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID","T009-C03")
-    sol=run_code(); a=validate(sol,config("T009-C03",17),strict=True)
-    sol["objective"]="1/2"; b=validate(sol,config("T009-C03",17),strict=True)
-    assert a["objective"] == b["objective"]
-    assert b["details"]["claimed_objective_mismatch"]
+class TaskTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.matrix=json.loads(DATA.read_text())['matrix']
 
-def test_rejects_damaged_duplicate_and_wrong_size(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID","T009-C04")
-    sol=run_code(); c=config("T009-C04",19)
-    sol["points"][0]=[0,0,0]
-    with pytest.raises(ValueError): validate(sol,c,strict=True)
-    sol=run_code(); sol["points"][1]=sol["points"][0]
-    with pytest.raises(ValueError): validate(sol,c,strict=True)
-    sol=run_code(); sol["points"].pop()
-    with pytest.raises(ValueError): validate(sol,c,strict=True)
+    def test_public_witness_exact_distance(self):
+        result=validate({'generator_matrix':self.matrix,'objective':999},CONFIG)
+        # Independent direct XOR enumeration for the score cross-check.
+        independent=[]
+        for mask in range(1, 1 << 15):
+            word=[0]*68
+            for i in range(15):
+                if (mask >> i) & 1:
+                    word=[a ^ b for a,b in zip(word,self.matrix[i])]
+            independent.append(sum(word))
+        self.assertEqual(min(independent),8)
+        self.assertEqual(result['objective'],min(independent))
+        self.assertEqual(result['verification_status'],'exact')
+        self.assertEqual(result['details']['codewords_checked'],32767)
+        self.assertTrue(result['details']['claimed_objective_ignored'])
 
-def test_rejects_bool_nonfinite_and_configuration_mismatch(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID","T009-C03")
-    sol=run_code(); sol["points"][0][0]=True
-    with pytest.raises(ValueError): validate(sol,config("T009-C03",17),strict=True)
-    sol=run_code(); sol["points"][0][0]=float("nan")
-    with pytest.raises(ValueError): validate(sol,config("T009-C03",17),strict=True)
-    with pytest.raises(ValueError): validate(run_code(),config("T009-C03",18),strict=True)
+    def test_reproduced_sota_witness_exact_distance(self):
+        from tasks.t009.sota import run_code
+        witness=json.loads(SOTA_DATA.read_text())
+        result=validate(run_code(),CONFIG)
+        self.assertEqual(len(witness['matrix']),15)
+        self.assertTrue(all(len(row)==68 for row in witness['matrix']))
+        self.assertEqual(result['objective'],24)
+        self.assertEqual(result['verification_status'],'exact')
+        self.assertEqual(result['details']['rank'],15)
+        self.assertEqual(result['details']['codewords_checked'],32767)
+
+    def test_ignores_absent_score(self):
+        self.assertEqual(validate({'generator_matrix':self.matrix},CONFIG)['objective'],8)
+
+    def test_rejects_bool_entry(self):
+        m=[r[:] for r in self.matrix]; m[0][0]=True
+        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+
+    def test_rejects_float_entry(self):
+        m=[r[:] for r in self.matrix]; m[0][0]=1.0
+        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+
+    def test_rejects_wrong_shape(self):
+        with self.assertRaises(ValueError): validate({'generator_matrix':self.matrix[:-1]},CONFIG)
+        m=[r[:] for r in self.matrix]; m[0].pop()
+        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+
+    def test_rejects_rank_deficient_matrix(self):
+        m=[r[:] for r in self.matrix]; m[1]=m[0][:]
+        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+
+    def test_boundary_valid_distance_one_systematic_code(self):
+        m=[]
+        for i in range(15):
+            row=[0]*68; row[i]=1; m.append(row)
+        self.assertEqual(validate({'generator_matrix':m},CONFIG)['objective'],1)
+
+    def test_parity_mutation_changes_code_and_distance_while_preserving_rank(self):
+        # [I|I|0] has distance 2. Clearing one parity bit in row 0
+        # makes that generator weight 1, so the new code has distance 1.
+        rows=[]
+        for i in range(15):
+            rows.append((1 << i) | (1 << (15+i)))
+        changed=_mutate_parity(rows, _FixedMutationRng(), max_flips=1)
+        self.assertEqual(_distance(rows),2)
+        self.assertEqual(_distance(changed),1)
+        self.assertNotEqual(rows,changed)
+        # The identity block remains intact, so rank remains 15.
+        self.assertTrue(all((changed[i] >> i) & 1 for i in range(15)))
+
+    def test_rejects_unknown_parameters(self):
+        with self.assertRaises(ValueError): validate({'generator_matrix':self.matrix},{'id':'T009-C01','parameters':{'n':68,'k':15,'q':3}})
+
+if __name__=='__main__': unittest.main()

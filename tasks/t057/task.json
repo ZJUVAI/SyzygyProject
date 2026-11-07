@@ -1,39 +1,35 @@
 {
   "task_id": "T057",
-  "name": "Sum-difference I: normalized logarithmic ratio",
+  "name": "Capacitated vehicle routing on X-n1001-k43",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T057-C01",
       "parameters": {
-        "max_cardinality": 512,
-        "integer_interval": [
-          -1000000,
-          1000000
-        ]
+        "instance": "X-n1001-k43",
+        "customers": 1000,
+        "depot_node_id": 1,
+        "vehicle_capacity": 131,
+        "distance": "TSPLIB EUC_2D nearest-integer rounding",
+        "route_count": "unrestricted; k43 is part of the instance name, not a fleet-size constraint"
       },
-      "direction": "maximize",
-      "human_reference": 1.0597930945472454
+      "direction": "minimize",
+      "human_reference": 77398
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定CVRPLIB X-n1001-k43，1000客户+1仓库、容量131、每客户恰一次，所有路线起止仓库，最小化总整数EUC_2D距离。主代理读取DIMACS正式规则，无路线数限制，43仅实例名。总需求5557给至少43路。",
+      "primary_sources": "Sol重新下载官方instance/257、bound/3162当前72332及bound/254历史72355的原始文件；输入SHA256 97c950e592d8a63d4f81669f1fda9762de2a79e4a213f9e7401c699a754dc492。当前官方instances表Opt=no，bounds/257记2026-10-24 Vizzolini在既有BKS上改进得72332。",
+      "independent_witness_review": "主代理按官方.sol的零基客户编号与原始VRP一基编号转换独立验证两份完整路线，均43路，所有1000客户覆盖恰一次、最大负载131；逐边整数平方及半整数阈值重算得72332/72355。",
+      "independent_math": "正式checker用isqrt加半整数平方阈值；验收另从原始VRP独立读坐标和需求，用纯整数二分寻找最近整数距离，不调用正式instance距离函数。五种构造逐路线覆盖、负载和成本均重算一致。",
+      "human_reference": "Clarke–Wright1964公开节约值方法在本实例固定排序规则重建77398，明显标为弱人类方法H，不宣称它是人类最强纪录。当前72332和历史72355的AI协助未披露，按来源状态归档。",
+      "controls": "初始1376372、六次固定迭代传统/演化77170、人类77398、参考72332；完整声明成绩不变、重复路线破坏、严格回放、只公开VRP冷导出及三类失败控制通过。首次破坏生成器错误假设首路线至少两客户，修复后完整重跑，原失败保留。",
+      "limits": "未重跑官方大规模搜索或证明最优；路线数未被错误固定43，也未把不同CVRP实例计成不同任务。"
+    }
   }
 }

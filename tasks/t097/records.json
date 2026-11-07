@@ -1,166 +1,150 @@
 {
   "task_id": "T097",
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 202,
-    "parameters": {
-      "target": "2^192-2^64-3"
-    },
-    "authors": [
-      "Neill Clift"
-    ],
-    "year": 2026,
-    "url": "https://additionchains.com/LargeChains.html",
-    "evidence_state": "downloaded public one-integer-per-line witness; all 203 entries and 202 additions independently replayed with exact integers",
-    "optimality": "construction only; source states none of listed lengths is proved optimal",
-    "witness": "data/human_t097.json"
-  },
-  "best_public": {
-    "value": 202,
-    "parameters": {
-      "target": "2^192-2^64-3"
-    },
-    "url": "https://additionchains.com/LargeChains.html",
-    "evidence_state": "page updated 2026-11-02; exact P-192 row says previous 203, new length 202; linked witness downloaded and reproduced",
-    "optimality": "not proved; page says none of the listed lengths is proved optimal",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 202,
-    "parameters": {
-      "target": "2^192-2^64-3"
-    },
-    "provenance": "task-local exact copy of P-192_field_inverse_202.txt linked by Clift's page",
-    "evidence_state": "independently checked start, strict increase, each sum-of-two-earlier-terms relation, endpoint, and length with Python integers",
-    "witness": "data/human_t097.json"
-  },
-  "baseline_seed": {
-    "provenance": "binary expansion chain generated from the fixed integer target",
-    "evidence_state": "checker verifies all steps; no human/reference files read"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula",
-  "configuration_records": {
-    "T097-C02": {
-      "human_reference": 230,
+  "configurations": {
+    "T097-C01": {
       "parameters": {
-        "target": "2^221-5"
+        "instance": "socg_fixed92",
+        "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+        "boundary_vertices": 92,
+        "holes": 0,
+        "cover_domain": "all real convex polygons",
+        "overlap_allowed": true
       },
       "best_human": {
-        "value": 230,
-        "authors": [
-          "Neill Clift"
-        ],
-        "year": 2026,
-        "url": "https://additionchains.com/LargeChains.html",
-        "witness_source": "https://additionchains.com/LargeChains/M-221_field_inverse_230.txt",
-        "witness": "data/human_t097_c02.json",
-        "evidence_state": "Public witness replayed by Sol; see sol_review for independently checked score. Optimality is not claimed.",
-        "optimality": "Not proved; source says none of listed lengths is proved optimal.",
+        "value": 15,
+        "date": "2026-11-06 (exact reconstruction and verification)",
         "parameters": {
-          "target": "2^221-5"
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
         },
-        "submission_evidence_state": "Exact downloaded public witness; replay pending independent Sol review.",
-        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+        "method": "A feasible integer 15-piece cover inferred from the rounded Shadoks CG:SHOP 2023 viewer SVG.",
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "witness": "data/human/socg_fixed92_15.json",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_status": "certified",
+        "verification_method": "Exact real-algebraic vertical decomposition; the witness is rational/integer and all 276 open arrangement cells were checked.",
+        "ai_provenance": "Not disclosed in the reviewed paper or viewer. No claim of an unaided human process is made.",
+        "evidence_state": "The published viewer reports 15. Nearby integer polygons reconstructed from its rounded display form a separately verified feasible 15-piece cover; the original coordinates are not recovered uniquely. This is not a global-optimality proof."
       },
       "best_public": {
-        "value": 230,
-        "url": "https://additionchains.com/LargeChains.html",
-        "source_reported_value": 230,
-        "evidence_state": "Table reports previous length 231 and new length 230; exact witness downloaded and replayed by task agent.",
+        "value": 15,
         "parameters": {
-          "target": "2^221-5"
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
         },
-        "origin_type": "Source does not state whether AI assisted this result; unknown."
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "witness": "data/human/socg_fixed92_15.json",
+        "verification_status": "certified",
+        "reported_piece_count": 15,
+        "evidence_state": "The Shadoks viewer reports this instance with 15 polygons. Nearby integer coordinates inferred from its rounded display give one exactly verified feasible witness of the same size; the original coordinates are not uniquely recovered. The official competition ranking gives aggregate team scores, not per-instance values. The checked all-team per-instance record inventory is incomplete; 15 is not claimed to be the best result of every team."
       },
       "best_reproduced": {
-        "value": 230,
-        "witness": "data/human_t097_c02.json",
-        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
-        "actual_value": 230,
-        "verification_status": "exact",
+        "value": 15,
+        "date": "2026-11-06",
         "parameters": {
-          "target": "2^221-5"
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
         },
-        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+        "program": "reference.py",
+        "witness": "data/reference/socg_fixed92_15.json",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_status": "certified",
+        "origin_type": "Same-count reconstruction from the published Shadoks viewer",
+        "evidence_state": "The viewer SVG is inverse-transformed and rounded to nearby integer coordinates. These inferred polygons pass exact full-region validation; the display does not uniquely identify the original submitted coordinates.",
+        "review_status": "reviewed_by_sol"
       },
-      "acceptance_status": "accepted_by_sol",
-      "sol_review": {
-        "reviewer": "GPT-6.1 Sol",
-        "date": "2026-11-04",
-        "actual_objective": 230,
-        "verification_status": "exact",
-        "witness": "tasks/t097/data/human_t097_c02.json",
-        "independent_audit": "PLAN.md",
-        "checks": [
-          "all four programs strict valid",
-          "independent key quantity",
-          "damaged witness rejected",
-          "claimed score ignored",
-          "cold export valid"
-        ]
+      "best_own_search": {
+        "value": 26,
+        "objective_value": 26,
+        "program": "baseline.py",
+        "witness": "best/T097-C01/solution.json",
+        "witness_sha256": "a661afff17ae16052316a737a8cf574f679a51de2753eaa1ce5482da2b013f0f",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "seed": 0,
+        "verification_status": "certified",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "construction": "seeded greedy convex-hull merges from the public polygon triangulation",
+          "seed": 0,
+          "sweeps": 65,
+          "sweep_limit": 200,
+          "candidate_pairs_checked": 2890,
+          "merges": 64,
+          "comparison_data_read": false
+        },
+        "generation_record": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 1.0,
+          "combined_score": 0.5769230769230769,
+          "objective": 26,
+          "verification_status": "certified",
+          "generation_time": 4.171503759920597,
+          "verification_time": 5.47343036532402,
+          "objective_value": 26,
+          "details": {
+            "instance": "socg_fixed92",
+            "convex_polygon_count": 26,
+            "total_piece_vertices": 112,
+            "algebraic_field_degree": 1,
+            "verified_open_arrangement_cells": 2837,
+            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 9.64798105508089,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "No global proof for this fixed instance was found in the reviewed sources.",
+        "notes": "The viewer reports 15. Its CPLEX Optimal status applies to the generated candidate collection. The official challenge ranking is aggregate, and DIKU (AMW) ranks above Shadoks overall; per-instance values for all teams are not available in the checked sources. The 2026 rotten-potato paper provides an approximation algorithm, not an instance closure. The challenge restricted submitted witness coordinates to rationals; this task keeps the complete all-real MCC objective and encodes algebraic witnesses."
       }
-    },
-    "T097-C03": {
-      "human_reference": 532,
-      "parameters": {
-        "target": "2^521-3"
-      },
-      "best_human": {
-        "value": 532,
-        "authors": [
-          "Neill Clift"
-        ],
-        "year": 2026,
-        "url": "https://additionchains.com/LargeChains.html",
-        "witness_source": "https://additionchains.com/LargeChains/P-521_field_inverse_532.txt",
-        "witness": "data/human_t097_c03.json",
-        "evidence_state": "Public witness replayed by Sol; see sol_review for independently checked score. Optimality is not claimed.",
-        "optimality": "Not proved; source says none of listed lengths is proved optimal.",
-        "parameters": {
-          "target": "2^521-3"
-        },
-        "submission_evidence_state": "Exact downloaded public witness; replay pending independent Sol review.",
-        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
-      },
-      "best_public": {
-        "value": 532,
-        "url": "https://additionchains.com/LargeChains.html",
-        "source_reported_value": 532,
-        "evidence_state": "Table reports previous length 533 and new length 532; exact witness downloaded and replayed by task agent.",
-        "parameters": {
-          "target": "2^521-3"
-        },
-        "origin_type": "Source does not state whether AI assisted this result; unknown."
-      },
-      "best_reproduced": {
-        "value": 532,
-        "witness": "data/human_t097_c03.json",
-        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
-        "actual_value": 532,
-        "verification_status": "exact",
-        "parameters": {
-          "target": "2^521-3"
-        },
-        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
-      },
-      "acceptance_status": "accepted_by_sol",
-      "sol_review": {
-        "reviewer": "GPT-6.1 Sol",
-        "date": "2026-11-04",
-        "actual_objective": 532,
-        "verification_status": "exact",
-        "witness": "tasks/t097/data/sota_t097_c03.json",
-        "independent_audit": "PLAN.md",
-        "checks": [
-          "all four programs strict valid",
-          "independent key quantity",
-          "damaged witness rejected",
-          "claimed score ignored",
-          "cold export valid"
-        ]
-      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T097-C01": {
+      "objective": 90,
+      "objective_value": 90,
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.16666666666666666
     }
   }
 }

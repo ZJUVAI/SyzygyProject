@@ -55,7 +55,7 @@ def test_friedman_1997_reconstruction_exactly():
 import os
 import pytest
 
-@pytest.mark.parametrize(('n','cid','score','pairs'),[(29,'T002-C03','2966942899906512939318226046481160904289990651293931822604648091421/500000000000000000000000000000000000000000000000000000000000000000',406),(38,'T002-C04','6+1/2*sqrt2',703)])
+@pytest.mark.parametrize(('n','cid','score','pairs'),[(29,'T002-C02','2966942899906512939318226046481160904289990651293931822604648091421/500000000000000000000000000000000000000000000000000000000000000000',406),(38,'T002-C03','6+1/2*sqrt2',703)])
 def test_staged_expansion_human_witnesses(n,cid,score,pairs,monkeypatch):
     monkeypatch.setenv('MATHBENCH_CONFIG_ID',cid)
     from tasks.t002.human import run_code
@@ -66,7 +66,7 @@ def test_staged_expansion_human_witnesses(n,cid,score,pairs,monkeypatch):
 
 def test_staged_initial_programs_are_valid(monkeypatch):
     from tasks.t002.init_program import run_code
-    for n,cid in ((29,'T002-C03'),(38,'T002-C04')):
+    for n,cid in ((29,'T002-C02'),(38,'T002-C03')):
         monkeypatch.setenv('MATHBENCH_CONFIG_ID',cid)
         result=validate(run_code(),{'parameters':{'n':n}},strict=True)
         assert result['verification_status']=='certified'
@@ -74,7 +74,7 @@ def test_staged_initial_programs_are_valid(monkeypatch):
 def test_rejects_retired_n17():
     with pytest.raises(ValueError): validate({'squares':[]},{'parameters':{'n':17}})
 
-@pytest.mark.parametrize(('n','cid'),[(29,'T002-C03'),(38,'T002-C04')])
+@pytest.mark.parametrize(('n','cid'),[(29,'T002-C02'),(38,'T002-C03')])
 def test_staged_claimed_scores_cannot_change_recomputed_objective(n,cid,monkeypatch):
     monkeypatch.setenv('MATHBENCH_CONFIG_ID',cid)
     from tasks.t002.human import run_code
@@ -84,3 +84,42 @@ def test_staged_claimed_scores_cannot_change_recomputed_objective(n,cid,monkeypa
     result=validate(altered,{'parameters':{'n':n}},strict=True)
     assert result['objective']==actual
     assert result['details']['claimed_objective_mismatch']
+
+
+def test_sat_penalty_analytic_gradient(monkeypatch):
+    import numpy as np
+    import scipy.optimize
+    import random
+    from tasks.t002 import evolution
+    class Captured(Exception):
+        pass
+    def inspect(fun, x0, **kwargs):
+        # An asymmetric perturbation avoids absolute-value and SAT ties.
+        rng=np.random.default_rng(29)
+        z=x0+rng.normal(0,.02,len(x0))
+        value,gradient=fun(z)
+        eps=1e-6
+        numeric=np.zeros_like(z)
+        for i in range(len(z)-1):
+            shift=np.zeros_like(z); shift[i]=eps
+            numeric[i]=(fun(z+shift)[0]-fun(z-shift)[0])/(2*eps)
+        assert np.allclose(gradient,numeric,rtol=2e-5,atol=2e-5)
+        raise Captured
+    monkeypatch.setattr(scipy.optimize,'minimize',inspect)
+    with pytest.raises(Captured):
+        evolution._optimize(26,30,random.Random(4),evolution._seed(26))
+
+
+def test_exact_dilation_repairs_rotated_overlap_and_matches_checker():
+    from fractions import Fraction
+    import random
+    from tasks.t002.evolution import _seed, _repair, _score
+    rng = random.Random(77301)
+    squares = _seed(26)['squares']
+    for square in squares:
+        square['x'] = str(Fraction(square['x']) + Fraction(rng.randrange(-100,101),1000))
+        square['t'] = str(Fraction(rng.randrange(-100,101),1000))
+    with pytest.raises(ValueError):
+        _score({'squares':squares},26)
+    repaired, objective = _repair(squares,26)
+    assert _score(repaired,26) == objective

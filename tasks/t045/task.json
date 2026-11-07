@@ -1,0 +1,52 @@
+{
+  "task_id": "T045",
+  "name": "Minimum linear arrangement on gd96a",
+  "acceptance_status": "accepted_by_sol",
+  "category": "graph_layout",
+  "definition": "For the fixed undirected unweighted graph gd96a, assign each vertex a distinct position from 1 through 1,096 and minimize the sum of edge lengths.",
+  "solution_format": "An object with ordering, a list containing each vertex ID 1 through 1,096 exactly once.",
+  "objective": {
+    "name": "linear_arrangement_cost",
+    "unit": "sum of edge spans",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "The ordering has exactly 1,096 entries.",
+    "Each entry is an integer vertex ID from 1 through 1,096.",
+    "Every vertex ID occurs exactly once.",
+    "The objective is the sum of absolute position differences over all 1,676 undirected edges in gd96a."
+  ],
+  "configurations": [
+    {
+      "id": "T045-C01",
+      "parameters": {
+        "graph": "gd96a",
+        "vertices": 1096,
+        "edges": 1676
+      },
+      "direction": "minimize",
+      "human_reference": 147653
+    }
+  ],
+  "sources": [
+    "https://www.cs.upc.edu/~jpetit/MinLA/Experiments/",
+    "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+    "https://doi.org/10.1007/s10732-026-09604-6"
+  ],
+  "verification": "Exact permutation checks and an exact integer sum over the pinned 1,676-edge graph; verification takes less than one second locally.",
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "官方无权无向gd96a图，1096顶点1676边，对顶点作双射排列，最小化全部边跨度和；不是最小化最大跨度或最大化最小跨度。",
+      "official_input": "主代理重新下载Petit官方jpetit-extra.tar.gz，从CodeJEA/Graphs/gd96a.rmf取出原图，字节与保存图完全一致，SHAa3f6f97b8c084f41b6312a02544d71b293bfb8e809f627e4c5e7a04495061f4c。冷导出仅含该原图，不含参考排列、H或源记录。",
+      "human_and_public_records": "亲自阅读Caprara–Letchford–Salazar-Gonzalez2011主论文，表1给2008传统启发式95242，表2给新LB77860；旧表1LB5155未混淆。另取Petit当前上界页：历史谱法170903、SA96342，未把较弱页值替代95242。",
+      "frozen_baseline": "H147653为已发表传统谱排序加严格相邻交换的本地重建，AI实现代码；不是声称重现95242，也不是将此值归给原论文。固定参考保存实际可重放排列147653；最好公开95242仍标未复现。",
+      "open_status": "所查一手界仍有差距；2026 Small Boundary文献实例集未含gd96a，未发现同参数精确解或最优性证明。检索范围及缺失公开最好排列明确保留。",
+      "independent_verification": "五种排列按1096个前缀割边数求和，独立于正式检查器的逐边绝对位置差。初始579874、传统搜索280285、人类/参考147653、演化220029。合法、破坏、完整声明成绩不变性、严格回放、冷导出与三类失败检查全部通过。",
+      "limits": "未复现文献95242排列或LP下界证书，未重跑完整传统文献搜索。"
+    }
+  }
+}

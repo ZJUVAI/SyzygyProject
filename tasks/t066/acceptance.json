@@ -1,0 +1,397 @@
+{
+  "task_id": "T066",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T066 --label admission_20261106_main",
+  "configurations": {
+    "T066-C01": {
+      "configuration": {
+        "id": "T066-C01",
+        "parameters": {
+          "point_count": 17,
+          "ambient_space": "Euclidean plane R^2",
+          "coordinate_domain": "real algebraic coordinates in a common real algebraic number field",
+          "objective": "number of distinct lines containing exactly 3 input points"
+        },
+        "direction": "maximize",
+        "human_reference": 40
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T066",
+            "config_id": "T066-C01",
+            "validity": 1.0,
+            "combined_score": 0.0,
+            "objective": 0,
+            "verification_status": "exact",
+            "generation_time": 1.1627542153000832,
+            "verification_time": 3.778196346014738,
+            "objective_value": 0,
+            "details": {
+              "point_count": 17,
+              "distinct_lines_checked": 136,
+              "exactly_three_point_lines": 0,
+              "largest_line_incidence": 2,
+              "coordinate_field_degree": 1,
+              "minimal_polynomial_irreducible": true,
+              "real_root_isolated_by_sturm_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 4.9504782147705555,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "three_point_lines": 0,
+            "method": "independent rational determinant incidence sets"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T066",
+            "config_id": "T066-C01",
+            "validity": 1.0,
+            "combined_score": 0.325,
+            "objective": 13,
+            "verification_status": "exact",
+            "generation_time": 2.0825934559106827,
+            "verification_time": 1.7206464745104313,
+            "objective_value": 13,
+            "details": {
+              "point_count": 17,
+              "distinct_lines_checked": 96,
+              "exactly_three_point_lines": 13,
+              "largest_line_incidence": 5,
+              "coordinate_field_degree": 1,
+              "minimal_polynomial_irreducible": true,
+              "real_root_isolated_by_sturm_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 3.8103273063898087,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "three_point_lines": 13,
+            "method": "independent rational determinant incidence sets"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T066",
+            "config_id": "T066-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 40,
+            "verification_status": "exact",
+            "generation_time": 0.6466599851846695,
+            "verification_time": 4.1012107655406,
+            "objective_value": 40,
+            "details": {
+              "point_count": 17,
+              "distinct_lines_checked": 56,
+              "exactly_three_point_lines": 40,
+              "largest_line_incidence": 3,
+              "coordinate_field_degree": 16,
+              "minimal_polynomial_irreducible": true,
+              "real_root_isolated_by_sturm_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 4.753712967038155,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "three_point_lines": 40,
+            "method": "exact cubic coordinates, tangent group order17 and index-sum incidence",
+            "group_order": 17,
+            "no_four_collinear": "irreducible cubic has no line component"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T066",
+            "config_id": "T066-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 40,
+            "verification_status": "exact",
+            "generation_time": 0.6972695104777813,
+            "verification_time": 5.399435970932245,
+            "objective_value": 40,
+            "details": {
+              "point_count": 17,
+              "distinct_lines_checked": 56,
+              "exactly_three_point_lines": 40,
+              "largest_line_incidence": 3,
+              "coordinate_field_degree": 16,
+              "minimal_polynomial_irreducible": true,
+              "real_root_isolated_by_sturm_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 6.1036688052117825,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "three_point_lines": 40,
+            "method": "exact cubic coordinates, tangent group order17 and index-sum incidence",
+            "group_order": 17,
+            "no_four_collinear": "irreducible cubic has no line component"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T066",
+            "config_id": "T066-C01",
+            "validity": 1.0,
+            "combined_score": 0.325,
+            "objective": 13,
+            "verification_status": "exact",
+            "generation_time": 0.6924387067556381,
+            "verification_time": 2.5529695302248,
+            "objective_value": 13,
+            "details": {
+              "point_count": 17,
+              "distinct_lines_checked": 96,
+              "exactly_three_point_lines": 13,
+              "largest_line_incidence": 5,
+              "coordinate_field_degree": 1,
+              "minimal_polynomial_irreducible": true,
+              "real_root_isolated_by_sturm_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 3.2514931336045265,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "three_point_lines": 13,
+            "method": "independent rational determinant incidence sets"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T066",
+        "config_id": "T066-C01",
+        "validity": 1.0,
+        "combined_score": 0.0,
+        "objective": 0,
+        "verification_status": "exact",
+        "generation_time": 0.46705346554517746,
+        "verification_time": 1.9833214916288853,
+        "objective_value": 0,
+        "details": {
+          "point_count": 17,
+          "distinct_lines_checked": 136,
+          "exactly_three_point_lines": 0,
+          "largest_line_incidence": 2,
+          "coordinate_field_degree": 1,
+          "minimal_polynomial_irreducible": true,
+          "real_root_isolated_by_sturm_count": 1,
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 2.4859023056924343,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T066",
+          "config_id": "T066-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t066/runs/admission_20261106_main/T066-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.5183574296534061,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T066",
+          "config_id": "T066-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.21008970588445663,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T066",
+          "config_id": "T066-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.4875217638909817,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "35a74740d9fdeb1ffe71048d23fde8e33c31f2c4f8404434c7ec2863d08c9b1a",
+    "README.md": "d288c477ad18479621586e09ce4994699e95aa4b25c073a50bb7c56aa3aee0e3",
+    "algebra.py": "a2d2ebdc657d5979a9cfb61d33960b628c51cd1a8fe85c7d1e7f6393bba143e6",
+    "baseline.py": "c7cb43a40ced69db6a56f5b01345f342c6310775c49cf2e39ac86fab19675aaf",
+    "check.py": "d12163a9c0f93d030fc841c50e7b78cfb2f0179fdb5d426492e946e1da8d20ea",
+    "data/reference/cubic_tangent_17.json": "0575565b5d4993e07ffcf34a3f4a7799bf214b2486b36c9d1bcec6b966fef77c",
+    "evaluator.py": "be660c62f10247416b8a96eed9dfaff69f61322ca2278966a5d942ae874ffb3e",
+    "evolution.py": "813810b50e486d37779385ffab33c959868d3d1b737837156b777a88a41843e6",
+    "human.py": "122b94c1d925d2a79feab89adbd5d6d5d2649aa5eb0b9c819799fabcacbe092d",
+    "init_program.py": "02202609fe7b33103d626fe672d805118f7eceb6198be0b8281615780c8c5179",
+    "instruction.txt": "51eff85c1a08d7903db6a78017048eba63e85cbcfcee8ee4af5e93e183952f8f",
+    "records.json": "12d4cc946e112b15653d49a96425afa54899b727a4b1057ca999504a25089959",
+    "reference.py": "142eac17d7388eb8107760b2c1c55f3f785c860fd2d712c64346b57c444d2eec",
+    "test_task.py": "13a7359b06f7f2a188f3195b62a5fc24f30311c87c3e76225481beb00cda3bf0"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "固定17个互异平面点，最大化含恰好3个输入点的不同直线数；4点或更多共线不计。共同实代数域可覆盖有限实点incidence模式，不限制特定三次曲线。",
+    "primary_source": "Sol亲自读取Green–Tao1208.4714v3 §2 Theorem2.5后acnodal y²=x²(x−1)的cot参数化和Proposition2.6有限子群计数。取k/17，原齐次[sinθ,cosθ,sin³θ]交换后两坐标，odd17的cosθ非零，得(tanθ,tan³θ/(1+tan²θ))。Pegg2018只作同参数40线公开证据，不声称所保存坐标与其图片相同。",
+    "independent_math": "正式checker用自实现分式多项式域运算，规范化每条直线并统计完整incidence。Sol另用Sympy模多项式除法及逆元重建17阶tangent循环，逐点验证坐标及v(1+u²)=u³，t17=0；独立符号行列式分解为Vandermonde乘abc−a−b−c。三次曲线无直线分支，故至多3点共线；index和0mod17的无序三元组恰40。初始及搜索有理构造另用Fraction行列式incidence集合独立计数。",
+    "open_status": "当前OEIS A003035与Friedman原作者表仍给17点40–42；15点2026新增闭合31、16点37均排除。Green–Tao上界定理仅充分大n，其全局最优性证明不用于n17；有限子群构造公式则对n≥3适用。",
+    "controls": "初始0、传统及演化13、人类及参考40。五程序、重复点破坏、完整声明不变、严格回放、冷导出、异常/非有限/超时均通过，任务及共享检查21项通过。移除无证明的坐标多项式长度上限，整数任意精度受公共资源预算控制。",
+    "limits": "未证明40最优；没有从Pegg图片提取舍入点或声称运行完整原始研究搜索。独立群公式审计只针对保存的经典构造，正式checker支持一般实代数点。"
+  }
+}

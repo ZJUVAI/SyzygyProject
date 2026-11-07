@@ -1,0 +1,63 @@
+{
+  "container_side": "sqrt(3)/3 + 1",
+  "triangles": [
+    [
+      [
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "sqrt(3)/2",
+        "1/2"
+      ]
+    ],
+    [
+      [
+        "sqrt(3)/3",
+        "0"
+      ],
+      [
+        "sqrt(3)/3 + 1",
+        "0"
+      ],
+      [
+        "1/2 + sqrt(3)/3",
+        "sqrt(3)/2"
+      ]
+    ],
+    [
+      [
+        "sqrt(3)/3 + 1",
+        "sqrt(3)/3"
+      ],
+      [
+        "sqrt(3)/3 + 1",
+        "sqrt(3)/3 + 1"
+      ],
+      [
+        "1 - sqrt(3)/6",
+        "1/2 + sqrt(3)/3"
+      ]
+    ],
+    [
+      [
+        "1",
+        "sqrt(3)/3 + 1"
+      ],
+      [
+        "0",
+        "sqrt(3)/3 + 1"
+      ],
+      [
+        "1/2",
+        "1 - sqrt(3)/6"
+      ]
+    ]
+  ],
+  "source": "https://erich-friedman.github.io/packing/triinsqu/",
+  "provenance": "Root exact reconstruction from the unit-distance pinwheel in t4.gif; not original author coordinate bytes"
+}

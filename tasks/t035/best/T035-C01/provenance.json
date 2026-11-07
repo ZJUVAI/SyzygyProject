@@ -1,0 +1,44 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T035",
+    "config_id": "T035-C01",
+    "validity": 1.0,
+    "combined_score": 0.59375,
+    "objective": 19,
+    "verification_status": "exact",
+    "generation_time": 13.38838517293334,
+    "verification_time": 0.21471663936972618,
+    "objective_value": 19,
+    "details": {
+      "point_count": 19,
+      "general_position": true,
+      "convex_seven_gon": false,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 13.606158830225468,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "e367bd04b91db5db411db54eb7d0ebb98a7d86fc1ae33534bfb5e166f2f13139",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T035 tasks/t035/best/T035-C01/solution.json --config T035-C01"
+}

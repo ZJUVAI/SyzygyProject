@@ -1,0 +1,32 @@
+{
+  "task_id": "T042",
+  "candidate_id": "max3-term-apfree-integer-subset",
+  "name": "Largest 3-AP-free subset of [1, 212]",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T042-C01",
+      "parameters": {
+        "N": 212,
+        "universe": "integers_1_through_N",
+        "forbidden_pattern": "nontrivial_three_term_arithmetic_progression"
+      },
+      "direction": "maximize",
+      "human_reference": 32
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定[1,212]整数子集，最大化不含非平凡三项等差数列的基数。与七维三元仿射cap的域、约束不同，不是参数变体。",
+      "human_method": "Odlyzko–Stanley1978的三进制仅0/1公式，经平移1并取5位得到32点、最大122。独立重建32项并穷举两端点；最低不同三进制位也给无三项等差的直接证明。仅作弱同参数传统方法复现，未冒称32为文献最优记录。",
+      "best_public": "亲自阅读Ergezer arXiv2606.04016v1，明确43–44，公开43点见证精确复算。当前维护论文披露广泛AI协作，具体43点发现过程未单独披露；人类H32与公开参考43分开。",
+      "current_open_status": "主代理另下载固定提交cfd76934bff8cb5d5016e9f599063d698a09d47e的erdos_r3/README.md；它明确T1c历史块已DRAT关闭，T2关闭6045/6071，全T3尚未完成，所以全局上界问题仍开放。没有把旧T1c未解声明当成当前事实。",
+      "independent_verification": "五种构造按两端点枚举，检查偶数端点和的中点不在集合；与检查器首项/中项枚举相互独立。初始1，传统搜索/演化35，人类32，固定参考43。",
+      "controls": "合法、破坏、声明成绩完整不变性、严格回放、冷导出及三类运行失败检查通过；未重做完整SAT上界搜索。"
+    }
+  }
+}

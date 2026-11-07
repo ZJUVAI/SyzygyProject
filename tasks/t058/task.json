@@ -1,0 +1,34 @@
+{
+  "task_id": "T058",
+  "name": "Social Golfer maximum schedule for 35 players in groups of 5",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T058-C01",
+      "parameters": {
+        "players": 35,
+        "groups_per_round": 7,
+        "players_per_group": 5,
+        "constraint": "each player appears once per round; each unordered pair shares a group at most once",
+        "objective": "number of valid rounds"
+      },
+      "direction": "maximize",
+      "human_reference": 7
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "35人每轮分为7组各5人，任意两人至多同组一次，最大化轮数；35非MOLS等价的方形总人数配置。20人各4与32人各4的已解配置均排除。",
+      "primary_source": "Sol亲自读取Miller–Valkov–Abel2026附表，v35,k5行明确MAX8、RTD(5,7)、r7；论文optimal仅指最佳已知，不是已证最大值。OEIS A107431当前comment明确T(7,5)为7或8。",
+      "source_revision_correction": "删除把OEIS全站页脚更新时间误当A107431条目修订日期的陈述；source_last_modified为null，核查日期2026-11-06，条目revision历史未核对。",
+      "human_reconstruction": "以35人(a,b)，a=0..4、b∈F7，周t=0..6同组条件b−ta=c，每周c∈F7给7组。不同a的两人至多在唯一t相遇，相同a不相遇。明确重建文献RTD(5,7)同参传统方法。",
+      "independent_math": "正式checker保存无序搭档对；Sol另为每人维护35位搭档bitmask，逐组验证不交、每周完整分区，最终每人4r个不同搭档，7轮为28、共490对；4r<=34给r<=8。五种保存构造均重算。",
+      "controls": "初始/传统/演化1、人类/参考7。自有搜索弱于公开构造，如实记录，不作改善声称。重复轮次破坏、完整声明分数不变、严格回放、冷导出、程序错误/非有限数/超时均通过。",
+      "limits": "未找到8轮见证或不存在性证明；当前来源界7–8尚有缺口。未把构造算法搜索失败当作最优性证据。"
+    }
+  }
+}

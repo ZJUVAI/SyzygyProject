@@ -1,91 +1,148 @@
+import hashlib
 import json
+import os
 from pathlib import Path
-import unittest
-from tasks.t066.check import validate
-from tasks.t066.baseline import _distance, _mutate_parity
+import sys
+from fractions import Fraction
 
-class _FixedMutationRng:
-    def randint(self, a, b): return 1
-    def randrange(self, start, stop=None):
-        if stop is None: return 0
-        return start
+import pytest
 
-CONFIG={'parameters':{'n':68,'k':15,'q':2}}
-DATA=Path(__file__).parent/'data'/'human_generator.json'
-SOTA_DATA=Path(__file__).parent/'data'/'sota_generator.json'
+from mathbench.evaluate import _run
+from tasks.t066.algebra import add, mul, sub, zero
+from tasks.t066.baseline import run_code as baseline_run
+from tasks.t066.check import CONFIG_ID, PARAMETERS, validate
+from tasks.t066.evolution import run_code as evolution_run
+from tasks.t066.human import DEGREE, MODULUS, build_human_orchard, run_code as human_run
+from tasks.t066.init_program import run_code as init_run
+from tasks.t066.reference import run_code as reference_run
 
-class TaskTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.matrix=json.loads(DATA.read_text())['matrix']
 
-    def test_public_witness_exact_distance(self):
-        result=validate({'generator_matrix':self.matrix,'objective':999},CONFIG)
-        # Independent direct XOR enumeration for the score cross-check.
-        independent=[]
-        for mask in range(1, 1 << 15):
-            word=[0]*68
-            for i in range(15):
-                if (mask >> i) & 1:
-                    word=[a ^ b for a,b in zip(word,self.matrix[i])]
-            independent.append(sum(word))
-        self.assertEqual(min(independent),8)
-        self.assertEqual(result['objective'],min(independent))
-        self.assertEqual(result['verification_status'],'exact')
-        self.assertEqual(result['details']['codewords_checked'],32767)
-        self.assertTrue(result['details']['claimed_objective_mismatch'])
+TASK = Path(__file__).parent
+CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
 
-    def test_reproduced_sota_witness_exact_distance(self):
-        from tasks.t066.sota import run_code
-        witness=json.loads(SOTA_DATA.read_text())
-        result=validate(run_code(),CONFIG)
-        self.assertEqual(len(witness['matrix']),15)
-        self.assertTrue(all(len(row)==68 for row in witness['matrix']))
-        self.assertEqual(result['objective'],24)
-        self.assertEqual(result['verification_status'],'exact')
-        self.assertEqual(result['details']['rank'],15)
-        self.assertEqual(result['details']['codewords_checked'],32767)
 
-    def test_ignores_absent_score(self):
-        self.assertEqual(validate({'generator_matrix':self.matrix},CONFIG)['objective'],8)
+def _validate(solution):
+    return validate(solution, CONFIG)
 
-    def test_rejects_bool_entry(self):
-        m=[r[:] for r in self.matrix]; m[0][0]=True
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
 
-    def test_rejects_float_entry(self):
-        m=[r[:] for r in self.matrix]; m[0][0]=1.0
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+def test_all_five_entries_and_reproduced_score(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
+    for solution in outputs:
+        checked = _validate(solution)
+        assert checked["verification_status"] == "exact"
+        assert isinstance(checked["objective"], int)
+    assert _validate(human_run())["objective"] == 40
+    assert _validate(reference_run())["objective"] == 40
 
-    def test_rejects_wrong_shape(self):
-        with self.assertRaises(ValueError): validate({'generator_matrix':self.matrix[:-1]},CONFIG)
-        m=[r[:] for r in self.matrix]; m[0].pop()
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
 
-    def test_rejects_rank_deficient_matrix(self):
-        m=[r[:] for r in self.matrix]; m[1]=m[0][:]
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+def test_frozen_reference_matches_formula_and_hash():
+    path = TASK / "data/reference/cubic_tangent_17.json"
+    raw = path.read_bytes()
+    metadata = json.loads((TASK / "sota.json").read_text())
+    record = metadata["configurations"][CONFIG_ID]
+    assert hashlib.sha256(raw).hexdigest() == record["witness_sha256"]
+    saved = json.loads(raw)
+    assert saved == build_human_orchard()
+    assert _validate(saved)["objective"] == 40
 
-    def test_boundary_valid_distance_one_systematic_code(self):
-        m=[]
-        for i in range(15):
-            row=[0]*68; row[i]=1; m.append(row)
-        self.assertEqual(validate({'generator_matrix':m},CONFIG)['objective'],1)
 
-    def test_parity_mutation_changes_code_and_distance_while_preserving_rank(self):
-        # [I|I|0] has distance 2. Clearing one parity bit in row 0
-        # makes that generator weight 1, so the new code has distance 1.
-        rows=[]
-        for i in range(15):
-            rows.append((1 << i) | (1 << (15+i)))
-        changed=_mutate_parity(rows, _FixedMutationRng(), max_flips=1)
-        self.assertEqual(_distance(rows),2)
-        self.assertEqual(_distance(changed),1)
-        self.assertNotEqual(rows,changed)
-        # The identity block remains intact, so rank remains 15.
-        self.assertTrue(all((changed[i] >> i) & 1 for i in range(15)))
+def test_independent_determinant_identity_and_zero_sum_count():
+    witness = build_human_orchard()
+    assert len(witness["points"]) == 17
+    exact = []
+    for point in witness["points"]:
+        exact.append((
+            tuple(Fraction(v) for v in point["x"]),
+            tuple(Fraction(v) for v in point["y"]),
+        ))
+    zero_element = zero(DEGREE)
+    collinear = set()
+    for i in range(17):
+        for j in range(i + 1, 17):
+            for k in range(j + 1, 17):
+                xi, yi = exact[i]
+                xj, yj = exact[j]
+                xk, yk = exact[k]
+                det = sub(
+                    mul(sub(xj, xi), sub(yk, yi), MODULUS),
+                    mul(sub(yj, yi), sub(xk, xi), MODULUS),
+                )
+                if det == zero_element:
+                    collinear.add((i, j, k))
+    expected = {
+        (i, j, k)
+        for i in range(17)
+        for j in range(i + 1, 17)
+        for k in range(j + 1, 17)
+        if (i + j + k) % 17 == 0
+    }
+    assert len(expected) == 40
+    assert collinear == expected
 
-    def test_rejects_unknown_parameters(self):
-        with self.assertRaises(ValueError): validate({'generator_matrix':self.matrix},{'parameters':{'n':68,'k':15,'q':3}})
 
-if __name__=='__main__': unittest.main()
+def test_a_line_with_more_than_three_points_does_not_count():
+    solution = {
+        "minimal_polynomial": [0, 1],
+        "isolating_interval": ["-1", "1"],
+        "points": [{"x": [i], "y": [0]} for i in range(17)],
+    }
+    checked = _validate(solution)
+    assert checked["objective"] == 0
+    assert checked["details"]["largest_line_incidence"] == 17
+
+
+def test_large_exact_integer_coordinates_have_no_precision_cap():
+    large = 10 ** 5000
+    solution = {
+        "minimal_polynomial": [0, 1],
+        "isolating_interval": ["-1", "1"],
+        "points": [{"x": [str(large + i)], "y": [i * i]} for i in range(17)],
+    }
+    checked = _validate(solution)
+    assert checked["verification_status"] == "exact"
+
+
+@pytest.mark.parametrize(
+    "solution",
+    [
+        {"minimal_polynomial": [0, 1], "isolating_interval": ["-1", "1"], "points": [{"x": [0], "y": [0]}] * 17},
+        {"minimal_polynomial": [0, 1], "isolating_interval": ["-1", "1"], "points": [{"x": [True], "y": [0]} for _ in range(17)]},
+        {"minimal_polynomial": [0, 1], "isolating_interval": ["-1", "1"], "points": [{"x": [float("nan")], "y": [0]} for _ in range(17)]},
+        {"minimal_polynomial": [0, 2], "isolating_interval": ["-1", "1"], "points": [{"x": [i], "y": [i * i]} for i in range(17)]},
+        {"minimal_polynomial": [-1, 0, 1], "isolating_interval": ["0", "2"], "points": [{"x": [i], "y": [i * i]} for i in range(17)]},
+        {"minimal_polynomial": [-2, 0, 1], "isolating_interval": ["-2", "2"], "points": [{"x": [i], "y": [i * i]} for i in range(17)]},
+        {"minimal_polynomial": [0, 1], "isolating_interval": ["1", "1"], "points": [{"x": [i], "y": [i * i]} for i in range(17)]},
+        {"minimal_polynomial": [0, 1], "isolating_interval": ["-1", "1"], "points": [{"x": [i], "y": [i * i]} for i in range(16)]},
+    ],
+)
+def test_invalid_constructions_rejected(solution):
+    with pytest.raises(ValueError):
+        _validate(solution)
+
+
+def test_claimed_scores_do_not_change_validation():
+    solution = build_human_orchard()
+    expected = _validate(solution)
+    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "fake")):
+        assert validate({**solution, key: value}, CONFIG) == expected
+    assert expected["details"]["claimed_objective_ignored"] is True
+
+
+def test_search_is_seeded_and_does_not_read_reference(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "23")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    first, second = baseline_run(), baseline_run()
+    assert first == second
+    assert first["search_metadata"]["reference_data_read"] is False
+    _validate(first)
+
+
+def test_runner_error_and_timeout_without_registry():
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T066 failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T066 failure')"], env, 3)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)

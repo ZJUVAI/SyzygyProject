@@ -1,0 +1,33 @@
+{
+  "task_id": "T011",
+  "config_id": "T011-C03",
+  "validity": 1.0,
+  "combined_score": 0.662125340599455,
+  "objective": 729,
+  "verification_status": "exact",
+  "generation_time": 0.16441768407821655,
+  "verification_time": 0.2646887004375458,
+  "objective_value": 729,
+  "details": {
+    "word_count": 729,
+    "power": 6,
+    "all_pairs_checked": true,
+    "claimed_objective_ignored": true,
+    "optimality_proved": false
+  },
+  "eval_time": 0.43283651769161224,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

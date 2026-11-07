@@ -1,0 +1,139 @@
+{
+  "best_human": {
+    "value": 367,
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "q": 7,
+      "power": 5
+    },
+    "url": "https://arxiv.org/abs/1808.07438",
+    "provenance": "Polak and Schrijver published an explicit independent set of size 367 for the fifth strong power of C7.",
+    "evidence_state": "published witness; no claim that it is optimal"
+  },
+  "best_public": {
+    "value": 367,
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "q": 7,
+      "power": 5
+    },
+    "url": "https://arxiv.org/abs/1808.07438",
+    "evidence_state": "public construction checked for this fixed configuration; a maximum value is not established",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 367,
+    "date_reproduced": "2026-11-04",
+    "parameters": {
+      "q": 7,
+      "power": 5
+    },
+    "url": "https://arxiv.org/abs/1808.07438",
+    "provenance": "The appendix witness was copied to task-local JSON and checked over all 67,161 unordered pairs.",
+    "ai_provenance": "Witness transcription and independent exact pairwise verification performed for this task.",
+    "actual_value": 367,
+    "evidence_state": "exact checker validates every word and every unordered pair; optimality remains open"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configurations": {
+    "T011-C01": {
+      "value": 367,
+      "date_checked": "2026-11-04",
+      "parameters": {
+        "q": 7,
+        "power": 5
+      },
+      "url": "https://arxiv.org/abs/1808.07438",
+      "evidence_state": "public construction checked for this fixed configuration; a maximum value is not established",
+      "origin_type": "unknown unless attribution is stated in source/provenance"
+    },
+    "T011-C02": {
+      "best_human": {
+        "value": 100,
+        "parameters": {
+          "q": 7,
+          "power": 4
+        },
+        "evidence_state": "verified traditional construction"
+      },
+      "best_public": {
+        "value": 108,
+        "parameters": {
+          "q": 7,
+          "power": 4
+        },
+        "url": "https://www.sciencedirect.com/science/article/pii/S0020019001002290",
+        "origin_type": "human simulated-annealing result",
+        "evidence_state": "reported in primary paper; local witness not reproduced"
+      },
+      "best_reproduced": {
+        "value": 100,
+        "parameters": {
+          "q": 7,
+          "power": 4
+        },
+        "witness": "data/reference_C7_4_100.json",
+        "evidence_state": "exactly verified; weaker than public report",
+        "review_status": "reviewed_by_sol"
+      },
+      "acceptance_status": "accepted_by_sol"
+    },
+    "T011-C03": {
+      "best_human": {
+        "value": 1101,
+        "parameters": {
+          "q": 7,
+          "power": 6
+        },
+        "evidence_state": "verified traditional product construction"
+      },
+      "best_public": {
+        "value": 1120,
+        "parameters": {
+          "q": 7,
+          "power": 6
+        },
+        "url": "https://arxiv.org/abs/2607.21517v2",
+        "origin_type": "AI-assisted",
+        "evidence_state": "pinned primary repository witness; exact verification pending Sol"
+      },
+      "best_reproduced": {
+        "value": 1120,
+        "parameters": {
+          "q": 7,
+          "power": 6
+        },
+        "witness": "data/reference/CC_6_7_1120.txt",
+        "evidence_state": "exact local verification; pending Sol review",
+        "review_status": "reviewed_by_sol"
+      },
+      "acceptance_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T011-C01": {
+      "objective": 243,
+      "objective_value": 243,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.662125340599455
+    },
+    "T011-C02": {
+      "objective": 81,
+      "objective_value": 81,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.81
+    },
+    "T011-C03": {
+      "objective": 729,
+      "objective_value": 729,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.662125340599455
+    }
+  }
+}

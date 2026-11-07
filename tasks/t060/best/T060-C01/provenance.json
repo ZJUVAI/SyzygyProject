@@ -1,0 +1,76 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T060",
+    "config_id": "T060-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 153,
+    "verification_status": "exact",
+    "generation_time": 0.5465838685631752,
+    "verification_time": 0.5534985885024071,
+    "objective_value": 153,
+    "details": {
+      "target": "2305843009213693951",
+      "expression_value": "2305843009213693951",
+      "ones_count": 153,
+      "expression_tree": true,
+      "certified_lower_bound": 116,
+      "selfridge_max_at_115": "1801135623563989452",
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 1.1082188747823238,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "exhaustive uniform-radix Horner candidates",
+    "tested_radices": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "seed": 0,
+    "iterations": 15,
+    "iteration_limit": 15,
+    "reference_data_read": false,
+    "budget": {
+      "mode": "fixed_iteration_count",
+      "requested_iterations": 15,
+      "actual_iterations": 15,
+      "requested_wall_clock_seconds": null
+    }
+  },
+  "solution_sha256": "952df51172260e1b4ae986734391deb21b21af846be8a39b0e1f747c0e2b45a7",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T060 tasks/t060/best/T060-C01/solution.json --config T060-C01"
+}

@@ -1,0 +1,1 @@
+{"elements": [8657, 13181, 15381, 16501, 17071, 17356, 17504, 17581, 17621, 17641, 17652, 17658, 17661, 17663, 17664, 17665], "search_metadata": {"algorithm": "greedy descending scan with exact subset-sum bitset, over a seeded fixed cap grid", "seed": 0, "cap_start": 16000, "cap_stop": 18997, "cap_step": 333, "cap_trials_completed": 10, "reference_data_read": false}}

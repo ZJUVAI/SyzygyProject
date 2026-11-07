@@ -1,0 +1,50 @@
+{
+  "task_id": "T053",
+  "name": "Factor 100000 factorial into 100000 balanced factors",
+  "acceptance_status": "accepted_by_sol",
+  "category": "number_theory",
+  "definition": "For fixed N=100000, choose exactly N positive integer factors whose product is N!, and maximize the smallest factor.",
+  "solution_format": "An object containing a list of exactly 100000 positive integer factors.",
+  "objective": {
+    "name": "minimum_factor",
+    "unit": "integer",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "The construction contains exactly 100000 factors.",
+    "Every factor is a positive integer.",
+    "The product of all factors is exactly 100000!.",
+    "The objective is the smallest factor, not the ratio of largest to smallest factors."
+  ],
+  "configurations": [
+    {
+      "id": "T053-C01",
+      "parameters": {
+        "n": 100000
+      },
+      "direction": "maximize",
+      "human_reference": 33330
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.1090/mcom/4249",
+    "https://arxiv.org/abs/2503.20170v4",
+    "https://github.com/teorth/erdos-guy-selfridge/tree/978e4802dd413356e7e0ff97a44db803ab9596eb"
+  ],
+  "verification": "Exact product-tree multiplication compared with 100000!, exact factor count and positivity checks. Independent verification can compare prime exponents using Legendre's formula.",
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定100000个正整数因子乘积100000!，最大化最小因子；无因子≤N额外约束，无最大最小比值替代。",
+      "primary_source": "主代理读取2503.20170v4定义、Theorem1.3、§1.1及固定978e4802dd413356e7e0ff97a44db803ab9596eb仓库t_large_n_bounds.txt与生成语义。43632配置Fig12已闭合14545，排除并改100000。",
+      "bounds": "源数据(33641,33649)保留为报告计算端点；33641未取到同参见证，33649为未证LP上界，且模型假设需另证明，不用作严格证书。定理给严谨上界floor(100000/e)=36787，未查到匹配精确最优值。",
+      "human_reproduction": "复现Sutherland贪心方法产生100008个≥33330子因子，将多余子因子和未用质数幂合并得到恰100000因子，最小33330。冻结H33330明确弱于公开报告33641。",
+      "independent_math": "正式检查器平衡乘积树与factorial比较；主代理另逐因子试除所有质数并逐质数对照Legendre指数，所有9592个质数指数一致。五程序各自精确验证。",
+      "controls": "五程序初始1、传统41、演化158、人类/参考33330；倍增一个因子破坏、完整声明不变性、严格回放、冷导出及三类错误控制通过。",
+      "limits": "未复现报告33641的更强分解，未验证源LP对偶上界，未称已突破文献纪录。"
+    }
+  }
+}

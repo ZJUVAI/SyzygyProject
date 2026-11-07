@@ -1,0 +1,31 @@
+{
+  "task_id": "T030",
+  "candidate_id": "graph-coloring",
+  "name": "DIMACS DSJC1000.5 vertex coloring",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T030-C01",
+      "parameters": {
+        "instance": "DSJC1000.5",
+        "vertices": 1000,
+        "edges": 249826,
+        "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+      },
+      "direction": "minimize",
+      "human_reference": 86
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "固定DSJC1000.5的1000顶点249826条边。最小化合法着色中不同颜色数。",
+      "人类来源": "Titiloye–Crispin2012论文和作者证书提供82色。冻结对照仍用Loudni的86色。原长时间退火搜索未重跑。",
+      "独立验算": "主代理解码官方二进制图，全部边与公开JSON和文本一致。另按同色顶点分组检查组内点对，独立于任务逐边检查。五程序及完整控制通过。",
+      "开放状态与限制": "Cazenave等2025表4题注说明色数未知。该表83只是其HEAD实验值，不能当公开最好。73下界只作文献报告，未本地重证。"
+    }
+  }
+}

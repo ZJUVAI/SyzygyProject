@@ -1,4 +1,3 @@
-"""Task adapter using the shared mathbench evaluator."""
 from mathbench.evaluate import evaluate_candidate
 
 

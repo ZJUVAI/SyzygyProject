@@ -1,0 +1,63 @@
+{
+  "source_date": "2026-11-06",
+  "survey_scope_note": "The Ovals problem for smooth simple closed convex plane curves of length 2*pi. The target is the least eigenvalue of -d^2/ds^2 + curvature^2, minimized over curves.",
+  "best_human": {
+    "value": 1,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "dimension": 2,
+      "curve_class": "smooth strictly convex simple closed plane curves",
+      "length": "2*pi",
+      "quantity": "first periodic eigenvalue"
+    },
+    "url": "https://arxiv.org/abs/math-ph/0402048",
+    "ai_provenance": "Classical analytical unit-circle construction from Benguria and Loss (2004), encoded locally with AI assistance.",
+    "evidence_state": "The unit circle has curvature 1; the constant eigenfunction gives eigenvalue 1, and the full periodic spectrum is 1+k^2. Exact score 1 is reproduced.",
+    "origin_type": "traditional human analytical construction"
+  },
+  "best_public": {
+    "value": 1,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "dimension": 2,
+      "curve_class": "smooth closed plane curves of length 2*pi",
+      "quantity": "feasible first eigenvalue upper bound"
+    },
+    "url": "https://arxiv.org/abs/math-ph/0402048",
+    "ai_provenance": "Traditional mathematical result; no AI contribution is reported in the cited 2004 source.",
+    "evidence_state": "The circle is an exact feasible curve with eigenvalue 1. This does not prove global optimality; the Ovals conjecture remains open.",
+    "origin_type": "published analytical construction"
+  },
+  "best_reproduced": {
+    "value": 1,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "curve": "unit circle",
+      "length": "2*pi"
+    },
+    "url": "https://arxiv.org/abs/math-ph/0402048",
+    "witness": "data/reference/circle.json",
+    "ai_provenance": "The classical formula is replayed from a local exact certificate.",
+    "evidence_state": "Exact Fourier certificate gives Rayleigh quotient 1. The circle's complete spectrum independently gives first eigenvalue 1.",
+    "verification_status": "certified"
+  },
+  "configurations": {
+    "T096-C01": {
+      "human_reference_value": 1,
+      "public_value": 1,
+      "reproduced_value": "1/1",
+      "known_public_lower_bound": 0.96183165233528,
+      "optimality_status": "Open in sources checked through 2026-11-06."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T096-C01": {
+      "objective": "1/1",
+      "objective_value": "1/1",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 1.0
+    }
+  }
+}

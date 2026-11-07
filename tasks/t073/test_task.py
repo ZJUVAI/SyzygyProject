@@ -1,74 +1,115 @@
-import unittest
-from unittest.mock import patch
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
 
-from tasks.t073.baseline import run_code as baseline
-from tasks.t073.check import aperiodic_autocorrelations, validate
-from tasks.t073.human import run_code as human
-from tasks.t073.init_program import run_code as initial
-from tasks.t073.reference import run_code as reference
+import pytest
 
-CONFIG = {"id": "T073-C01", "parameters": {"L": 100}, "direction": "minimize"}
-
-
-class TaskTests(unittest.TestCase):
-    def test_seed_is_feasible(self):
-        result = validate(initial(), CONFIG)
-        self.assertEqual(result["verification_status"], "exact")
-        self.assertEqual(len(result["details"]["aperiodic_autocorrelations"]), 99)
-
-    def test_human_witness_is_exact_and_pinned(self):
-        sequence = human()["sequence"]
-        result = validate({"sequence": sequence, "claimed_score": -1}, CONFIG)
-        self.assertEqual(result["objective"], 578)
-        self.assertEqual(reference()["sequence"], sequence)
-
-    def test_invalid_entries_and_dimensions(self):
-        with self.assertRaises(ValueError):
-            validate({}, CONFIG)
-        with self.assertRaises(ValueError):
-            validate({"sequence": [1] * 99}, CONFIG)
-        for bad in (True, 1.0, 0, -2):
-            sequence = [1] * 100
-            sequence[0] = bad
-            with self.assertRaises(ValueError):
-                validate({"sequence": sequence}, CONFIG)
-
-    def test_baseline_search_changes_seed_energy(self):
-        self.assertLess(validate(baseline(), CONFIG)["objective"],
-                        validate(initial(), CONFIG)["objective"])
-
-    def test_correlation_count(self):
-        self.assertEqual(len(aperiodic_autocorrelations([1, -1, 1])), 2)
-
-    def test_staged_human_witnesses_and_exact_scores(self):
-        for config_id, length, energy in (("T073-C02", 80, 352),
-                                          ("T073-C03", 120, 872)):
-            config = {"id": config_id, "parameters": {"L": length},
-                      "direction": "minimize"}
-            with patch.dict("os.environ", {"MATHBENCH_CONFIG_ID": config_id}):
-                witness = human()
-                self.assertEqual(len(witness["sequence"]), length)
-                scored = validate({**witness, "claimed_score": -999999}, config)
-                self.assertEqual(scored["objective"], energy)
-                self.assertEqual(reference(), witness)
-                self.assertEqual(len(initial()["sequence"]), length)
-                self.assertEqual(len(baseline()["sequence"]), length)
-                broken = witness["sequence"][:-1]
-                with self.assertRaises(ValueError):
-                    validate({"sequence": broken, "claimed_score": energy}, config)
-
-    def test_staged_length_mismatch_rejected(self):
-        config = {"id": "T073-C02", "parameters": {"L": 80}}
-        with self.assertRaises(ValueError):
-            validate({"sequence": [1] * 100}, config)
-
-    def test_environment_switches_between_live_and_staged_configs(self):
-        for config_id, length in (("T073-C01", 100), ("T073-C02", 80),
-                                  ("T073-C03", 120)):
-            with patch.dict("os.environ", {"MATHBENCH_CONFIG_ID": config_id}):
-                self.assertEqual(len(initial()["sequence"]), length)
-                self.assertEqual(len(human()["sequence"]), length)
+from mathbench.evaluate import _run
+from tasks.t073.baseline import run_code as baseline_run
+from tasks.t073.check import CONFIG_ID, PARAMETERS, validate
+from tasks.t073.evolution import run_code as evolution_run
+from tasks.t073.human import run_code as human_run
+from tasks.t073.init_program import run_code as init_run
+from tasks.t073.reference import run_code as reference_run
 
 
-if __name__ == "__main__":
-    unittest.main()
+TASK = Path(__file__).parent
+CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
+
+
+def _validate(solution):
+    return validate(solution, CONFIG)
+
+
+def test_all_five_entries_and_exact_human_reference(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    solutions = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
+    for solution in solutions:
+        result = _validate(solution)
+        assert result["verification_status"] == "exact"
+        assert result["details"]["monomials_checked"] == 126
+        assert result["objective"] == len(solution["points"])
+    assert len(solutions[0]["points"]) == 96
+    assert len(solutions[1]["points"]) == 24
+    assert solutions[1] == solutions[2]
+    assert solutions[3] == solutions[4]
+
+
+def test_reference_is_pinned_and_independent_certificate_matches():
+    metadata = json.loads((TASK / "sota.json").read_text())
+    record = metadata["configurations"][CONFIG_ID]
+    witness = TASK / record["witness"]
+    human = TASK / "data/human/d4_24cell.json"
+    assert hashlib.sha256(witness.read_bytes()).hexdigest() == record["witness_sha256"]
+    assert hashlib.sha256(human.read_bytes()).hexdigest() == record["witness_sha256"]
+    raw_certificate = TASK / "data/reference/d4_rational24_independent_certificate.json"
+    raw_record = record["independent_certificate"]
+    assert hashlib.sha256(raw_certificate.read_bytes()).hexdigest() == raw_record["sha256"]
+    frozen = json.loads(witness.read_text())
+    raw_points = json.loads(raw_certificate.read_text())["points"]
+    normalized = [[[coordinate] for coordinate in point] for point in raw_points]
+    assert frozen["points"] == normalized
+    assert len(frozen["points"]) == 24
+
+
+def test_generic_algebraic_coordinates_are_checked_exactly():
+    initial = init_run()
+    result = _validate(initial)
+    assert result["objective"] == 96
+    assert result["details"]["coordinate_field_degree"] == 2
+    assert result["details"]["minimal_polynomial_irreducible"] is True
+
+
+def test_duplicate_off_sphere_and_moment_perturbation_rejected():
+    source = reference_run()
+    duplicate = copy.deepcopy(source)
+    duplicate["points"][1] = copy.deepcopy(duplicate["points"][0])
+    with pytest.raises(ValueError, match="distinct"):
+        _validate(duplicate)
+
+    off_sphere = copy.deepcopy(source)
+    off_sphere["points"][0][0] = ["0"]
+    with pytest.raises(ValueError, match="unit sphere"):
+        _validate(off_sphere)
+
+    wrong_moment = copy.deepcopy(source)
+    wrong_moment["points"][-1] = [["3/5"], ["4/5"], ["0"], ["0"]]
+    with pytest.raises(ValueError, match="moment mismatch"):
+        _validate(wrong_moment)
+
+
+@pytest.mark.parametrize(
+    "mutate",
+    [
+        lambda x: x.update(minimal_polynomial=[0, 0, 1]),
+        lambda x: x.update(isolating_interval=["1", "2"]),
+        lambda x: x["points"][0].__setitem__(0, [True]),
+        lambda x: x["points"][0].__setitem__(0, [0.0]),
+        lambda x: x["points"][0].__setitem__(0, [float("nan")]),
+    ],
+)
+def test_invalid_field_or_coordinate_encoding_rejected(mutate):
+    solution = copy.deepcopy(reference_run())
+    mutate(solution)
+    with pytest.raises(ValueError):
+        _validate(solution)
+
+
+def test_claimed_objective_does_not_change_validation():
+    solution = reference_run()
+    expected = _validate(solution)
+    for key, value in (("objective", -3), ("score", float("nan")), ("claimed_score", "not-used")):
+        assert validate({**solution, key: value}, CONFIG) == expected
+    assert expected["details"]["claimed_objective_ignored"] is True
+
+
+def test_runner_error_and_timeout_without_registry():
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T073 failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T073 failure')"], env, 3)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)

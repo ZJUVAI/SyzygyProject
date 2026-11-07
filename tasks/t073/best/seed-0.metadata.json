@@ -1,0 +1,31 @@
+{
+  "task_id": "T073",
+  "configuration_id": "T073-C01",
+  "objective": 24,
+  "verification_status": "exact",
+  "verification_details": {
+    "dimension": 3,
+    "ambient_dimension": 4,
+    "design_strength": 5,
+    "point_count": 24,
+    "unit_norms_verified": 24,
+    "monomials_checked": 126,
+    "coordinate_field_degree": 2,
+    "minimal_polynomial_irreducible": true,
+    "selected_real_root_count": 1,
+    "claimed_objective_ignored": true
+  },
+  "seed": 0,
+  "algorithm": "enumerate integer coordinate multisets and select a signed-permutation orbit satisfying the exact fourth-moment identity",
+  "patterns_examined": 1,
+  "elapsed_seconds": 0.000464,
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "memory_limit_gib": 4,
+  "threads": 1,
+  "python": "3.13.12 (main, Mar 10 2026, 18:17:38) [Clang 21.1.4 ]",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "replay_command": "MATHBENCH_CONFIG_ID=T073-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t073.baseline import run_code; print(run_code())\"",
+  "witness_file": "best/seed-0.json",
+  "witness_sha256": "80431331d5a4740fd06f95757509b5e5dfbce1633c8dceb2a5c370f5af13b1a7"
+}

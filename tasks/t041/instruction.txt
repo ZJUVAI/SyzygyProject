@@ -1,0 +1,21 @@
+Pack exactly 17 squares inside the closed unit square [0,1] x [0,1]. The
+interiors of distinct squares must not intersect; boundary touching is legal.
+Squares may have different positive side lengths and arbitrary orientations.
+Maximize the sum of the 17 side lengths.
+
+Return JSON with one top-level key `squares`. It must contain 17 objects. Each
+object has exactly these fields:
+
+- `x`, `y`: exact rational strings for the square centre coordinates;
+- `side`: a positive exact rational string;
+- `cos`, `sin`: exact rational strings for a unit edge direction, with
+  cos^2 + sin^2 = 1 exactly.
+
+For example, `{"x":"1/2","y":"1/2","side":"1/4","cos":"1","sin":"0"}`
+encodes an axis-parallel square. The verifier computes all four corners,
+containment, all 136 pairwise separating-axis tests, and the side-length sum
+with exact rational arithmetic. Do not include or rely on a declared score.
+
+Your program must define `run_code()` with no arguments and return the JSON
+data. Read the configuration from `MATHBENCH_CONFIG_ID` and seed from
+`MATHBENCH_SEED`. Do not read human or public reference files.

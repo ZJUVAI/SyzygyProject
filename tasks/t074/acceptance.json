@@ -1,0 +1,405 @@
+{
+  "task_id": "T074",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T074 --label admission_20261106",
+  "configurations": {
+    "T074-C01": {
+      "configuration": {
+        "id": "T074-C01",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points",
+          "objective": "minimum_triangle_area / convex_hull_area",
+          "no_three_collinear": true
+        },
+        "direction": "maximize",
+        "human_reference": 0.0392156862745098
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T074",
+            "config_id": "T074-C01",
+            "validity": 1.0,
+            "combined_score": 0.1159090909090909,
+            "objective": "1/220",
+            "verification_status": "exact",
+            "generation_time": 4.3410018645226955,
+            "verification_time": 0.6642822846770287,
+            "objective_value": "1/220",
+            "details": {
+              "point_count": 12,
+              "triangles_checked": 220,
+              "minimum_triangle_area": "1",
+              "convex_hull_area": "220",
+              "hull_vertex_count": 12,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 5.014585837721825,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "area_ratio": "1/220",
+            "minimum_triangle_area": "1",
+            "hull_area": "220",
+            "support_edges": 12,
+            "triangles_checked": 220
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T074",
+            "config_id": "T074-C01",
+            "validity": 1.0,
+            "combined_score": 0.12814070351758794,
+            "objective": "1/199",
+            "verification_status": "exact",
+            "generation_time": 5.221434440463781,
+            "verification_time": 1.6769379936158657,
+            "objective_value": "1/199",
+            "details": {
+              "point_count": 12,
+              "triangles_checked": 220,
+              "minimum_triangle_area": "1",
+              "convex_hull_area": "199",
+              "hull_vertex_count": 11,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 6.907400034368038,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "area_ratio": "1/199",
+            "minimum_triangle_area": "1",
+            "hull_area": "199",
+            "support_edges": 11,
+            "triangles_checked": 220
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T074",
+            "config_id": "T074-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": "2/51",
+            "verification_status": "exact",
+            "generation_time": 2.291468568146229,
+            "verification_time": 4.300636809319258,
+            "objective_value": "2/51",
+            "details": {
+              "point_count": 12,
+              "triangles_checked": 220,
+              "minimum_triangle_area": "1/4",
+              "convex_hull_area": "51/8",
+              "hull_vertex_count": 9,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 6.609817557036877,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "area_ratio": "2/51",
+            "minimum_triangle_area": "1/4",
+            "hull_area": "51/8",
+            "support_edges": 9,
+            "triangles_checked": 220
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T074",
+            "config_id": "T074-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": "2/51",
+            "verification_status": "exact",
+            "generation_time": 2.893059618771076,
+            "verification_time": 5.750130265951157,
+            "objective_value": "2/51",
+            "details": {
+              "point_count": 12,
+              "triangles_checked": 220,
+              "minimum_triangle_area": "1/4",
+              "convex_hull_area": "51/8",
+              "hull_vertex_count": 9,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 8.65799344331026,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "area_ratio": "2/51",
+            "minimum_triangle_area": "1/4",
+            "hull_area": "51/8",
+            "support_edges": 9,
+            "triangles_checked": 220
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T074",
+            "config_id": "T074-C01",
+            "validity": 1.0,
+            "combined_score": 0.1159090909090909,
+            "objective": "1/220",
+            "verification_status": "exact",
+            "generation_time": 2.4940239675343037,
+            "verification_time": 2.101142343133688,
+            "objective_value": "1/220",
+            "details": {
+              "point_count": 12,
+              "triangles_checked": 220,
+              "minimum_triangle_area": "1",
+              "convex_hull_area": "220",
+              "hull_vertex_count": 12,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 4.604568503797054,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "area_ratio": "1/220",
+            "minimum_triangle_area": "1",
+            "hull_area": "220",
+            "support_edges": 12,
+            "triangles_checked": 220
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T074",
+        "config_id": "T074-C01",
+        "validity": 1.0,
+        "combined_score": 0.1159090909090909,
+        "objective": "1/220",
+        "verification_status": "exact",
+        "generation_time": 0.5894596017897129,
+        "verification_time": 0.5997437909245491,
+        "objective_value": "1/220",
+        "details": {
+          "point_count": 12,
+          "triangles_checked": 220,
+          "minimum_triangle_area": "1",
+          "convex_hull_area": "220",
+          "hull_vertex_count": 12,
+          "claimed_objective_ignored": true,
+          "strict": true
+        },
+        "eval_time": 1.1916959285736084,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T074",
+          "config_id": "T074-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t074/runs/admission_20261106/T074-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 1.6462894044816494,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T074",
+          "config_id": "T074-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 1.2026013620197773,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T074",
+          "config_id": "T074-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 3.2395044341683388,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "f6127fad4cf207bb38dde567e1624991bd0343f32ca43f76b41f1084c0a6309c",
+    "README.md": "6265990774047c8a206e63628d7541aeba42ccfdef6fea2829263337d6fa2c6b",
+    "baseline.py": "7ad38ef005d2a4a2a61e9cf443e7881539bdd7f3617abeefaa89c05c397caf7b",
+    "check.py": "352e6cc3a526cbfcb4106d14c8d9157d0d24ccc057356423a6749d44dbb3cbbf",
+    "construction.py": "3af7bc2221264564e9e4a2f3b589f3194a9dbf07c4e5864240d43a10d1ba5054",
+    "data/reference/cantrell_n12_rationalized.json": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+    "data/source/source_notes.json": "6565dc8122ed3663786d37a24d390cc3d82b75ce467730e1b53c5d88e11b58a7",
+    "data/source/tejstead_convex_n12.json": "c5eaf80a1b3f270b949fe891eb9777541f0330c6d33a33e7b3d1eaa267c03b27",
+    "evaluator.py": "d402bc5d2fea52ceafa2eb26bdc6c931e525713d2a9500bad705ff1df5690768",
+    "evolution.py": "1a96b90f736098dc3a5fbdefa3f88e3a009839cf4cdf6c5a7575e850d2eed7a7",
+    "human.py": "bd57c9c5485fd277f76d21980c0775a863505775de27b5a8703e9f8cf581ecb3",
+    "init_program.py": "0c7350174bc415fe22bfc2a6560c8aa2d8f30e1f63360514ed2a02f3633f5078",
+    "instruction.txt": "4d3936767675bde8a81a349655e8f817a853648a92841da2ac4b1e0fecfbb21b",
+    "records.json": "9df5f67f360bbace76f1a76f36ee484e02295bb99d8411c0b06fef3fa4d9e5a7",
+    "reference.py": "860300dfd33d978c802ff07770677fe537d1adedfe674ed3fd493b0d71d9ad4d",
+    "test_task.py": "f4a276ac1606c185de63f97812e825177dd5a546c28792945f17592e927b1dc1"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "Twelve points in a free convex planar domain; maximize minimum triangle area divided by convex hull area. This functional differs from fixed-square T005. No rational-coordinate magnitude cap; rational approximation preserves the continuous supremum by continuity on general-position configurations.",
+    "primary_record": "Current Tejstead free-convex n12 archive gives 2/51, credited to David Cantrell June2007; source notes original Mathematica notebook received September2026. Local baseline independently rebuilds archived decimals by affine normalization and rational reconstruction; does not assert byte identity with the original notebook.",
+    "independent_reproduction": "Root independently normalized source and recovered exact half-integer coordinates. Enumerated 220 triangles, minimum doubled area 1/2. A separate directed-support-edge enumeration, without formal Andrew hull algorithm, gives nine hull edges and doubled hull area 51/4; exact ratio2/51.",
+    "open_status": "Current archive reports this n12 construction as a record without optimality proof. 2026 certified free-convex n3 through8 results do not include12; no matching n12 proof located in screened sources. No claim that a finite numerical check establishes mathematical optimality.",
+    "initial_and_search": "Standalone twelve parabola points give1/220; independent traditional300-step mutation gives1/199, evolution1/220. Human and reference2/51; search does not read comparison assets.",
+    "admission": "Five strict budgeted programs, full-return claimed-score invariance, duplicate-point damaged witness, independent arithmetic, strict replay, cold export, and program-error/nonfinite/timeout controls passed."
+  }
+}

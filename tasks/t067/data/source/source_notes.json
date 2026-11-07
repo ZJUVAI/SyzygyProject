@@ -1,0 +1,16 @@
+{
+  "source_file": "milshtein_a17_4_5_444.txt",
+  "sha256": "bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a",
+  "origin": "The word list supplied with the research materials for Milshtein's published A(17,4,5) construction. The original file header states A(17,4,5) >= 444.",
+  "paper": {
+    "title": "A new binary (17,4,5) constant weight code",
+    "author": "Moshe Milshtein",
+    "doi": "10.1007/s12095-022-00611-5",
+    "url": "https://link.springer.com/article/10.1007/s12095-022-00611-5",
+    "published_online": "2022-10-08",
+    "journal": "Cryptography and Communications 15 (2023), 443-453"
+  },
+  "method": "The paper describes computer search for a maximum independent set using a stochastic local-search algorithm based on Generic Scuba Search.",
+  "ai_provenance": "The paper does not report use of generative AI and does not give a separate AI-provenance statement. Do not infer more than this.",
+  "reproduction": "The 444 binary strings were parsed and checked for length 17, weight 5, uniqueness, and pairwise Hamming distance at least 4."
+}

@@ -4,7 +4,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TASKS = ROOT / "tasks"
-INITIAL_TASKS = ("T001", "T002", "T005", "T009", "T014", "T035", "T044", "T060", "T066", "T067", "N001", "T057", "T073", "T079", "T080", "T081", "T082", "T089", "T099", "T097")
+# The v1.0 catalog contains one hundred consecutively numbered tasks.
+INITIAL_TASKS = tuple(f"T{number:03d}" for number in range(1, 101))
+
+
+def resolve_task_id(value):
+    task_id = value.upper()
+    if task_id in INITIAL_TASKS:
+        return task_id
+    raise ValueError(f"Unknown task {value!r}. Use T001–T100.")
 
 
 def task_path(task_id):
@@ -14,7 +22,12 @@ def task_path(task_id):
 
 
 def load_task(task_id):
-    return json.loads((task_path(task_id) / "task.json").read_text())
+    task = json.loads((task_path(task_id) / "task.json").read_text())
+    task["configurations"] = [
+        config for config in task["configurations"]
+        if config.get("acceptance_status", "accepted_by_sol") == "accepted_by_sol"
+    ]
+    return task
 
 
 def load_config(task_id, config_id=None):

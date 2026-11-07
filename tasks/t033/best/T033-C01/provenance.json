@@ -1,0 +1,61 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T033",
+    "config_id": "T033-C01",
+    "validity": 1.0,
+    "combined_score": 1.0366759517177344,
+    "objective": 8932,
+    "verification_status": "exact",
+    "generation_time": 8.885328214615583,
+    "verification_time": 0.1648205816745758,
+    "objective_value": 8932,
+    "details": {
+      "n": 10000,
+      "m": 9999,
+      "cut_edges": 8932,
+      "graph_sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
+    },
+    "eval_time": 9.054857909679413,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "steepest_improving_single_vertex_flip",
+    "seed": 0,
+    "restarts": 8,
+    "max_flips_per_restart": 10000,
+    "flips_per_restart": [
+      3618,
+      2198,
+      2226,
+      2140,
+      2178,
+      2200,
+      2218,
+      2186
+    ],
+    "total_flips": 18964,
+    "budget": "fixed iteration cap; stop early at 1-flip local optimum"
+  },
+  "solution_sha256": "361a409c916bf4d12f9b92040854988281ae7af68fbd34559f39a2f0c251bdb2",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T033 tasks/t033/best/T033-C01/solution.json --config T033-C01"
+}

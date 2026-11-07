@@ -1,0 +1,98 @@
+{
+  "task_id": "T051",
+  "snapshot_date": "2026-11-06",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T051-C01": {
+      "parameters": {
+        "discrepancy_cap": 3,
+        "entry_domain": [
+          -1,
+          1
+        ],
+        "sequence_type": "unrestricted"
+      },
+      "objective": {
+        "name": "sequence length",
+        "direction": "maximize",
+        "unit": "terms"
+      },
+      "best_human": {
+        "value": 130000,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted"
+        },
+        "url": "https://arxiv.org/html/1405.3097v2",
+        "source": "Konev and Lisitsa, §4 and the author data page.",
+        "provenance": "Traditional SAT-based construction; no AI assistance is attributed by the cited paper to this construction.",
+        "evidence_state": "Full witness recovered from a public Wolfram Community notebook discussing the problem and exactly verified across 1550902 progression prefixes. Byte identity with the original compressed download is not established.",
+        "witness": "data/source/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
+      },
+      "best_public": {
+        "value": 130000,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted"
+        },
+        "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
+        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and data page.",
+        "provenance": "Published SAT search. Reported construction is a lower bound, not an optimality result.",
+        "evidence_state": "Full public-notebook witness independently checked for all 1550902 progression prefixes.",
+        "witness": "data/reference/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
+      },
+      "best_reproduced": {
+        "value": 130000,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted"
+        },
+        "witness": "data/reference/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
+        "verification_status": "exact",
+        "verification_method": "Check every signed prefix sum in every homogeneous progression using Python integer arithmetic.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 130000,
+        "witness_program": "human.py",
+        "witness": "data/source/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
+        "note": "Same-parameter published unrestricted C=3 construction, recovered and exactly verified."
+      },
+      "optimality_status": {
+        "status": "open; lower bound 130000, exact maximum unknown",
+        "survey_date": "2026-11-06",
+        "note": "The exact C=2 and completely multiplicative C=3 results are different restricted/configured problems. Tao's infinite theorem does not determine this finite maximum."
+      },
+      "restricted_results": [
+        {
+          "cap": 2,
+          "maximum": 1160,
+          "scope": "unrestricted signs",
+          "status": "solved; excluded"
+        },
+        {
+          "cap": 3,
+          "maximum": 127645,
+          "scope": "completely multiplicative signs",
+          "status": "solved restricted problem; excluded"
+        }
+      ]
+    }
+  },
+  "initial_results": {
+    "T051-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 7.692307692307692e-06
+    }
+  }
+}

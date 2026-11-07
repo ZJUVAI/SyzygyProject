@@ -1,0 +1,146 @@
+{
+  "task_id": "T039",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T039-C01": {
+      "objective": "minimize the largest positive difference within any row, subject to all within-row differences being globally distinct",
+      "unit": "integer marks",
+      "direction": "minimize",
+      "known_lower_bound": 108,
+      "known_upper_bound": 112,
+      "upper_bound_source": "https://doi.org/10.1002/jcd.22009",
+      "lower_bound_source": "https://doi.org/10.37236/1463",
+      "open_status": "The cited bounds leave five possible integer values, 108 through 112. No optimality claim is made.",
+      "program": "reference.py",
+      "reproduced_value": 112,
+      "public_value": 112,
+      "highest_reported": {
+        "value": 112,
+        "source": {
+          "value": 112,
+          "parameters": {
+            "rows": 7,
+            "marks_per_row": 6,
+            "difference_triangle_parameters": "(n,k)=(7,5)"
+          },
+          "source_url": "https://doi.org/10.1002/jcd.22009",
+          "repository_url": "https://github.com/applecoffeecake/dts-search-hdl",
+          "repository_commit": "2ccff8e767c3fe6390fd3af056dfda11847011fc",
+          "repository_archive": "data/dts-search-hdl-2ccff8e.zip",
+          "archive_sha256": "e626454696109efbc72c4e693010ca0facdb9379ce5b29406d476403930c3f87",
+          "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
+          "witness_sha256": "9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f",
+          "origin_type": "published traditional FPGA search result",
+          "ai_provenance": "Not reported in the source.",
+          "evidence_state": "The 112 witness is reproduced. The paper calls it an upper bound, not a proven optimum."
+        },
+        "reproduction_status": "Exact published marks reproduced; original FPGA search not rerun."
+      },
+      "best_human": {
+        "value": 112,
+        "parameters": {
+          "rows": 7,
+          "marks_per_row": 6,
+          "difference_triangle_parameters": "(n,k)=(7,5)"
+        },
+        "source": "Mohannad Shehadeh, William Kingsford, and Frank R. Kschischang, New Difference Triangle Sets by a Field-Programmable Gate Array-Based Search Technique, Journal of Combinatorial Designs 34 (2026), 37-50; first published online 2025-10-02.",
+        "source_url": "https://doi.org/10.1002/jcd.22009",
+        "source_version": "Version of record. Table 1 reports the new upper bound 112 for (n,k)=(7,5), improved from 113. Appendix A lists the construction.",
+        "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
+        "witness_sha256": "9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f",
+        "witness_program": "human.py",
+        "date_checked": "2026-11-06",
+        "origin_type": "published traditional FPGA search result",
+        "ai_provenance": "The paper does not report whether AI or LLM tools were used.",
+        "evidence_state": "Exact repository witness replayed and independently checked: 7 rows, 6 marks per row, and 105 distinct positive differences. This verifies feasibility and value 112, not optimality."
+      },
+      "best_public": {
+        "value": 112,
+        "parameters": {
+          "rows": 7,
+          "marks_per_row": 6,
+          "difference_triangle_parameters": "(n,k)=(7,5)"
+        },
+        "source_url": "https://doi.org/10.1002/jcd.22009",
+        "repository_url": "https://github.com/applecoffeecake/dts-search-hdl",
+        "repository_commit": "2ccff8e767c3fe6390fd3af056dfda11847011fc",
+        "repository_archive": "data/dts-search-hdl-2ccff8e.zip",
+        "archive_sha256": "e626454696109efbc72c4e693010ca0facdb9379ce5b29406d476403930c3f87",
+        "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
+        "witness_sha256": "9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f",
+        "origin_type": "published traditional FPGA search result",
+        "ai_provenance": "Not reported in the source.",
+        "evidence_state": "The 112 witness is reproduced. The paper calls it an upper bound, not a proven optimum."
+      },
+      "best_reproduced": {
+        "value": 112,
+        "parameters": {
+          "rows": 7,
+          "marks_per_row": 6
+        },
+        "program": "reference.py",
+        "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
+        "verification_status": "exact",
+        "date_reproduced": "2026-11-06",
+        "ai_provenance": "The source's AI provenance is not reported; this is a replay of the published traditional FPGA-search result."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T039",
+          "config_id": "T039-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 112,
+          "verification_status": "exact",
+          "generation_time": 0.4033645689487457,
+          "verification_time": 0.5449595935642719,
+          "objective_value": 112,
+          "details": {
+            "rows": 7,
+            "marks_per_row": 6,
+            "within_row_differences_checked": 105,
+            "distinct_differences": 105,
+            "row_spans": [
+              112,
+              111,
+              110,
+              109,
+              107,
+              106,
+              100
+            ]
+          },
+          "eval_time": 0.9534559585154057,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "scope": 112,
+          "distinct_positive_differences": 105,
+          "sum_positive_differences": 5758
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "9f9b5b693b7b36aa1551ca355cdfc4753dfcf4d4e0f095fd7940794df6544467"
+      }
+    }
+  }
+}

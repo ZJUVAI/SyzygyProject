@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T034",
+    "config_id": "T034-C01",
+    "validity": 1.0,
+    "combined_score": 0.0650823656494734,
+    "objective": 241,
+    "verification_status": "exact",
+    "generation_time": 0.31482987478375435,
+    "verification_time": 0.16461149975657463,
+    "objective_value": 241,
+    "details": {
+      "n": 241,
+      "colors": 2,
+      "progression_length": 7,
+      "positive_steps_checked": 40,
+      "progressions_checked": 4720,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 0.4825589992105961,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded randomized sequential greedy extension with restart after dead end",
+    "configuration_id": "T034-C01",
+    "seed": 0,
+    "placements": 19810,
+    "placement_budget": 20000,
+    "restarts": 190,
+    "wall_clock_cutoff_seconds": null,
+    "reference_data_read": false
+  },
+  "solution_sha256": "9f6b04ab3b338e97ddb4b9f6378a0f24fb761535821ef35d2e9b3761522fdb60",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T034 tasks/t034/best/T034-C01/solution.json --config T034-C01"
+}

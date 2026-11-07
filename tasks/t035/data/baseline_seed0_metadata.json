@@ -1,0 +1,21 @@
+{
+  "configuration": "T035-C01",
+  "command": "MATHBENCH_CONFIG_ID=T035-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t035.baseline import run_code; print(run_code())\"",
+  "algorithm": "Greedy sequential point addition; 250 integer candidates sampled uniformly from [-1000,1000]^2; retain an addition only if the exact checker accepts it.",
+  "seed": 0,
+  "candidate_attempts": 250,
+  "objective": 19,
+  "witness": "best/greedy-seed-0.json",
+  "verification_status": "exact",
+  "generation_wall_seconds": 13.261466,
+  "environment": {
+    "python": "3.13.12",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "processor": "x86_64",
+    "cpu_threads": 1,
+    "memory_limit_bytes": 4294967296,
+    "generation_budget_seconds": 300,
+    "verification_budget_seconds": 60
+  },
+  "note": "Measured local replay. Wall time depends on machine; this run was not externally limited by the shared subprocess runner."
+}

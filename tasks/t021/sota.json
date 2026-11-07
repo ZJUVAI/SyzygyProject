@@ -1,0 +1,317 @@
+{
+  "task_id": "T021",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T021-C01": {
+      "public_value": "412.2612746",
+      "human_reference": 412.2612746505293,
+      "unit": "unit-charge, unit-radius Coulomb energy",
+      "direction": "minimize",
+      "public_metric": "sum over unordered pairs of reciprocal Euclidean distances",
+      "public_source": {
+        "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+        "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz",
+        "title": "Global Minima for the Thomson Problem",
+        "reported_value": "412.2612746",
+        "reported_decimal_places": 7,
+        "point_group": "I_h",
+        "source_status": "lowest located candidate; no proof of global optimality stated"
+      },
+      "highest_reported": {
+        "value": "412.2612746",
+        "source": {
+          "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+          "title": "Global Minima for the Thomson Problem",
+          "doi": "10.1103/PhysRevB.74.212101"
+        },
+        "status": "same-parameter candidate in checked sources; global optimality not proved"
+      },
+      "source_asset_sha256": "967ce3e92de2ab459a28d473cb80a501c6efb2c8dd274a66ab9634e7fd44456c",
+      "reproduced_value": "4122612746505293102359059093/10000000000000000000000000",
+      "reproduced_value_interval": [
+        "4122612746505293102359058597/10000000000000000000000000",
+        "4122612746505293102359059093/10000000000000000000000000"
+      ],
+      "program": "reference.py",
+      "matches_public_best": "not asserted; the source value is rounded and the decimal coordinates are rationalized onto the sphere",
+      "limitations": [
+        "The published coordinate file has finite decimal precision. human.py interprets each decimal as an exact rational, then maps it to an exact unit-sphere point by stereographic projection. This slightly changes the geometry.",
+        "The reproduced score is the checker's conservative upper bound for the rationalized witness, not the source's rounded value.",
+        "The CCD table records a numerical candidate and does not prove global optimality.",
+        "The latest author discussion dated 2026-10-27 says N=32 will need a new idea for a proof: https://www.vals.ai/blogs/thomson-exposition.",
+        "The matching AlphaEvolve problem is repository problem 33 at fixed commit 8f447457957deac61e28bf1676746f0753b3b2f8 and paper section 6.18. No AlphaEvolve score is carried over; same-parameter cross-run verification remains outstanding."
+      ],
+      "checked_at": "2026-11-06",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T021",
+          "config_id": "T021-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "4122612746505293102359059093/10000000000000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11417177692055702,
+          "verification_time": 0.16431688889861107,
+          "objective_value": "4122612746505293102359059093/10000000000000000000000000",
+          "details": {
+            "objective_interval": [
+              "4122612746505293102359058597/10000000000000000000000000",
+              "4122612746505293102359059093/10000000000000000000000000"
+            ],
+            "point_count": 32,
+            "pairs_checked": 496,
+            "coordinate_model": "exact rational stereographic projection",
+            "sqrt_bound_scale": "10000000000000000000000000",
+            "energy_bound_scale": "1000000000000000000000000000000",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.281089223921299,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "energy_interval": [
+            "41226127465052931023590588506754257669/100000000000000000000000000000000000",
+            "8245225493010586204718117701350851633/20000000000000000000000000000000000"
+          ],
+          "pairs": 496,
+          "minimum_squared_distance": "68957043525439690228643976234025360/167904908538042646367432018085297321",
+          "unit_sphere_equations_exact": true
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "b145238401b715b4a103bf3786e0caafe082daf4415be3c249c07fa247fe85aa"
+      },
+      "review_status": "accepted_by_sol",
+      "witness": "data/ccd_32.xyz"
+    },
+    "T021-C02": {
+      "public_value": "660.6752788",
+      "human_reference": 660.6752788,
+      "unit": "unit-charge, unit-radius Coulomb energy",
+      "direction": "minimize",
+      "public_metric": "sum over unordered pairs of reciprocal Euclidean distances",
+      "public_source": {
+        "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+        "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/40.xyz",
+        "title": "Global Minima for the Thomson Problem",
+        "reported_value": "660.6752788",
+        "reported_decimal_places": 7,
+        "point_group": "T_d",
+        "source_status": "numerical candidate; no proof of global optimality for this n found"
+      },
+      "source_asset_sha256": "9f880170e0e067b2f77021c5a662975f96246ab9f1994574e6f23e20f93c6842",
+      "reproduced_value_interval": [
+        "6606752788346224142901769349/10000000000000000000000000",
+        "6606752788346224142901770129/10000000000000000000000000"
+      ],
+      "program": "reference.py",
+      "matches_public_best": "not asserted; source energy is rounded and decimals are rationalized onto sphere",
+      "optimality_status": {
+        "status": "open in checked literature; candidate is not a proof of global optimality",
+        "evidence": "Chen and Mehta (2014), §III, state deterministic results known only for N=2,3,4,5,6,12; this n is outside that set.",
+        "source": "https://www.tianranchen.org/research/papers/thomson.pdf"
+      },
+      "limitations": [
+        "Published coordinates have finite decimal precision; exact rational sphere reconstruction slightly changes geometry.",
+        "The certified score belongs to the rationalized construction, not the rounded CCD energy."
+      ],
+      "review_status": "accepted_by_sol",
+      "reproduced_value": "6606752788346224142901770129/10000000000000000000000000",
+      "highest_reported": {
+        "value": "660.6752788",
+        "source": {
+          "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+          "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/40.xyz",
+          "title": "Global Minima for the Thomson Problem",
+          "reported_value": "660.6752788"
+        },
+        "status": "same-parameter published CCD value; numerical candidate, not a proof of global optimality"
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T021",
+          "config_id": "T021-C02",
+          "validity": 1.0,
+          "combined_score": 0.9999999999475954,
+          "objective": "6606752788346224142901770129/10000000000000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11441398784518242,
+          "verification_time": 0.16450082510709763,
+          "objective_value": "6606752788346224142901770129/10000000000000000000000000",
+          "details": {
+            "objective_interval": [
+              "6606752788346224142901769349/10000000000000000000000000",
+              "6606752788346224142901770129/10000000000000000000000000"
+            ],
+            "point_count": 40,
+            "pairs_checked": 780,
+            "coordinate_model": "exact rational stereographic projection",
+            "sqrt_bound_scale": "10000000000000000000000000",
+            "energy_bound_scale": "1000000000000000000000000000000",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.28091903403401375,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "energy_interval": [
+            "33033763941731120714508848697704510931/50000000000000000000000000000000000",
+            "33033763941731120714508848697704511321/50000000000000000000000000000000000"
+          ],
+          "pairs": 780,
+          "minimum_squared_distance": "7606344792003164950286248274514744244/25156724272106229178684246184038332631",
+          "unit_sphere_equations_exact": true
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c02.json",
+        "witness_sha256": "8f70dcfb9036f8dfc38cfe013826443c5edce38d0972cdfe0ec2c35777a42c94"
+      },
+      "witness": "data/ccd_40.xyz"
+    },
+    "T021-C03": {
+      "public_value": "1055.1823147",
+      "human_reference": 1055.1823147,
+      "unit": "unit-charge, unit-radius Coulomb energy",
+      "direction": "minimize",
+      "public_metric": "sum over unordered pairs of reciprocal Euclidean distances",
+      "public_source": {
+        "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+        "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/50.xyz",
+        "title": "Global Minima for the Thomson Problem",
+        "reported_value": "1055.1823147",
+        "reported_decimal_places": 7,
+        "point_group": "D_6d",
+        "source_status": "numerical candidate; no proof of global optimality for this n found"
+      },
+      "source_asset_sha256": "1f9f28accda198e1e1d377f5285f8241f1fb8156eb06e311c44da9241de6d851",
+      "reproduced_value_interval": [
+        "10551823147262960991276699871/10000000000000000000000000",
+        "1318977893407870123909587637/1250000000000000000000000"
+      ],
+      "program": "reference.py",
+      "matches_public_best": "not asserted; source energy is rounded and decimals are rationalized onto sphere",
+      "optimality_status": {
+        "status": "open in checked literature; candidate is not a proof of global optimality",
+        "evidence": "Chen and Mehta (2014), §III, state deterministic results known only for N=2,3,4,5,6,12; this n is outside that set.",
+        "source": "https://www.tianranchen.org/research/papers/thomson.pdf"
+      },
+      "limitations": [
+        "Published coordinates have finite decimal precision; exact rational sphere reconstruction slightly changes geometry.",
+        "The certified score belongs to the rationalized construction, not the rounded CCD energy."
+      ],
+      "review_status": "accepted_by_sol",
+      "reproduced_value": "1318977893407870123909587637/1250000000000000000000000",
+      "highest_reported": {
+        "value": "1055.1823147",
+        "source": {
+          "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+          "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/50.xyz",
+          "title": "Global Minima for the Thomson Problem",
+          "reported_value": "1055.1823147"
+        },
+        "status": "same-parameter published CCD value; numerical candidate, not a proof of global optimality"
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T021",
+          "config_id": "T021-C03",
+          "validity": 1.0,
+          "combined_score": 0.9999999999750792,
+          "objective": "1318977893407870123909587637/1250000000000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11439107730984688,
+          "verification_time": 0.16440992057323456,
+          "objective_value": "1318977893407870123909587637/1250000000000000000000000",
+          "details": {
+            "objective_interval": [
+              "10551823147262960991276699871/10000000000000000000000000",
+              "1318977893407870123909587637/1250000000000000000000000"
+            ],
+            "point_count": 50,
+            "pairs_checked": 1225,
+            "coordinate_model": "exact rational stereographic projection",
+            "sqrt_bound_scale": "10000000000000000000000000",
+            "energy_bound_scale": "1000000000000000000000000000000",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.28110290318727493,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "energy_interval": [
+            "52759115736314804956383502432834465031/50000000000000000000000000000000000",
+            "105518231472629609912767004865668931287/100000000000000000000000000000000000"
+          ],
+          "pairs": 1225,
+          "minimum_squared_distance": "78358853833959038446511175657742792/318663032489717515816549389189712247",
+          "unit_sphere_equations_exact": true
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c03.json",
+        "witness_sha256": "3ddf6b6494799b18006180099af12cc9a0266b793686909fd677cb2f3c8bc942"
+      },
+      "witness": "data/ccd_50.xyz"
+    }
+  },
+  "configuration_expansion_review": {
+    "status": "accepted_by_sol",
+    "configurations": [
+      "T021-C02",
+      "T021-C03"
+    ]
+  }
+}

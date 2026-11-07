@@ -1,0 +1,58 @@
+{
+  "task_id": "T072",
+  "name": "Minimum sum-product size for 32 positive integers",
+  "acceptance_status": "accepted_by_sol",
+  "category": "additive_combinatorics",
+  "definition": "Choose a set A of exactly 32 positive integers, with no upper bound on its elements, to minimize max(|A+A|, |AA|), where A+A={a+b:a,b in A} and AA={ab:a,b in A}.",
+  "solution_format": "An object with elements, a list of 32 distinct positive integers.",
+  "objective": {
+    "name": "max_sum_product_cardinality",
+    "unit": "distinct integer values",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "There are exactly 32 elements.",
+    "Every element is a positive integer, with no fixed upper bound.",
+    "All 32 elements are distinct.",
+    "A+A contains a+b for all ordered choices a,b in A; AA contains ab for all ordered choices a,b in A."
+  ],
+  "configurations": [
+    {
+      "id": "T072-C01",
+      "parameters": {
+        "cardinality": 32,
+        "element_domain": "all positive integers, unbounded",
+        "sumset": "{a+b : a,b in A}",
+        "product_set": "{a*b : a,b in A}",
+        "objective": "max(|A+A|, |AA|)"
+      },
+      "direction": "minimize",
+      "human_reference": 154
+    }
+  ],
+  "sources": [
+    "https://arxiv.org/html/2411.08139v2",
+    "https://www.math.csi.cuny.edu/~obryant/SumProduct/",
+    "https://arxiv.org/abs/2601.21828"
+  ],
+  "verification": "The checker validates all 32 distinct positive integers and recomputes both finite sets of pairwise sums and products exactly using arbitrary-precision integer arithmetic.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Choose32distinct unbounded positive integers; minimize max of exact sumset/productset cardinalities. No smoothness or coordinate-size constraint in validation. Search4096proposalbound is heuristic only.",
+      "source": "Read O Bryant2411.08139v2 Table2 n32 states154/154and explicitly not known optimal. Rebuilt first35 5-smooth positiveintegers minus75,81,100. Primary2026smallsetsII2601.21828 proves10/11only and doesnotclose32; 2026realalgebraicintegerasymptoticcounterexamples notfinitepositiveintegeroptimum.",
+      "provenance": "Root independently downloaded102089754byte officialdataset SHA20d33250e047272c170fb575a9dad51dec81c882a5694d2a674d2357dae597b8;1163592rows. Frozen line1005722exact same32integers,91bytes SHA0cd52d3292fdef5a69e851e8c6d8c37c285666c6064377dc09e3c6cd7e0a58e4. Fullscan178547n32recordsmin154, scopeonlyarchive notglobaloptimum. AuthorclassicalMathematica/Julia search; generativeAIrole notdisclosed, noabsenceinferred.",
+      "independent": "Root reconstructed formula and exact pair sets. Admission enumerates528unorderedpairswithreplacement, sorts output and counts transitions independently of formal ordered-pair hashsets; obtains154/154.",
+      "isolation": "Read initial1..32 and generic32-integer mutations; baseline331andevolution352 do notreadcomparison. Five strict programs,full-returnclaiminvariance,broken duplicate,replay,coldexport,errorandtimeoutcontrols pass."
+    }
+  }
+}

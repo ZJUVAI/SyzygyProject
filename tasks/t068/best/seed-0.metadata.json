@@ -1,0 +1,28 @@
+{
+  "task_id": "T068",
+  "configuration_id": "T068-C01",
+  "objective": 135,
+  "verification_status": "exact",
+  "verification_details": {
+    "length": 10,
+    "universe_size": 1024,
+    "codeword_count": 135,
+    "covered_word_count": 1024,
+    "radius": 1,
+    "claimed_objective_ignored": true
+  },
+  "seed": 0,
+  "algorithm": "greedy maximum-new-coverage set cover followed by redundant-center deletion",
+  "trial_limit": 8,
+  "trials_completed": 8,
+  "elapsed_seconds": 0.415605,
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "memory_limit_gib": 4,
+  "threads": 1,
+  "python": "3.13.12 (main, Mar 10 2026, 18:17:38) [Clang 21.1.4 ]",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "replay_command": "MATHBENCH_CONFIG_ID=T068-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t068.baseline import run_code; print(run_code())\"",
+  "witness_file": "best/seed-0.json",
+  "witness_sha256": "cdcf4263e2d64153cabd27dcd10e9f141eb5a3db0c0fd123d28d4f7054110e10"
+}

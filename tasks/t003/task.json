@@ -1,0 +1,53 @@
+{
+  "task_id": "T003",
+  "name": "Unequal-circle packing in the unit square",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T003-C01",
+      "parameters": {
+        "n": 26,
+        "container": "unit square",
+        "radii": "variable"
+      },
+      "direction": "maximize",
+      "human_reference": 2.50542078826,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T003-C02",
+      "parameters": {
+        "n": 32,
+        "container": "unit square",
+        "radii": "variable"
+      },
+      "direction": "maximize",
+      "human_reference": 2.811460994816,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T003-C03",
+      "parameters": {
+        "n": 40,
+        "container": "unit square",
+        "radii": "variable"
+      },
+      "direction": "maximize",
+      "human_reference": 3.16747010068,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Variable positive radii, all circles contained in [0,1]^2 with disjoint interiors; maximize exact sum of radii. Keep26 and32, add40.",
+      "primary_sources": "Sol checked Packomania variable-radius table last updated31-Oct-2026, row40 reports3.292391572608 and is not bold (the source marks proven optimal results in bold). Reference[8] credits Haowei Lin packing_records. Source method is not confirmed; public witness is separate from the confirmed historical human comparison. No optimality proof found in checked sources.",
+      "human_comparison": "Equal-circle table row40 credits Graham-Lubachevsky1996 reference[11]. Its ASCII coordinates have radius0.079186752517 and satisfy exact wall/pair constraints after translation. Reuse as feasible human construction under variable-radii rules, exact sum79186752517/25000000000. Original C01/C02 frozen H unchanged; human entry now selects their already archived equal-circle comparisons.",
+      "independent_method": "Sol personally fetched the original csqv40.txt, byte-matched saved file, translated coordinates, and checked exact Fraction wall clearance and all780 pair inequalities. Uniform decrement611401/10^18 gives feasibility, whereas611400/10^18 fails. Exact sum82309789314588599/25000000000000000; record retains original displayed report separately. Sol ran human and reference in both admission and independent checks.",
+      "admission": "Five programs and complete independent objective/replay/cold/malformed/claim/error/nonfinite/timeout controls pass for all3. Older run with public witness as human comparison retained as historical draft. This final admission freezes the confirmed traditional human H. Cold starter is5x8 grid with sum5/2. Best own n40 is from independent seeded evolution, not the public witness."
+    }
+  }
+}

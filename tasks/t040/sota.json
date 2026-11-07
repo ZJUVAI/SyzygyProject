@@ -1,0 +1,385 @@
+{
+  "task_id": "T040",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T040-C01": {
+      "program": "reference.py",
+      "reproduced_value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+      "public_value": "2.354634495069",
+      "highest_reported": {
+        "value": "2.354634495069",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "reproduction_status": "The source coordinate archive was reconstructed and exactly rescored. The exact value rounds to the reported value at its 12 decimal places."
+      },
+      "human_reference": 2.3546344950686153,
+      "direction": "maximize",
+      "unit": "unit-radius cubed",
+      "source_coordinate_sha256": "5add684454391c037f97c1d1dd05374387fd3c7b3a12cf13708ebbc7808727e3",
+      "witness": "data/reference/sloane11_rational_stereographic.json",
+      "historical_weaker_candidate": {
+        "value": "2.35462915",
+        "source": {
+          "url": "https://doi.org/10.1007/978-3-540-44400-8_22",
+          "title": "The Polyhedra of Maximal Volume Inscribed in the Unit Sphere",
+          "author": "Nobuaki Mutoh",
+          "year": 2003,
+          "source_status": "weaker numerical local candidate; not the highest reported result"
+        },
+        "reproduction_status": "not reproduced from the cited Mutoh witness; retained as a historical weaker reported candidate"
+      },
+      "matches_public_value": "yes at reported decimal precision; exact reconstruction uses rounded source coordinates",
+      "reproduced_at": "2026-11-06",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T040",
+          "config_id": "T040-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "verification_status": "exact",
+          "generation_time": 0.9913648702204227,
+          "verification_time": 0.9461091756820679,
+          "objective_value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "details": {
+            "objective_name": "convex_hull_volume",
+            "hull_method": "exact rational supporting-plane enumeration and exact coplanar-face hulls",
+            "supporting_triples_checked": 165,
+            "supporting_triples_found": 18,
+            "unique_supporting_planes": 18,
+            "triangles_after_face_triangulation": 18,
+            "input_representation": "exact Cartesian coordinates",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.956413198262453,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "volume": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "centroid_pyramids": 18,
+          "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    },
+    "T040-C02": {
+      "program": "reference.py",
+      "reproduced_value": "7954738703820484692942193250629687212476870574448584775081944838365515376121942299448266773506494055483166244567526452899050211051221032410671719035552384803330347827199235888603855656468093818643699321556233539527633737177140885392788038615345106785865747172488857124482953477510769142650079729986606/3044486653524555005518990657516175708546723680117270923542697312186932120560585154236893379010252102397527076331056859230857211345103839817753961514521004999096151565481952596728961266175317816379093750640305307311920394191615732974684164002663599657450365250923723360554202324654492974103428700966411",
+      "public_value": "2.612834152060",
+      "highest_reported": {
+        "value": "2.612834152060",
+        "parameters": {
+          "n": 13,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "source": {
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.13.txt",
+          "source_coordinate_file": "data/maxvol.3.13.txt",
+          "source_coordinate_sha256": "920f7c67977874b316efe119b1a808b359c636dcef8389ebddc079cfd7e57adc",
+          "source_status": "Putative optimum in author table. No global optimality proof for this size was found in checked sources.",
+          "origin_type": "Classical numerical construction, 1994 author archive"
+        },
+        "evidence_state": "Rounded published value; exact rational stereographic reconstruction verified separately."
+      },
+      "best_public": {
+        "value": "2.612834152060",
+        "parameters": {
+          "n": 13,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "source": {
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.13.txt",
+          "source_coordinate_file": "data/maxvol.3.13.txt",
+          "source_coordinate_sha256": "920f7c67977874b316efe119b1a808b359c636dcef8389ebddc079cfd7e57adc",
+          "source_status": "Putative optimum in author table. No global optimality proof for this size was found in checked sources.",
+          "origin_type": "Classical numerical construction, 1994 author archive"
+        },
+        "evidence_state": "Rounded published value; exact rational stereographic reconstruction verified separately."
+      },
+      "best_human": {
+        "value": "7954738703820484692942193250629687212476870574448584775081944838365515376121942299448266773506494055483166244567526452899050211051221032410671719035552384803330347827199235888603855656468093818643699321556233539527633737177140885392788038615345106785865747172488857124482953477510769142650079729986606/3044486653524555005518990657516175708546723680117270923542697312186932120560585154236893379010252102397527076331056859230857211345103839817753961514521004999096151565481952596728961266175317816379093750640305307311920394191615732974684164002663599657450365250923723360554202324654492974103428700966411",
+        "parameters": {
+          "n": 13,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "witness": "data/reference/sloane13_rational_stereographic.json",
+        "witness_sha256": "9f37820eb98e50fa3dde3b4d66037bbef33a377f77d28b4944387712abd834f2",
+        "verification_status": "exact",
+        "review_status": "accepted_by_sol",
+        "source": {
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.13.txt",
+          "source_coordinate_file": "data/maxvol.3.13.txt",
+          "source_coordinate_sha256": "920f7c67977874b316efe119b1a808b359c636dcef8389ebddc079cfd7e57adc",
+          "source_status": "Putative optimum in author table. No global optimality proof for this size was found in checked sources.",
+          "origin_type": "Classical numerical construction, 1994 author archive"
+        }
+      },
+      "best_reproduced": {
+        "value": "7954738703820484692942193250629687212476870574448584775081944838365515376121942299448266773506494055483166244567526452899050211051221032410671719035552384803330347827199235888603855656468093818643699321556233539527633737177140885392788038615345106785865747172488857124482953477510769142650079729986606/3044486653524555005518990657516175708546723680117270923542697312186932120560585154236893379010252102397527076331056859230857211345103839817753961514521004999096151565481952596728961266175317816379093750640305307311920394191615732974684164002663599657450365250923723360554202324654492974103428700966411",
+        "parameters": {
+          "n": 13,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "witness": "data/reference/sloane13_rational_stereographic.json",
+        "witness_sha256": "9f37820eb98e50fa3dde3b4d66037bbef33a377f77d28b4944387712abd834f2",
+        "verification_status": "exact",
+        "review_status": "accepted_by_sol"
+      },
+      "witness": "data/reference/sloane13_rational_stereographic.json",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T040",
+          "config_id": "T040-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "7954738703820484692942193250629687212476870574448584775081944838365515376121942299448266773506494055483166244567526452899050211051221032410671719035552384803330347827199235888603855656468093818643699321556233539527633737177140885392788038615345106785865747172488857124482953477510769142650079729986606/3044486653524555005518990657516175708546723680117270923542697312186932120560585154236893379010252102397527076331056859230857211345103839817753961514521004999096151565481952596728961266175317816379093750640305307311920394191615732974684164002663599657450365250923723360554202324654492974103428700966411",
+          "verification_status": "exact",
+          "generation_time": 0.2151140421628952,
+          "verification_time": 0.36480560526251793,
+          "objective_value": "7954738703820484692942193250629687212476870574448584775081944838365515376121942299448266773506494055483166244567526452899050211051221032410671719035552384803330347827199235888603855656468093818643699321556233539527633737177140885392788038615345106785865747172488857124482953477510769142650079729986606/3044486653524555005518990657516175708546723680117270923542697312186932120560585154236893379010252102397527076331056859230857211345103839817753961514521004999096151565481952596728961266175317816379093750640305307311920394191615732974684164002663599657450365250923723360554202324654492974103428700966411",
+          "details": {
+            "objective_name": "convex_hull_volume",
+            "hull_method": "exact rational supporting-plane enumeration and exact coplanar-face hulls",
+            "supporting_triples_checked": 286,
+            "supporting_triples_found": 22,
+            "unique_supporting_planes": 22,
+            "triangles_after_face_triangulation": 22,
+            "input_representation": "rational stereographic parameters; south pole is omitted",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.5824610404670238,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "volume": "7954738703820484692942193250629687212476870574448584775081944838365515376121942299448266773506494055483166244567526452899050211051221032410671719035552384803330347827199235888603855656468093818643699321556233539527633737177140885392788038615345106785865747172488857124482953477510769142650079729986606/3044486653524555005518990657516175708546723680117270923542697312186932120560585154236893379010252102397527076331056859230857211345103839817753961514521004999096151565481952596728961266175317816379093750640305307311920394191615732974684164002663599657450365250923723360554202324654492974103428700966411",
+          "centroid_pyramids": 22,
+          "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    },
+    "T040-C03": {
+      "program": "reference.py",
+      "reproduced_value": "220632761297965179248076754271643940426857337703041144182731251206944459453626070956247011517714780772417140501077310899271412009716605611977365987550140681870709337707530149464965584767613505002836183985995996539566263265337039530263001321744033092514403380081085618628839368091611204993559726547307989943750930802519912963818278894443395879326982804538/78674362936442150896680693575667539753581469365051202007180488641230731600977993758252188434621620883363270171253364799204719499056520986443177912322620072581773488911101457532557566898285134580643560658703862524744890361234156998053899306339195777584779130265037964186988711671917284112291001273573719194100839162869123270463916387096039788502720003755",
+      "public_value": "2.804379381835",
+      "highest_reported": {
+        "value": "2.804379381835",
+        "parameters": {
+          "n": 15,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "source": {
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.15.txt",
+          "source_coordinate_file": "data/maxvol.3.15.txt",
+          "source_coordinate_sha256": "a0be36d54fb6a8696e41503ec857cd6234d71bd5d5ca6d5c92a91fbafd92a064",
+          "source_status": "Putative optimum in author table. No global optimality proof for this size was found in checked sources.",
+          "origin_type": "Classical numerical construction, 1994 author archive"
+        },
+        "evidence_state": "Rounded published value; exact rational stereographic reconstruction verified separately."
+      },
+      "best_public": {
+        "value": "2.804379381835",
+        "parameters": {
+          "n": 15,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "source": {
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.15.txt",
+          "source_coordinate_file": "data/maxvol.3.15.txt",
+          "source_coordinate_sha256": "a0be36d54fb6a8696e41503ec857cd6234d71bd5d5ca6d5c92a91fbafd92a064",
+          "source_status": "Putative optimum in author table. No global optimality proof for this size was found in checked sources.",
+          "origin_type": "Classical numerical construction, 1994 author archive"
+        },
+        "evidence_state": "Rounded published value; exact rational stereographic reconstruction verified separately."
+      },
+      "best_human": {
+        "value": "220632761297965179248076754271643940426857337703041144182731251206944459453626070956247011517714780772417140501077310899271412009716605611977365987550140681870709337707530149464965584767613505002836183985995996539566263265337039530263001321744033092514403380081085618628839368091611204993559726547307989943750930802519912963818278894443395879326982804538/78674362936442150896680693575667539753581469365051202007180488641230731600977993758252188434621620883363270171253364799204719499056520986443177912322620072581773488911101457532557566898285134580643560658703862524744890361234156998053899306339195777584779130265037964186988711671917284112291001273573719194100839162869123270463916387096039788502720003755",
+        "parameters": {
+          "n": 15,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "witness": "data/reference/sloane15_rational_stereographic.json",
+        "witness_sha256": "5fcf04e597bdb0439219afaba2dedf155f0f8e78c952673e4d793497a4604b78",
+        "verification_status": "exact",
+        "review_status": "accepted_by_sol",
+        "source": {
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.15.txt",
+          "source_coordinate_file": "data/maxvol.3.15.txt",
+          "source_coordinate_sha256": "a0be36d54fb6a8696e41503ec857cd6234d71bd5d5ca6d5c92a91fbafd92a064",
+          "source_status": "Putative optimum in author table. No global optimality proof for this size was found in checked sources.",
+          "origin_type": "Classical numerical construction, 1994 author archive"
+        }
+      },
+      "best_reproduced": {
+        "value": "220632761297965179248076754271643940426857337703041144182731251206944459453626070956247011517714780772417140501077310899271412009716605611977365987550140681870709337707530149464965584767613505002836183985995996539566263265337039530263001321744033092514403380081085618628839368091611204993559726547307989943750930802519912963818278894443395879326982804538/78674362936442150896680693575667539753581469365051202007180488641230731600977993758252188434621620883363270171253364799204719499056520986443177912322620072581773488911101457532557566898285134580643560658703862524744890361234156998053899306339195777584779130265037964186988711671917284112291001273573719194100839162869123270463916387096039788502720003755",
+        "parameters": {
+          "n": 15,
+          "space": "unit sphere S2 in R3",
+          "objective": "Euclidean volume of the convex hull",
+          "objective_unit": "unit-radius cubed"
+        },
+        "witness": "data/reference/sloane15_rational_stereographic.json",
+        "witness_sha256": "5fcf04e597bdb0439219afaba2dedf155f0f8e78c952673e4d793497a4604b78",
+        "verification_status": "exact",
+        "review_status": "accepted_by_sol"
+      },
+      "witness": "data/reference/sloane15_rational_stereographic.json",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T040",
+          "config_id": "T040-C03",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "220632761297965179248076754271643940426857337703041144182731251206944459453626070956247011517714780772417140501077310899271412009716605611977365987550140681870709337707530149464965584767613505002836183985995996539566263265337039530263001321744033092514403380081085618628839368091611204993559726547307989943750930802519912963818278894443395879326982804538/78674362936442150896680693575667539753581469365051202007180488641230731600977993758252188434621620883363270171253364799204719499056520986443177912322620072581773488911101457532557566898285134580643560658703862524744890361234156998053899306339195777584779130265037964186988711671917284112291001273573719194100839162869123270463916387096039788502720003755",
+          "verification_status": "exact",
+          "generation_time": 0.21478431299328804,
+          "verification_time": 0.5159079767763615,
+          "objective_value": "220632761297965179248076754271643940426857337703041144182731251206944459453626070956247011517714780772417140501077310899271412009716605611977365987550140681870709337707530149464965584767613505002836183985995996539566263265337039530263001321744033092514403380081085618628839368091611204993559726547307989943750930802519912963818278894443395879326982804538/78674362936442150896680693575667539753581469365051202007180488641230731600977993758252188434621620883363270171253364799204719499056520986443177912322620072581773488911101457532557566898285134580643560658703862524744890361234156998053899306339195777584779130265037964186988711671917284112291001273573719194100839162869123270463916387096039788502720003755",
+          "details": {
+            "objective_name": "convex_hull_volume",
+            "hull_method": "exact rational supporting-plane enumeration and exact coplanar-face hulls",
+            "supporting_triples_checked": 455,
+            "supporting_triples_found": 26,
+            "unique_supporting_planes": 26,
+            "triangles_after_face_triangulation": 26,
+            "input_representation": "rational stereographic parameters; south pole is omitted",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.7332408800721169,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "volume": "220632761297965179248076754271643940426857337703041144182731251206944459453626070956247011517714780772417140501077310899271412009716605611977365987550140681870709337707530149464965584767613505002836183985995996539566263265337039530263001321744033092514403380081085618628839368091611204993559726547307989943750930802519912963818278894443395879326982804538/78674362936442150896680693575667539753581469365051202007180488641230731600977993758252188434621620883363270171253364799204719499056520986443177912322620072581773488911101457532557566898285134580643560658703862524744890361234156998053899306339195777584779130265037964186988711671917284112291001273573719194100839162869123270463916387096039788502720003755",
+          "centroid_pyramids": 26,
+          "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "checked_at": "2026-11-06"
+}

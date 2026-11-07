@@ -1,0 +1,35 @@
+{
+  "task_id": "T069",
+  "config_id": "T069-C01",
+  "validity": 1.0,
+  "combined_score": 0.8396924642690404,
+  "objective": 6856309,
+  "verification_status": "exact",
+  "generation_time": 3.1877442225813866,
+  "verification_time": 2.4146951138973236,
+  "objective_value": 6856309,
+  "details": {
+    "instance": "mona-lisa100K",
+    "instance_sha256": "532fefbfb9ad66cc2550bece766fa069acaa8e34ee511ac1949ae101da4d70ad",
+    "city_count": 100000,
+    "unique_city_count": 100000,
+    "closed_tour_edge_count": 100000,
+    "distance_rule": "isqrt(squared_distance), rounded to nearest integer with exact half-up comparison",
+    "claimed_score_ignored": true
+  },
+  "eval_time": 7.201247192919254,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

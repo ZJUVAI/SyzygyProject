@@ -1,0 +1,406 @@
+{
+  "task_id": "T097",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T097 --label admission_20261106_rational_audit",
+  "configurations": {
+    "T097-C01": {
+      "configuration": {
+        "id": "T097-C01",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "direction": "minimize",
+        "human_reference": 15
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T097",
+            "config_id": "T097-C01",
+            "validity": 1.0,
+            "combined_score": 0.16666666666666666,
+            "objective": 90,
+            "verification_status": "certified",
+            "generation_time": 0.21490247175097466,
+            "verification_time": 2.169791966676712,
+            "objective_value": 90,
+            "details": {
+              "instance": "socg_fixed92",
+              "convex_polygon_count": 90,
+              "total_piece_vertices": 270,
+              "algebraic_field_degree": 1,
+              "verified_open_arrangement_cells": 237,
+              "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 2.38870183005929,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "polygon_count": 90,
+            "target_area": "206848",
+            "uncovered_area": "0",
+            "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T097",
+            "config_id": "T097-C01",
+            "validity": 1.0,
+            "combined_score": 0.5769230769230769,
+            "objective": 26,
+            "verification_status": "certified",
+            "generation_time": 4.171503759920597,
+            "verification_time": 5.47343036532402,
+            "objective_value": 26,
+            "details": {
+              "instance": "socg_fixed92",
+              "convex_polygon_count": 26,
+              "total_piece_vertices": 112,
+              "algebraic_field_degree": 1,
+              "verified_open_arrangement_cells": 2837,
+              "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 9.64798105508089,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "polygon_count": 26,
+            "target_area": "206848",
+            "uncovered_area": "0",
+            "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T097",
+            "config_id": "T097-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 15,
+            "verification_status": "certified",
+            "generation_time": 0.16479872912168503,
+            "verification_time": 1.4197079092264175,
+            "objective_value": 15,
+            "details": {
+              "instance": "socg_fixed92",
+              "convex_polygon_count": 15,
+              "total_piece_vertices": 66,
+              "algebraic_field_degree": 1,
+              "verified_open_arrangement_cells": 276,
+              "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.5876351557672024,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "polygon_count": 15,
+            "target_area": "206848",
+            "uncovered_area": "0",
+            "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T097",
+            "config_id": "T097-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 15,
+            "verification_status": "certified",
+            "generation_time": 0.16453132778406143,
+            "verification_time": 1.4165723770856857,
+            "objective_value": 15,
+            "details": {
+              "instance": "socg_fixed92",
+              "convex_polygon_count": 15,
+              "total_piece_vertices": 66,
+              "algebraic_field_degree": 1,
+              "verified_open_arrangement_cells": 276,
+              "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.5844123810529709,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "polygon_count": 15,
+            "target_area": "206848",
+            "uncovered_area": "0",
+            "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T097",
+            "config_id": "T097-C01",
+            "validity": 1.0,
+            "combined_score": 0.5769230769230769,
+            "objective": 26,
+            "verification_status": "certified",
+            "generation_time": 7.130289986729622,
+            "verification_time": 5.130322564393282,
+            "objective_value": 26,
+            "details": {
+              "instance": "socg_fixed92",
+              "convex_polygon_count": 26,
+              "total_piece_vertices": 112,
+              "algebraic_field_degree": 1,
+              "verified_open_arrangement_cells": 2837,
+              "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 12.263839270919561,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "polygon_count": 26,
+            "target_area": "206848",
+            "uncovered_area": "0",
+            "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T097",
+        "config_id": "T097-C01",
+        "validity": 1.0,
+        "combined_score": 0.16666666666666666,
+        "objective": 90,
+        "verification_status": "certified",
+        "generation_time": 0.16458218917250633,
+        "verification_time": 2.0696304254233837,
+        "objective_value": 90,
+        "details": {
+          "instance": "socg_fixed92",
+          "convex_polygon_count": 90,
+          "total_piece_vertices": 270,
+          "algebraic_field_degree": 1,
+          "verified_open_arrangement_cells": 237,
+          "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 2.2355289198458195,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t097/runs/admission_20261106_rational_audit/T097-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.21570630371570587,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20546726137399673,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.1653973124921322,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "f783b7d7467f50f0e1e5abf0a9338b44de6bb30b617ebb7485e431258287889b",
+    "README.md": "0282efadcd61c25991abe872ec91be394af0ec7ab677b95d3e77aabf3aca7e2a",
+    "algebraic.py": "073348f455fdfdb9c389a1b30b7035ee13a01c98708b1ef26ca35bc600ca19db",
+    "baseline.py": "7c20fc59e99bdc0fd14518a7311c5e5e7f0a9b4874d3e05afc98864a56c3dfad",
+    "check.py": "4d63a7fd375269eb9643f4bef0117d4230afe203aafef525eb02220a4f396a61",
+    "data/human/socg_fixed92_15.json": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+    "data/reference/socg_fixed92_15.json": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+    "data/source/cgshop2023_official_ranking.html": "f5444fb346b74026aaf31d6c2c41bc5e00bfbfc866fe5607af5e737b8f178894",
+    "data/source/socg_fixed92.instance.json": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+    "data/source/socg_fixed92_solution.html": "3d5d8c4107e79622cf349ac23bcf49826eb8257502a767915ff9601b9b5e1270",
+    "data/source/source_manifest.json": "363ee27cb6be2d6488dceb408136dd561c74b96b82fadbe609096750bea2a244",
+    "evaluator.py": "c0cf8540074f2746f6485b9f6e1a271a6181be9a5ed386e97b527759ab5ed0e6",
+    "evolution.py": "1f5c49e13633d436b846db8576710388bd549747e7347c04a5792bb1a0fd09c9",
+    "geometry.py": "ac7b6deabf92a8fdd87e4f24a1d62b725449ecc14dceaef1524887f12278adad",
+    "human.py": "dfc1d59582eddc10cf255afa2517f6dd5e3e4865b6cdbbbdea138d2aacbc3254",
+    "init_program.py": "c57d508ce81fa23e7c2184b7f8463ab7b7ead6a208105dee4e7fb31ace4901f1",
+    "instruction.txt": "72a2be1dcd686e15d2fef19ae1ae86ccba68fc2b2bdfb24275f37f180d02ea6d",
+    "records.json": "47c1e83d82cfbbcad6184cf54a3acd1634969b0a2e833789ad01caf297686b0d",
+    "reference.py": "d6d61522628cc50b2cd97ffe82ce873e36d73babed996149d7b1917985dae41e",
+    "search_core.py": "473adf8f74497971f98f79db69b5df6c6ae92a145a9c80c0e2951bda8f983f9d",
+    "test_task.py": "4020fb136d86f45771196643386c28cc98e6c2a734ddf3cdd5965600d69bcdcc"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "固定官方socg_fixed92简单多边形，92顶点且无洞。用内部凸多边形覆盖整个区域，允许重叠，最小化片数。完整目标允许任意实坐标，不限输入顶点或有理顶点。",
+    "domain_completeness": "对固定有限片数及顶点数，覆盖可行性是有理系数的实闭域一阶公式。实代数数域保持该公式的可满足性；有限实代数坐标可共属一个单生成数域。因此任意代数次数、同一实根域的格式不改变最优片数。正式评测器用不可约多项式、Sturm隔离及精确域运算处理全部坐标。",
+    "primary_source": "Sol核查官方输入与Shadoks公开viewer，以及2026凸覆盖文献的实代数坐标问题。源输入SHA256为573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38。viewer的CPLEX Optimal仅针对候选片集合，不能证明完整MCC最优。",
+    "human_and_public_record": "公开viewer报告同参数15片。经逆仿射与附近整数重建得到15片有效覆盖，未声称恢复原提交坐标或唯一原始坐标。重建文件SHA256为caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0。AI使用源未披露。官方排名仅总分，其他队伍的单实例清单不完整，不声称15为全榜最新纪录。",
+    "independent_method": "Sol不用正式竖直排列和代数域内核。对本次全部有理构造，用Fraction内部对角线递归三角化，证明每片的包含面积，并逐片裁去覆盖后的凸补集。目标面积206848，未覆盖面积0；初始90片、自有26片、人类与参考15片均独立通过。独立工具曾将空交集零转为浮点，已改为精确Fraction零并加非二进制有理面积回归样例，随后完整重验。",
+    "admission": "最新标签五程序90、26、15、15、26及全部破坏、完整结果声明篡改、重放、冷导出、错误/非有限数/超时控制通过。人类与参考图像、重建文件不进入导出，只导出官方输入。任务38项测试及最新源哈希和高次域2项专测通过。"
+  }
+}

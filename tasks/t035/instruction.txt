@@ -1,4 +1,9 @@
-Construct a simple connected 4-regular graph of girth at least 10 with as few vertices as possible. Return JSON with `vertices` (a positive integer) and `edges` (a list of two-integer endpoint lists, labelled from 0 through vertices-1). Do not include loops or duplicate undirected edges. The trusted evaluator checks every degree, connectedness, and the absence of cycles shorter than 10. A feasible graph gives an upper bound; it does not prove that the order is minimum.
-
-
-Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact or conservative interval verification. Compatibility feedback is J/H for maximization or H/J for minimization, where H is the frozen external reference. Start from the supplied initial program.
+Build a finite set of distinct integer or rational points in the plane. Every three
+points must be noncollinear. Maximize the number of points while ensuring that no
+seven points are in convex position. Forbidden polygons need not be empty: other
+submitted points may lie inside their hull.
+Return JSON data as {"points": [[x, y], ...]}. The evaluator recomputes the score
+and ignores any claimed score. The fixed configuration forbids a convex polygon
+with 7 vertices. Do not output or assume the unknown value ES(7). Default budgets
+are 300 seconds for generation and 60 seconds for verification, with 4 GiB of
+memory and one compute thread.

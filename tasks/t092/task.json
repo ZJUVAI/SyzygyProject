@@ -1,0 +1,58 @@
+{
+  "task_id": "T092",
+  "name": "Degree-20 real spherical harmonic L4 concentration on S2",
+  "acceptance_status": "accepted_by_sol",
+  "category": "harmonic_analysis",
+  "definition": "Among nonzero real homogeneous harmonic polynomials of degree 20 in three variables, maximize the normalized L4/L2 ratio on the unit sphere S2: J=(M4/M2^2)^(1/4), where Mp is the uniform probability-surface average of |P|^p.",
+  "solution_format": "An object with coefficients: a list of 231 rational numbers in the documented monomial order x^a y^b z^(20-a-b). Each coefficient is an integer or an exact rational string. No coefficient-size bound is imposed.",
+  "objective": {
+    "name": "normalized_L4_over_L2",
+    "unit": "dimensionless",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "The input polynomial is homogeneous of degree exactly 20 in x,y,z.",
+    "The polynomial is real, nonzero, and its ordinary Euclidean Laplacian is identically zero.",
+    "The domain uses rational coefficients. Rational harmonic polynomials are dense in the real 41-dimensional harmonic subspace, so they have the same supremum for this continuous scale-invariant objective.",
+    "The objective uses uniform probability measure on S2; M2=average |P|^2 and M4=average |P|^4.",
+    "No coefficient magnitude or denominator cap is imposed."
+  ],
+  "configurations": [
+    {
+      "id": "T092-C01",
+      "parameters": {
+        "degree": 20,
+        "domain": "real spherical harmonics on S^2",
+        "coefficient_domain": "rational dense subspace",
+        "objective": "normalized L4/L2 ratio"
+      },
+      "direction": "maximize",
+      "human_reference": 1.5315529249613
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.1017/S0305004100058229",
+    "https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/abs/on-the-l4-norm-of-spherical-harmonics/B25E59463AD3A35422BB51ECDA9BFB69",
+    "https://arxiv.org/abs/2610.14160"
+  ],
+  "verification": "The checker proves homogeneity by fixed degree-20 monomial indexing, computes the exact rational Laplacian, and exactly integrates P^2 and P^4 using monomial moments on S2. It returns the exact fourth-root expression and a conservative rational lower bound with an enclosing interval.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Fixed degree20 real homogeneous harmonic polynomial on S2, maximize normalized L4/L2. Full231-coefficient rational dense kernel, dimension41, no magnitude cap. Corrects old Rudin-minimum naming to actual maximum direction.",
+      "primary_source": "Root checked Stanton-Weinstein1981 DOI10.1017/S0305004100058229 local maximality of real highest-weight harmonic; global finite20 optimum not proved there. Sogge asymptotic order and2026Rudin bounded holomorphic bases do not prove this constant. Current finite20 closure search found none.",
+      "human_method": "Re((x+i*y)^20), M2=B20/2 and M4=3B40/8, Bk=4^k*(k!)^2/(2k+1)!. Root independently recomputed these exact quantities and fourth-power ratio58188232951867590/10575651537777253. Human ratio~1.5315529249613015.",
+      "independent_method": "Root clears coefficient denominators and uses symmetric integer products. It integrates first over azimuth using central binomial coefficients, then over latitude with a finite alternating binomial integral. Exact M2,M4 and their ratio match formal double-factorial moments for all five entries; independent fourth-root bounds1e-60 lie inside formal1e-18 interval.",
+      "admission": "Five strict programs and full controls passed. Initial and own searches use Legendre zonal harmonics, not highest-weight reference. Damaged nonharmonic polynomial rejected; full returned result ignores claims; replay,cold export,error,nonfinite,timeout controls pass. Agent28tests pass. Checker direction omission returned and fixed before frozen admission."
+    }
+  }
+}

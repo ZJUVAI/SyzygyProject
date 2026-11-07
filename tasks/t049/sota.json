@@ -1,0 +1,85 @@
+{
+  "task_id": "T049",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T049-C01": {
+      "program": "reference.py",
+      "reproduced_value": 34,
+      "witness": "data/reference/hexagon_n91.json",
+      "public_value": 34,
+      "highest_reported": {
+        "value": 34,
+        "metric": "number of distinct positive Euclidean distances among 91 planar points",
+        "direction": "minimize",
+        "bound_type": "reported feasible construction; upper bound on the unknown minimum",
+        "source": "https://doi.org/10.1016/0012-365X(95)00153-N",
+        "source_location": "Erdos and Fishburn (1996), Table 1, L_delta, n=91, k=34, s=6",
+        "reproduction_status": "coordinates reconstructed from the regular hexagonal triangular-lattice formula; exact algebraic checker returns 34"
+      },
+      "coordinate_sha256": "0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac",
+      "known_lower_bound": 9,
+      "lower_bound_evidence": {
+        "source": "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf",
+        "source_location": "Erdos 1946, Theorem 1",
+        "derivation": "n-1 <= k(k+1); for n=91, 90 <= k(k+1), hence k>=9"
+      },
+      "optimality_status": "no exact n=91 optimum located in the checked sources as of 2026-11-06; 34 is not claimed optimal",
+      "checked_sources": [
+        "https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/Erdos2.pdf",
+        "https://oeis.org/A186704",
+        "https://erdosproblems.ai/problems/89",
+        "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf"
+      ],
+      "checked_at": "2026-11-06",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T049",
+          "config_id": "T049-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 34,
+          "verification_status": "exact",
+          "generation_time": 0.31601884588599205,
+          "verification_time": 3.8290962129831314,
+          "objective_value": 34,
+          "details": {
+            "point_count": 91,
+            "unordered_pair_count": 4095,
+            "distinct_positive_distances": 34,
+            "coordinate_field_degree": 2,
+            "minimal_polynomial_irreducible": true,
+            "real_root_isolated_by_sturm_count": 1,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 4.150618556886911,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "distance_count": 34,
+          "ordered_displacement_types": 330,
+          "audit_scope": "Saved rational and triangular-lattice witnesses; checker permits all real algebraic fields"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

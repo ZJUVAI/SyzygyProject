@@ -1,0 +1,12 @@
+{
+  "arxiv_1602.03075_v2_source_archive": {
+    "url": "https://export.arxiv.org/e-print/1602.03075v2",
+    "sha256": "ca84043d6e3c6492ff2eb4ed6b49e93b08c6a577fb1c0db4f00916c5c58fb945",
+    "note": "Downloaded LaTeX source archive; used to check the stated S_{k,l} recursion, layer placement, and integer realization bounds."
+  },
+  "pydcg_master_source_archive": {
+    "url": "https://github.com/rfabila/PyDCG/archive/refs/heads/master.zip",
+    "sha256": "94f89ea3e3eb3df118194dd32abdaffca27eda1f3c86785a4290727acdb4b85b",
+    "note": "Public implementation repository cited by the paper. The task reconstructs the formula from the paper and does not copy a coordinate file from this archive."
+  }
+}

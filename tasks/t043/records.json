@@ -1,0 +1,105 @@
+{
+  "best_human": {
+    "value": 333,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "field_size": 2,
+      "ambient_dimension": 7,
+      "subspace_dimension": 3,
+      "minimum_subspace_distance": 4
+    },
+    "url": "https://doi.org/10.3934/amc.2019029",
+    "provenance": "Heinlein, Kiermaier, Kurz, and Wassermann report an integer-linear-programming search and print the 333-subspace construction. AI provenance is not reported.",
+    "evidence_state": "witness reconstructed from Appendix B/C and independently checked exactly"
+  },
+  "best_public": {
+    "value": 333,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "field_size": 2,
+      "ambient_dimension": 7,
+      "subspace_dimension": 3,
+      "minimum_subspace_distance": 4
+    },
+    "url": "https://doi.org/10.3934/amc.2019029",
+    "evidence_state": "same-parameter published construction; witness independently replayed",
+    "origin_type": "human/computational; AI provenance not reported"
+  },
+  "best_reproduced": {
+    "value": 333,
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "field_size": 2,
+      "ambient_dimension": 7,
+      "subspace_dimension": 3,
+      "minimum_subspace_distance": 4
+    },
+    "url": "https://doi.org/10.3934/amc.2019029",
+    "provenance": "Parsed the Appendix C RREF representatives, decoded each column digit as a+2b+4c, and applied the Appendix B G_{4,6} group action.",
+    "ai_provenance": "The paper reports an ILP-based search. It does not state whether AI tools were used; no unaided-human claim is made.",
+    "actual_value": 333,
+    "evidence_state": "all 333 row spaces and 55,278 pairwise intersections checked exactly over GF(2)"
+  },
+  "implementation_review_date": "2026-11-06",
+  "survey_scope_note": "The best-public record here is the checked same-parameter construction, not a claim that the code is optimal. Literature and live-table checks are not exhaustive.",
+  "frozen_human_baseline_type": "reconstruction of a published ILP-search construction",
+  "task_id": "T043",
+  "configurations": {
+    "T043-C01": {
+      "best_human": {
+        "value": 333,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "provenance": "Heinlein, Kiermaier, Kurz, and Wassermann report an integer-linear-programming search and print the 333-subspace construction. AI provenance is not reported.",
+        "evidence_state": "witness reconstructed from Appendix B/C and independently checked exactly"
+      },
+      "best_public": {
+        "value": 333,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "evidence_state": "same-parameter published construction; witness independently replayed",
+        "origin_type": "human/computational; AI provenance not reported"
+      },
+      "best_reproduced": {
+        "value": 333,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "provenance": "Parsed the Appendix C RREF representatives, decoded each column digit as a+2b+4c, and applied the Appendix B G_{4,6} group action.",
+        "ai_provenance": "The paper reports an ILP-based search. It does not state whether AI tools were used; no unaided-human claim is made.",
+        "actual_value": 333,
+        "evidence_state": "all 333 row spaces and 55,278 pairwise intersections checked exactly over GF(2)",
+        "review_status": "reviewed_by_sol"
+      },
+      "survey_scope_note": "The best-public record here is the checked same-parameter construction, not a claim that the code is optimal. Literature and live-table checks are not exhaustive.",
+      "frozen_human_baseline_type": "reconstruction of a published ILP-search construction"
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T043-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.003003003003003003
+    }
+  }
+}

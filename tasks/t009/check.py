@@ -1,107 +1,81 @@
-"""Exact-input and interval-certified checker for selected directions on S^2."""
-from fractions import Fraction
-import math
+"""Exact verifier for configured binary linear codes."""
 
-_OBJECTIVE = "minimum pairwise angular separation in radians"
-_CONFIGS = {f"T009-C{cid}": {"n": n, "space": "S2", "objective": _OBJECTIVE} for cid,n in (("02",16),("03",17),("04",19))}
 
-def _q(value):
-    if type(value) is int:
-        return Fraction(value)
-    if isinstance(value, str):
-        try:
-            return Fraction(value)
-        except Exception as exc:
-            raise ValueError("invalid rational coordinate") from exc
-    if type(value) is float:
-        if not math.isfinite(value):
-            raise ValueError("coordinates must be finite")
-        return Fraction.from_float(value)
-    raise ValueError("coordinates must be integers, finite floats, or rational strings")
+SUPPORTED = {
+    "T009-C01": {"n": 68, "k": 15, "q": 2},
+    "T009-C02": {"n": 80, "k": 20, "q": 2},
+    "T009-C03": {"n": 100, "k": 20, "q": 2},
+}
 
-def _get_interval_module():
-    try:
-        from mpmath import iv
-        return iv
-    except Exception as exc:
-        raise ValueError("interval arithmetic is required for strict verification") from exc
 
-def _fraction_interval(iv, q):
-    # Enclose numerator and denominator separately, then divide as intervals.
-    return iv.mpf(q.numerator) / iv.mpf(q.denominator)
+def _rank(rows, n, k):
+    packed = [sum(bit << j for j, bit in enumerate(row)) for row in rows]
+    rank = 0
+    for col in range(n):
+        pivot = next((i for i in range(rank, k) if (packed[i] >> col) & 1), None)
+        if pivot is None:
+            continue
+        packed[rank], packed[pivot] = packed[pivot], packed[rank]
+        for i in range(k):
+            if i != rank and ((packed[i] >> col) & 1):
+                packed[i] ^= packed[rank]
+        rank += 1
+        if rank == k:
+            break
+    return rank
+
+
+def _matrix(solution, n, k):
+    if not isinstance(solution, dict) or "generator_matrix" not in solution:
+        raise ValueError("solution must contain generator_matrix")
+    matrix = solution["generator_matrix"]
+    if not isinstance(matrix, (list, tuple)) or len(matrix) != k:
+        raise ValueError(f"generator_matrix must have {k} rows")
+    rows = []
+    for row in matrix:
+        if not isinstance(row, (list, tuple)) or len(row) != n:
+            raise ValueError(f"each generator row must have {n} entries")
+        if any(type(bit) is not int or bit not in (0, 1) for bit in row):
+            raise ValueError("matrix entries must be integer 0 or 1 (bool is rejected)")
+        rows.append(list(row))
+    if _rank(rows, n, k) != k:
+        raise ValueError(f"generator matrix must have rank {k} over GF(2)")
+    return rows
+
+
+def _min_distance(rows):
+    k = len(rows)
+    n = len(rows[0])
+    packed = [sum(bit << j for j, bit in enumerate(row)) for row in rows]
+    word = 0
+    previous_gray = 0
+    best = n + 1
+    for i in range(1, 1 << k):
+        gray = i ^ (i >> 1)
+        changed = gray ^ previous_gray
+        word ^= packed[changed.bit_length() - 1]
+        best = min(best, word.bit_count())
+        previous_gray = gray
+    return best
+
 
 def validate(solution, config, strict=False):
-    if not isinstance(config, dict) or config.get("id") not in _CONFIGS or config.get("parameters") != _CONFIGS[config.get("id")]:
+    if not isinstance(config, dict):
         raise ValueError("unsupported configuration")
-    n_points = _CONFIGS[config["id"]]["n"]
-    if not isinstance(solution, dict) or not isinstance(solution.get("points"), (list, tuple)):
-        raise ValueError("solution must contain a points list")
-    points = solution["points"]
-    if len(points) != n_points:
-        raise ValueError(f"expected exactly {n_points} points")
-    parsed = []
-    for point in points:
-        if not isinstance(point, (list, tuple)) or len(point) != 3:
-            raise ValueError("each point must have three coordinates")
-        v = tuple(_q(x) for x in point)
-        norm2 = sum((x*x for x in v), Fraction())
-        if norm2 == 0:
-            raise ValueError("zero vectors do not define directions")
-        parsed.append((v, norm2))
-    if len({v for v, _ in parsed}) != n_points:
-        raise ValueError("duplicate vectors are not allowed")
-    # Distinct positive multiples encode the same point on S^2. Detect these
-    # exactly by checking zero cross product.
-    for i, (a, _) in enumerate(parsed):
-        for b, _ in parsed[:i]:
-            dot = sum((a[k]*b[k] for k in range(3)), Fraction())
-            if dot > 0 and all(a[k]*b[l] == a[l]*b[k] for k,l in ((0,1),(0,2),(1,2))):
-                raise ValueError("duplicate directions are not allowed")
-    # For each pair, exact rational dot products and squared norms determine
-    # the normalized cosine. Its largest value gives the minimum angle.
-    pair_data = []
-    for i, (a, na) in enumerate(parsed):
-        for b, nb in parsed[:i]:
-            dot = sum((x*y for x,y in zip(a,b)), Fraction())
-            pair_data.append((dot, na, nb))
-    iv = _get_interval_module()
-    # mpmath interval operations enclose rational conversion and square root.
-    # Take the maximum cosine interval first, then evaluate its angle once.
-    cos_intervals = []
-    for dot, na, nb in pair_data:
-        c = _fraction_interval(iv, dot) / iv.sqrt(_fraction_interval(iv, na) * _fraction_interval(iv, nb))
-        cos_intervals.append(c)
-    max_lo = cos_intervals[0].a
-    max_hi = cos_intervals[0].b
-    for c in cos_intervals[1:]:
-        max_lo = max(max_lo, c.a)
-        max_hi = max(max_hi, c.b)
-    # Exact normalized cosines lie in [-1, 1]; clipping only removes outward
-    # interval-rounding spill beyond these known mathematical bounds.
-    max_lo = max(max_lo, iv.mpf(-1).a)
-    max_hi = min(max_hi, iv.mpf(1).b)
-    cosine_iv = iv.mpf([max_lo, max_hi])
-    angle_iv = iv.atan2(iv.sqrt(1 - cosine_iv*cosine_iv), cosine_iv)
-    lo = float(angle_iv.a)
-    hi = float(angle_iv.b)
-    if not (math.isfinite(lo) and math.isfinite(hi) and 0 <= lo <= hi <= math.pi):
-        raise ValueError("could not establish a finite angle interval")
-    if strict:
-        # Outward safety padding covers the final conversion to binary floats.
-        lo = math.nextafter(lo, -math.inf)
-        hi = math.nextafter(hi, math.inf)
-        if lo < 0: lo = 0.0
-    claimed = solution.get("objective")
-    mismatch = False
-    if claimed is not None:
-        qclaim = _q(claimed)
-        mismatch = not (Fraction.from_float(lo) <= qclaim <= Fraction.from_float(hi))
+    config_id = config.get("id")
+    params = config.get("parameters")
+    if config_id not in SUPPORTED or params != SUPPORTED[config_id]:
+        raise ValueError("unsupported configuration")
+    n, k = params["n"], params["k"]
+    rows = _matrix(solution, n, k)
+    distance = _min_distance(rows)
     return {
-        "objective": lo if strict else (lo + hi) / 2,
-        "verification_status": "certified" if strict else "numeric",
-        "details": {"n": n_points, "pairs_checked": len(pair_data),
-                    "objective_name": "minimum_pairwise_angular_separation_radians",
-                    "angle_interval": [lo, hi],
-                    "claimed_objective_mismatch": mismatch,
-                    "directions_normalized_for_scoring": True}
+        "objective": distance,
+        "verification_status": "exact",
+        "details": {
+            "parameters": {"n": n, "k": k, "q": 2},
+            "rank": k,
+            "codewords_checked": (1 << k) - 1,
+            "claimed_objective_ignored": True,
+        },
     }

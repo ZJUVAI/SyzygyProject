@@ -4,7 +4,7 @@ import json, os
 
 def run_code():
     cid = os.environ.get('MATHBENCH_CONFIG_ID', 'T002-C01')
-    n = {'T002-C01': 26, 'T002-C03': 29, 'T002-C04': 38}.get(cid)
+    n = {'T002-C01': 26, 'T002-C02': 29, 'T002-C03': 38}.get(cid)
     if n is None:
         raise ValueError('unknown T002 configuration')
     if n==26:

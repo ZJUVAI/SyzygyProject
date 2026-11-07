@@ -1,0 +1,38 @@
+{
+  "task_id": "T022",
+  "name": "Ramsey R(5,5) lower-bound graph",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T022-C01",
+      "parameters": {
+        "clique_size": 5,
+        "independent_set_size": 5,
+        "max_vertices": 45
+      },
+      "direction": "maximize",
+      "human_reference": 42
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "checks": [
+      "mathematical definition and direction",
+      "same-parameter source and open status",
+      "replayed human and reference witnesses",
+      "valid cold seed export",
+      "classical search",
+      "independent objective bounds or exhaustive counts",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "program error and timeout rejected"
+    ],
+    "limitations": [
+      "Public record claims are limited to the cited sources.",
+      "Local resource limits do not provide model access isolation."
+    ]
+  }
+}

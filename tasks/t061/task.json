@@ -1,0 +1,32 @@
+{
+  "task_id": "T061",
+  "name": "Minimum-edge C6-saturated graph on 100 vertices",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T061-C01",
+      "parameters": {
+        "vertices": 100,
+        "forbidden_subgraph": "simple cycle C6",
+        "saturation": "C6-free; adding any missing edge creates a simple C6",
+        "objective": "number of edges"
+      },
+      "direction": "minimize",
+      "human_reference": 133
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定100点简单无向图，禁止简单六环，要求每条缺边加入均产生简单六环；最小化边数。区别于T024最大C4-free边数，不能只检查无六环或重复顶点walk。",
+      "primary_source": "Sol亲自读取Lan–Shi–Wang–Zhang2108.03910v3 Theorem1.5及Section2，并查看PDF第3页Figure1(a)的全部12条核心边。t33扩展30条三顶点路径，每条四边，再向y4接一叶，n100且12+120+1=133。2025正式论文DOI10.1016/j.disc.2025.114504。",
+      "open_status": "定理给下界ceil(400/3-2)=132、可行133。所查2026相关饱和图资料未给同参闭合；同时禁止C4/C5/C6、禁止所有长环、彩虹饱和的已解结果不适用。未把一般线性渐近值当有限精确答案。",
+      "independent_math": "正式检查器枚举无重复顶点五边路径。Sol另枚举三边路径，利用任意六环的两个对顶点之间存在内部不交三边路径作C6-free检查；对每条缺边，以二边和三边路径在中点会合，核对六个顶点互异，独立证实全部4817条人类缺边饱和。",
+      "controls": "初始198、传统及演化221、人类及参考133。五程序、故意六环破坏、完整声明不变、严格回放、冷导出、异常/非有限/超时均通过，任务及共享检查22项通过。首轮准入因共享独立量映射未接入而停止，补映射后完整重跑通过。",
+      "limits": "未证明133最优，132仍是可能值；未重跑论文构造发现过程，直接按定理重建并精确验算。"
+    }
+  }
+}

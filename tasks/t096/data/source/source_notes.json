@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-11-06",
+  "problem": {
+    "source": "Benguria and Loss, Connection between the Lieb-Thirring conjecture for Schrödinger operators and an isoperimetric problem for ovals on the plane (2004)",
+    "url": "https://arxiv.org/abs/math-ph/0402048",
+    "scope": "For smooth closed plane curves of length 2*pi, minimize the first eigenvalue of -d^2/ds^2 + curvature^2. The circle and a family of ovals attain value 1; the conjecture that this is the global minimum remains open."
+  },
+  "representation_and_open_status": {
+    "source": "Suragan, An Improved Bound for the Ovals Problem, arXiv:2609.10775v1 (2026-09-09)",
+    "url": "https://arxiv.org/html/2609.10775v1",
+    "statements": [
+      "Defines C_oval as the infimum over smooth simple closed convex plane curves of length 2*pi.",
+      "States the circle gives C_oval <= 1 and the Ovals conjecture is C_oval = 1.",
+      "Proves C_oval >= (sqrt(pi)/2)*(Gamma(7/6)/Gamma(5/3))^3, approximately 0.96183165233528.",
+      "States the sharp lower bound remains open."
+    ],
+    "reported_lower_bound": "(sqrt(pi)/2)*(Gamma(7/6)/Gamma(5/3))^3",
+    "numeric_lower_bound_for_display_only": 0.96183165233528
+  },
+  "compactness_source": {
+    "source": "Denzler, Existence and Regularity for a Curvature Dependent Variational Problem, arXiv:1301.6322 (2013; published 2015)",
+    "url": "https://arxiv.org/abs/1301.6322",
+    "use": "Denzler proves existence for the relaxed variational problem and classifies minimizers: the limiting digon has value 1; otherwise minimizers are analytic strictly convex planar curves with positive curvature. Since the circle has value 1, the infimum below or equal to 1 is captured by the positive-curvature class used here."
+  },
+  "local_baseline": {
+    "value": 1,
+    "witness": "data/reference/circle.json",
+    "verification": "The unit circle has curvature 1 and the constant eigenfunction has eigenvalue 1; the periodic operator spectrum is 1+k^2, k in Z.",
+    "provenance": "Classical analytical construction, locally encoded with AI assistance."
+  }
+}

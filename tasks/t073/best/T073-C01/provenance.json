@@ -1,11 +1,56 @@
 {
-  "classification": "ai_assisted_local_search",
   "status": "reviewed_by_sol",
-  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
-  "independent_quantity": {
-    "energy": 1082,
-    "lags": 99
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T073",
+    "config_id": "T073-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 24,
+    "verification_status": "exact",
+    "generation_time": 0.49441181495785713,
+    "verification_time": 1.9499017894268036,
+    "objective_value": 24,
+    "details": {
+      "dimension": 3,
+      "ambient_dimension": 4,
+      "design_strength": 5,
+      "point_count": 24,
+      "unit_norms_verified": 24,
+      "monomials_checked": 126,
+      "coordinate_field_degree": 2,
+      "minimal_polynomial_irreducible": true,
+      "selected_real_root_count": 1,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 2.4523173160851,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
   },
-  "claimed_score_ignored": true,
-  "damaged_construction_rejected": true
+  "search_metadata": {
+    "algorithm": "enumerate integer coordinate multisets and select a signed-permutation orbit satisfying the exact fourth-moment identity",
+    "seed": 0,
+    "integer_patterns_examined": 1,
+    "point_count": 24,
+    "human_or_reference_data_read": false
+  },
+  "solution_sha256": "4561a6edf77c957809acad7e1d7a4b24b61be71d82a78bfc1d0e2610707b1c48",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T073 tasks/t073/best/T073-C01/solution.json --config T073-C01"
 }

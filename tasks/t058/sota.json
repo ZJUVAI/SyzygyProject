@@ -1,0 +1,105 @@
+{
+  "task_id": "T058",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T058-C01": {
+      "program": "reference.py",
+      "reproduced_value": 7,
+      "public_value": 7,
+      "highest_reported": {
+        "value": 7,
+        "metric": "rounds in a valid 35-player schedule",
+        "direction": "maximize",
+        "source": "https://eprints.gla.ac.uk/377866/4/377866_suppl.pdf",
+        "source_location": "Miller, Valkov, and Abel (2026), Table 4, row v=35, k=5: MAX=8, construction RTD(5,7), r=7",
+        "reproduction_status": "seven-round construction independently rebuilt over F_7 and checked exactly; the source calls it optimal in the best-known sense, not maximal",
+        "ai_provenance": "not stated by source"
+      },
+      "parameters": {
+        "players": 35,
+        "groups_per_round": 7,
+        "players_per_group": 5,
+        "constraint": "each player appears once per round; each unordered pair shares a group at most once",
+        "objective": "number of valid rounds"
+      },
+      "witness": "data/reference/rtd_5_7.json",
+      "witness_sha256": "f950b70f2ed05281c6fbde7c6cf0a58214b19a8517671108e278e8ab20e6e773",
+      "human_method_baseline": {
+        "value": 7,
+        "witness": "data/reference/rtd_5_7.json",
+        "source": "https://doi.org/10.3390/sym18020269",
+        "source_location": "Table 4, RTD(5,7) construction; supplement Table 4 gives r=7",
+        "reconstruction": "players are points in A x F_7, where A={0,...,4} is a five-element subset of F_7; for each t,c in F_7, group the five points (a, ta+c) for a in A",
+        "reproduction_status": "generated from the standard finite-field RTD construction and exactly checked"
+      },
+      "known_status": {
+        "reported_range": [
+          7,
+          8
+        ],
+        "upper_bound": 8,
+        "source": "https://oeis.org/A107431",
+        "source_location": "comment currently states T(7,5) is known to be either 7 or 8; checked 2026-11-06, entry revision history not checked",
+        "status": "open in the checked sources; no eight-round witness or proof excluding eight rounds was found"
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T058",
+          "config_id": "T058-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 7,
+          "verification_status": "exact",
+          "generation_time": 0.5418059192597866,
+          "verification_time": 0.7175294868648052,
+          "objective_value": 7,
+          "details": {
+            "players": 35,
+            "groups_per_round": 7,
+            "players_per_group": 5,
+            "round_count": 7,
+            "distinct_pairs_used": 490,
+            "pair_count_upper_bound": 8,
+            "pairs_per_round": [
+              70,
+              70,
+              70,
+              70,
+              70,
+              70,
+              70
+            ],
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.2985893599689007,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "round_count": 7,
+          "distinct_pairs": 490
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T068",
+    "config_id": "T068-C01",
+    "validity": 1.0,
+    "combined_score": 0.9481481481481482,
+    "objective": 135,
+    "verification_status": "exact",
+    "generation_time": 10.368966069072485,
+    "verification_time": 1.7295171469449997,
+    "objective_value": 135,
+    "details": {
+      "length": 10,
+      "universe_size": 1024,
+      "codeword_count": 135,
+      "covered_word_count": 1024,
+      "radius": 1,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 12.278437547385693,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "greedy maximum-new-coverage set cover followed by redundant-center deletion",
+    "seed": 0,
+    "trial_limit": 8,
+    "trials_completed": 8,
+    "reference_data_read": false,
+    "search_seconds_cutoff": null
+  },
+  "solution_sha256": "d05c603a543c5f07e8a506614c9d7520341e6d171afd0eae3d6496c662a071b0",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T068 tasks/t068/best/T068-C01/solution.json --config T068-C01"
+}

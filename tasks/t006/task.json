@@ -1,0 +1,41 @@
+{
+  "task_id": "T006",
+  "name": "cage order",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T006-C01",
+      "parameters": {
+        "degree": 4,
+        "girth": 10
+      },
+      "direction": "minimize",
+      "human_reference": 320,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T006-C02",
+      "parameters": {
+        "degree": 4,
+        "girth": 9
+      },
+      "direction": "minimize",
+      "human_reference": 270,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Minimize connected simple regular graph order, fixing degree4 and girth at least10 in C01 or at least9 in new C02. The original degree4,girth10 formulation is preserved.",
+      "primary_source": "Sol read Exoo et al. arXiv2511.07247v2 abstract and Table2, reporting new upper bound270 for(4,9), and De la Cruz-Pizana EJC33(1)P1.54 DOI10.37236/14471, Table2 and discussion of exhaustive exclusions161-164 establishing165. Moore bound is1+4*(1+3+9+27)=161, distinct from165.",
+      "witness": "Sol personally fetched https://houseofgraphs.org/data/cages/k4_g9_n270.g6. SHA256b2f7ef96469f839a093f42352a419435a0655a068cd345732d42b48899406e8d. The file has TWO graph6 rows; both are4-regular connected270-vertex540-edge girth9 graphs. Exactly one row matches all edges of saved human_graph_c02.json. Do not attribute this file to the separately reviewed authors repo commit that does not contain it.",
+      "independent_method": "Task bounded-BFS girth certificate and Sol networkx girth both run independently on every required program. Human/reference have270 vertices and girth9. Deleted-edge corruption and complete score-claim invariance pass. The source lower165 and upper270 leave a gap; no optimality proof was found in reviewed primary sources.",
+      "baseline": "Existing formula-generated LPSX(5,37) degree4/girth10 seed is also feasible for girth>=9 and reads no comparison assets. New baseline removes a vertex and reconnects neighbors when exact checks permit, yielding50615 versus50616 seed. The new evolution returns a valid50616 fallback; it does not match the270 public record.",
+      "admission": "Five strict programs, independent quantities, exact replay, cold export,error/nonfinite/timeout controls pass for both configs. Original failed admission due declaration-dependent details retained; fixed full result now ignores claims. Draft best containing the public witness is replaced by actual own baseline output; historical reference stays in source assets. Accepted C01 own incumbent retained after successful strict replay."
+    }
+  }
+}

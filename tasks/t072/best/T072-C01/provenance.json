@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T072",
+    "config_id": "T072-C01",
+    "validity": 1.0,
+    "combined_score": 0.4652567975830816,
+    "objective": 331,
+    "verification_status": "exact",
+    "generation_time": 0.8981961905956268,
+    "verification_time": 0.4985034056007862,
+    "objective_value": 331,
+    "details": {
+      "cardinality": 32,
+      "sumset_size": 195,
+      "product_set_size": 331,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 1.4036197438836098,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded one/two-element replacement hill climb with occasional equal-score plateau moves",
+    "seed": 0,
+    "iterations_requested": 500,
+    "iterations_run": 500,
+    "accepted_moves": 6,
+    "search_only_integer_proposal_limit": 4096,
+    "best_objective": 331,
+    "generation_seconds": 0.3218892402946949,
+    "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds"
+  },
+  "solution_sha256": "75d07358909997540f30877a5870377b873458db4f2c5ff6ec43139c99f3ff64",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T072 tasks/t072/best/T072-C01/solution.json --config T072-C01"
+}

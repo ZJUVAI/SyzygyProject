@@ -1,31 +1,30 @@
 {
   "task_id": "T014",
   "review_status": "passed_sol",
-  "checked_at": "2026-11-05",
   "configurations": {
     "T014-C01": {
-      "public_value": "1/27",
+      "public_value": "1.5097201507458786",
       "public_source": {
-        "url": "https://math.tejstead.com/heilbronn/square/11/",
-        "data_url": "https://math.tejstead.com/heilbronn/square/11/points.json",
-        "title": "Heilbronn — Square, n = 11 record",
-        "credit": "Michael Goldberg, 1972",
-        "same_parameters": {
-          "n": 11,
-          "domain": "unit square"
-        },
-        "verification": "The source reports exact value 1/27 and exact-arithmetic verification of all 165 triples.",
-        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
+        "url": "https://arxiv.org/abs/0907.1379",
+        "authors": "Mate Matolcsi and Carlos Vinuesa",
+        "year": 2009,
+        "claim": "Best nonnegative step function then known, at n=208; coefficients published in the appendix.",
+        "url_pdf": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+        "same_configuration": true
       },
-      "reproduced_value": "1/27",
+      "reproduced_value": "6280435861361744576/4160000022692211721",
       "program": "sota.py",
-      "witness": "human.py",
+      "witness": "data/human_matolcsi_vinuesa.json",
       "matches_public_best": true,
-      "comparison_tolerance": "0; exact rational equality",
+      "comparison_tolerance": "The printed public value is rounded to 16 decimal places; compare its decimal rounding with the exact rational checker value.",
       "limitations": [
-        "The witness establishes a feasible lower bound, not global optimality.",
-        "AlphaEvolve's reported n=11 value above 0.0365 concerns a unit-area equilateral triangle, not the unit square; it has different domain parameters."
+        "This is the best located published witness for exactly 208 nonnegative coefficients, not a proof of optimality or an exhaustive survey.",
+        "AlphaEvolve reports 1.5053 and later 1.5032 for the continuous AC1 problem using a 600-part step function; those values are not a 208-coefficient witness for this configuration: https://arxiv.org/abs/2511.02864.",
+        "SimpleTES reports 1.503871 for continuous AC1; its representation and reported task score are not established as this fixed 208-step objective: https://arxiv.org/abs/2604.19341.",
+        "Later continuous-problem reports, including 1.5029, are outside the verified 208-step configuration. No corresponding 208-coefficient witness was located.",
+        "DREAM-RSI coverage records do not list AC1 as a DREAM-RSI task; its coverage comes from SimpleTES and AlphaEvolve."
       ],
+      "checked_at": "2026-11-05",
       "verification": {
         "task_id": "T014",
         "status": "reproduced",
@@ -34,15 +33,21 @@
           "config_id": "T014-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": "1/27",
+          "objective": "6280435861361744576/4160000022692211721",
           "verification_status": "exact",
-          "generation_time": 0.21497340500354767,
-          "verification_time": 0.16492857038974762,
-          "objective_value": "1/27",
+          "generation_time": 0.31502126157283783,
+          "verification_time": 0.265011440962553,
+          "objective_value": "6280435861361744576/4160000022692211721",
           "details": {
-            "triangles_checked": 165
+            "steps": 208,
+            "coefficient_count": 208,
+            "max_convolution": "7548600794905943/5000000000000000",
+            "max_indices": [
+              321
+            ],
+            "normalization": "normalized to integral 1 before scoring"
           },
-          "eval_time": 0.383570309728384,
+          "eval_time": 0.5838731750845909,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -57,161 +62,20 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t014/human.py",
+        "witness": "tasks/t014/data/human_matolcsi_vinuesa.json",
         "independent_quantity": {
-          "minimum_triangle_area": "1/27",
-          "triangles": 165
+          "exact_objective": "6280435861361744576/4160000022692211721",
+          "convolution_entries": 415
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
-        "snapshot_date": "2026-11-05"
-      }
-    },
-    "T014-C02": {
-      "public_value": "unique real root of 64*A^3 + 80*A^2 + 28*A - 1 = 0 (0.0325988586918196982187640066235154080492419884...)",
-      "public_source": {
-        "url": "https://math.tejstead.com/heilbronn/square/12/",
-        "data_url": "https://math.tejstead.com/heilbronn/square/12/points.json",
-        "title": "Heilbronn — Square, n = 12 record",
-        "credit": "F. Comellas and J. L. A. Yebra, December 2001",
-        "same_parameters": {
-          "n": 12,
-          "domain": "unit square"
-        },
-        "verification": "The current record page identifies the exact algebraic value from the published closed-form configuration and reports exact-arithmetic verification of all 220 triples.",
-        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
-      },
-      "reproduced_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
-      "program": "sota.py",
-      "witness": "human.py",
-      "matches_public_best": true,
-      "comparison_tolerance": "absolute area difference <= 1e-30; human.py stores the published coordinates as 30-decimal rational literals, and its exact checked score differs from the public algebraic value by about 3.0001539101993535e-31",
-      "limitations": [
-        "The local witness interprets the published 30-decimal coordinate literals as exact rationals; it does not encode the source's exact algebraic coordinates.",
-        "The witness establishes a feasible lower bound, not global optimality."
-      ],
-      "verification": {
-        "task_id": "T014",
-        "status": "conservative_reproduction",
-        "run": {
-          "task_id": "T014",
-          "config_id": "T014-C02",
-          "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
-          "verification_status": "exact",
-          "generation_time": 0.16483891010284424,
-          "verification_time": 0.16492298990488052,
-          "objective_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
-          "details": {
-            "triangles_checked": 220
-          },
-          "eval_time": 0.3337561562657356,
-          "seed": 0,
-          "strict": true,
-          "budget": {
-            "generation_seconds": 300,
-            "verification_seconds": 60,
-            "memory_bytes": 4294967296,
-            "threads": 1
-          },
-          "environment": {
-            "python": "3.13.2",
-            "platform": "linux",
-            "worker_cpu": 0
-          }
-        },
-        "witness": "tasks/t014/human.py",
-        "independent_quantity": {
-          "minimum_triangle_area": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
-          "triangles": 220
-        },
-        "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
-        "public_value_approx": 0.0325988586918197,
-        "replay_minus_public": "-3.0001539101993535e-31",
-        "snapshot_date": "2026-11-05"
-      }
-    },
-    "T014-C03": {
-      "public_value": "7/341",
-      "public_source": {
-        "url": "https://math.tejstead.com/heilbronn/square/16/",
-        "data_url": "https://math.tejstead.com/heilbronn/square/16/points.json",
-        "title": "Heilbronn — Square, n = 16 record",
-        "credit": "Mark Beyleveld, August 2006",
-        "same_parameters": {
-          "n": 16,
-          "domain": "unit square"
-        },
-        "verification": "The source reports rational coordinates, exact value 7/341, and exact-arithmetic verification of all 560 triples.",
-        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
-      },
-      "reproduced_value": "7/341",
-      "program": "sota.py",
-      "witness": "human.py",
-      "matches_public_best": true,
-      "comparison_tolerance": "0; exact rational equality",
-      "limitations": [
-        "The witness establishes a feasible lower bound, not global optimality."
-      ],
-      "verification": {
-        "task_id": "T014",
-        "status": "reproduced",
-        "run": {
-          "task_id": "T014",
-          "config_id": "T014-C03",
-          "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": "7/341",
-          "verification_status": "exact",
-          "generation_time": 0.16517840698361397,
-          "verification_time": 0.1673881746828556,
-          "objective_value": "7/341",
-          "details": {
-            "triangles_checked": 560
-          },
-          "eval_time": 0.33581633120775223,
-          "seed": 0,
-          "strict": true,
-          "budget": {
-            "generation_seconds": 300,
-            "verification_seconds": 60,
-            "memory_bytes": 4294967296,
-            "threads": 1
-          },
-          "environment": {
-            "python": "3.13.2",
-            "platform": "linux",
-            "worker_cpu": 0
-          }
-        },
-        "witness": "tasks/t014/human.py",
-        "independent_quantity": {
-          "minimum_triangle_area": "7/341",
-          "triangles": 560
-        },
-        "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
+        "source_review": "Checked the Matolcsi-Vinuesa primary source and later AlphaEvolve reports. This is the strongest located public exactly-208 nonnegative-step witness; later cited stronger values use other discretizations. Exact convolution independently recomputed. Scope remains limited to checked sources.",
         "snapshot_date": "2026-11-05"
       }
     }
   },
   "sol_review": {
     "T014-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    },
-    "T014-C02": {
-      "status": "conservative_reproduction",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    },
-    "T014-C03": {
       "status": "reproduced",
       "reviewer": "Sol main agent",
       "date": "2026-11-05"

@@ -1,0 +1,176 @@
+{
+  "task_id": "T008",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T008-C01": {
+      "public_value": "23",
+      "public_source": {
+        "url": "https://ljcr.dmgordon.org/cover/show_cover.php?v=24&k=14&t=4",
+        "archive_url": "https://zenodo.org/records/19735294",
+        "archive_file": "coverdata.json",
+        "witness_archive_file": "covers.json",
+        "archive_version": "1.2",
+        "recorded_contributor": "Andrei Ochmat",
+        "recorded_date": "2004-07-20",
+        "history": [
+          {
+            "value": "24",
+            "contributor": "JCD article",
+            "date": "1996-11-14 17:08:00"
+          }
+        ],
+        "provenance_note": "Zenodo archive metadata reports the best known size and its improvement history. It does not provide the construction method in this record."
+      },
+      "covers_json_byte_offset": 332010995,
+      "reproduced_value": "23",
+      "program": "sota.py",
+      "witness": "data/sota_witness.json",
+      "reproduction_command": ".venv/bin/python -m mathbench evaluate T008 tasks/t008/sota.py --strict",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "checked_at": "2026-11-05",
+      "limitations": [
+        "The archive attributes the 23-block improvement to Andrei Ochmat but does not state the construction method in its metadata.",
+        "The covering repository reports a best known construction, not a proof that 23 is optimal."
+      ],
+      "verification": {
+        "task_id": "T008",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T008",
+          "config_id": "T008-C01",
+          "validity": 1.0,
+          "combined_score": 2.6956521739130435,
+          "objective": 23,
+          "verification_status": "exact",
+          "generation_time": 0.2652539797127247,
+          "verification_time": 0.2151874043047428,
+          "objective_value": 23,
+          "details": {
+            "parameters": {
+              "v": 24,
+              "k": 14,
+              "t": 4
+            },
+            "blocks": 23,
+            "covered_four_subsets": 10626,
+            "total_four_subsets": 10626,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.48527121916413307,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t008/data/sota_witness.json",
+        "independent_quantity": {
+          "blocks": 23,
+          "four_subsets": 10626
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked Zenodo v1.2 provenance, independently compared the extracted C(24,14,4) array against the saved 0-based witness, and verified all 10,626 four-subsets using bit masks. Empty coverage is rejected and forged scores are ignored.",
+        "snapshot_date": "2026-11-05"
+      }
+    },
+    "T008-C02": {
+      "public_value": 36,
+      "public_source": {
+        "url": "https://ljcr.dmgordon.org/cover/show_cover.php?k=10&t=4&v=20",
+        "secondary_record_source": "https://w1.cirrelt.ca/~toulouse/CD-BL-MT.pdf",
+        "archive_url": "https://zenodo.org/records/19735294",
+        "witness_source": "LJCR live block listing",
+        "archive_version": "1.2",
+        "recorded_contributor": "Rade Belic",
+        "recorded_date": "2001-05-03",
+        "lower_bound": 32,
+        "proven_optimal": false
+      },
+      "reproduced_value": 36,
+      "program": "reference.py",
+      "reference": "reference.py",
+      "witness": "data/sota_witness_C02.json",
+      "reproduction_command": "MATHBENCH_CONFIG_ID=T008-C02 .venv/bin/python -m mathbench evaluate T008 tasks/t008/sota.py --strict --config T008-C02",
+      "matches_public_best": true,
+      "comparison_tolerance": 0,
+      "checked_at": "2026-11-07",
+      "limitations": [
+        "Deliever et al. list a 35-block search attempt with 18 uncovered four-subsets. It is infeasible and is not a public record.",
+        "The minimum is not proved; the current LJCR lower bound is 32.",
+        "The archived witness uses labels 1 through 20; the saved witness shifts them to 0 through 19."
+      ],
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T008",
+          "config_id": "T008-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 36,
+          "verification_status": "exact",
+          "generation_time": 0.11427688598632812,
+          "verification_time": 0.1143411323428154,
+          "objective_value": 36,
+          "details": {
+            "parameters": {
+              "v": 20,
+              "k": 10,
+              "t": 4
+            },
+            "blocks": 36,
+            "covered_t_subsets": 4845,
+            "total_t_subsets": 4845,
+            "claimed_objective_ignored": true,
+            "optimality_proved": false,
+            "covered_four_subsets": 4845
+          },
+          "eval_time": 0.2306261770427227,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "blocks": 36,
+          "subsets_checked": 4845,
+          "subset_size": 4
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "sol_review": {
+    "T008-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

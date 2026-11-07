@@ -1,0 +1,54 @@
+{
+  "task_id": "T056",
+  "name": "Taillard ta41 job-shop makespan",
+  "acceptance_status": "accepted_by_sol",
+  "category": "scheduling",
+  "definition": "For the fixed Taillard ta41 instance, schedule every operation. Each job follows its own prescribed machine route, and each machine processes at most one operation at a time. Minimize the final completion time (makespan).",
+  "solution_format": "An object with machine_orders: one permutation of all 30 job indices for each of the 20 machines.",
+  "objective": {
+    "name": "makespan",
+    "unit": "integer time units",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "Every one of the 30 jobs has 20 operations on its prescribed route.",
+    "Each machine processes all 30 assigned operations exactly once, without overlap.",
+    "Operations within each job follow the fixed route order.",
+    "Processing times are positive integers; operations are non-preemptive.",
+    "The directed graph formed by job precedence and machine order must be acyclic."
+  ],
+  "configurations": [
+    {
+      "id": "T056-C01",
+      "parameters": {
+        "instance": "ta41",
+        "jobs": 30,
+        "machines": 20
+      },
+      "direction": "minimize",
+      "human_reference": 3296
+    }
+  ],
+  "sources": [
+    "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html",
+    "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/jobshop.dir/tai30_20.txt",
+    "https://doi.org/10.1287/opre.8.4.487",
+    "https://www.optimizizer.com/TA.php"
+  ],
+  "verification": "Exact integer longest-path evaluation on the acyclic graph of job precedences and consecutive operations in each machine order. A cycle or invalid machine permutation is rejected.",
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Taillard ta41，30工件20机器、每工件各自固定机器顺序、非抢占、最小化makespan。不同机器可用不同工件顺序，与T028 permutation flowshop不同。",
+      "primary_sources": "Sol重新下载Taillard官方tai30_20.txt与Shylo公开2006排程HTML，逐字节匹配源快照；全部600个machine/duration操作及20条机器工件排列逐项匹配保存JSON。原始实例SHA256 fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9。",
+      "record_and_status": "亲自读取当前optimizizer TA表ta41行，仍列1912–2006，2008传统GES构造2006保存且可复算；2025论文Table5、14给1915是new lower bound而非可行值，结论明确未形式证明其solver下界，故单独记为报告。所查来源未闭合。",
+      "human_baseline": "Giffler–Thompson冲突集算法配最长加工时间优先，复现3296；该弱H不冒充最强公开人类2006。实现逐步选最早完成操作对应机器，冲突集取可开始时间小于该完成时间的待选操作。",
+      "independent_math": "正式checker构造前驱DAG后拓扑最长路；Sol另用工件下一操作与机器下一工件双游标逐步dispatch，维护两类ready时间。全部600操作调度完成，独立得相同makespan。",
+      "controls": "初始25114、传统/演化2795、人类3296、参考2006；重复工件破坏、完整声明不变性、严格回放、仅公开instance冷导出、三类运行失败通过。预算metadata初稿虚称支持秒数截断，交原代理改成实际固定迭代后完整重跑。",
+      "limits": "未验证1915的计算下界证明，未重跑2008并行GES或2025长时solver；2006只是可行公开纪录，不称最优。"
+    }
+  }
+}

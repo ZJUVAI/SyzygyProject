@@ -1,60 +1,92 @@
 {
   "task_id": "T081",
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 1.5097201507458786,
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "signed_values_allowed": true,
-      "integral": 1
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published nonnegative 208-step coefficients transferred to the signed class and exactly recomputed",
-    "optimality": "No optimality or current-record claim",
-    "witness": "data/human_matolcsi_vinuesa.json"
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T081-C01": {
+      "parameters": {
+        "dimension": 2,
+        "point_count": 12,
+        "coordinates": "exact rational numbers",
+        "constraint": "all points are distinct",
+        "objective": "maximum squared pair distance divided by minimum squared pair distance",
+        "direction": "minimize"
+      },
+      "best_human": {
+        "value": 8.464101615137755,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 2,
+          "point_count": 12
+        },
+        "witness_file": "data/human/rechenberg12_rational.json",
+        "witness_sha256": "ec135111b953a7eca739c733a3bdb4ee5d38fa7a90250d491220260e7b566e5b",
+        "url": "https://erich-friedman.github.io/packing/maxmin/",
+        "source_location": "n=12 row and mm12.gif diagram; source reports r^2=5+2*sqrt(3) and credits Ingo Rechenberg (2006)",
+        "provenance": "Independent exact reconstruction of the pictured geometry; substitute a 63-digit rational lower approximation to sqrt(3) for a rational witness. The page supplies the diagram and value, not coordinate strings.",
+        "ai_provenance": "The source credits Ingo Rechenberg (2006); no AI provenance is reported.",
+        "actual_value": "33856406460551018348219570732046978935542442030483045024446455830434458106192147637714398026789709384238645547380720042905106441/3999999999999999999999999999999999999999999999999999999999999998434458106192147637714398026789709384238645547380720042905106441",
+        "reference_rounding": "human_reference is the positive JSON number 8.464101615137755, rounded upward from the exact rational reconstruction for the frozen compatibility score.",
+        "evidence_state": "All 66 squared distances were recomputed exactly. The rational substitution has minimum squared distance below 1 and an exact ratio slightly above 5+2*sqrt(3)."
+      },
+      "best_public": {
+        "value": 8.464101615137755,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "dimension": 2,
+          "point_count": 12
+        },
+        "exact_value": "5+2*sqrt(3)",
+        "url": "https://erich-friedman.github.io/packing/maxmin/",
+        "source_location": "Current n=12 row; credited to Rechenberg, 2006",
+        "provenance": "Public page reports the exact squared ratio and image. The local rational witness is an independent reconstruction and is not presented as the original coordinate file.",
+        "ai_provenance": "No AI provenance is reported by the source.",
+        "evidence_state": "Published feasible upper bound; the local rational witness has a slightly weaker exact score. Optimality remains open."
+      },
+      "best_reproduced": {
+        "value": "33856406460551018348219570732046978935542442030483045024446455830434458106192147637714398026789709384238645547380720042905106441/3999999999999999999999999999999999999999999999999999999999999998434458106192147637714398026789709384238645547380720042905106441",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 2,
+          "point_count": 12
+        },
+        "witness_file": "data/reference/rechenberg12_rational.json",
+        "witness_sha256": "ec135111b953a7eca739c733a3bdb4ee5d38fa7a90250d491220260e7b566e5b",
+        "provenance": "Rational reconstruction from the 12-point published diagram, with sqrt(3) replaced by floor(sqrt(3)*10^63)/10^63.",
+        "ai_provenance": "Human-source construction reconstructed locally; no AI attribution applies to the 2006 report.",
+        "actual_value": "33856406460551018348219570732046978935542442030483045024446455830434458106192147637714398026789709384238645547380720042905106441/3999999999999999999999999999999999999999999999999999999999999998434458106192147637714398026789709384238645547380720042905106441",
+        "evidence_state": "The exact rational checker verifies 12 distinct points and all 66 squared distances.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 8.464101615137755,
+        "actual_value": "33856406460551018348219570732046978935542442030483045024446455830434458106192147637714398026789709384238645547380720042905106441/3999999999999999999999999999999999999999999999999999999999999998434458106192147637714398026789709384238645547380720042905106441",
+        "witness_file": "data/human/rechenberg12_rational.json",
+        "witness_sha256": "ec135111b953a7eca739c733a3bdb4ee5d38fa7a90250d491220260e7b566e5b",
+        "provenance": "Exact rational reconstruction of the public n=12 diagram; H is rounded upward to a JSON number."
+      },
+      "highest_reported": {
+        "value": 8.464101615137755,
+        "exact_value": "5+2*sqrt(3)",
+        "metric": "maximum squared pair distance divided by minimum squared pair distance for 12 planar points",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://erich-friedman.github.io/packing/maxmin/",
+        "source_location": "Current n=12 entry; Rechenberg construction from 2006",
+        "reproduction_status": "Exact Q(sqrt(3)) geometry gives 5+2*sqrt(3). The frozen rational point list substitutes a lower 63-digit approximation to sqrt(3), so its exact score is reported separately and is slightly worse."
+      },
+      "optimality_status": {
+        "reported_upper_bound": "5+2*sqrt(3)",
+        "state": "open; the 2025 AlphaEvolve paper says exact values are listed through n=8 and calls n=9..30 numerical candidates"
+      }
+    }
   },
-  "best_public": {
-    "value": 1.5097201507458786,
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "signed_values_allowed": true,
-      "integral": 1
-    },
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published nonnegative construction is admissible; local witness exactly recomputed",
-    "optimality": "not asserted; no latest signed record claimed",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 1.5097201507458786,
-    "exact_value": "6280435861361744576/4160000022692211721",
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "signed_values_allowed": true,
-      "integral": 1
-    },
-    "provenance": "published nonnegative human witness transferred to the signed class",
-    "evidence_state": "exact rational recomputation"
-  },
-  "scope_note": "The signed 150-step appendix construction is a distinct configuration. Its positive-only maximum 1.458105685768 is not an absolute score; its maximum-absolute score is about 2.426895802097. It is not used as this task's baseline.",
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class"
+  "initial_results": {
+    "T081-C01": {
+      "objective": 13,
+      "objective_value": 13,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.6510847396259811
+    }
+  }
 }

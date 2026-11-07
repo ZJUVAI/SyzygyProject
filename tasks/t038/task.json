@@ -1,0 +1,45 @@
+{
+  "task_id": "T038",
+  "name": "Maximum number of mutually orthogonal Latin squares",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_designs",
+  "definition": "For fixed order n=12, maximize the number of pairwise orthogonal Latin squares over the symbol set {0,...,11}.",
+  "solution_format": "An object with a squares list; each square is a 12 by 12 integer array.",
+  "objective": {
+    "name": "number_of_squares",
+    "unit": "Latin squares",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Each square has exactly 12 rows and 12 columns.",
+    "Each row and each column contains every integer from 0 through 11 exactly once.",
+    "For each pair of distinct input squares, all 144 ordered symbol pairs occur exactly once."
+  ],
+  "configurations": [
+    {
+      "id": "T038-C01",
+      "parameters": {
+        "order": 12
+      },
+      "direction": "maximize",
+      "human_reference": 5
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.1016/0097-3165(92)90052-V",
+    "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5"
+  ],
+  "verification": "Exact integer checks of all entries, row and column symbol sets, and pairwise ordered-pair counts.",
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "固定12阶，最大化两两正交拉丁方阵数量。每行每列恰好含0至11，每对方阵产生全部144个有序符号对。",
+      "人类来源": "Sage 10.10固定提交cb359e4c6e3b52e1bfc7f4f152e7db3ebd5f5d03，将显式五方阵归于Brendan McKay。主代理从原函数M字面字符串重建720个符号并逐项匹配，不执行外部代码。1992年相关论文作者是Charles E. Roberts，两种归属分开。",
+      "独立验算": "主代理将五方阵转换为144行、7列的正交数组，核对全部21个二列投影。该方法同时涵盖拉丁条件与两两正交条件。初始1，MacNeish基线和演化2，人类及参考5。五程序及完整验收控制通过。",
+      "开放状态与限制": "五方阵是已知下界，未称最优。官方2026形式猜想库仍将12阶完整11方阵是否存在列为开放。本地未重建非存在证明，公开检索未见更高构造；检索不是穷尽。原检查器的声明分数差异标志已移除，伪造分数不会改变完整校验结果。"
+    }
+  }
+}

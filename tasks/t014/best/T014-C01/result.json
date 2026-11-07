@@ -2,17 +2,23 @@
   "task_id": "T014",
   "config_id": "T014-C01",
   "validity": 1.0,
-  "combined_score": 0.869812250453843,
-  "objective": "50336357086449248204323247580805692018611103/1562500000000000000000000000000000000000000000",
+  "combined_score": 0.9978796555508764,
+  "objective": "2363950124063999601/1562500000000000000",
   "verification_status": "exact",
-  "generation_time": 45.461857706308365,
-  "verification_time": 0.16468026861548424,
-  "objective_value": "50336357086449248204323247580805692018611103/1562500000000000000000000000000000000000000000",
+  "generation_time": 253.45014350488782,
+  "verification_time": 3.2994662672281265,
+  "objective_value": "2363950124063999601/1562500000000000000",
   "details": {
-    "triangles_checked": 165
+    "steps": 208,
+    "coefficient_count": 208,
+    "max_convolution": "181842317235692277/50000000000000000000",
+    "max_indices": [
+      171
+    ],
+    "normalization": "normalized to integral 1 before scoring"
   },
-  "eval_time": 45.62860371917486,
-  "seed": 0,
+  "eval_time": 256.9140951856971,
+  "seed": 60402,
   "strict": true,
   "budget": {
     "generation_seconds": 300,
@@ -21,8 +27,9 @@
     "threads": 1
   },
   "environment": {
-    "python": "3.13.2",
+    "python": "3.13.12",
     "platform": "linux",
-    "worker_cpu": 0
+    "memory_limit_enforced": true,
+    "worker_cpu": 86
   }
 }

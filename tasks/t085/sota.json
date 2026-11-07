@@ -1,0 +1,164 @@
+{
+  "task_id": "T085",
+  "configurations": {
+    "T085-C01": {
+      "program": "reference.py",
+      "reproduced_value": "7/2",
+      "public_value": 3.804,
+      "highest_reported": {
+        "value": 3.804,
+        "source": "Erich Friedman, Circles Covering Circles, n=21 entry; https://erich-friedman.github.io/packing/circovcir/",
+        "reproduction_status": "The page reports radius 3.804+ and credits Jeremy Tan in 2018. It labels the construction found, not proved optimal. No exact n=21 witness was reconstructed or independently verified in this task. The reproduced reference is the weaker radius-3.5 triangular-lattice patch."
+      },
+      "best_human": {
+        "value": 3.5,
+        "parameters": {
+          "circle_count": 21,
+          "covering_circle_radius": 1
+        },
+        "source": "Kershner, The Number of Circles Covering a Set, American Journal of Mathematics 61(3), 1939, pp. 665–671, DOI 10.2307/2371320; https://doi.org/10.2307/2371320",
+        "provenance": "Traditional triangular-lattice circle-covering method. A finite radius-two lattice patch is reconstructed locally with a small inward spacing adjustment and two repeated origin centers.",
+        "witness": "data/human/kershner_triangular_patch21.json",
+        "evidence_state": "Exact continuous coverage checked by the restricted-Voronoi certificate. This local finite patch is not attributed as a published n=21 record.",
+        "ai_provenance": "The method is classical; the specific finite patch was reconstructed locally for this benchmark and is not presented as a historical human result."
+      },
+      "best_public": {
+        "value": 3.804,
+        "parameters": {
+          "circle_count": 21,
+          "covering_circle_radius": 1
+        },
+        "source": "https://erich-friedman.github.io/packing/circovcir/",
+        "date_checked": "2026-11-06",
+        "source_artifact": "data/source/friedman_tan21.png",
+        "source_artifact_sha256": "014887ec99d39ae3337799a074424e42d694f38d39b63ef1d96c53970e678088",
+        "provenance": "Friedman's table credits Jeremy Tan in 2018 and labels n=21 as found.",
+        "witness": null,
+        "evidence_state": "Reported same-parameter construction value; exact witness not recovered or reproduced.",
+        "optimality": "No n=21 optimality proof appears in the reviewed source."
+      },
+      "best_reproduced": {
+        "value": "7/2",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "circle_count": 21,
+          "covering_circle_radius": 1
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Exact enumeration of all restricted Voronoi vertices, pair-bisector boundary intersections, smooth boundary extrema, and fixed boundary points; 1,463 critical points checked.",
+        "objective_value": 3.5,
+        "witness": "data/reference/kershner_triangular_patch21.json",
+        "origin_type": "task-local exact reconstruction of a classical triangular-lattice covering method"
+      },
+      "best_own_search": {
+        "value": "1",
+        "objective_value": "1",
+        "program": "init_program.py",
+        "witness": "best/T085-C01/solution.json",
+        "witness_sha256": "5bfe8c97448afd6e3d063315819efdb1875c71b1af25666ae6ccaf4818751fee",
+        "parameters": {
+          "circle_count": 21,
+          "covering_circle_radius": 1,
+          "target": "closed disk centered at origin",
+          "center_domain": "unbounded rational coordinates",
+          "radius_domain": "positive rational"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {},
+        "generation_record": {
+          "task_id": "T085",
+          "config_id": "T085-C01",
+          "validity": 1.0,
+          "combined_score": 0.2857142857142857,
+          "objective": "1",
+          "verification_status": "exact",
+          "generation_time": 0.3656923696398735,
+          "verification_time": 0.48433125019073486,
+          "objective_value": "1",
+          "details": {
+            "circle_count": 21,
+            "target_radius": "1",
+            "critical_points_checked": 5,
+            "coverage_certificate": "All restricted Voronoi vertices, pair-bisector boundary crossings, boundary distance extrema, and fixed boundary representatives were checked exactly.",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.8566035591065884,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "The primary public table still labels n=21 as found. Its 2026 proofs for n=11 through n=20 do not include n=21.",
+        "scope": "Twenty-one unit disks covering a centered disk. Results for other circle counts are excluded from the same-parameter comparison."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T085",
+          "config_id": "T085-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "7/2",
+          "verification_status": "exact",
+          "generation_time": 0.3157821446657181,
+          "verification_time": 0.9173773899674416,
+          "objective_value": "7/2",
+          "details": {
+            "circle_count": 21,
+            "target_radius": "7/2",
+            "critical_points_checked": 1463,
+            "coverage_certificate": "All restricted Voronoi vertices, pair-bisector boundary crossings, boundary distance extrema, and fixed boundary representatives were checked exactly.",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 1.2393424548208714,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "radius": "7/2",
+          "circle_count": 21,
+          "distinct_centers": 19,
+          "method": "Analytic triangular tessellation radius; omitted-site norm lower bound and exact rational perturbation slack. Independent of formal restricted Voronoi enumeration."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

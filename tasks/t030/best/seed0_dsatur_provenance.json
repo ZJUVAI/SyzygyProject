@@ -1,0 +1,20 @@
+{
+  "configuration_id": "T030-C01",
+  "program": "baseline.py",
+  "algorithm": "multi-start DSATUR greedy coloring with seeded random tie breaks",
+  "seed": 0,
+  "iterations": 8,
+  "iteration_limit": 8,
+  "wall_clock_cutoff_seconds": null,
+  "generation_seconds": 1.6884,
+  "objective": 113,
+  "verification_status": "exact",
+  "environment": {
+    "python": "3.13.12",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "cpu_threads": 1
+  },
+  "replay_command": "MATHBENCH_CONFIG_ID=T030-C01 MATHBENCH_SEED=0 .venv/bin/python -c 'from tasks.t030.baseline import run_code; import json; print(json.dumps(run_code()))'",
+  "candidate_input": "data/instance.json",
+  "comparison_data_read": false
+}

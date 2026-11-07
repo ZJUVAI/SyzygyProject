@@ -1,0 +1,5 @@
+Task T075-C01: maximize the number of edges in a 3-uniform hypergraph on 36 labeled vertices, 0 through 35.
+
+Return a JSON object with an `edges` list. Each edge is a triple of distinct integer vertex labels in the range 0..35. Edges are unordered, so list each triple only once.
+
+The construction must be K4^- free in the ordinary, non-induced sense: every set of four vertices may contain at most two of its four possible triples. Maximize the number of selected triples. The checker recomputes feasibility and edge count. It ignores claimed objective values.

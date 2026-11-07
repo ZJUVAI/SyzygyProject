@@ -1,0 +1,52 @@
+{
+  "snapshot_date": "2026-11-06",
+  "sources": [
+    {
+      "role": "traditional quadratic-residue construction and asymptotic lower bound",
+      "title": "Sharp density bounds on the finite field Kakeya problem",
+      "authors": ["Boris Bukh", "Ting-Wei Chao"],
+      "year": 2021,
+      "version": "arXiv:2108.00074v2",
+      "url": "https://arxiv.org/abs/2108.00074",
+      "location": "Section 4, especially the odd-q almost-Kakeya construction and completion by a horizontal hyperplane",
+      "archived_file": "bukh_chao_2108.00074v2.pdf",
+      "sha256": "b0b2a3c979d8ce5a8a9662a30383780a75984c71730c68e5cadb1f9ba9a0b48a",
+      "notes": "The paper gives a finite lower-bound inequality but does not prove the finite minimum for q=31."
+    },
+    {
+      "role": "best directly sourced same-parameter AI-assisted construction",
+      "title": "Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment",
+      "authors": ["Stephen Chung", "Wenyu Du", "William J. Wesley"],
+      "year": 2026,
+      "version": "arXiv:2608.23691v2, 2026-09-14",
+      "url": "https://arxiv.org/html/2608.23691v2",
+      "locations": ["Section 6.1, S1", "Theorem 2.1 and its line-coverage proof"],
+      "reported_formula": "(2*p^3 + 7*p^2 + 3)/8 for primes p congruent to 3 modulo 4; at p=31 this is 8,289.",
+      "provenance": "The paper discloses a multi-agent AI discovery process and external GPT-5.5 assistance for Lean formalization.",
+      "first_party_verification": "https://dualverse.ai/station/math/finite-field-kakeya/",
+      "verification_bundle": "https://github.com/dualverse-ai/station_data_v2/blob/main/artifacts/finite_kakeya/verification.ipynb",
+      "source_pdf": "station_2608.23691v2.pdf",
+      "source_pdf_sha256": "b13619c1b9b6fbc47a086a7fe4ee188beb7d484c5a9c0b2515b1257522e9043f",
+      "verification_bundle_revision": "a4ae9192fa75b7ffc6909ed018a712510062378b",
+      "verification_bundle_file": "station_finite_kakeya_verification.ipynb",
+      "verification_bundle_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07"
+    },
+    {
+      "role": "earlier AI-assisted finite-field construction report",
+      "title": "Mathematical exploration and discovery at scale",
+      "version": "arXiv:2511.02864v3",
+      "url": "https://arxiv.org/html/2511.02864v3",
+      "location": "Problem 6.1",
+      "reported_value_at_p31": 8290,
+      "archived_file": "alphaevolve_2511.02864v3.pdf",
+      "sha256": "77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2",
+      "numerical_value_source": "https://zerothesis.com/challenges/kakeya-fp3?tab=brief",
+      "provenance_limit": "The secondary public record list attributes 8,290 to AlphaEvolve. The exact p=31 value was not located in the inspected primary paper or official notebook, so the value remains an unreproduced report.",
+      "reproduction_status": "Not reproduced in this task; the primary 8,289 construction above is stronger."
+    }
+  ],
+  "excluded_claim": {
+    "value": 8288,
+    "reason": "Found only in a non-primary current online table; no construction or primary source for this value was located by the 2026-11-06 cutoff. It is not treated as a reliable result."
+  }
+}

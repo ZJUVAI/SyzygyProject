@@ -1,35 +1,33 @@
 {
   "task_id": "T099",
-  "name": "Narrow admissible prime 343-tuples",
+  "name": "minimum order of the P1 11-omino",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T099-C01",
       "parameters": {
-        "k": 343
+        "polyomino": "11P1",
+        "tile_area": 11,
+        "congruence": "translations, rotations, and reflections allowed",
+        "region": "any axis-aligned integer rectangle",
+        "objective": "minimize number of congruent tile copies"
       },
       "direction": "minimize",
-      "human_reference": 2340
+      "human_reference": 270
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-07",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定P1 11格形状：底行5格，上方两行各3格。采用标准正方格点模型，允许D4八种旋转反射及整数平移。对任意正整数边长矩形，最小化铺满所需的块数；未把区域固定为54乘55。",
+      "primary_source": "Sol核对polyominoes.org/data/11P1的order<=270及smallest known rectangle、MIT Tiling Search data113/K12的270块54乘55记录。后者说明来自Karl Dahlke1997与Wichmann图案档案；不将网站版权年份当作发现年份。270是可行上界，没有匹配最小阶证明。",
+      "human": "源SVG重建270块，同参历史布局由Sol亲自运行human复现。精确覆盖2970格。D4及平移由独立Gaussian整数单位变换复算，所有行区间完整拼合，无重叠无缺口。",
+      "independent_seed": "自有CP-SAT只读11格形状，seed20261106、单线程、1800秒上限，477.481秒找到独立270块。脚本及版本9.15.6755与统计、SHA保存。固定54乘55满足模型的OPTIMAL不证明全矩形最小值。另47乘99的600.281秒UNKNOWN失败保留。",
+      "isolation": "简单程序独立保存自有270布局并重复成540块。传统和演化程序从该自有起点用通用边界切口找270块，不读历史或参考布局。离线搜索477秒与正式生成300秒分开报告；正式静态起点及各搜索在预算内。",
+      "admission": "Sol完成五程序540、270、270、270、270，所有合法与破坏、完整分数声明篡改、严格重放、冷导出、错误、非有限数和超时控制通过。独立行区间核验初始5940格及其他2970格。Sol另跑任务8项测试通过。"
+    }
   }
 }

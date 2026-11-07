@@ -1,40 +1,46 @@
 {
-  "best_human": {
-    "value": 320,
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "degree": 4,
-      "girth": 10
-    },
-    "url": "https://arxiv.org/abs/2511.07247v2",
-    "provenance": "Exoo, Goedgebeur, Jooken, Stubbe, and Van den Eede report n(4,10) <= 320. Their paper does not claim equality.",
-    "evidence_state": "published construction; witness downloaded from authors' public repository"
+  "task_id": "T035",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T035-C01": {
+      "best_human": {
+        "value": 32,
+        "parameters": {
+          "forbidden_convex_polygon_vertices": 7
+        },
+        "source": "Erdős and Szekeres' classical 2^(n-2)-point lower-bound construction, reconstructed from its recursive definition and the integer realization in Duque, Fabila-Monroy, and Hidalgo-Toscano.",
+        "source_url": "https://sziami.cs.bme.hu/~geza/erdosszekeres61.pdf",
+        "witness": "data/human_witness.json",
+        "evidence_state": "The recursive formula was rebuilt locally. Its 32-point witness and score were independently checked with exact integer arithmetic. This is a reconstruction, not the authors' original coordinate file.",
+        "ai_provenance": "No AI provenance is reported for the cited mathematical construction. This task's implementation and verification are new reproductions."
+      },
+      "best_public": {
+        "value": 32,
+        "parameters": {
+          "forbidden_convex_polygon_vertices": 7
+        },
+        "source_url": "https://arxiv.org/abs/1602.03075v2",
+        "witness_url": "https://github.com/rfabila/PyDCG",
+        "evidence_state": "The paper gives the 32-point Erdős–Szekeres construction and describes an integer-grid realization. The local witness is formula-reconstructed and exactly checked; the paper's plotted coordinate set was not digitized. This is a feasible lower bound, not an optimality proof."
+      },
+      "best_reproduced": {
+        "value": 32,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "verification_method": "Recompute all determinants for triples and perform an exact search over 4-subset convexity constraints for any seven-point subset.",
+        "date_checked": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      }
+    }
   },
-  "best_public": {
-    "value": 320,
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "degree": 4,
-      "girth": 10
-    },
-    "url": "https://houseofgraphs.org/meta-directory/cages",
-    "evidence_state": "publicly reported upper bound; not an optimality proof",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 320,
-    "date_reproduced": "2026-11-03",
-    "parameters": {
-      "degree": 4,
-      "girth": 10
-    },
-    "url": "https://github.com/AGT-Kulak/smallRegGirthGraphs/blob/main/genLifts/data/graphs/cage/n320_k4_g10.g6",
-    "provenance": "The graph6 file from the paper authors' repository was decoded into data/human_graph.json. The task checker verifies the resulting graph directly.",
-    "ai_provenance": "Conversion and independent verification performed for this task; graph construction is attributed to the cited paper authors.",
-    "actual_value": 320,
-    "evidence_state": "witness and order replayed; checker verifies simple connected 4-regularity and exact girth 10"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T035-C01": {
+      "objective": 6,
+      "objective_value": 6,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.1875
+    }
+  }
 }

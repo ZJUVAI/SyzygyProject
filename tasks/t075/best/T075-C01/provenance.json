@@ -1,0 +1,70 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T075",
+    "config_id": "T075-C01",
+    "validity": 1.0,
+    "combined_score": 0.5612612612612613,
+    "objective": 1246,
+    "verification_status": "exact",
+    "generation_time": 3.0005540661513805,
+    "verification_time": 0.5178768746554852,
+    "objective_value": 1246,
+    "details": {
+      "vertex_count": 36,
+      "uniformity": 3,
+      "edge_count": 1246,
+      "four_vertex_sets_checked": 58905,
+      "maximum_triples_on_any_four_set": 2,
+      "double_counting_upper_bound": 3570,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 3.5517377592623234,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded random-priority greedy edge addition",
+    "seed": 0,
+    "iterations": 8,
+    "iteration_limit": 8,
+    "trial_edge_counts": [
+      1231,
+      1216,
+      1230,
+      1236,
+      1232,
+      1246,
+      1236,
+      1237
+    ],
+    "best_edge_count": 1246,
+    "comparison_data_read": false,
+    "budget": {
+      "mode": "fixed_iterations",
+      "requested_iterations": 8,
+      "actual_iterations": 8,
+      "requested_wall_clock_seconds": null
+    }
+  },
+  "solution_sha256": "1da98fa5d4d5cfba31355950f598f57219d6b58f23d9e18ef4c54510e5c54608",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T075 tasks/t075/best/T075-C01/solution.json --config T075-C01"
+}

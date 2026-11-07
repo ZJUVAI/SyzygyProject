@@ -1,0 +1,90 @@
+{
+  "task_id": "T093",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T093-C01": {
+      "id": "T093-C01",
+      "parameters": {
+        "instance": "random_cf2_74ae2d30_50",
+        "container_vertices": 15,
+        "item_types": 44,
+        "available_items_total": 50
+      },
+      "best_human": {
+        "value": 2304,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "random_cf2_74ae2d30_50",
+          "container_vertices": 15,
+          "item_types": 44,
+          "available_items_total": 50
+        },
+        "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
+        "source_location": "Shadoks entry; value 2304; 23 items",
+        "provenance": "Published computational construction from the Shadoks CG:SHOP 2024 team. Their paper describes integer programming and heuristic search; the witness file metadata says it is from before digopt optimization.",
+        "ai_provenance": "The source does not disclose use or non-use of AI tools.",
+        "evidence_state": "published witness locally reproduced and exact geometry/value rechecked"
+      },
+      "best_public": {
+        "value": 2304,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "random_cf2_74ae2d30_50",
+          "container_vertices": 15,
+          "item_types": 44,
+          "available_items_total": 50
+        },
+        "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
+        "source_location": "Interactive instance results page, Shadoks card, value 2304/2304; also lists SmartPlacer 2268 and CGA Lab Salzburg 2105",
+        "provenance": "Highest team solution shown on the checked public result page. This is a reported feasible value, not a proof of optimality.",
+        "ai_provenance": "not disclosed by the source",
+        "evidence_state": "public witness file recovered and independently validated"
+      },
+      "best_reproduced": {
+        "value": 2304,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "random_cf2_74ae2d30_50",
+          "container_vertices": 15,
+          "item_types": 44,
+          "available_items_total": 50
+        },
+        "witness_file": "data/reference/shadoks2304.json",
+        "provenance": "The public Shadoks solution file was replayed and checked from its integer translations. No geometry values were rounded.",
+        "ai_provenance": "not disclosed by the source",
+        "actual_value": 2304,
+        "evidence_state": "exact triangulation, rational clipping, containment, and pairwise interior-disjointness checks",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 2304,
+        "parameters": {
+          "instance": "random_cf2_74ae2d30_50",
+          "container_vertices": 15,
+          "item_types": 44,
+          "available_items_total": 50
+        },
+        "witness_file": "data/source/shadoks2304.json",
+        "provenance": "Replay of the published Shadoks computational witness; the code does not claim to reproduce their solver."
+      },
+      "highest_reported": {
+        "value": 2304,
+        "metric": "sum of values of selected feasible items",
+        "direction": "maximize",
+        "date_checked": "2026-11-06",
+        "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
+        "source_location": "Shadoks solution card and linked solution file",
+        "reproduction_status": "reported and locally reproduced exactly; no optimality proof identified in the sources checked"
+      }
+    }
+  },
+  "initial_results": {
+    "T093-C01": {
+      "objective": 0,
+      "objective_value": 0,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0
+    }
+  }
+}

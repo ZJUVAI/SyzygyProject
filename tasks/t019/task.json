@@ -1,0 +1,71 @@
+{
+  "task_id": "T019",
+  "name": "Narrow admissible prime k-tuples",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T019-C01",
+      "parameters": {
+        "k": 343
+      },
+      "direction": "minimize",
+      "human_reference": 2340,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T019-C02",
+      "parameters": {
+        "k": 1000
+      },
+      "direction": "minimize",
+      "human_reference": 7802,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T019-C03",
+      "parameters": {
+        "k": 3000
+      },
+      "direction": "minimize",
+      "human_reference": 26606,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Minimize the integer diameter max(A)-min(A) of a k-element admissible set. For each prime p<=k the residue set must omit at least one residue, and p>k is automatic by cardinality. Add k1000 and3000 alongside k343.",
+      "primary_source": "Sol personally downloaded the MIT official tuple texts admissible_1000_7802.txt and admissible_3000_26606.txt, matched exact bytes to archives and JSON points in order. MathBases July14-2026 inventory marks proven cases; MIT accepted.log archived rows credit Engelsma and xfxie in 2013 and record the respective upper bounds7802/26606, with no optimal marker. For3000, older26622 row also marked current at submission, so choose smallest current recorded bound26606.",
+      "independent_method": "Sol personally ran all human and fixed-reference programs. Independent trial-division enumeration of every prime <=k, exact residue sets and missing classes, sorted distinct cardinality and exact max-min reproduce both records. No published optimality proof found in the checked source scope.",
+      "cold_start": "For new k, select first k primes greater than k using a sieve. Each selected integer avoids 0 modulo every p<=k. Finite initial spans8424/28972. A discarded primorial draft made the objective too large for runner normalization; it was replaced without changing the mathematical goal or scoring.",
+      "admission": "Five strict programs, independent recomputation, damaged and score-claim cases, exact replay, cold export, errors, nonfinite and timeout all passed. Original k343 archives preserved. New outputs include actual seed and budget metadata."
+    },
+    "configuration_ids": [
+      "T019-C02",
+      "T019-C03"
+    ]
+  }
+}

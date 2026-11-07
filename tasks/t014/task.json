@@ -1,33 +1,20 @@
 {
   "task_id": "T014",
-  "name": "Heilbronn triangles",
+  "name": "Nonnegative convolution extremum, 208 steps",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T014-C01",
       "parameters": {
-        "n": 11
+        "steps": 208,
+        "support": [
+          "-1/4",
+          "1/4"
+        ],
+        "nonnegative": true
       },
-      "direction": "maximize",
-      "human_reference": 0.037037037037037035
-    },
-    {
-      "id": "T014-C02",
-      "parameters": {
-        "n": 12
-      },
-      "direction": "maximize",
-      "human_reference": 0.0325988586918197,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T014-C03",
-      "parameters": {
-        "n": 16
-      },
-      "direction": "maximize",
-      "human_reference": 0.020527859237536656,
-      "acceptance_status": "accepted_by_sol"
+      "direction": "minimize",
+      "human_reference": 1.5097201507458786
     }
   ],
   "acceptance_review": {
@@ -48,26 +35,6 @@
     ],
     "limitations": [
       "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
-  },
-  "configuration_expansion_review": {
-    "reviewer": "GPT-6.1 Sol",
-    "implementation_agent": "/root/expand_t014",
-    "implementation_model": "gpt-6-luna",
-    "date": "2026-11-04",
-    "acceptance_status": "accepted_by_sol",
-    "configuration_ids": [
-      "T014-C02",
-      "T014-C03"
-    ],
-    "evidence": "PLAN.md",
-    "checks": [
-      "source and parameter review",
-      "four strict program runs per configuration",
-      "cold seed export",
-      "independent key quantity",
-      "damaged witness rejected",
-      "claimed score ignored"
     ]
   }
 }

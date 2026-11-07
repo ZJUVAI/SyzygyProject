@@ -1,0 +1,22 @@
+{
+  "elements": [
+    4232,
+    6386,
+    7463,
+    8023,
+    8317,
+    8464,
+    8540,
+    8583,
+    8606,
+    8611,
+    8616,
+    8623,
+    8626,
+    8629,
+    8635
+  ],
+  "source": "https://oeis.org/A276661/a276661_1.txt",
+  "source_location": "n=15, lines9\u201310; transcribed from web tool, direct urllib403; not raw source byte identity",
+  "exact_subset_sums": 32768
+}

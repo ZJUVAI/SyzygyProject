@@ -1,0 +1,39 @@
+{
+  "task_id": "T083",
+  "config_id": "T083-C01",
+  "validity": 1.0,
+  "combined_score": 0.788675134594813,
+  "objective": "[2,0]",
+  "verification_status": "certified",
+  "generation_time": 2.4704305231571198,
+  "verification_time": 0.33502789959311485,
+  "objective_value": "2",
+  "details": {
+    "objective_interval": [
+      "2",
+      "2"
+    ],
+    "exact_side_coefficients": [
+      "2",
+      "0"
+    ],
+    "triangle_pairs_checked": 6,
+    "claimed_score_ignored": true,
+    "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+  },
+  "eval_time": 2.812275893986225,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

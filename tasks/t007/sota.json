@@ -1,0 +1,218 @@
+{
+  "task_id": "T007",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T007-C01": {
+      "public_value": "623",
+      "public_source": {
+        "url": "https://cube20.org/golomb/",
+        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
+        "archive": "cube20.org rulers-all-00, 5-999 marks",
+        "checked_at": "2026-11-05",
+        "record_parameters": {
+          "marks": 29
+        },
+        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      },
+      "reproduced_value": "623",
+      "program": "sota.py",
+      "witness": "data/public_29.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
+        "The archive is the cited public source checked for the same-parameter record."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T007",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T007",
+          "config_id": "T007-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 623,
+          "verification_status": "exact",
+          "generation_time": 0.5664435066282749,
+          "verification_time": 0.2660170719027519,
+          "objective_value": 623,
+          "details": {
+            "marks": 29,
+            "differences_checked": 406
+          },
+          "eval_time": 0.8415292724967003,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t007/data/public_29.json",
+        "independent_quantity": {
+          "distinct_positive_differences": 406,
+          "span": 623
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
+        "snapshot_date": "2026-11-05"
+      }
+    },
+    "T007-C02": {
+      "public_value": "680",
+      "public_source": {
+        "url": "https://cube20.org/golomb/",
+        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
+        "archive": "cube20.org rulers-all-00, 5-999 marks",
+        "checked_at": "2026-11-05",
+        "record_parameters": {
+          "marks": 30
+        },
+        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      },
+      "reproduced_value": "680",
+      "program": "sota.py",
+      "witness": "data/public_30_32.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
+        "The archive is the cited public source checked for the same-parameter record."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T007",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T007",
+          "config_id": "T007-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 680,
+          "verification_status": "exact",
+          "generation_time": 0.46590616926550865,
+          "verification_time": 0.4497265852987766,
+          "objective_value": 680,
+          "details": {
+            "marks": 30,
+            "differences_checked": 435
+          },
+          "eval_time": 0.9201054684817791,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t007/data/public_30_32.json",
+        "independent_quantity": {
+          "distinct_positive_differences": 435,
+          "span": 680
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
+        "snapshot_date": "2026-11-05"
+      }
+    },
+    "T007-C03": {
+      "public_value": "784",
+      "public_source": {
+        "url": "https://cube20.org/golomb/",
+        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
+        "archive": "cube20.org rulers-all-00, 5-999 marks",
+        "checked_at": "2026-11-05",
+        "record_parameters": {
+          "marks": 32
+        },
+        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      },
+      "reproduced_value": "784",
+      "program": "sota.py",
+      "witness": "data/public_30_32.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
+        "The archive is the cited public source checked for the same-parameter record."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T007",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T007",
+          "config_id": "T007-C03",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 784,
+          "verification_status": "exact",
+          "generation_time": 0.26512131467461586,
+          "verification_time": 0.2651984691619873,
+          "objective_value": 784,
+          "details": {
+            "marks": 32,
+            "differences_checked": 496
+          },
+          "eval_time": 0.5341822504997253,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t007/data/public_30_32.json",
+        "independent_quantity": {
+          "distinct_positive_differences": 496,
+          "span": 784
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
+        "snapshot_date": "2026-11-05"
+      }
+    }
+  },
+  "sol_review": {
+    "T007-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T007-C02": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T007-C03": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

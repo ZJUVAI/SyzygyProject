@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/dualverse-ai/station_data_v2",
+  "commit": "a4ae9192fa75b7ffc6909ed018a712510062378b",
+  "path": "artifacts/sign_uncertainty/uncertainty_data.json.gz",
+  "sha256": "04440bb9d0239a68ed38b7d780462380c2b698fdf54f0917c628ff7df35b9826",
+  "bytes": 14595505,
+  "extracted_field": "continuum.power_coefficients_ascending",
+  "published_coefficient_sha256": "8df170dcfc89ea3f707c16d22aab20f12939426e88bef117d6a9053cf46a3e16",
+  "derived_witness_sha256": "9b592f693b66412d3b0bc5ca38de5a555075412e2475583549926a6f37a0f39c",
+  "derivation": "p(t)=-P(2t)-1/1000000; q(t)=p(t) by the even-Laguerre self-Fourier construction. The retained witness is 90 KiB, not the full 14.6 MiB bundle."
+}

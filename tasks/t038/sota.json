@@ -1,0 +1,90 @@
+{
+  "task_id": "T038",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T038-C01": {
+      "public_value": "5",
+      "public_source": {
+        "url": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+        "database": "SageMath combinatorial design database",
+        "release": "10.10",
+        "tag_commit": "cb359e4c6e3b52e1bfc7f4f152e7db3ebd5f5d03",
+        "source_file": "src/sage/combinat/designs/database.py",
+        "source_file_sha256": "55a30e8aebba5b1d34f8e6469dad746a42757b1c2c549715a04b00069be423a9",
+        "function_fragment": "data/source/sage_10_10_MOLS_12_5.py.txt",
+        "function_fragment_sha256": "302e6dbf714f489c42cf3eec3910ed4bb6f9ba3531a067d981bd0abc4228922d",
+        "witness": "data/source/mckay_mols12_5.json",
+        "witness_sha256": "c039701b9f19fea6d6f038e9897035e88cbaf1090318d4d38235b8291823674f",
+        "attribution": "Sage source says these MOLS were found by Brendan McKay. This identifies the data attribution; the 1992 lower-bound paper is by Charles E. Roberts."
+      },
+      "reproduced_value": "5",
+      "program": "reference.py",
+      "highest_reported": {
+        "value": 5,
+        "source": {
+          "title": "Sets of mutually orthogonal Latin squares with ‘like subsquares’",
+          "author": "Charles E. Roberts",
+          "url": "https://doi.org/10.1016/0097-3165(92)90052-V",
+          "claim": "Reports an order-12 construction meeting the then-current lower bound of five. Sage 10.10 separately preserves a five-square witness and attributes its data to Brendan McKay.",
+          "data_url": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "Five-square witness replayed exactly. This is a best-known lower-bound construction among the checked sources, not a proof that five is maximum."
+      },
+      "witness": "data/source/mckay_mols12_5.json",
+      "comparison_tolerance": "0",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T038",
+          "config_id": "T038-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 5,
+          "verification_status": "exact",
+          "generation_time": 0.16444038972258568,
+          "verification_time": 0.16459429264068604,
+          "objective_value": 5,
+          "details": {
+            "order": 12,
+            "squares_checked": 5,
+            "orthogonal_pairs_checked": 10,
+            "ordered_pairs_per_square_pair": 144,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.3317199684679508,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "square_count": 5,
+          "orthogonal_array_rows": 144,
+          "two_column_projections_checked": 21
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "limitations": [
+        "Five is a verified lower bound, not a proved maximum.",
+        "The 11-square complete-set case remains open; this does not decide whether six squares exist."
+      ],
+      "checked_at": "2026-11-06",
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

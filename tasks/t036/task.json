@@ -1,0 +1,31 @@
+{
+  "task_id": "T036",
+  "candidate_id": "rectilinear-crossing-number",
+  "name": "Rectilinear crossing number of K28",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T036-C01",
+      "parameters": {
+        "vertices": 28,
+        "graph": "complete graph K28",
+        "general_position": "no three points collinear",
+        "crossing_definition": "unordered pairs of disjoint straight edges whose relative interiors intersect"
+      },
+      "direction": "minimize",
+      "human_reference": 20475
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "固定K28直线画法，28顶点无三点共线。最小化不相交边的内部交叉对数，共点交叉按边对计重。",
+      "人类方法来源": "冻结H20475是按Lovász等2003凸位置公式重建的抛物线弱构造。最好人类及公开7234仅报告，坐标未取得，两者分开。",
+      "独立验算": "任务检查61425组边配对。主代理用单调链凸包独立计20475个四子集的凸性。五程序及完整控制通过。",
+      "来源纠错与开放状态": "实际2011作者survey只有表1，并未列所谓2012表3。开放状态由该survey和2024 DMTCS原文支持；7233–7234数值改引Ábrego本人2008-05-05的OEIS评论，2026-09-14修订仍保留。当前crossingconstants页只谈渐近常数，不用作K28来源。"
+    }
+  }
+}

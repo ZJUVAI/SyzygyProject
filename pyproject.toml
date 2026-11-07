@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "syzygy-mathbench"
-version = "0.1.0"
+version = "1.0.0"
 description = "Verified mathematical construction benchmarks"
 requires-python = ">=3.11"
 dependencies = ["numpy>=1.24", "scipy>=1.10", "sympy>=1.12", "mpmath>=1.3", "networkx>=3"]
@@ -17,10 +17,12 @@ mathbench = "mathbench.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["mathbench*", "tasks*"]
+exclude = ["*.runs", "*.runs.*", "*.__pycache__", "*.__pycache__.*"]
 
 [tool.setuptools.package-data]
-"*" = ["*.json", "*.md", "*.txt", "data/*.json", "data/*.txt"]
+"*" = ["*.json", "*.md", "*.txt", "*.cpp", "*.h", "*.hpp", "data/*", "data/source/*", "data/reference/*", "data/human/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "tasks"]
 addopts = "--import-mode=importlib"
+norecursedirs = ["*.egg", ".*", "_darcs", "build", "CVS", "dist", "node_modules", "venv", "{arch}", "runs"]

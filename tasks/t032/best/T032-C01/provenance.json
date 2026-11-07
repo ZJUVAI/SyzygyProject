@@ -1,0 +1,57 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T032",
+    "config_id": "T032-C01",
+    "validity": 1.0,
+    "combined_score": 0.9285714285714286,
+    "objective": 117,
+    "verification_status": "exact",
+    "generation_time": 0.26476601511240005,
+    "verification_time": 0.1647658906877041,
+    "objective_value": 117,
+    "details": {
+      "rows": 14,
+      "columns": 19,
+      "ones": 117,
+      "row_triples_checked": 364,
+      "maximum_common_columns": 2,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 0.4329265393316746,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded greedy one-bit addition with four-one deletion kicks",
+    "seed": 0,
+    "iteration_budget": 10000,
+    "actual_steps": 10000,
+    "kicks": 10,
+    "accepted_additions": 153,
+    "incumbent_score": 117,
+    "final_search_state_score": 113,
+    "returned_score": 117,
+    "time_budget_seconds": null
+  },
+  "solution_sha256": "7b3ffa41585077689b0772b18f790a4acf91d4f0252d666546778afcbdf00d3a",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T032 tasks/t032/best/T032-C01/solution.json --config T032-C01"
+}

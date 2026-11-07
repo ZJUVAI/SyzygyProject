@@ -1,0 +1,178 @@
+{
+  "task_id": "T083",
+  "configurations": {
+    "T083-C01": {
+      "program": "reference.py",
+      "reproduced_value": "[1,1/3]",
+      "public_value": 1.577350269189626,
+      "highest_reported": {
+        "value": 1.577350269189626,
+        "source": "Erich Friedman, Triangles in Squares, n=4 entry; https://erich-friedman.github.io/packing/triinsqu/",
+        "reproduction_status": "The table reports s=1+1/sqrt(3) and credits Erich Friedman in 1996. The archived figure was reconstructed into exact Q(sqrt(3)) coordinates, and the checker independently verifies the four unit triangles and their containment. This is a reported best-known construction, not a proof of optimality."
+      },
+      "best_human": {
+        "value": 1.577350269189626,
+        "parameters": {
+          "triangle_count": 4,
+          "triangle_side": 1
+        },
+        "source": "https://erich-friedman.github.io/packing/triinsqu/",
+        "provenance": "Traditional geometric packing construction credited by the source to Erich Friedman in 1996.",
+        "exact_value": "1+sqrt(3)/3",
+        "witness": "data/human/friedman4_formula.json",
+        "evidence_state": "The construction is reconstructed from the published n=4 figure and exact-checked here. The decimal reference is rounded upward.",
+        "ai_provenance": "The source predates current AI methods and credits Erich Friedman; no AI provenance is claimed."
+      },
+      "best_public": {
+        "value": 1.577350269189626,
+        "parameters": {
+          "triangle_count": 4,
+          "triangle_side": 1
+        },
+        "source": "https://erich-friedman.github.io/packing/triinsqu/",
+        "date_checked": "2026-11-06",
+        "exact_value": "1+sqrt(3)/3",
+        "source_artifact": "data/source/friedman_t4.gif",
+        "source_artifact_sha256": "e0784b81873ef0a96ed2a079e94380eeec564e603c53f416c8fad390c8dd6f25",
+        "witness": "data/source/friedman4_reconstructed_source.json",
+        "evidence_state": "Same-parameter public construction; exact local reconstruction and checker verification are saved. The source does not claim optimality.",
+        "optimality": "No proof of optimality was found in the reviewed primary source."
+      },
+      "best_reproduced": {
+        "value": "[1,1/3]",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "triangle_count": 4,
+          "triangle_side": 1
+        },
+        "program": "reference.py",
+        "verification_status": "certified",
+        "verification_method": "Exact Q(sqrt(3)) reconstruction, exact containment, and exact separating-axis checks for all six triangle pairs; objective interval has rational endpoints.",
+        "exact_value": "1+sqrt(3)/3",
+        "witness": "data/reference/friedman4_reconstructed.json",
+        "origin_type": "local exact reconstruction of the published traditional construction",
+        "objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "best_own_search": {
+        "value": "[2,0]",
+        "objective_value": "2",
+        "program": "init_program.py",
+        "witness": "best/T083-C01/solution.json",
+        "witness_sha256": "6d12e405fe5734e6f7ed5b4c601c06ae40c91f6baf337105d2a96285339b839b",
+        "parameters": {
+          "triangle_count": 4,
+          "triangle_side": 1,
+          "container": "axis-aligned square with lower-left corner (0,0)",
+          "pose_domain": "dense Q(sqrt(3)) translations and rational unit directions"
+        },
+        "seed": 0,
+        "verification_status": "certified",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {},
+        "generation_record": {
+          "task_id": "T083",
+          "config_id": "T083-C01",
+          "validity": 1.0,
+          "combined_score": 0.788675134594813,
+          "objective": "[2,0]",
+          "verification_status": "certified",
+          "generation_time": 2.4704305231571198,
+          "verification_time": 0.33502789959311485,
+          "objective_value": "2",
+          "details": {
+            "objective_interval": [
+              "2",
+              "2"
+            ],
+            "exact_side_coefficients": [
+              "2",
+              "0"
+            ],
+            "triangle_pairs_checked": 6,
+            "claimed_score_ignored": true,
+            "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+          },
+          "eval_time": 2.812275893986225,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "The Friedman table continues to label n=4 as a found construction, not as proved optimal. The separately listed October 2026 proof concerns n=3.",
+        "scope": "Four unit equilateral triangles packed inside an axis-aligned square. Covering a square by triangles is a different problem and is not used as a same-parameter record."
+      },
+      "reproduced_objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T083",
+          "config_id": "T083-C01",
+          "validity": 1.0,
+          "combined_score": 1.0000000000000002,
+          "objective": "[1,1/3]",
+          "verification_status": "certified",
+          "generation_time": 0.4161958433687687,
+          "verification_time": 2.5285554677248,
+          "objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000",
+          "details": {
+            "objective_interval": [
+              "4732050807568877293527446341505872366942805253810380628055806979451933/3000000000000000000000000000000000000000000000000000000000000000000000",
+              "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "exact_side_coefficients": [
+              "1",
+              "1/3"
+            ],
+            "triangle_pairs_checked": 6,
+            "claimed_score_ignored": true,
+            "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+          },
+          "eval_time": 4.660714149475098,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "exact_side": "sqrt(3)/3 + 1",
+          "unit_sides_checked": 12,
+          "pairs_checked": 6,
+          "method": "SymPy algebraic expressions; exact polygon clipping and intersection area, independent of formal ordered-field separating axes"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

@@ -1,0 +1,48 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T006",
+    "config_id": "T006-C02",
+    "validity": 1.0,
+    "combined_score": 0.005334387039415193,
+    "objective": 50615,
+    "verification_status": "exact",
+    "generation_time": 2.774945043027401,
+    "verification_time": 2.121651578694582,
+    "objective_value": 50615,
+    "details": {
+      "degree": 4,
+      "girth": null,
+      "girth_lower_bound": 9,
+      "vertices": 50615,
+      "edges": 101230,
+      "connected": true,
+      "claimed_objective_ignored": true,
+      "optimality_proved": false
+    },
+    "eval_time": 4.982087045907974,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "5f50460deb6c8a7e84203a839839cd4dffe9159d80bb67dcec7d44b66ff9b54c",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T006 tasks/t006/best/T006-C02/solution.json --config T006-C02"
+}

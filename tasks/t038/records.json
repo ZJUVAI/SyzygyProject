@@ -1,0 +1,60 @@
+{
+  "best_human": {
+    "value": 5,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "url": "https://doi.org/10.1016/0097-3165(92)90052-V",
+    "provenance": "Charles E. Roberts reports order-12 orthogonal sets meeting the then-current lower bound. Sage's pinned database separately attributes its explicit five-square data to Brendan McKay.",
+    "evidence_state": "five-square witness replayed and exactly verified; no optimality proof"
+  },
+  "best_public": {
+    "value": 5,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "url": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+    "evidence_state": "pinned Sage 10.10 database includes a McKay-attributed order-12 family of five; no checked source establishes that five is optimal",
+    "origin_type": "human"
+  },
+  "best_reproduced": {
+    "value": 5,
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "witness_file": "data/source/mckay_mols12_5.json",
+    "program": "human.py",
+    "provenance": "Literal digit-for-digit extraction of the MOLS_12_5 string in Sage 10.10 source, mapping a..l to 0..11. The Sage function was not executed.",
+    "actual_value": 5,
+    "evidence_state": "independently replayed; every Latin and orthogonality constraint checked exactly"
+  },
+  "ai_assisted": {
+    "value": null,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "evidence_state": "no higher AI-assisted construction found in the sources checked"
+  },
+  "unmatched_parameters": [],
+  "scope_note": "The five-square lower bound is not an optimality result. The general upper bound is 11. A complete family of 11 is equivalent to a projective plane of order 12, whose existence remains open. This archive does not claim that no six-square family exists.",
+  "checked_sources": [
+    "https://doi.org/10.1016/0097-3165(92)90052-V",
+    "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Paper/LatinSquare.lean",
+    "https://www.cs.uleth.ca/~morris/Combinatorics/html/sect_Latin-squares-MOLS.html"
+  ],
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T038-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.2
+    }
+  }
+}

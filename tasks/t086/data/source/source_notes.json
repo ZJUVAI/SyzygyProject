@@ -1,0 +1,48 @@
+{
+  "primary_problem_source": {
+    "title": "Mathematical exploration and discovery at scale",
+    "url": "https://arxiv.org/abs/2511.02864",
+    "version": "v1",
+    "location": "Section 6.47, printed page 57 in the supplied text extraction.",
+    "extract_sha256": "4934ab062476162665dcb49606c35387289447c1a194ef2d2198a9ffe2b3daf8",
+    "quoted_scope_summary": "Problem 6.47 defines Duchi's variant with the unitarily invariant norm inside each summand. It states m>=4 is open, lists (4,4,3) among AlphaEvolve's parameter choices, includes Schatten 2 among tested norms, and reports no construction improving the identity upper bound 1.",
+    "selected_parameters": {
+      "n": 4,
+      "m": 4,
+      "d": 3,
+      "norm": "Schatten 2"
+    },
+    "local_extract_path": "tasks/_template/runs/research_downloads_20261106/geometry_next/sources/deepmind_2511.02864v1.txt"
+  },
+  "traditional_source": {
+    "title": "Commentary on 'Towards a Noncommutative Arithmetic-Geometric Mean Inequality'",
+    "author": "John C. Duchi",
+    "venue": "COLT 2012, Proceedings of Machine Learning Research volume 23, pages 11.25-11.27",
+    "url": "https://citeseerx.ist.psu.edu/document?doi=619325d9c18b896b94f4de0bd5be63a749a1f21c&repid=rep1&type=pdf",
+    "role": "Defines the with- and without-replacement expectations and introduces the product-norm-inside-sum variant. The identity tuple is the standard exact witness for the value 1."
+  },
+  "reference_witness": {
+    "path": "../reference/identity_psd_n4_d3.json",
+    "sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7",
+    "construction": "All four matrices equal I3.",
+    "result": "All 256 and 24 product norms equal sqrt(3), so the ratio is exactly 1."
+  },
+  "related_but_distinct_results": [
+    {
+      "title": "Recht-Re Noncommutative Arithmetic-Geometric Mean Conjecture is False",
+      "authors": [
+        "Zehua Lai",
+        "Lek-Heng Lim"
+      ],
+      "url": "https://proceedings.mlr.press/v119/lai20a.html",
+      "distinction": "This refutes the Recht-Re formulation with a norm outside the sum; it does not refute the Duchi inside-sum ratio."
+    },
+    {
+      "title": "Exact Low-Length Recht-Re Inequalities and Metric-Dependent Rankings in Random Reshuffling Dynamics",
+      "url": "https://www.evidencepress.org/releases/exact-low-length-recht-re-inequalities/",
+      "date_checked": "2026-11-06",
+      "status": "Unrefereed candidate release; it concerns Recht-Re's outside-sum comparison and states that no unaffiliated rerun is recorded. It does not address the Duchi norm-inside-sum target."
+    }
+  ],
+  "rational_domain_density": "For any Hermitian PSD A, A+epsilon*I is positive definite. Complex rational Hermitian matrices are dense among Hermitian matrices, so sufficiently close rational Hermitian approximants to A+epsilon*I stay positive definite. Letting epsilon tend to zero approximates A. The objective is continuous wherever its without-replacement denominator is positive; close approximants preserve positivity. Therefore restricting to exact rational entries leaves the infimum unchanged."
+}

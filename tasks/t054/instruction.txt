@@ -1,0 +1,7 @@
+Find a selected-length binary sign sequence with a low aperiodic peak sidelobe level for selected T054 configuration.
+
+Return a JSON object with one key, `sequence`, whose value is a list of the configured length integer entries, each -1 or +1. Boolean and floating-point entries are invalid.
+
+For each shift k=1,...,n-1, the aperiodic autocorrelation is C[k]=sum(s[i]*s[i+k] for i=0,...,99-k). The score is PSL=max(abs(C[k]) for k=1,...,n-1), which is minimized. The zero-shift main peak is excluded.
+
+Start from the supplied simple program. Do not read human, reference, or best witness files. Declared objective and score fields are ignored. The checker recomputes every correlation exactly with integer arithmetic.

@@ -11,7 +11,7 @@ Use Python 3.11 or newer. The local validated environment is `.venv`. Dependenci
 ```sh
 .venv/bin/python -m pytest tests tasks -q
 python scripts/search.py audit
-python3 -m json.tool tasks/t073/task.json > /dev/null
+python3 -m json.tool tasks/t013/task.json > /dev/null
 ```
 
 Replace the path with each modified JSON file. Review Markdown rendering and check that links, counts, and corresponding Markdown and JSON records remain consistent. For mathematical changes, independently recompute examples where possible and document the verification method and limitations.
@@ -64,8 +64,8 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 ### Sol 与 Luna 的分工及验收
 
 - 主代理与最终验收者使用 GPT-6.1 Sol。任务子代理使用 GPT-6 Luna。
-- 实现阶段每个任务由独立 Luna 代理负责。返修交回原代理。T005 的全部配置由同一个任务代理负责。
-- 最多同时运行 Sol 与 3 个任务代理。Luna 只修改自己任务的目录；公共接口、依赖、目录和汇总由 Sol 修改。
+- 实现阶段每个任务由独立 Luna 代理负责。返修交回原代理。T003 的全部配置由同一个任务代理负责。
+- 最多同时运行 Sol 与 6 个任务代理。Luna 只修改自己任务的目录；公共接口、依赖、目录和汇总由 Sol 修改。
 - Luna 交付一律标记“待 Sol 验收”。Sol 才能标记通过、退回修改或暂缓。
 - Sol 须核对数学定义、目标方向和参数来源，亲自运行人类基线，检查简单起点与传统搜索，并复核最佳公开结果档案。
 - 每个配置至少独立复算一个关键量，运行一个合法样例和一个故意破坏的样例，并检查篡改声明分数不能改变重算结果。

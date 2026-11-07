@@ -1,0 +1,84 @@
+{
+  "task_id": "T084",
+  "configurations": {
+    "T084-C01": {
+      "program": "reference.py",
+      "reproduced_value": 19407,
+      "public_value": 19407,
+      "highest_reported": {
+        "value": 19407,
+        "source": "Martos Ojeda, Delgado Ordoñez, and Trujillo Solarte, IEEE Access 9 (2021), Table 3, Singer generalized (SG), q=31, m=31",
+        "reproduction_status": "The table entry was transcribed from the web-rendered full text and independently checked; the local transcription is not a byte-identical PDF extraction."
+      },
+      "source": {
+        "title": "B_h Sets as a Generalization of Golomb Rulers",
+        "doi": "10.1109/ACCESS.2021.3106617",
+        "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+        "web_full_text": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+        "table_location": "Table 3, near-optimal B3 sets, row SG q=31, m=31, a_m=19407",
+        "checked_at": "2026-11-06"
+      },
+      "open_status": {
+        "status": "no_optimality_proof_found_for_this_configuration",
+        "checked_at": "2026-11-06",
+        "evidence": "The 2021 paper calls the table near-optimal and reports optimal B3 sets only through cardinality 7. Searches for G3(31), the exact q=31 row, and current B3 diameter results found no later closure. This is limited to sources checked.",
+        "lower_bound": 4737,
+        "lower_bound_source": "Atkinson, Santoro, and Urrutia, Integer sets with distinct sums and differences and carrier frequency assignments for nonlinear repeaters, IEEE Transactions on Communications 34(6) (1986), DOI 10.1109/TCOM.1986.1096587; https://people.scs.carleton.ca/~santoro/Reports/DistinctSums.pdf; G3(m+1)>10m^3/57 at m=30."
+      },
+      "witness": "data/reference/public_m31_19407.json",
+      "comparison_notes": [
+        "The objective is minimum integer diameter for a B3 set of cardinality 31.",
+        "The published construction is feasible; no global optimality claim is made.",
+        "The paper does not state AI provenance. This repository's transcription and checker are benchmark work."
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T084",
+          "config_id": "T084-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 19407,
+          "verification_status": "exact",
+          "generation_time": 0.4428384155035019,
+          "verification_time": 0.4164307042956352,
+          "objective_value": 19407,
+          "details": {
+            "cardinality": 31,
+            "order": 3,
+            "triple_sums_checked": 5456,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.870038777589798,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "diameter": 19407,
+          "triple_sums": 5456,
+          "counting_lower_bound": 1819,
+          "method": "Newton complete-symmetric identity h3=(p1^3+3p1*p2+2p3)/6, exact sparse polynomial coefficients all equal one"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

@@ -1,0 +1,32 @@
+{
+  "task_id": "T028",
+  "candidate_id": "permutation-flow-shop",
+  "name": "Taillard permutation flow shop Ta051",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T028-C01",
+      "parameters": {
+        "instance": "Ta051",
+        "jobs": 50,
+        "machines": 20,
+        "schedule_type": "permutation",
+        "processing_times_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de"
+      },
+      "direction": "minimize",
+      "human_reference": 3846
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "Ta051固定50作业20机器，所有机器采用同一排列。最小化整数完工时间。",
+      "人类来源": "官方输入第一块1000个加工时间逐项核对。作者界表2026-06-03为3771–3846，上界归于RRMRP2012。归档排列重算3846。",
+      "独立验算": "主代理按机器顺序计算20×50完整完工表，独立于任务滚动递推。五程序与完整验收控制通过。",
+      "开放状态与限制": "Gmys2022论文将该例列为开放，作者现行界表仍有差距。Zenodo v11警告Optimal栏不可靠，未用该栏断言最优。"
+    }
+  }
+}

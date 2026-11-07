@@ -1,0 +1,73 @@
+{
+  "task_id": "T007",
+  "name": "29-mark Golomb ruler length",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T007-C01",
+      "parameters": {
+        "marks": 29
+      },
+      "direction": "minimize",
+      "human_reference": 623
+    },
+    {
+      "id": "T007-C02",
+      "parameters": {
+        "marks": 30
+      },
+      "direction": "minimize",
+      "human_reference": 680,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T007-C03",
+      "parameters": {
+        "marks": 32
+      },
+      "direction": "minimize",
+      "human_reference": 784,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "GPT-6.1 Sol",
+    "implementation_agent": "/root/expand_t007",
+    "implementation_model": "gpt-6-luna",
+    "date": "2026-11-04",
+    "acceptance_status": "accepted_by_sol",
+    "configuration_ids": [
+      "T007-C02",
+      "T007-C03"
+    ],
+    "evidence": "PLAN.md",
+    "checks": [
+      "source and parameter review",
+      "four strict program runs per configuration",
+      "cold seed export",
+      "independent key quantity",
+      "damaged witness rejected",
+      "claimed score ignored"
+    ]
+  }
+}

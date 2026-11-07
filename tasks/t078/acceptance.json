@@ -1,0 +1,389 @@
+{
+  "task_id": "T078",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T078 --label admission_20261106",
+  "configurations": {
+    "T078-C01": {
+      "configuration": {
+        "id": "T078-C01",
+        "parameters": {
+          "dimension": 10,
+          "gram_entries": "exact rational numbers",
+          "gram_matrix": "symmetric positive definite 10x10 matrix",
+          "minimum_squared_norm": "at least 4 on nonzero integer vectors",
+          "objective": "determinant of the Gram matrix"
+        },
+        "direction": "minimize",
+        "human_reference": 768
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T078",
+            "config_id": "T078-C01",
+            "validity": 1.0,
+            "combined_score": 0.000732421875,
+            "objective": 1048576,
+            "verification_status": "exact",
+            "generation_time": 0.6400121860206127,
+            "verification_time": 0.49862800911068916,
+            "objective_value": 1048576,
+            "details": {
+              "dimension": 10,
+              "minimum_squared_norm_at_least": 4,
+              "nonzero_vectors_below_threshold": 0,
+              "ellipsoid_nodes_visited": 11,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.1454707831144333,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "determinant": "1048576",
+            "vectors_with_squared_norm_at_most4": 20,
+            "nodes": 121,
+            "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T078",
+            "config_id": "T078-C01",
+            "validity": 1.0,
+            "combined_score": 0.25,
+            "objective": 3072,
+            "verification_status": "exact",
+            "generation_time": 0.5085173845291138,
+            "verification_time": 0.4883471019566059,
+            "objective_value": 3072,
+            "details": {
+              "dimension": 10,
+              "minimum_squared_norm_at_least": 4,
+              "nonzero_vectors_below_threshold": 0,
+              "ellipsoid_nodes_visited": 217,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.0026354305446148,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "determinant": "3072",
+            "vectors_with_squared_norm_at_most4": 246,
+            "nodes": 789,
+            "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T078",
+            "config_id": "T078-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 768,
+            "verification_status": "exact",
+            "generation_time": 2.147745802998543,
+            "verification_time": 2.3503189459443092,
+            "objective_value": 768,
+            "details": {
+              "dimension": 10,
+              "minimum_squared_norm_at_least": 4,
+              "nonzero_vectors_below_threshold": 0,
+              "ellipsoid_nodes_visited": 371,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 4.50369193777442,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "determinant": "768",
+            "vectors_with_squared_norm_at_most4": 336,
+            "nodes": 1385,
+            "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T078",
+            "config_id": "T078-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 768,
+            "verification_status": "exact",
+            "generation_time": 0.6496677994728088,
+            "verification_time": 2.0500949695706367,
+            "objective_value": 768,
+            "details": {
+              "dimension": 10,
+              "minimum_squared_norm_at_least": 4,
+              "nonzero_vectors_below_threshold": 0,
+              "ellipsoid_nodes_visited": 371,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.7077180482447147,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "determinant": "768",
+            "vectors_with_squared_norm_at_most4": 336,
+            "nodes": 1385,
+            "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T078",
+            "config_id": "T078-C01",
+            "validity": 1.0,
+            "combined_score": 0.25,
+            "objective": 3072,
+            "verification_status": "exact",
+            "generation_time": 0.5507644452154636,
+            "verification_time": 0.4672844931483269,
+            "objective_value": 3072,
+            "details": {
+              "dimension": 10,
+              "minimum_squared_norm_at_least": 4,
+              "nonzero_vectors_below_threshold": 0,
+              "ellipsoid_nodes_visited": 217,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.2561019957065582,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "determinant": "3072",
+            "vectors_with_squared_norm_at_most4": 246,
+            "nodes": 789,
+            "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T078",
+        "config_id": "T078-C01",
+        "validity": 1.0,
+        "combined_score": 0.000732421875,
+        "objective": 1048576,
+        "verification_status": "exact",
+        "generation_time": 2.1603755354881287,
+        "verification_time": 2.0958628095686436,
+        "objective_value": 1048576,
+        "details": {
+          "dimension": 10,
+          "minimum_squared_norm_at_least": 4,
+          "nonzero_vectors_below_threshold": 0,
+          "ellipsoid_nodes_visited": 11,
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 4.258236430585384,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T078",
+          "config_id": "T078-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t078/runs/admission_20261106/T078-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 1.2324113324284554,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T078",
+          "config_id": "T078-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20989830791950226,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T078",
+          "config_id": "T078-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.539255328476429,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "28e9f5fc97dfb9c881e408c9bd8267e31578acc59d6b152d10f6328d16ce37ec",
+    "README.md": "58846da64865843ca0bba24c51b92c45aea4f069902cd0fc5a19c28eb47e6a18",
+    "baseline.py": "d7d79378fe3b2d997a6f865d91bdc41dbdd6e237603a928752789f25ce92310d",
+    "check.py": "a1a5911dbe144372120c45bc67e24284f40c8cf0c88cd2c658a60b6c43e8ea08",
+    "data/human/lambda10_gram.json": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+    "data/human/lambda10_minimal_vectors.json": "5499f6ee57683d10f366ce1f50a787b44e4baec94ff7169a4852ef5017144ea9",
+    "data/reference/lambda10_gram.json": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+    "data/source/lambda10.html": "10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a",
+    "evaluator.py": "336b11dfde6f8656cc88b399acfc21b82a4da1d3f7bf626c0a4eb06fa17bef50",
+    "evolution.py": "9ec6f14414dca4a7b24b9600689af6707a6bf625fcb7d1e462f5f5df79778434",
+    "human.py": "ee32639f7a2e4a5629aefc55400d071b6ff879c58bfbc97394387d6b2ece5242",
+    "init_program.py": "e6f29f8fbc72cb97fca71ca995c21451a34705323a525f927983ecf1197f4abf",
+    "instruction.txt": "a649be761162e6e29851850efacd303d43ffeda5f06bebae57838c33850202df",
+    "records.json": "8d1d50f523712651b40c1a6520f7b9f97925cf984b006ac23ecb40010839c8c9",
+    "reference.py": "88549d6405fb7ff9d46a3edded3788c78cdd576a329cecb50c338574ab404e2f",
+    "test_task.py": "73fc16a2aed717476aafb613b206a541157866752d86bf9c310bec4cf4c514c6"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "Ten-dimensional positive definite symmetric rational Gram matrix, every nonzero integer vector has squared norm at least4, minimize exact Gram determinant. Full lattice problem at fixed sphere radius1; nonlattice P10c scores are not lattice records.",
+    "primary_source": "Nebe-Sloane Catalogue LAMBDA10 GRAM section, frozen10728-byte HTML SHA10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a. Independently downloaded and transcribed10x10 matrix, determinant768, minimum squared norm4,336 shortest vectors.",
+    "open_status": "Dutour Sikirić/vanWoerden2508.20719v2 Introduction and Corollary1 close dimension9; explicitly exclude9. The proof does not close10, and reviewed contemporary lattice sources have no ten-dimensional optimality proof. General nonlattice packing uncertainty is not used as lattice evidence.",
+    "rational_model": "Voronoi perfect-form principle: a densest form scaled to minimum4 is fixed by rational linear equations z^TGz=4 from spanning integer minimal vectors, hence may be rational. No arbitrary coefficient or basis bounds.",
+    "independent_arithmetic": "Root first wrote a complete exact LDL ellipsoid enumeration prototype before task delivery, finding336 vectors norm<=4, all equal4, determinant768. Admission additionally applies a unimodular unitriangular integer basis change, uses separate Gaussian-elimination determinant and separate complete rational ellipsoid recursion. Formal checker searches original basis and only norm<4. No fixed coordinate box or partial enumeration accepted.",
+    "initial_and_search": "Standalone4I determinant1048576; generic classical A10/D10/E8+A2 candidates and own seeded basis changes produce3072; external human/reference Lambda10=768. Init/search do not read external comparison data.",
+    "admission": "Five strict budgeted runs, exact independent quantities, damaged indefinite matrix, whole-return declaration invariance, replay, cold export and error/nonfinite/timeout controls passed."
+  }
+}

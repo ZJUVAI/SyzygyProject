@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T050",
+    "config_id": "T050-C01",
+    "validity": 1.0,
+    "combined_score": 0.631578947368421,
+    "objective": 120,
+    "verification_status": "exact",
+    "generation_time": 0.6308030784130096,
+    "verification_time": 0.4663093872368336,
+    "objective_value": 120,
+    "details": {
+      "dimension": 9,
+      "vertices_checked": 121,
+      "nonconsecutive_pairs_checked": 7140,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 1.1033529452979565,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded population endpoint truncation and greedy regrowth",
+    "seed": 0,
+    "iterations_requested": 96,
+    "iterations_run": 96,
+    "objective_recomputed": 120,
+    "generation_seconds": 0.06821035593748093,
+    "budget": {
+      "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
+      "runner_generation_seconds": 300
+    }
+  },
+  "solution_sha256": "33aa66794656925c0189e9d5fc54820928e44d98def25de0f6010e2d965ce8c0",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T050 tasks/t050/best/T050-C01/solution.json --config T050-C01"
+}

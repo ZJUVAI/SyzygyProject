@@ -1,0 +1,33 @@
+{
+  "task_id": "T053",
+  "config_id": "T053-C01",
+  "validity": 1.0,
+  "combined_score": 0.0047404740474047405,
+  "objective": 158,
+  "verification_status": "exact",
+  "generation_time": 7.652971867471933,
+  "verification_time": 1.174466010183096,
+  "objective_value": 158,
+  "details": {
+    "n": 100000,
+    "factor_count": 100000,
+    "product_equals_factorial": true,
+    "product_check": "exact balanced product tree",
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 8.927463717758656,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

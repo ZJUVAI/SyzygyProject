@@ -1,0 +1,51 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "independent_words": 325,
+    "pairs": 52650
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "group": "discrete_retry"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 201,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "1.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 12
+  },
+  "source_sha256": {
+    "tasks/t011/baseline.py": "dd579ab0210ddf85f95a4376c0f086391109641b4fcbd608115a11e8afd8f486",
+    "tasks/t011/check.py": "aecd0390a8d6b488436531fc155fba6eb6c60dbb00747e61089d8cc408872ff3",
+    "tasks/t011/evaluator.py": "7616c07e1fe6791e3f0eeb07bbd4ee5a54c66adad59c21ccb4cd199da9bdc2fd",
+    "tasks/t011/evolution.py": "25280ec96eeb5a4c856d8efbcde243a823ec8a0979afcb8cb47d6caabc7e4a5f",
+    "tasks/t011/human.py": "d4cc43804a148a6c679fdb8352813b23b0d972a0082cb5bfc7597683dae32917",
+    "tasks/t011/init_program.py": "34e8ad964a3b339433a6fd6224b944d7d75da25f5314170c17d79e85701667a7",
+    "tasks/t011/reference.py": "73486c66691db11852197834ba5fac33c5d30d3e339d63610208988fa6c692dd",
+    "tasks/t011/search_kernel.cpp": "4a4bc4bef283b8e84c53eaff694752ad363da3d13c54f389d18452de21f7106d",
+    "tasks/t011/sota.py": "576cf476ed06f79a71660350f1360d7b632d82558e6e0da92b1604971ded5525",
+    "tasks/t011/test_task.py": "3e45601ff5fb57e4add9522c6b4b8ec765f1eacc8aff2b8394fd1c987a2066f1"
+  },
+  "warm_start_sha256": "71e68c506530c1f7fb2449263324861140267f0880f75e1479a22d58586b079a",
+  "replay_command": "python -m mathbench replay T011 tasks/t011/best/T011-C01/solution.json --config T011-C01"
+}

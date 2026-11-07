@@ -1,0 +1,24 @@
+{
+  "elements": [
+    1,
+    8464,
+    12772,
+    14926,
+    16046,
+    16634,
+    16928,
+    17080,
+    17166,
+    17212,
+    17222,
+    17232,
+    17246,
+    17252,
+    17258,
+    17270
+  ],
+  "source": {
+    "base_witness": "sharp_8635_transcribed.json",
+    "construction": "{1} union 2*S, as noted in OEIS A276661 comments"
+  }
+}

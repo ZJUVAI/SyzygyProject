@@ -1,0 +1,147 @@
+{
+  "task_id": "T072",
+  "configurations": {
+    "T072-C01": {
+      "program": "reference.py",
+      "reproduced_value": 154,
+      "public_value": 154,
+      "highest_reported": {
+        "value": 154,
+        "source": "O'Bryant, Visualizing the Sum-Product Conjecture, arXiv:2411.08139v2, Table 2; author dataset row 1,005,722 in the 2026-11-06 snapshot.",
+        "url": "https://arxiv.org/html/2411.08139v2",
+        "reproduction_status": "The exact 32-element source row is saved. Recalculation gives 154 sums and 154 products. This is a reported dataset minimum, not a proved optimum."
+      },
+      "best_human": {
+        "value": 154,
+        "parameters": {
+          "cardinality": 32,
+          "element_domain": "all positive integers, unbounded"
+        },
+        "source": "O'Bryant, arXiv:2411.08139v2, Table 2; the set is Psi_35^5 minus {75,81,100}.",
+        "url": "https://arxiv.org/html/2411.08139v2",
+        "date_checked": "2026-11-06",
+        "provenance": "The paper describes traditional computational exploration using Mathematica 14 and Julia 1.10. It does not discuss generative-AI use; no claim is made about unreported workflow details.",
+        "evidence_state": "The matching author-dataset row is archived and both objective counts are independently recomputed exactly.",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25"
+      },
+      "best_public": {
+        "value": 154,
+        "parameters": {
+          "cardinality": 32,
+          "element_domain": "all positive integers, unbounded"
+        },
+        "source": "O'Bryant's Table 2 and the author-maintained SPPsets.txt dataset.",
+        "url": "https://www.math.csi.cuny.edu/~obryant/SumProduct/",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical computer search as described in the paper. The checked sources do not report generative-AI contributions.",
+        "evidence_state": "The source row and snapshot hashes are pinned. The construction is reproduced; the minimum is not proved.",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25"
+      },
+      "best_reproduced": {
+        "value": 154,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "cardinality": 32,
+          "element_domain": "all positive integers, unbounded"
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Check 32 distinct positive integers, then form all pairwise sums and products with arbitrary-precision integers and count distinct values.",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25",
+        "origin_type": "published traditional computational result reconstructed from the author's dataset"
+      },
+      "frozen_human_baseline": {
+        "value": 154,
+        "witness_program": "human.py",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25",
+        "evidence_state": "Exact same-parameter witness from the source row; both set cardinalities are independently checked."
+      },
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": 154,
+        "note": "H is the reproduced human computational construction."
+      },
+      "optimality_status": {
+        "status": "open; the 154 construction is not proved minimal",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The paper says its dataset is incomplete and Table 2 entries are not known to be optimal. The checked arXiv:2601.21828 result proves exact values for cardinalities 10 and 11, not 32.",
+        "limitations": "No lower-bound proof matching 154 for cardinality 32 was found in the checked sources."
+      },
+      "source_pins": {
+        "primary_paper": {
+          "version": "arXiv:2411.08139v2, 2025-03-16",
+          "url": "https://arxiv.org/html/2411.08139v2",
+          "record_location": "Table 2, n=32; Section 2 describes dataset generation and traditional computational tools."
+        },
+        "author_dataset": {
+          "url": "https://www.math.csi.cuny.edu/~obryant/SumProduct/",
+          "file": "SPPsets.txt",
+          "snapshot_date": "2026-11-06",
+          "bytes": 102089754,
+          "line_count": 1163592,
+          "sha256": "20d33250e047272c170fb575a9dad51dec81c882a5694d2a674d2357dae597b8",
+          "saved_row_number": 1005722,
+          "saved_row_sha256": "0cd52d3292fdef5a69e851e8c6d8c37c285666c6064377dc09e3c6cd7e0a58e4"
+        },
+        "recent_exact_small_set_result": {
+          "version": "arXiv:2601.21828",
+          "url": "https://arxiv.org/abs/2601.21828",
+          "scope_checked": "Exact values for cardinalities 10 and 11; this does not settle cardinality 32."
+        }
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T072",
+          "config_id": "T072-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 154,
+          "verification_status": "exact",
+          "generation_time": 1.397086776793003,
+          "verification_time": 0.6987316682934761,
+          "objective_value": 154,
+          "details": {
+            "cardinality": 32,
+            "sumset_size": 154,
+            "product_set_size": 154,
+            "claimed_objective_ignored": true,
+            "strict": true
+          },
+          "eval_time": 2.10419350117445,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "max_size": 154,
+          "sumset_size": 154,
+          "productset_size": 154,
+          "unordered_pairs_with_replacement": 528
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

@@ -1,0 +1,34 @@
+{
+  "task_id": "T093",
+  "name": "Maximum value polygon packing for random_cf2_74ae2d30_50",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T093-C01",
+      "parameters": {
+        "instance": "random_cf2_74ae2d30_50",
+        "container_vertices": 15,
+        "item_types": 44,
+        "available_items_total": 50,
+        "movement": "integer translations only; rotations forbidden",
+        "feasibility": "each selected simple polygon is contained in the container; item interiors are pairwise disjoint; boundary contact is allowed",
+        "objective": "maximize the sum of values of selected items"
+      },
+      "direction": "maximize",
+      "human_reference": 2304
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "FixedCGSHOP2024 random_cf2_74ae2d30_50,44item types50available copies15-vertexconvexcontainer. Integertranslations only, no rotation, contact allowed; maximize total selected value. Arbitrary source simple concave item shapes allowed.",
+      "primary_source": "Rootread2026authorsCGSHOP24.pdf section1integertranslationrules and section5heuristicresults; officialinput SHA f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92. PublicauthorviewerShadoks2304,SmartPlacer2268,CGA2105. Samefixedinstanceoptimalityproofnotfound in current checked sources; no exhaustive negativeproofclaim.",
+      "human_method": "PublicShadoks23items2304exactintegerwitness SHA f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1. PaperdescribestraditionalIPandheuristics; source does not disclose AI use, so no unqualified best-human origin claim. Frozen comparison reproduces exact source construction.",
+      "independent_method": "Root uses no item triangulation or triangle clipping. Reparse source, prove convex container by oriented turns, check all moved vertices in every container halfplane. Every pair of polygons is partitioned into rational vertical slabs at vertices and edge crossings; exact vertical parity intervals never overlap positively. Recompute quantities and value. Public2304 verified in.09seconds.",
+      "admission": "Allfive strict entries pass: emptycold0, genericrandomintegerfirstfitbaseline/evolution711, human/reference2304. Full-resultscoreinvariance, displacedout-of-containerbrokenitem, replay,coldexport,error/nonfinite/timeoutpassed. Only sourceinstancefileexported; noShadokswitness. Agent7testspass, nofutureparameterstatusinheritance."
+    }
+  }
+}

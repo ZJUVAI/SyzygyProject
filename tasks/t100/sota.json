@@ -1,0 +1,128 @@
+{
+  "task_id": "T100",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-07",
+  "configurations": {
+    "T100-C01": {
+      "program": "reference.py",
+      "reproduced_value": 1817,
+      "public_value": 1817,
+      "parameters": {
+        "vertices": 50,
+        "edges": 700,
+        "graph": "simple undirected graph",
+        "objective": "number of triangles"
+      },
+      "witness": "data/reference/hstar_50_700.json",
+      "witness_sha256": "a9ec1045378c7183865b96e1487665b364c0f7a489d4776259a7f8a270d31012",
+      "best_human": {
+        "value": 1817,
+        "witness": "data/reference/hstar_50_700.json",
+        "source": "https://arxiv.org/html/1712.00633v2",
+        "source_location": "Definition 1.1, applied to (n,e)=(50,700)",
+        "reconstruction": "Complete tripartite graph with parts 23,23,4, deleting a 13-edge star from the size-4 part to a size-23 part.",
+        "reproduction_status": "Construction generated from the published formula; all 700 edges and all 1,817 triangles were independently recomputed.",
+        "ai_provenance": "pre-AI published formula"
+      },
+      "best_public": {
+        "value": 1817,
+        "date_checked": "2026-11-07",
+        "parameters": {
+          "vertices": 50,
+          "edges": 700
+        },
+        "url": "https://zerothesis.com/challenges/min-triangles-fixed-edges?tab=brief",
+        "source_location": "Brief table row 50,700; construction sourced to LPS Definition 1.1",
+        "provenance": "Public challenge pack lists H*=1817 as its best-known construction and marks optimality conjectural.",
+        "ai_provenance": "The formula predates current AI systems; the pack's independent solver provenance is not relevant to this formula witness.",
+        "evidence_state": "same-parameter feasible construction reproduced exactly; the pack does not establish global optimality"
+      },
+      "best_reproduced": {
+        "value": 1817,
+        "date_reproduced": "2026-11-07",
+        "parameters": {
+          "vertices": 50,
+          "edges": 700
+        },
+        "witness_file": "data/reference/hstar_50_700.json",
+        "provenance": "Generated directly from the LPS H* part-size and edge-deletion formula.",
+        "ai_provenance": "benchmark transcription of a published formula",
+        "actual_value": 1817,
+        "evidence_state": "exact edge and triangle count check; global optimum not proved",
+        "review_status": "pending_sol_review"
+      },
+      "known_bounds": {
+        "lower_bound": 1815,
+        "upper_bound": 1817,
+        "lower_bound_exact_rational": "49000/27",
+        "lower_bound_source": "https://arxiv.org/html/1712.00633v2",
+        "lower_bound_location": "Section 1 blow-up inequality following Equation (1.12), using Razborov's exact density theorem",
+        "status": "checked sources leave the exact value unresolved between 1815 and 1817; the lower bound is not a finite-parameter proof of 1817"
+      },
+      "highest_reported": {
+        "value": 1817,
+        "metric": "triangles in a feasible graph for this fixed parameter",
+        "direction": "minimize",
+        "date_checked": "2026-11-07",
+        "url": "https://arxiv.org/html/1712.00633v2",
+        "source_location": "Definition 1.1, evaluated at (50,700); zerothesis same-parameter row checked as a status supplement",
+        "reproduction_status": "Published H* candidate reproduced exactly. No optimality claim; checked lower bound is 1815.",
+        "ai_provenance": "pre-AI published formula"
+      },
+      "optimality_status": {
+        "lower_bound": 1815,
+        "upper_bound": 1817,
+        "source": "https://arxiv.org/html/1712.00633v2",
+        "evidence_state": "no fixed (50,700) proof found in the bounded source check as of 2026-11-07"
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T100",
+          "config_id": "T100-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 1817,
+          "verification_status": "exact",
+          "generation_time": 6.231329120695591,
+          "verification_time": 2.999872360378504,
+          "objective_value": 1817,
+          "details": {
+            "vertices": 50,
+            "edge_count": 700,
+            "triangle_count": 1817,
+            "simple_undirected": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 9.260718323290348,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "triangle_count": 1817,
+          "edge_count": 700,
+          "vertex_count": 50,
+          "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

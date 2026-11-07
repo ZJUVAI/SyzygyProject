@@ -1,4 +1,7 @@
-Construct 343 distinct integers such that, for every prime p, the integers do not represent every residue class modulo p. It is sufficient to check primes p <= 343; for p > 343 this condition holds automatically. Minimize max(tuple) - min(tuple). Negative integers and translations are allowed. Return JSON with one key, "tuple", containing the 343 integers. Use integer entries only; booleans are invalid. Any claimed score is ignored.
+Find a low-copy tiling of an axis-aligned rectangle by the fixed P1 11-omino.
 
+Return JSON with integer `width`, integer `height`, and a nonempty `placements` array. Every placement has integer `x`, integer `y`, and integer `orientation` in 0..7. Each orientation code selects one of the eight D4 orientations: bit 0 transposes x/y, bit 1 reflects x, and bit 2 reflects y. The tile is translated so its oriented bounding box starts at (x,y).
 
-Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact or conservative interval verification. Compatibility feedback is J/H for maximization or H/J for minimization, where H is the frozen external reference. Start from the supplied initial program.
+The fixed tile has 11 cells. Tile translations, rotations, and reflections are allowed. The target rectangle dimensions are free. Minimize the number of copies. The checker independently checks exact cell coverage and ignores declared score fields.
+
+Start from a simple valid construction. Search deterministically from `MATHBENCH_SEED`. Do not read the human or reference witness files. Expose `run_code()`.

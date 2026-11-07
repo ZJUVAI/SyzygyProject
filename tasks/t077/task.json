@@ -1,0 +1,61 @@
+{
+  "task_id": "T077",
+  "name": "Maximum raw logarithmic difference-to-sum ratio",
+  "acceptance_status": "accepted_by_sol",
+  "category": "additive_combinatorics",
+  "definition": "Choose an integer set A with 2 through 512 elements, all in [-1000000,1000000], to maximize ln(|A-A|)/ln(|A+A|). Both sets contain all results of ordered pairs; the cardinalities count distinct integers.",
+  "solution_format": "An object with set, a list of distinct integer elements.",
+  "objective": {
+    "name": "log_difference_set_size_over_log_sumset_size",
+    "unit": "dimensionless logarithmic ratio",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "The set has 2 through 512 distinct elements.",
+    "Every element is an integer in [-1000000,1000000].",
+    "A+A={a+b : a,b in A}; every ordered pair, including diagonal pairs, is included before duplicate values are removed.",
+    "A-A={a-b : a,b in A}; every ordered pair, including diagonal pairs, is included before duplicate values are removed.",
+    "The objective is ln(|A-A|)/ln(|A+A|), using natural logarithms."
+  ],
+  "configurations": [
+    {
+      "id": "T077-C01",
+      "parameters": {
+        "min_cardinality": 2,
+        "max_cardinality": 512,
+        "integer_interval": [
+          -1000000,
+          1000000
+        ],
+        "objective": "ln(|A-A|) / ln(|A+A|)"
+      },
+      "direction": "maximize",
+      "human_reference": 1.1782049454028793
+    }
+  ],
+  "sources": [
+    "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+    "https://arxiv.org/abs/2604.19341"
+  ],
+  "verification": "The checker recomputes exact integer sum and difference sets and their cardinalities. It evaluates the logarithmic ratio with outward-rounded interval arithmetic and uses the lower endpoint as the conservative maximization objective.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximize ln|A-A|/ln|A+A| for2..512 distinct integers in[-1000000,1000000]. This raw ratio differs from T012 normalized ratio. Root checked explicit ordering reversal with n8/s26/d25 and its separated two-copy extension n16/s78/d75; they rank oppositely under the two objectives.",
+      "human_source": "Gyarmati/Hennecart/Ruzsa May30 2008 manuscript section2 equations13-15, finite simplex vectors and projection weights. Frozen human m6L5 has462 elements, max555555, s8008,d39733 and exact ratio about1.1782049454. Asymptotic1.27155 is not claimed as this finite score.",
+      "stronger_reference": "Root screened the same public formula family and requested correction: m7L4 has330 elements,s6435,d33111,max1198372; translating by-599186 fits[-599186,599186]. Exact ratio about1.1867965542. This locally instantiated published formula is not a separately tabulated literature score or new public record. Weaker frozen H remains unchanged.",
+      "independent_verification": "Sorted all unordered-with-repetition sums and ordered differences, count value transitions. Independently enclose logarithms by exact rational atanh power series with110 terms and explicit geometric remainder; the resulting rational ratio enclosure lies inside every formal80-digit mpmath interval. No numerical sampling certificate.",
+      "open_status": "Reviewed primary formula and subsequent experimental sources provide constructions, without a proof of maximum for this finite configuration. No global optimality or best-public absence claim inferred from a limited source search.",
+      "initial_search_and_admission": "Standalone{0,1,3}initial ratio1.0860; generic traditional/evolution1.1287422798 without comparison reads. All five strict runs, whole-return claim invariance, duplicate damage, exact independent quantities, replay, cold export and failure controls passed."
+    }
+  }
+}

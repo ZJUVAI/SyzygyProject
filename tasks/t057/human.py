@@ -1,5 +1,13 @@
-"""Published 17-element Pigarev-Freiman witness, transcribed for validation."""
+"""Rebuild a classic Clarke-Wright savings construction from public input."""
+
+import os
+
+from tasks.t057.heuristics import clarke_wright
 
 
 def run_code():
-    return {"set": [0, 1, 2, 4, 5, 9, 12, 13, 14, 16, 17, 21, 24, 25, 26, 28, 29]}
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T057-C01")
+    if chosen != "T057-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    routes, meta = clarke_wright()
+    return {"routes": routes, "construction": {"method": "parallel Clarke-Wright savings", **meta}}

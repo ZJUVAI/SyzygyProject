@@ -1,0 +1,52 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "order": 1120,
+    "networkx_girth": 10
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "group": "discrete_retry"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 201,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "1.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 8
+  },
+  "source_sha256": {
+    "tasks/t006/baseline.py": "ed310d01d9de61b8c8de2f6d3df9c12fd7344da1962471dc92a839f563b65de1",
+    "tasks/t006/check.py": "848314f9ab02336bc42a77bb2a6c62ceaf4b13821e47bb91f82db188b19ab63c",
+    "tasks/t006/evaluator.py": "b8bda3311986d47aa2b02ad03e84acfc6cf3dd9295b25189f6511f199a88546e",
+    "tasks/t006/evolution.py": "74bc97cbe799488c04ce82333b36692a5fcdff1d4378985bdb4511f3362986f0",
+    "tasks/t006/human.py": "67aea4f1d8b949c1727320b20dd2596084e3f98a65be23930aeca7e093a878d6",
+    "tasks/t006/init_program.py": "4f2f109e6e01655884c95f47bebf40bd6475bf8d15c411f1c6da64e6d0a7b6e3",
+    "tasks/t006/lps.py": "11eebb4991907d88b1c0f0dbc26298b1f4dbd284452f92e92063b67c855ca8a7",
+    "tasks/t006/reference.py": "9d17c55b23e9f4254a11aae7bd48df141e45999a8e505f82626f111e5d2bb868",
+    "tasks/t006/sota.py": "3cb353dcb30a11b76094fc5bf8ca3522126b8ab35e117b07079b264ff31ab487",
+    "tasks/t006/test_task.py": "a58cec290c9fb9e49c2cad0bef5cfd094e92b685d5a9157cbeea0a758c3b3996",
+    "tasks/t006/voltage_search.cpp": "375bc95a76e0361eddc0179a08874f214eeeb864aa169b13c75d2515ffdc5364"
+  },
+  "warm_start_sha256": "5e50160097bbc50ebb5ba7ac6ca8907102fa9b6f5e47a5c68bb6b1f931df8565",
+  "replay_command": "python -m mathbench replay T006 tasks/t006/best/T006-C01/solution.json --config T006-C01"
+}

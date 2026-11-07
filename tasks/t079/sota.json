@@ -1,53 +1,120 @@
 {
   "task_id": "T079",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T079-C01": {
-      "public_value": "1.5097201507458786",
-      "public_source": {
-        "url": "https://arxiv.org/abs/0907.1379",
-        "authors": "Mate Matolcsi and Carlos Vinuesa",
-        "year": 2009,
-        "claim": "Best nonnegative step function then known, at n=208; coefficients published in the appendix.",
-        "url_pdf": "https://math.bme.hu/~matolcsi/sch0914.pdf",
-        "same_configuration": true
+      "program": "reference.py",
+      "reproduced_value": 8289,
+      "public_value": 8289,
+      "highest_reported": {
+        "value": 8289,
+        "source": "Chung, Du, and Wesley, Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment, arXiv:2608.23691v2, Section 6.1, Theorem 2.1.",
+        "url": "https://arxiv.org/html/2608.23691v2",
+        "reproduction_status": "The paper gives an explicit infinite family for p=3 mod 4 and an exact size formula. This task specializes the published line construction to p=31, reconstructs all 993 line witnesses, and exactly recomputes 8,289 union points. The source also links a first-party verification notebook and Lean proof. This is a feasible construction, not a proof of finite optimality."
       },
-      "reproduced_value": "6280435861361744576/4160000022692211721",
-      "program": "sota.py",
-      "witness": "data/human_matolcsi_vinuesa.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "The printed public value is rounded to 16 decimal places; compare its decimal rounding with the exact rational checker value.",
-      "limitations": [
-        "This is the best located published witness for exactly 208 nonnegative coefficients, not a proof of optimality or an exhaustive survey.",
-        "AlphaEvolve reports 1.5053 and later 1.5032 for the continuous AC1 problem using a 600-part step function; those values are not a 208-coefficient witness for this configuration: https://arxiv.org/abs/2511.02864.",
-        "SimpleTES reports 1.503871 for continuous AC1; its representation and reported task score are not established as this fixed 208-step objective: https://arxiv.org/abs/2604.19341.",
-        "Later continuous-problem reports, including 1.5029, are outside the verified 208-step configuration. No corresponding 208-coefficient witness was located.",
-        "DREAM-RSI coverage records do not list AC1 as a DREAM-RSI task; its coverage comes from SimpleTES and AlphaEvolve."
-      ],
-      "checked_at": "2026-11-05",
-      "verification": {
-        "task_id": "T079",
-        "status": "reproduced",
-        "run": {
+      "best_human": {
+        "value": 8641,
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "source": "Bukh and Chao, Sharp density bounds on the finite field Kakeya problem, 2021, Section 4; https://arxiv.org/abs/2108.00074",
+        "provenance": "Traditional quadratic-residue construction: the odd-field almost-Kakeya set of size 31*((31+1)/2)^2, united with the full plane t=0.",
+        "witness": "data/human/quadratic_residue_q31.json",
+        "evidence_state": "Reconstructed from the formula and exact-checked over all 993 directions; the union has 8,641 points.",
+        "ai_provenance": "This is the pre-AI traditional construction cited in the source."
+      },
+      "best_public": {
+        "value": 8289,
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "source": "https://arxiv.org/html/2608.23691v2",
+        "date_checked": "2026-11-06",
+        "provenance": "AI-assisted multi-agent Station discovery. The paper discloses use of agents from multiple model families, and says GPT-5.5 operating outside the Station assisted formal verification. The formula is given in Section 6.1 and supported by a first-party verification notebook.",
+        "witness": "data/reference/station_p31_8289.json",
+        "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
+        "source_pdf": "data/source/station_2608.23691v2.pdf",
+        "source_pdf_sha256": "b13619c1b9b6fbc47a086a7fe4ee188beb7d484c5a9c0b2515b1257522e9043f",
+        "first_party_verification_revision": "a4ae9192fa75b7ffc6909ed018a712510062378b",
+        "first_party_verification_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07",
+        "evidence_state": "The published p=3 mod 4 formula gives 8,289 at p=31. The line witnesses were reconstructed and exactly checked here.",
+        "optimality": "Not proved for p=31."
+      },
+      "best_reproduced": {
+        "value": 8289,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Generate the 993 explicit lines from the published formula; the checker reconstructs all 30,783 line points modulo 31 and counts the exact union.",
+        "witness": "data/reference/station_p31_8289.json",
+        "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
+        "origin_type": "local specialization and exact reproduction of a published AI-assisted construction"
+      },
+      "earlier_ai_result": {
+        "value": 8290,
+        "source": "A secondary public record list at https://zerothesis.com/challenges/kakeya-fp3?tab=brief attributes 8,290 at p=31 to the AlphaEvolve problem notebook. Georgiev et al., arXiv:2511.02864v3, Section 6.1 documents the related AI-assisted work but does not give a p=31 result table.",
+        "provenance": "The numerical attribution is secondary and was not located in the inspected primary paper or notebook. Treat it as an unreproduced reported value, not as a verified witness.",
+        "reproduction_status": "secondary report, not reproduced",
+        "note": "The primary Station paper's 8,289 construction is smaller and is reproduced here."
+      },
+      "best_own_search": {
+        "value": 15534,
+        "objective_value": 15534,
+        "program": "evolution.py",
+        "witness": "best/T079-C01/solution.json",
+        "witness_sha256": "5cbd2771c7d9c2e01de6064917cb6ad9dbc8eb4f1d04dca81eaf48ba7e90ec82",
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3,
+          "direction_count": 993,
+          "construction": "one affine line in each projective direction",
+          "objective": "cardinality of the union of the represented lines"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "algorithm": "seeded randomized greedy anchor replacement with exact marginal union counts",
+          "seed": 0,
+          "requested_sweeps": 8,
+          "completed_sweeps": 8,
+          "samples_per_line": 16,
+          "candidate_anchors_evaluated": 127104,
+          "accepted_replacements": 1772,
+          "comparison_data_read": false,
+          "budget": {
+            "mode": "fixed iterations",
+            "requested_wall_clock_seconds": null
+          }
+        },
+        "generation_record": {
           "task_id": "T079",
           "config_id": "T079-C01",
           "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": "6280435861361744576/4160000022692211721",
+          "combined_score": 0.5562636796704004,
+          "objective": 15534,
           "verification_status": "exact",
-          "generation_time": 0.31502126157283783,
-          "verification_time": 0.265011440962553,
-          "objective_value": "6280435861361744576/4160000022692211721",
+          "generation_time": 9.79223944991827,
+          "verification_time": 0.5956560261547565,
+          "objective_value": 15534,
           "details": {
-            "steps": 208,
-            "coefficient_count": 208,
-            "max_convolution": "7548600794905943/5000000000000000",
-            "max_indices": [
-              321
-            ],
-            "normalization": "normalized to integral 1 before scoring"
+            "field_order": 31,
+            "dimension": 3,
+            "projective_directions_checked": 993,
+            "line_points_generated": 30783,
+            "union_cardinality": 15534,
+            "full_space_cardinality": 29791,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.5838731750845909,
+          "eval_time": 10.408493369817734,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -57,28 +124,77 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t079/data/human_matolcsi_vinuesa.json",
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "lower_bound": {
+        "value": 7694,
+        "exact_expression": "ceil(31^5 / 61^2) = 7694",
+        "source": "Bukh and Chao, Sharp density bounds on the finite field Kakeya problem, 2021, Theorem 1; https://arxiv.org/abs/2108.00074",
+        "status": "rigorous finite lower bound, exact integer rounding of the published rational inequality"
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "No exact finite minimum at p=31 was found in the reviewed sources. Bukh-Chao proves an asymptotically sharp leading constant, not a matching finite lower bound.",
+        "limitations": "This is a bounded source review. A non-primary online table mentions 8,288 without an identified witness or primary derivation; it is not treated as a reliable record. The best directly sourced and reconstructed value is 8,289.",
+        "scope": "The task concerns F_31^3 only. Results for other fields or dimensions are not compared as same-parameter records."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T079",
+          "config_id": "T079-C01",
+          "validity": 1.0,
+          "combined_score": 1.042465918687417,
+          "objective": 8289,
+          "verification_status": "exact",
+          "generation_time": 0.41677432507276535,
+          "verification_time": 0.46739962324500084,
+          "objective_value": 8289,
+          "details": {
+            "field_order": 31,
+            "dimension": 3,
+            "projective_directions_checked": 993,
+            "line_points_generated": 30783,
+            "union_cardinality": 8289,
+            "full_space_cardinality": 29791,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.9541449882090092,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
         "independent_quantity": {
-          "exact_objective": "6280435861361744576/4160000022692211721",
-          "convolution_entries": 415
+          "union_cardinality": 8289,
+          "directions_checked": 993,
+          "line_incidences_checked": 30783,
+          "bukh_chao_lower_bound": 7694,
+          "method": "projectivize every nonzero vector; repeated modular additions and dense finite-space bitmap"
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Checked the Matolcsi-Vinuesa primary source and later AlphaEvolve reports. This is the strongest located public exactly-208 nonnegative-step witness; later cited stronger values use other discretizations. Exact convolution independently recomputed. Scope remains limited to checked sources.",
-        "snapshot_date": "2026-11-05"
+        "evidence": "acceptance.json"
       }
-    }
-  },
-  "sol_review": {
-    "T079-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
     }
   }
 }

@@ -1,0 +1,86 @@
+{
+  "task_id": "T072",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T072-C01": {
+      "parameters": {
+        "cardinality": 32,
+        "element_domain": "all positive integers, unbounded",
+        "objective": "minimize max(|A+A|, |AA|)"
+      },
+      "best_human": {
+        "value": 154,
+        "parameters": {
+          "cardinality": 32,
+          "element_domain": "all positive integers, unbounded"
+        },
+        "source": "O'Bryant, arXiv:2411.08139v2, Table 2; Psi_35^5 minus {75,81,100}.",
+        "source_url": "https://arxiv.org/html/2411.08139v2",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional computational search described in the paper. The paper does not discuss generative-AI use.",
+        "evidence_state": "The corresponding dataset row is saved and the 154/154 counts are exactly reproduced.",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25",
+        "origin_type": "published computational construction"
+      },
+      "best_public": {
+        "value": 154,
+        "parameters": {
+          "cardinality": 32,
+          "element_domain": "all positive integers, unbounded"
+        },
+        "source": "O'Bryant's Table 2 and author-maintained SPPsets.txt dataset.",
+        "source_url": "https://www.math.csi.cuny.edu/~obryant/SumProduct/",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional computational result as described by the source paper; no generative-AI contribution is reported.",
+        "evidence_state": "Witness and score are reproduced; minimality is unknown.",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25"
+      },
+      "best_reproduced": {
+        "value": 154,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "cardinality": 32,
+          "element_domain": "all positive integers, unbounded"
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Exact arbitrary-precision pairwise sum and product sets.",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25",
+        "origin_type": "published construction reconstructed from source dataset",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 154,
+        "witness_program": "human.py",
+        "witness": "data/reference/obryant_n32_154.json",
+        "witness_sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25",
+        "evidence_state": "The exact same-parameter source row and objective have been reproduced."
+      },
+      "highest_reported": {
+        "value": 154,
+        "source": "O'Bryant, arXiv:2411.08139v2 Table 2, and the author's SPPsets.txt dataset.",
+        "url": "https://arxiv.org/html/2411.08139v2",
+        "reproduction_status": "Reproduced exactly, but the paper explicitly says the value is not known to be optimal."
+      },
+      "optimality_status": {
+        "status": "open",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The primary paper states the dataset is incomplete and the tabled minima are not known to be optimal. The checked 2026 exact results for n=10 and n=11 do not apply to n=32.",
+        "limitations": "No matching lower bound for 154 at cardinality 32 was found."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T072-C01": {
+      "objective": 354,
+      "objective_value": 354,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.4350282485875706
+    }
+  }
+}

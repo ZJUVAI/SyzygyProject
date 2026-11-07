@@ -1,73 +1,31 @@
 {
   "task_id": "T044",
-  "name": "29-mark Golomb ruler length",
+  "candidate_id": "maximum-order-subcubic-diameter-five-graph",
+  "name": "Largest graph with maximum degree 3 and diameter at most 5",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T044-C01",
       "parameters": {
-        "marks": 29
+        "maximum_degree": 3,
+        "diameter_at_most": 5,
+        "graph": "simple_undirected_connected"
       },
-      "direction": "minimize",
-      "human_reference": 623
-    },
-    {
-      "id": "T044-C02",
-      "parameters": {
-        "marks": 30
-      },
-      "direction": "minimize",
-      "human_reference": 680,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T044-C03",
-      "parameters": {
-        "marks": 32
-      },
-      "direction": "minimize",
-      "human_reference": 784,
-      "acceptance_status": "accepted_by_sol"
+      "direction": "maximize",
+      "human_reference": 70
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
-  },
-  "configuration_expansion_review": {
-    "reviewer": "GPT-6.1 Sol",
-    "implementation_agent": "/root/expand_t044",
-    "implementation_model": "gpt-6-luna",
-    "date": "2026-11-04",
-    "acceptance_status": "accepted_by_sol",
-    "configuration_ids": [
-      "T044-C02",
-      "T044-C03"
-    ],
-    "evidence": "PLAN.md",
-    "checks": [
-      "source and parameter review",
-      "four strict program runs per configuration",
-      "cold seed export",
-      "independent key quantity",
-      "damaged witness rejected",
-      "claimed score ignored"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定简单无向连通图，最大度≤3、直径≤5，最大化顶点数。与固定度及围长最小阶cage的目标和可行域不同。",
+      "primary_sources": "亲自阅读Comellas当前主表与2026-10-14直径5详情页：70阶的vonConta1983/AFY1986构造及2024Coxeter替代构造。主代理重新下载两份原始邻接列表，与保存字节及SHA256完全一致。主表说明粗体才是已证明最优，该70条目未标最优。",
+      "independent_verification": "五种构造以Floyd–Warshall全点对距离独立复算，正式检查器另用逐源BFS。人类与固定参考70顶点105边、最大度3、直径5。Moore树计数1+3*(1+2+4+8+16)=94是上界，未当作可达记录。",
+      "controls": "初始1，传统搜索/演化26；固定种子384次尝试不读取公开构造。全部五种程序、破坏自环、声明成绩完整不变性、严格回放、冷导出和三类失败检查通过。",
+      "limits": "仅复现所引两种公开70阶见证，不重做原始构造搜索或全局最优性证明。"
+    }
   }
 }

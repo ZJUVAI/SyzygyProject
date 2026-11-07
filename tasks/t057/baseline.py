@@ -1,49 +1,55 @@
-from mathbench.search import search_deadline, search_steps
-"""Bounded deterministic integer add/delete local search."""
+"""Bounded multistart Clarke-Wright search with randomized savings ties."""
+
 import math
 import os
 import random
 import time
-from tasks.t057.init_program import run_code as seed_program
 
-
-def _score(a):
-    n = len(a)
-    if n < 2:
-        return None
-    sums = {x + y for x in a for y in a}
-    diffs = {x - y for x in a for y in a}
-    if len(sums) <= len(diffs) or len(diffs) <= n:
-        return None
-    return math.log(len(sums) / n) / math.log(len(diffs) / n)
+from tasks.t057.check import CONFIG_ID
+from tasks.t057.heuristics import clarke_wright
+from tasks.t057.instance import load_instance, total_route_cost
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T057-C01") != "T057-C01":
-        raise ValueError("unsupported configuration")
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    try:
-        budget = min(2.0, max(0.01, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    except ValueError:
-        budget = 2.0
-    deadline = search_deadline()
-    current = sorted(set(seed_program()["set"]))
-    best = current[:]
-    best_score = _score(best)
-    lo, hi = -1000000, 1000000
-    for _attempt in search_steps(2000):
-        trial = current[:]
-        if len(trial) < 512 and (len(trial) <= 2 or rng.random() < 0.55):
-            choices = [x for x in (rng.randint(lo, hi) for _ in range(20)) if x not in set(trial)]
-            if choices:
-                trial.append(choices[0])
-                trial.sort()
-        elif len(trial) > 2:
-            trial.pop(rng.randrange(len(trial)))
-        score = _score(trial)
-        if score is not None and (best_score is None or score > best_score):
-            best, best_score = trial, score
-            current = trial
-        elif score is not None and rng.random() < 0.08:
-            current = trial
-    return {"set": best}
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    trials = int(os.environ.get("T057_SEARCH_TRIALS", "6"))
+    if trials < 0:
+        raise ValueError("search trial count must be nonnegative")
+    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    if seconds is None:
+        deadline = None
+    else:
+        duration = float(seconds)
+        if not math.isfinite(duration) or duration <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + duration
+
+    instance = load_instance()
+    best_routes = [[customer] for customer in instance["customer_ids"]]
+    best_cost = total_route_cost(best_routes, instance)
+    rng = random.Random(seed)
+    completed = 0
+    all_merges = 0
+    for _ in range(trials):
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        routes, meta = clarke_wright(instance, rng=rng)
+        cost = total_route_cost(routes, instance)
+        completed += 1
+        all_merges += meta["merges"]
+        if cost < best_cost:
+            best_routes, best_cost = routes, cost
+    return {
+        "routes": best_routes,
+        "search": {
+            "algorithm": "Clarke-Wright capacity-feasible route merging with randomized equal-savings tie order",
+            "seed": seed,
+            "trial_limit": trials,
+            "trials_completed": completed,
+            "total_merges_over_trials": all_merges,
+            "reference_data_read": False,
+        },
+    }

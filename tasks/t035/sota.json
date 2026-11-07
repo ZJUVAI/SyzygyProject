@@ -1,51 +1,66 @@
 {
   "task_id": "T035",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T035-C01": {
-      "public_value": "320",
-      "public_source": {
-        "url": "https://houseofgraphs.org/meta-directory/cages",
-        "title": "House of Graphs: Cages",
-        "claim": "n(4,10) ≤ 320; listed as an upper bound from Exoo et al. (2026).",
-        "supporting_paper_url": "https://arxiv.org/abs/2511.07247",
-        "witness_url": "https://github.com/AGT-Kulak/smallRegGirthGraphs/blob/main/genLifts/data/graphs/cage/n320_k4_g10.g6",
-        "checked_at": "2026-11-05"
+      "parameters": {
+        "forbidden_convex_polygon_vertices": 7
       },
-      "reproduced_value": "320",
-      "program": "sota.py",
-      "witness": "data/human_graph.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "limitations": [
-        "House of Graphs lists this as a known upper bound; it does not prove n(4,10) = 320.",
-        "The source check covers House of Graphs and the cited paper and author repository, not every public source."
-      ],
-      "checked_at": "2026-11-05",
+      "direction": "maximize",
+      "objective": "number of distinct planar points in general position with no seven points in convex position",
+      "program": "reference.py",
+      "reproduced_value": 32,
+      "public_value": 32,
+      "highest_reported": {
+        "value": 32,
+        "source_url": "https://arxiv.org/abs/1602.03075v2",
+        "meaning": "constructive lower bound for ES(7); not an upper-bound proof",
+        "reproduction_status": "recursive formula reconstructed and witness independently checked exactly",
+        "source": {
+          "url": "https://arxiv.org/abs/1602.03075v2",
+          "version": "v2, 2017-07-12"
+        }
+      },
+      "best_human": {
+        "value": 32,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "source_url": "https://sziami.cs.bme.hu/~geza/erdosszekeres61.pdf"
+      },
+      "best_public": {
+        "value": 32,
+        "witness_url": "https://github.com/rfabila/PyDCG",
+        "evidence_state": "Published recursive construction and integer-realization method; the plotted point coordinates were not transcribed."
+      },
+      "best_reproduced": {
+        "value": 32,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact"
+      },
+      "search_provenance": "The published Erdős–Szekeres formula was reconstructed. This task's greedy baseline is a separate fixed-seed search and does not read this witness.",
+      "checked_at": "2026-11-06",
+      "open_status": "The task maximizes a witness size below ES(7). It does not optimize the unknown ES(7) threshold. A 2026-09-19 preprint reports 33 <= ES(7) <= 81 and states that ES(7)=33 remains a conjecture.",
       "verification": {
-        "task_id": "T035",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T035",
           "config_id": "T035-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 320,
+          "objective": 32,
           "verification_status": "exact",
-          "generation_time": 0.2651446461677551,
-          "verification_time": 0.26626112312078476,
-          "objective_value": 320,
+          "generation_time": 0.16446559131145477,
+          "verification_time": 0.7655147761106491,
+          "objective_value": 32,
           "details": {
-            "degree": 4,
-            "girth": 10,
-            "girth_lower_bound": 10,
-            "vertices": 320,
-            "edges": 640,
-            "connected": true,
-            "claimed_objective_mismatch": false,
-            "optimality_proved": false
+            "point_count": 32,
+            "general_position": true,
+            "convex_seven_gon": false,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.5360014922916889,
+          "eval_time": 0.9335418194532394,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -55,28 +70,23 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t035/data/human_graph.json",
         "independent_quantity": {
-          "order": 320,
-          "networkx_girth": 10
+          "point_count": 32,
+          "seven_subsets_checked": 3365856,
+          "convex_four_subsets": 23220,
+          "convex_seven_subsets": 0
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked the parameter match, author graph witness provenance and strict replay. NetworkX independently confirmed connected 4-regular order 320 and girth 10; damaged edges were rejected and forged objectives ignored.",
-        "snapshot_date": "2026-11-05"
-      }
-    }
-  },
-  "sol_review": {
-    "T035-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
     }
   }
 }

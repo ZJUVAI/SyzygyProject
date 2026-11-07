@@ -1,56 +1,84 @@
-from mathbench.search import search_deadline, search_steps
-"""Bounded seeded random construction with non-equivalent local moves."""
+"""Seeded search over random simple cubic graphs, without comparison data."""
+
+from collections import deque
 import os
 import random
-import time
-import os
-from itertools import combinations
 
-from .check import validate
+from mathbench.search import search_steps
 
 
-def _valid(marks):
-    ds = [b-a for a, b in combinations(marks, 2)]
-    return len(ds) == len(set(ds))
+CONFIG_ID = "T044-C01"
+ATTEMPT_LIMIT = 384
+ORDER_CHOICES = tuple(range(14, 95, 2))
+
+
+def _random_cubic_graph(order, rng):
+    stubs = [vertex for vertex in range(order) for _ in range(3)]
+    rng.shuffle(stubs)
+    edges = set()
+    adjacency = [set() for _ in range(order)]
+    for index in range(0, len(stubs), 2):
+        left, right = stubs[index : index + 2]
+        if left == right:
+            return None
+        edge = (min(left, right), max(left, right))
+        if edge in edges:
+            return None
+        edges.add(edge)
+        adjacency[left].add(right)
+        adjacency[right].add(left)
+    if any(len(neighbors) != 3 for neighbors in adjacency):
+        return None
+
+    for source in range(order):
+        distances = [-1] * order
+        distances[source] = 0
+        queue = deque([source])
+        while queue:
+            current = queue.popleft()
+            for neighbor in adjacency[current]:
+                if distances[neighbor] == -1:
+                    distances[neighbor] = distances[current] + 1
+                    if distances[neighbor] > 5:
+                        return None
+                    queue.append(neighbor)
+        if -1 in distances:
+            return None
+    return {"n": order, "edges": [list(edge) for edge in sorted(edges)]}
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T044-C01")
-    counts = {"T044-C01": 29, "T044-C02": 30, "T044-C03": 32}
-    if config_id not in counts:
-        raise ValueError(f"unknown T044 configuration: {config_id}")
-    count = counts[config_id]
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    seconds = max(.01, min(30., float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    deadline = search_deadline()
-    # Construct a guaranteed-valid fallback without loading either witness.
-    best = [0]
-    best_differences = set()
-    while len(best) < count:
-        c = best[-1] + 1
-        while True:
-            new = [c - p for p in best]
-            if len(set(new)) == len(new) and not (set(new) & best_differences):
-                best.append(c)
-                best_differences.update(new)
-                break
-            c += 1
-    # Greedy random gap construction produces valid, varied starting rulers.
-    for restart in range(100):
-        marks = [0]
-        diffs = set()
-        while len(marks) < count and time.monotonic() < deadline:
-            start = marks[-1] + 1
-            candidates = list(range(start, start + 45))
-            rng.shuffle(candidates)
-            for c in candidates:
-                new = [c - p for p in marks]
-                if len(set(new)) == len(new) and not (set(new) & diffs):
-                    marks.append(c); diffs.update(new); break
-            else:
-                break
-        if len(marks) == count and marks[-1] < best[-1] and _valid(marks):
-            best = marks
-        if time.monotonic() >= deadline: break
-    validate({"marks": best}, {"parameters": {"marks": count}})
-    return {"marks": best}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if config_id != CONFIG_ID:
+        raise ValueError("unsupported configuration id")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    rng = random.Random(seed)
+    best = {"n": 1, "edges": []}
+    attempts = 0
+    accepted = 0
+    for _ in search_steps(ATTEMPT_LIMIT):
+        order = rng.choice(ORDER_CHOICES)
+        candidate = _random_cubic_graph(order, rng)
+        attempts += 1
+        if candidate is not None:
+            accepted += 1
+            if order > best["n"]:
+                best = candidate
+    return {
+        **best,
+        "claimed_objective": best["n"],
+        "search_metadata": {
+            "algorithm": "seeded configuration-model sampling of simple cubic graphs; exact BFS rejects disconnected graphs and diameter above 5",
+            "configuration_id": config_id,
+            "seed": seed,
+            "attempts": attempts,
+            "attempt_limit": ATTEMPT_LIMIT,
+            "accepted_candidates": accepted,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            "comparison_data_read": False,
+            "budget": {
+                "attempt_limit": ATTEMPT_LIMIT,
+                "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            },
+        },
+    }

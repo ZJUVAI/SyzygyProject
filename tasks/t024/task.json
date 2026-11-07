@@ -1,0 +1,36 @@
+{
+  "task_id": "T024",
+  "name": "C4-free graph extremal number at order 41",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T024-C01",
+      "parameters": {
+        "vertices": 41,
+        "forbidden_cycle_length": 4
+      },
+      "direction": "maximize",
+      "human_reference": 132
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "checks": [
+      "same-parameter primary source and open bounds",
+      "independent sparse6 decode",
+      "human and reference replay",
+      "cold seed export",
+      "traditional search",
+      "exhaustive four-vertex subset audit",
+      "claimed scores ignored",
+      "invalid constructions rejected",
+      "program errors and timeout rejected"
+    ],
+    "limitations": [
+      "The live source states that related papers are in preparation; no fixed publication version of this graph archive was located. Archive bytes are frozen by SHA-256."
+    ]
+  }
+}

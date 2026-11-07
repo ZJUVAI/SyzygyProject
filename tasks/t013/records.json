@@ -1,0 +1,225 @@
+{
+  "task_id": "T013",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 578,
+    "parameters": {
+      "L": 100
+    },
+    "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+    "date_checked": "2026-11-04",
+    "evidence_state": "length-100 run-length encoding reconstructed; integer energy578 verified",
+    "provenance": "Published research record table. This row does not name its individual discoverer; attribution left unknown.",
+    "optimality": "not proved; best in checked sources, not an exhaustive current-record claim",
+    "witness": "data/human_labs100_record.json"
+  },
+  "best_public": {
+    "value": 578,
+    "parameters": {
+      "L": 100
+    },
+    "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+    "date_checked": "2026-11-04",
+    "evidence_state": "length-100 run-length encoding reconstructed; integer energy578 verified",
+    "provenance": "Published research record table. This row does not name its individual discoverer; attribution left unknown.",
+    "optimality": "not proved; best in checked sources, not an exhaustive current-record claim",
+    "witness": "data/human_labs100_record.json",
+    "corroboration": "https://arxiv.org/html/2504.00987v2",
+    "survey_scope": "2025/2026 GPU paper reports matching prior best for N100; record table and author solver archive checked.",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 578,
+    "parameters": {
+      "L": 100
+    },
+    "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+    "date_checked": "2026-11-04",
+    "evidence_state": "length-100 run-length encoding reconstructed; integer energy578 verified",
+    "provenance": "Published research record table. This row does not name its individual discoverer; attribution left unknown.",
+    "optimality": "not proved; best in checked sources, not an exhaustive current-record claim",
+    "witness": "data/human_labs100_record.json"
+  },
+  "baseline_seed": {
+    "value": 328350,
+    "formula": "sum(j*j for j in 1..99) for the alternating sequence",
+    "provenance": "deterministic seed in init_program.py",
+    "evidence_state": "exact integer computation; not a published record"
+  },
+  "historical_human": {
+    "value": 638,
+    "parameters": {
+      "L": 100
+    },
+    "authors": [
+      "Burkhard Militzer",
+      "Michele Zamparelli",
+      "Dieter Beule"
+    ],
+    "year": 1996,
+    "url": "https://militzer.berkeley.edu/sequences.html",
+    "evidence_state": "historical published witness transcribed and exactly reproduced",
+    "optimality": "feasible historical incumbent; not claimed current best or globally optimal",
+    "witness": "data/human_labs100.json"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T013-C02": {
+      "acceptance_status": "accepted_by_sol",
+      "best_human": {
+        "value": 352,
+        "parameters": {
+          "L": 80
+        },
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "date_checked": "2026-11-04",
+        "evidence_state": "published run-length row reconstructed and exact integer energy 352 recomputed",
+        "provenance": "The public table does not identify an individual discoverer for this row; attribution is unknown.",
+        "optimality": "not proved; the source marks this length with an asterisk and says larger merit factors may exist.",
+        "witness": "data/human_labs80_record.json",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 352,
+        "parameters": {
+          "L": 80
+        },
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "date_checked": "2026-11-04",
+        "evidence_state": "published run-length row reconstructed and exact integer energy 352 recomputed",
+        "provenance": "The public table does not identify an individual discoverer for this row; attribution is unknown.",
+        "optimality": "not proved; the source marks this length with an asterisk and says larger merit factors may exist.",
+        "witness": "data/human_labs80_record.json",
+        "survey_scope": "Dantus public record table checked on 2026-11-04; this is not a claim of a complete literature survey.",
+        "origin_type": "unknown unless an attribution is stated in the source"
+      },
+      "best_reproduced": {
+        "value": 352,
+        "parameters": {
+          "L": 80
+        },
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "date_checked": "2026-11-04",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "provenance": "The public table does not identify an individual discoverer for this row; attribution is unknown.",
+        "optimality": "not proved; the source marks this length with an asterisk and says larger merit factors may exist.",
+        "witness": "data/human_labs80_record.json",
+        "actual_value": 352,
+        "verification_status": "exact",
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "initial_program": {
+        "status": "valid deterministic alternating sequence; exact score computed by checker"
+      },
+      "classical_baseline": {
+        "status": "seeded single-bit simulated annealing; does not read human data"
+      },
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 352,
+        "verification_status": "exact",
+        "witness": "tasks/t013/data/verified_human_t013-c02.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T013-C03": {
+      "acceptance_status": "accepted_by_sol",
+      "best_human": {
+        "value": 872,
+        "parameters": {
+          "L": 120
+        },
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "date_checked": "2026-11-04",
+        "evidence_state": "published run-length row reconstructed and exact integer energy 872 recomputed",
+        "provenance": "The public table does not identify an individual discoverer for this row; attribution is unknown.",
+        "optimality": "not proved; the source marks this length with an asterisk and says larger merit factors may exist.",
+        "witness": "data/human_labs120_record.json",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 872,
+        "parameters": {
+          "L": 120
+        },
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "date_checked": "2026-11-04",
+        "evidence_state": "published run-length row reconstructed and exact integer energy 872 recomputed",
+        "provenance": "The public table does not identify an individual discoverer for this row; attribution is unknown.",
+        "optimality": "not proved; the source marks this length with an asterisk and says larger merit factors may exist.",
+        "witness": "data/human_labs120_record.json",
+        "survey_scope": "Dantus public record table checked on 2026-11-04; this is not a claim of a complete literature survey.",
+        "origin_type": "unknown unless an attribution is stated in the source"
+      },
+      "best_reproduced": {
+        "value": 872,
+        "parameters": {
+          "L": 120
+        },
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "date_checked": "2026-11-04",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "provenance": "The public table does not identify an individual discoverer for this row; attribution is unknown.",
+        "optimality": "not proved; the source marks this length with an asterisk and says larger merit factors may exist.",
+        "witness": "data/human_labs120_record.json",
+        "actual_value": 872,
+        "verification_status": "exact",
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "initial_program": {
+        "status": "valid deterministic alternating sequence; exact score computed by checker"
+      },
+      "classical_baseline": {
+        "status": "seeded single-bit simulated annealing; does not read human data"
+      },
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 872,
+        "verification_status": "exact",
+        "witness": "tasks/t013/data/verified_human_t013-c03.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  },
+  "initial_results": {
+    "T013-C01": {
+      "objective": 328350,
+      "objective_value": 328350,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.001760316735191107
+    },
+    "T013-C02": {
+      "objective": 167480,
+      "objective_value": 167480,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0021017434917602103
+    },
+    "T013-C03": {
+      "objective": 568820,
+      "objective_value": 568820,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.001532998136493091
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "configurations": {
+    "T096-C01": {
+      "program": "reference.py",
+      "reproduced_value": "1/1",
+      "public_value": 1,
+      "highest_reported": {
+        "value": 1,
+        "source": "Benguria and Loss (2004), unit-circle construction; see also Suragan arXiv:2609.10775v1",
+        "reproduction_status": "The circle has curvature 1, and the periodic operator has spectrum 1+k^2 for k in the integers. Exact value 1 is independently recomputed. The Ovals conjecture that this is the global minimum remains open."
+      },
+      "known_public_lower_bound": {
+        "value": "(sqrt(pi)/2)*(Gamma(7/6)/Gamma(5/3))^3",
+        "approximate_value": 0.96183165233528,
+        "source": "Suragan, An Improved Bound for the Ovals Problem, arXiv:2609.10775v1, 2026-09-09",
+        "reproduction_status": "Reported theoretical lower bound; not independently reconstructed by this task."
+      },
+      "source": {
+        "url": "https://arxiv.org/abs/math-ph/0402048",
+        "current_status_url": "https://arxiv.org/html/2609.10775v1",
+        "checked_at": "2026-11-06"
+      },
+      "parameters": {
+        "dimension": 2,
+        "curve_class": "smooth strictly convex simple closed plane curves",
+        "length": "2*pi",
+        "objective": "minimize joint Rayleigh quotient over curve and nonzero periodic trial function"
+      },
+      "optimality_status": "Open: the 2026 source gives a lower bound below 1 and states that the sharp lower bound remains open.",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T096",
+          "config_id": "T096-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "1/1",
+          "verification_status": "certified",
+          "generation_time": 0.16459720954298973,
+          "verification_time": 0.5654302537441254,
+          "objective_value": "1/1",
+          "details": {
+            "objective_interval": [
+              "1/1",
+              "1/1"
+            ],
+            "objective_interval_meaning": "Certified interval for this trial Rayleigh quotient only; the reported objective is its conservative upper endpoint, not a two-sided interval for the first eigenvalue.",
+            "rayleigh_quotient_upper_bound": "1/1",
+            "curvature_radius_lower_bound": "1/1",
+            "curvature_radius_upper_bound": "1/1",
+            "geometric_series_tail_ratio": "0/1",
+            "series_terms": 0,
+            "curve_closure": "mean rho is one and first harmonics vanish exactly",
+            "score_claims_ignored": true
+          },
+          "eval_time": 0.7331131733953953,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "ratio_interval": [
+            "1",
+            "1"
+          ],
+          "method": "Exact circle Parseval sum of Fourier energy weights n^2+1; no reciprocal series or angular sampling."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "ac488c36a8b91cb2fd6a1524ed227a35088c7848ecc66babf94bccfe3f5e3df9"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

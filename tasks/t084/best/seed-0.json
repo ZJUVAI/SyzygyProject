@@ -1,0 +1,60 @@
+{
+  "task_id": "T084",
+  "config_id": "T084-C01",
+  "elements": [
+    0,
+    1,
+    4,
+    13,
+    32,
+    71,
+    124,
+    218,
+    375,
+    572,
+    744,
+    1208,
+    1556,
+    2441,
+    3097,
+    4047,
+    5297,
+    6703,
+    7838,
+    10986,
+    12331,
+    15464,
+    19143,
+    24545,
+    28973,
+    34405,
+    37768,
+    45863,
+    50876,
+    61371,
+    68302
+  ],
+  "objective": 68302,
+  "verification_status": "exact",
+  "details": {
+    "cardinality": 31,
+    "order": 3,
+    "triple_sums_checked": 5456,
+    "claimed_objective_ignored": true
+  },
+  "search_method": "greedy construction followed by exact-check single-element mutation",
+  "search_iterations": 1500,
+  "candidate_checks": 68302,
+  "accepted_valid_proposals": 28,
+  "seed": 0,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31"
+  }
+}

@@ -1,0 +1,414 @@
+{
+  "task_id": "T073",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T073 --label admission_20261106",
+  "configurations": {
+    "T073-C01": {
+      "configuration": {
+        "id": "T073-C01",
+        "parameters": {
+          "sphere": "S^3 subset R^4 unit sphere",
+          "design_strength": 5,
+          "weights": "equal positive weights",
+          "objective": "number of distinct points",
+          "coordinate_domain": "real algebraic coordinates in one common real algebraic number field"
+        },
+        "direction": "minimize",
+        "human_reference": 24
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T073",
+            "config_id": "T073-C01",
+            "validity": 1.0,
+            "combined_score": 0.25,
+            "objective": 96,
+            "verification_status": "exact",
+            "generation_time": 0.5511153526604176,
+            "verification_time": 2.5316697396337986,
+            "objective_value": 96,
+            "details": {
+              "dimension": 3,
+              "ambient_dimension": 4,
+              "design_strength": 5,
+              "point_count": 96,
+              "unit_norms_verified": 96,
+              "monomials_checked": 126,
+              "coordinate_field_degree": 2,
+              "minimal_polynomial_irreducible": true,
+              "selected_real_root_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 3.093030247837305,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "point_count": 96,
+            "monomials_checked": 126,
+            "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T073",
+            "config_id": "T073-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 24,
+            "verification_status": "exact",
+            "generation_time": 0.49441181495785713,
+            "verification_time": 1.9499017894268036,
+            "objective_value": 24,
+            "details": {
+              "dimension": 3,
+              "ambient_dimension": 4,
+              "design_strength": 5,
+              "point_count": 24,
+              "unit_norms_verified": 24,
+              "monomials_checked": 126,
+              "coordinate_field_degree": 2,
+              "minimal_polynomial_irreducible": true,
+              "selected_real_root_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.4523173160851,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "point_count": 24,
+            "monomials_checked": 126,
+            "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T073",
+            "config_id": "T073-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 24,
+            "verification_status": "exact",
+            "generation_time": 1.0950952991843224,
+            "verification_time": 2.549479626119137,
+            "objective_value": 24,
+            "details": {
+              "dimension": 3,
+              "ambient_dimension": 4,
+              "design_strength": 5,
+              "point_count": 24,
+              "unit_norms_verified": 24,
+              "monomials_checked": 126,
+              "coordinate_field_degree": 1,
+              "minimal_polynomial_irreducible": true,
+              "selected_real_root_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 3.6538849249482155,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "point_count": 24,
+            "monomials_checked": 126,
+            "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T073",
+            "config_id": "T073-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 24,
+            "verification_status": "exact",
+            "generation_time": 2.7460587099194527,
+            "verification_time": 1.8497695922851562,
+            "objective_value": 24,
+            "details": {
+              "dimension": 3,
+              "ambient_dimension": 4,
+              "design_strength": 5,
+              "point_count": 24,
+              "unit_norms_verified": 24,
+              "monomials_checked": 126,
+              "coordinate_field_degree": 1,
+              "minimal_polynomial_irreducible": true,
+              "selected_real_root_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 4.602399595081806,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "point_count": 24,
+            "monomials_checked": 126,
+            "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T073",
+            "config_id": "T073-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 24,
+            "verification_status": "exact",
+            "generation_time": 0.4169742651283741,
+            "verification_time": 1.8289323449134827,
+            "objective_value": 24,
+            "details": {
+              "dimension": 3,
+              "ambient_dimension": 4,
+              "design_strength": 5,
+              "point_count": 24,
+              "unit_norms_verified": 24,
+              "monomials_checked": 126,
+              "coordinate_field_degree": 2,
+              "minimal_polynomial_irreducible": true,
+              "selected_real_root_count": 1,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.2530619390308857,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "point_count": 24,
+            "monomials_checked": 126,
+            "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T073",
+        "config_id": "T073-C01",
+        "validity": 1.0,
+        "combined_score": 0.25,
+        "objective": 96,
+        "verification_status": "exact",
+        "generation_time": 0.31631454825401306,
+        "verification_time": 4.288852829486132,
+        "objective_value": 96,
+        "details": {
+          "dimension": 3,
+          "ambient_dimension": 4,
+          "design_strength": 5,
+          "point_count": 96,
+          "unit_norms_verified": 96,
+          "monomials_checked": 126,
+          "coordinate_field_degree": 2,
+          "minimal_polynomial_irreducible": true,
+          "selected_real_root_count": 1,
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 4.608234632760286,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T073",
+          "config_id": "T073-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t073/runs/admission_20261106/T073-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.6478214040398598,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T073",
+          "config_id": "T073-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20863483101129532,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T073",
+          "config_id": "T073-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.5374976508319378,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "1d79341a3f3ac0e01cc0d345eea70957baf17a6c6ee0616007542a43de15910d",
+    "README.md": "901ac42f79a429580f3482a6b5fe7f97e30733a88ce472ba93136c8d0e791b0f",
+    "baseline.py": "b034f70dc19bc9c69ce585c8f9425daf38d709a1da52e483f9e6e7120a53be0f",
+    "check.py": "78b45a1255dd8c5b46847fb2f3c8a83a870b84a615efe81383063fb1509dd03e",
+    "construction.py": "4703f07ba79d8d30d336f039c122cddba019d01ae46890d399c2f3ff36ce1362",
+    "data/human/d4_24cell.json": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
+    "data/reference/d4_24cell.json": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
+    "data/reference/d4_rational24_independent_certificate.json": "f7332f8bf9ffe3cec5d59f5140570de63645d5ec2863240d2cd4d16a55e94a85",
+    "evaluator.py": "a70f97bd1a8fc82d6ce52dc4ccede5e301687b7c8753a7d56121334bb12eab87",
+    "evolution.py": "b3e7d63b5240a28616d7d5b8b10bd69f01f92a058beb85e5608e68531c206fa3",
+    "human.py": "cc7a93b2a79a4f9764b88b3403cda69aa8851eef8452d0dbaa6a9ca7ab1bbaf1",
+    "init_program.py": "b06af8941dfcbc3aa8b279dc9ed27ad3c583a7ae405319345ab4d3f771e62062",
+    "instruction.txt": "16946c16d8bced8adf0b6ec55d0e3ac95e87c5d164eb4c23d7516d9857937e64",
+    "records.json": "2c85885dbe69632d7d124fcbaa99ffbc80a6b9d5dc6a649a1563a72677dc4935",
+    "reference.py": "78c534cdfe637055e1af7f3be047b8d65a1854ab4fd677720f172ecbd08dd8ad",
+    "test_task.py": "277d0c998981964cfd6bb75e033c54c3860d12f0cc1b5ea9bd5376116d627e00"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "Equal-weight spherical strength-5 designs of distinct unit points in R4; minimize point count. Full 126 monomial equations, not a sampled numerical design.",
+    "primary_sources": "Bondarenko/Radchenko/Viazovska Annals2013 p444 gives 22 <= N(3,5) <= 24 and D4 design. Lindblad 2025 Designs Related Through Projective and Hopf Maps section3 still calls the 24-point design putatively optimal. 2026 S2 strength4 closure and odd-sphere construction results do not prove the S3 strength5 minimum.",
+    "human_reconstruction": "Eight signed unit axes plus sixteen half-integer sign vectors form a rational rotation of the D4 roots. Root independently computed all 126 exact moments and norms. This is a reproduced classical construction, not an optimality certificate.",
+    "independent_method": "Separate symbolic real-root expression arithmetic and Dirichlet rising-factorial moment formula, with all 126 moments for each of the five programs; formal checker instead uses explicit rational polynomial quotient arithmetic.",
+    "coordinate_model": "Any finite real solution of the rational sphere/moment equations and distinctness inequalities has a real-algebraic solution by real-closed-field transfer. A common primitive real number field therefore preserves finite minimum; no arbitrary field-degree or coefficient caps.",
+    "cold_start_and_search": "Standalone 96-point signed-permutation seed of (1,1,2,0)/sqrt6. Traditional integer-pattern scan and evolution produce 24 without reading human/reference witnesses. Exact checker and independent audits passed.",
+    "admission": "All five programs, strict replay, whole-return declaration invariance, broken duplicate-point witnesses, cold export and failure controls passed."
+  }
+}

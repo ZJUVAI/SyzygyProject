@@ -1,0 +1,104 @@
+{
+  "task_id": "T068",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T068-C01": {
+      "parameters": {
+        "length": 10,
+        "alphabet": "{0,1}",
+        "covering_radius": 1,
+        "objective": "number of codewords"
+      },
+      "best_human": {
+        "value": 120,
+        "url": "https://doi.org/10.1109/18.61135",
+        "source_location": "Östergård (1991), IEEE Transactions on Information Theory 37, 179–180",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "provenance": "Traditional mixed-code construction reported by the author. The frozen 128-word Hamming-product comparison is a separate, weaker construction.",
+        "reproduction_status": "Reported historical construction; identity with the independently verified 2020 OEIS list has not been established.",
+        "ai_provenance": "1991 human publication; no AI role reported"
+      },
+      "best_public": {
+        "value": 120,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "url": "https://oeis.org/A000983/a000983.txt",
+        "source_location": "a(10)<=120 and its following 120-word list",
+        "provenance": "Public list credited by OEIS to Dmitry Kamenetsky (2020), verified here as a feasible cover. The exact minimum remains in the interval 107-120.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "all 1024 binary words are covered within Hamming distance 1 by the frozen 120-word list"
+      },
+      "best_reproduced": {
+        "value": 120,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "witness_file": "data/reference/oeis_a000983_n10.json",
+        "witness_sha256": "65c8a7ec1574a64ef45e7334f8166966f70062cbf0ad09eb1499e5068842f8dd",
+        "provenance": "Parsed only the a(10) list from the pinned OEIS A000983 text file; the subsequent a(11) code is excluded.",
+        "ai_provenance": "benchmark transcription and exact exhaustive verification",
+        "actual_value": 120,
+        "evidence_state": "exact bitset check covers all 1024 words",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 128,
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "witness_file": "data/human/hamming7_times_f2_3.json",
+        "witness_sha256": "e3aada0ead9ee0098d30776a53fbe932f7a7afcdfff4770ce80f6ba35b7b069f",
+        "provenance": "Length-7 perfect Hamming code times all 3-bit suffixes."
+      },
+      "highest_reported": {
+        "value": 120,
+        "metric": "codewords in a binary length-10 covering code of radius 1",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://oeis.org/A000983/a000983.txt",
+        "source_location": "a(10)<=120 list",
+        "reproduction_status": "The 120-word witness is independently verified. Kéri and OEIS record the remaining minimum-size interval as 107-120; no exact optimum claim is made."
+      },
+      "optimality_status": {
+        "lower_bound": 107,
+        "upper_bound": 120,
+        "evidence_state": "OEIS A000983 and the Kéri binary table checked on 2026-11-06 retain 107-120 for length 10, radius 1."
+      },
+      "historical_record_note": "Östergård (1991) reports a 120-word binary code derived from a 60-word F_4 x F_2^7 mixed code. The public 2020 OEIS word list is treated as a separate frozen witness; no identity between the two is asserted.",
+      "reproduced_human_method": {
+        "value": 128,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "witness_file": "data/human/hamming7_times_f2_3.json",
+        "witness_sha256": "e3aada0ead9ee0098d30776a53fbe932f7a7afcdfff4770ce80f6ba35b7b069f",
+        "url": "https://doi.org/10.1002/j.1538-7305.1950.tb00463.x",
+        "source_location": "R. W. Hamming, Error Detecting and Error Correcting Codes (1950); binary [7,4,3] Hamming code construction",
+        "provenance": "Reconstructed as the product of the length-7 perfect Hamming code with all 3-bit suffixes. The parity-check columns are the seven nonzero vectors in F_2^3.",
+        "ai_provenance": "classical human construction",
+        "actual_value": 128,
+        "evidence_state": "exact parity-check argument and independent full-universe checker confirm coverage"
+      }
+    }
+  },
+  "initial_results": {
+    "T068-C01": {
+      "objective": 1024,
+      "objective_value": 1024,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.125
+    }
+  }
+}

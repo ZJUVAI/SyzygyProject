@@ -1,7 +1,12 @@
-import json, os
-from pathlib import Path
+"""Fixed replay of the exact Milshtein 444-word witness."""
+
+from tasks.t067.human import run_code as _published_witness
+
 
 def run_code():
-    if os.environ.get('MATHBENCH_CONFIG_ID', 'T067-C01') != 'T067-C01': raise ValueError('unsupported configuration')
-    data = json.loads((Path(__file__).parent/'data'/'bch_extended_128.json').read_text())
-    return {'codewords': data['codewords']}
+    return _published_witness()
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

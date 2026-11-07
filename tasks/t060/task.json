@@ -1,37 +1,41 @@
 {
   "task_id": "T060",
-  "name": "Covering number C(24,14,4)",
+  "name": "Integer complexity of the Mersenne prime 2^61-1",
+  "candidate_id": "integer-complexity-m61",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T060-C01",
       "parameters": {
-        "v": 24,
-        "k": 14,
-        "t": 4
+        "target": "2^61-1",
+        "target_value": "2305843009213693951",
+        "allowed_expression_grammar": "1, +, *, parentheses",
+        "expression_model": "binary expression tree; repeated text denotes separate occurrences; no shared subexpressions"
       },
       "direction": "minimize",
-      "human_reference": 62
+      "human_reference": 153
     }
   ],
+  "search_metadata": {
+    "algorithm": "seeded mixed-radix Horner candidate search",
+    "default_seed": 0,
+    "default_iterations": 1000,
+    "candidate_reads_reference_witness": false,
+    "budget_note": "Fixed candidate count and seed by default. Explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "固定人类方法对照为62块，本地传统搜索为40块。23块公开见证已复现，仍待Sol复核。公开纪录不构成最优性证明。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定M61=2305843009213693951，表达式树叶子仅1、内部仅加乘，最小化叶子数。重复文本单独计数，禁止DAG、减法、幂；与加法链目标不同。",
+      "primary_source": "Sol亲自读取Altman2019综述导言及Theorem1.1，确认整数复杂度定义、Horner方法、Selfridge极值公式；同参重建三进制39位Horner表达式153个1。该153为弱传统方法基线，不声称文献最强。",
+      "record_and_status": "Sol下载PR4固定6b79a6324891b4b196731f78fcd7a9b978524b25的689字节127表达式，SHA256 946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449；独立AST求值正确。EventCompute明确披露生成式AI协作，记录为AI辅助。PR仍开放未合并，不影响表达式可行性。所查页面与仓库未给M61最优性证明，116至127间仍未闭合。",
+      "independent_math": "正式checker用整数栈语法解析；Sol另用受限Python AST逐节点求值及计数。另独立动态规划枚举所有二叉根分裂，复算115个1的最大数1801135623563989452，小于M61，从而下界116，不调用任务公式。",
+      "resource_scope": "100000字符只限输入资源；k叶二叉树总可规范化至4k-3字符，任何优于153的解都存在不足609字符的表示，不排除更优表达式。",
+      "controls": "初始181、传统153、演化166、人类153、参考127。五程序、故意加1破坏、完整声明不变、严格重放、冷导出、异常和超时均通过，任务及共享检查43项通过。",
+      "limits": "未重跑公开127的发现过程，未证明127最优；未将挑战150基线或AI辅助127称为纯人类纪录。开放性结论限所列来源。"
+    }
   }
 }

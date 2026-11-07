@@ -1,43 +1,77 @@
 {
   "task_id": "T066",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T066-C01": {
-      "public_value": "24",
-      "public_source": {
-        "url": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
-        "database": "Magma BestKnownLinearCode database",
-        "calculator_url": "https://magma-maths.org/calc/",
-        "calculator_version": "2.30-1",
-        "query": "BestKnownLinearCode(GF(2),68,15)",
-        "has_code": true,
-        "checked_at": "2026-11-05"
+      "program": "reference.py",
+      "reproduced_value": 40,
+      "public_value": 40,
+      "highest_reported": {
+        "value": 40,
+        "source": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Theorem 2.5 and Proposition 2.6: acnodal cubic parametrization and subgroup construction",
+        "reproduction_status": "The task witness is independently reconstructed from the source's exact cubic group method with subgroup parameter k/17. Pegg's figure is separate same-parameter public evidence, not the source of these coordinates. Exact checking confirms 40 distinct lines containing exactly three points. This is a feasible lower bound, not an optimum proof.",
+        "ai_provenance": "not stated by source"
       },
-      "reproduced_value": "24",
-      "program": "sota.py",
-      "witness": "data/sota_generator.json",
-      "reproduction_script": "data/reproduce_sota.m",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
+      "parameters": {
+        "point_count": 17,
+        "ambient_space": "Euclidean plane R^2",
+        "coordinate_domain": "real algebraic coordinates in a common real algebraic number field",
+        "objective": "number of distinct lines containing exactly 3 input points"
+      },
+      "witness": "data/reference/cubic_tangent_17.json",
+      "witness_sha256": "0575565b5d4993e07ffcf34a3f4a7799bf214b2486b36c9d1bcec6b966fef77c",
+      "known_bounds": {
+        "lower_bound": 40,
+        "upper_bound": 42,
+        "lower_bound_source": "https://arxiv.org/abs/1208.4714v3",
+        "lower_bound_location": "Section 2, Theorem 2.5 and Proposition 2.6; order-17 subgroup gives 1+floor(17(17-3)/6)=40",
+        "upper_bound_source": "https://erich-friedman.github.io/packing/trees/",
+        "upper_bound_location": "Tree Planting Problems table, k=3, n=17; current range 40-42",
+        "status": "The checked current tables leave a(17) in {40,41,42}; no exact value was found as of 2026-11-06."
+      },
+      "checked_sources": [
+        "https://oeis.org/A003035",
+        "https://erich-friedman.github.io/packing/trees/",
+        "https://mathworld.wolfram.com/Orchard-PlantingProblem.html",
+        "https://doi.org/10.1007/BF00147569",
+        "https://arxiv.org/abs/1208.4714"
+      ],
+      "algebraic_construction": {
+        "parameter": "alpha=tan(pi/17), the unique root in (9/50,19/100) of the listed degree-16 minimal polynomial",
+        "points": "P_k=(tan(k*pi/17), tan(k*pi/17)^3/(1+tan(k*pi/17)^2)), k=0,...,16",
+        "primary_source_mapping": "Green-Tao §2 Theorem 2.5 maps the acnodal cubic Y^2 Z=X^2(X-Z) by t=cot(pi*x) to [t^2+1:t(t^2+1):1]. At x=k/17, scale to [sin(theta):cos(theta):sin(theta)^3], then swap the last two homogeneous coordinates to obtain the task's affine points. No cos(k*pi/17) vanishes for k=0,...,16.",
+        "line_identity": "For t_i=tan(theta_i), the collinearity determinant is (t1-t2)(t1-t3)(t2-t3)(t1*t2*t3-t1-t2-t3)/prod(1+t_i^2). Thus a distinct triple is collinear exactly when its three angles sum to 0 modulo pi.",
+        "exact_count": "There are 40 unordered distinct triples k1<k2<k3 in 0..16 with k1+k2+k3=0 mod 17. The points lie on an irreducible cubic with no line component, so no line contains four of them."
+      },
+      "green_tao_scope": "Green-Tao prove the classical bound is sharp for all sufficiently large n, but that asymptotic statement alone does not settle n=17.",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T066",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T066",
           "config_id": "T066-C01",
           "validity": 1.0,
-          "combined_score": 3.0,
-          "objective": 24,
+          "combined_score": 1.0,
+          "objective": 40,
           "verification_status": "exact",
-          "generation_time": 0.46563340350985527,
-          "verification_time": 0.26752201467752457,
-          "objective_value": 24,
+          "generation_time": 0.6972695104777813,
+          "verification_time": 5.399435970932245,
+          "objective_value": 40,
           "details": {
-            "rank": 15,
-            "codewords_checked": 32767,
-            "claimed_objective_mismatch": false
+            "point_count": 17,
+            "distinct_lines_checked": 56,
+            "exactly_three_point_lines": 40,
+            "largest_line_incidence": 3,
+            "coordinate_field_degree": 16,
+            "minimal_polynomial_irreducible": true,
+            "real_root_isolated_by_sturm_count": 1,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.7397576831281185,
+          "eval_time": 6.1036688052117825,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -47,33 +81,22 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t066/data/sota_generator.json",
         "independent_quantity": {
-          "codewords": 32768,
-          "minimum_distance": 24
+          "three_point_lines": 40,
+          "method": "exact cubic coordinates, tangent group order17 and index-sum incidence",
+          "group_order": 17,
+          "no_four_collinear": "irreducible cubic has no line component"
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked Grassl BKLC [68,15] construction and bounds 24–26, replayed the saved matrix, independently enumerated its vector space, rejected rank damage, and confirmed forged scores have no effect.",
-        "snapshot_date": "2026-11-05"
-      },
-      "limitations": [
-        "The published table gives a lower bound of 24 and an upper bound of 26, so this is a best-known construction, not a proof of optimality.",
-        "The matrix is reproduced from the Magma BKLC database; the source table does not attribute its construction to a specific human author."
-      ],
-      "checked_at": "2026-11-05"
-    }
-  },
-  "sol_review": {
-    "T066-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
+        "evidence": "acceptance.json"
+      }
     }
   }
 }

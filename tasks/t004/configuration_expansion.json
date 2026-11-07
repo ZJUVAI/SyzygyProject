@@ -1,0 +1,29 @@
+{
+  "task_id": "T004",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T004-C02",
+      "parameters": {
+        "n": 17,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "direction": "maximize",
+      "human_reference": 0.8916944491515696
+    },
+    {
+      "id": "T004-C03",
+      "parameters": {
+        "n": 19,
+        "space": "S2",
+        "objective": "minimum pairwise angular separation in radians"
+      },
+      "direction": "maximize",
+      "human_reference": 0.8323809277763071
+    }
+  ],
+  "submission_status": "pending_sol_review",
+  "reviewer": "GPT-6.1 Sol",
+  "review_date": "2026-11-04"
+}

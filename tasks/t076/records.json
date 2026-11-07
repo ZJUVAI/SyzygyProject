@@ -1,0 +1,241 @@
+{
+  "task_id": "T076",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T076-C01": {
+      "parameters": {
+        "element_count": 15,
+        "elements": "positive integers",
+        "constraint": "all 2^15 subset sums are distinct",
+        "objective": "largest element",
+        "direction": "minimize"
+      },
+      "best_human": {
+        "value": 8807,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "element_count": 15
+        },
+        "witness_file": "data/human/conway_guy_n15.json",
+        "witness_sha256": "cb9acc08c943af93fed73e6b821991cf577e096129b8b09f84945bbc665422f9",
+        "url": "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "source_location": "Bohman (1998), §2 and Theorem 2.1; Conway-Guy construction generated from A005318 recurrence",
+        "provenance": "Classical Conway-Guy set reconstructed by the recurrence a(n+1)=2a(n)-a(n-floor(1/2+sqrt(2n))) and elements a(15)-a(15-i).",
+        "ai_provenance": "Traditional human construction.",
+        "actual_value": 8807,
+        "evidence_state": "Exact checker verifies all 32768 subset sums are distinct."
+      },
+      "best_public": {
+        "value": 8635,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "element_count": 15
+        },
+        "url": "https://oeis.org/A276661",
+        "source_location": "Current entry comment a(15)<=8635 and linked A-file n=15 witness rows 9–10",
+        "provenance": "Sharp's explicit set as transcribed from the linked OEIS A-file; exact code verification passes. The list is not represented as raw upstream bytes.",
+        "ai_provenance": "Not disclosed by the source.",
+        "evidence_state": "The local list has 15 positive distinct integers and exactly 32768 subset sums."
+      },
+      "best_reproduced": {
+        "value": 8635,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "element_count": 15
+        },
+        "witness_file": "data/reference/sharp_8635_transcribed.json",
+        "witness_sha256": "e5b1c66298ad4643ecc22e6d589c764a4aba20c0b18ce0656def98a18d7b0fa0",
+        "provenance": "Transcribed from the upstream OEIS A-file in web view; exact distinct-subset-sum validation completed locally.",
+        "ai_provenance": "Not disclosed by the source.",
+        "actual_value": 8635,
+        "evidence_state": "All 32768 subset sums are exactly distinct.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 8807,
+        "witness_file": "data/human/conway_guy_n15.json",
+        "witness_sha256": "cb9acc08c943af93fed73e6b821991cf577e096129b8b09f84945bbc665422f9",
+        "provenance": "Generated from the Conway-Guy recurrence and exact set formula."
+      },
+      "highest_reported": {
+        "value": 8635,
+        "metric": "largest element of a 15-element positive integer set with distinct subset sums",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://oeis.org/A276661",
+        "source_location": "Current a(15)<=8635 comment and linked A-file witness",
+        "reproduction_status": "The explicit list is exactly reproduced from a web transcription and verified. The exact minimum remains between 7060 and 8635 in the sources checked."
+      },
+      "optimality_status": {
+        "lower_bound": 7060,
+        "upper_bound": 8635,
+        "lower_bound_source": "https://arxiv.org/html/2609.27941v1",
+        "lower_bound_method": "sum(binomial(j,floor(j/2)), j=0..14)",
+        "state": "open; OEIS A276661 has exact values through n=10 and lists an n=15 upper-bound witness",
+        "lower_bound_location": "Costa and Della Fiore (2026), Theorem 1.1 and Proposition 2.2; integer sum independently recomputed by Sol, cited bandwidth theorem not locally re-proved",
+        "historical_2021_bound": {
+          "value": 6435,
+          "source": "https://arxiv.org/abs/2006.12988"
+        },
+        "other_2026_bound": {
+          "value": 6864,
+          "source": "https://arxiv.org/html/2610.32580v1",
+          "formula": "2*binomial(14,7)"
+        }
+      }
+    },
+    "T076-C02": {
+      "parameters": {
+        "element_count": 16,
+        "elements": "positive integers",
+        "constraint": "all 2^16 subset sums are distinct",
+        "objective": "largest element",
+        "direction": "minimize"
+      },
+      "best_human": {
+        "value": 17305,
+        "authors": [
+          "Conway",
+          "Guy"
+        ],
+        "year": 1969,
+        "url": "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "evidence_state": "Conway-Guy recurrence reconstructed and exactly checked",
+        "witness_file": "data/human/conway_guy_n16.json",
+        "optimality": "construction only; no optimum claim",
+        "witness_sha256": "b841bd8525247acdb88fd95b30aed08d958f35c03dd1e842225c261c70abb62e",
+        "parameters": {
+          "element_count": 16,
+          "elements": "positive integers",
+          "constraint": "all 2^16 subset sums are distinct",
+          "objective": "largest element",
+          "direction": "minimize"
+        }
+      },
+      "best_public": {
+        "value": 17072,
+        "authors": [
+          "W. F. Lunnon"
+        ],
+        "year": 1988,
+        "url": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "doi": "10.1090/S0025-5718-1988-0917837-5",
+        "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756.",
+        "provenance": "Lunnon Table 1 w^2 sequence; associated set reconstructed by formula (1.4), then exactly checked.",
+        "evidence_state": "exact saved witness; all subset sums checked",
+        "witness_file": "data/reference/lunnon_w2_n16.json",
+        "witness_sha256": "83b6f13bfbb510f910addba8ff41a6ba21e31e36a30107f758228813b7a5bc4f",
+        "optimality": "open; feasible upper bound only, no proof of global minimum identified",
+        "ai_provenance": "Traditional published construction; no AI involvement indicated."
+      },
+      "best_reproduced": {
+        "value": 17072,
+        "witness_file": "data/reference/lunnon_w2_n16.json",
+        "witness_sha256": "83b6f13bfbb510f910addba8ff41a6ba21e31e36a30107f758228813b7a5bc4f",
+        "verification_status": "exact",
+        "subset_sums_checked": 65536,
+        "review_status": "reviewed_by_sol"
+      },
+      "baseline_seed": {
+        "value": 32768,
+        "formula": "powers of two",
+        "evidence_state": "self-contained feasible cold start"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "previously_selected_public_candidate": {
+        "value": 17270,
+        "witness_file": "data/reference/sharp_extension_n16.json",
+        "witness_sha256": "92df064e977a641240ce3fd292006e4813d80261fa2e6521fa03becac03d5d0c",
+        "status": "valid but weaker than Lunnon w^2 witness"
+      }
+    },
+    "T076-C03": {
+      "parameters": {
+        "element_count": 17,
+        "elements": "positive integers",
+        "constraint": "all 2^17 subset sums are distinct",
+        "objective": "largest element",
+        "direction": "minimize"
+      },
+      "best_human": {
+        "value": 34301,
+        "authors": [
+          "Conway",
+          "Guy"
+        ],
+        "year": 1969,
+        "url": "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "evidence_state": "Conway-Guy recurrence reconstructed and exactly checked",
+        "witness_file": "data/human/conway_guy_n17.json",
+        "optimality": "construction only; no optimum claim",
+        "witness_sha256": "e93b523cea1219064e91dd6ee65456fdcf7fc7c3fc82a03c6bb730e32915a300",
+        "parameters": {
+          "element_count": 17,
+          "elements": "positive integers",
+          "constraint": "all 2^17 subset sums are distinct",
+          "objective": "largest element",
+          "direction": "minimize"
+        }
+      },
+      "best_public": {
+        "value": 33531,
+        "authors": [
+          "W. F. Lunnon"
+        ],
+        "year": 1988,
+        "url": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "doi": "10.1090/S0025-5718-1988-0917837-5",
+        "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756.",
+        "provenance": "Lunnon Table 1 w^2 sequence; associated set reconstructed by formula (1.4), then exactly checked.",
+        "evidence_state": "exact saved witness; all subset sums checked",
+        "witness_file": "data/reference/lunnon_w2_n17.json",
+        "witness_sha256": "fb49f881464b6d9b526926ba5507ed6e9c06951bf8b590892ed836513ee81eb6",
+        "optimality": "open; feasible upper bound only, no proof of global minimum identified",
+        "ai_provenance": "Traditional published construction; no AI involvement indicated."
+      },
+      "best_reproduced": {
+        "value": 33531,
+        "witness_file": "data/reference/lunnon_w2_n17.json",
+        "witness_sha256": "fb49f881464b6d9b526926ba5507ed6e9c06951bf8b590892ed836513ee81eb6",
+        "verification_status": "exact",
+        "subset_sums_checked": 131072,
+        "review_status": "reviewed_by_sol"
+      },
+      "baseline_seed": {
+        "value": 65536,
+        "formula": "powers of two",
+        "evidence_state": "self-contained feasible cold start"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "previously_selected_public_candidate": {
+        "value": 34301,
+        "witness_file": "data/reference/conway_guy_n17.json",
+        "witness_sha256": "ba3bbeec7e56c8845af03d52f1fb78cda95de421c23b8a4caa6dd0d62994ea0a",
+        "status": "valid but weaker than Lunnon w^2 witness"
+      }
+    }
+  },
+  "initial_results": {
+    "T076-C01": {
+      "objective": 16384,
+      "objective_value": 16384,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.53753662109375
+    },
+    "T076-C02": {
+      "objective": 32768,
+      "objective_value": 32768,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.528106689453125
+    },
+    "T076-C03": {
+      "objective": 65536,
+      "objective_value": 65536,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5233917236328125
+    }
+  }
+}

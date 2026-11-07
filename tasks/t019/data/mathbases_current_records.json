@@ -1,0 +1,56 @@
+[
+  {
+    "submitter": "Engelsma",
+    "k": 1000,
+    "H": 7802,
+    "boundType": "upper",
+    "description": "",
+    "status": "accepted",
+    "validation": "passed",
+    "currentRecord": "yes",
+    "_id": "51cbafb328570afc680018db",
+    "_acl": {
+      "creator": "kid_VVVl6XruNf"
+    },
+    "_kmd": {
+      "lmt": "2013-06-27T03:24:53.968Z",
+      "ect": "2013-06-27T03:21:23.029Z"
+    }
+  },
+  {
+    "submitter": "Engelsma",
+    "k": 3000,
+    "H": 26622,
+    "boundType": "upper",
+    "description": "",
+    "status": "accepted",
+    "validation": "passed",
+    "currentRecord": "yes",
+    "_id": "51cbb2cc28570afc68002018",
+    "_acl": {
+      "creator": "kid_VVVl6XruNf"
+    },
+    "_kmd": {
+      "lmt": "2013-06-27T03:35:18.565Z",
+      "ect": "2013-06-27T03:34:36.062Z"
+    }
+  },
+  {
+    "submitter": "xfxie",
+    "k": 3000,
+    "H": 26606,
+    "boundType": "upper",
+    "description": "",
+    "status": "accepted",
+    "validation": "passed",
+    "currentRecord": "yes",
+    "_id": "51cbb9b17f139ff60d00244b",
+    "_acl": {
+      "creator": "kid_VVVl6XruNf"
+    },
+    "_kmd": {
+      "lmt": "2013-06-27T04:04:04.687Z",
+      "ect": "2013-06-27T04:04:01.551Z"
+    }
+  }
+]

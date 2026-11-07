@@ -1,0 +1,32 @@
+{
+  "task_id": "T050",
+  "config_id": "T050-C03",
+  "validity": 1.0,
+  "combined_score": 1.8958333333333333,
+  "objective": 364,
+  "verification_status": "exact",
+  "generation_time": 0.3650376498699188,
+  "verification_time": 0.11444210633635521,
+  "objective_value": 364,
+  "details": {
+    "dimension": 11,
+    "vertices_checked": 365,
+    "nonconsecutive_pairs_checked": 66066,
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 0.4821995459496975,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

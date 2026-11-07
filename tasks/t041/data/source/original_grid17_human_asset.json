@@ -1,0 +1,108 @@
+{
+  "provenance": "Erdos-Graham equal-square grid method (1975), with one 1/4 cell split into two 1/8 squares",
+  "squares": [
+    {
+      "x": "1/4",
+      "y": "0/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "2/4",
+      "y": "0/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "3/4",
+      "y": "0/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "0/4",
+      "y": "1/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "1/4",
+      "y": "1/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "2/4",
+      "y": "1/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "3/4",
+      "y": "1/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "0/4",
+      "y": "2/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "1/4",
+      "y": "2/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "2/4",
+      "y": "2/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "3/4",
+      "y": "2/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "0/4",
+      "y": "3/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "1/4",
+      "y": "3/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "2/4",
+      "y": "3/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "3/4",
+      "y": "3/4",
+      "side": "1/4",
+      "orientation": "0"
+    },
+    {
+      "x": "0",
+      "y": "0",
+      "side": "1/8",
+      "orientation": "0"
+    },
+    {
+      "x": "1/8",
+      "y": "0",
+      "side": "1/8",
+      "orientation": "0"
+    }
+  ],
+  "sum_of_sides": "4"
+}

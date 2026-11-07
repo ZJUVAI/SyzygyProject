@@ -1,46 +1,68 @@
 {
-  "best_human": {
-    "value": 62,
-    "date_checked": "2026-11-04",
-    "parameters": {
-      "v": 24,
-      "k": 14,
-      "t": 4
-    },
-    "url": "https://arxiv.org/html/math/9502238",
-    "provenance": "Reconstruction of Gordon, Kuperberg and Patashnik (1995), sections III-IV, finite geometry and induced coverings. AG(5,2) hyperplanes restricted to 24 points, padded to 14. The deleted eight-point subset was selected by this implementation. This is a published-method baseline, not a published 62-block record.",
-    "ai_provenance": "AI implemented the published method and selected the restriction.",
-    "evidence_state": "62 blocks independently cover all 10626 four-subsets exactly"
+  "task_id": "T060",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T060-C01": {
+      "best_human": {
+        "value": 153,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "method": "base-3 Horner reconstruction",
+        "source": "https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf",
+        "witness": "data/human/human_base3_expression.json",
+        "evidence_state": "Reconstructed from the 39 target digits; exact parser confirms value and 153 leaves.",
+        "origin_type": "Traditional method reproduction; not a literature-record claim."
+      },
+      "best_public": {
+        "value": 127,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "url": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
+        "witness": "data/reference/public_127_expression.json",
+        "evidence_state": "Published expression matches board PR #4 witness SHA-256 and independently verifies exactly.",
+        "ai_provenance": "AI-assisted; the page states that generative AI assistants were used.",
+        "optimality": "Not proved; only a feasible construction."
+      },
+      "best_reproduced": {
+        "value": 127,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "program": "reference.py",
+        "witness": "data/reference/public_127_expression.json",
+        "evidence_state": "Expression tree parsed with exact integer arithmetic; 127 leaves and exact target.",
+        "provenance": "Reproduction only; the external source classifies the construction as AI-assisted.",
+        "review_status": "reviewed_by_sol"
+      },
+      "lower_bound": {
+        "value": 116,
+        "method": "Selfridge extremal integer formula",
+        "source": "https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf",
+        "evidence_state": "Exact integer check: maximum value at 115 ones is below M61.",
+        "status": "proved"
+      },
+      "additional_public_item": {
+        "value": 150,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "source": "https://github.com/math-market/integer-complexity-m61",
+        "evidence_state": "Board base-32767 Horner baseline; explicitly a challenge bar and not a record.",
+        "ai_provenance": "Not stated."
+      },
+      "survey_scope_note": "The cited sources and board state were checked on 2026-11-06. No exact M61 complexity proof was found there. This statement is limited to the reviewed sources."
+    }
   },
-  "best_public": {
-    "value": 23,
-    "date_checked": "2026-11-05",
-    "parameters": {
-      "v": 24,
-      "k": 14,
-      "t": 4
-    },
-    "url": "https://ljcr.dmgordon.org/cover.html",
-    "provenance": "La Jolla repository record, corroborated by the James Yu covering project which reports best known 23 and proves a lower bound of 20.",
-    "evidence_state": "published report; optimality not proved",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 23,
-    "parameters": {
-      "v": 24,
-      "k": 14,
-      "t": 4
-    },
-    "date_reproduced": "2026-11-05",
-    "provenance": "La Jolla Covering Repository witness, archived in the Zenodo dataset v1.2; the archive records the 23-block improvement by Andrei Ochmat on 2004-07-20. Labels 1..24 were converted to 0..23 for the local evaluator.",
-    "ai_provenance": "AI retrieved and converted the archived witness; the task evaluator independently checked all blocks and four-subsets.",
-    "evidence_state": "23 saved blocks; all10626four-subsets exactly verified",
-    "witness": "data/sota_witness.json",
-    "program": "sota.py"
-  },
-  "survey_cutoff": "2026-11-05",
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "reconstruction of a published human method; weaker than best public record"
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T060-C01": {
+      "objective": 181,
+      "objective_value": 181,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.8453038674033149
+    }
+  }
 }

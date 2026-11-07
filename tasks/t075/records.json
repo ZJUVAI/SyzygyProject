@@ -1,0 +1,138 @@
+{
+  "task_id": "T075",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T075-C01": {
+      "best_human": {
+        "value": 2220,
+        "date": "2026-11-06",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-"
+        },
+        "method": "published Frankl-Furedi H6 iterated blow-up, specialized to six parts of six vertices",
+        "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
+        "evidence_state": "Exact checker verifies the 2,220-edge reconstruction on all four-vertex sets.",
+        "ai_provenance": "Not stated in the reviewed paper."
+      },
+      "best_public": {
+        "value": 2220,
+        "date": "2026-11-06",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-"
+        },
+        "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "evidence_state": "Public H6 blow-up rule specialized to n=36; the finite witness is exactly verified.",
+        "optimality": "Not proved for n=36 in reviewed sources."
+      },
+      "best_reproduced": {
+        "value": 2220,
+        "date": "2026-11-06",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-"
+        },
+        "program": "reference.py",
+        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "evidence_state": "All 58,905 four-vertex sets checked; exact edge count 2,220.",
+        "origin_type": "Reproduction of a published construction, not an optimality proof.",
+        "review_status": "reviewed_by_sol"
+      },
+      "best_own_search": {
+        "value": 1246,
+        "objective_value": 1246,
+        "program": "evolution.py",
+        "witness": "best/T075-C01/solution.json",
+        "witness_sha256": "1da98fa5d4d5cfba31355950f598f57219d6b58f23d9e18ef4c54510e5c54608",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-: three triples on four vertices",
+          "forbidden_semantics": "ordinary non-induced subhypergraph",
+          "constraint": "every 4-vertex set spans at most 2 selected triples"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "algorithm": "seeded random-priority greedy edge addition",
+          "seed": 0,
+          "iterations": 8,
+          "iteration_limit": 8,
+          "trial_edge_counts": [
+            1231,
+            1216,
+            1230,
+            1236,
+            1232,
+            1246,
+            1236,
+            1237
+          ],
+          "best_edge_count": 1246,
+          "comparison_data_read": false,
+          "budget": {
+            "mode": "fixed_iterations",
+            "requested_iterations": 8,
+            "actual_iterations": 8,
+            "requested_wall_clock_seconds": null
+          }
+        },
+        "generation_record": {
+          "task_id": "T075",
+          "config_id": "T075-C01",
+          "validity": 1.0,
+          "combined_score": 0.5612612612612613,
+          "objective": 1246,
+          "verification_status": "exact",
+          "generation_time": 3.0005540661513805,
+          "verification_time": 0.5178768746554852,
+          "objective_value": 1246,
+          "details": {
+            "vertex_count": 36,
+            "uniformity": 3,
+            "edge_count": 1246,
+            "four_vertex_sets_checked": 58905,
+            "maximum_triples_on_any_four_set": 2,
+            "double_counting_upper_bound": 3570,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 3.5517377592623234,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      }
+    }
+  },
+  "initial_results": {
+    "T075-C01": {
+      "objective": 0,
+      "objective_value": 0,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0
+    }
+  }
+}

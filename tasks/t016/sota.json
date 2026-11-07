@@ -1,0 +1,166 @@
+{
+  "task_id": "T016",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T016-C01": {
+      "public_value": "1.5097201507458786",
+      "public_source": {
+        "url": "https://arxiv.org/abs/0907.1379",
+        "pdf_url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+        "title": "Improved bounds on the supremum of autoconvolutions",
+        "authors": [
+          "Mate Matolcsi",
+          "Carlos Vinuesa"
+        ],
+        "year": 2010,
+        "evidence": "The paper states that the best nonnegative step-function example known to its authors has n=208 and reaches ||f*f||_infinity=1.50972..., and prints its associate-polynomial coefficients. The 208 published decimal coefficients are preserved locally and exactly recomputed.",
+        "scope": "Located strongest public witness for the fixed 208-step configuration in the checked source set. The witness is nonnegative and therefore admissible in the signed class; its reported ||f*f||_infinity is the same maximum-absolute objective for this witness. This is a located-public-witness claim, not a proof that no other 208-step witness exists.",
+        "preprint_date": "2009-09-14",
+        "publication": "Journal of Mathematical Analysis and Applications 372 (2010), no. 2, 439–447"
+      },
+      "reproduced_value": "6280435861361744576/4160000022692211721",
+      "program": "sota.py",
+      "witness": "data/human_matolcsi_vinuesa.json",
+      "provenance": "public_human_construction",
+      "matches_public_best": true,
+      "comparison_tolerance": "The paper prints 1.50972 to five decimal places; the exact local rational value rounds to 1.5097201507458786, within 0.000005 of the printed value. Exact Fraction checker used for the reproduced_value.",
+      "source_check_scope": {
+        "reviewed": "Public primary paper, the pinned official AlphaEvolve results notebook and repository record, the GGSWT2025 paper, and the signed-constant ledger entries for 300, 600, and 800 equal cells.",
+        "conclusion": "The other located stronger signed absolute-peak constructions use 150, 300, 600, or 800 cells. They do not match this fixed 208-step configuration. Within the checked finite source set, the 208-step Matolcsi–Vinuesa construction is the located public 208-step witness.",
+        "not_claimed": "Exhaustive literature search, mathematical optimality, or a universal claim that no unlocated 208-step witness exists."
+      },
+      "related_public_reports": [
+        {
+          "steps": 150,
+          "value": "1.4687620697410217",
+          "objective": "maximum absolute autoconvolution peak",
+          "source": "https://github.com/google-deepmind/alphaevolve_results/blob/4226acbf237ff9ad10ba7673a2af127a2d8a5977/mathematical_results.ipynb",
+          "note": "Official AlphaEvolve notebook cell 65, height_sequence_4. Same signed absolute-peak objective, different grid size."
+        },
+        {
+          "steps": 150,
+          "value": "1.4621879468",
+          "objective": "maximum absolute autoconvolution peak",
+          "source": "https://github.com/unclegareth-create/alphaevolve_repository_of_problems/blob/4b3bbd2a44db92442e4ebb4e64e0bb90f229aad1/experiments/autocorrelation_problems/problem_4_signed_autoconvolution_bounds.py",
+          "note": "AlphaEvolve repository PR 13 record, N=150; different grid size."
+        },
+        {
+          "steps": 300,
+          "value": "1.4630715826075593",
+          "objective": "maximum absolute autoconvolution peak",
+          "source": "https://teorth.github.io/optimizationproblems/constants/1d.html",
+          "note": "CERT2026 exact-rational certificate; different grid size."
+        },
+        {
+          "steps": 600,
+          "value": "1.4602172840228739",
+          "objective": "maximum absolute autoconvolution peak",
+          "source": "https://github.com/steps-re/c1d-certificate/tree/9a091494facc801eaf6b92b175b63c58b7c3b30b",
+          "note": "STEPS2026 exact-rational certificate; different grid size."
+        },
+        {
+          "steps": 600,
+          "value": "1.4599890469053831",
+          "objective": "maximum absolute autoconvolution peak",
+          "source": "https://github.com/unclegareth-create/alphaevolve_repository_of_problems/blob/4b3bbd2a44db92442e4ebb4e64e0bb90f229aad1/experiments/autocorrelation_problems/problem_4_signed_autoconvolution_bounds.py",
+          "note": "AlphaEvolve repository PR 13 record C4-prime; different grid size."
+        },
+        {
+          "steps": 800,
+          "value": "1.4578548849219886",
+          "objective": "maximum absolute autoconvolution peak",
+          "source": "https://doi.org/10.5281/zenodo.23541324",
+          "note": "SCiEL2026 exact-rational certificate; different grid size."
+        },
+        {
+          "steps": 800,
+          "value": "1.4554649475",
+          "objective": "absolute value of the maximum signed autoconvolution peak (one-sided variant)",
+          "source": "https://github.com/unclegareth-create/alphaevolve_repository_of_problems/blob/4b3bbd2a44db92442e4ebb4e64e0bb90f229aad1/experiments/autocorrelation_problems/problem_4_signed_autoconvolution_bounds.py",
+          "note": "Different objective variant; excluded from the absolute-peak comparison."
+        },
+        {
+          "steps": 400,
+          "value": "1.4557",
+          "objective": "absolute value of the positive maximum autoconvolution peak (one-sided variant)",
+          "source": "https://arxiv.org/abs/2506.13131",
+          "note": "AlphaEvolve paper Appendix B.3; the reported 400-step score does not use the benchmark maximum-absolute objective and also has a different grid size."
+        }
+      ],
+      "limitations": [
+        "The cited 208-step witness is a nonnegative construction admitted by the signed class. The paper does not claim it is optimal among all signed 208-step constructions.",
+        "The public-best statement is limited to the cited and checked finite source set. Stronger absolute-peak public reports at 150, 300, 600, and 800 cells do not match the frozen 208-step configuration.",
+        "AlphaEvolve 400-cell score 1.4557 uses the absolute value of the positive maximum, a distinct objective variant; it is excluded. The separate 800-cell one-sided result is also excluded."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T016",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T016",
+          "config_id": "T016-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "6280435861361744576/4160000022692211721",
+          "verification_status": "exact",
+          "generation_time": 0.26574528217315674,
+          "verification_time": 0.41733839362859726,
+          "objective_value": "6280435861361744576/4160000022692211721",
+          "details": {
+            "steps": 208,
+            "coefficient_count": 208,
+            "mass": "2039607811/100000000",
+            "max_abs_convolution": "7548600794905943/5000000000000000",
+            "max_abs_indices": [
+              321
+            ],
+            "normalization": "integral-one normalization; objective is invariant under nonzero scaling",
+            "objective_definition": "416 * max_k(abs(sum_i a_i*a_(k-i))) / (sum_i a_i)^2"
+          },
+          "eval_time": 0.7013038918375969,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t016/data/human_matolcsi_vinuesa.json",
+        "independent_quantity": {
+          "exact_objective": "6280435861361744576/4160000022692211721",
+          "convolution_entries": 415
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed the public208-step MV witness, corrected official AlphaEvolve signed150 construction, and primary bounds ledger listing300/600/800-step certificates. No stronger same208 public witness was located. The original nonnegative208 witness is admissible in the signed class. Local optimization is excluded; status is limited to the checked public-source comparison.",
+        "snapshot_date": "2026-11-05"
+      },
+      "sol_light_other_parameter_recheck": {
+        "checked_at": "2026-11-06",
+        "source": "https://raw.githubusercontent.com/teorth/optimizationproblems/main/constants/1d.md",
+        "reported_value": "1.457854884921989",
+        "steps": 800,
+        "metric": "maximum absolute autoconvolution with integral-one normalization",
+        "same_parameters": false,
+        "evidence_status": "reported self-archived certificate; not downloaded or independently reproduced in this batch",
+        "note": "Do not use this value in the fixed 208-step comparison columns."
+      }
+    }
+  },
+  "sol_review": {
+    "T016-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05",
+      "public_sources_only": true,
+      "highest_reported_reproduced": true
+    }
+  }
+}

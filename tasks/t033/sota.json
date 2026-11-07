@@ -1,0 +1,196 @@
+{
+  "task_id": "T033",
+  "configurations": {
+    "T033-C01": {
+      "id": "T033-C01",
+      "objective": {
+        "name": "total weight of edges whose endpoints have different labels",
+        "unit": "integer edge weight",
+        "direction": "maximize",
+        "constraints": [
+          "use the pinned Gset G70 graph with 10,000 vertices and 9,999 edges",
+          "assign each vertex exactly one side in {0,1}",
+          "all edge weights equal +1"
+        ]
+      },
+      "program": "reference.py",
+      "highest_reported": {
+        "value": 9595,
+        "source": {
+          "title": "Cosm: orchestrated collective dynamics give rise to rapid computational search at the solution frontier",
+          "url": "https://arxiv.org/abs/2605.30355v4",
+          "version": "v4, revised 2026-10-11",
+          "claim": "The abstract reports heuristic cuts 5,799 and 9,595 on G61 and G70 as best-known; it separately calls G81, G72, and G77 certified optima.",
+          "checked_at": "2026-11-06"
+        },
+        "corroborating_source": {
+          "title": "A Large Population Island Framework for the Unconstrained Binary Quadratic Problem",
+          "url": "https://doi.org/10.1016/j.cor.2024.106684",
+          "claim": "The paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "published heuristic report; no public assignment independently reproduced; AI-assistance disclosure unknown"
+      },
+      "best_human": {
+        "value": 9594,
+        "parameters": {
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
+        },
+        "authors": [
+          "Olivier Goudet",
+          "Adrien Goëffon",
+          "Jin-Kao Hao"
+        ],
+        "url": "https://doi.org/10.1016/j.cor.2024.106684",
+        "date_checked": "2026-11-06",
+        "provenance": "The LPI paper reports 9,594 on its G70 test instance. Its calibration value 9,595 is recorded separately and is not the test score.",
+        "evidence_state": "published score; paper-specific assignment not replayed",
+        "witness": null,
+        "origin_type": "traditional human-designed computational heuristic",
+        "optimality": "not proved"
+      },
+      "best_public": {
+        "value": 9595,
+        "parameters": {
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
+        },
+        "url": "https://arxiv.org/abs/2605.30355v4",
+        "corroborating_url": "https://doi.org/10.1016/j.cor.2024.106684",
+        "date_checked": "2026-11-06",
+        "provenance": "Cosm v4 reports that its heuristic reaches 9,595 on G70. The LPI paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+        "evidence_state": "published heuristic score; assignment not replayed here",
+        "witness": null,
+        "origin_type": "author-developed computational heuristic; AI assistance disclosure unknown"
+      },
+      "best_reproduced": {
+        "value": 8616,
+        "parameters": {
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
+        },
+        "url": "https://doi.org/10.1016/j.engappai.2012.09.001",
+        "date_checked": "2026-11-06",
+        "evidence_state": "task-local FLIP reproduction, exact checker verification",
+        "provenance": "This task implements the published single-vertex FLIP neighborhood as seeded steepest local search. It does not reproduce the full BLS algorithm or its reported G70 value.",
+        "witness": "data/human_g70_1flip.json",
+        "actual_value": 8616,
+        "verification_status": "exact",
+        "ai_provenance": "no public record witness used"
+      },
+      "optimality": {
+        "status": "open in reviewed sources; 9,595 is a reported feasible value and no matching proof was found",
+        "lower_bound": 9595,
+        "evidence": [
+          {
+            "url": "https://doi.org/10.1016/j.cor.2024.106684",
+            "claim": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value; the latter is not the reported test-instance score."
+          },
+          {
+            "url": "https://arxiv.org/abs/2605.30355v4",
+            "claim": "Cosm v4 reports the heuristic result 9,595 for G70 as best-known. The same abstract distinguishes certified optima for G81, G72, and G77 from heuristic results on G61 and G70."
+          },
+          {
+            "url": "https://arxiv.org/abs/2004.12345v5",
+            "claim": "Qian and Pan, v5 (revised 2021), report upper bounds and known best values for large UBPP instances; this is computational evidence, not a G70 optimality certificate."
+          },
+          {
+            "url": "https://doi.org/10.1364/OE.381850",
+            "claim": "The source reports numerical SDP value 9,683 for G70. This task has not independently certified it as an upper bound."
+          }
+        ],
+        "note": "Cosm v4 reports a heuristic G70 cut of 9,595. LPI reports 9,594 on G70 test data and 9,595 as a calibration value. A 2019 paper reports numerical SDP value 9,683, which this task has not certified. The 88-point difference between the Cosm score and SDP figure is not a certified optimality gap. No checked source proves the G70 result optimal.",
+        "reported_sdp_value": 9683
+      },
+      "input": {
+        "source_url": "https://web.stanford.edu/~yyye/yyye/Gset/G70",
+        "sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061",
+        "file": "data/instance.json",
+        "normalized_graph_sha256": "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085",
+        "source_file": "data/source/G70"
+      },
+      "program_record": {
+        "entrypoint": "run_code()",
+        "cold_start": "init_program.py",
+        "search": "seeded repeated steepest 1-flip local search; fixed restart and flip counts by default",
+        "seed_environment": "MATHBENCH_SEED",
+        "configuration_environment": "MATHBENCH_CONFIG_ID"
+      },
+      "reproduced_record": {
+        "value": 8616,
+        "witness": "data/human_g70_1flip.json",
+        "method": "Task-local reproduction of the published steepest single-vertex FLIP neighborhood; four seeded starts; max 10,000 flips per start; fixed seed 0.",
+        "source_url": "https://doi.org/10.1016/j.engappai.2012.09.001",
+        "evidence_state": "replayed from human.py and recomputed exactly by check.py",
+        "reproduction_status": "exactly replayed and independently scored by check.py; 8,616 is this local reproduction, not a score claimed by the source paper.",
+        "date_checked": "2026-11-06"
+      },
+      "reproduced_value": 8616,
+      "public_record": {
+        "value": 9595,
+        "source_url": "https://arxiv.org/abs/2605.30355v4",
+        "source": "Cosm v4 reports that its heuristic reaches 9,595 on G70.",
+        "witness": null,
+        "evidence_state": "reported heuristic score; assignment not independently replayed",
+        "ai_provenance": "unknown; paper does not disclose whether AI assistance was used",
+        "corroboration_url": "https://doi.org/10.1016/j.cor.2024.106684",
+        "corroboration": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+        "reproduction_status": "reported, no assignment reproduced here",
+        "date_checked": "2026-11-06",
+        "version": "arXiv:2605.30355v4, revised 2026-10-11"
+      },
+      "public_value": 9595,
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T033",
+          "config_id": "T033-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 8616,
+          "verification_status": "exact",
+          "generation_time": 0.16458547115325928,
+          "verification_time": 0.16469041258096695,
+          "objective_value": 8616,
+          "details": {
+            "n": 10000,
+            "m": 9999,
+            "cut_edges": 8616,
+            "graph_sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
+          },
+          "eval_time": 0.33436764404177666,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "cut_weight": 8616,
+          "ising_energy": -7233,
+          "original_edges_checked": 9999
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

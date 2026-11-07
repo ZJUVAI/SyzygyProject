@@ -1,0 +1,367 @@
+{
+  "task_id": "T010",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T010-C01": {
+      "public_value": "256",
+      "public_source": {
+        "url": "https://neilsloane.com/doc/forney.pdf",
+        "title": "The Nordstrom-Robinson Code is the Binary Image of the Octacode",
+        "authors": [
+          "G. David Forney, Jr.",
+          "N. J. A. Sloane",
+          "Mitchell D. Trott"
+        ],
+        "formula_evidence": "The paper identifies the Nordstrom-Robinson code as the octacode's Gray image and gives its minimum distance as 6.",
+        "generator_and_gray_map_url": "https://www.math.uzh.ch/sepp/magma-2.26.5-dm/html/text1945.htm",
+        "generator_matrix_over_z4": [
+          [
+            1,
+            0,
+            0,
+            0,
+            3,
+            1,
+            2,
+            1
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            3,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            3,
+            3,
+            3,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            1,
+            1
+          ]
+        ],
+        "gray_map": {
+          "0": "00",
+          "1": "01",
+          "2": "11",
+          "3": "10"
+        },
+        "parameter_transfer": "Append one zero coordinate to the (16,256,6) Nordstrom-Robinson code; this preserves every pairwise distance and gives a (17,256,6) code.",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "256",
+      "program": "sota.py",
+      "witness": "data/sota_nordstrom_robinson_256.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "0",
+      "verification": {
+        "task_id": "T010",
+        "status": "best_reproducible",
+        "run": {
+          "task_id": "T010",
+          "config_id": "T010-C01",
+          "validity": 1.0,
+          "combined_score": 0.9922480620155039,
+          "objective": 256,
+          "verification_status": "exact",
+          "generation_time": 1.499611273407936,
+          "verification_time": 0.3162694051861763,
+          "objective_value": 256,
+          "details": {
+            "n": 17,
+            "minimum_pairwise_distance": 6,
+            "pairs_checked": 32640,
+            "claimed_objective_mismatch": false
+          },
+          "eval_time": 1.8259511590003967,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t010/data/sota_nordstrom_robinson_256.json",
+        "independent_quantity": {
+          "codewords": 256,
+          "minimum_distance": 6
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed the full public Forney-Sloane-Trott octacode paper and the Magma manual generator matrix and Gray map. Exact replay and independent all-pairs check give 256 words and distance6 after zero extension. Milshtein reported258 stays separate; no 258-word witness is claimed.",
+        "snapshot_date": "2026-11-05"
+      },
+      "highest_reported": {
+        "value": "258",
+        "source": {
+          "url": "https://aeb.win.tue.nl/codes/binary-1.html",
+          "table_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+          "paper_url": "https://doi.org/10.1007/s12095-019-00365-7",
+          "paper_title": "A new two-error-correcting binary code of length 16",
+          "author": "Moshe Milshtein",
+          "paper_parameters": {
+            "n": 16,
+            "distance": 5,
+            "size": 258
+          },
+          "evidence": "Brouwer attributes A(17,6) >= 258 to Milshtein. His paper abstract reports a (16,258,5) construction; appending an overall parity bit gives a (17,258,6) construction.",
+          "checked_at": "2026-11-05"
+        },
+        "reproduction_status": "witness_not_accessible",
+        "access_checks": [
+          {
+            "source": "OpenAlex",
+            "url": "https://openalex.org/works/W2941286306",
+            "result": "is_oa=false; any_repository_has_fulltext=false"
+          },
+          {
+            "source": "Semantic Scholar",
+            "url": "https://www.semanticscholar.org/paper/615601ab25490cffc7fc465c5a6b9f08bd14ab3e",
+            "result": "openAccessPdf.status=CLOSED; no PDF URL"
+          },
+          {
+            "source": "ResearchGate publisher preview",
+            "url": "https://www.researchgate.net/publication/332623417_A_new_two-error-correcting_binary_code_of_length_16",
+            "result": "Only the abstract and first-page preview were exposed; the codeword table was unavailable."
+          },
+          {
+            "source": "Springer Nature article page and public search",
+            "url": "https://link.springer.com/article/10.1007/s12095-019-00365-7",
+            "result": "The public page exposes the abstract and references. The /tables/1 and /fulltext.html endpoints were not publicly readable in this check. Searches found no author manuscript, repository copy, or supplementary codeword file. Full-text API access requires a relevant license or agreement and was not used."
+          },
+          {
+            "source": "OpenAIRE",
+            "url": "https://api.openaire.eu/search/publications?doi=10.1007%2Fs12095-019-00365-7",
+            "result": "bestaccessright=CLOSED; the record has no repository full-text instance."
+          },
+          {
+            "source": "Internet Archive CDX",
+            "url": "https://web.archive.org/cdx/search/cdx?url=link.springer.com/content/pdf/10.1007/s12095-019-00365-7.pdf&output=json&filter=statuscode%3A200",
+            "result": "No archived 200-response was found for the Springer PDF URL."
+          },
+          {
+            "source": "Author ORCID",
+            "url": "https://orcid.org/0000-0002-0466-1282",
+            "result": "The work entry links only to the DOI, and the public profile has no researcher website URL."
+          }
+        ],
+        "limitations": [
+          "No 258-word codeword list has been obtained or independently verified, so the 258 lower bound is recorded as reported rather than reproduced."
+        ]
+      },
+      "checked_at": "2026-11-05",
+      "limitations": [
+        "The reproduced 256-word witness is below the highest reported value of 258; it is not marked as matching the best public result.",
+        "Milshtein's 258-word witness remains unavailable in the public sources checked, so the benchmark has no verified 258-word artifact yet."
+      ],
+      "sol_light_report_recheck": {
+        "checked_at": "2026-11-06",
+        "source": "https://aeb.win.tue.nl/codes/binary-1.html",
+        "same_parameters": true,
+        "reported_value": "258",
+        "reported_lower_bound": 258,
+        "reported_upper_bound": 340
+      }
+    },
+    "T010-C02": {
+      "public_value": 84,
+      "public_source": {
+        "url": "https://arxiv.org/abs/2610.11609",
+        "title": "Three Improved Lower Bounds for Binary Error-Correcting Codes",
+        "authors": [
+          "Kazuki Ota",
+          "Takayuki Osa",
+          "Tatsuya Harada"
+        ],
+        "source_witness_url": "https://arxiv.org/src/2610.11609v1/anc/code_22_84_9.txt",
+        "source_witness_sha256": "de8bba24190d5be3c3b679ec16cfcd8c4f8e9d2621994bc5e4fc0e829b308091",
+        "source_witness_format": "One decimal integer per line, exact n-bit word list; paper states its ancillary verifier checks every unordered pair.",
+        "parameter_transfer": "Append an overall parity bit to each (22,84,9) word, giving (23,84,10). Paper states A_2(n,d)=A_2(n+1,d+1) for odd d.",
+        "checked_at": "2026-11-07",
+        "ai_disclosure": "The paper does not state whether AI tools assisted; provenance is not independently classified."
+      },
+      "public_bounds": {
+        "url": "https://aeb.win.tue.nl/codes/binary-1.html",
+        "lower_bound": 84,
+        "upper_bound": 150,
+        "status": "open; no optimality proof found",
+        "checked_at": "2026-11-07"
+      },
+      "reproduced_value": 84,
+      "program": "reference.py",
+      "reference": "reference.py",
+      "witness": "data/parity_extended_23_84_10.json",
+      "witness_sha256": "ab2d1850bb5933e90c42c3cfe7fa2ee3fc7adc33653abcce8df8c0c0504b4cea",
+      "matches_public_best": true,
+      "comparison_tolerance": 0,
+      "human_reference": 16,
+      "human_program": "human.py",
+      "human_witness": "data/bch_shortened_23.json",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T010",
+          "config_id": "T010-C02",
+          "validity": 1.0,
+          "combined_score": 5.25,
+          "objective": 84,
+          "verification_status": "exact",
+          "generation_time": 0.11442649364471436,
+          "verification_time": 0.11439231038093567,
+          "objective_value": 84,
+          "details": {
+            "n": 23,
+            "minimum_pairwise_distance": 10,
+            "pairs_checked": 3486,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.2310607023537159,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "codewords": 84,
+          "minimum_distance": 10
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "limitations": [
+        "The upper bound is larger than the reproduced lower bound; optimality is not proved.",
+        "The paper does not disclose AI assistance; this record does not infer authorship method."
+      ],
+      "review_status": "accepted_by_sol"
+    },
+    "T010-C03": {
+      "public_value": 196,
+      "public_source": {
+        "url": "https://arxiv.org/abs/2610.11609",
+        "title": "Three Improved Lower Bounds for Binary Error-Correcting Codes",
+        "authors": [
+          "Kazuki Ota",
+          "Takayuki Osa",
+          "Tatsuya Harada"
+        ],
+        "source_witness_url": "https://arxiv.org/src/2610.11609v1/anc/code_24_196_9.txt",
+        "source_witness_sha256": "d2adf32705fb20a04bd044b8344895a162d71f3a26d1b3cb6b089387d6ba4522",
+        "source_witness_format": "One decimal integer per line, exact n-bit word list; paper states its ancillary verifier checks every unordered pair.",
+        "parameter_transfer": "Append an overall parity bit to each (24,196,9) word, giving (25,196,10). Paper states A_2(n,d)=A_2(n+1,d+1) for odd d.",
+        "checked_at": "2026-11-07",
+        "ai_disclosure": "The paper does not state whether AI tools assisted; provenance is not independently classified."
+      },
+      "public_bounds": {
+        "url": "https://aeb.win.tue.nl/codes/binary-1.html",
+        "lower_bound": 196,
+        "upper_bound": 466,
+        "status": "open; no optimality proof found",
+        "checked_at": "2026-11-07"
+      },
+      "reproduced_value": 196,
+      "program": "reference.py",
+      "reference": "reference.py",
+      "witness": "data/parity_extended_25_196_10.json",
+      "witness_sha256": "3471ada33c93fc40764114a4cac77884ec98be670520e151214f8df5cecf5db1",
+      "matches_public_best": true,
+      "comparison_tolerance": 0,
+      "human_reference": 64,
+      "human_program": "human.py",
+      "human_witness": "data/bch_shortened_25.json",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T010",
+          "config_id": "T010-C03",
+          "validity": 1.0,
+          "combined_score": 3.0625,
+          "objective": 196,
+          "verification_status": "exact",
+          "generation_time": 0.11422031000256538,
+          "verification_time": 0.11432318389415741,
+          "objective_value": 196,
+          "details": {
+            "n": 25,
+            "minimum_pairwise_distance": 10,
+            "pairs_checked": 19110,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.23065558820962906,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "codewords": 196,
+          "minimum_distance": 10
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "limitations": [
+        "The upper bound is larger than the reproduced lower bound; optimality is not proved.",
+        "The paper does not disclose AI assistance; this record does not infer authorship method."
+      ],
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "sol_review": {
+    "T010-C01": {
+      "status": "best_reproducible",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05",
+      "public_sources_only": true,
+      "highest_reported_reproduced": false
+    }
+  }
+}

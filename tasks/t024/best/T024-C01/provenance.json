@@ -1,0 +1,53 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "origin": "Seeded traditional edge addition from the simple star. No public witness read.",
+  "seed": 0,
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T024",
+    "config_id": "T024-C01",
+    "validity": 1.0,
+    "combined_score": 0.45454545454545453,
+    "objective": 60,
+    "verification_status": "exact",
+    "generation_time": 0.6979332268238068,
+    "verification_time": 0.5056250430643559,
+    "objective_value": 60,
+    "details": {
+      "vertices": 41,
+      "edges": 60,
+      "common_neighbor_pair_count": 820,
+      "maximum_common_neighbors": 1,
+      "c4_check": "all unordered vertex pairs have at most one common neighbor",
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 1.2499742656946182,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded random edge addition with exact C4 checker",
+    "seed": 0,
+    "iterations_attempted": 3000,
+    "iteration_budget": 3000,
+    "accepted_additions": 20,
+    "time_budget_seconds": null
+  },
+  "solution_sha256": "79d1235f709ef70e1b7828ee9ee0b2a62e759ffc2392af2b8d53004561ffe204",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T024 tasks/t024/best/T024-C01/solution.json --config T024-C01"
+}

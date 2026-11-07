@@ -1,0 +1,85 @@
+{
+  "task_id": "T023",
+  "configuration_id": "T023-C01",
+  "best_human": {
+    "value": 39,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "strength": 4,
+      "columns": 20,
+      "alphabet_size": 2
+    },
+    "url": "https://www.data2intelligence.de/ColbournTables/t4v2.html",
+    "provenance": "Frozen Colbourn table reports a 39-row Hadamard (Colbourn-Keri) construction with NCK postoptimization.",
+    "evidence_state": "reported_human_construction_upper_bound; witness not locally reproduced"
+  },
+  "best_public": {
+    "value": 39,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "strength": 4,
+      "columns": 20,
+      "alphabet_size": 2
+    },
+    "url": "https://www.data2intelligence.de/ColbournTables/t4v2.html",
+    "provenance": "Colbourn November 2024 snapshot. The archive entry records the construction family and row count.",
+    "evidence_state": "public upper bound; witness not independently reproduced",
+    "origin_type": "human construction as attributed by the archive"
+  },
+  "best_reproduced": {
+    "value": 65,
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "strength": 4,
+      "columns": 20,
+      "alphabet_size": 2
+    },
+    "url": "https://math.nist.gov/coveringarrays/ipof/tables/table.4.2.html",
+    "program": "human.py",
+    "witness": "data/nist_ca_t4_v2_k20.txt",
+    "actual_value": 65,
+    "provenance": "NIST IPOG-F array. Each dash in the published file was set to zero; the completed array passes exact coverage checking.",
+    "ai_provenance": "No AI provenance stated by NIST.",
+    "evidence_state": "Exact witness independently replayed and accepted by Sol on 2026-11-06."
+  },
+  "search_metadata": {
+    "algorithm": "256 seeded random rows, exact uncovered-pattern repair, then seeded greedy row deletion",
+    "seed": 7,
+    "iterations": 512,
+    "iteration_limit": 100000,
+    "wall_clock_cutoff_seconds": null,
+    "generation_seconds": 4.064,
+    "verification_seconds": 0.095,
+    "verification_status": "exact",
+    "objective_rows": 96,
+    "environment": {
+      "python": "3.13.12",
+      "platform": "Linux x86_64"
+    },
+    "replay": "MATHBENCH_SEED=7; call tasks/t023/baseline.py run_code() then tasks/t023/check.py validate()",
+    "budget": {
+      "iteration_limit": 100000,
+      "wall_clock_cutoff_seconds": null
+    }
+  },
+  "bounds": {
+    "lower_bound": 32,
+    "lower_bound_reason": "Column deletion reduces any 20-column candidate to a 13-column strength-four CA, whose optimum is proved to be 32.",
+    "lower_bound_url": "https://arxiv.org/abs/1711.10040",
+    "upper_bound": 39,
+    "upper_bound_url": "https://www.data2intelligence.de/ColbournTables/t4v2.html",
+    "status": "open interval; CAN(4,20,2) not claimed solved"
+  },
+  "survey_scope_note": "Checked the NIST CA(4,k,2) library, the frozen November 2024 Colbourn table, arXiv:1711.10040, and exact-parameter web searches on 2026-11-06. This is not a complete literature survey.",
+  "frozen_human_baseline_type": "NIST IPOG-F array replay; weaker than the best reported public construction",
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T023-C01": {
+      "objective": 6196,
+      "objective_value": 6196,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.010490639122014202
+    }
+  }
+}

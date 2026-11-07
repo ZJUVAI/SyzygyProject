@@ -1,0 +1,84 @@
+{
+  "task_id": "T053",
+  "configurations": {
+    "T053-C01": {
+      "best_human": {
+        "value": 33330,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "n": 100000,
+          "objective": "minimum_factor"
+        },
+        "source": {
+          "title": "Decomposing a factorial into large factors",
+          "url": "https://arxiv.org/abs/2503.20170v4",
+          "repository": "https://github.com/teorth/erdos-guy-selfridge",
+          "repository_commit": "978e4802dd413356e7e0ff97a44db803ab9596eb",
+          "file": "src/python/greedy.py",
+          "file_sha256": "6bc0a0ac756f406d595eced22ce6d7a004256d24f8fbd913b867570c00d9e344"
+        },
+        "provenance": "Reconstruction of the repository's greedy large-factor method attributed in its source comment to Andrew Sutherland's Maple program, with Adam Wagner credited for assistance in translating it to Python. This implementation constructs a threshold-33330 divisor with at least N factors, then restores all remaining prime powers across exactly N retained factors.",
+        "ai_provenance": "The source does not state whether AI tools were used. No AI-free claim is made.",
+        "evidence_state": "full 100000-factor witness independently rechecked by exact product and Legendre-prime-exponent tests"
+      },
+      "best_public": {
+        "value": 33641,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "n": 100000,
+          "objective": "minimum_factor"
+        },
+        "source": {
+          "url": "https://github.com/teorth/erdos-guy-selfridge/blob/978e4802dd413356e7e0ff97a44db803ab9596eb/Data/t_large_n_bounds.txt",
+          "paper": "https://arxiv.org/abs/2503.20170v4",
+          "snapshot": "data/source/t_large_n_bounds.txt",
+          "snapshot_sha256": "9cd480d1f294a6e9d40612bd4644726e22e3ef26eef1dedcd607c260dff4178c"
+        },
+        "evidence_state": "archived LP lower-bound endpoint; the text file contains no per-instance factorization witness and this endpoint was not independently reproduced",
+        "ai_provenance": "Not stated by the source; the repository describes linear/integer programming and greedy construction."
+      },
+      "best_reproduced": {
+        "value": 33330,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "n": 100000,
+          "objective": "minimum_factor"
+        },
+        "program": "reference.py",
+        "witness": "data/reference/human_T100000_T33330.json",
+        "actual_value": 33330,
+        "reproduction_status": "exactly rechecked; all factors positive; exactly 100000 factors; product exactly 100000!",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 33330,
+        "witness_program": "human.py",
+        "evidence_state": "reconstructed from pinned upstream greedy algorithm and independently verified"
+      },
+      "public_reported_interval": {
+        "lower_endpoint": 33641,
+        "upper_endpoint": 33649,
+        "source_file": "data/source/t_large_n_bounds.txt",
+        "endpoint_semantics": "bounding_data.py returns (Tlb,Tub): the lower endpoint advances only when the greedy procedure finds at least N admissible factors; the upper endpoint comes from the LP relaxation and its dual bound.",
+        "limitations": "The public archive has no 100000-specific factor witness. The paper states that upper bounds in the relevant numerical figures were not verified. The generator also notes its factor-at-most-N modeling assumption had not yet been rigorously proved. Do not treat 33649 as an unconditional certified upper bound."
+      },
+      "rigorous_published_bound": {
+        "lower_bound": 33330,
+        "upper_bound": 36787,
+        "upper_bound_source": "Theorem 1.3(i), arXiv:2503.20170v4: t(N) <= N/e for N not in {1,2,4}; for N=100000 this implies integer t(N) <= floor(100000/e)=36787.",
+        "status": "exact optimum remains open in the sources checked"
+      },
+      "survey_scope_note": "The repository main branch still points to commit 978e4802dd413356e7e0ff97a44db803ab9596eb on 2026-11-06. The 2026 journal publication and arXiv v4 do not report an exact t(100000) value. The public LP interval is kept separate from the rigorous published upper bound."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T053-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 3.0003000300030004e-05
+    }
+  }
+}

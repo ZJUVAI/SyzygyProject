@@ -1,0 +1,30 @@
+{
+  "task_id": "T007",
+  "config_id": "T007-C03",
+  "validity": 1.0,
+  "combined_score": 1.0,
+  "objective": 784,
+  "verification_status": "exact",
+  "generation_time": 241.5115464515984,
+  "verification_time": 11.749841310083866,
+  "objective_value": 784,
+  "details": {
+    "marks": 32,
+    "differences_checked": 496
+  },
+  "eval_time": 253.3364945165813,
+  "seed": 10,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 80
+  }
+}

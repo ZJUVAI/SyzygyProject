@@ -1,0 +1,35 @@
+{
+  "task_id": "T028",
+  "config_id": "T028-C01",
+  "validity": 1.0,
+  "combined_score": 0.9470573750307806,
+  "objective": 4061,
+  "verification_status": "exact",
+  "generation_time": 0.5668920911848545,
+  "verification_time": 0.16506057232618332,
+  "objective_value": 4061,
+  "details": {
+    "instance": "Ta051",
+    "jobs": 50,
+    "machines": 20,
+    "schedule_type": "permutation",
+    "all_operations_recomputed": true,
+    "processing_times_source_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 0.7356630973517895,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

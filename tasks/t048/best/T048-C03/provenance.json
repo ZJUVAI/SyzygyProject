@@ -1,0 +1,60 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T048",
+    "config_id": "T048-C03",
+    "validity": 1.0,
+    "combined_score": 0.5868263473053892,
+    "objective": 167,
+    "verification_status": "exact",
+    "generation_time": 6.1288072019815445,
+    "verification_time": 4.171113979071379,
+    "objective_value": 167,
+    "details": {
+      "inputs": 19,
+      "comparators_checked": 167,
+      "binary_inputs_checked": 524288,
+      "asap_depth": 23,
+      "zero_one_principle": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 10.302542451769114,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded deletion, replacement, and order-swap mutations from the self-contained odd-even transposition seed; every candidate exact-checked",
+    "seed": 0,
+    "initial_size": 171,
+    "iterations_requested": 256,
+    "iterations_run": 256,
+    "accepted_mutations": 28,
+    "best_improvements": 4,
+    "objective_recomputed": 167,
+    "generation_seconds": 5.852836403995752,
+    "budget": {
+      "runner_generation_seconds": 300,
+      "runner_verification_seconds": 60
+    }
+  },
+  "solution_sha256": "ccb1a1b4e8eb1213c74e26a4affc3ab20cf805d40bed10959b2c50e6c8fb0be9",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T048 tasks/t048/best/T048-C03/solution.json --config T048-C03"
+}

@@ -1,23 +1,20 @@
-import json
-import os
-import random
-
-# EVOLVE-BLOCK-START
+"""Starter program for T009."""
+import os, random
 
 def run_code():
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    n = {"T009-C02": 16, "T009-C03": 17, "T009-C04": 19}.get(os.environ.get("MATHBENCH_CONFIG_ID", "T009-C02"))
-    if n is None: raise ValueError("unknown T009 configuration")
-    points = []
-    # Fibonacci directions give a deterministic, nonzero start for all seeds.
-    for k in range(n):
-        z = 1 - 2 * (k + 0.5) / n
-        phi = (k + rng.random() * 0.001) * (3.141592653589793 * (3 - 5**0.5))
-        r = max(0.0, 1-z*z) ** 0.5
-        points.append([r * __import__("math").cos(phi), r * __import__("math").sin(phi), z])
-    return {"points": points}
-
-# EVOLVE-BLOCK-END
-
-if __name__ == "__main__":
-    print(json.dumps(run_code()))
+    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T009-C01')
+    rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
+    if config_id == 'T009-C02': n,k=80,20
+    elif config_id == 'T009-C03': n,k=100,20
+    elif config_id == 'T009-C01': n,k=68,15
+    else: raise ValueError('unsupported configuration')
+    # EVOLVE-BLOCK-START
+    rows=[]
+    for i in range(k):
+        row=[0]*n
+        row[i]=1
+        if config_id == 'T009-C01':
+            for j in range(k,n): row[j]=rng.randrange(2)
+        rows.append(row)
+    # EVOLVE-BLOCK-END
+    return {'generator_matrix':rows}

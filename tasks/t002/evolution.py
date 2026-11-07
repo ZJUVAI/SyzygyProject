@@ -1,18 +1,20 @@
-"""Cold-start evolutionary search for unit-square packing instances.
+"""Multi-start continuous search with exact rational feasibility repair.
 
-The search starts from a regular grid and makes bounded, exact-rational
-coordinate and orientation proposals.  It retains only layouts accepted by
-the task checker, so the returned construction is always feasible.
+The optimizer is only a proposal generator.  Every archived construction is
+reparsed and checked by the exact task checker before it can replace the grid
+fallback.  Coordinates and tan(theta/2) are rational strings.
 """
 import os
 import random
 import time
+import json
+import math
 from fractions import Fraction
 
 from tasks.t002.check import Q, validate
 
 
-CONFIGS = {"T002-C01": 26, "T002-C03": 29, "T002-C04": 38}
+CONFIGS = {"T002-C01": 26, "T002-C02": 29, "T002-C03": 38}
 
 
 def _seed(n):
@@ -24,149 +26,214 @@ def _seed(n):
     ]}
 
 
-def _score(layout, config):
-    return Q.parse(validate(layout, config)["objective"])
+def _score(layout, n):
+    return Q.parse(validate(layout, {"parameters": {"n": n}})["objective"])
 
 
-def _optimize(n, seconds, rng):
-    """Joint smooth penalty optimization, followed by exact rational repair."""
+def _numeric(q):
+    return float(q.a) + float(q.b) * 2 ** .5
+
+
+def _to_exact(z, n, np):
+    centers = z[:2*n].reshape((n, 2))
+    angles = z[2*n:3*n]
+    return [{"x": str(Fraction(format(float(x), '.12g'))),
+             "y": str(Fraction(format(float(y), '.12g'))),
+             "t": str(Fraction(format(float(np.tan(a / 2)), '.12g')))}
+            for (x, y), a in zip(centers, angles)]
+
+
+def _repair(squares, n):
+    """Compute the least uniform center dilation using exact separating axes."""
+    cx = sum((Fraction(s["x"]) for s in squares), Fraction(0)) / n
+    cy = sum((Fraction(s["y"]) for s in squares), Fraction(0)) / n
+    xy = [(Fraction(s['x']), Fraction(s['y'])) for s in squares]
+    axes = []
+    for s in squares:
+        t = Fraction(s['t']); den = 1 + t*t
+        axes.append(((1-t*t)/den, 2*t/den))
+    scale = Fraction(1)
+    for i in range(n):
+        ci, si = axes[i]
+        for j in range(i):
+            cj, sj = axes[j]
+            dx, dy = xy[i][0]-xy[j][0], xy[i][1]-xy[j][1]
+            projection = max(abs(dx*ci+dy*si), abs(-dx*si+dy*ci),
+                             abs(dx*cj+dy*sj), abs(-dx*sj+dy*cj))
+            if not projection:
+                return None, None
+            extent = (1 + abs(ci*cj+si*sj) + abs(si*cj-ci*sj))/2
+            scale = max(scale, extent/projection)
+    # Round the dilation upward to keep denominator size bounded. All pair
+    # separations stay valid because their center projections increase.
+    den = 10**13
+    scale = Fraction((scale.numerator*den + scale.denominator-1)//scale.denominator, den)
+    layout = {'squares': [{'x': str(cx+scale*(x-cx)), 'y': str(cy+scale*(y-cy)),
+                            't': s['t']} for (x,y),s in zip(xy,squares)]}
+    half = [(abs(c)+abs(s))/2 for c,s in axes]
+    bounds = [[cx+scale*(x-cx)-h, cx+scale*(x-cx)+h,
+               cy+scale*(y-cy)-h, cy+scale*(y-cy)+h] for (x,y),h in zip(xy,half)]
+    side = max(max(b[1] for b in bounds)-min(b[0] for b in bounds),
+               max(b[3] for b in bounds)-min(b[2] for b in bounds))
+    return layout, Q(side)
+
+
+def _optimize(n, seconds, rng, incumbent, warm_start=None):
+    """Run fixed-box feasibility searches and return the exact best layout."""
+    deadline = time.monotonic() + seconds
     try:
         import numpy as np
         from scipy.optimize import minimize
     except ImportError:
-        return None
+        return incumbent, 0, "grid_fallback_scipy_unavailable"
+
     cols = 5 if n == 26 else (6 if n == 29 else 7)
     rows = (n + cols - 1) // cols
-    xy = np.array([[(i % cols) + .5, (i // cols) + .5]
-                   for i in range(n)], dtype=float)
-    # Add small independent jitter so the optimizer can break grid symmetry.
-    xy += np.array([[rng.uniform(-.025, .025), rng.uniform(-.025, .025)]
-                    for _ in range(n)])
-    z0 = np.concatenate((xy.ravel(), np.zeros(n), [float(max(cols, rows))]))
-    deadline = time.monotonic() + seconds
-    best = None
-    best_value = float("inf")
+    best = incumbent
+    best_value = _numeric(_score(incumbent, n))
+    chain = warm_start
+    chain_value = best_value
+    downhill_accepts = 0
+    iterations = 0
 
-    def loss(z):
-        centers = z[:2*n].reshape((n, 2))
-        angles = z[2*n:3*n]
-        side = z[-1]
-        c, s = np.cos(angles), np.sin(angles)
-        # Half extents of each square along x and y.
-        hx = .5 * (np.abs(c) + np.abs(s))
-        hy = hx
-        over = np.maximum(0., centers[:, 0] + hx - side/2) ** 2
-        over += np.maximum(0., -side/2 - (centers[:, 0] - hx)) ** 2
-        over += np.maximum(0., centers[:, 1] + hy - side/2) ** 2
-        over += np.maximum(0., -side/2 - (centers[:, 1] - hy)) ** 2
-        penalty = 250. * float(over.sum())
-        dx = centers[:, 0, None] - centers[None, :, 0]
-        dy = centers[:, 1, None] - centers[None, :, 1]
-        da = angles[:, None] - angles[None, :]
-        ca, sa = np.cos(angles), np.sin(angles)
-        # SAT gaps projected on each square's two local axes.
-        ext = .5 * (np.abs(np.cos(da)) + np.abs(np.sin(da)))
-        gaps = [np.abs(dx*ca[:, None] + dy*sa[:, None]) - .5 - ext,
-                np.abs(-dx*sa[:, None] + dy*ca[:, None]) - .5 - ext,
-                np.abs(dx*ca[None, :] + dy*sa[None, :]) - .5 - ext,
-                np.abs(-dx*sa[None, :] + dy*ca[None, :]) - .5 - ext]
-        best_gap = np.maximum.reduce(gaps)
-        tri = np.triu_indices(n, 1)
-        overlap = np.maximum(0., -best_gap[tri])
-        penalty += 250. * float(np.dot(overlap, overlap))
-        return side + penalty
+    class DeadlineReached(Exception):
+        pass
 
-    # Keep optimization iterations bounded by the per-run deadline. Every
-    # decoded candidate is checked exactly before it can become the archive.
+    ii, jj = np.triu_indices(n, 1)
+    def loss_factory(weight, target):
+        def loss(z):
+            if time.monotonic() >= deadline:
+                raise DeadlineReached
+            xy=z[:2*n].reshape(n,2); ang=z[2*n:3*n]
+            ca,sa=np.cos(ang),np.sin(ang)
+            half=.5*(np.abs(ca)+np.abs(sa))
+            hp=.5*(-np.sign(ca)*sa+np.sign(sa)*ca)
+            gxy=np.zeros_like(xy); ga=np.zeros(n); value=0.
+            for dim in range(2):
+                for sign in (-1,1):
+                    v=np.maximum(0.,sign*xy[:,dim]+half-target/2)
+                    value+=v@v; gxy[:,dim]+=2*sign*v; ga+=2*v*hp
+            d=xy[ii]-xy[jj]; delta=ang[ii]-ang[jj]
+            ext=.5*(np.abs(np.cos(delta))+np.abs(np.sin(delta)))
+            ep=.5*(-np.sign(np.cos(delta))*np.sin(delta)+np.sign(np.sin(delta))*np.cos(delta))
+            axes=np.stack((np.stack((ca[ii],sa[ii]),1),np.stack((-sa[ii],ca[ii]),1),
+                           np.stack((ca[jj],sa[jj]),1),np.stack((-sa[jj],ca[jj]),1)),1)
+            proj=np.einsum('mi,mki->mk',d,axes)
+            gaps=np.abs(proj)-.5-ext[:,None]
+            k=np.argmax(gaps,axis=1); row=np.arange(len(ii))
+            v=np.maximum(0.,-gaps[row,k]); value+=v@v
+            axis=axes[row,k]; sg=np.sign(proj[row,k]); coeff=-2*v
+            grad=coeff[:,None]*sg[:,None]*axis
+            np.add.at(gxy,ii,grad); np.add.at(gxy,jj,-grad)
+            directional=sg*(-d[:,0]*axis[:,1]+d[:,1]*axis[:,0])
+            gi=-ep+np.where(k<2,directional,0.)
+            gj=ep+np.where(k>=2,directional,0.)
+            np.add.at(ga,ii,coeff*gi); np.add.at(ga,jj,coeff*gj)
+            return weight*value, weight*np.r_[gxy.ravel(),ga,0.]
+        return loss
+
+    # Alternate warm starts, axis-grid starts, and structured rotation
+    # clusters. Shrinking target sizes turn this into a sequence of SAT
+    # feasibility problems, with each stage increasing collision pressure.
+    start_number = 0
     while time.monotonic() < deadline:
-        result = minimize(loss, z0, method="L-BFGS-B",
-                          bounds=[(None, None)] * (len(z0)-1) + [(4.5, 10.)],
-                          options={"maxiter": 80, "ftol": 1.e-8})
-        z = result.x
-        centers = z[:2*n].reshape((n, 2))
-        angles = z[2*n:3*n]
-        # Rationalize the tan-half-angle and center coordinates. Expand the
-        # centers about their mean until the exact checker certifies the pose.
-        squares = []
-        for (x, y), a in zip(centers, angles):
-            t = Fraction(float(np.tan(a/2))).limit_denominator(100000)
-            squares.append({"x": str(Fraction(float(x)).limit_denominator(100000)),
-                            "y": str(Fraction(float(y)).limit_denominator(100000)),
-                            "t": str(t)})
-        cx = sum(float(Fraction(s["x"])) for s in squares)/n
-        cy = sum(float(Fraction(s["y"])) for s in squares)/n
-        for scale in (1.0, 1.0001, 1.001, 1.01, 1.03, 1.08, 1.16, 1.32):
-            repaired = {"squares": []}
-            for sq in squares:
-                repaired["squares"].append({
-                    "x": str(Fraction(float(cx + scale*(float(Fraction(sq["x"]))-cx))).limit_denominator(100000)),
-                    "y": str(Fraction(float(cy + scale*(float(Fraction(sq["y"]))-cy))).limit_denominator(100000)),
-                    "t": sq["t"]})
+        if start_number % 12 == 0:
+            chain, chain_value = warm_start, best_value
+        if start_number % 3 != 2 and chain is not None:
+            xy = np.array([[float(Fraction(s['x'])), float(Fraction(s['y']))]
+                           for s in chain['squares']], dtype=float)
+            angles = np.array([2 * math.atan(float(Fraction(s['t'])))
+                               for s in chain['squares']], dtype=float)
+            side = chain_value
+            xy -= (xy.max(axis=0)+xy.min(axis=0))/2
+            target = min(side, best_value) - (.002,.025,.08,.18)[start_number % 4]
+            xy += np.array([[rng.uniform(-.08, .08),
+                             rng.uniform(-.08, .08)] for _ in range(n)])
+            angles += np.array([rng.uniform(-.08, .08) for _ in range(n)])
+            if start_number % 4 == 3:
+                for index in rng.sample(range(n),max(1,n//6)):
+                    angles[index]+=rng.choice((-.4,.4))
+        else:
+            cols = rng.choice((int(math.sqrt(n)), int(math.sqrt(n))+1))
+            rows = (n + cols - 1) // cols
+            sites = rng.sample(range(cols*rows), n)
+            xy = np.array([[(i % cols) + .5, (i // cols) + .5]
+                           for i in sites], dtype=float)
+            jitter = .12 if start_number == 0 else .38
+            base_side = float(max(cols, rows))
+            # Begin close to the fixed box. The center scaling is only a
+            # continuous start; exact containment is never assumed.
+            target = best_value - (.005 + .008 * ((start_number - 1) % 5))
+            factor = max(.82, target / base_side)
+            xy = (xy - np.array([cols / 2, rows / 2])) * factor
+            xy += np.array([[rng.uniform(-jitter, jitter),
+                             rng.uniform(-jitter, jitter)] for _ in range(n)])
+            # Rotate in a few coherent clusters before adding small noise.
+            clusters = (0., math.pi/8, -math.pi/8, math.pi/4, -math.pi/4)
+            cluster = clusters[(start_number - 1) % len(clusters)]
+            angles = np.array([(cluster if i % cols >= cols//2 else 0.)
+                               + rng.uniform(-.07, .07) for i in sites])
+        z = np.concatenate((xy.ravel(), angles, [target]))
+        start_number += 1
+        for weight in (1.e3, 1.e5, 1.e7):
+            if time.monotonic() >= deadline:
+                break
+            def stop_if_expired(_x):
+                if time.monotonic() >= deadline:
+                    raise DeadlineReached
             try:
-                qvalue = _score(repaired, {"parameters": {"n": n}})
-                value = float(qvalue.a) + float(qvalue.b) * 2 ** .5
-            except (ValueError, ZeroDivisionError):
-                continue
-            if value < best_value:
-                best, best_value = repaired, value
-            break
-        if time.monotonic() >= deadline:
-            break
-        # Restart from the relaxed pose with fresh small perturbations.
-        z0 = z.copy()
-        z0[:2*n] += np.array([[rng.uniform(-.08, .08), rng.uniform(-.08, .08)]
-                              for _ in range(n)]).ravel()
-        z0[2*n:3*n] += np.array([rng.uniform(-.12, .12) for _ in range(n)])
-    return best
+                result = minimize(loss_factory(weight, target), z,
+                                  method="L-BFGS-B", jac=True, callback=stop_if_expired,
+                                  bounds=[(None, None)] * (len(z)-1) + [(target, target)],
+                                  options={"maxiter": 1000, "ftol": 1.e-12,
+                                           "maxls": 40})
+                iterations += int(getattr(result, "nit", 0))
+                z = result.x
+            except DeadlineReached:
+                break
+            raw = _to_exact(z, n, np)
+            candidate, value = _repair(raw, n)
+            if candidate is not None and _numeric(value) < best_value:
+                best, best_value = candidate, _numeric(value)
+                warm_start = candidate
+            if candidate is not None:
+                numeric = _numeric(value)
+                temperature = .025
+                if numeric <= chain_value or rng.random() < math.exp(min(0.,(chain_value-numeric)/temperature)):
+                    downhill_accepts += int(numeric > chain_value)
+                    chain, chain_value = candidate, numeric
+            if result.fun / weight < 1.e-10:
+                target -= .01
+            if time.monotonic() >= deadline:
+                break
+        # The next loop makes a fully independent randomized start.
+    return best, iterations, "cluster_rotation_sat_annealing_exact_minimal_dilation"
 
 
 def run_code():
+    started = time.monotonic()
     cid = os.environ.get("MATHBENCH_CONFIG_ID", "T002-C01")
     if cid not in CONFIGS:
         raise ValueError("unknown T002 configuration")
     n = CONFIGS[cid]
-    conf = {"parameters": {"n": n}}
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "2002")))
     budget = max(0.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
-    deadline = time.monotonic() + budget
-    best = _seed(n)
-    best_score = _score(best, conf)
-    optimized = _optimize(n, min(budget, max(0., deadline-time.monotonic())), rng)
-    if optimized is not None:
+    best = _seed(n)  # Always-valid exact fallback.
+    warm_start = None
+    warm_path = os.environ.get("MATHBENCH_WARM_START")
+    if warm_path:
         try:
-            value = _score(optimized, conf)
-            if value < best_score:
-                best, best_score = optimized, value
-        except ValueError:
-            pass
-    current = best
-    # Coordinate values stay rational. Small translations can use the unused
-    # grid cells; occasional 45-degree proposals explore a different geometry.
-    # The exact checker, rather than a floating-point penalty, decides
-    # feasibility and recomputes every candidate's score.
-    step = Fraction(1, 8)
-    while time.monotonic() < deadline:
-        trial = {"squares": [dict(s) for s in current["squares"]]}
-        idx = rng.randrange(n)
-        sq = trial["squares"][idx]
-        action = rng.randrange(5)
-        if action < 4:
-            key = "x" if action < 2 else "y"
-            delta = step if action % 2 == 0 else -step
-            sq[key] = str(Fraction(sq[key]) + delta)
-        else:
-            # tan(pi/8) is in Q(sqrt(2)); the checker supports Q(sqrt(2))
-            # for center/vertex arithmetic, so use t=1/2 as an exact angle.
-            sq["t"] = "1/2" if sq["t"] == "0" else "0"
-        try:
-            score = _score(trial, conf)
-        except (ValueError, ZeroDivisionError):
-            continue
-        # Greedy improvement plus occasional neutral movement allows the
-        # search to traverse layouts without ever dropping its valid archive.
-        if score < best_score:
-            best, best_score = trial, score
-            current = trial
-        elif score <= best_score and rng.random() < 0.08:
-            current = trial
+            with open(warm_path, encoding="utf-8") as stream:
+                proposed = json.load(stream)
+            _score(proposed, n)
+            warm_start = proposed
+            if _numeric(_score(proposed, n)) < _numeric(_score(best, n)):
+                best = proposed
+        except (OSError, ValueError, TypeError, KeyError, ZeroDivisionError):
+            warm_start = None
+    best, iterations, method = _optimize(n, max(0.,budget-(time.monotonic()-started)), rng, best, warm_start)
+    # Defensive final replay; never emit a proposal the exact checker rejects.
+    _score(best, n)
+    best["search_method"] = method
+    best["search_iterations"] = iterations
     return best

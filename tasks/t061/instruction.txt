@@ -1,0 +1,7 @@
+Find a simple C6-saturated graph on 100 vertices with as few edges as possible.
+
+Return a JSON object with `vertices: 100` and an `edges` list. Each edge is a two-element list of distinct integer vertex IDs from 0 through 99. Edges are undirected and must not be repeated.
+
+The graph must contain no simple cycle of length 6. For every missing pair of vertices, the graph must contain a simple path of exactly 5 edges between them. Adding that missing edge then creates a simple C6. A walk with repeated vertices does not satisfy this condition.
+
+Minimize the number of edges. Start from the supplied simple program. Do not read human, reference, or best witness files. Declared objective and score fields are ignored.

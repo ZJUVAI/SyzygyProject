@@ -1,0 +1,32 @@
+{
+  "task_id": "T062",
+  "name": "Largest square-difference-free subset of [42025]",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T062-C01",
+      "parameters": {
+        "N": 42025,
+        "set": "subset of {1,...,N}",
+        "forbidden_difference": "positive perfect square",
+        "objective": "cardinality"
+      },
+      "direction": "maximize",
+      "human_reference": 2460
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定N42025，最大化[1,N]子集大小，禁止任意两元素正平方差。范围不是模群，且不是立方差。",
+      "primary_source": "Sol亲自读取Lewko2015 EJC22(1)P1.32 Section3及Table1，逐一核对12个模205剩余类。独立重建全部1+a+205b，b0..204，共2460，最小8最大42020，与归档逐项一致。另核全部132个有向非零剩余差均非平方剩余。",
+      "proof": "不同剩余类由模205排除平方；相同类差为205(b-bprime)，205=5*41无平方因子，若差平方则205²整除，和0<差<205²矛盾。正式checker逐元素查平方平移，Sol另以整个位集的204次左移交集独立检查五种输出。",
+      "open_status": "Sol读取Dean等原文摘要精确范围N≤300，并核现有表与2026渐近改进不提供N42025匹配最优性证明。2460是历史人类传统公式同参有限重建下界，不称文献报告的有限最高纪录或最优值。模91的14剩余类属于立方差，明确排除。",
+      "controls": "初始1、三轮传统与演化1533、人类及参考2460。五程序、故意[1,2]平方差破坏、完整声明不变、严格重放、冷导出、程序异常/非有限/超时均通过。20项任务及共享检查通过。",
+      "limits": "没有复现2026渐近构造，没有证明2460最优，所查来源之外可能有更强同参构造。原作者模205最优搜索范围不当作[42025]全局最优证明。"
+    }
+  }
+}

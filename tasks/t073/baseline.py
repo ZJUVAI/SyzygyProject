@@ -1,33 +1,39 @@
-"""Seeded single-bit annealing search; does not load human data."""
-import math
+"""Find a 24-point D4 orbit by exact integer moment-pattern enumeration."""
+
+from itertools import combinations_with_replacement
 import os
 import random
 
-from tasks.t073.init_program import run_code as initial
-from tasks.t073.check import aperiodic_autocorrelations
-
-
-def _energy(sequence):
-    return sum(c * c for c in aperiodic_autocorrelations(sequence))
+from tasks.t073.construction import radical_field_solution, signed_permutation_orbit
 
 
 def run_code():
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    current = initial()["sequence"]
-    current_energy = _energy(current)
-    best, best_energy = current[:], current_energy
-    steps = int(os.environ.get("MATHBENCH_SEARCH_STEPS", "4000"))
-    start_temp, end_temp = 12.0, 0.15
-    for step in range(max(0, steps)):
-        candidate = current[:]
-        index = rng.randrange(len(candidate))
-        candidate[index] *= -1
-        value = _energy(candidate)
-        fraction = step / max(1, steps - 1)
-        temperature = start_temp * (end_temp / start_temp) ** fraction
-        delta = value - current_energy
-        if delta <= 0 or rng.random() < math.exp(-delta / temperature):
-            current, current_energy = candidate, value
-        if current_energy < best_energy:
-            best, best_energy = current[:], current_energy
-    return {"sequence": best}
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T073-C01")
+    if chosen != "T073-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    try:
+        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    except ValueError as exc:
+        raise ValueError("MATHBENCH_SEED must be an integer") from exc
+    examined = 0
+    patterns = list(combinations_with_replacement(range(4), 4))
+    random.Random(seed).shuffle(patterns)
+    for pattern in patterns:
+        examined += 1
+        squared_norm = sum(value * value for value in pattern)
+        fourth_sum = sum(value ** 4 for value in pattern)
+        if squared_norm == 0 or 2 * fourth_sum != squared_norm * squared_norm:
+            continue
+        orbit = signed_permutation_orbit(pattern)
+        if len(orbit) != 24:
+            continue
+        solution = radical_field_solution(orbit, squared_norm)
+        solution["search_metadata"] = {
+            "algorithm": "enumerate integer coordinate multisets and select a signed-permutation orbit satisfying the exact fourth-moment identity",
+            "seed": seed,
+            "integer_patterns_examined": examined,
+            "point_count": len(orbit),
+            "human_or_reference_data_read": False,
+        }
+        return solution
+    raise RuntimeError("no 24-point integer orbit found within the fixed pattern set")

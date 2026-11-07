@@ -16,15 +16,33 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from mathbench.evaluate import evaluate_candidate
 from mathbench.registry import INITIAL_TASKS, load_task
-from scripts.independent_audit import independent_quantity, broken
+from scripts.audits.independent_audit import independent_quantity, broken
 
 
 def same_exact_value(left, right):
     """Compare literals as exact rationals, including decimal literals."""
+    def radical_terms(value):
+        if not isinstance(value,str) or not value.startswith('sqrt_sum:'):
+            return None
+        terms=json.loads(value.removeprefix('sqrt_sum:'))
+        if not isinstance(terms,list) or not terms or any(type(d)is not int or d<0 for d in terms):
+            raise ValueError('Invalid exact radical sum')
+        return terms
+    try:
+        a,b=radical_terms(left),radical_terms(right)
+    except ValueError:
+        return False
+    # Identical terms are the common archive path. Avoid constructing a large
+    # symbolic expression for a triangulation with thousands of edges.
+    if a is not None and b is not None and sorted(a)==sorted(b):
+        return True
     import sympy as sp
-    def parse(value):
+    def parse(value,terms):
+        if terms is not None:
+            return sp.Add(*(sp.sqrt(d) for d in terms))
         return sp.sympify(str(value).replace('sqrt2', 'sqrt(2)'), rational=True)
-    return sp.simplify(parse(left) - parse(right)) == 0
+    return sp.simplify(parse(left,a) - parse(right,b)) == 0
+
 
 
 def audit(task_ids):
@@ -53,18 +71,21 @@ def audit(task_ids):
             checked = checker.validate(solution, config, strict=True)
             # Independently compute at least one mathematical quantity.
             quantity = independent_quantity(tid, solution, config)
-            key = {'T001':'radius','T005':'sum_radii','T014':'minimum_triangle_area',
-                   'T035':'order','T044':'span','T057':'ratio','T060':'blocks',
-                   'T066':'minimum_distance','T067':'codewords','T073':'energy',
-                   'T079':'exact_objective','T080':'exact_objective','T081':'exact_objective',
-                   'T082':'maximum_overlap','N001':'independent_words','T089':'absolute_determinant',
-                   'T099':'diameter','T097':'additions'}.get(tid)
+            key = {'T099':'tile_count','T100':'triangle_count','T098':'outer_side','T095':'face_count','T097':'polygon_count','T093':'packed_value','T091':'row_count','T090':'energy','T088':'cutwidth','T087':'minimum_autocorrelation_ratio','T085':'radius','T084':'diameter','T082':'army_size','T081':'distance_ratio','T079':'union_cardinality','T078':'determinant','T075':'edge_count','T076':'largest_element','T074':'area_ratio','T073':'point_count','T072':'max_size','T071':'code_size','T070':'square_count','T069':'tour_cost','T068':'code_size','T067':'code_size','T066':'three_point_lines','T065':'unit_pairs','T064':'steiner_count','T062':'cardinality','T061':'edge_count','T060':'one_count','T058':'round_count','T059':'clique_cardinality','T057':'route_cost','T055':'satisfied_soft_weight','T056':'makespan','T054':'peak_sidelobe','T053':'minimum_factor','T051':'sequence_length','T052':'code_size','T050':'induced_path_edges','T049':'distance_count','T048':'comparator_count','T047':'difference_basis_size','T045':'linear_arrangement_cost','T044':'order','T043':'code_size','T042':'cardinality','T041':'sum_sides','T040':'volume','T039':'scope','T038':'square_count','T035':'point_count','T036':'crossings','T037':'direction_count','T034':'prefix_length','T032':'ones','T033':'cut_weight','T031':'string_length','T030':'color_count','T028':'makespan','T029':'rank_terms','T027':'quadratic_cost','T026':'prefix_length','T025':'points','T024':'edges','T022':'vertices','T023':'rows','T001':'radius','T003':'sum_radii','T005':'minimum_triangle_area',
+                   'T006':'order','T007':'span','T012':'ratio','T008':'blocks',
+                   'T009':'minimum_distance','T010':'codewords','T013':'energy',
+                   'T014':'exact_objective','T015':'exact_objective','T016':'exact_objective',
+                   'T017':'maximum_overlap','T011':'independent_words','T018':'absolute_determinant',
+                   'T019':'diameter','T020':'additions'}.get(tid)
             if key:
-                if tid == 'T057':
+                if tid == 'T012':
                     assert math.isclose(float(checked['objective']), quantity[key], rel_tol=1e-14)
                 else:
                     assert Fraction(str(checked['objective'])) == Fraction(str(quantity[key]))
-            elif tid == 'T009':
+            elif tid in ('T096', 'T094', 'T092', 'T089', 'T086', 'T083', 'T021', 'T046', 'T063', 'T077', 'T080'):
+                from scripts.review_search import check_quantity
+                check_quantity(tid, quantity, result)
+            elif tid == 'T004':
                 assert math.isclose(checked['objective'], float(quantity['minimum_angle_80_digits']), rel_tol=1e-14)
             elif tid == 'T002':
                 import sympy as sp

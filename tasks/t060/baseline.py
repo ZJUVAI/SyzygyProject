@@ -1,37 +1,65 @@
-from mathbench.search import search_deadline, search_steps
-"""Greedy set cover on sampled blocks, with a guaranteed seed fallback."""
+"""Deterministic radix-Horner search from the target; reads no comparison data."""
 import os
-import random
-import time
-from itertools import combinations
-from tasks.t060.init_program import run_code as seed_cover
+
+from mathbench.search import search_steps
+
+TARGET = 2**61 - 1
+RADICES = tuple(range(2, 17))
+ITERATION_LIMIT = len(RADICES)
+
+
+def _ones(count):
+    return "+".join(["1"] * count)
+
+
+def _radix_expression(target, radix):
+    digits = []
+    while target:
+        target, digit = divmod(target, radix)
+        digits.append(digit)
+    digits.reverse()
+    expression = f"({_ones(digits[0])})"
+    for digit in digits[1:]:
+        expression = f"(({expression})*({_ones(radix)}))"
+        if digit:
+            expression = f"({expression}+({_ones(digit)}))"
+    return expression
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T060-C01") != "T060-C01":
-        raise ValueError("unsupported configuration")
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    try:
-        budget = min(2.0, max(0.01, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    except ValueError:
-        budget = 2.0
-    deadline = search_deadline()
-    blocks = [tuple(b) for b in seed_cover()["blocks"]]
-    index = {q: i for i, q in enumerate(combinations(range(24), 4))}
-    pool = set()
-    for _ in search_steps(500):
-        pool.add(tuple(sorted(rng.sample(range(24), 14))))
-    # Add the seed blocks to ensure the candidate pool covers every four-set.
-    pool = sorted(pool | set(blocks))
-    masks = [sum(1 << index[q] for q in combinations(b, 4)) for b in pool]
-    remaining = (1 << 10626) - 1
-    chosen = []
-    while remaining and time.monotonic() < deadline:
-        i = max(range(len(pool)), key=lambda j: (masks[j] & remaining).bit_count())
-        if not (masks[i] & remaining):
+        raise ValueError("unsupported T060 configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    iterator = iter(search_steps(ITERATION_LIMIT))
+    best = None
+    best_count = None
+    actual = 0
+    for radix in RADICES:
+        if next(iterator, None) is None:
             break
-        chosen.append(pool[i])
-        remaining &= ~masks[i]
-    if not remaining and len(chosen) < len(blocks):
-        blocks = chosen
-    return {"blocks": [list(b) for b in blocks]}
+        expression = _radix_expression(TARGET, radix)
+        count = expression.count("1")
+        actual += 1
+        if best_count is None or count < best_count:
+            best, best_count = expression, count
+    if best is None:
+        best = _radix_expression(TARGET, 2)
+        best_count = best.count("1")
+    return {
+        "expression": best,
+        "search_metadata": {
+            "algorithm": "exhaustive uniform-radix Horner candidates",
+            "tested_radices": list(RADICES[:actual]),
+            "seed": seed,
+            "iterations": actual,
+            "iteration_limit": ITERATION_LIMIT,
+            "reference_data_read": False,
+            "budget": {
+                "mode": "wall_clock_cutoff" if seconds is not None else "fixed_iteration_count",
+                "requested_iterations": ITERATION_LIMIT,
+                "actual_iterations": actual,
+                "requested_wall_clock_seconds": seconds,
+            },
+        },
+    }

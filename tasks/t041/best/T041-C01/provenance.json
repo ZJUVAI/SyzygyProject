@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T041",
+    "config_id": "T041-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": "4",
+    "verification_status": "exact",
+    "generation_time": 0.796369407325983,
+    "verification_time": 0.9019546993076801,
+    "objective_value": "4",
+    "details": {
+      "square_count": 17,
+      "pairs_checked": 136,
+      "corners_checked": 68,
+      "objective_name": "sum_of_side_lengths",
+      "touching_allowed": true,
+      "arithmetic": "exact rational arithmetic",
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 1.706310924142599,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "exhaustive scan of 16 grid cells and two split directions",
+    "seed": 0,
+    "iterations_attempted": 32,
+    "iteration_budget": 32,
+    "time_budget_seconds": null,
+    "best_family_score": "4"
+  },
+  "solution_sha256": "a9e6721fd3ce5c42d472d75265c4b64b47e3065c01b714669a22bc5f4d231cf7",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T041 tasks/t041/best/T041-C01/solution.json --config T041-C01"
+}

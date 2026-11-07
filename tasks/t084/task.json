@@ -1,0 +1,31 @@
+{
+  "task_id": "T084",
+  "name": "31-element integer B3 set minimum diameter",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T084-C01",
+      "parameters": {
+        "cardinality": 31,
+        "order": 3,
+        "integer_domain": true
+      },
+      "direction": "minimize",
+      "human_reference": 19407
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "31 arbitrary distinct integers, all unordered triple sums with repetition unique, minimize diameter. No coordinate cap. Translation to nonnegative integers preserves feasibility and score. h2 Golomb is T007; h3 is a separate generalized constraint.",
+      "primary_source": "Martos/Delgado/Trujillo2021 IEEEAccess DOI10.1109/ACCESS.2021.3106617 Table3 SGq31,m31,19407. Root independently transcribed the author-rendered list, matches agent list, exactly5456 unique triple sums and diameter19407. Source calls near-optimal; conclusion only certifies optimal small B3 sets through7.",
+      "proof_and_limits": "Counting5456 sums in0..3D proves D>=1819. Cited Atkinson/Santoro/Urrutia bound gives4737, arithmetic checked but original theorem not locally reproved. No31-element optimality proof located in reviewed current sources; absence scope is limited.",
+      "independent_method": "Root sparse polynomial Newton identity h3=(p1^3+3*p1*p2+2*p3)/6 uses all ordered triples plus power sums. Every coefficient is exactly1 and support size5456. Formal checker enumerates unordered multisets instead. All five diameter values recomputed independently.",
+      "initial_and_search": "Base4 cold seed no-carry proof, diameter4^29. Generic increasing greedy plus1500 seeded mutations returns68302 without comparison reads; published human/reference19407.",
+      "admission": "Returned once for frozen config identity/complete parameters validation and Chinese README. Original agent repaired and23tests passed. Root then reran five strict entries, claim invariance, duplicate rejection, independent quantities, replay, cold export and all failure controls successfully."
+    }
+  }
+}

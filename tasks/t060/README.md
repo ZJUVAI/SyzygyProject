@@ -1,21 +1,33 @@
-# T060: C(24,14,4)
-
-## English
-
-Find a small collection of 14-point blocks on 24 points that contains every four-point subset. The checker enumerates all 10,626 four-subsets and verifies coverage exactly. The objective is the number of distinct blocks. The task does not ask for an optimality proof.
-
-The reported public construction has 23 blocks. Its source is the [La Jolla Covering Repository](https://ljcr.dmgordon.org/cover.html), also preserved in the [Zenodo dataset](https://doi.org/10.5281/zenodo.19735294). The archive attributes the 2004 improvement to Andrei Ochmat. The witness is stored in `data/sota_witness.json` and is independently checked by the task evaluator. The repository reports best-known coverings, not necessarily proven minima.
+# T060: M61 的整数复杂度
 
 ## 中文
 
-在24个点上选择尽量少的14点块，使每个四点子集都包含在至少一个块中。检查器会穷举全部10,626个四点子集，并精确验证覆盖。目标值是不同块的数量。本任务不要求证明最优性。
+配置 `T060-C01` 固定目标为 `M61 = 2^61 - 1 = 2305843009213693951`。目标是在表达式树中用最少个 `1` 精确表示该整数。允许的叶子只有 `1`，内部节点只有 `+` 与 `*`。重复写出的子表达式各自计数；不允许共享子树、减法或幂。
 
-公开资料报告了23块构造，来源为[La Jolla覆盖设计库](https://ljcr.dmgordon.org/cover.html)，并保存在[Zenodo数据集](https://doi.org/10.5281/zenodo.19735294)。归档记录将该改进归于 Andrei Ochmat，日期为2004-07-20。见证保存在 `data/sota_witness.json`，已由检查器精确复算；这不表示已证明最优。
+评测器用整数栈解析表达式，并从完整字符串重新计算值和 `1` 的数量。它不读取候选声称的分数。Selfridge 定理给出精确下界 116：最多用 115 个 `1` 可表示的最大整数是 `1801135623563989452`，小于 M61。此配置尚无已知最优性证明。
 
-## Reproduced reference / 已复现对照
+解析器的 100,000 字符上限是输入资源限制，不是数学目标或“任意冗余文本均可接受”的保证。含 `k` 个叶子的二叉表达式可规范化为完全括号化形式，长度至多 `4k−3`；153 个叶子对应 609 字符。本任务保存的三进制表达式为 505 字符。去掉空格和多余括号不会改变表达式树或叶子数。
 
-The frozen human-method reference has 62 blocks. It reconstructs the finite geometry and induced-covering methods of [Gordon, Kuperberg and Patashnik (1995), sections III–IV](https://arxiv.org/html/math/9502238). Take all 62 affine hyperplanes of AG(5,2). Delete points `{1,8,13,15,16,24,28,31}` (binary point labels 0–31). Each hyperplane loses at least two points. Pad each remaining intersection to 14 points. Each four-set lies in an affine hyperplane, so the resulting blocks cover all four-sets. The implementation selected the deleted points. The value 62 is a reproduced instance of a published method; the paper does not report this particular restriction as a record.
+冻结人类基线为 153。`human.py` 按三进制位展开，用 Horner 法从高位向低位重建表达式。M61 有 39 个三进制位；每步乘以 `1+1+1`，再按当前位加 0、1 或 2 个 `1`。这是对传统整数复杂度表达方法的重建，不是公开最优纪录。Altman 的整数复杂度综述回顾了该问题、Selfridge 界及 Horner 表示。[论文](https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf)
 
-固定评分对照为62块。它复现论文第III–IV节中的方法。删除点集由本项目选择。62块构造已精确检查。23块公开见证是独立复现的最佳已知构造。评分仍使用冻结的62块对照。
+固定参考构造使用 127 个 `1`。该表达式来自 EventCompute 的公开页面及 board 的 PR #4，SHA-256 为 `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`。页面明确说明其研究过程使用生成式 AI 助手，因此记为 AI 辅助公开结果，不归作纯人工发现。[结果与来源说明](https://eventcompute.com/en/challenges/integer-complexity-m61/) · [board PR #4](https://github.com/math-market/integer-complexity-m61/pull/4)
 
-The classical search uses greedy set cover on500 seeded random14-subsets plus the seed pool. It produces40 blocks at seed0. This saved local result is the reference program; the published-method human normalization stays62.
+Board 自己的 150 表达式只是挑战基线，不是纪录；来源未说明该构造是否使用 AI。公开页面截至 2026-10-13 报告 127 构造、下界 116，未给出精确复杂度。我们在 2026-11-06 复查了该页面、board 主仓库和 PR 状态；没有发现 M61 精确最优性证明或更短的同参见证。该检查限于所引来源，不表示穷尽所有公开资料。
+
+简单起点用二进制 Horner 法独立生成。传统搜索枚举固定基数 Horner 表达式；进化入口用固定种子搜索混合基数展开。它们都只从目标整数构造，不读取人类或参考文件。正式结果以 `check.py` 的精确重算为准。
+
+## English
+
+Configuration `T060-C01` fixes `M61 = 2^61 - 1 = 2305843009213693951`. The objective is to minimize the number of `1` leaves in an expression tree that equals this integer. The only leaves are `1`; the only internal nodes are `+` and `*`. Repeated text is counted as separate tree nodes. Shared subtrees, subtraction, and exponentiation are not allowed.
+
+The checker parses the full expression with integer stacks, then recomputes its value and leaf count. It ignores every score supplied by a candidate. Selfridge's theorem gives an exact lower bound of 116: the largest integer that uses at most 115 ones is `1801135623563989452`, below M61. No proof of the exact complexity is known in the sources checked for this task.
+
+The 100,000-character parser limit is an input resource bound, not part of the mathematical objective and not a promise to accept arbitrary redundant text. A binary expression tree with `k` leaves has a fully parenthesized form of at most `4k−3` characters; for 153 leaves this is 609 characters. The saved base-3 expression is 505 characters. Spaces and redundant parentheses can be removed without changing its tree or leaf count.
+
+The frozen human baseline is 153. `human.py` rebuilds a base-3 Horner expression from the digits of M61. M61 has 39 base-3 digits. Each step multiplies by `1+1+1` and adds zero, one, or two ones for the next digit. This is a reconstruction of a traditional integer-complexity method, not a reported optimum. Altman's survey reviews integer complexity, Selfridge's bound, and Horner representations. [Paper](https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf)
+
+The fixed reference uses 127 ones. The expression is published by EventCompute and in board PR #4. Its SHA-256 is `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`. The page states that generative AI assistants were used in the research, so this is recorded as an AI-assisted public result, not as a human-only discovery. [Result and provenance](https://eventcompute.com/en/challenges/integer-complexity-m61/) · [Board PR #4](https://github.com/math-market/integer-complexity-m61/pull/4)
+
+The board's 150 expression is a challenge baseline, not a record. Its AI provenance is unstated. The public result page, checked on 2026-10-13, reports the 127 construction and lower bound 116, with no exact complexity. We rechecked that page, the board repository, and PR status on 2026-11-06. We found no proof of the exact value or a shorter same-parameter witness. This review covers the cited sources and is not an exhaustive survey.
+
+The simple seed uses binary Horner expansion and is generated from the target alone. The classical baseline enumerates fixed-base Horner expressions. The evolution entry searches mixed-base expansions with a fixed seed. Neither search reads human or reference files. The checker recomputes all formal results with exact integer arithmetic.

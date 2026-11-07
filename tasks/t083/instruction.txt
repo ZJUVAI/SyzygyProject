@@ -1,0 +1,7 @@
+Pack four unit equilateral triangles in an axis-aligned square and minimize the square side. The square is [0,L] x [0,L], with lower-left corner (0,0). Each triangle may translate and rotate independently. Triangle interiors must not overlap; touching boundaries is allowed.
+
+Return JSON with a positive `side` and exactly four `triangles`. `side` is [a,b], meaning a+b*sqrt(3). Each triangle has `anchor:[[ax,bx],[ay,by]]` and `direction:[u,v]`. Each anchor coordinate is a pair of exact rational strings. The direction is a rational unit vector and defines the first unit edge from the anchor. The third vertex is the 60-degree counterclockwise rotation of this edge. Do not use decimal floats.
+
+All translations in Q(sqrt(3)) and rational unit directions are allowed. They form a dense pose set and preserve the unrestricted problem's infimum. There is no coordinate-size or denominator cap in the task definition.
+
+The score is recomputed from the returned triangles. Optional submitted score fields have no effect.

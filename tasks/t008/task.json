@@ -1,0 +1,65 @@
+{
+  "task_id": "T008",
+  "name": "Covering numbers C(v,k,t)",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T008-C01",
+      "parameters": {
+        "v": 24,
+        "k": 14,
+        "t": 4
+      },
+      "direction": "minimize",
+      "human_reference": 62,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T008-C02",
+      "parameters": {
+        "v": 20,
+        "k": 10,
+        "t": 4
+      },
+      "direction": "minimize",
+      "human_reference": 36,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "固定人类方法对照为62块，本地传统搜索为40块。23块公开见证已复现，仍待Sol复核。公开纪录不构成最优性证明。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Minimum size of a collection of distinct k-subsets of [v] covering every t-subset. Keep C(24,14,4); add C(20,10,4).",
+      "primary_source": "Sol downloaded Gordon LJCR Zenodo19735294 v1.2 coverdata.json; MD5 b2c626b07f216aac830d344eff5ad523 matches author release. Exact C(20,10,4) entry is size36, lower32; contributor Rade Belic 2001-05-03. Full block list saved from matching LJCR record and normalized from labels1..20 to0..19. Bounds32–36 leave a gap in checked sources.",
+      "record_correction": "Sol read Deliever et al. CD-BL-MT.pdf, PDF page30/printed28 Table3 and the column definitions on preceding page. The35-block attempt has Cost18 uncovered t-subsets, so it is infeasible and does not improve the published36. Source and reported value reconciled accordingly.",
+      "independent_method": "Sol personally ran human and reference. Independent bit masks verify all4845 four-subsets against the36 distinct ten-element blocks and count the exact objective, separate from the task checker. Damaged block and entire score-claim invariance, strict replay, cold export and failure controls pass.",
+      "admission": "Five required programs passed both old and new config. New cold init1001 blocks, traditional greedy73, reference/human36, evolution fallback1001. New configuration is usable through standard runner. The old C01 SOTA and frozen comparisons are preserved. C(24,12,5) upper86 deferred until its full witness is available."
+    },
+    "configuration_ids": [
+      "T008-C02"
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "T027",
+  "name": "Quadratic assignment on QAPLIB tai256c",
+  "acceptance_status": "accepted_by_sol",
+  "candidate_id": "quadratic-assignment",
+  "configurations": [
+    {
+      "id": "T027-C01",
+      "parameters": {
+        "instance": "QAPLIB tai256c",
+        "n": 256,
+        "matrix_file": "data/tai256c.dat",
+        "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+        "permutation_convention": "zero-based location assigned to each zero-based facility",
+        "objective": "sum_{i=0}^{255} sum_{j=0}^{255} A[i,j] * B[p[i],p[j]]",
+        "objective_unit": "QAPLIB objective units",
+        "feasibility": "p is a bijection from {0,...,255} to {0,...,255}",
+        "source_snapshot": "Debian r-cran-qap 0.1-1-2, QAPLIB files"
+      },
+      "direction": "minimize",
+      "human_reference": 44759294
+    }
+  ],
+  "search_metadata": {
+    "algorithm": "randomized first-improvement pair-swap local search",
+    "default_seed": 0,
+    "candidate_reads_reference_witness": false,
+    "baseline_default_checks": 10000,
+    "budget_note": "Default search uses a fixed check count and seed. An explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "固定QAPLIB tai256c的两份256阶整数矩阵。最小化65536项二次指派成本。",
+      "人类来源": "QAPLIB将44759294归于ANT，并在1997年历史中记载Stützle。复现归档排列，不声称重跑原搜索。",
+      "独立验算": "主代理取逆排列，按位置顺序独立累计全部65536项。五种程序均通过严格重放、破坏、分数篡改、冷导出及异常控制。",
+      "开放状态与限制": "arXiv:2401.09439v2正文报告下界44200000，上界44759294。版本为2024-09-30，PDF题页2024-10-01。摘要及两个网页仍有不同旧下界，已保留差异。最新搜索未发现闭合证明，搜索并不穷尽。"
+    }
+  }
+}

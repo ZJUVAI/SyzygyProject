@@ -1,64 +1,101 @@
 {
   "task_id": "T060",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T060-C01": {
-      "public_value": "23",
-      "public_source": {
-        "url": "https://ljcr.dmgordon.org/cover/show_cover.php?v=24&k=14&t=4",
-        "archive_url": "https://zenodo.org/records/19735294",
-        "archive_file": "coverdata.json",
-        "witness_archive_file": "covers.json",
-        "archive_version": "1.2",
-        "recorded_contributor": "Andrei Ochmat",
-        "recorded_date": "2004-07-20",
-        "history": [
-          {
-            "value": "24",
-            "contributor": "JCD article",
-            "date": "1996-11-14 17:08:00"
-          }
-        ],
-        "provenance_note": "Zenodo archive metadata reports the best known size and its improvement history. It does not provide the construction method in this record."
+      "program": "reference.py",
+      "reproduced_value": 127,
+      "public_value": 127,
+      "highest_reported": {
+        "value": 127,
+        "source": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
+        "reproduction_status": "expression copied from public proposal and exactly re-evaluated; the cited page labels it an AI-assisted result"
       },
-      "covers_json_byte_offset": 332010995,
-      "reproduced_value": "23",
-      "program": "sota.py",
-      "witness": "data/sota_witness.json",
-      "reproduction_command": ".venv/bin/python -m mathbench evaluate T060 tasks/t060/sota.py --strict",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "checked_at": "2026-11-05",
-      "limitations": [
-        "The archive attributes the 23-block improvement to Andrei Ochmat but does not state the construction method in its metadata.",
-        "The covering repository reports a best known construction, not a proof that 23 is optimal."
-      ],
+      "public_source": {
+        "title": "Integer complexity of 2^61-1: 127 ones",
+        "url": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
+        "same_parameters": true,
+        "source_snapshot": "2026-10-13; page and board state rechecked 2026-11-06",
+        "ai_provenance": "The page says generative AI assistants served as research assistants. Classified as AI-assisted; internal division of work is not stated.",
+        "witness": "data/reference/public_127_expression.json",
+        "sha256": "946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449",
+        "board_repository_commit": "394bec0d2c976a967414d95388ca2e024ce19dd1",
+        "proposal": "https://github.com/math-market/integer-complexity-m61/pull/4",
+        "proposal_head": "6b79a6324891b4b196731f78fcd7a9b978524b25",
+        "proposal_status_checked": "open, not merged, 2026-11-06",
+        "optimality": "construction only; no exact value proof is reported by the reviewed sources"
+      },
+      "best_human": {
+        "value": 153,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "method": "reconstructed base-3 Horner expression",
+        "provenance": "Traditional positional Horner construction from the target's base-3 digits; not claimed as a literature record.",
+        "source": "https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf",
+        "witness": "data/human/human_base3_expression.json",
+        "evidence_state": "Rebuilt independently from the 39 base-3 digits and exactly re-evaluated; 153 leaves.",
+        "ai_provenance": "This is the task's reconstruction of a standard method, not an attributed external discovery."
+      },
+      "best_public": {
+        "value": 127,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "url": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
+        "witness": "data/reference/public_127_expression.json",
+        "origin_type": "AI-assisted public construction",
+        "evidence_state": "Exact expression is public; SHA-256 matches the file attached to board PR #4.",
+        "optimality": "not proved"
+      },
+      "best_reproduced": {
+        "value": 127,
+        "parameters": {
+          "target": "2^61-1"
+        },
+        "program": "reference.py",
+        "witness": "data/reference/public_127_expression.json",
+        "evidence_state": "Task checker exactly parsed the expression, recomputed M61, and counted 127 leaves.",
+        "origin_type": "Reproduction of an AI-assisted public construction; no new discovery claimed."
+      },
+      "other_public_baseline": {
+        "value": 150,
+        "source": "https://github.com/math-market/integer-complexity-m61",
+        "witness": "board baseline.txt, Horner expansion in base 32767",
+        "classification": "challenge bar, explicitly not a record; AI provenance unstated"
+      },
+      "lower_bound": {
+        "value": 116,
+        "source": "https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf",
+        "proof_check": "Selfridge's exact extremal formula gives E(115)=1801135623563989452 < M61 and E(116)=2701703435345984178 > M61. The checker uses integer powers only.",
+        "status": "proved lower bound"
+      },
+      "survey_note": "On 2026-11-06, the cited result page and board PR were checked. They support 116 <= complexity(M61) <= 127 and do not establish the exact value. This is a bounded source review, not an exhaustive claim.",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T060",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T060",
           "config_id": "T060-C01",
           "validity": 1.0,
-          "combined_score": 2.6956521739130435,
-          "objective": 23,
+          "combined_score": 1.204724409448819,
+          "objective": 127,
           "verification_status": "exact",
-          "generation_time": 0.2652539797127247,
-          "verification_time": 0.2151874043047428,
-          "objective_value": 23,
+          "generation_time": 3.798034332692623,
+          "verification_time": 4.200659189373255,
+          "objective_value": 127,
           "details": {
-            "parameters": {
-              "v": 24,
-              "k": 14,
-              "t": 4
-            },
-            "blocks": 23,
-            "covered_four_subsets": 10626,
-            "total_four_subsets": 10626,
-            "claimed_objective_mismatch": false,
-            "optimality_proved": false
+            "target": "2305843009213693951",
+            "expression_value": "2305843009213693951",
+            "ones_count": 127,
+            "expression_tree": true,
+            "certified_lower_bound": 116,
+            "selfridge_max_at_115": "1801135623563989452",
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.48527121916413307,
+          "eval_time": 8.007797997444868,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -68,28 +105,21 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t060/data/sota_witness.json",
         "independent_quantity": {
-          "blocks": 23,
-          "four_subsets": 10626
+          "one_count": 127,
+          "exact_value": 2305843009213693951,
+          "strict_lower_bound": 116
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked Zenodo v1.2 provenance, independently compared the extracted C(24,14,4) array against the saved 0-based witness, and verified all 10,626 four-subsets using bit masks. Empty coverage is rejected and forged scores are ignored.",
-        "snapshot_date": "2026-11-05"
+        "evidence": "acceptance.json"
       }
-    }
-  },
-  "sol_review": {
-    "T060-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
     }
   }
 }

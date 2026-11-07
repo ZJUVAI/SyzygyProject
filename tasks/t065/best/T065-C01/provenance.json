@@ -1,0 +1,64 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T065",
+    "config_id": "T065-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 261,
+    "verification_status": "exact",
+    "generation_time": 2.594042345881462,
+    "verification_time": 2.0573122948408127,
+    "objective_value": 261,
+    "details": {
+      "point_count": 100,
+      "unordered_pairs_checked": 4950,
+      "unit_distance_pairs": 261,
+      "coordinate_field_degree": 4,
+      "minimal_polynomial_irreducible": true,
+      "selected_real_root_count": 1,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 4.855931408703327,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "exhaustive factor-pair scan of 100-point rectangular triangular-lattice patches",
+    "seed": 0,
+    "iterations_requested": 9,
+    "iterations_run": 9,
+    "candidate_shapes_checked": 9,
+    "best_shape": {
+      "columns": 10,
+      "rows": 10
+    },
+    "family_edge_formula": "(columns-1)*rows + columns*(rows-1) + (columns-1)*(rows-1)",
+    "generation_seconds": 0.0028116293251514435,
+    "budget": {
+      "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
+      "runner_generation_limit_seconds": 300
+    }
+  },
+  "solution_sha256": "65b3ea9c60028197121e05384a926814dd039af0a0dfd4c90c8303cacbcb965a",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T065 tasks/t065/best/T065-C01/solution.json --config T065-C01"
+}

@@ -1,0 +1,33 @@
+{
+  "task_id": "T039",
+  "name": "Difference triangle sets with seven rows and six marks per row",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T039-C01",
+      "parameters": {
+        "rows": 7,
+        "marks_per_row": 6,
+        "difference_triangle_parameters": {
+          "n": 7,
+          "k": 5
+        }
+      },
+      "direction": "minimize",
+      "human_reference": 112
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "7行，每行6个整数标记；全部105个行内正差互不相同，最小化最大正差。论文(n,k)=(7,5)，不能按5个标记解释。",
+      "primary_upper_bound": "逐字核对Shehadeh、Kingsford、Kschischang，JCD DOI10.1002/jcd.22009，表1和附录A全部42个标记；作者固定仓库给出相同112构造。755是各行跨度和，不是目标。",
+      "primary_lower_bound": "亲自提取并阅读Shearer1999原文，Remark2公式(5)给出(91I+6)/6；I=7得643/6，向上取整108。表1第5行第7列也为108。所查108–112仍有差距。",
+      "independent_verification": "五种程序均独立排序105个绝对差，核对严格递增及最大值；合法、故意破坏、整个验证结果不受声明成绩影响、严格回放、冷导出和三类失败检查均通过。",
+      "limits": "本地复现可行性，不复现FPGA完整搜索或下界LP；未声称112最优。"
+    }
+  }
+}

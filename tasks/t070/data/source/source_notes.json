@@ -1,0 +1,22 @@
+{
+  "dataset": {
+    "title": "MrsPerkinssQuilts.txt",
+    "url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+    "zip_sha256": "ea43c7728ada8bec7fe93d4ffc3dfa88f3b37f0b6be9a36e1e8ea1b1b64bb98a",
+    "text_sha256": "ec6b0f9b21eda14648de00317371cf6f07f456c72fab235fa9ecaaffe798c2e7",
+    "archive_policy": "Only the exact source row for size 1000 is stored in this task; the full text file is not duplicated."
+  },
+  "row": {
+    "path": "pegg_2017_row_1000.txt",
+    "line_number": 1000,
+    "sha256": "011cbfe1a1933cf20ba51f78f4c721ca447636bc4e52d8ea1255b7cb92a5e880",
+    "format": "order, outer width, outer height, then one side length per square",
+    "order": 27,
+    "outer_side": 1000,
+    "source_note": "Ed Pegg Jr's July 2017 update; the source page says its quilt data was updated from computer searches and mathematical work."
+  },
+  "decoder": "Apply the lowest-y, then lowest-x skyline placement to the 27 listed side lengths. The decoded placements are saved in data/reference/pegg_1000_27.json and hashed separately.",
+  "problem_definition": "A quilt is a square dissected into smaller integer squares. A Mrs Perkins quilt requires the side lengths to have gcd 1. Compound/sub-quilt structure is allowed; primitive is a separate restriction and is not imposed here.",
+  "optimality": "The source page says most listed results past order 18 have not been proved best possible. Wynn's exhaustive search covers order at most 18. Neither fact proves the minimum order for the 1000 square.",
+  "ai_provenance": "The source attributes the July 2017 update to Ed Pegg Jr and describes both computer programs and hand analysis. It does not discuss generative-AI use."
+}

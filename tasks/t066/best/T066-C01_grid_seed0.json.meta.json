@@ -1,0 +1,14 @@
+{
+  "configuration_id": "T066-C01",
+  "seed": 0,
+  "iteration_limit": 96,
+  "iterations": 96,
+  "elapsed_seconds": 0.043849,
+  "objective": 13,
+  "verification_status": "exact",
+  "replay_command": "MATHBENCH_CONFIG_ID=T066-C01 MATHBENCH_SEED=0 .venv/bin/python -c 'from tasks.t066.baseline import run_code; print(run_code())'",
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "python": "3.13",
+  "cpu_threads": 1
+}

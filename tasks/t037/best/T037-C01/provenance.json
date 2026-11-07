@@ -1,0 +1,54 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T037",
+    "config_id": "T037-C01",
+    "validity": 1.0,
+    "combined_score": 0.45,
+    "objective": 18,
+    "verification_status": "exact",
+    "generation_time": 0.26509831473231316,
+    "verification_time": 0.26474741473793983,
+    "objective_value": 18,
+    "details": {
+      "dimension": 5,
+      "minimum_angle_degrees": 60,
+      "pair_checks": 153,
+      "representation": "exact rational directions"
+    },
+    "eval_time": 0.5323496572673321,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded random integer-direction greedy additions",
+    "seed": 0,
+    "iterations": 200,
+    "accepted_additions": 8,
+    "coordinate_range": [
+      -2,
+      2
+    ],
+    "budget": "fixed iteration count; shared runner hard limit applies"
+  },
+  "solution_sha256": "205e2535250c57a147001664516289bc25daff066b58311bd49763e488851faf",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T037 tasks/t037/best/T037-C01/solution.json --config T037-C01"
+}

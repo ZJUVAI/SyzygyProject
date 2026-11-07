@@ -1,0 +1,50 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T078",
+    "config_id": "T078-C01",
+    "validity": 1.0,
+    "combined_score": 0.25,
+    "objective": 3072,
+    "verification_status": "exact",
+    "generation_time": 0.5085173845291138,
+    "verification_time": 0.4883471019566059,
+    "objective_value": 3072,
+    "details": {
+      "dimension": 10,
+      "minimum_squared_norm_at_least": 4,
+      "nonzero_vectors_below_threshold": 0,
+      "ellipsoid_nodes_visited": 217,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 1.0026354305446148,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded 32-trial selection and exact determinant ranking of scaled A10, D10, E8+A2, and 4I forms",
+    "seed": 0,
+    "trials_completed": 32,
+    "reference_data_read": false
+  },
+  "solution_sha256": "d82f33d87e6863109ea0800a65dfd3b19e5d7e3aefbf90e02bb58cb2e925b1f7",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T078 tasks/t078/best/T078-C01/solution.json --config T078-C01"
+}

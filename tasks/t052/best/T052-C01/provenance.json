@@ -1,0 +1,58 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T052",
+    "config_id": "T052-C01",
+    "validity": 1.0,
+    "combined_score": 0.10909090909090909,
+    "objective": 144,
+    "verification_status": "exact",
+    "generation_time": 2.2008268423378468,
+    "verification_time": 0.41780050098896027,
+    "objective_value": 144,
+    "details": {
+      "length": 12,
+      "minimum_distance_required": 9,
+      "minimum_distance_observed": 9,
+      "codewords_checked": 144,
+      "pairs_checked": 10296,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 2.6274998001754284,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded multi-start greedy packing; best valid batch retained",
+    "seed": 0,
+    "iterations_requested": 32,
+    "iterations_run": 32,
+    "candidates_per_generation": 750,
+    "objective_recomputed": 144,
+    "generation_seconds": 1.7405026517808437,
+    "budget": {
+      "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
+      "runner_generation_seconds": 300
+    }
+  },
+  "solution_sha256": "c2c312f087eb4e791f0bde9d790c68bf1103a9585da6184a2d1103bd8f465f3c",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T052 tasks/t052/best/T052-C01/solution.json --config T052-C01"
+}

@@ -1,14 +1,12 @@
-"""Pinned historical human witness, stored within this task."""
-import json
-import os
-from pathlib import Path
+"""Rebuild the classical D4 24-cell spherical 5-design."""
 
-FILES = {"T073-C01": "human_labs100_record.json",
-         "T073-C02": "human_labs80_record.json",
-         "T073-C03": "human_labs120_record.json"}
+import os
+
+from tasks.t073.construction import d4_24cell_points, serialize_rational_points
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T073-C01")
-    data = json.loads((Path(__file__).parent / "data" / FILES[config_id]).read_text())
-    return {"sequence": data["sequence"]}
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T073-C01")
+    if chosen != "T073-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    return serialize_rational_points(d4_24cell_points())

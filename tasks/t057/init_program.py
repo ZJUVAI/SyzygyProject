@@ -1,14 +1,12 @@
-"""Small deterministic seed; the optimizer can mutate it."""
+"""Self-contained feasible construction: one customer per vehicle route."""
+
 import os
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T057-C01") != "T057-C01":
-        raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T057-C01")
+    if chosen != "T057-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    values = [0, 2, 3, 4, 7, 11, 12, 14]
-    if seed % 2:
-        values = [14, 12, 11, 7, 4, 3, 2, 0]
+    return {"routes": [[customer] for customer in range(2, 1002)]}
     # EVOLVE-BLOCK-END
-    return {"set": values}

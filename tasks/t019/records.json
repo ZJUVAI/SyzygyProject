@@ -1,0 +1,134 @@
+{
+  "task_id": "T019",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 2340,
+    "parameters": {
+      "k": 343
+    },
+    "authors": [
+      "Thomas Engelsma"
+    ],
+    "year": 2013,
+    "url": "https://mathbases.org/d/narrow-admissible-tuples",
+    "evidence_state": "published tuple copied from the audited source artifact and independently checked for feasibility and diameter",
+    "optimality": "The source row is unmarked; optimality is not claimed.",
+    "witness": "data/human_343.json"
+  },
+  "best_public": {
+    "value": 2340,
+    "parameters": {
+      "k": 343
+    },
+    "url": "https://math.mit.edu/~primegaps/tuples/admissible_343_2340.txt",
+    "evidence_state": "source artifact reports k=343, diameter 2340, credited to Engelsma (2013); full tuple saved locally and checked",
+    "optimality": "No optimality claim; the source's missing marker is not a proof.",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 2340,
+    "parameters": {
+      "k": 343
+    },
+    "provenance": "human published witness",
+    "evidence_state": "independently validated against all 68 primes through 343 and exact integer diameter"
+  },
+  "baseline_seed": {
+    "value": {
+      "T019-C01": "342 times the product of all primes through 343",
+      "T019-C02": "first 1000 primes greater than 1000",
+      "T019-C03": "first 3000 primes greater than 3000"
+    },
+    "provenance": "simple consecutive-multiples construction in init_program.py",
+    "evidence_state": "each generated seed is exactly admissible; C02/C03 have diameter below 50000 and finite score conversion"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "k_1000": {
+    "best_human": {
+      "value": 7802,
+      "parameters": {
+        "k": 1000
+      },
+      "authors": [
+        "Engelsma"
+      ],
+      "year": 2013,
+      "url": "https://math.mit.edu/~primegaps/tuples/admissible_1000_7802.txt",
+      "evidence_state": "MIT tuple copied, and MathBases accepted.log identifies submitter with currentRecord=yes; task independently checks tuple and diameter",
+      "optimality": "not marked proven; accepted.log description blank",
+      "witness": "data/human_1000.json",
+      "sha256": "7666fa63333ffbbf0135016f4e6bc73b5b0cecf0e244ea4b865688cefe33af25"
+    },
+    "best_public": {
+      "value": 7802,
+      "parameters": {
+        "k": 1000
+      },
+      "url": "https://math.mit.edu/~primegaps/tuples/admissible_1000_7802.txt",
+      "evidence_state": "same-parameter MIT artifact; current MathBases database reports narrowest known tuple range k=2..5000 updated 2026-07-14",
+      "optimality": "not marked proven; accepted.log description blank",
+      "origin_type": "unknown",
+      "sha256": "7666fa63333ffbbf0135016f4e6bc73b5b0cecf0e244ea4b865688cefe33af25",
+      "submitter": "Engelsma",
+      "current_record": true,
+      "mathbases_record_url": "https://math.mit.edu/~primegaps/tuples/accepted.log"
+    }
+  },
+  "k_3000": {
+    "best_human": {
+      "value": 26606,
+      "parameters": {
+        "k": 3000
+      },
+      "authors": [
+        "xfxie"
+      ],
+      "year": 2013,
+      "url": "https://math.mit.edu/~primegaps/tuples/admissible_3000_26606.txt",
+      "evidence_state": "MIT tuple copied, and MathBases accepted.log identifies submitter with currentRecord=yes; task independently checks tuple and diameter",
+      "optimality": "not marked proven; accepted.log description blank",
+      "witness": "data/human_3000.json",
+      "sha256": "309f6d8c08c5ad821f7626e64bd20bec11ee2cb16a6557874eef815a26cc05a8"
+    },
+    "best_public": {
+      "value": 26606,
+      "parameters": {
+        "k": 3000
+      },
+      "url": "https://math.mit.edu/~primegaps/tuples/admissible_3000_26606.txt",
+      "evidence_state": "same-parameter MIT artifact; current MathBases database reports narrowest known tuple range k=2..5000 updated 2026-07-14",
+      "optimality": "not marked proven; accepted.log description blank",
+      "origin_type": "unknown",
+      "sha256": "309f6d8c08c5ad821f7626e64bd20bec11ee2cb16a6557874eef815a26cc05a8",
+      "submitter": "xfxie",
+      "current_record": true,
+      "mathbases_record_url": "https://math.mit.edu/~primegaps/tuples/accepted.log"
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T019-C01": {
+      "objective": 738618971698707114724185491282414717945192998076415916248707090255107158808576221136520697066313981897227269221105572775579355751767196180,
+      "objective_value": 738618971698707114724185491282414717945192998076415916248707090255107158808576221136520697066313981897227269221105572775579355751767196180,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 3.168074595509467e-135
+    },
+    "T019-C02": {
+      "objective": 8424,
+      "objective_value": 8424,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.9261633428300095
+    },
+    "T019-C03": {
+      "objective": 28972,
+      "objective_value": 28972,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.9183349440839431
+    }
+  }
+}

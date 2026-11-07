@@ -38,8 +38,8 @@
   "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
   "frozen_human_baseline_type": "published human witness or explicit construction formula",
   "configuration_records": {
-    "T002-C03": {
-      "id": "T002-C03",
+    "T002-C02": {
+      "id": "T002-C02",
       "best_human": {
         "value": 5.933885799813026,
         "date_checked": "2026-11-04",
@@ -94,8 +94,8 @@
         ]
       }
     },
-    "T002-C04": {
-      "id": "T002-C04",
+    "T002-C03": {
+      "id": "T002-C03",
       "best_human": {
         "value": 6.707106781186548,
         "date_checked": "2026-11-04",
@@ -149,6 +149,29 @@
           "cold export valid"
         ]
       }
+    }
+  },
+  "initial_results": {
+    "T002-C01": {
+      "objective": "6",
+      "objective_value": "6",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.936886723926607
+    },
+    "T002-C02": {
+      "objective": "6",
+      "objective_value": "6",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9889809666355043
+    },
+    "T002-C03": {
+      "objective": "7",
+      "objective_value": "7",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9581581115980783
     }
   }
 }

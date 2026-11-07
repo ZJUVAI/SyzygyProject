@@ -1,0 +1,71 @@
+{
+  "task_id": "T032",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T032-C01": {
+      "best_human": {
+        "value": 126,
+        "parameters": {
+          "rows": 14,
+          "columns": 19,
+          "forbidden_submatrix": [
+            3,
+            3
+          ]
+        },
+        "source": "Saurabh's explicit matrix, found by classical kicked-greedy search; no language model or learned component is reported.",
+        "source_url": "https://arxiv.org/html/2608.26603v1",
+        "witness": "data/human_witness.json",
+        "evidence_state": "The explicit witness is independently reproduced and exactly checked. The discovery search itself is not claimed reproduced.",
+        "ai_provenance": "The paper states classical kicked-greedy search, with no language model and no learned component; NOVA autonomously selected the cell, ran the search, and packaged the results."
+      },
+      "best_public": {
+        "value": 126,
+        "parameters": {
+          "rows": 14,
+          "columns": 19,
+          "forbidden_submatrix": [
+            3,
+            3
+          ]
+        },
+        "source_url": "https://arxiv.org/html/2608.26603v1",
+        "witness_url": "https://arxiv.org/src/2608.26603",
+        "evidence_state": "Published lower bound with an explicit matrix. It does not prove optimality."
+      },
+      "best_reproduced": {
+        "value": 126,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "verification_method": "Recount all entries and check all 364 row triples for fewer than three common one-columns.",
+        "date_checked": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      },
+      "other_reported_results": [
+        {
+          "value": 121,
+          "parameters": {
+            "rows": 14,
+            "columns": 19,
+            "forbidden_submatrix": [
+              3,
+              3
+            ]
+          },
+          "source_url": "https://arxiv.org/abs/2605.01120",
+          "evidence_state": "Earlier AI-assisted report; superseded by the 126 explicit matrix."
+        }
+      ]
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T032-C01": {
+      "objective": 0,
+      "objective_value": 0,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0
+    }
+  }
+}

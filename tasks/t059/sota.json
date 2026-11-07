@@ -1,0 +1,102 @@
+{
+  "task_id": "T059",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T059-C01": {
+      "program": "reference.py",
+      "reproduced_value": 80,
+      "public_value": 80,
+      "best_human": {
+        "value": 80,
+        "source": {
+          "title": "Short Communication: Larger Cliques for a DIMACS Test",
+          "authors": "A. Grosso, M. Locatelli, W. J. Pullan",
+          "year": 2005,
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf"
+        },
+        "ai_provenance": "Not stated by the source."
+      },
+      "best_public": {
+        "value": 80,
+        "source": {
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "witness": "data/reference/human_2005_clique80.json"
+        },
+        "reproduction_status": "all 3160 pairs checked against pinned input"
+      },
+      "best_reproduced": {
+        "value": 80,
+        "program": "reference.py",
+        "witness": "data/reference/human_2005_clique80.json",
+        "reproduction_status": "exact all-pairs adjacency check"
+      },
+      "highest_reported": {
+        "value": 80,
+        "source": {
+          "title": "Short Communication: Larger Cliques for a DIMACS Test",
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "snapshot_date": "2026-11-06"
+        },
+        "reproduction_status": "published 80-vertex witness downloaded and independently verified"
+      },
+      "reported_upper_bound": {
+        "value": 168,
+        "source": {
+          "title": "Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules",
+          "url": "https://arxiv.org/abs/2607.11726v1",
+          "code_commit": "79d3fe7dcfb09237042ad5059a4f1352838e3ba2"
+        },
+        "status": "reported by authors as a certified integer upper bound; not independently reproduced here",
+        "method": "core reduction with Lovasz theta SDP bound"
+      },
+      "optimality_status": "unknown",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T059",
+          "config_id": "T059-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 80,
+          "verification_status": "exact",
+          "generation_time": 0.4916391298174858,
+          "verification_time": 5.300455953925848,
+          "objective_value": 80,
+          "details": {
+            "instance": "C2000.9",
+            "vertex_count": 2000,
+            "edge_count": 1799532,
+            "clique_edges_checked": 3160,
+            "graph_source_sha256": "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 5.800898235291243,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "clique_cardinality": 80,
+          "required_edges_found": 3160
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

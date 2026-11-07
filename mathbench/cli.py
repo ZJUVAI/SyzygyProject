@@ -2,7 +2,14 @@
 import argparse
 import json
 from .evaluate import evaluate_candidate
-from .registry import INITIAL_TASKS, load_task
+from .registry import INITIAL_TASKS, load_task, resolve_task_id
+
+
+def resolve_task_argument(value):
+    try:
+        return resolve_task_id(value)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(str(error)) from error
 
 
 def main():
@@ -10,16 +17,16 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("list")
     export = commands.add_parser("export-seed")
-    export.add_argument("task", choices=INITIAL_TASKS)
+    export.add_argument("task", type=resolve_task_argument, metavar="TASK_ID")
     export.add_argument("destination")
     export.add_argument("--config")
     replay = commands.add_parser("replay")
-    replay.add_argument("task", choices=INITIAL_TASKS)
+    replay.add_argument("task", type=resolve_task_argument, metavar="TASK_ID")
     replay.add_argument("solution")
     replay.add_argument("--config")
     replay.add_argument("--output")
     run = commands.add_parser("evaluate")
-    run.add_argument("task", choices=INITIAL_TASKS)
+    run.add_argument("task", type=resolve_task_argument, metavar="TASK_ID")
     run.add_argument("program")
     run.add_argument("--config")
     run.add_argument("--strict", action="store_true")

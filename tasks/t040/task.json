@@ -1,0 +1,86 @@
+{
+  "task_id": "T040",
+  "name": "Maximum volume of a polytope inscribed in S²",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T040-C01",
+      "parameters": {
+        "n": 11,
+        "space": "unit sphere S2 in R3",
+        "objective": "Euclidean volume of the convex hull",
+        "objective_unit": "unit-radius cubed"
+      },
+      "direction": "maximize",
+      "human_reference": 2.3546344950686153,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T040-C02",
+      "parameters": {
+        "n": 13,
+        "space": "unit sphere S2 in R3",
+        "objective": "Euclidean volume of the convex hull",
+        "objective_unit": "unit-radius cubed"
+      },
+      "direction": "maximize",
+      "acceptance_status": "accepted_by_sol",
+      "human_reference": 2.612834152060219
+    },
+    {
+      "id": "T040-C03",
+      "parameters": {
+        "n": 15,
+        "space": "unit sphere S2 in R3",
+        "objective": "Euclidean volume of the convex hull",
+        "objective_unit": "unit-radius cubed"
+      },
+      "direction": "maximize",
+      "acceptance_status": "accepted_by_sol",
+      "human_reference": 2.8043793818350395
+    }
+  ],
+  "budgets": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "numerical_threads": 1
+  },
+  "search_metadata": {
+    "algorithm": "seeded stereographic-coordinate perturbation with simulated-annealing acceptance",
+    "iterations": 400,
+    "default_seed": 0,
+    "objective_feedback": "floating-point scipy ConvexHull feedback; official scores are exact rational checker outputs"
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "11个不同点精确位于单位S²，最大化凸包体积。文献允许至多11顶点，与本任务最优值一致：所有球面点均为凸包极点，增加不同球面点不会减小体积。",
+      "primary_source": "亲自核对Hardin–Sloane–Smith1994主页3维11点行，公开值2.354634495069；原始33个小数经有理立体投影重建，精确体积约2.3546344950686153。重建见证和原始精确未舍入见证作区分。Mutoh较弱值未当作最高记录。",
+      "open_status": "亲自阅读Hoehner–Ledford arXiv2608.04392v1引言：n=9已解决，n=11及≥13仍开放；n=10另有即将发表工作，故未选n=10。",
+      "independent_verification": "五种保存构造均独立检查精确单位球面、18个三角支撑面，以内部质心为顶点累加精确四面体体积，与正式检查器的规范支撑平面和定向边界积分一致。检查器对共面多边形面的处理另有任务测试。",
+      "controls": "五种程序、破坏样例、声明成绩完整不变性、严格回放、冷导出与程序错误/非有限数/超时全部通过。",
+      "limits": "冻结H是精确重构值的binary64近似，精确目标另以有理数保留。未证明全局最优，浮点Qhull只作搜索反馈。"
+    }
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximize Euclidean volume of the convex hull of n distinct points on the unit sphere S2. Keep11; add13 and15. Exact rational stereographic representation remains feasible and dense.",
+      "primary_source": "Sol checked Hardin–Sloane–Smith Maximal Volume Spherical Codes author table at https://neilsloane.com/maxvolumes/index.html. It labels arrangements putatively optimal and gives2.612834152060 for13,2.804379381835 for15. Sol fetched both coordinate files and verified 39/45 decimal entries. Source files and reconstructed witnesses are hashed.",
+      "open_status": "Horvath and Langi, https://math.bme.hu/~ghorvath/inscribedpoly_ddim_4.pdf introduction, describe Mutoh results for up to30 vertices as computer-aided search, not general global optimality proof. Their theorems for d+2/d+3 do not cover13/15 in3D. Excluded classical solved sizes, including12. No proof for13/15 was found in checked sources.",
+      "independent_method": "Sol ran both human/reference cases. Independent exact centroid-pyramid volume sums over supporting triangular facets agree with the task oriented boundary/plane-canonicalization method. There are22 and26 facets; exact volumes round to the respective 12-place source values. This certifies reconstructed feasible configurations, not the unrounded original optimizer.",
+      "admission": "All five programs, strict replay, invalid points, full score-claim invariance, isolated cold export and program-error/nonfinite/timeout controls passed. Existing11-point archives retained."
+    },
+    "configuration_ids": [
+      "T040-C02",
+      "T040-C03"
+    ]
+  }
+}

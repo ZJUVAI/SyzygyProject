@@ -1,0 +1,35 @@
+{
+  "primary_paper": {
+    "version": "arXiv:2411.08139v2, 2025-03-16",
+    "url": "https://arxiv.org/html/2411.08139v2",
+    "locations": "Section 1 defines the positive-integer sum-product problem; Table 2 gives n=32, |A+A|=154, |AA|=154 and Psi_35^5 minus {75,81,100}; the text says these dataset minima are not known to be optimal.",
+    "computational_method": "Section 2 reports examining every subset of [36], translated and dilated sets of bounded diameter, divisor-derived sets, and randomized sets. It says most exploration used Mathematica 14 and some speed-critical steps used Julia 1.10.",
+    "ai_provenance": "The checked paper does not discuss generative-AI use. No stronger claim about the author's workflow is made here."
+  },
+  "author_dataset_snapshot": {
+    "url": "https://www.math.csi.cuny.edu/~obryant/SumProduct/",
+    "file": "SPPsets.txt",
+    "retrieved_snapshot_date": "2026-11-06",
+    "bytes": 102089754,
+    "sha256": "20d33250e047272c170fb575a9dad51dec81c882a5694d2a674d2357dae597b8",
+    "line_count": 1163592,
+    "note": "The paper's v2 abstract reports 1,162,868 sets. The retrieved file snapshot has 1,163,592 lines; these are separate version-specific counts. The entire file is not duplicated in this task."
+  },
+  "saved_source_row": {
+    "path": "obryant_spp_n32_row_1005722.txt",
+    "line_number": 1005722,
+    "sha256": "0cd52d3292fdef5a69e851e8c6d8c37c285666c6064377dc09e3c6cd7e0a58e4",
+    "format": "One brace-delimited set of comma-separated positive integers",
+    "interpretation": "The row equals Psi_35^5 minus {75,81,100}, with 32 elements. Its exact sumset and product-set sizes are both 154."
+  },
+  "reproduced_witness": {
+    "path": "../reference/obryant_n32_154.json",
+    "sha256": "21862735ba6d83cb1017b2c3cfad783d0fc039ba18d0ac85d45a7398240d7e25",
+    "verification": "Recomputed all ordered pairs of the 32 integers using Python arbitrary-precision integer addition and multiplication; obtained 154 distinct sums and 154 distinct products."
+  },
+  "open_status": {
+    "survey_date": "2026-11-06",
+    "evidence": "The v2 paper explicitly says its tabled minima are not known to be optimal and its dataset is incomplete. The checked 2026 small-set paper arXiv:2601.21828 proves exact values only for cardinalities 10 and 11; it does not settle cardinality 32.",
+    "limitation": "The 154 construction is a feasible upper bound for this minimization task, not a proof of the minimum."
+  }
+}

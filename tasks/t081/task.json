@@ -1,41 +1,32 @@
 {
   "task_id": "T081",
-  "name": "Signed step-function autoconvolution extremum, 208 steps",
+  "name": "Minimum squared max-to-min pair-distance ratio for 12 planar points",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
-      "id": "T081-C02",
+      "id": "T081-C01",
       "parameters": {
-        "steps": 208,
-        "support": [
-          "-1/4",
-          "1/4"
-        ],
-        "signed_values_allowed": true,
-        "integral": 1
+        "dimension": 2,
+        "point_count": 12,
+        "coordinates": "exact rational numbers",
+        "constraint": "all points are distinct",
+        "objective": "maximum squared pair distance divided by minimum squared pair distance"
       },
       "direction": "minimize",
-      "human_reference": 1.5097201507458786
+      "human_reference": 8.464101615137755
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "非负208步人类构造转用于有符号类别。150步正峰值不能作为绝对峰值成绩。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Twelve arbitrary distinct rational points in the plane minimize maximum squared pair distance divided by minimum squared pair distance. No collinearity or bounding-box constraint. Density and continuity preserve the real-coordinate infimum.",
+      "primary_source": "Friedman maxmin n12 page attributes Rechenberg2006 value5+2sqrt3 without optimality proof. Root read the source diagram and independently reconstructed Q(sqrt3) coordinates: all66 pairs have minimum squared distance1 and maximum5+2sqrt3, with21 minimum pairs. Exact rational approximation to sqrt3 yields the formally reproduced slightly weaker ratio; it is not identified with the exact irrational record.",
+      "independent_method": "For each of five saved witnesses, rebuild all66 distances via the rational Gram identity norm(i)+norm(j)-2dot(i,j), separate from formal coordinate differences, and divide exact maximum by positive minimum.",
+      "open_status": "AlphaEvolve2511.02864v1 section6.50 distinguishes proved n<=8 from numerical n9..30 candidates. Later improvements at16/21/22/29 do not settle12; no n12 optimality proof located in reviewed sources.",
+      "admission": "Initial grid13, independent traditional/evolution48625/5274, human/reference rational near8.4641016151. All five strict runs, damage, claim invariance, independent exact score, replay, cold export and all failure controls pass. Agent16tests passed; main shared run follows."
+    }
   }
 }

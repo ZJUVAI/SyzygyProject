@@ -1,0 +1,183 @@
+{
+  "task_id": "T086",
+  "configurations": {
+    "T086-C01": {
+      "program": "reference.py",
+      "reproduced_value": "1",
+      "public_value": 1,
+      "highest_reported": {
+        "value": 1,
+        "source": "Duchi, Commentary on 'Towards a Noncommutative Arithmetic-Geometric Mean Inequality' (COLT 2012), together with AlphaEvolve arXiv:2511.02864v1 §6.47's all-identity upper-bound example and its report of no counterexample at the selected (4,4,3), Schatten-2 setting.",
+        "url": "https://arxiv.org/abs/2511.02864",
+        "reproduction_status": "The all-identity witness is independently reconstructed and exactly verified at ratio 1. The paper's AI search report is not a witness for a value below 1 and gives no proof of optimality."
+      },
+      "best_human": {
+        "value": 1,
+        "parameters": {
+          "n": 4,
+          "m": 4,
+          "dimension": 3,
+          "norm": "Schatten 2"
+        },
+        "source": "John C. Duchi, COLT 2012 commentary on the inside-sum variant; all four matrices set to I3 gives equal with- and without-replacement means.",
+        "url": "https://citeseerx.ist.psu.edu/document?doi=619325d9c18b896b94f4de0bd5be63a749a1f21c&repid=rep1&type=pdf",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical construction. The tuple of identity matrices is explicit and independently reconstructed; no AI contribution is involved in this baseline.",
+        "evidence_state": "Exact rational input; exact PSD minors; all product norms are sqrt(3), so the ratio is exactly 1.",
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7"
+      },
+      "best_public": {
+        "value": 1,
+        "parameters": {
+          "n": 4,
+          "m": 4,
+          "dimension": 3,
+          "norm": "Schatten 2"
+        },
+        "source": "Duchi's identity-matrix upper-bound example, as restated in AlphaEvolve arXiv:2511.02864v1 §6.47; the source reports that AlphaEvolve found no value below this bound in its tested configurations, which include this parameter/norm choice.",
+        "url": "https://arxiv.org/abs/2511.02864",
+        "date_checked": "2026-11-06",
+        "provenance": "The 2025 paper reports AI-assisted search but does not present the identity tuple as a new AI construction. The exact score-1 witness is the traditional all-identity example and is separately reproduced here.",
+        "evidence_state": "The value 1 is exactly attained by the saved identity witness. No proof that the infimum is at least 1 for this fixed configuration was found.",
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7"
+      },
+      "best_reproduced": {
+        "value": "1",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "n": 4,
+          "m": 4,
+          "dimension": 3,
+          "field": "complex",
+          "norm": "Schatten 2"
+        },
+        "program": "reference.py",
+        "verification_status": "certified",
+        "verification_method": "Exact rational complex multiplication, exact Hermitian PSD checks by all principal minors, integer-square-root intervals for all Frobenius norms, and exact cancellation of the all-identical product means.",
+        "objective_interval": [
+          "1",
+          "1"
+        ],
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7",
+        "origin_type": "traditional identity-matrix construction, exactly verified"
+      },
+      "frozen_human_baseline": {
+        "value": 1,
+        "witness_program": "human.py",
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7",
+        "endpoint_policy": "Freeze the exact mathematical ratio H=1 for compatibility score H/J.",
+        "evidence_state": "All 280 products equal I3 and have Frobenius norm sqrt(3), so the two means are exactly equal."
+      },
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": 1,
+        "note": "The task minimizes J. A score above 1 means improvement over the frozen human witness and does not by itself establish a counterexample to the conjecture unless J<1 is certified."
+      },
+      "optimality_status": {
+        "status": "open in sources checked",
+        "source_survey_date": "2026-11-06",
+        "evidence": "AlphaEvolve arXiv:2511.02864v1 §6.47 says m>=4 is open and includes (4,4,3) with Schatten 2 in its search list. A search that finds no counterexample is not a proof that the infimum is at least 1.",
+        "limitations": "The 2020 and 2026 Recht-Re results concern a norm outside the sum and do not establish the Duchi inside-sum inequality. The 2026 Evidence Press result is an unrefereed candidate with no unaffiliated rerun recorded."
+      },
+      "source_pins": {
+        "alphaevolve_paper": {
+          "title": "Mathematical exploration and discovery at scale",
+          "url": "https://arxiv.org/abs/2511.02864",
+          "version": "v1",
+          "relevant_location": "Section 6.47, printed page 57",
+          "local_extracted_text_sha256": "4934ab062476162665dcb49606c35387289447c1a194ef2d2198a9ffe2b3daf8"
+        },
+        "Duchi_commentary": {
+          "title": "Commentary on 'Towards a Noncommutative Arithmetic-Geometric Mean Inequality'",
+          "author": "John C. Duchi",
+          "url": "https://citeseerx.ist.psu.edu/document?doi=619325d9c18b896b94f4de0bd5be63a749a1f21c&repid=rep1&type=pdf",
+          "venue": "COLT 2012, PMLR 23, pages 11.25-11.27",
+          "note": "The commentary is part of the COLT volume; Duchi defines with- and without-replacement expectations and proposes putting each product norm inside the sum.",
+          "official_volume_url": "https://proceedings.mlr.press/v23/"
+        },
+        "outside_sum_counterexample": {
+          "title": "Recht-Re Noncommutative Arithmetic-Geometric Mean Conjecture is False",
+          "url": "https://proceedings.mlr.press/v119/lai20a.html",
+          "relevance": "Included to distinguish the outside-sum statement from this inside-sum task."
+        }
+      },
+      "review_status": "accepted_by_sol",
+      "ai_assisted_search_report": {
+        "source": "AlphaEvolve, arXiv:2511.02864v1 §6.47.",
+        "url": "https://arxiv.org/abs/2511.02864",
+        "provenance": "The paper describes AI-assisted search at (4,4,3) among listed configurations and tests Schatten 2. It reports no construction improving the identity upper bound. It does not identify a distinct n=4,d=3 Schatten-2 witness for that search outcome.",
+        "evidence_state": "Reported search outcome only. The score-1 identity witness is independently reconstructed from the traditional construction.",
+        "reported_reference_bound": 1
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T086",
+          "config_id": "T086-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "1",
+          "verification_status": "certified",
+          "generation_time": 0.9495183303952217,
+          "verification_time": 0.466888178139925,
+          "objective_value": "1",
+          "details": {
+            "n": 4,
+            "m": 4,
+            "dimension": 3,
+            "field": "complex rational",
+            "norm": "Schatten 2 / Frobenius",
+            "products_with_replacement": 256,
+            "products_without_replacement": 24,
+            "common_product_norm_squared": "3",
+            "objective_interval": [
+              "1",
+              "1"
+            ],
+            "upper_bound_for_minimization": "1",
+            "psd_verified_by_all_principal_minors": true,
+            "without_replacement_denominator_positive": true,
+            "identical_products_cancel_exactly": true,
+            "claimed_objective_ignored": true,
+            "strict": true
+          },
+          "eval_time": 2.5217675045132637,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "ratio_interval": [
+            "1",
+            "1"
+          ],
+          "with_replacement_products": 256,
+          "without_replacement_products": 24,
+          "squared_norms_verified": 280,
+          "method": "SymPy complex matrices and trace(M.H*M); independent exact product norms and finer rational root enclosures"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

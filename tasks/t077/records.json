@@ -1,0 +1,112 @@
+{
+  "task_id": "T077",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T077-C01": {
+      "parameters": {
+        "min_cardinality": 2,
+        "max_cardinality": 512,
+        "integer_interval": [
+          -1000000,
+          1000000
+        ],
+        "objective": "maximize ln(|A-A|)/ln(|A+A|)"
+      },
+      "best_human": {
+        "value": "1.186796554240681248176252398561366157419373951056860834599174878070530850367526991881",
+        "parameters": {
+          "min_cardinality": 2,
+          "max_cardinality": 512,
+          "integer_interval": [
+            -1000000,
+            1000000
+          ]
+        },
+        "source": "GHR finite projection formula instantiated locally at m=7,L=4, translated by -599186.",
+        "source_url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional published mathematical method. This specific parameter choice and score are reconstructed here, not a standalone value stated in the paper.",
+        "evidence_state": "The saved 330-element witness exactly gives 6435 sums and 33111 differences; its objective interval is certified.",
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m7_l4_shifted.json",
+        "witness_sha256": "916221446c05549172b608ad38361ee4008e9b4a5a9516cced3eace4ffbbfa8b",
+        "origin_type": "locally instantiated human-published formula"
+      },
+      "best_public": {
+        "value": "1.186796554240681248176252398561366157419373951056860834599174878070530850367526991881",
+        "parameters": {
+          "min_cardinality": 2,
+          "max_cardinality": 512,
+          "integer_interval": [
+            -1000000,
+            1000000
+          ]
+        },
+        "source": "Gyarmati, Hennecart, and Ruzsa, 2008 manuscript, Section 2, general finite projection formula instantiated at m=7,L=4.",
+        "source_url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+        "date_checked": "2026-11-06",
+        "provenance": "Public traditional construction formula; the exact finite instance is locally instantiated and is not called a separately reported literature record.",
+        "evidence_state": "The derived witness is exactly reproduced and fits the configuration. No optimality claim is made.",
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m7_l4_shifted.json",
+        "witness_sha256": "916221446c05549172b608ad38361ee4008e9b4a5a9516cced3eace4ffbbfa8b"
+      },
+      "best_reproduced": {
+        "value": "1.186796554240681248176252398561366157419373951056860834599174878070530850367526991881",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "min_cardinality": 2,
+          "max_cardinality": 512,
+          "integer_interval": [
+            -1000000,
+            1000000
+          ]
+        },
+        "program": "reference.py",
+        "verification_status": "certified",
+        "verification_method": "Exact pairwise set enumeration; outward-rounded interval for ln(33111)/ln(6435).",
+        "objective_interval": [
+          "1.186796554240681248176252398561366157419373951056860834599174878070530850367526991881",
+          "1.186796554240681248176252398561366157419373951056860834599174878070530850367526998206"
+        ],
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m7_l4_shifted.json",
+        "witness_sha256": "916221446c05549172b608ad38361ee4008e9b4a5a9516cced3eace4ffbbfa8b",
+        "origin_type": "local m=7,L=4 instance of the published finite projection formula",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": "1.178204945402879364476096845368201389593044893613982025333407282823475626213927385792",
+        "witness_program": "human.py",
+        "witness": "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json",
+        "witness_sha256": "0a2b6d7e40a16688d66f6c5e4ad322edb5f7fa38b6015dc4c9a4ce475bc873c4",
+        "endpoint_policy": "Conservative lower endpoint for the m=6,L=5 baseline; frozen as H for J/H.",
+        "evidence_state": "The 462-element witness is exactly counted as 8008 sums and 39733 differences."
+      },
+      "highest_reported": {
+        "value": "1.186796554240681248176252398561366157419373951056860834599174878070530850367526991881",
+        "source": "Published GHR general finite projection formula instantiated locally at m=7,L=4; exact score recomputed for this task.",
+        "url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+        "reproduction_status": "This specific m=7,L=4 score is derived from the paper formula and is not a separately listed literature record. It is a reproducible construction, not an optimality result."
+      },
+      "objective_distinction_from_t012": {
+        "T012": "ln(|A+A|/|A|)/ln(|A-A|/|A|)",
+        "T077": "ln(|A-A|)/ln(|A+A|)",
+        "ordering_reversal": "T012 example A scores higher than B; T077 scores B higher than A. See data/source/t012_order_reversal_examples.json."
+      },
+      "optimality_status": {
+        "status": "open in sources checked",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The paper gives finite constructions and general asymptotic results, but no maximum for the bounded configuration.",
+        "limitations": "The paper’s 1.27155... asymptotic statement is a different result and not this finite score."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T077-C01": {
+      "objective": "1.086033132501691842986042050927821332918780955201192994887102460276594645872145650695",
+      "objective_value": "1.086033132501691842986042050927821332918780955201192994887102460276594645872145650695",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9217692870320877
+    }
+  }
+}

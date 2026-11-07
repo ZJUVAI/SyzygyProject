@@ -1,44 +1,71 @@
 {
-  "task_id": "T099",
-  "snapshot_date": "2026-11-04",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "Minimum number of congruent translations, rotations, and reflections of the fixed 11P1 polyomino that tile any axis-aligned rectangle.",
   "best_human": {
-    "value": 2340,
+    "value": 270,
+    "date_checked": "2026-11-06",
     "parameters": {
-      "k": 343
+      "polyomino": "11P1",
+      "tile_area": 11,
+      "rectangle": [
+        54,
+        55
+      ]
     },
-    "authors": [
-      "Thomas Engelsma"
-    ],
-    "year": 2013,
-    "url": "https://mathbases.org/d/narrow-admissible-tuples",
-    "evidence_state": "published tuple copied from the audited source artifact and independently checked for feasibility and diameter",
-    "optimality": "The source row is unmarked; optimality is not claimed.",
-    "witness": "data/human_343.json"
+    "url": "https://polyominoes.org/data/11P1",
+    "ai_provenance": "Published human construction. Polyominoes.org attributes its 54x55 rectangle to Michael Reid's 11-omino page; MIT Tiling Search identifies the 270-copy construction with a July 1997 Dahlke attribution via B. A. Wichmann. Local SVG extraction and certificate encoding used AI assistance.",
+    "evidence_state": "The source SVG gives 270 D4-congruent placements. Exact verification confirms that they cover the 54x55 rectangle with no overlap. This is a feasible construction, not a proved minimum.",
+    "origin_type": "published human construction, locally decoded and verified"
   },
   "best_public": {
-    "value": 2340,
+    "value": 270,
+    "date_checked": "2026-11-06",
     "parameters": {
-      "k": 343
+      "polyomino": "11P1",
+      "tile_area": 11,
+      "rectangle": [
+        54,
+        55
+      ]
     },
-    "url": "https://math.mit.edu/~primegaps/tuples/admissible_343_2340.txt",
-    "evidence_state": "source artifact reports k=343, diameter 2340, credited to Engelsma (2013); full tuple saved locally and checked",
-    "optimality": "No optimality claim; the source's missing marker is not a proof.",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
+    "url": "https://tilingsearch.mit.edu/HTML/data113/K12.html",
+    "ai_provenance": "The cited construction is attributed to a July 1997 Dahlke record in the MIT archive. No AI provenance is indicated; the primary source is a 1997 human construction.",
+    "evidence_state": "The exact public construction is replayed and verified at 270 copies. The modern polyominoes.org page labels its order <=270; no minimum-order proof was found.",
+    "origin_type": "published construction archive"
   },
   "best_reproduced": {
-    "value": 2340,
+    "value": 270,
+    "date_checked": "2026-11-06",
     "parameters": {
-      "k": 343
+      "polyomino": "11P1",
+      "rectangle": [
+        54,
+        55
+      ],
+      "tile_area": 11
     },
-    "provenance": "human published witness",
-    "evidence_state": "independently validated against all 68 primes through 343 and exact integer diameter"
+    "url": "https://polyominoes.org/data/11P1/rect/55x54.svg",
+    "witness": "data/reference/11P1_54x55.json",
+    "ai_provenance": "The published SVG was decoded locally with AI assistance; the witness and score were independently recomputed by the exact checker.",
+    "evidence_state": "All 270 placements are D4 copies of the 11-cell tile. Their cells are pairwise disjoint and exactly cover the 54x55 rectangle.",
+    "verification_status": "exact"
   },
-  "baseline_seed": {
-    "value": "342 times the product of all primes through 343",
-    "provenance": "simple consecutive-multiples construction in init_program.py",
-    "evidence_state": "feasible by exact divisibility; not presented as a record"
+  "configurations": {
+    "T099-C01": {
+      "human_reference_value": 270,
+      "public_value": 270,
+      "reproduced_value": 270,
+      "optimality_status": "Open in sources checked through 2026-11-06; source gives <=270 without a lower-bound proof."
+    }
   },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T099-C01": {
+      "objective": 540,
+      "objective_value": 540,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5
+    }
+  }
 }

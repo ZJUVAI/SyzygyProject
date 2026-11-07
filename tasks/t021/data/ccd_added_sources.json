@@ -1,0 +1,27 @@
+{
+  "task_id": "T021",
+  "source": "Cambridge Cluster Database, Global Minima for the Thomson Problem",
+  "table_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+  "table_snapshot": "ccd_thomson_table.html",
+  "table_snapshot_sha256": "5466173175b10a81d19e20763dffa64589f3ce5b92b09e827de14eb1fbb583e2",
+  "rows": {
+    "40": {
+      "energy": "660.6752788",
+      "point_group": "T_d",
+      "coordinate_file": "ccd_40.xyz",
+      "coordinate_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/40.xyz",
+      "coordinate_sha256": "9f880170e0e067b2f77021c5a662975f96246ab9f1994574e6f23e20f93c6842",
+      "table_text": "40 | 660.6752788 | T_d | xyz/40.xyz",
+      "interpretation": "database numerical candidate and rounded reference; not proof of global optimality"
+    },
+    "50": {
+      "energy": "1055.1823147",
+      "point_group": "D_6d",
+      "coordinate_file": "ccd_50.xyz",
+      "coordinate_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/50.xyz",
+      "coordinate_sha256": "1f9f28accda198e1e1d377f5285f8241f1fb8156eb06e311c44da9241de6d851",
+      "table_text": "50 | 1055.1823147 | D_6d | xyz/50.xyz",
+      "interpretation": "database numerical candidate and rounded reference; not proof of global optimality"
+    }
+  }
+}

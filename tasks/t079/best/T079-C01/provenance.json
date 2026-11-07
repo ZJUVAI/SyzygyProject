@@ -1,11 +1,60 @@
 {
-  "classification": "ai_assisted_local_search",
   "status": "reviewed_by_sol",
-  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
-  "independent_quantity": {
-    "exact_objective": "153005816862330970720/99999999980000000001",
-    "convolution_entries": 415
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T079",
+    "config_id": "T079-C01",
+    "validity": 1.0,
+    "combined_score": 0.5562636796704004,
+    "objective": 15534,
+    "verification_status": "exact",
+    "generation_time": 9.79223944991827,
+    "verification_time": 0.5956560261547565,
+    "objective_value": 15534,
+    "details": {
+      "field_order": 31,
+      "dimension": 3,
+      "projective_directions_checked": 993,
+      "line_points_generated": 30783,
+      "union_cardinality": 15534,
+      "full_space_cardinality": 29791,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 10.408493369817734,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
   },
-  "claimed_score_ignored": true,
-  "damaged_construction_rejected": true
+  "search_metadata": {
+    "algorithm": "seeded randomized greedy anchor replacement with exact marginal union counts",
+    "seed": 0,
+    "requested_sweeps": 8,
+    "completed_sweeps": 8,
+    "samples_per_line": 16,
+    "candidate_anchors_evaluated": 127104,
+    "accepted_replacements": 1772,
+    "comparison_data_read": false,
+    "budget": {
+      "mode": "fixed iterations",
+      "requested_wall_clock_seconds": null
+    }
+  },
+  "solution_sha256": "5cbd2771c7d9c2e01de6064917cb6ad9dbc8eb4f1d04dca81eaf48ba7e90ec82",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T079 tasks/t079/best/T079-C01/solution.json --config T079-C01"
 }

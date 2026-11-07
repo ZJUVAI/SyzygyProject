@@ -1,0 +1,164 @@
+{
+  "task_id": "T006",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T006-C01": {
+      "public_value": "320",
+      "public_source": {
+        "url": "https://houseofgraphs.org/meta-directory/cages",
+        "title": "House of Graphs: Cages",
+        "claim": "n(4,10) ≤ 320; listed as an upper bound from Exoo et al. (2026).",
+        "supporting_paper_url": "https://arxiv.org/abs/2511.07247",
+        "witness_url": "https://github.com/AGT-Kulak/smallRegGirthGraphs/blob/main/genLifts/data/graphs/cage/n320_k4_g10.g6",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "320",
+      "program": "reference.py",
+      "witness": "data/human_graph.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "House of Graphs lists this as a known upper bound; it does not prove n(4,10) = 320.",
+        "The source check covers House of Graphs and the cited paper and author repository, not every public source."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T006",
+          "config_id": "T006-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 320,
+          "verification_status": "exact",
+          "generation_time": 0.2144533172249794,
+          "verification_time": 0.26465732604265213,
+          "objective_value": 320,
+          "details": {
+            "degree": 4,
+            "girth": 10,
+            "girth_lower_bound": 10,
+            "vertices": 320,
+            "edges": 640,
+            "connected": true,
+            "claimed_objective_ignored": true,
+            "optimality_proved": false
+          },
+          "eval_time": 0.48208020254969597,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "order": 320,
+          "networkx_girth": 10
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    },
+    "T006-C02": {
+      "public_value": "270",
+      "public_source": {
+        "url": "https://houseofgraphs.org/meta-directory/cages",
+        "title": "House of Graphs: Cages",
+        "claim": "n(4,9) ≤ 270; listed from Exoo et al. (2026).",
+        "supporting_paper_url": "https://arxiv.org/abs/2511.07247",
+        "witness_url": "https://houseofgraphs.org/data/cages/k4_g9_n270.g6",
+        "checked_at": "2026-11-07",
+        "witness_sha256": "b2f7ef96469f839a093f42352a419435a0655a068cd345732d42b48899406e8d"
+      },
+      "reproduced_value": "270",
+      "program": "reference.py",
+      "witness": "data/human_graph_c02.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "House of Graphs lists this as an upper bound; it does not prove n(4,9) = 270.",
+        "The source check covers House of Graphs and the cited paper, not every public source."
+      ],
+      "checked_at": "2026-11-07",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T006",
+          "config_id": "T006-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 270,
+          "verification_status": "exact",
+          "generation_time": 0.11428947746753693,
+          "verification_time": 0.11423994600772858,
+          "objective_value": 270,
+          "details": {
+            "degree": 4,
+            "girth": null,
+            "girth_lower_bound": 9,
+            "vertices": 270,
+            "edges": 540,
+            "connected": true,
+            "claimed_objective_ignored": true,
+            "optimality_proved": false
+          },
+          "eval_time": 0.23120363429188728,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "order": 270,
+          "networkx_girth": 9
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "lower_bound_source": {
+        "value": "165",
+        "url": "https://doi.org/10.37236/14471",
+        "title": "On Cages and Choosing with Symmetries",
+        "claim": "n(4,9) >= 165 from exhaustive search; Moore bound is 161."
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "sol_review": {
+    "T006-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T006-C02": {
+      "status": "accepted_by_sol",
+      "reviewer": "Sol main agent"
+    }
+  }
+}

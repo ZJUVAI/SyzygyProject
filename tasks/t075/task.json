@@ -1,0 +1,41 @@
+{
+  "task_id": "T075",
+  "name": "Maximum K4-minus-free 3-uniform hypergraph",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T075-C01",
+      "parameters": {
+        "n": 36,
+        "uniformity": 3,
+        "forbidden_hypergraph": "K4^-: three triples on four vertices",
+        "forbidden_semantics": "ordinary non-induced subhypergraph",
+        "constraint": "every 4-vertex set spans at most 2 selected triples"
+      },
+      "direction": "maximize",
+      "human_reference": 2220
+    }
+  ],
+  "search_metadata": {
+    "algorithm": "seeded random-order greedy edge addition",
+    "default_seed": 0,
+    "baseline_default_iterations": 5,
+    "evolution_default_iterations": 8,
+    "candidate_reads_reference_witness": false,
+    "budget_note": "Fixed candidate count and seed by default. Explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "36-vertex three-uniform hypergraph, ordinary non-induced K4-minus forbidden: any four vertices span at most two triples. Maximize edge count. Complete four-edge hypergraphs also rejected.",
+      "primary_source": "Falgas-Ravry, Pikhurko, Vaughan, Volec (JLMS2023 DOI10.1112/jlms.12722), section6.3 p27 explicitly lists ten H6 triples and permits iterated blow-ups. Ordinary density conjectured2/7 remains distinct from solved codegree and uniform-density tetrahedron problems. Source-level screening found no finite36 matching optimality proof.",
+      "reproduction": "Root independently reconstructed the two-level balanced blow-up count10*6^3+6*10=2220. Human rebuilds published formula; no claim the paper tabulates2220 as a separate finite record.",
+      "independent_method": "All36 vertex link graphs checked triangle-free. A forbidden K4-minus has a common vertex whose link is a triangle. Formal checker instead counts triples on each of58905 four-sets. Root direct double counting gives upper3570, not proof of actual optimum.",
+      "initial_and_search": "Empty initial hypergraph valid with objective0; generic own greedy seed0 baseline1245 and evolution1246, no human/reference reads. Frozen human2220 positive permits ratio normalization even though initial objective0.",
+      "admission": "Five strict budgeted programs and full broken-witness/claim-invariance/replay/cold-export/error/nonfinite/timeout controls passed."
+    }
+  }
+}

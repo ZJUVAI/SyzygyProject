@@ -1,58 +1,43 @@
 {
   "task_id": "T009",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
-    "T009-C02": {
-      "public_value": "0.9118367215995329533405163091901914357833",
-      "unit": "radians",
-      "public_metric": "minimum-angle cosine, as reported by the source",
-      "source_cosine": "0.612294616483",
+    "T009-C01": {
+      "public_value": "24",
       "public_source": {
-        "url": "https://spherical-codes.org/",
-        "coordinates_url": "https://spherical-codes.org/data/3/16",
-        "title": "Table of spherical codes, dimension 3, 16 points",
-        "reported_metric": "cosine of minimum angle",
-        "reported_value": "0.612294616483",
-        "reported_decimal_places": 12,
-        "source_status": "unstarred numerical construction; no global optimality claim"
+        "url": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
+        "database": "Magma BestKnownLinearCode database",
+        "calculator_url": "https://magma-maths.org/calc/",
+        "calculator_version": "2.30-1",
+        "query": "BestKnownLinearCode(GF(2),68,15)",
+        "has_code": true,
+        "checked_at": "2026-11-05"
       },
-      "reproduced_value": "0.9118367215999157",
+      "reproduced_value": "24",
       "program": "sota.py",
-      "witness": "data/spherical_code_3_16.txt",
+      "witness": "data/sota_generator.json",
+      "reproduction_script": "data/reproduce_sota.m",
       "matches_public_best": true,
-      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.91183672159953295334051630919019144, 0.91183672160079776797613397779950286], the arccos image of [0.612294616482, 0.612294616483].",
-      "limitations": [
-        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
-        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places.",
-        "The table lists a numerical construction and does not prove global optimality.",
-        "This comparison covers the cited source table, not every public source."
-      ],
-      "checked_at": "2026-11-05",
+      "comparison_tolerance": "0",
       "verification": {
         "task_id": "T009",
-        "status": "conservative_reproduction",
+        "status": "reproduced",
         "run": {
           "task_id": "T009",
-          "config_id": "T009-C02",
+          "config_id": "T009-C01",
           "validity": 1.0,
-          "combined_score": 0.9999999999999991,
-          "objective": 0.9118367215999157,
-          "verification_status": "certified",
-          "generation_time": 0.2659095749258995,
-          "verification_time": 0.36613424494862556,
-          "objective_value": 0.9118367215999157,
+          "combined_score": 3.0,
+          "objective": 24,
+          "verification_status": "exact",
+          "generation_time": 0.46563340350985527,
+          "verification_time": 0.26752201467752457,
+          "objective_value": 24,
           "details": {
-            "n": 16,
-            "pairs_checked": 120,
-            "objective_name": "minimum_pairwise_angular_separation_radians",
-            "angle_interval": [
-              0.9118367215999157,
-              0.9118367215999172
-            ],
-            "claimed_objective_mismatch": false,
-            "directions_normalized_for_scoring": true
+            "rank": 15,
+            "codewords_checked": 32767,
+            "claimed_objective_mismatch": false
           },
-          "eval_time": 0.6392436847090721,
+          "eval_time": 0.7397576831281185,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -67,67 +52,172 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t009/data/spherical_code_3_16.txt",
+        "witness": "tasks/t009/data/sota_generator.json",
         "independent_quantity": {
-          "minimum_angle_80_digits": "0.91183672159991657867556495135875727370020389094972398810269001155207616906690925"
+          "codewords": 32768,
+          "minimum_distance": 24
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
+        "source_review": "Sol checked Grassl BKLC [68,15] construction and bounds 24–26, replayed the saved matrix, independently enumerated its vector space, rejected rank damage, and confirmed forged scores have no effect.",
         "snapshot_date": "2026-11-05"
-      }
-    },
-    "T009-C03": {
-      "public_value": "0.891694449150313201102736466822772753125",
-      "unit": "radians",
-      "public_metric": "minimum-angle cosine, as reported by the source",
-      "source_cosine": "0.628094415071",
-      "public_source": {
-        "url": "https://spherical-codes.org/",
-        "coordinates_url": "https://spherical-codes.org/data/3/17",
-        "title": "Table of spherical codes, dimension 3, 17 points",
-        "reported_metric": "cosine of minimum angle",
-        "reported_value": "0.628094415071",
-        "reported_decimal_places": 12,
-        "source_status": "unstarred numerical construction; no global optimality claim"
       },
-      "reproduced_value": "0.8916944491515696",
-      "program": "sota.py",
-      "witness": "data/spherical_code_3_17.txt",
-      "matches_public_best": true,
-      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.89169444915031320110273646682277275, 0.89169444915159832161810806010730433], the arccos image of [0.628094415070, 0.628094415071].",
       "limitations": [
-        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
-        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places; no claim of a record improvement is made.",
-        "The table lists a numerical construction and does not prove global optimality.",
-        "This comparison covers the cited source table, not every public source."
+        "The published table gives a lower bound of 24 and an upper bound of 26, so this is a best-known construction, not a proof of optimality.",
+        "The matrix is reproduced from the Magma BKLC database; the source table does not attribute its construction to a specific human author."
       ],
       "checked_at": "2026-11-05",
+      "sol_light_report_recheck": {
+        "checked_at": "2026-11-06",
+        "source": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
+        "same_parameters": true,
+        "reported_value": "24",
+        "reported_lower_bound": 24,
+        "reported_upper_bound": 26
+      }
+    },
+    "T009-C02": {
+      "public_value": 25,
+      "public_source": {
+        "url": "https://www.codetables.de/BKLC/BKLC.php?k=20&n=80&q=2",
+        "original_paper": "https://doi.org/10.1109/18.333888",
+        "database": "Grassl / Magma Best Known Linear Code tables",
+        "parameters": {
+          "n": 80,
+          "k": 20,
+          "q": 2
+        },
+        "construction": "[81,20,26] degree-three QC code from three polynomials, punctured at coordinate 81",
+        "lower_bound": 25,
+        "upper_bound": 30,
+        "last_modified": "2001-01-30",
+        "current_magma_query": "C, has_code := BestKnownLinearCode(GF(2), 80, 20); assert has_code; MinimumDistance(C);",
+        "magma_version": "2.30-1",
+        "checked_at": "2026-11-07",
+        "proven_optimal": false
+      },
+      "reproduced_value": 25,
+      "program": "reference.py",
+      "reference": "reference.py",
+      "source_reproduction_script": "data/reproduce_sota_C02.m",
+      "reproduction_command": "MATHBENCH_CONFIG_ID=T009-C02 .venv/bin/python -m mathbench evaluate T009 tasks/t009/sota.py --strict --config T009-C02",
+      "matches_public_best": true,
+      "comparison_tolerance": 0,
+      "checked_at": "2026-11-07",
+      "limitations": [
+        "The published lower and upper bounds are 25 and 30. Optimality is not proved."
+      ],
       "verification": {
-        "task_id": "T009",
-        "status": "conservative_reproduction",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T009",
+          "config_id": "T009-C02",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 25,
+          "verification_status": "exact",
+          "generation_time": 0.11431267857551575,
+          "verification_time": 0.31497691571712494,
+          "objective_value": 25,
+          "details": {
+            "parameters": {
+              "n": 80,
+              "k": 20,
+              "q": 2
+            },
+            "rank": 20,
+            "codewords_checked": 1048575,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.4319310635328293,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "codewords": 1048576,
+          "minimum_distance": 25
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c02.json",
+        "witness_sha256": "1f433acc699b3181713572aee27e930eeacaf2c5b5a6ec0daea1f29f5c940097"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "review_status": "accepted_by_sol",
+      "witness": "data/sota_generator_C02.json",
+      "witness_sha256": "68982b46a4cc81a38bc018c179161edf2f83c114ada7bbd7cd5c6ecb924e6189"
+    },
+    "T009-C03": {
+      "public_value": 34,
+      "public_source": {
+        "url": "https://www.codetables.de/BKLC/BKLC.php?k=20&n=100&q=2",
+        "original_paper": "https://doi.org/10.1109/18.333888",
+        "database": "Grassl / Magma Best Known Linear Code tables",
+        "parameters": {
+          "n": 100,
+          "k": 20,
+          "q": 2
+        },
+        "construction": "[99,20,34] degree-three QC code from three polynomials, extended by one zero coordinate",
+        "lower_bound": 34,
+        "upper_bound": 40,
+        "last_modified": "2001-01-30",
+        "current_magma_query": "C, has_code := BestKnownLinearCode(GF(2), 100, 20); assert has_code; MinimumDistance(C);",
+        "magma_version": "2.30-1",
+        "checked_at": "2026-11-07",
+        "proven_optimal": false
+      },
+      "reproduced_value": 34,
+      "program": "reference.py",
+      "reference": "reference.py",
+      "source_reproduction_script": "data/reproduce_sota_C03.m",
+      "reproduction_command": "MATHBENCH_CONFIG_ID=T009-C03 .venv/bin/python -m mathbench evaluate T009 tasks/t009/sota.py --strict --config T009-C03",
+      "matches_public_best": true,
+      "comparison_tolerance": 0,
+      "checked_at": "2026-11-07",
+      "limitations": [
+        "The published lower and upper bounds are 34 and 40. Optimality is not proved."
+      ],
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
         "run": {
           "task_id": "T009",
           "config_id": "T009-C03",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 0.8916944491515696,
-          "verification_status": "certified",
-          "generation_time": 0.2651629112660885,
-          "verification_time": 0.31557371467351913,
-          "objective_value": 0.8916944491515696,
+          "objective": 34,
+          "verification_status": "exact",
+          "generation_time": 0.11449390649795532,
+          "verification_time": 0.31499845162034035,
+          "objective_value": 34,
           "details": {
-            "n": 17,
-            "pairs_checked": 136,
-            "objective_name": "minimum_pairwise_angular_separation_radians",
-            "angle_interval": [
-              0.8916944491515696,
-              0.8916944491515711
-            ],
-            "claimed_objective_mismatch": false,
-            "directions_normalized_for_scoring": true
+            "parameters": {
+              "n": 100,
+              "k": 20,
+              "q": 2
+            },
+            "rank": 20,
+            "codewords_checked": 1048575,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.5853269621729851,
+          "eval_time": 0.43214743956923485,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -137,110 +227,31 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t009/data/spherical_code_3_17.txt",
         "independent_quantity": {
-          "minimum_angle_80_digits": "0.89169444915157039700953132643851450209237252850061576674863950767610894655337686"
+          "codewords": 1048576,
+          "minimum_distance": 34
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
-        "snapshot_date": "2026-11-05"
-      }
-    },
-    "T009-C04": {
-      "public_value": "0.8323809277750249256455890523122749310175",
-      "unit": "radians",
-      "public_metric": "minimum-angle cosine, as reported by the source",
-      "source_cosine": "0.673116887561",
-      "public_source": {
-        "url": "https://spherical-codes.org/",
-        "coordinates_url": "https://spherical-codes.org/data/3/19",
-        "title": "Table of spherical codes, dimension 3, 19 points",
-        "reported_metric": "cosine of minimum angle",
-        "reported_value": "0.673116887561",
-        "reported_decimal_places": 12,
-        "source_status": "unstarred numerical construction; no global optimality claim"
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c03.json",
+        "witness_sha256": "04b727833f40c683322e8a0413d1611b3e4e945d914a56dba8302629dd90e898"
       },
-      "reproduced_value": "0.8323809277763071",
-      "program": "sota.py",
-      "witness": "data/spherical_code_3_19.txt",
-      "matches_public_best": true,
-      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.83238092777502492564558905231227493, 0.83238092777637712466412603023837871], the arccos image of [0.673116887560, 0.673116887561].",
-      "limitations": [
-        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
-        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places; no claim of a record improvement is made.",
-        "The table lists a numerical construction and does not prove global optimality.",
-        "This comparison covers the cited source table, not every public source."
-      ],
-      "checked_at": "2026-11-05",
-      "verification": {
-        "task_id": "T009",
-        "status": "conservative_reproduction",
-        "run": {
-          "task_id": "T009",
-          "config_id": "T009-C04",
-          "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 0.8323809277763071,
-          "verification_status": "certified",
-          "generation_time": 0.2149851657450199,
-          "verification_time": 0.3154233321547508,
-          "objective_value": 0.8323809277763071,
-          "details": {
-            "n": 19,
-            "pairs_checked": 171,
-            "objective_name": "minimum_pairwise_angular_separation_radians",
-            "angle_interval": [
-              0.8323809277763071,
-              0.8323809277763087
-            ],
-            "claimed_objective_mismatch": false,
-            "directions_normalized_for_scoring": true
-          },
-          "eval_time": 0.5349039547145367,
-          "seed": 0,
-          "strict": true,
-          "budget": {
-            "generation_seconds": 300,
-            "verification_seconds": 60,
-            "memory_bytes": 4294967296,
-            "threads": 1
-          },
-          "environment": {
-            "python": "3.13.2",
-            "platform": "linux",
-            "worker_cpu": 0
-          }
-        },
-        "witness": "tasks/t009/data/spherical_code_3_19.txt",
-        "independent_quantity": {
-          "minimum_angle_80_digits": "0.83238092777630794287434797748825009419045593085015621313451565408646896818110132"
-        },
-        "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
-        "snapshot_date": "2026-11-05"
-      }
+      "acceptance_status": "accepted_by_sol",
+      "review_status": "accepted_by_sol",
+      "witness": "data/sota_generator_C03.json",
+      "witness_sha256": "9bf8dbee63eb97861252addea666efb5c5b9035208eb8b3a792fb9c27f924684"
     }
   },
   "sol_review": {
-    "T009-C02": {
-      "status": "conservative_reproduction",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    },
-    "T009-C03": {
-      "status": "conservative_reproduction",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    },
-    "T009-C04": {
-      "status": "conservative_reproduction",
+    "T009-C01": {
+      "status": "reproduced",
       "reviewer": "Sol main agent",
       "date": "2026-11-05"
     }

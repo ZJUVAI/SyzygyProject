@@ -1,0 +1,5 @@
+Solve the fixed partial MaxSAT instance T055-C01. Assign all 1630 Boolean variables so that every hard clause is satisfied. Then maximize the total weight of satisfied soft clauses. The fixed WCNF has 649 soft unit clauses, each with weight 1.
+
+Return JSON with one key, `assignment`, whose value is a list of exactly 1630 Boolean values. Entry i gives the value of variable i+1. The evaluator checks every hard clause and recomputes the soft score. It ignores declared score fields.
+
+Start from the supplied simple program and improve its assignment. You may parse the fixed public WCNF and use exact clause checks. Do not read, import, inspect, or infer from the human baseline, reference program, official assignments, records, SOTA files, or their data. Return only a valid JSON solution.

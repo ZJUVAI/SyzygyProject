@@ -1,0 +1,82 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T070",
+    "config_id": "T070-C01",
+    "validity": 1.0,
+    "combined_score": 0.36,
+    "objective": 75,
+    "verification_status": "exact",
+    "generation_time": 0.5165248364210129,
+    "verification_time": 0.8817660249769688,
+    "objective_value": 75,
+    "details": {
+      "square_count": 75,
+      "outer_side": 1000,
+      "total_tile_area": 1000000,
+      "covered_area": 1000000,
+      "tile_side_gcd": 1,
+      "integer_columns_checked": 1000,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 1.4095800258219242,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "elitist evolutionary search over integer guillotine split plans; leaves use Euclidean square tilings and one square is refined to force gcd 1 when needed",
+    "seed": 0,
+    "generations_requested": 60,
+    "generations_run": 60,
+    "population_size": 6,
+    "winning_plan": [
+      [
+        7644,
+        1,
+        738
+      ],
+      [
+        3195,
+        1,
+        460
+      ],
+      [
+        3460,
+        0,
+        258
+      ],
+      [
+        5529,
+        0,
+        839
+      ]
+    ],
+    "best_size": 75,
+    "generation_seconds": 0.004747331142425537,
+    "budget": {
+      "mode": "fixed generation count unless MATHBENCH_SEARCH_SECONDS is set",
+      "runner_generation_limit_seconds": 300
+    }
+  },
+  "solution_sha256": "8b40319eeec82cbc084c1deb428895f18fb6e164b0797df7206fcde10b696645",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T070 tasks/t070/best/T070-C01/solution.json --config T070-C01"
+}

@@ -1,57 +1,149 @@
 {
   "task_id": "T079",
-  "snapshot_date": "2026-11-03",
-  "best_human": {
-    "value": 1.5097201507458786,
-    "exact_value": "6280435861361744576/4160000022692211721",
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published coefficients transcribed and exact score recomputed",
-    "optimality": "historical construction; no proof of global optimality is claimed",
-    "witness": "data/human_matolcsi_vinuesa.json"
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T079-C01": {
+      "parameters": {
+        "field_order": 31,
+        "dimension": 3
+      },
+      "best_human": {
+        "value": 8641,
+        "date": "2026-11-06",
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "method": "Quadratic-residue almost-Kakeya construction plus the full t=0 plane.",
+        "source": "Bukh and Chao, Sharp density bounds on the finite field Kakeya problem, Section 4",
+        "url": "https://arxiv.org/abs/2108.00074",
+        "witness": "data/human/quadratic_residue_q31.json",
+        "evidence_state": "The explicit line origins are generated from the classical construction. Exact validation checks all 993 directions and recomputes the 8,641-point union.",
+        "ai_provenance": "Traditional published mathematical construction; no AI provenance claimed."
+      },
+      "best_public": {
+        "value": 8289,
+        "date": "2026-11-06",
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "source": "https://arxiv.org/html/2608.23691v2",
+        "witness": "data/reference/station_p31_8289.json",
+        "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
+        "evidence_state": "The paper gives the exact formula for p=3 mod 4. The p=31 line witnesses are reconstructed here and exactly checked.",
+        "ai_provenance": "Disclosed AI-assisted multi-agent Station discovery; paper reports external GPT-5.5 assistance for formal verification.",
+        "optimality": "No finite p=31 optimality proof is reported."
+      },
+      "best_reproduced": {
+        "value": 8289,
+        "date": "2026-11-06",
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "program": "reference.py",
+        "witness": "data/reference/station_p31_8289.json",
+        "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
+        "evidence_state": "Exact checker recomputes the union of 993 lines and returns 8,289.",
+        "origin_type": "published AI-assisted family, locally specialized and exactly checked",
+        "review_status": "reviewed_by_sol"
+      },
+      "earlier_ai_result": {
+        "value": 8290,
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3
+        },
+        "source": "https://zerothesis.com/challenges/kakeya-fp3?tab=brief",
+        "related_primary_work": "https://arxiv.org/html/2511.02864v3",
+        "evidence_state": "A secondary public list attributes this value to AlphaEvolve. The exact p=31 value was not located in the inspected primary paper or notebook and is not reproduced here.",
+        "ai_provenance": "Attributed to AlphaEvolve by the secondary public list; not independently confirmed from a p=31 primary artifact."
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "Open in the reviewed sources; finite optimality at p=31 is not established.",
+        "lower_bound": "Bukh-Chao Theorem 1 gives |K| >= 31^5/61^2, hence the integer cardinality is at least 7,694.",
+        "notes": "The asymptotic lower bound is not a finite certificate for this configuration. A non-primary 8,288 claim has no identified source witness and is excluded from the reliable record."
+      },
+      "best_own_search": {
+        "value": 15534,
+        "objective_value": 15534,
+        "program": "evolution.py",
+        "witness": "best/T079-C01/solution.json",
+        "witness_sha256": "5cbd2771c7d9c2e01de6064917cb6ad9dbc8eb4f1d04dca81eaf48ba7e90ec82",
+        "parameters": {
+          "field_order": 31,
+          "dimension": 3,
+          "direction_count": 993,
+          "construction": "one affine line in each projective direction",
+          "objective": "cardinality of the union of the represented lines"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "algorithm": "seeded randomized greedy anchor replacement with exact marginal union counts",
+          "seed": 0,
+          "requested_sweeps": 8,
+          "completed_sweeps": 8,
+          "samples_per_line": 16,
+          "candidate_anchors_evaluated": 127104,
+          "accepted_replacements": 1772,
+          "comparison_data_read": false,
+          "budget": {
+            "mode": "fixed iterations",
+            "requested_wall_clock_seconds": null
+          }
+        },
+        "generation_record": {
+          "task_id": "T079",
+          "config_id": "T079-C01",
+          "validity": 1.0,
+          "combined_score": 0.5562636796704004,
+          "objective": 15534,
+          "verification_status": "exact",
+          "generation_time": 9.79223944991827,
+          "verification_time": 0.5956560261547565,
+          "objective_value": 15534,
+          "details": {
+            "field_order": 31,
+            "dimension": 3,
+            "projective_directions_checked": 993,
+            "line_points_generated": 30783,
+            "union_cardinality": 15534,
+            "full_space_cardinality": 29791,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 10.408493369817734,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      }
+    }
   },
-  "best_public": {
-    "value": 1.5097201507458786,
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published human witness locally reproduced",
-    "optimality": "not asserted",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 1.5097201507458786,
-    "exact_value": "6280435861361744576/4160000022692211721",
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "provenance": "human published witness",
-    "evidence_state": "exact rational recomputation"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  "initial_results": {
+    "T079-C01": {
+      "objective": 29791,
+      "objective_value": 29791,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.2900540431673996
+    }
+  }
 }

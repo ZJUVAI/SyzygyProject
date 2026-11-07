@@ -1,0 +1,33 @@
+{
+  "task_id": "T100",
+  "config_id": "T100-C01",
+  "validity": 1.0,
+  "combined_score": 0.7434533551554828,
+  "objective": 2444,
+  "verification_status": "exact",
+  "generation_time": 25.696777112782,
+  "verification_time": 0.8064485341310501,
+  "objective_value": 2444,
+  "details": {
+    "vertices": 50,
+    "edge_count": 700,
+    "triangle_count": 2444,
+    "simple_undirected": true,
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 26.511059168726206,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

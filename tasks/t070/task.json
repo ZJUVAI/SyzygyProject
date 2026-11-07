@@ -1,0 +1,61 @@
+{
+  "task_id": "T070",
+  "name": "Minimum coprime integer-square dissection of a 1000 square",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_geometry",
+  "definition": "Partition a 1000 by 1000 square into the fewest axis-aligned squares with positive integer side lengths whose greatest common divisor is 1.",
+  "solution_format": "An object with squares, a list of [x,y,side] integer triples describing each square's lower-left corner and side length.",
+  "objective": {
+    "name": "square_count",
+    "unit": "small squares",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "The outer square is [0,1000] x [0,1000].",
+    "Each tile is an axis-aligned square with positive integer side length less than 1000.",
+    "All tile coordinates and side lengths are integers.",
+    "Tile interiors are pairwise disjoint.",
+    "The tiles cover the entire outer square.",
+    "The greatest common divisor of all tile side lengths is 1.",
+    "Compound or sub-quilt arrangements are allowed."
+  ],
+  "configurations": [
+    {
+      "id": "T070-C01",
+      "parameters": {
+        "outer_side": 1000,
+        "tile_side_domain": "positive integers less than 1000",
+        "side_length_gcd": 1,
+        "compound_dissection_allowed": true,
+        "objective": "square_count"
+      },
+      "direction": "minimize",
+      "human_reference": 27
+    }
+  ],
+  "sources": [
+    "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+    "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+    "https://arxiv.org/abs/1308.5420"
+  ],
+  "verification": "The checker validates integer squares and bounds, requires gcd 1, and uses one exact bit mask per integer x-column to reject overlap and prove that every cell of the 1000 by 1000 square is covered.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Fixed1000-square integer axis-aligned dissection, minimize square count, side gcd1, repeated sizes and compound/subquilts permitted. Gcd1 does not impose source separate prime-dissection condition.",
+      "source": "Root downloaded original40000-row Pegg2017 dataZIP SHAea43c7728ada8bec7fe93d4ffc3dfa88f3b37f0b6be9a36e1e8ea1b1b64bb98a; expandedtxt SHAec6b0f9b21eda14648de00317371cf6f07f456c72fab235fa9ecaaffe798c2e7. Frozen1000th row has identical source tokens, normalizedrow SHA011cbfe1a1933cf20ba51f78f4c721ca447636bc4e52d8ea1255b7cb92a5e880.",
+      "independent": "Root decoded lowest-leftmost skyline independently; all27 squares inside1000square, pairwise interiors disjoint, area1000000, gcd1. Admission independent pairwise rectangle separation differs from formal bitmask column coverage.",
+      "open_status": "Primaryauthorpage explicitly distinguishes bestknown from provedbest beyond18pieces. Wynn1308.5420v2 only exhaustive through18pieces; current exactA005670 list throughside120 does not close1000. No proof27optimal found; elementary18piece exclusion gives only>=19.",
+      "isolation": "Read own guillotine/evolution and constructionhelper. Baseline/evolution call only generic tiling functions, never comparison decoder/files. Initial2000 ownstrips, baseline299, evolution75. Full strict fiveprogram, claim invariance, damaged samples,replay,coldexportandfailurecontrols passed."
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "task_id": "T074",
+  "name": "Free-convex-domain Heilbronn problem for 12 points",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_geometry",
+  "definition": "Choose 12 distinct rational points in the plane, with no three collinear. Maximize the minimum area of a triangle formed by three chosen points divided by the area of their convex hull. There are no coordinate bounds and no fixed outer container.",
+  "solution_format": "An object with points, a list of 12 [x,y] coordinate pairs. Coordinates may be integers, rational strings such as '3/2', or finite decimal numbers interpreted by their decimal representation.",
+  "objective": {
+    "name": "minimum_triangle_area_over_convex_hull_area",
+    "unit": "dimensionless ratio",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "There are exactly 12 points.",
+    "Coordinates are rational numbers with no magnitude bound.",
+    "All points are distinct.",
+    "No three points are collinear, so the minimum triangle area is positive.",
+    "The denominator is the area of the convex hull of the 12 points; the hull has positive area.",
+    "There is no fixed square, triangle, or other container."
+  ],
+  "configurations": [
+    {
+      "id": "T074-C01",
+      "parameters": {
+        "point_count": 12,
+        "coordinate_domain": "unbounded rational coordinates in the plane",
+        "container": "convex hull of the selected points",
+        "objective": "minimum_triangle_area / convex_hull_area",
+        "no_three_collinear": true
+      },
+      "direction": "maximize",
+      "human_reference": 0.0392156862745098
+    }
+  ],
+  "sources": [
+    "https://math.tejstead.com/heilbronn/convex/12/",
+    "https://math.tejstead.com/heilbronn/convex/12/points.json",
+    "https://math.tejstead.com/heilbronn/methods/",
+    "https://math.tejstead.com/heilbronn/leaderboard/"
+  ],
+  "verification": "The checker parses exact rational coordinates, rejects duplicates and every collinear triple, enumerates all 220 triangle areas, computes the convex hull with an exact monotone-chain algorithm, and returns the exact ratio of the minimum triangle area to hull area.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Twelve points in a free convex planar domain; maximize minimum triangle area divided by convex hull area. This functional differs from fixed-square T005. No rational-coordinate magnitude cap; rational approximation preserves the continuous supremum by continuity on general-position configurations.",
+      "primary_record": "Current Tejstead free-convex n12 archive gives 2/51, credited to David Cantrell June2007; source notes original Mathematica notebook received September2026. Local baseline independently rebuilds archived decimals by affine normalization and rational reconstruction; does not assert byte identity with the original notebook.",
+      "independent_reproduction": "Root independently normalized source and recovered exact half-integer coordinates. Enumerated 220 triangles, minimum doubled area 1/2. A separate directed-support-edge enumeration, without formal Andrew hull algorithm, gives nine hull edges and doubled hull area 51/4; exact ratio2/51.",
+      "open_status": "Current archive reports this n12 construction as a record without optimality proof. 2026 certified free-convex n3 through8 results do not include12; no matching n12 proof located in screened sources. No claim that a finite numerical check establishes mathematical optimality.",
+      "initial_and_search": "Standalone twelve parabola points give1/220; independent traditional300-step mutation gives1/199, evolution1/220. Human and reference2/51; search does not read comparison assets.",
+      "admission": "Five strict budgeted programs, full-return claimed-score invariance, duplicate-point damaged witness, independent arithmetic, strict replay, cold export, and program-error/nonfinite/timeout controls passed."
+    }
+  }
+}

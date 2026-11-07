@@ -1,0 +1,9 @@
+# Task: find a large clique in C2000.9
+
+Maximize the number of pairwise adjacent distinct vertices in the fixed undirected graph C2000.9. The graph has 2,000 vertices indexed 0 through 1999 and 1,799,532 edges.
+
+The public input is `data/source/C2000.9.clq.gz`, a gzip-compressed DIMACS graph. Its header is `p col 2000 1799532`; each `e u v` record uses one-based endpoints. The uncompressed source hash is recorded in `records.json` and is checked by the evaluator.
+
+Return JSON with a `vertices` list of distinct zero-based vertex indices. The checker verifies all ranges, duplicate constraints, and every selected pair against the exact source graph. It ignores claimed scores.
+
+Start from the one-vertex seed in `init_program.py`. Do not read `human.py`, `reference.py`, or `data/reference/`. Search must only use the public graph input and its own candidate state.

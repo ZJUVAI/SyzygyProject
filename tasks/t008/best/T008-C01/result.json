@@ -1,0 +1,38 @@
+{
+  "task_id": "T008",
+  "config_id": "T008-C01",
+  "validity": 1.0,
+  "combined_score": 2.5833333333333335,
+  "objective": 24,
+  "verification_status": "exact",
+  "generation_time": 241.23856823146343,
+  "verification_time": 5.800406493246555,
+  "objective_value": 24,
+  "details": {
+    "parameters": {
+      "v": 24,
+      "k": 14,
+      "t": 4
+    },
+    "blocks": 24,
+    "covered_four_subsets": 10626,
+    "total_four_subsets": 10626,
+    "claimed_objective_mismatch": false,
+    "optimality_proved": false
+  },
+  "eval_time": 247.04763336479664,
+  "seed": 101,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 5
+  }
+}

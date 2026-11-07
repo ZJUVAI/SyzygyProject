@@ -1,4 +1,5 @@
-"""Task adapter using the shared evaluator."""
+"""Shared-runner adapter for T044."""
+
 from mathbench.evaluate import evaluate_candidate
 
 

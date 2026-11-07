@@ -1,0 +1,7 @@
+Find a longer finite sequence of signs for the fixed T051-C01 task.
+
+Return a JSON object with a nonempty `sequence` list. Every entry must be the integer -1 or +1. The sequence is unrestricted: do not assume multiplicativity.
+
+For every positive integer d and every prefix length k with k*d no greater than the sequence length, the homogeneous progression sum x_d + x_(2d) + ... + x_(kd) must have absolute value at most 3. The score is the sequence length, which is maximized.
+
+Start from the supplied simple program. Do not read human, reference, or best witness files. You may use exact integer checks and deterministic local search. Return only construction data; declared scores are ignored.

@@ -1,0 +1,67 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "cardinality": 512,
+    "sumset": 3145,
+    "difference_set": 2591,
+    "ratio": 1.1195023307103198
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high"
+  },
+  "generation_record": {
+    "budget_seconds": 5,
+    "actual_elapsed_seconds": 6.18699137121439,
+    "trials": 6740,
+    "seed": 5,
+    "method": "periodic interior expansion of own native-search candidate",
+    "source_witness_sha256": "fc13e6c9672409e446f838ee59a0b2abe1da8fa37acbd9ce021110ec48a087df",
+    "generation_resource_limits_enforced": false,
+    "threads_used": 1,
+    "python": "3.13.12 (main, Mar 10 2026, 18:17:38) [Clang 21.1.4 ]",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "note": "The exploratory helper ran in the local Python process without runner limits. Its saved construction is verified below with the standard strict runner. The retained replay result runtime describes verification, not a new search."
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 5,
+  "controls": {
+    "MATHBENCH_EVOLUTION_SECONDS": "5",
+    "MATHBENCH_SEARCH_SECONDS": "1"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  },
+  "source_sha256": {
+    "tasks/t012/baseline.py": "18a55b67376b1b5951830fd0e707fd73d01b69cdff060df76ffd3a20beb91cfc",
+    "tasks/t012/check.py": "c7c40d0a6fdf4b6b2ae898040df62d161b4907adb2dbff6d5e60a6d3ac4efbab",
+    "tasks/t012/evaluator.py": "082db1ec76b071ca2fc5f190e64badb2353cbefc6c3d38743ce1f9148e994c3e",
+    "tasks/t012/evolution.py": "4bd75cca348f46fa4cd74dfe7e890d1027a4f269e0c79cf6908cfc649ebfb5ab",
+    "tasks/t012/human.py": "5ef4ca7fa47c56d654df0764c516d0af30a9cf6f1c36852e5368fb9fd538aca9",
+    "tasks/t012/init_program.py": "6ec339d70f567ccd17d4d9db96d9ec0415b3951bfc210ba12b1794e2a89b618d",
+    "tasks/t012/reference.py": "9624667c96c4ac3622f77aeefdc51d03101dc3dbdb4a4d7d3333435820a0290f",
+    "tasks/t012/search_sets.cpp": "8d23b3d78bd581f52d30d5caaeae512327065e0edd4cfd3347061cbce8073de9",
+    "tasks/t012/sota.py": "51550de0e40703ff61e36321883d27b04027d6474395ac9d88252748a4fcc3e0",
+    "tasks/t012/test_evolution.py": "9a97f07261f89cfb7cab64c34caf1d61cebaa89e1c2d232a475c57f9c02489ab",
+    "tasks/t012/test_task.py": "58abf6fe97ca80071c87f5ad41d8122a705d9946c7c1e16fa6ad913a97aa1191",
+    "tasks/t012/periodic_expansion.py": "511baeb5198acfa5c225cc9404ce2ba61a6768ca42a6acb71edf553af051d147"
+  },
+  "warm_start_sha256": "fc13e6c9672409e446f838ee59a0b2abe1da8fa37acbd9ce021110ec48a087df",
+  "replay_command": "python -m mathbench replay T012 tasks/t012/best/T012-C01/solution.json --config T012-C01"
+}

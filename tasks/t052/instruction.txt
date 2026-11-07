@@ -1,0 +1,3 @@
+Find a large set of permutations of {0,...,11} such that each pair differs at 9 or more positions. Return JSON with a `codewords` list; each item must be a permutation of 0 through 11. Maximize the number of codewords.
+
+The fixed configuration is T052-C01 (length 12, minimum Hamming distance 9). The checker recalculates validity and score from the codewords. Do not add a declared score as a substitute for a valid construction. Start from the supplied simple program and improve it. You may use exact integer Hamming-distance checks during search. Do not read, import, inspect, or infer from comparison witnesses, human or reference programs, records, SOTA files, or their data. Return only a valid JSON solution.

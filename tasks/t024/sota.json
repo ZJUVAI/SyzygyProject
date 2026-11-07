@@ -1,0 +1,104 @@
+{
+  "task_id": "T024",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T024-C01": {
+      "parameters": {
+        "vertices": 41,
+        "forbidden_cycle_length": 4
+      },
+      "direction": "maximize",
+      "objective": "edge count of a simple C4-free graph on 41 vertices",
+      "best_human": {
+        "value": 132,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html"
+      },
+      "best_public": {
+        "value": 132,
+        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6",
+        "evidence_state": "reported lower bound; not a proof of optimality"
+      },
+      "best_reproduced": {
+        "value": 132,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "verification_method": "decoded first sparse6 record; checker tests every pair for at most one common neighbor and recounts edges"
+      },
+      "program": "reference.py",
+      "reproduced_value": 132,
+      "public_value": 132,
+      "highest_reported": {
+        "value": 132,
+        "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+        "meaning": "reported C4-free construction; >= entry does not establish the extremal number"
+      },
+      "same_parameter_bounds": [
+        {
+          "value": 133,
+          "meaning": "proved upper bound by deleting each of 41 vertices and using the exact order-40 value ex(40,C4)=127",
+          "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+          "derivation": "39m <= 41*127, hence m <= floor(5207/39)=133"
+        }
+      ],
+      "proved_interval": {
+        "lower": 132,
+        "upper": 133,
+        "statement": "132 <= ex(41,C4) <= 133"
+      },
+      "checked_at": "2026-11-06",
+      "archive_sha256": "900da21cbbb59d10c30f26feb35ebab4f0e3ef65f21429939584bda497768989",
+      "decoded_witness_sha256": "da0752c7bbe5d432098d63d8d421e7441cbfd0291a09a08510fa91fb3a92dc80",
+      "open_status": "The source table marks ex(41,C4) >= 132; no proof of optimality was found in the checked sources.",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T024",
+          "config_id": "T024-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 132,
+          "verification_status": "exact",
+          "generation_time": 0.5543667264282703,
+          "verification_time": 0.44326549768447876,
+          "objective_value": 132,
+          "details": {
+            "vertices": 41,
+            "edges": 132,
+            "common_neighbor_pair_count": 726,
+            "maximum_common_neighbors": 1,
+            "c4_check": "all unordered vertex pairs have at most one common neighbor",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.0058171190321445,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "edges": 132,
+          "four_subsets_checked": 101270,
+          "four_cycles": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

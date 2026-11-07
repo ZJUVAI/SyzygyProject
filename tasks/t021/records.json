@@ -1,0 +1,152 @@
+{
+  "best_human": {
+    "value": {
+      "T021-C01": 412.2612746
+    },
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "n": 32,
+      "space": "S2",
+      "objective": "sum of reciprocal Euclidean distances"
+    },
+    "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+    "provenance": "The Cambridge Cluster Database lists the N=32 Ih structure and links to the archived xyz coordinate file. The database identifies this as a lowest structure found, without a proof of global optimality.",
+    "evidence_state": "source coordinates archived; rational sphere reconstruction and energy bounds independently reproduced by Sol"
+  },
+  "best_public": {
+    "value": {
+      "T021-C01": 412.2612746
+    },
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "n": 32,
+      "space": "S2"
+    },
+    "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+    "coordinate_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz",
+    "ai_provenance": "not stated by source",
+    "provenance": "The source reports a lowest located structure, not a global-optimality proof. Its printed energy is rounded and is not used as the task's reproduced score.",
+    "evidence_state": "source energy is a rounded decimal; original coordinate archive is saved under data/",
+    "origin_type": "human or traditional computational result; original authoring process not specified"
+  },
+  "best_reproduced": {
+    "value": {
+      "T021-C01": "4122612746505293102359059093/10000000000000000000000000"
+    },
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "n": 32,
+      "space": "S2",
+      "objective": "sum of reciprocal Euclidean distances"
+    },
+    "witness_file": "data/ccd_32.xyz",
+    "provenance": "Exact rational stereographic reconstruction from the archived CCD coordinate decimals. The archived file SHA-256 is 967ce3e92de2ab459a28d473cb80a501c6efb2c8dd274a66ab9634e7fd44456c. The database row cites Wales and Ulker, Physical Review B 74, 212101 (2006), DOI 10.1103/PhysRevB.74.212101.",
+    "ai_provenance": "No AI-generated coordinates; the public archive is used.",
+    "evidence_state": "certified interval and independent all-pair recomputation accepted by Sol on 2026-11-06"
+  },
+  "highest_reported": {
+    "value": "412.2612746",
+    "source": {
+      "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+      "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz",
+      "title": "Global Minima for the Thomson Problem",
+      "doi": "10.1103/PhysRevB.74.212101",
+      "status": "same-parameter reported candidate; source does not prove optimality"
+    },
+    "status": "highest numeric record among checked same-parameter source entries; broader source coverage is not claimed"
+  },
+  "benchmark_mapping": {
+    "AlphaEvolve": {
+      "repository": "https://github.com/google-deepmind/alphaevolve_repository_of_problems",
+      "fixed_commit": "8f447457957deac61e28bf1676746f0753b3b2f8",
+      "problem_path": "problems/33.html",
+      "notebook_path": "experiments/thomson_problem/thomson_problem.ipynb",
+      "paper": "https://arxiv.org/abs/2511.02864v1",
+      "paper_section": "6.18",
+      "parameter_match": "Section 6.18 lists N=32 among the generalization-mode evaluation parameters. The fixed notebook separately contains explicit saved witnesses at N=282,292,306. No upstream N=32 score or witness is imported.",
+      "fixed_version_note": "Upstream code and prompt must be replayed separately before reporting a result comparison."
+    }
+  },
+  "snapshot_date": "2026-11-06",
+  "review_status": "accepted_by_sol",
+  "configuration_expansions": {
+    "T021-C02": {
+      "parameters": {
+        "n": 40,
+        "space": "unit sphere S2",
+        "potential": "sum over unordered pairs 1 / Euclidean distance",
+        "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+      },
+      "public_energy": "660.6752788",
+      "point_group": "T_d",
+      "coordinates_file": "data/ccd_40.xyz",
+      "coordinate_sha256": "9f880170e0e067b2f77021c5a662975f96246ab9f1994574e6f23e20f93c6842",
+      "reproduced_energy_upper": "6606752788346224142901770129/10000000000000000000000000",
+      "certified_interval": [
+        "6606752788346224142901769349/10000000000000000000000000",
+        "6606752788346224142901770129/10000000000000000000000000"
+      ],
+      "evidence": "Exact rational stereographic projection and conservative rational square-root bounds over all unordered pairs.",
+      "open_status": "No proof located; Chen and Mehta (2014), §III, report deterministic results only for N=2,3,4,5,6,12.",
+      "open_source": "https://www.tianranchen.org/research/papers/thomson.pdf",
+      "review_status": "accepted_by_sol"
+    },
+    "T021-C03": {
+      "parameters": {
+        "n": 50,
+        "space": "unit sphere S2",
+        "potential": "sum over unordered pairs 1 / Euclidean distance",
+        "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+      },
+      "public_energy": "1055.1823147",
+      "point_group": "D_6d",
+      "coordinates_file": "data/ccd_50.xyz",
+      "coordinate_sha256": "1f9f28accda198e1e1d377f5285f8241f1fb8156eb06e311c44da9241de6d851",
+      "reproduced_energy_upper": "1318977893407870123909587637/1250000000000000000000000",
+      "certified_interval": [
+        "10551823147262960991276699871/10000000000000000000000000",
+        "1318977893407870123909587637/1250000000000000000000000"
+      ],
+      "evidence": "Exact rational stereographic projection and conservative rational square-root bounds over all unordered pairs.",
+      "open_status": "No proof located; Chen and Mehta (2014), §III, report deterministic results only for N=2,3,4,5,6,12.",
+      "open_source": "https://www.tianranchen.org/research/papers/thomson.pdf",
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "source_snapshot": {
+    "table_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+    "snapshot_file": "data/ccd_thomson_table.html",
+    "table_sha256": "5466173175b10a81d19e20763dffa64589f3ce5b92b09e827de14eb1fbb583e2",
+    "paper": "Wales and Ulker, Phys. Rev. B 74, 212101 (2006), DOI 10.1103/PhysRevB.74.212101"
+  },
+  "configuration_expansion_review": {
+    "status": "accepted_by_sol",
+    "configurations": [
+      "T021-C02",
+      "T021-C03"
+    ]
+  },
+  "initial_results": {
+    "T021-C01": {
+      "objective": "413065615661938261900002531/1000000000000000000000000",
+      "objective_value": "413065615661938261900002531/1000000000000000000000000",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9980527524419577
+    },
+    "T021-C02": {
+      "objective": "6616064366836294077244134279/10000000000000000000000000",
+      "objective_value": "6616064366836294077244134279/10000000000000000000000000",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9985925803740711
+    },
+    "T021-C03": {
+      "objective": "330135586449100206889687567/312500000000000000000000",
+      "objective_value": "330135586449100206889687567/312500000000000000000000",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9988152955288554
+    }
+  }
+}

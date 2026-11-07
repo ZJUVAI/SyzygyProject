@@ -1,0 +1,184 @@
+{
+  "task_id": "T050",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T050-C01": {
+      "parameters": {
+        "dimension": 9,
+        "graph": "Q9",
+        "object": "induced_path",
+        "length_unit": "edges"
+      },
+      "best_human": {
+        "value": 190,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "dimension": 9,
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "url": "https://arxiv.org/html/1201.1647",
+        "source": "Wynn (2012), arXiv:1201.1647v1, §VI and appendix.",
+        "provenance": "Traditional human computational construction by sequence joining and permutation search. No generative AI contribution is reported in the 2012 source.",
+        "evidence_state": "Complete transition sequence independently replayed and exactly checked.",
+        "witness": "data/reference/wynn_q9_190.json",
+        "witness_sha256": "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882"
+      },
+      "best_public": {
+        "value": 191,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "dimension": 9,
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "url": "https://arxiv.org/html/2607.15270v3",
+        "source": "Orland et al., §6 and Appendix E; authors' dataset at commit 46c765399353a588ea50444a5d6610f53102b1c2.",
+        "provenance": "The authors attribute Q9=191 to cube-surgery simulated annealing. They disclose project-level LLM assistance for manuscript work and for writing and optimizing search code, but do not attribute LLM assistance to this particular witness or run.",
+        "evidence_state": "Source paper prints a complete 191-transition witness; exact witness reproduced and validated.",
+        "witness": "data/reference/orland_v3_q9_191.json",
+        "witness_sha256": "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4"
+      },
+      "best_reproduced": {
+        "value": 191,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 9,
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "witness": "data/reference/orland_v3_q9_191.json",
+        "witness_sha256": "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4",
+        "verification_status": "exact",
+        "verification_method": "Replay the published transition sequence and check the complete induced-path constraints.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 190,
+        "witness_program": "human.py",
+        "witness": "data/reference/wynn_q9_190.json",
+        "witness_sha256": "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882",
+        "note": "Same-parameter published traditional construction."
+      },
+      "survey_scope_note": "Q9=191 remains a lower bound, not a solved optimum. The sampled 131-class census is not an optimality proof. The current paper v3, author-repository snapshot, and Leaps in Bounds status entry were checked on 2026-11-06.",
+      "analytic_upper_bound": {
+        "value": 286,
+        "reviewer": "Sol main agent",
+        "derivation": "For k path vertices, the induced graph has k-1 edges. Its outgoing edges are 9k-2(k-1)=7k+2, at most 9(512-k). Thus16k<=4606, k<=287 and path edges<=286.",
+        "scope": "Independent conservative counting bound; no claim that this is the best published upper bound."
+      }
+    },
+    "T050-C02": {
+      "best_human": {
+        "value": 191,
+        "parameters": {
+          "dimension": 10,
+          "graph": "Q10",
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "source": "Wynn (2012), arXiv:1201.1647, Q9 190-edge path, embedded with one endpoint step in each new coordinate.",
+        "url": "https://arxiv.org/abs/1201.1647",
+        "evidence_state": "Verified traditional construction obtained by exact dimension extension. No claim that Wynn published this longer-dimension witness."
+      },
+      "best_public": {
+        "value": 379,
+        "parameters": {
+          "dimension": 10,
+          "graph": "Q10",
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "witness": "data/reference/orland_v3_q10_379.json",
+        "witness_sha256": "1dfbf391f6419e31aab21293fa68fbd7da7246655fd10ba53788b9ccf3e62064",
+        "source": "Orland et al., arXiv:2607.15270v3 Table 1 and authors record_snakes.csv.zip, pinned commit 46c765399353a588ea50444a5d6610f53102b1c2, Git blob 7854e2592325dab85a35a8a4809314edb80f7af8.",
+        "url": "https://arxiv.org/html/2607.15270v3",
+        "origin_type": "LLM assistance disclosed for search code; computational record independently verified.",
+        "verification_status": "exact",
+        "review_status": "accepted_by_sol"
+      },
+      "best_reproduced": {
+        "value": 379,
+        "parameters": {
+          "dimension": 10,
+          "graph": "Q10",
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "witness": "data/reference/orland_v3_q10_379.json",
+        "witness_sha256": "1dfbf391f6419e31aab21293fa68fbd7da7246655fd10ba53788b9ccf3e62064",
+        "source": "Orland et al., arXiv:2607.15270v3 Table 1 and authors record_snakes.csv.zip, pinned commit 46c765399353a588ea50444a5d6610f53102b1c2, Git blob 7854e2592325dab85a35a8a4809314edb80f7af8.",
+        "url": "https://arxiv.org/html/2607.15270v3",
+        "origin_type": "LLM assistance disclosed for search code; computational record independently verified.",
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol"
+      }
+    },
+    "T050-C03": {
+      "best_human": {
+        "value": 192,
+        "parameters": {
+          "dimension": 11,
+          "graph": "Q11",
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "source": "Wynn (2012), arXiv:1201.1647, Q9 190-edge path, embedded with one endpoint step in each new coordinate.",
+        "url": "https://arxiv.org/abs/1201.1647",
+        "evidence_state": "Verified traditional construction obtained by exact dimension extension. No claim that Wynn published this longer-dimension witness."
+      },
+      "best_public": {
+        "value": 750,
+        "parameters": {
+          "dimension": 11,
+          "graph": "Q11",
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "source": "Echols 2026a, reported in the footnote to Orland et al. v3 Table 1.",
+        "url": "https://williamechols.com/posts/sitb_updates.html",
+        "evidence_state": "Stronger reported result. The exact 750-edge witness was not recovered in this source review."
+      },
+      "best_reproduced": {
+        "value": 746,
+        "parameters": {
+          "dimension": 11,
+          "graph": "Q11",
+          "object": "induced_path",
+          "length_unit": "edges"
+        },
+        "witness": "data/reference/orland_v3_q11_746.json",
+        "witness_sha256": "c173f122dff79b82c2fc7a2030a8c30bdbd96698f7abdb3caa356dec1070d6f7",
+        "source": "Orland et al., arXiv:2607.15270v3 Table 1 and authors record_snakes.csv.zip, pinned commit 46c765399353a588ea50444a5d6610f53102b1c2, Git blob 7854e2592325dab85a35a8a4809314edb80f7af8.",
+        "url": "https://arxiv.org/html/2607.15270v3",
+        "origin_type": "LLM assistance disclosed for search code; computational record independently verified.",
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T050-C01": {
+      "objective": 9,
+      "objective_value": 9,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.04736842105263158
+    },
+    "T050-C02": {
+      "objective": 10,
+      "objective_value": 10,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.05235602094240838
+    },
+    "T050-C03": {
+      "objective": 11,
+      "objective_value": 11,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.057291666666666664
+    }
+  }
+}

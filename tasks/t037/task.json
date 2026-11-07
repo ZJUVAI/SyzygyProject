@@ -1,0 +1,31 @@
+{
+  "task_id": "T037",
+  "candidate_id": "kissing-number-5d",
+  "name": "Five-dimensional kissing number",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T037-C01",
+      "parameters": {
+        "dimension": 5,
+        "minimum_angle_degrees": 60,
+        "representation": "nonzero rational direction vectors in Q^5; exact angle check after normalization",
+        "objective": "maximum cardinality"
+      },
+      "direction": "maximize",
+      "human_reference": 40
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "五维方向间夹角至少60度，最大化方向数。有理非零向量是精确归一化的证书表示，搜索候选的有限整数集合不是验证条件。",
+      "人类方法来源": "主代理读Cohn–Rajagopal2026第2节的D5公式：五维选两个非零坐标，各取±1，共40。归于Korkine–Zolotareff1873，未取得原1873文献。",
+      "独立验算": "主代理清除分母并除最大公因数，再用整数平方根比较所有780对。原代理补齐遗漏SOTA和自有best后，五程序及完整控制通过。",
+      "开放状态与限制": "2026主论文仍报告40–44。44上界未本地重证，有限三元代码内最优性不推广到无限制问题。"
+    }
+  }
+}

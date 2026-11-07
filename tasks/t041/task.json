@@ -1,0 +1,33 @@
+{
+  "task_id": "T041",
+  "name": "Erdős unequal-square sum in the unit square, unrestricted rotations",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T041-C01",
+      "parameters": {
+        "square_count": 17,
+        "container": "closed unit square [0,1]^2",
+        "orientation": "arbitrary",
+        "interior_disjoint": true,
+        "objective": "sum of the 17 side lengths"
+      },
+      "direction": "maximize",
+      "human_reference": 4
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "单位正方形内17个可任意旋转、正边长、内部不交的正方形，最大化边长和；边界接触合法。",
+      "human_baseline": "从传统网格方法重建同参数17块：15个1/4和2个1/8，精确和4。不是把AI构造归为人类，也不声称这17个坐标原载于1975论文。",
+      "public_provenance": "亲自阅读ProbXiv106记录：Aug17 2026披露Claude Opus5发现，Codex形式化，尚无人员检查；形式化与网页等价性不由Lean保证。固定Sprite143仓库提交edbfb534，逐一比对闭式源程序产生的85个有理字段，与归档见证完全一致。",
+      "independent_verification": "主代理使用精确有理多边形裁剪，独立验证136对交面积均零；正式检查器使用分离轴法。核对全部68角、17个单位方向和精确边长和2190452873/547596200。面积加Cauchy–Schwarz给上界sqrt17，文献可行构造不视为最优。",
+      "controls": "五种程序、破坏样例、声明成绩完整不变性、严格回放、冷导出及程序错误/非有限数/超时全部通过。",
+      "limits": "仅复现明确固定的公开构造；未重做完整AI搜索或证明最优。任意旋转与仅轴平行版本严格区分。"
+    }
+  }
+}

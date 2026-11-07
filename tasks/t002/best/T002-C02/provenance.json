@@ -1,0 +1,45 @@
+{
+  "classification": "ai_assisted_local_search",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "scope": "Frozen own construction; no public SOTA claim or isolated model comparison.",
+  "seed": 0,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "45",
+    "MATHBENCH_EVOLUTION_SECONDS": "45"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 33
+  },
+  "source_sha256": {
+    "tasks/t002/baseline.py": "f715a147e0802502f4060ccf91792a4803afd43611c76ec490060509fc62790f",
+    "tasks/t002/check.py": "25a69ace57d15e38e024ebc40383ad6be37802f70955eed24d8dd50f90e094c9",
+    "tasks/t002/evaluator.py": "659659b091315436554ad9b55206c0a4021b93cdac9b0c55c0f85f148d7974b7",
+    "tasks/t002/evolution.py": "ba6e38d73922d324b156937ae43e5af930b74ceb00f14122cc84e8ae44ef5f73",
+    "tasks/t002/human.py": "91fe1df084598777fb722342f57f8d4dde639b3b5799fdb8e64bb85cce55c1b3",
+    "tasks/t002/init_program.py": "636cf80ba244f172e5432810d097ff8e36e379d690cae72b65b952d64b7330d3",
+    "tasks/t002/rebuild_witnesses.py": "4167a189db34b5bf77425b9c3505978f9468da1e0983a783e1358f7c9e663a69",
+    "tasks/t002/reference.py": "0d1c7ac8036b0beb267a5b7e7bd401bd8fb19f78e8ef2cf6933210b23ef50942",
+    "tasks/t002/sota.py": "e2e78881f4cd31be187dda9ec4c491e1010200310ccb8e8c3bd765a66e60e809",
+    "tasks/t002/test_task.py": "57226fdf558a8cce49731183f877bade5f0a77940381de2922043d09543f8e1f"
+  },
+  "independent_quantity": {
+    "bounding_side": "6"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_objective": "6",
+  "baseline_objective": "6",
+  "human_objective": "2966942899906512939318226046481160904289990651293931822604648091421/500000000000000000000000000000000000000000000000000000000000000000",
+  "replay_command": "python -m mathbench replay T002 tasks/t002/best/T002-C02/solution.json --config T002-C02",
+  "limitations": "Time cutoffs depend on machine and CPU contention. T012 has the documented prior human.py exposure. Search assets were not security-isolated."
+}

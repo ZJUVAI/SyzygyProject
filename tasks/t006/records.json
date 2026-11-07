@@ -1,0 +1,109 @@
+{
+  "best_human": {
+    "value": 320,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "degree": 4,
+      "girth": 10
+    },
+    "url": "https://arxiv.org/abs/2511.07247v2",
+    "provenance": "Exoo, Goedgebeur, Jooken, Stubbe, and Van den Eede report n(4,10) <= 320. Their paper does not claim equality.",
+    "evidence_state": "published construction; witness downloaded from authors' public repository"
+  },
+  "best_public": {
+    "value": 320,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "degree": 4,
+      "girth": 10
+    },
+    "url": "https://houseofgraphs.org/meta-directory/cages",
+    "evidence_state": "publicly reported upper bound; not an optimality proof",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 320,
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "degree": 4,
+      "girth": 10
+    },
+    "url": "https://github.com/AGT-Kulak/smallRegGirthGraphs/blob/main/genLifts/data/graphs/cage/n320_k4_g10.g6",
+    "provenance": "The graph6 file from the paper authors' repository was decoded into data/human_graph.json. The task checker verifies the resulting graph directly.",
+    "ai_provenance": "Conversion and independent verification performed for this task; graph construction is attributed to the cited paper authors.",
+    "actual_value": 320,
+    "evidence_state": "witness and order replayed; checker verifies simple connected 4-regularity and exact girth 10"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configurations": {
+    "T006-C02": {
+      "best_human": {
+        "value": 270,
+        "date_checked": "2026-11-07",
+        "parameters": {
+          "degree": 4,
+          "girth": 9
+        },
+        "url": "https://arxiv.org/abs/2511.07247",
+        "provenance": "Exoo, Goedgebeur, Jooken, Stubbe, and Van den Eede report n(4,9) <= 270. Their paper does not claim equality.",
+        "evidence_state": "published construction; witness downloaded from House of Graphs",
+        "witness_sha256": "b2f7ef96469f839a093f42352a419435a0655a068cd345732d42b48899406e8d"
+      },
+      "best_public": {
+        "value": 270,
+        "date_checked": "2026-11-07",
+        "parameters": {
+          "degree": 4,
+          "girth": 9
+        },
+        "url": "https://houseofgraphs.org/meta-directory/cages",
+        "evidence_state": "publicly reported upper bound; not an optimality proof",
+        "origin_type": "human paper result",
+        "witness_sha256": "b2f7ef96469f839a093f42352a419435a0655a068cd345732d42b48899406e8d"
+      },
+      "best_reproduced": {
+        "value": 270,
+        "date_reproduced": "2026-11-07",
+        "parameters": {
+          "degree": 4,
+          "girth": 9
+        },
+        "url": "https://houseofgraphs.org/data/cages/k4_g9_n270.g6",
+        "provenance": "graph6 downloaded from House of Graphs and converted to task JSON; strict checker replay pending Sol review",
+        "actual_value": 270,
+        "evidence_state": "House of Graphs graph6 file SHA-256 recorded; task-local JSON witness independently replayed by task checker; Sol review pending",
+        "witness_sha256": "2a28776e32b0da75e771d76ae3343bb214fa41af355452e21fa1a8eb17544f14",
+        "review_status": "reviewed_by_sol"
+      },
+      "best_known_lower_bound": {
+        "value": 165,
+        "parameters": {
+          "degree": 4,
+          "girth": 9
+        },
+        "url": "https://doi.org/10.37236/14471",
+        "provenance": "De la Cruz and Pizaña, On Cages and Choosing with Symmetries, Electronic Journal of Combinatorics 33(1), #P1.54 (2026), report n(4,9) >= 165 from exhaustive search. Moore bound is 161.",
+        "evidence_state": "published computational lower bound; lower bound only"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T006-C01": {
+      "objective": 50616,
+      "objective_value": 50616,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.00632211158526948
+    },
+    "T006-C02": {
+      "objective": 50616,
+      "objective_value": 50616,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.005334281650071123
+    }
+  }
+}

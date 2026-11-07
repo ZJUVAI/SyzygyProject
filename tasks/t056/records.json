@@ -1,0 +1,101 @@
+{
+  "task_id": "T056",
+  "configurations": {
+    "T056-C01": {
+      "best_human": {
+        "value": 2006,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "source": {
+          "title": "Parallel implementation of GES",
+          "authors": "O. V. Shylo and M. P. Pardalos",
+          "year": 2008,
+          "url": "https://www.optimizizer.com/infoUB.php?UB=2006&name=ta41&problemclass=ta",
+          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta",
+          "algorithm_source": "Parallel global equilibrium search"
+        },
+        "ai_provenance": "The cited source does not state whether AI tools were used. No AI-free claim is made.",
+        "evidence_state": "published makespan; the listed machine sequences are downloaded and independently rechecked"
+      },
+      "best_public": {
+        "value": 2006,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "source": {
+          "url": "https://www.optimizizer.com/TA.php",
+          "last_update": "2026-10-18",
+          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta"
+        },
+        "evidence_state": "published upper-bound schedule downloaded and independently checked against the official Taillard instance"
+      },
+      "best_reproduced": {
+        "value": 2006,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "program": "reference.py",
+        "witness": "data/reference/ta41_2006_schedule.json",
+        "witness_sha256": "d3760f7a46266d9da02920433f027645056704d76fb423846414ca9d275c58ed",
+        "reproduction_status": "exact integer precedence graph validation; makespan recomputed as 2006",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 3296,
+        "program": "human.py",
+        "method": "Giffler-Thompson active-schedule generation with longest-processing-time priority in the conflict set",
+        "source": {
+          "title": "Algorithms for Solving Production-Scheduling Problems",
+          "authors": "B. Giffler and G. L. Thompson",
+          "year": 1960,
+          "url": "https://doi.org/10.1287/opre.8.4.487"
+        },
+        "evidence_state": "reconstructed deterministic rule; witness independently checked; not the published 2006 record"
+      },
+      "reported_bounds": {
+        "current_public_lower_bound": 1912,
+        "lower_bound_source": "https://doi.org/10.2139/ssrn.4938242",
+        "lower_bound_reproduction_status": "reported by the current Taillard bounds page; not independently reproduced as an optimality certificate",
+        "2025_cp_numerical_lower_bound": 1915,
+        "2025_cp_source": "https://arxiv.org/abs/2504.16106",
+        "2025_cp_limitation": "The paper's OPT-50000s column reports 1915 for ta41. It describes this as a numerical lower bound and warns that the solver-derived lower bounds are not formally proved because implementation error cannot be excluded.",
+        "optimality_status": "open"
+      },
+      "source_pins": {
+        "official_instance_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/jobshop.dir/tai30_20.txt",
+        "official_snapshot_sha256": "fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9",
+        "normalized_instance": "data/source/ta41_instance.json",
+        "normalized_instance_sha256": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
+        "official_row_note": "ta41 is the first 30-job, 20-machine block in tai30_20.txt; its embedded historical bound fields are superseded and not used as current bounds."
+      },
+      "own_search": {
+        "program": "evolution.py",
+        "witness": "best/seed_0.json",
+        "objective": 2795,
+        "seed": 0,
+        "iterations": 500,
+        "search_isolation": "starts from init_program.py; no reference or human witness reads"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T056-C01": {
+      "objective": 25114,
+      "objective_value": 25114,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.1312415385840567
+    }
+  }
+}

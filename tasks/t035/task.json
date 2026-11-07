@@ -1,36 +1,27 @@
 {
   "task_id": "T035",
-  "name": "(4,10)-cage order",
+  "name": "Erdős–Szekeres point sets with no convex 7-gon",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T035-C01",
       "parameters": {
-        "degree": 4,
-        "girth": 10
+        "forbidden_convex_polygon_vertices": 7
       },
-      "direction": "minimize",
-      "human_reference": 320
+      "direction": "maximize",
+      "human_reference": 32
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "最大化一般位置平面点集基数，禁止任何凸七点子集。凸多边形不要求内部为空。",
+      "人类方法来源": "按Erdős–Szekeres经典规则及Duque等v2整数实现递归重建32点，不从图片猜坐标。",
+      "独立验算": "任务采用三元组扩展掩码。主代理用单调链算四点凸包，再穷举3365856个七子集，各自含非凸四子集，由平面Caratheodory定理完全排除凸七边形。修复human入口后五程序及完整控制通过。",
+      "开放状态与限制": "Dumitru2025及Schroeder2026-09-19主来源仍将ES(7)=33列为猜想，后者报告33–81。81上界未本地重证。"
+    }
   }
 }

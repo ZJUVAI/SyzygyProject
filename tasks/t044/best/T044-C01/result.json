@@ -1,0 +1,36 @@
+{
+  "task_id": "T044",
+  "config_id": "T044-C01",
+  "validity": 1.0,
+  "combined_score": 0.37142857142857144,
+  "objective": 26,
+  "verification_status": "exact",
+  "generation_time": 0.7953221201896667,
+  "verification_time": 2.043650683015585,
+  "objective_value": 26,
+  "details": {
+    "order": 26,
+    "edge_count": 39,
+    "maximum_degree": 3,
+    "diameter": 5,
+    "all_source_distances_checked": 676,
+    "claimed_score_ignored": true,
+    "strict_full_graph_check": true,
+    "moore_bound": 94
+  },
+  "eval_time": 2.849256742745638,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

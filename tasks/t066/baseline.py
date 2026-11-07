@@ -1,73 +1,79 @@
-from mathbench.search import search_deadline, search_steps
-"""Bounded simulated annealing on systematic binary generator matrices."""
+"""Fixed-seed random search over integer-grid point sets."""
+
 import math
 import os
 import random
 import time
-
-N, K = 68, 15
-
-
-def _make_systematic(seed):
-    rng = random.Random(seed)
-    rows=[]
-    for i in range(K):
-        row=1 << i
-        for j in range(K, N):
-            if rng.getrandbits(1):
-                row |= 1 << j
-        rows.append(row)
-    return rows
+from math import gcd
 
 
-def _distance(rows):
-    """Exact minimum weight over all nonzero linear combinations."""
-    words=[0] * (1 << K)
-    best=N+1
-    for mask in range(1, 1 << K):
-        bit=mask & -mask
-        index=bit.bit_length()-1
-        words[mask]=words[mask ^ bit] ^ rows[index]
-        weight=bin(words[mask]).count('1')
-        if weight < best:
-            best=weight
-    return best
+CONFIG_ID = "T066-C01"
+POINT_COUNT = 17
+GRID = [(x, y) for x in range(-6, 7) for y in range(-6, 7)]
+ITERATION_LIMIT = 96
 
 
-def _mutate_parity(rows, rng, max_flips=4):
-    """Flip 1..max_flips entries in P of [I|P], preserving rank."""
-    candidate=rows[:]
-    count=rng.randint(1, max_flips)
-    for _ in range(count):
-        row=rng.randrange(K)
-        col=rng.randrange(K, N)
-        candidate[row] ^= 1 << col
-    return candidate
+def _line_key(p, q):
+    x1, y1 = p
+    x2, y2 = q
+    a, b, c = y1 - y2, x2 - x1, x1 * y2 - x2 * y1
+    divisor = gcd(gcd(abs(a), abs(b)), abs(c))
+    a, b, c = a // divisor, b // divisor, c // divisor
+    if next(value for value in (a, b, c) if value) < 0:
+        a, b, c = -a, -b, -c
+    return a, b, c
+
+
+def _score(points):
+    lines = {_line_key(points[i], points[j]) for i in range(len(points)) for j in range(i)}
+    exactly_three = 0
+    for a, b, c in lines:
+        incidence = sum(a * x + b * y + c == 0 for x, y in points)
+        exactly_three += incidence == 3
+    return exactly_three
+
+
+def _encode(points):
+    return {
+        "minimal_polynomial": [0, 1],
+        "isolating_interval": ["-1", "1"],
+        "points": [{"x": [x], "y": [y]} for x, y in points],
+    }
 
 
 def run_code():
-    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T066-C01')
-    if config_id != 'T066-C01':
-        raise ValueError('unsupported configuration')
-    seed=int(os.environ.get('MATHBENCH_SEED','0'))
-    rng=random.Random(seed)
-    current=_make_systematic(seed)
-    current_d=_distance(current)
-    best=current[:]
-    best_d=current_d
-    budget=max(0.0, min(float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2')), 30.0))
-    deadline = search_deadline()
-    steps=0
-    for _attempt in search_steps(60):
-        candidate=_mutate_parity(current, rng)
-        candidate_d=_distance(candidate)
-        steps += 1
-        if candidate_d > best_d:
-            best,best_d=candidate[:],candidate_d
-        # A cooling schedule permits occasional downhill moves to escape plateaus.
-        temperature=max(0.15, 2.0 * (1.0 - min(steps, 200) / 200.0))
-        delta=candidate_d-current_d
-        if delta >= 0 or rng.random() < math.exp(delta/temperature):
-            current,current_d=candidate,candidate_d
-    matrix=[[((row >> j) & 1) for j in range(N)] for row in best]
-    return {'generator_matrix':matrix}
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    rng = random.Random(seed)
+    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds_text is not None:
+        seconds = float(seconds_text)
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + seconds
+
+    incumbent = [(i, i * i) for i in range(POINT_COUNT)]
+    incumbent_score = _score(incumbent)
+    iterations = 0
+    for _ in range(ITERATION_LIMIT):
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        candidate = rng.sample(GRID, POINT_COUNT)
+        score = _score(candidate)
+        iterations += 1
+        if score > incumbent_score:
+            incumbent, incumbent_score = candidate, score
+    return {
+        **_encode(incumbent),
+        "search_metadata": {
+            "algorithm": "fixed-seed random sampling of 17-point subsets of the integer 13x13 grid",
+            "seed": seed,
+            "iteration_limit": ITERATION_LIMIT,
+            "iterations": iterations,
+            "reference_data_read": False,
+            "search_seconds_cutoff": seconds_text,
+        },
+    }

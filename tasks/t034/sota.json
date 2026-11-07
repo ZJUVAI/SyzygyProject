@@ -1,0 +1,135 @@
+{
+  "task_id": "T034",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T034-C01": {
+      "objective": {
+        "name": "largest N with a two-coloring of [1,N] containing no monochromatic 7-term arithmetic progression",
+        "unit": "positive integers",
+        "direction": "maximize",
+        "constraints": [
+          "the domain is exactly the consecutive prefix [1,N]",
+          "each integer receives exactly one of two colors",
+          "a forbidden progression has seven distinct terms and a positive integer common difference"
+        ]
+      },
+      "program": "reference.py",
+      "reproduced_value": 3703,
+      "public_value": 3703,
+      "highest_reported": {
+        "value": 3703,
+        "source": "Herwig et al. (2007), Table 3, confirmed in Monroe (2025), Table 1",
+        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+        "reproduction_status": "same-parameter construction reproduced from the power-residue formula and checked exactly"
+      },
+      "best_human": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "source": "Rabung power-residue construction, reported by Herwig et al. (2007), Table 3",
+        "url": "https://www.cs.utexas.edu/~marijn/publications/waerden.pdf",
+        "witness_program": "human.py",
+        "evidence_state": "Formula reconstructed and exact check completed; historical attribution is stated at the method level.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6"
+      },
+      "best_public": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "source": "Herwig et al. (2007), Table 3; Monroe (2025), Table 1",
+        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+        "evidence_state": "Published lower bound with a reconstructed and exactly validated witness.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6"
+      },
+      "best_reproduced": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Exhaustive enumeration of all 7-term progressions with positive step in [1,3703].",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb"
+      },
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 3703,
+        "note": "H is the reproduced same-parameter published human construction."
+      },
+      "checked_at": "2026-11-06",
+      "unmatched_parameter_records": [],
+      "source_unattributed_records": [],
+      "ai_assisted_records": [],
+      "limitations": [
+        "The literature check is limited to the sources named in records.json.",
+        "The task gives no impossibility proof at N=3704 and makes no exact value claim."
+      ],
+      "monroe_repository": {
+        "url": "https://github.com/hmonroe/vdw",
+        "commit": "f1223097f4adc0a41ccb92ace51ebafd2b996fb1",
+        "files_sha256": {
+          "data/source/monroe_README.md": "63a5af99ce0a1195acaa1e8fdabd4564f1b577d7296af4151a4d584d809c94c9",
+          "data/source/monroe_uc2.cpp": "1394039f3fd6cf8dfba601a960b7aa7d2558c7448e4bb915a1318a8317098391"
+        },
+        "scope": "Source snapshot linked by Monroe2025; not executed by human.py. Historical power-residue formula is independently rebuilt, not a replay of BOINC computation."
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T034",
+          "config_id": "T034-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 3703,
+          "verification_status": "exact",
+          "generation_time": 0.21468046307563782,
+          "verification_time": 1.0170887298882008,
+          "objective_value": 3703,
+          "details": {
+            "n": 3703,
+            "colors": 2,
+            "progression_length": 7,
+            "positive_steps_checked": 617,
+            "progressions_checked": 1140833,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.2409897781908512,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "prefix_length": 3703,
+          "arithmetic_progressions_checked": 1140833
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

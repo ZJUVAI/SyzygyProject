@@ -1,0 +1,444 @@
+{
+  "task_id": "T064",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T064 --label admission_20261106_main",
+  "configurations": {
+    "T064-C01": {
+      "configuration": {
+        "id": "T064-C01",
+        "parameters": {
+          "instance_uid": "ortho_40_56a6f463",
+          "input_file": "data/source/ortho40.instance.json",
+          "input_sha256": "f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7",
+          "input_vertices": 40,
+          "region_boundary_vertices": 40,
+          "additional_constraints": 0,
+          "objective": "number of added Steiner points",
+          "objective_unit": "Steiner points",
+          "coordinate_domain": "rational",
+          "coordinate_encoding": "finite JSON floats are interpreted as exact binary rationals",
+          "resource_guard_max_steiner_points": 2000,
+          "feasibility": "straight-line triangulation of the complete simple polygon; all input vertices included; all edges inside the polygon; all 40 boundary segments covered; no crossings; every bounded face is a non-degenerate non-obtuse triangle"
+        },
+        "direction": "minimize",
+        "human_reference": 129
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T064",
+            "config_id": "T064-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 129,
+            "verification_status": "exact",
+            "generation_time": 0.5741296447813511,
+            "verification_time": 1.150267407298088,
+            "objective_value": 129,
+            "details": {
+              "instance_uid": "ortho_40_56a6f463",
+              "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+              "input_vertices": 40,
+              "steiner_points": 129,
+              "total_vertices": 169,
+              "edges": 394,
+              "bounded_triangles": 226,
+              "polygon_area2": "2711189126024",
+              "triangle_area2_sum": "2711189126024",
+              "all_edges_inside": true,
+              "all_boundary_segments_covered": true,
+              "all_triangles_nonobtuse": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.7352796234190464,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "steiner_count": 129,
+            "triangles": 226,
+            "edges": 394,
+            "exact_doubled_area": "2711189126024"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T064",
+            "config_id": "T064-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 129,
+            "verification_status": "exact",
+            "generation_time": 1.9664595164358616,
+            "verification_time": 0.9797728024423122,
+            "objective_value": 129,
+            "details": {
+              "instance_uid": "ortho_40_56a6f463",
+              "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+              "input_vertices": 40,
+              "steiner_points": 129,
+              "total_vertices": 169,
+              "edges": 394,
+              "bounded_triangles": 226,
+              "polygon_area2": "2711189126024",
+              "triangle_area2_sum": "2711189126024",
+              "all_edges_inside": true,
+              "all_boundary_segments_covered": true,
+              "all_triangles_nonobtuse": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.9528379552066326,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "steiner_count": 129,
+            "triangles": 226,
+            "edges": 394,
+            "exact_doubled_area": "2711189126024"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T064",
+            "config_id": "T064-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 129,
+            "verification_status": "exact",
+            "generation_time": 0.6971602886915207,
+            "verification_time": 0.8992658890783787,
+            "objective_value": 129,
+            "details": {
+              "instance_uid": "ortho_40_56a6f463",
+              "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+              "input_vertices": 40,
+              "steiner_points": 129,
+              "total_vertices": 169,
+              "edges": 394,
+              "bounded_triangles": 226,
+              "polygon_area2": "2711189126024",
+              "triangle_area2_sum": "2711189126024",
+              "all_edges_inside": true,
+              "all_boundary_segments_covered": true,
+              "all_triangles_nonobtuse": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.6037566773593426,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "steiner_count": 129,
+            "triangles": 226,
+            "edges": 394,
+            "exact_doubled_area": "2711189126024"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T064",
+            "config_id": "T064-C01",
+            "validity": 1.0,
+            "combined_score": 6.7894736842105265,
+            "objective": 19,
+            "verification_status": "exact",
+            "generation_time": 0.36675531417131424,
+            "verification_time": 0.6816261969506741,
+            "objective_value": 19,
+            "details": {
+              "instance_uid": "ortho_40_56a6f463",
+              "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+              "input_vertices": 40,
+              "steiner_points": 19,
+              "total_vertices": 59,
+              "edges": 121,
+              "bounded_triangles": 63,
+              "polygon_area2": "2711189126024",
+              "triangle_area2_sum": "2711189126024",
+              "all_edges_inside": true,
+              "all_boundary_segments_covered": true,
+              "all_triangles_nonobtuse": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.0548269636929035,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "steiner_count": 19,
+            "triangles": 63,
+            "edges": 121,
+            "exact_doubled_area": "2711189126024"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T064",
+            "config_id": "T064-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 129,
+            "verification_status": "exact",
+            "generation_time": 1.736856371164322,
+            "verification_time": 1.3986811228096485,
+            "objective_value": 129,
+            "details": {
+              "instance_uid": "ortho_40_56a6f463",
+              "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+              "input_vertices": 40,
+              "steiner_points": 129,
+              "total_vertices": 169,
+              "edges": 394,
+              "bounded_triangles": 226,
+              "polygon_area2": "2711189126024",
+              "triangle_area2_sum": "2711189126024",
+              "all_edges_inside": true,
+              "all_boundary_segments_covered": true,
+              "all_triangles_nonobtuse": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 3.145076882094145,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "steiner_count": 129,
+            "triangles": 226,
+            "edges": 394,
+            "exact_doubled_area": "2711189126024"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T064",
+        "config_id": "T064-C01",
+        "validity": 1.0,
+        "combined_score": 1.0,
+        "objective": 129,
+        "verification_status": "exact",
+        "generation_time": 0.5383842289447784,
+        "verification_time": 1.7488362900912762,
+        "objective_value": 129,
+        "details": {
+          "instance_uid": "ortho_40_56a6f463",
+          "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+          "input_vertices": 40,
+          "steiner_points": 129,
+          "total_vertices": 169,
+          "edges": 394,
+          "bounded_triangles": 226,
+          "polygon_area2": "2711189126024",
+          "triangle_area2_sum": "2711189126024",
+          "all_edges_inside": true,
+          "all_boundary_segments_covered": true,
+          "all_triangles_nonobtuse": true,
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 2.2901669703423977,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T064",
+          "config_id": "T064-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t064/runs/admission_20261106_main/T064-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.49081212654709816,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T064",
+          "config_id": "T064-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.21073827892541885,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T064",
+          "config_id": "T064-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.43480848148465157,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "82cc8e9f68bb688ba54d54080c2239153605bd0d5c95b38a3bb4266504be407e",
+    "README.md": "c2a0a881c881bdce07ed53345dca73eae96b3975c502340dfa93ce6fe807f5c3",
+    "baseline.py": "4d46e1c10b8e376e13787dfd6926b1354dc396af9311d5907ef34b6db922f7e9",
+    "check.py": "e1c2ce76aeb66d385180bc0070e5157c22c6513cfec413c28aff3791ca019eab",
+    "data/human/ortho40_grid.json": "6a4716a355bd15694e64637b2f19c94b355e36ee96a54c7945eefdaac78ce4f6",
+    "data/reference/ortho40_solution.json": "56bb1631924d9d254a399df25cb2ef0a1d9d18f228395dbefca98940b9151877",
+    "data/source/ortho40.instance.json": "f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7",
+    "evaluator.py": "932aaf827829dd4bd37fbb19053aa38befe1870699fff5520834688916eee545",
+    "evolution.py": "6c63180a1790d61b46fe870dc525afcd684b413dc3cc329d09f7c7d907ff42aa",
+    "grid_method.py": "9699d1f3143c0040e365d9505d4754ad2278cea6e04a3f5b2882e2a465402e9c",
+    "human.py": "f4e71bdebdabb532b6ecc4f8d500a48ce8978d681eff7c1ee1a3accfd21cb72e",
+    "init_program.py": "653a3b79a6e2cbe932ecd54d8b00e9be51e61f953b99269309268b987b00c882",
+    "instruction.txt": "fc295b2d6005b4cd99cf5685f7db4f6742536e9f277ef525f42db559a787df2a",
+    "records.json": "2347fbd3d8191348b7ccaa78985180704d49281f71d386df867f3f187071f224",
+    "reference.py": "7973c77b501c7b101d3423c1daf54e680ef6c87806d64f4d6c24b55e88c65e7e",
+    "test_task.py": "fa6eb95565907911b419ae7686d26b54276919360a42075c51f611d1dc58a6df"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "固定ortho_40_56a6f463输入40点无额外约束，最小化非钝角完整剖分的额外Steiner点数；仅完全合法非钝角构造进入排名，不把少量钝角惩罚作正式解。",
+    "primary_source": "Sol亲读SoCG2025.79 Figure10的该实例19点记录，重取固定77920a0e578e5bff13c710f988ec1c52d61dcfd8仓库merged_summaries_3.zip内对应完整解，核对官方输入SHA f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7。另阅读SoCG2025.80正交多边形网格传统方法，独立在同参重建弱人类129点。",
+    "independent_math": "正式checker清除公分母转整数后作平面与角度检查。Sol另直接用Fraction精确构建半边面、查所有边对交叉/重叠、连通、40条边界子段无缝覆盖、每个有界面三角及全部角点积非负；59点121边63三角，所有三角双面积之和与原多边形均2711189126024。相同独立方法检查五种构造。",
+    "domain_and_resources": "接口明确为任意精度有理坐标版本，不声称覆盖原几何实坐标模型。移除未经证明的128字符与8192共同分母bit限制，依赖公共资源预算。2000额外点cap不排除任何优于19的解，因为改进仅需≤18点。",
+    "open_status": "论文、获胜工件及所查2026资料没有该实例19的匹配最优性证明；19只记可行公开纪录。2026 Bishop最优角度范围结果不同于最少Steiner点，不用于闭合本题。获胜搜索AI参与情况未披露，human129传统网格重建与public19分开。",
+    "controls": "初始/传统/演化/人类129，公开固定参考19。五程序、删边破坏、完整声明不变、严格回放、仅公开输入冷导出、程序异常/非有限/超时均通过。任务及共享检查46项通过。",
+    "limits": "未证明19最优，未重跑作者300000CPU小时发现过程；未将有理接口可行性推广为覆盖全部实数坐标构造。"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "task_id": "T100",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T100-C01": {
+      "id": "T100-C01",
+      "parameters": {
+        "vertices": 50,
+        "edges": 700,
+        "graph": "simple undirected graph",
+        "objective": "number of triangles"
+      },
+      "best_human": {
+        "value": 1817,
+        "date_reproduced": "2026-11-07",
+        "parameters": {
+          "vertices": 50,
+          "edges": 700
+        },
+        "witness_file": "data/reference/hstar_50_700.json",
+        "url": "https://arxiv.org/html/1712.00633v2",
+        "source_location": "Definition 1.1, applied at (50,700)",
+        "provenance": "Published LPS H* construction reconstructed from its complete multipartite part sizes and star deletion.",
+        "ai_provenance": "pre-AI published formula",
+        "actual_value": 1817,
+        "evidence_state": "exact count: 700 edges and 1,817 triangles"
+      },
+      "best_public": {
+        "value": 1817,
+        "date_checked": "2026-11-07",
+        "parameters": {
+          "vertices": 50,
+          "edges": 700
+        },
+        "url": "https://zerothesis.com/challenges/min-triangles-fixed-edges?tab=brief",
+        "source_location": "Brief table row (50,700); the construction is LPS H*",
+        "provenance": "The source pack lists 1,817 and labels optimality conjectural. Its API snapshot is pinned by SHA-256 in IMPLEMENTATION.md.",
+        "ai_provenance": "the public construction is the pre-AI LPS formula",
+        "evidence_state": "public same-parameter feasible value, independently reproduced"
+      },
+      "best_reproduced": {
+        "value": 1817,
+        "date_reproduced": "2026-11-07",
+        "parameters": {
+          "vertices": 50,
+          "edges": 700
+        },
+        "witness_file": "data/reference/hstar_50_700.json",
+        "provenance": "Exact reconstruction of LPS Definition 1.1.",
+        "ai_provenance": "benchmark transcription of a published formula",
+        "actual_value": 1817,
+        "evidence_state": "exact checker; open optimum remains between lower bound 1,815 and this upper bound",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 1817,
+        "parameters": {
+          "vertices": 50,
+          "edges": 700
+        },
+        "witness_file": "data/reference/hstar_50_700.json",
+        "provenance": "LPS H* formula reconstructed and exactly checked."
+      },
+      "highest_reported": {
+        "value": 1817,
+        "metric": "triangle count for a feasible graph at n=50, e=700",
+        "direction": "minimize",
+        "date_checked": "2026-11-07",
+        "url": "https://arxiv.org/html/1712.00633v2",
+        "source_location": "Definition 1.1 applied at (50,700), also listed in the current problem-pack row",
+        "reproduction_status": "same-parameter construction rechecked exactly; not a global-optimality claim"
+      },
+      "optimality_status": {
+        "lower_bound": 1815,
+        "upper_bound": 1817,
+        "evidence_state": "bounded source check found no finite proof at (50,700); not an exhaustive literature proof"
+      }
+    }
+  },
+  "initial_results": {
+    "T100-C01": {
+      "objective": 5219,
+      "objective_value": 5219,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.34815098677907647
+    }
+  }
+}

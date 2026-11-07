@@ -1,0 +1,385 @@
+{
+  "task_id": "T100",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T100 --label admission_20261107_interface",
+  "configurations": {
+    "T100-C01": {
+      "configuration": {
+        "id": "T100-C01",
+        "parameters": {
+          "vertices": 50,
+          "edges": 700,
+          "graph": "simple undirected graph",
+          "objective": "number of triangles"
+        },
+        "direction": "minimize",
+        "human_reference": 1817
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T100",
+            "config_id": "T100-C01",
+            "validity": 1.0,
+            "combined_score": 0.34815098677907647,
+            "objective": 5219,
+            "verification_status": "exact",
+            "generation_time": 3.7212445475161076,
+            "verification_time": 0.6837288923561573,
+            "objective_value": 5219,
+            "details": {
+              "vertices": 50,
+              "edge_count": 700,
+              "triangle_count": 5219,
+              "simple_undirected": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 4.418318580836058,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "triangle_count": 5219,
+            "edge_count": 700,
+            "vertex_count": 50,
+            "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T100",
+            "config_id": "T100-C01",
+            "validity": 1.0,
+            "combined_score": 0.7434533551554828,
+            "objective": 2444,
+            "verification_status": "exact",
+            "generation_time": 25.696777112782,
+            "verification_time": 0.8064485341310501,
+            "objective_value": 2444,
+            "details": {
+              "vertices": 50,
+              "edge_count": 700,
+              "triangle_count": 2444,
+              "simple_undirected": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 26.511059168726206,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "triangle_count": 2444,
+            "edge_count": 700,
+            "vertex_count": 50,
+            "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T100",
+            "config_id": "T100-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 1817,
+            "verification_status": "exact",
+            "generation_time": 1.196688961237669,
+            "verification_time": 3.899413961917162,
+            "objective_value": 1817,
+            "details": {
+              "vertices": 50,
+              "edge_count": 700,
+              "triangle_count": 1817,
+              "simple_undirected": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 6.985564026981592,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "triangle_count": 1817,
+            "edge_count": 700,
+            "vertex_count": 50,
+            "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T100",
+            "config_id": "T100-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 1817,
+            "verification_status": "exact",
+            "generation_time": 6.231329120695591,
+            "verification_time": 2.999872360378504,
+            "objective_value": 1817,
+            "details": {
+              "vertices": 50,
+              "edge_count": 700,
+              "triangle_count": 1817,
+              "simple_undirected": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 9.260718323290348,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "triangle_count": 1817,
+            "edge_count": 700,
+            "vertex_count": 50,
+            "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T100",
+            "config_id": "T100-C01",
+            "validity": 1.0,
+            "combined_score": 0.5322202694786174,
+            "objective": 3414,
+            "verification_status": "exact",
+            "generation_time": 66.69567196816206,
+            "verification_time": 2.4988931342959404,
+            "objective_value": 3414,
+            "details": {
+              "vertices": 50,
+              "edge_count": 700,
+              "triangle_count": 3414,
+              "simple_undirected": true,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 70.46709131076932,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "triangle_count": 3414,
+            "edge_count": 700,
+            "vertex_count": 50,
+            "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T100",
+        "config_id": "T100-C01",
+        "validity": 1.0,
+        "combined_score": 0.34815098677907647,
+        "objective": 5219,
+        "verification_status": "exact",
+        "generation_time": 3.0944687500596046,
+        "verification_time": 4.7396754287183285,
+        "objective_value": 5219,
+        "details": {
+          "vertices": 50,
+          "edge_count": 700,
+          "triangle_count": 5219,
+          "simple_undirected": true,
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 7.837189331650734,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T100",
+          "config_id": "T100-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t100/runs/admission_20261107_interface/T100-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 3.3971063308417797,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T100",
+          "config_id": "T100-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 1.86820462718606,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T100",
+          "config_id": "T100-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.8244068436324596,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "5bee5a9a61633136ac66a6465d0c51a9aeda9c9c4230fec19ea98c4a7cc6da24",
+    "README.md": "b3e28773521cb92e6f7ed61cbb72e6afff54dcc3926bef14256eeb520131e9c2",
+    "_graph.py": "2bd1177262f8dcaab6ca3c5637cc3c8db8ec84c676b1bb7ef57edfb79743c0ab",
+    "baseline.py": "b445d015c4b450f0794e22ecd593a8ef1dfed614e0e3308077d3c43d640fc150",
+    "check.py": "73e459f10807ca8c6dc9ab5a6b15d7efe217f20f5dcf4815e83f8905a5d37081",
+    "data/reference/hstar_50_700.json": "a9ec1045378c7183865b96e1487665b364c0f7a489d4776259a7f8a270d31012",
+    "evaluator.py": "1cdeb929b26096dd00aef2d36c04ecaf77e28de96e983a36e0bd395c7033c267",
+    "evolution.py": "0e41e904a0e1fc74efb829ed424461cd0eb960b1a18cd843ccc866d4b6d9dcce",
+    "human.py": "7d89e11554ce2de2b5863e820304b411c595701796311fa2bd4fbac34777494a",
+    "init_program.py": "5ec09f58f6b59cde21510ab018d38b6a1e8b98a577b0bb3a9e9efd02d98de902",
+    "instruction.txt": "9eeebdb7ea37d18919576bb1ea9e0f24d3e12999f8750691a524cda5e0cff848",
+    "records.json": "2d41d9c56ea113db8364ed4e2a677e4150bfe29f441cefe2c7da029c96dd29ac",
+    "reference.py": "423f7944864933b026ff78b7378b2e27f02c236afd5333238d45f61b1979f9bd",
+    "test_task.py": "534224c7874742733c5464bab046f79d6dae7e54c61655f6d5c3a100d2dc4281"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-07",
+  "source_review": {
+    "definition": "固定50个标记顶点、700条简单无向边，最小化真实三角形数。允许全部一般图，不限多部图或H*家族。",
+    "primary_source": "Sol读Liu–Pikhurko–Staden arxiv1712.00633v2 Definition1.1/Theorem1.9/Conjecture1.11。H*分部23,23,4共713条边，删去13条同一小部顶点的星边，恰700边；各删边消去23个三角形，得1817。",
+    "open_status": "Sol核对2025 Liu/Pikhurko note(arxiv2311.18753v2，正确修订日2024-10-07)只修订r>=4构造猜想；2026 Li/Feng/Peng arxiv2408.01709v2重述近Mantel定理要求q<n/2。本行q75，不适用。LPS大n定理的未给出阈值不自动覆盖50。本行密度下界49000/27只得整数1815，尚差2。题包同参未证标签仅补充有限状态快照，文献检索有范围，不声称穷尽。",
+    "screening": "九行题包中6行由密度下界取整或近Mantel定理已闭合，虽包称未证也排除。12,40的下界32-32sqrt6/9介于23与24，24构造已证最优。不把渐近开放套到任意小n。只选50,700。",
+    "independent": "Sol独立生成23,23,4删13边，并以int64邻接矩阵trace(A^3)/6得到1817；全部候选同法复算。50³<2^63确保整数矩阵无溢出。正式checker用位集公共邻点，算法独立。",
+    "admission": "首次admission_20261107失败是checker拒绝完整标准配置，旧记录保留。原代理已返修严格核标准四字段、方向及固定参数，新增真实公共evaluate接口测试。新标签五程序5219、2444、1817、1817、3414及全部破坏、完整分数篡改、重放、冷导出、错误、非有限数、超时控制通过。最终25项任务测试通过。传统/演化不读取人类或参考构造。"
+  }
+}

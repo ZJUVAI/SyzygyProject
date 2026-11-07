@@ -1,0 +1,5 @@
+Choose 21 unit disks in the plane to cover a closed disk centered at the origin. Maximize the target disk radius. Circle centers may repeat.
+
+Return JSON with `radius` as a positive rational string and `centers` as exactly 21 pairs `[x,y]` of rational strings or integers. Coordinates are unbounded and have no fixed denominator cap. Do not use decimal floats.
+
+The checker verifies coverage over the full continuous disk. It enumerates exact Voronoi critical points and uses rational and quadratic-field arithmetic. A candidate score is ignored and recomputed from the submitted radius after full feasibility checks.

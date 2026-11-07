@@ -1,0 +1,93 @@
+{
+  "task_id": "T061",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T061-C01": {
+      "program": "reference.py",
+      "reproduced_value": 133,
+      "public_value": 133,
+      "highest_reported": {
+        "value": 133,
+        "metric": "number of edges in a C6-saturated graph on 100 vertices",
+        "direction": "minimize",
+        "source": "https://doi.org/10.1016/j.disc.2025.114504",
+        "source_location": "Theorem 1.5(a), epsilon=1 construction, t=33; Figure 1(a) gives core H",
+        "reproduction_status": "133-edge construction rebuilt from the published description and independently checked for C6-freeness and saturation; this is an upper bound, not a proof of optimality",
+        "ai_provenance": "not stated by source"
+      },
+      "parameters": {
+        "vertices": 100,
+        "forbidden_subgraph": "simple cycle C6",
+        "saturation": "C6-free; adding any missing edge creates a simple C6",
+        "objective": "number of edges"
+      },
+      "witness": "data/reference/c6_sat_100_133.json",
+      "witness_sha256": "39d7689fd56d2f47b4faef733ce8c3a170433ed111fcf0c991feb9e564d28061",
+      "best_human": {
+        "value": 133,
+        "witness": "data/reference/c6_sat_100_133.json",
+        "source": "https://doi.org/10.1016/j.disc.2025.114504",
+        "source_location": "Theorem 1.5(a), Figure 1, n=100",
+        "reconstruction": "Core H on nine vertices, thirty attached 3-vertex paths, and one leaf, as specified by the theorem with t=33 and epsilon=1.",
+        "reproduction_status": "witness and objective exactly rechecked"
+      },
+      "known_bounds": {
+        "lower_bound": 132,
+        "upper_bound": 133,
+        "lower_bound_source": "https://doi.org/10.1016/j.disc.2025.114504",
+        "lower_bound_location": "Theorem 1.5(b): ceil(4n/3 - 2) at n=100",
+        "status": "the exact value at n=100 remains unresolved in checked sources"
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T061",
+          "config_id": "T061-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 133,
+          "verification_status": "exact",
+          "generation_time": 2.397173535078764,
+          "verification_time": 3.8008706904947758,
+          "objective_value": 133,
+          "details": {
+            "vertices": 100,
+            "edge_count": 133,
+            "simple_c6_free": true,
+            "saturated": true,
+            "missing_pairs_checked": 4817,
+            "simple_5_path_endpoint_pairs": 4817,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 6.2518154345452785,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "edge_count": 133,
+          "missing_pairs_checked": 4817,
+          "simple_c6_free": true
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

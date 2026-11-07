@@ -1,0 +1,72 @@
+{
+  "task_id": "T010",
+  "name": "Maximum size of a binary code A(n,d)",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T010-C01",
+      "parameters": {
+        "n": 17,
+        "distance": 6
+      },
+      "direction": "maximize",
+      "human_reference": 258,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T010-C02",
+      "parameters": {
+        "n": 23,
+        "distance": 10
+      },
+      "direction": "maximize",
+      "human_reference": 16,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T010-C03",
+      "parameters": {
+        "n": 25,
+        "distance": 10
+      },
+      "direction": "maximize",
+      "human_reference": 64,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开方法对照128码字。公开258码字见证未取到。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "primary_source": "Ota, Osa and Harada, arXiv:2610.11609, Proposition 3.1 and Section 4; exact ancillary word lists, with parity extension identity.",
+      "open_bounds": "Brouwer table: 84–150 at (23,10) and 196–466 at (25,10). No proof of optimality found.",
+      "independent_check": "Rebuilt both parity extensions from the source words. Exhaustively checked distances in the original lists, the extensions and the classical BCH comparators; confirmed sizes 84/196 and 16/64 respectively."
+    },
+    "configuration_ids": [
+      "T010-C02",
+      "T010-C03"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "elements": [
+    8376,
+    12640,
+    14810,
+    15895,
+    16459,
+    16752,
+    16904,
+    16980,
+    17023,
+    17045,
+    17056,
+    17064,
+    17066,
+    17067,
+    17068,
+    17072
+  ],
+  "sequence_prefix": [
+    0,
+    4,
+    5,
+    6,
+    8,
+    16,
+    27,
+    49,
+    92,
+    168,
+    320,
+    613,
+    1177,
+    2262,
+    4432,
+    8696,
+    17072
+  ],
+  "source": {
+    "author": "W. F. Lunnon",
+    "title": "Integer Sets with Distinct Subset-Sums",
+    "year": 1988,
+    "doi": "10.1090/S0025-5718-1988-0917837-5",
+    "url": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+    "source_location": "Table 1, column w^2, row n=16; set formula (1.4)",
+    "construction": "elements are sorted(w[n] - w[i] for i=0,...,n-1)",
+    "sequence_oeis": "A006756"
+  }
+}

@@ -1,14 +1,7 @@
-"""Deterministic algebraic seed for T035."""
-import os
-from lps import build_graph
+"""Small standalone seed for the T035 search interface."""
 
 
 def run_code():
-    if os.environ.get('MATHBENCH_CONFIG_ID','T035-C01')!='T035-C01':
-        raise ValueError('unsupported configuration')
-    seed=int(os.environ.get('MATHBENCH_SEED','0'))
-    # EVOLVE-BLOCK-START
-    drop_pairs=((0,2),(0,4),(2,4))
-    graph=build_graph(drop_pairs[seed % len(drop_pairs)])
-    # EVOLVE-BLOCK-END
-    return graph
+    # Six integer points on y=x^2 are in general position and cannot contain
+    # a seven-point subset. The model can grow or replace this construction.
+    return {"points": [[x, x * x] for x in range(6)], "claimed_objective": 6}

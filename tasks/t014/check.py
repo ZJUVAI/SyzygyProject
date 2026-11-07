@@ -1,50 +1,31 @@
-"""Exact checker for T014 Heilbronn configurations in the unit square."""
+"""Exact checker for the 208-step nonnegative convolution objective."""
 from fractions import Fraction
-from itertools import combinations
 import math
 
-
-def _fraction(value):
-    if isinstance(value, bool):
-        raise ValueError("boolean coordinates are invalid")
-    if isinstance(value, Fraction):
-        return value
-    if isinstance(value, int):
-        return Fraction(value)
-    if isinstance(value, str):
-        return Fraction(value)
-    if isinstance(value, float):
-        if not math.isfinite(value):
-            raise ValueError("coordinates must be finite")
-        return Fraction(str(value))
-    raise TypeError("coordinates must be integers, decimal strings, or finite floats")
-
-
-def triangle_area2(a, b, c):
-    return abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]))
-
-
 def validate(solution, config, strict=False):
-    parameters = config.get("parameters", {}) if isinstance(config, dict) else {}
-    n = parameters.get("n")
-    if not isinstance(n, int) or isinstance(n, bool) or n < 3:
-        raise ValueError("configuration must specify an integer n>=3")
-    points = solution.get("points") if isinstance(solution, dict) else solution
-    if not isinstance(points, (list, tuple)) or len(points) != n:
-        raise ValueError(f"solution must contain exactly {n} points")
-    parsed = []
-    for point in points:
-        if not isinstance(point, (list, tuple)) or len(point) != 2:
-            raise ValueError("each point must have two coordinates")
-        xy = tuple(_fraction(v) for v in point)
-        if any(v < 0 or v > 1 for v in xy):
-            raise ValueError("all points must lie in the unit square")
-        parsed.append(xy)
-    if len(set(parsed)) != n:
-        raise ValueError("points must be distinct")
-    value = min(triangle_area2(*triple) for triple in combinations(parsed, 3)) / 2
-    return {
-        "objective": str(value),
-        "verification_status": "exact",
-        "details": {"triangles_checked": len(parsed) * (len(parsed)-1) * (len(parsed)-2) // 6},
-    }
+    del strict
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    params = config.get("parameters", config)
+    if not isinstance(params, dict) or params.get("steps") != 208 or params.get("support") != ["-1/4", "1/4"] or params.get("nonnegative") is not True:
+        raise ValueError("configuration must specify steps=208, support [-1/4,1/4], and nonnegative=true")
+    coeff = solution.get("coefficients")
+    if not isinstance(coeff, list) or len(coeff) != 208:
+        raise ValueError("coefficients must contain exactly 208 rational values")
+    values=[]
+    for x in coeff:
+        if isinstance(x, bool) or not isinstance(x, (int, float, str, Fraction)):
+            raise ValueError("coefficients must be nonnegative rational integers or strings")
+        if isinstance(x, float) and not math.isfinite(x):
+            raise ValueError("coefficients must be finite")
+        try: value=Fraction(str(x)) if isinstance(x, float) else Fraction(x)
+        except (ValueError, ZeroDivisionError, TypeError): raise ValueError("coefficients must be finite rational values")
+        if value < 0: raise ValueError("coefficients must be nonnegative")
+        values.append(value)
+    mass=sum(values, Fraction(0))
+    if mass == 0: raise ValueError("coefficient mass must be positive")
+    conv=[sum((values[i]*values[k-i] for i in range(max(0,k-207),min(207,k)+1)),Fraction(0)) for k in range(415)]
+    peak=max(conv)
+    objective=Fraction(416)*peak/(mass*mass)
+    peak_idx=[i for i,x in enumerate(conv) if x==peak]
+    return {"objective": str(objective), "verification_status":"exact", "details":{"steps":208,"coefficient_count":208,"max_convolution":"%s" % peak,"max_indices":peak_idx,"normalization":"normalized to integral 1 before scoring"}}

@@ -1,0 +1,59 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T027",
+    "config_id": "T027-C01",
+    "validity": 1.0,
+    "combined_score": 0.9877863891922989,
+    "objective": 45312726,
+    "verification_status": "exact",
+    "generation_time": 1.9184882938861847,
+    "verification_time": 0.2657657787203789,
+    "objective_value": 45312726,
+    "details": {
+      "instance": "tai256c",
+      "n": 256,
+      "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+      "permutation_bijection_verified": true,
+      "objective_terms": 65536,
+      "claimed_score_ignored": true
+    },
+    "eval_time": 2.189255051314831,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "seed": 0,
+    "pair_checks": 10000,
+    "iterations": 172,
+    "budget": {
+      "mode": "fixed_iteration_count",
+      "requested_checks": 10000,
+      "actual_checks": 10000,
+      "requested_wall_clock_seconds": null,
+      "effective_wall_clock_seconds": null
+    },
+    "algorithm": "randomized first-improvement pair-swap local search",
+    "reported_score": 45312726
+  },
+  "solution_sha256": "f094e1566891fa01ddfc6ff35c6ba012cceac539a0016aba99f7a57823095a79",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T027 tasks/t027/best/T027-C01/solution.json --config T027-C01"
+}

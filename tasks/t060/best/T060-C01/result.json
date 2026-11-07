@@ -1,0 +1,35 @@
+{
+  "task_id": "T060",
+  "config_id": "T060-C01",
+  "validity": 1.0,
+  "combined_score": 1.0,
+  "objective": 153,
+  "verification_status": "exact",
+  "generation_time": 0.5465838685631752,
+  "verification_time": 0.5534985885024071,
+  "objective_value": 153,
+  "details": {
+    "target": "2305843009213693951",
+    "expression_value": "2305843009213693951",
+    "ones_count": 153,
+    "expression_tree": true,
+    "certified_lower_bound": 116,
+    "selfridge_max_at_115": "1801135623563989452",
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 1.1082188747823238,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

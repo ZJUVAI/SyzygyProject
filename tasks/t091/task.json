@@ -1,0 +1,58 @@
+{
+  "task_id": "T091",
+  "name": "Minimum rows in a binary strength-4 orthogonal array with 63 columns",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_designs",
+  "definition": "Find the smallest number N of rows in a binary orthogonal array with 63 columns and strength 4. Rows may repeat. Every selection of four columns must contain each of the 16 binary patterns exactly N/16 times.",
+  "solution_format": "An object with rows: a list of integers. Each integer is a 63-bit row mask; bit j is the entry in column j.",
+  "objective": {
+    "name": "row_count",
+    "unit": "rows",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "Every row has exactly 63 binary entries encoded by an integer mask in [0,2^63).",
+    "For every set of four columns, each of the 16 binary patterns occurs exactly N/16 times.",
+    "Repeated rows are allowed and must not be rejected solely for duplication.",
+    "N is a positive multiple of 16. Rao's bound gives N >= 2032 for this configuration."
+  ],
+  "configurations": [
+    {
+      "id": "T091-C01",
+      "parameters": {
+        "columns": 63,
+        "levels": 2,
+        "strength": 4,
+        "row_repetition": "allowed"
+      },
+      "direction": "minimize",
+      "human_reference": 4096
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.1007/s10623-022-01105-4",
+    "https://link.springer.com/article/10.1007/s10623-022-01105-4",
+    "https://neilsloane.com/oadir/index.html"
+  ],
+  "verification": "The checker packs each column as an N-bit integer. For every nonempty subset of at most four columns, it counts the rows with odd parity. Every count must equal N/2. These balanced parity characters are equivalent, by binary Fourier inversion, to uniform counts for all 16 patterns on every four-column subset.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Binary strength-four orthogonal arrays with 63 columns; minimize positive row count, repeated rows allowed. No linearity restriction in the checker.",
+      "primary_source": "Root read Carlet, Kiss and Nagy DOI10.1007/s10623-022-01105-4, Remark5 BCH-dual reconstruction, Proposition10 and Remark11 shortened Kerdock2048 with unknown optimality. Rao2017 and divisibility16 imply2032, leaving16-row gap. Closed15-column128-row case excluded. Current same-parameter proof search found no closure.",
+      "human_method": "GF64 primitive polynomial x6+x+1; all4096 linear forms on column labels(x,x3). Public2048 reported separately without reproduced witness. Human/reference4096 independently reproduced.",
+      "isolation": "Root returned initial BCH construction that exposed the comparison method. Revised initializer uses generic random greedy labels in F2^14,16384 rows; baseline/evolution independently use F2^13,8192 rows. Neither reads comparison witnesses or BCH formulas.",
+      "independent_method": "Root Gaussian-eliminates actual row space, proves full uniformly repeated binary linear space, and verifies rank4 of all595665 four-column projections by checking each fourth label outside the triple span. This differs from formal637392 balanced parity-character counts. Human rank12 yields256 of each pattern.",
+      "admission": "All five strict runner programs passed, initial16384, baseline/evolution8192, human/reference4096. Bit corruption rejected; complete checker result invariant under claimed-score tampering; saved witnesses replay, cold export and program-error/nonfinite/timeout controls passed. Task tests27 passed57.55s."
+    }
+  }
+}

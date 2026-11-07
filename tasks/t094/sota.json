@@ -1,0 +1,92 @@
+{
+  "task_id": "T094",
+  "source_checked": "2026-11-06",
+  "configurations": {
+    "T094-C01": {
+      "program": "reference.py",
+      "reproduced_value": "481669373744614531460135/332305777911042658732591",
+      "public_value": 1.4482,
+      "objective": "maximum vertex-pair shortest-path length divided by Euclidean chord length",
+      "direction": "minimize",
+      "highest_reported": {
+        "value": 1.4482,
+        "source": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Theorem: every regular polygon has a triangulation with dilation below 1.4482",
+        "reproduction_status": "published universal upper bound; the theorem's specific n=120 triangulation is not reconstructed"
+      },
+      "reproduced_witness": {
+        "value": "481669373744614531460135/332305777911042658732591",
+        "file": "data/reference/6fan_120.json",
+        "sha256": "2db7e3a33a5a3b9c9e1b494b58e3a6cf2a2428a6d9f22a222d3a36c967ed7a2f",
+        "provenance": "Rebuilt UBC 6-fan; exact combinatorial check and rational interval distance evaluation.",
+        "evidence_state": "objective enclosed by details.objective_interval"
+      },
+      "certified_score_interval": [
+        "2890016242467687188760789/1993834667466255952395547",
+        "481669373744614531460135/332305777911042658732591"
+      ],
+      "open_status": {
+        "evidence": "Fekete, Keldenich, and Perk (2026) report optimal solutions for regular n-gons up to n=100. Their range does not include n=120. The source review on 2026-11-06 found no same-parameter proof closing the 120-gon case.",
+        "primary_source": "https://doi.org/10.20382/jocg.v17i2a1",
+        "source_location": "Abstract; regular n-gon results and computations for n=4 through 100",
+        "claim_limit": "The checked sources do not establish optimality for n=120; this is not an exhaustive literature survey."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T094",
+          "config_id": "T094-C01",
+          "validity": 1.0,
+          "combined_score": 1.0000000000000044,
+          "objective": "481669373744614531460135/332305777911042658732591",
+          "verification_status": "certified",
+          "generation_time": 0.5446564592421055,
+          "verification_time": 3.5000081211328506,
+          "objective_value": "481669373744614531460135/332305777911042658732591",
+          "details": {
+            "objective_interval": [
+              "2890016242467687188760789/1993834667466255952395547",
+              "481669373744614531460135/332305777911042658732591"
+            ],
+            "scale": "1000000000000000000000000",
+            "vertices": 120,
+            "edges": 237,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 4.050555758178234,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "ratio_interval": [
+            "2890016242467687188760797308839830568975294941123693699438724/1993834667466255952395546817484088840317853763189687784388893",
+            "2890016242467687188760797308839830568975294941123693699438741/1993834667466255952395546817484088840317853763189687784388892"
+          ],
+          "edges": 237,
+          "method": "Cyclotomic cosine minimal polynomial, exact rational Horner and square-root chord bounds, all-pairs integer Floyd-Warshall."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "7d65c3d99f7ffe9dc3241a1583783ac1f26d7ecdfe6e1a29e23c325efb0a89b3"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

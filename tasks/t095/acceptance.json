@@ -1,0 +1,406 @@
+{
+  "task_id": "T095",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T095 --label admission_20261106_sources",
+  "configurations": {
+    "T095-C01": {
+      "configuration": {
+        "id": "T095-C01",
+        "parameters": {
+          "instance": "uniform-0000500-1",
+          "point_count": 500,
+          "input_coordinates": "exact integer coordinates",
+          "partition": "straight-line planar graph; all input points are vertices; bounded faces are empty convex polygons",
+          "objective": "minimize number of internal convex faces"
+        },
+        "direction": "minimize",
+        "human_reference": 384
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T095",
+            "config_id": "T095-C01",
+            "validity": 1.0,
+            "combined_score": 0.3922369765066394,
+            "objective": 979,
+            "verification_status": "exact",
+            "generation_time": 0.6155315637588501,
+            "verification_time": 3.6201489828526974,
+            "objective_value": 979,
+            "details": {
+              "point_count": 500,
+              "edge_count": 1478,
+              "face_count": 979,
+              "convex_hull_vertex_count_including_collinear": 19,
+              "hull_area_twice": 1736930960,
+              "bounded_face_area_twice_sum": 1736930960,
+              "euler_edge_face_check": 979,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 4.241188291460276,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "face_count": 979,
+            "point_count": 500,
+            "edge_count": 1478,
+            "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T095",
+            "config_id": "T095-C01",
+            "validity": 1.0,
+            "combined_score": 0.964824120603015,
+            "objective": 398,
+            "verification_status": "exact",
+            "generation_time": 0.9158558398485184,
+            "verification_time": 0.9660884886980057,
+            "objective_value": 398,
+            "details": {
+              "point_count": 500,
+              "edge_count": 897,
+              "face_count": 398,
+              "convex_hull_vertex_count_including_collinear": 19,
+              "hull_area_twice": 1736930960,
+              "bounded_face_area_twice_sum": 1736930960,
+              "euler_edge_face_check": 398,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.8863895386457443,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "face_count": 398,
+            "point_count": 500,
+            "edge_count": 897,
+            "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T095",
+            "config_id": "T095-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 384,
+            "verification_status": "exact",
+            "generation_time": 0.5153445936739445,
+            "verification_time": 0.9665184766054153,
+            "objective_value": 384,
+            "details": {
+              "point_count": 500,
+              "edge_count": 883,
+              "face_count": 384,
+              "convex_hull_vertex_count_including_collinear": 19,
+              "hull_area_twice": 1736930960,
+              "bounded_face_area_twice_sum": 1736930960,
+              "euler_edge_face_check": 384,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.4860263280570507,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "face_count": 384,
+            "point_count": 500,
+            "edge_count": 883,
+            "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T095",
+            "config_id": "T095-C01",
+            "validity": 1.0,
+            "combined_score": 1.4169741697416973,
+            "objective": 271,
+            "verification_status": "exact",
+            "generation_time": 0.1647304855287075,
+            "verification_time": 0.7664335668087006,
+            "objective_value": 271,
+            "details": {
+              "point_count": 500,
+              "edge_count": 770,
+              "face_count": 271,
+              "convex_hull_vertex_count_including_collinear": 19,
+              "hull_area_twice": 1736930960,
+              "bounded_face_area_twice_sum": 1736930960,
+              "euler_edge_face_check": 271,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.9352919720113277,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "face_count": 271,
+            "point_count": 500,
+            "edge_count": 770,
+            "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T095",
+            "config_id": "T095-C01",
+            "validity": 1.0,
+            "combined_score": 1.0434782608695652,
+            "objective": 368,
+            "verification_status": "exact",
+            "generation_time": 1.2174758277833462,
+            "verification_time": 0.9161881804466248,
+            "objective_value": 368,
+            "details": {
+              "point_count": 500,
+              "edge_count": 867,
+              "face_count": 368,
+              "convex_hull_vertex_count_including_collinear": 19,
+              "hull_area_twice": 1736930960,
+              "bounded_face_area_twice_sum": 1736930960,
+              "euler_edge_face_check": 368,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 2.1377727948129177,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "face_count": 368,
+            "point_count": 500,
+            "edge_count": 867,
+            "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T095",
+        "config_id": "T095-C01",
+        "validity": 1.0,
+        "combined_score": 0.3922369765066394,
+        "objective": 979,
+        "verification_status": "exact",
+        "generation_time": 0.4653150476515293,
+        "verification_time": 1.9685071744024754,
+        "objective_value": 979,
+        "details": {
+          "point_count": 500,
+          "edge_count": 1478,
+          "face_count": 979,
+          "convex_hull_vertex_count_including_collinear": 19,
+          "hull_area_twice": 1736930960,
+          "bounded_face_area_twice_sum": 1736930960,
+          "euler_edge_face_check": 979,
+          "claimed_score_ignored": true
+        },
+        "eval_time": 2.4362018816173077,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T095",
+          "config_id": "T095-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t095/runs/admission_20261106_sources/T095-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.2155548855662346,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T095",
+          "config_id": "T095-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.2054319977760315,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T095",
+          "config_id": "T095-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.16568626835942268,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "a6cc21278c60ed2567eb456ba5a73556b1e0a3086b96bec3e0adadd9ea5fe234",
+    "README.md": "12aefe662a0f9768265e55e3b8d4cee5097adb6348fe0214399ba041066aad29",
+    "baseline.py": "fbf645e7ba0fc7413a7bbb531b8d5b928082919737543d69af7d4aff4a7a841f",
+    "check.py": "cc496d501fc0685112929f7aef97af980ec0c268bdee7bd440e4ea7ffe52545b",
+    "construction.py": "aaf49906e8c2617fdd9fdd080a3c8b381fce82e898226c16a5e835cbc79f07d4",
+    "data/reference/uniform-0000500-1.official_solution.json": "f3de71a8fa4f98adf3314ccc2aa780e594e933b051e3d7cc715d1944eeb01190",
+    "data/source/source_notes.json": "bb5ac455c0d3e51392b261e0479f039b4ec270dfb4861a7dadba8cf6b13ff57b",
+    "data/source/uniform-0000500-1.instance.json": "c8ea5c524c52a6d7e0188f566482c124856a8cbd0318e518ff4419f09844c31a",
+    "evaluator.py": "540925d35e107a4a6019a58b3c784e52e4f641e5429c43448fe1a43e5b99e956",
+    "evolution.py": "3c0413ae5e6641a1e754dfc4859be24cdbbcf3a1e18e1e8527e6706c33968335",
+    "human.py": "1f4438a24935c41ab7138ac490131b4641845400bc85053b874bc6d9aa73db87",
+    "init_program.py": "d7390fb78db2c5cc0dfaeffeae57bae38641a68265b4e6e637988af927016980",
+    "instruction.txt": "18ae016f827ac5a41826b0a72dffb4cf5502b715513d14cb557dbb035ad75ea3",
+    "records.json": "ae5aec37cec94eb7500e886a9f548bebd4eefe297f8cbb32c970be104cdf9355",
+    "reference.py": "b026d913b1327a4355d5b0110b5828202183bdbb1c922bf8e72cbbf2ddc828d4",
+    "test_task.py": "360e237bc878ecb5f0f3212a29a6d58210f517728c69bf4f1cce1e4588028be2"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "固定CGSHOP2020的uniform-0000500-1，500个整数点。全部输入点作为平面直线图顶点，凸包边界固定，内部面为空凸多边形。最小化内部面数；不允许Steiner点或遗漏输入点。",
+    "primary_source": "Sol亲读Cambazard作者页的定义与精确求解范围，以及Eder、Held、de Lorenzo、Palfrader的SoCG2020论文§2.2。后者从Delaunay三角剖分删边并保持凸性。该500点实例未在所查来源中找到最优性证明。",
+    "human_method": "同参数弱人类方法对照384面，是论文Delaunay加凸合并思想的确定性重建；明确由AI协助实现，非原论文代码或原论文成绩。官方770边见证重放得271面；源未披露该见证的算法与AI使用，按未披露分类。",
+    "source_versions": "输入SHA256为c8ea5c524c52a6d7e0188f566482c124856a8cbd0318e518ff4419f09844c31a。官方见证SHA256为f3de71a8fa4f98adf3314ccc2aa780e594e933b051e3d7cc715d1944eeb01190。归档URL已修正为instances_01.zip，并重新完成整个验收。",
+    "independent_method": "Sol重新解析原始整数点和边。独立检查直线交叉与边上其他输入点，再用并查集统计基本回路维数；对连通平面图，它等于内部面数。此法不调用正式评测器的有向面遍历。人类384面对应883条边，公开271面对应770条边。",
+    "admission": "五程序分数为979、398、384、271、368。全部严格重放、破坏构造、完整结果声明篡改、冷导出及错误/非有限数/超时控制通过。仅导出公开输入。任务9项测试通过；Sol相关几何与分析测试24项通过。"
+  }
+}

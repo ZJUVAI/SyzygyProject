@@ -1,0 +1,189 @@
+{
+  "task_id": "T020",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "authors": [
+      "Neill Clift"
+    ],
+    "year": 2026,
+    "url": "https://additionchains.com/LargeChains.html",
+    "evidence_state": "downloaded public one-integer-per-line witness; all 203 entries and 202 additions independently replayed with exact integers",
+    "optimality": "construction only; source states none of listed lengths is proved optimal",
+    "witness": "data/human_t020.json"
+  },
+  "best_public": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "url": "https://additionchains.com/LargeChains.html",
+    "evidence_state": "page updated 2026-11-02; exact P-192 row says previous 203, new length 202; linked witness downloaded and reproduced",
+    "optimality": "not proved; page says none of the listed lengths is proved optimal",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "provenance": "task-local exact copy of P-192_field_inverse_202.txt linked by Clift's page",
+    "evidence_state": "independently checked start, strict increase, each sum-of-two-earlier-terms relation, endpoint, and length with Python integers",
+    "witness": "data/human_t020.json"
+  },
+  "baseline_seed": {
+    "provenance": "binary expansion chain generated from the fixed integer target",
+    "evidence_state": "checker verifies all steps; no human/reference files read"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T020-C02": {
+      "human_reference": 230,
+      "parameters": {
+        "target": "2^221-5"
+      },
+      "best_human": {
+        "value": 230,
+        "authors": [
+          "Neill Clift"
+        ],
+        "year": 2026,
+        "url": "https://additionchains.com/LargeChains.html",
+        "witness_source": "https://additionchains.com/LargeChains/M-221_field_inverse_230.txt",
+        "witness": "data/human_t020_c02.json",
+        "evidence_state": "Public witness replayed by Sol; see sol_review for independently checked score. Optimality is not claimed.",
+        "optimality": "Not proved; source says none of listed lengths is proved optimal.",
+        "parameters": {
+          "target": "2^221-5"
+        },
+        "submission_evidence_state": "Exact downloaded public witness; replay pending independent Sol review.",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 230,
+        "url": "https://additionchains.com/LargeChains.html",
+        "source_reported_value": 230,
+        "evidence_state": "Table reports previous length 231 and new length 230; exact witness downloaded and replayed by task agent.",
+        "parameters": {
+          "target": "2^221-5"
+        },
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "value": 230,
+        "witness": "data/human_t020_c02.json",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "actual_value": 230,
+        "verification_status": "exact",
+        "parameters": {
+          "target": "2^221-5"
+        },
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 230,
+        "verification_status": "exact",
+        "witness": "tasks/t020/data/human_t020_c02.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T020-C03": {
+      "human_reference": 532,
+      "parameters": {
+        "target": "2^521-3"
+      },
+      "best_human": {
+        "value": 532,
+        "authors": [
+          "Neill Clift"
+        ],
+        "year": 2026,
+        "url": "https://additionchains.com/LargeChains.html",
+        "witness_source": "https://additionchains.com/LargeChains/P-521_field_inverse_532.txt",
+        "witness": "data/human_t020_c03.json",
+        "evidence_state": "Public witness replayed by Sol; see sol_review for independently checked score. Optimality is not claimed.",
+        "optimality": "Not proved; source says none of listed lengths is proved optimal.",
+        "parameters": {
+          "target": "2^521-3"
+        },
+        "submission_evidence_state": "Exact downloaded public witness; replay pending independent Sol review.",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 532,
+        "url": "https://additionchains.com/LargeChains.html",
+        "source_reported_value": 532,
+        "evidence_state": "Table reports previous length 533 and new length 532; exact witness downloaded and replayed by task agent.",
+        "parameters": {
+          "target": "2^521-3"
+        },
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "value": 532,
+        "witness": "data/human_t020_c03.json",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "actual_value": 532,
+        "verification_status": "exact",
+        "parameters": {
+          "target": "2^521-3"
+        },
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 532,
+        "verification_status": "exact",
+        "witness": "tasks/t020/data/sota_t020_c03.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  },
+  "initial_results": {
+    "T020-C01": {
+      "objective": 380,
+      "objective_value": 380,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.531578947368421
+    },
+    "T020-C02": {
+      "objective": 439,
+      "objective_value": 439,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5239179954441914
+    },
+    "T020-C03": {
+      "objective": 1039,
+      "objective_value": 1039,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5120307988450433
+    }
+  }
+}

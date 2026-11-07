@@ -1,0 +1,7 @@
+Find a small finite set of integers B such that every integer d from 1 through 6166 is a difference y - x of two elements of B. Minimize the number of distinct marks.
+
+The set may contain negative integers or integers greater than 6166. Do not impose a sparse-ruler restriction B subset [0, 6166]. A sparse ruler can still be a feasible construction, but the task's model has no bound on mark locations. Differences larger than 6166 are allowed.
+
+Return a JSON-compatible object with a `basis` list of distinct integers. The checker recomputes all required differences exactly and ignores claimed scores. Use only the fixed configuration T047-C01. Start from this simple valid construction: {0, 1, ..., 6166}. Do not read the human or public reference witnesses in the search program.
+
+The objective is the cardinality of B, to be minimized. The finite optimum at N=6166 is not established by the cited sources. A public 128-mark construction is a feasible upper bound, not a proof of optimality. The frozen human baseline uses Wichmann W(38,3), with 158 marks and length 6548.

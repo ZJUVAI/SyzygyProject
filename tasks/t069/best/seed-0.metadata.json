@@ -1,0 +1,30 @@
+{
+  "task_id": "T069",
+  "configuration_id": "T069-C01",
+  "objective": 6856309,
+  "verification_status": "exact",
+  "verification_details": {
+    "instance": "mona-lisa100K",
+    "instance_sha256": "532fefbfb9ad66cc2550bece766fa069acaa8e34ee511ac1949ae101da4d70ad",
+    "city_count": 100000,
+    "unique_city_count": 100000,
+    "closed_tour_edge_count": 100000,
+    "distance_rule": "isqrt(squared_distance), rounded to nearest integer with exact half-up comparison",
+    "claimed_score_ignored": true
+  },
+  "seed": 0,
+  "algorithm": "100-unit horizontal spatial bands with alternating direction, followed by local random 2-opt exchanges",
+  "step_limit": 20000,
+  "steps_completed": 20000,
+  "accepted_exchanges": 153,
+  "elapsed_seconds": 2.320429,
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "memory_limit_gib": 4,
+  "threads": 1,
+  "python": "3.13.12 (main, Mar 10 2026, 18:17:38) [Clang 21.1.4 ]",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "replay_command": "MATHBENCH_CONFIG_ID=T069-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t069.baseline import run_code; print(run_code())\"",
+  "witness_file": "best/seed-0.json",
+  "witness_sha256": "1b3ccfaef152e9ada47f0e66cbaf323343ff96d39d4c2d6f491dfe9c759049c5"
+}

@@ -1,0 +1,59 @@
+{
+  "task_id": "T052",
+  "name": "Largest permutation code of length 12 and distance 9",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_search",
+  "definition": "Find a largest set of permutations of {0,...,11} such that every pair differs in at least 9 positions.",
+  "solution_format": "An object with codewords, a list of permutations. Each permutation is a list of 12 integers from 0 through 11.",
+  "objective": {
+    "name": "code_size",
+    "unit": "permutations",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Every codeword is a permutation of the integers 0 through 11.",
+    "Codewords are distinct.",
+    "The Hamming distance between every pair of distinct codewords is at least 9.",
+    "The objective is the number of codewords."
+  ],
+  "configurations": [
+    {
+      "id": "T052-C01",
+      "parameters": {
+        "length": 12,
+        "minimum_hamming_distance": 9,
+        "alphabet": "{0,...,11}",
+        "object": "permutation_code"
+      },
+      "direction": "maximize",
+      "human_reference": 1320
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.1007/s10623-011-9551-8",
+    "https://personal.utdallas.edu/~sxb027100/soft/permutation-arrays/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12562831/"
+  ],
+  "verification": "Exact integer checks on every symbol, permutation and pairwise Hamming distance.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "12元置换Hamming码，最小距离≥9，最大化码字数；d10虽已解但未选，d=n-1的MOLS等价配置未重复计数。",
+      "primary_source": "主代理读取Smith–Montemanni作者上传论文全文，Table3 n12,d9明确1320–11880；§4 item22给PGL(2,11)群阶1320及内部距离10，并列出三个生成元。纠正任务文档原将item22误写为§5。",
+      "human_reconstruction": "枚举非零首项归一的可逆2×2 F11矩阵，作用于12点射影直线；得到1320个不同置换，完整870540对全部检查。",
+      "independent_math": "主代理另用逐行numpy位置相等数向量计算匹配数，得到最小Hamming距离10；不同于正式检查器逐对逐符号循环。",
+      "open_status": "2012表给非匹配界；2025新下界文章不含(12,9)，当前UTD表访问失败。保留11880为历史上界，未声称它为2026最强上界或检索穷尽；所查来源无本参数最优证明。",
+      "controls": "五程序初始12、传统125、演化144、人类及参考1320；重复码字破坏、声明不变性、严格回放、冷导出、三类运行失败控制通过。",
+      "limits": "公开最强纪录调查范围有限，1320为已找到且完整复现的人类记录；不把群轨道搜索内最优当作全置换空间最优。"
+    }
+  }
+}

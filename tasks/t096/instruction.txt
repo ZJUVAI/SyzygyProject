@@ -1,0 +1,11 @@
+Find a rational Fourier certificate that lowers the joint Rayleigh quotient for the planar Ovals problem.
+
+Return JSON with:
+- `rho`: `{ "constant": rational, "cos": [rational coefficients], "sin": [rational coefficients] }`, representing the curvature radius `rho(theta)`.
+- `trial`: the same format for a nonzero real periodic trial function `f(theta)`.
+- `rho_lower_bound`: a positive rational `delta` for which `rho(theta) >= delta` on the full circle.
+- `series_terms`: a nonnegative integer controlling the exact reciprocal-series enclosure.
+
+The radius must have mean 1 and zero first sine and cosine coefficients. These conditions make `gamma'(theta)=rho(theta)(cos(theta),sin(theta))` a closed curve of length `2*pi`. The checker uses exact rational Sturm counts for positivity and exact Fourier arithmetic. It ignores candidate score fields. The reported objective is a certified upper endpoint for the Rayleigh quotient, which bounds the Ovals infimum from above.
+
+Begin with the unit circle. Search bounded rational Fourier perturbations. Do not read human or reference files. Use deterministic seeds from `MATHBENCH_SEED` and expose `run_code()`.

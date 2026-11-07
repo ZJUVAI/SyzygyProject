@@ -1,0 +1,98 @@
+{
+  "task_id": "T032",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T032-C01": {
+      "parameters": {
+        "rows": 14,
+        "columns": 19,
+        "forbidden_submatrix": [
+          3,
+          3
+        ]
+      },
+      "direction": "maximize",
+      "objective": "number of ones in a 14 by 19 binary matrix with no all-ones 3 by 3 submatrix",
+      "program": "reference.py",
+      "reproduced_value": 126,
+      "public_value": 126,
+      "highest_reported": {
+        "value": 126,
+        "source_url": "https://arxiv.org/html/2608.26603v1",
+        "meaning": "explicit feasible lower-bound witness; no optimality claim",
+        "reproduction_status": "explicit matrix reproduced exactly",
+        "source": {
+          "url": "https://arxiv.org/html/2608.26603v1",
+          "version": "v1,2026-08-27"
+        }
+      },
+      "best_human": {
+        "value": 126,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "source_url": "https://arxiv.org/html/2608.26603v1"
+      },
+      "best_public": {
+        "value": 126,
+        "witness_url": "https://arxiv.org/src/2608.26603",
+        "evidence_state": "Published lower bound; not an upper-bound proof."
+      },
+      "best_reproduced": {
+        "value": 126,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact"
+      },
+      "search_provenance": "Classical kicked-greedy construction, original seed 7; kick count not recorded. This task replays the explicit matrix and does not claim to reproduce the search.",
+      "checked_at": "2026-11-06",
+      "open_status": "Open interval in the source table: 126 <= z(14,19;3,3) <= 135.",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T032",
+          "config_id": "T032-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 126,
+          "verification_status": "exact",
+          "generation_time": 0.2146657109260559,
+          "verification_time": 0.16464879363775253,
+          "objective_value": 126,
+          "details": {
+            "rows": 14,
+            "columns": 19,
+            "ones": 126,
+            "row_triples_checked": 364,
+            "maximum_common_columns": 2,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.3825139105319977,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "ones": 126,
+          "column_triples_checked": 969,
+          "forbidden_submatrices": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

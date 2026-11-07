@@ -1,0 +1,89 @@
+{
+  "task_id": "T070",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T070-C01": {
+      "parameters": {
+        "outer_side": 1000,
+        "side_length_gcd": 1,
+        "compound_dissection_allowed": true
+      },
+      "best_human": {
+        "value": 27,
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "source": "Ed Pegg Jr, Mrs Perkins's Quilt July 2017 update, row 1000.",
+        "source_url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical/computer-assisted search; generative-AI provenance is not discussed in the source.",
+        "evidence_state": "The source's 27 side lengths are archived, skyline-decoded, and exactly checked as a full 1000 square dissection with gcd 1.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "origin_type": "published traditional computer-assisted construction"
+      },
+      "best_public": {
+        "value": 27,
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "source": "Pegg July 2017 data, archived from the squaring.net download.",
+        "source_url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional computer-assisted mathematical construction; no generative-AI use is reported.",
+        "evidence_state": "The published 27-square row is reproduced. It is not an optimality proof.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee"
+      },
+      "best_reproduced": {
+        "value": 27,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Integer bit masks per x-column establish exact non-overlap and full coverage; area and side gcd are checked independently.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "origin_type": "published size row reconstructed by lowest-leftmost skyline placement",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 27,
+        "witness_program": "human.py",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "evidence_state": "Exact same-parameter witness from the published data row."
+      },
+      "highest_reported": {
+        "value": 27,
+        "source": "Pegg's July 2017 data row for outer size 1000.",
+        "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "reproduction_status": "The dissection is reconstructed and verified; its optimality is not proved."
+      },
+      "optimality_status": {
+        "status": "open",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The source page labels most results past order 18 as not proven best possible; the 1000-square 27-piece entry is beyond the range exhaustively covered by Wynn's order-18 enumeration.",
+        "limitations": "No proof of a 27-piece minimum for the 1000 square was found. Compound dissections remain allowed."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T070-C01": {
+      "objective": 2000,
+      "objective_value": 2000,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0135
+    }
+  }
+}

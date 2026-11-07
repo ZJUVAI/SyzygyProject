@@ -1,0 +1,90 @@
+{
+  "task_id": "T061",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T061-C01": {
+      "id": "T061-C01",
+      "parameters": {
+        "vertices": 100,
+        "forbidden_subgraph": "simple cycle C6",
+        "saturation": "C6-free; adding any missing edge creates a simple C6",
+        "objective": "number of edges"
+      },
+      "best_human": {
+        "value": 133,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "vertices": 100,
+          "forbidden_subgraph": "C6"
+        },
+        "witness_file": "data/reference/c6_sat_100_133.json",
+        "url": "https://doi.org/10.1016/j.disc.2025.114504",
+        "source_location": "Theorem 1.5(a), Figure 1, epsilon=1 and t=33",
+        "provenance": "Published construction by Lan, Shi, Wang, and Zhang, reconstructed from the theorem and Figure 1(a).",
+        "ai_provenance": "not stated by source",
+        "actual_value": 133,
+        "evidence_state": "exact checker confirms no simple C6 and a simple 5-edge path for every nonedge"
+      },
+      "best_public": {
+        "value": 133,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": 100,
+          "forbidden_subgraph": "C6"
+        },
+        "url": "https://doi.org/10.1016/j.disc.2025.114504",
+        "source_location": "Theorem 1.5(a), epsilon=1, t=33",
+        "provenance": "Theorem gives a 133-edge C6-saturated construction. Its Theorem 1.5(b) lower bound is 132 at n=100, so it does not establish the exact value.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "public feasible upper bound, independently reproduced"
+      },
+      "best_reproduced": {
+        "value": 133,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "vertices": 100,
+          "forbidden_subgraph": "C6"
+        },
+        "witness_file": "data/reference/c6_sat_100_133.json",
+        "provenance": "Rebuilt from the published core H plus paths and a leaf; exact local validation.",
+        "ai_provenance": "construction transcription for this benchmark",
+        "actual_value": 133,
+        "evidence_state": "exact C6-free and saturation check; lower bound 132 leaves one-edge uncertainty",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 133,
+        "parameters": {
+          "vertices": 100,
+          "forbidden_subgraph": "C6"
+        },
+        "witness_file": "data/reference/c6_sat_100_133.json",
+        "provenance": "Published theorem construction reconstructed and exactly checked."
+      },
+      "highest_reported": {
+        "value": 133,
+        "metric": "edges in a feasible C6-saturated graph on 100 vertices",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://doi.org/10.1016/j.disc.2025.114504",
+        "source_location": "Theorem 1.5(a), epsilon=1 and t=33",
+        "reproduction_status": "witness independently rebuilt; source also proves a lower bound of 132, so exact optimum is open between 132 and 133"
+      },
+      "optimality_status": {
+        "lower_bound": 132,
+        "upper_bound": 133,
+        "source": "https://doi.org/10.1016/j.disc.2025.114504",
+        "evidence_state": "not closed at this parameter in the checked sources"
+      }
+    }
+  },
+  "initial_results": {
+    "T061-C01": {
+      "objective": 198,
+      "objective_value": 198,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.6717171717171717
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "checked_at": "2026-11-06",
+  "shape_source": {
+    "name": "P1 11-omino (11P1)",
+    "url": "https://polyominoes.org/data/11P1",
+    "site_author": "Dmitry Grekov",
+    "last_updated_on_page": "2022-09-26",
+    "page_sha256": "95d50757569f1879fefef5021690bde545362bc07e62da91aab9d973298bae28",
+    "local_cells_file": "data/source/11P1.json",
+    "local_cells_sha256": "e547baef5aed720511c8e413bc19f80e1e33070efde1dfc3095df5d57f2f03b6",
+    "shape_description": "11 cells; bounding box 5 by 3; bottom row has five cells and the next two rows each have three left-aligned cells.",
+    "orientations": "The source SVG includes all eight D4 orientations, including rotations and reflections."
+  },
+  "public_rectangle": {
+    "url": "https://polyominoes.org/data/11P1/rect/55x54.svg",
+    "credited_source": "Michael Reid, 11omino7_rect.html; the polyominoes.org page attributes the 54x55 tiling to this page.",
+    "secondary_archive_url": "https://tilingsearch.mit.edu/HTML/data113/K12.html",
+    "secondary_archive_statement": "11-omino, order 270, 54 by 55; entry cites a 1997 construction from Karl Dahlke associated with B. A. Wichmann's World of Patterns (2001).",
+    "local_witness_file": "data/reference/11P1_54x55.json",
+    "rectangle": [54, 55],
+    "tile_count": 270,
+    "reproduction_status": "The SVG placements were decoded and independently checked cell by cell. They cover the 54x55 rectangle with 270 D4-congruent copies."
+  },
+  "alternate_reported_rectangle": {
+    "url": "https://sicherman.net/mikereid/11omino7_rect.html",
+    "rectangle": [47, 99],
+    "tile_count": 423,
+    "reproduction_status": "Reported in the Reid source. Not decoded or independently reproduced. This weaker result does not change the 270-copy verified upper bound."
+  },
+  "independent_seed_search": {
+    "script": "search_exact_cover.py",
+    "script_sha256": "342600aa95610aedf7ce728dc94f8c2b317deebb3306adc56cc4da645697b583",
+    "ai_provenance": "A task agent wrote the search script and ran the CP-SAT search. This is a locally generated AI-assisted seed, not the published human construction.",
+    "method": "CP-SAT exact cover with one Boolean variable per shape placement and an exactly-one constraint per rectangle cell",
+    "input_scope": "The solver script encodes only the fixed 11P1 cells and rectangle dimensions. It does not read the human SVG or reference witness.",
+    "configuration": {
+      "rectangle": [54, 55],
+      "seed": 20261106,
+      "search_time_limit_seconds": 1800,
+      "search_workers": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "ortools": "9.15.6755",
+      "ortools_distribution": "PyPI package ortools",
+      "operating_system": "Linux"
+    },
+    "command": "PYTHONPATH=tasks/t099/runs/research/vendor .venv/bin/python tasks/t099/search_exact_cover.py 20261106 54 55 1800",
+    "result": {
+      "elapsed_seconds": 477.481,
+      "branches": 6754866,
+      "conflicts": 556126,
+      "tile_count": 270,
+      "solver_status_note": "The satisfaction model returned a feasible exact cover. This does not prove that 270 is the global minimum over all rectangles."
+    },
+    "witness_file": "best/independent_cpsat_seed_270.json",
+    "witness_sha256": "5d194c9589c9dab166b66f85feeeca8fe6f3ac831dc3400e9e66da506a10c225",
+    "replay_note": "The script has an 1800-second cap. Wall time and whether a feasible result is found can vary by machine; the saved witness is independently checked by check.py."
+  },
+  "optimality_status": {
+    "current_page_statement": "The modern polyominoes.org source labels the order as <=270 and calls 54x55 the smallest known rectangle. It does not provide a lower-bound proof for the minimum number of tiles.",
+    "checked_sources": [
+      "https://polyominoes.org/data/11P1",
+      "https://sicherman.net/mikereid/11omino7_rect.html",
+      "https://tilingsearch.mit.edu/HTML/data113/K12.html"
+    ],
+    "status": "Open in checked sources through 2026-11-06. The 270 witness is an upper bound only; the page's <= label is not treated as a proof of minimum order."
+  }
+}

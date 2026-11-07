@@ -1,0 +1,39 @@
+{
+  "task_id": "T023",
+  "name": "Binary strength-four covering array",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T023-C01",
+      "parameters": {
+        "strength": 4,
+        "columns": 20,
+        "alphabet_size": 2,
+        "rows_upper_bound": 6196
+      },
+      "direction": "minimize",
+      "human_reference": 65
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "checks": [
+      "same-parameter sources and open status",
+      "replayed human witness",
+      "valid cold seed export",
+      "traditional search",
+      "independent exhaustive projection sets",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "program error and timeout rejected"
+    ],
+    "limitations": [
+      "The reported 39-row record has no locally reproduced witness. The frozen reproduced human baseline has 65 rows.",
+      "No new optimality proof was found within the cited source survey.",
+      "The 6196-row resource cap is a proved feasible upper bound. Larger arrays cannot improve the supplied seed."
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "task_id": "T031",
+  "candidate_id": "shortest-superpermutation",
+  "name": "Shortest superpermutation on seven symbols",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T031-C01",
+      "parameters": {
+        "symbols": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "permutations_required": 5040,
+        "containment": "contiguous_substring"
+      },
+      "direction": "minimize",
+      "human_reference": 5913
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "固定七符号，最小化包含全部5040排列连续子串的字符串长度。",
+      "人类来源": "按Houston2014第1节重建Ashlock–Tillotson递归规则，得5913。公开5905来自Teodorescu2026-08-17附件，其AI使用情况未披露。",
+      "独立验算": "主代理另行下载5907字节原附件，SHA与保存文件一致。逐个查找全部5040目标字符串，独立于任务滑动窗口检查。修复资产路径后重跑五程序及完整控制通过。",
+      "开放状态与限制": "5898和更强5901下界工件均未关闭5905。5901包有未求值方程。本地未重建这些证明，只验证构造。"
+    }
+  }
+}

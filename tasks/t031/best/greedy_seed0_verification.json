@@ -1,0 +1,12 @@
+{
+  "objective": 6240,
+  "verification_status": "exact",
+  "details": {
+    "symbols": 7,
+    "required_permutations": 5040,
+    "distinct_permutations_found": 5040,
+    "windows_checked": 6234,
+    "claimed_score_ignored": true,
+    "containment": "contiguous_substring"
+  }
+}

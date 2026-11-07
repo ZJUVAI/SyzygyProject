@@ -1,0 +1,51 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "additions": 230,
+    "target": "3369993333393829974333376885877453834204643052817571560137951281147"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 21,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "30.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 92
+  },
+  "source_sha256": {
+    "tasks/t020/baseline.py": "64ee94fa7454656708f7931907db9d74d15582527150dfec16834d245e8203b0",
+    "tasks/t020/check.py": "ce2bb75698dd14e76266cda15204e9f747c177fecd516ba7cf156f9da99d7f6b",
+    "tasks/t020/evaluator.py": "d9fa82e6509d7307ac2000ff2c81f4ca9039265863b4ab9bcbc11d9c237fbd57",
+    "tasks/t020/evolution.py": "7d5ac9115786e11b0a04697ab7cde1aeadc0005aabc17e5355ddfd1d13d587ba",
+    "tasks/t020/human.py": "da16ab2fb09a28af6001b61b251a63666692734585efe4636e6c14901cf503f8",
+    "tasks/t020/init_program.py": "fca87518ebeecc5582ac9747a47b8b2b2581b3fea3553f311e109e7bfbb480e1",
+    "tasks/t020/reference.py": "60f18e1594f4d23fb7b695629b1523f51b7921af4682e3995803b64c6c967e4b",
+    "tasks/t020/sota.py": "b38017e3379474419c22e441c47a1556bb48e7d4db16b017298505969cb744c3",
+    "tasks/t020/structured_search.py": "072c1bdfe095e9db9d2a34df015ea259f872183b6d8268b6e2812e0a40847dcf",
+    "tasks/t020/test_structured_search.py": "5223a5edf4282097d8888b7df5e1486a74bb637d1121755d969b99307e49c6e5",
+    "tasks/t020/test_task.py": "68e63edbedaf8a3090d552763c42353fe0e49652046f94e55106b4a04fcac434"
+  },
+  "warm_start_sha256": "62bbb4afe8a4ed6f3ec112dbed92ef81db0447dd71d05a75bd86ea4c6fdb90aa",
+  "replay_command": "python -m mathbench replay T020 tasks/t020/best/T020-C02/solution.json --config T020-C02"
+}

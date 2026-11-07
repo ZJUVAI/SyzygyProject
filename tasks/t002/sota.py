@@ -6,8 +6,8 @@ from pathlib import Path
 
 _WITNESSES = {
     "T002-C01": "data/human_friedman_1997.json",
-    "T002-C03": "data/sota_n029_pingyou_2026.json",
-    "T002-C04": "data/human_gobel_figure1.json",
+    "T002-C02": "data/sota_n029_pingyou_2026.json",
+    "T002-C03": "data/human_gobel_figure1.json",
 }
 
 

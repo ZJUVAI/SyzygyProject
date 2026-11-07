@@ -1,0 +1,13 @@
+# Task: quadratic assignment on QAPLIB tai256c
+
+Implement `run_code()` with no arguments. Return a JSON object with a single required field:
+
+- `permutation`: a list of 256 integers. Entry `permutation[i]` is the location assigned to facility `i`. Use each integer from 0 through 255 exactly once.
+
+The evaluator minimizes the exact integer value
+
+`sum(A[i][j] * B[permutation[i]][permutation[j]] for i in 0..255 for j in 0..255)`.
+
+The fixed matrix input is at the relative path `data/tai256c.dat`, relative to this task directory. Its text format is: first the integer `256`, then 65,536 row-major integers for matrix `A`, then 65,536 row-major integers for matrix `B`. Use these matrices as fixed input. Do not return matrices.
+
+The task uses configuration `T027-C01`. Read `MATHBENCH_SEED` when randomness is needed. The default resource budget is 300 seconds for generation, 60 seconds for verification, 4 GiB memory, and one CPU thread.
