@@ -1,0 +1,110 @@
+{
+  "task_id": "T033",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T033-C01": {
+      "configuration_id": "T033-C01",
+      "best_human": {
+        "value": 9594,
+        "parameters": {
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
+        },
+        "authors": [
+          "Olivier Goudet",
+          "Adrien Goëffon",
+          "Jin-Kao Hao"
+        ],
+        "url": "https://doi.org/10.1016/j.cor.2024.106684",
+        "date_checked": "2026-11-06",
+        "provenance": "The LPI paper reports 9,594 on its G70 test instance. Its calibration value 9,595 is recorded separately and is not the test score.",
+        "evidence_state": "published score; paper-specific assignment not replayed",
+        "witness": null,
+        "origin_type": "traditional human-designed computational heuristic",
+        "optimality": "not proved"
+      },
+      "best_public": {
+        "value": 9595,
+        "parameters": {
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
+        },
+        "url": "https://arxiv.org/abs/2605.30355v4",
+        "corroborating_url": "https://doi.org/10.1016/j.cor.2024.106684",
+        "date_checked": "2026-11-06",
+        "provenance": "Cosm v4 reports that its heuristic reaches 9,595 on G70. The LPI paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+        "evidence_state": "published heuristic score; assignment not replayed here",
+        "witness": null,
+        "origin_type": "author-developed computational heuristic; AI assistance disclosure unknown"
+      },
+      "best_reproduced": {
+        "value": 8616,
+        "parameters": {
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
+        },
+        "url": "https://doi.org/10.1016/j.engappai.2012.09.001",
+        "date_checked": "2026-11-06",
+        "evidence_state": "task-local FLIP reproduction, exact checker verification",
+        "provenance": "This task implements the published single-vertex FLIP neighborhood as seeded steepest local search. It does not reproduce the full BLS algorithm or its reported G70 value.",
+        "witness": "data/human_g70_1flip.json",
+        "actual_value": 8616,
+        "verification_status": "exact",
+        "ai_provenance": "no public record witness used",
+        "review_status": "reviewed_by_sol"
+      },
+      "other_parameters": [],
+      "optimality": {
+        "status": "open in reviewed sources; 9,595 is a reported feasible value and no matching proof was found",
+        "lower_bound": 9595,
+        "evidence": [
+          {
+            "url": "https://doi.org/10.1016/j.cor.2024.106684",
+            "claim": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value; the latter is not the reported test-instance score."
+          },
+          {
+            "url": "https://arxiv.org/abs/2605.30355v4",
+            "claim": "Cosm v4 reports the heuristic result 9,595 for G70 as best-known. The same abstract distinguishes certified optima for G81, G72, and G77 from heuristic results on G61 and G70."
+          },
+          {
+            "url": "https://arxiv.org/abs/2004.12345v5",
+            "claim": "Qian and Pan, v5 (revised 2021), report upper bounds and known best values for large UBPP instances; this is computational evidence, not a G70 optimality certificate."
+          },
+          {
+            "url": "https://doi.org/10.1364/OE.381850",
+            "claim": "The source reports numerical SDP value 9,683 for G70. This task has not independently certified it as an upper bound."
+          }
+        ],
+        "note": "Cosm v4 reports a heuristic G70 cut of 9,595. LPI reports 9,594 on G70 test data and 9,595 as a calibration value. A 2019 paper reports numerical SDP value 9,683, which this task has not certified. The 88-point difference between the Cosm score and SDP figure is not a certified optimality gap. No checked source proves the G70 result optimal.",
+        "reported_sdp_value": 9683
+      },
+      "replay": {
+        "command": ".venv/bin/python -c 'from tasks.t033.human import run_code; from tasks.t033.check import validate; import json; from pathlib import Path; c=json.loads(Path(\"tasks/t033/task.json\").read_text())[\"configurations\"][0]; print(validate(run_code(),c))'",
+        "seed": 0,
+        "restarts": 4,
+        "max_flips_per_restart": 10000,
+        "budget": "fixed iteration count; shared runner hard limit applies"
+      },
+      "input": {
+        "source_url": "https://web.stanford.edu/~yyye/yyye/Gset/G70",
+        "sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061",
+        "normalized_graph_sha256": "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085",
+        "file": "data/instance.json",
+        "source_file": "data/source/G70"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T033-C01": {
+      "objective": 0,
+      "objective_value": 0,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0
+    }
+  }
+}

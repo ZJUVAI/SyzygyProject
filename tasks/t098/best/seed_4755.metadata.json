@@ -1,0 +1,30 @@
+{
+  "task_id": "T098",
+  "config_id": "T098-C01",
+  "objective": 4755,
+  "algorithm": "Generate 3-networks with graphgen.cpp, then pair generated M- and F-networks with the Williams search.cpp algorithm. No comparison witness or order-38 catalogue entry was read by the generator.",
+  "generator_source": "https://squaring.net/downloads/jbwsrc.zip",
+  "generator_source_page": "https://squaring.net/downloads/downloads.html",
+  "source_archive_sha256": "80e780853283dbaea387e5eb44511903904a21e520baa1a70be89bedb55bd84b",
+  "source_archive_contents": ["graphgen.cpp", "create_3library.cpp", "search.cpp", "chol.cpp", "chol.h", "README", "all_graphs2", "all_graphs3", "decompose_file.scr", "drive_search.scr"],
+  "replay_commands": [
+    "unzip jbwsrc.zip -d jbwsrc && cd jbwsrc",
+    "g++ -O3 -o graphgen graphgen.cpp",
+    "g++ -O3 -o create_3library create_3library.cpp chol.cpp",
+    "g++ -O3 -o search search.cpp chol.cpp",
+    "timeout 60s sh -c './graphgen 23 14 | ./create_3library > e23_n14.networks'",
+    "timeout 60s sh -c './graphgen 25 16 | ./create_3library > e25_n16.networks'",
+    "Use the bundled decompose_file.scr / drive_search.scr flow to sort and pair the generated M/F networks; independently verify any emitted tiling."
+  ],
+  "network_prefixes": {"e23_n14": 1391846, "e25_n16": 370992},
+  "search_budget_seconds_per_prefix": 60,
+  "random_seed": null,
+  "environment": {
+    "platform": "Linux x86_64; kernel 3.10.0-1160.el7.x86_64",
+    "compiler": "g++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0",
+    "language_standard": "compiler default (archive source uses legacy C++ constructs)",
+    "threads": 1,
+    "memory_limit": "not recorded for research-time discovery"
+  },
+  "replay_note": "The exact prefix files from the 2026 offline discovery run and their generated output were not retained, so these commands replay the published algorithm and input parameters but are not guaranteed to reproduce this same result. Prefix enumeration and pairing are time-bounded and machine-dependent. The saved witness is separately and exactly checked; the 4755 construction is an independent weak seed, not a claim of deterministic benchmark search performance."
+}

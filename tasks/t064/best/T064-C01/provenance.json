@@ -1,0 +1,53 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "init_program.py",
+  "generation_record": {
+    "task_id": "T064",
+    "config_id": "T064-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 129,
+    "verification_status": "exact",
+    "generation_time": 0.5741296447813511,
+    "verification_time": 1.150267407298088,
+    "objective_value": 129,
+    "details": {
+      "instance_uid": "ortho_40_56a6f463",
+      "coordinate_domain": "exact rational coordinates; finite floats are interpreted as exact binary rationals",
+      "input_vertices": 40,
+      "steiner_points": 129,
+      "total_vertices": 169,
+      "edges": 394,
+      "bounded_triangles": 226,
+      "polygon_area2": "2711189126024",
+      "triangle_area2_sum": "2711189126024",
+      "all_edges_inside": true,
+      "all_boundary_segments_covered": true,
+      "all_triangles_nonobtuse": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 1.7352796234190464,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "5c23afcd065595ca891564d2b7e721d1fb1ef3e13c82e598f3afe89f4b41081b",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T064 tasks/t064/best/T064-C01/solution.json --config T064-C01"
+}

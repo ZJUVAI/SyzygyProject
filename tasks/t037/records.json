@@ -1,0 +1,92 @@
+{
+  "task_id": "T037",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T037-C01": {
+      "configuration_id": "T037-C01",
+      "best_human": {
+        "value": 40,
+        "parameters": {
+          "dimension": 5,
+          "minimum_angle_degrees": 60
+        },
+        "authors": [
+          "A. Korkine",
+          "G. Zolotareff"
+        ],
+        "url": "https://doi.org/10.1007/s00454-026-00841-x",
+        "date_checked": "2026-11-06",
+        "provenance": "The D5 root system, historically constructed by Korkine and Zolotareff (1873), has 40 roots of the form (±1, ±1, 0, 0, 0) under coordinate permutations. This task reconstructs and exactly checks that formula.",
+        "evidence_state": "published construction; task-local witness and all pair constraints independently recomputed",
+        "witness": "data/d5_roots.json",
+        "origin_type": "human mathematical construction",
+        "optimality": "not proved"
+      },
+      "best_public": {
+        "value": 40,
+        "parameters": {
+          "dimension": 5,
+          "minimum_angle_degrees": 60
+        },
+        "url": "https://arxiv.org/abs/2412.00937v3",
+        "date_checked": "2026-11-06",
+        "provenance": "Cohn and Rajagopal discuss known 40-point constructions and state that the best proved upper bound remains 44. No verified public witness above 40 was found in the searched sources.",
+        "evidence_state": "published lower construction; no higher feasible witness reported in checked sources",
+        "witness": null,
+        "origin_type": "human construction; AI provenance not applicable"
+      },
+      "best_reproduced": {
+        "value": 40,
+        "parameters": {
+          "dimension": 5,
+          "minimum_angle_degrees": 60
+        },
+        "url": "https://doi.org/10.1007/s00454-026-00841-x",
+        "date_checked": "2026-11-06",
+        "evidence_state": "task-local formula reconstruction; exact rational checker",
+        "provenance": "Generated from the published D5 root description, not copied from a reference witness. All 780 unordered pairs were checked exactly.",
+        "witness": "data/d5_roots.json",
+        "actual_value": 40,
+        "verification_status": "exact",
+        "ai_provenance": "no AI-generated witness used",
+        "review_status": "reviewed_by_sol"
+      },
+      "other_parameters": [],
+      "optimality": {
+        "status": "open in checked literature; unrestricted kissing number is between 40 and 44",
+        "lower_bound": 40,
+        "upper_bound": 44,
+        "evidence": [
+          {
+            "url": "https://arxiv.org/html/2412.00937v3",
+            "claim": "Section 2 states that 40 appears to be the five-dimensional kissing number and that the best proved upper bound is 44; it describes the D5 roots."
+          },
+          {
+            "url": "https://arxiv.org/abs/0902.1105",
+            "claim": "Mittelmann and Vallentin obtain the published upper bound 44 from a semidefinite programming bound."
+          },
+          {
+            "url": "https://arxiv.org/abs/202608.1658",
+            "claim": "The finite ternary code result is restricted to a finite coordinate alphabet and does not prove unrestricted optimality."
+          }
+        ],
+        "note": "Searches on 2026-11-06 found no later unrestricted proof of 40 or construction above 40. The upper bound 44 is reported from literature and has not been reproduced by this task. Results for finite ternary alphabets are not treated as unrestricted kissing-number results."
+      },
+      "replay": {
+        "command": ".venv/bin/python -c 'from tasks.t037.human import run_code; from tasks.t037.check import validate; import json; from pathlib import Path; c=json.loads(Path(\"tasks/t037/task.json\").read_text())[\"configurations\"][0]; print(validate(run_code(), c))'",
+        "seed": 0,
+        "budget": "deterministic formula reconstruction; verifier default 60 seconds, 4 GiB, one CPU thread"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T037-C01": {
+      "objective": 10,
+      "objective_value": 10,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.25
+    }
+  }
+}

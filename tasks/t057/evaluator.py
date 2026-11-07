@@ -1,3 +1,5 @@
+"""Shared-runner adapter for T057."""
+
 from mathbench.evaluate import evaluate_candidate
 
 

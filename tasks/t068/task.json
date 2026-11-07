@@ -1,0 +1,32 @@
+{
+  "task_id": "T068",
+  "name": "Minimum binary radius-one covering code of length 10",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T068-C01",
+      "parameters": {
+        "length": 10,
+        "alphabet": "{0,1}",
+        "covering_radius": 1,
+        "universe": "all 1024 binary words of length 10",
+        "objective": "number of codewords"
+      },
+      "direction": "minimize",
+      "human_reference": 128
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Binary length 10, radius 1; minimize distinct centers covering all 1024 words. Independent direct minimum Hamming distances differ from formal bitset union.",
+      "human": "Hamming 1950 parity-check reconstruction gives 16*8=128 centers; syndrome argument covers every prefix and suffix. Historical Östergård 1991 reports 120 independently of the separate 2020 OEIS witness.",
+      "public": "Frozen 120-word OEIS entry matches n=10 section only. No identity with 1991 code is assumed. AI provenance of public list not stated.",
+      "open_status": "Current OEIS A000983 explicitly gives 107–120 for n=10; source tables and 2024 covering-code paper retain gap. Independently elementary sphere bound is only ceil(1024/11)=94, not a reproduction of published 107 proof.",
+      "isolation": "Read initial, greedy baseline and evolution: no comparison assets or human/reference imports. Five strict runs, full-universe distance checks, full-return claim invariance, damaged samples, replay, cold export and failure controls passed."
+    }
+  }
+}

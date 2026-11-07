@@ -1,0 +1,44 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T010",
+    "config_id": "T010-C03",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 64,
+    "verification_status": "exact",
+    "generation_time": 0.16428398713469505,
+    "verification_time": 0.16450005769729614,
+    "objective_value": 64,
+    "details": {
+      "n": 25,
+      "minimum_pairwise_distance": 10,
+      "pairs_checked": 2016,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 0.3309916481375694,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "1e9cf703acf36f943f86e9b5c267fc3a9017e57353c3347ea8ca0d40bff972c3",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T010 tasks/t010/best/T010-C03/solution.json --config T010-C03"
+}

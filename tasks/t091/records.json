@@ -1,0 +1,142 @@
+{
+  "task_id": "T091",
+  "configurations": {
+    "T091-C01": {
+      "parameters": {
+        "columns": 63,
+        "levels": 2,
+        "strength": 4,
+        "row_repetition": "allowed"
+      },
+      "best_human": {
+        "value": 4096,
+        "date": "2026-11-06 (local reconstruction)",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4
+        },
+        "method": "Dual of the binary double-error-correcting BCH code, constructed from columns (alpha^i, alpha^(3i)) over GF(64) and all 4096 binary linear forms.",
+        "source": "Carlet, Kiss, Nagy, Simplicity conditions for binary orthogonal arrays, https://doi.org/10.1007/s10623-022-01105-4, Remark 5.",
+        "witness": "data/human/bch_dual_oa4096.json",
+        "witness_sha256": "5e0d4a8af8c61f51e155197ba9b6a392ac2d1cfc575f5b856daf2acef1eec7c9",
+        "verification_status": "exact",
+        "evidence_state": "All 637392 nonempty parity characters of sizes one through four are balanced exactly; this implies each 4-column pattern occurs 256 times.",
+        "ai_provenance": "The cited method is a classical BCH-code construction. This local formula reconstruction is not described as the historical authors' computation; the source does not state AI use."
+      },
+      "best_public": {
+        "value": 2048,
+        "date": "2023 (paper volume); checked 2026-11-06",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4
+        },
+        "method": "Shortened Kerdock-code construction; Carlet, Kiss, and Nagy state this gives 2^(2m-1) rows for 2^m-1 columns when m is even, including m=6.",
+        "source": "https://doi.org/10.1007/s10623-022-01105-4, Proposition 10 and Remark 11.",
+        "witness": null,
+        "evidence_state": "Same-parameter 2048-row construction reported in the primary source. Its explicit rows were not reconstructed in this task.",
+        "ai_provenance": "The source predates current AI-assisted records and does not state AI involvement.",
+        "optimality": "The source states that optimality is not known. Rao and divisibility give lower bound 2032, leaving a 16-row gap."
+      },
+      "best_reproduced": {
+        "value": 4096,
+        "date": "2026-11-06",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4
+        },
+        "program": "reference.py",
+        "witness": "data/reference/bch_dual_oa4096.json",
+        "witness_sha256": "5e0d4a8af8c61f51e155197ba9b6a392ac2d1cfc575f5b856daf2acef1eec7c9",
+        "verification_status": "exact",
+        "evidence_state": "Independent parity-character checker confirms exact strength 4.",
+        "origin_type": "Local rebuild of the traditional BCH-dual construction.",
+        "review_status": "reviewed_by_sol"
+      },
+      "best_own_search": {
+        "value": 8192,
+        "objective_value": 8192,
+        "program": "baseline.py",
+        "witness": "best/T091-C01/solution.json",
+        "witness_sha256": "3d410c4003e174ffa0c9eebd80c1df6592a6220c3ffc398e090b2d96c15a945a",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4,
+          "row_repetition": "allowed"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "seed": 0,
+          "seed_dimension": 13,
+          "label_proposals": 4098,
+          "iterations_requested": 12,
+          "proposals_evaluated": 12,
+          "moves_accepted": 0,
+          "seed_rows": 8192,
+          "row_deletion_proposal_size": 16,
+          "comparison_data_read": false
+        },
+        "generation_record": {
+          "task_id": "T091",
+          "config_id": "T091-C01",
+          "validity": 1.0,
+          "combined_score": 0.5,
+          "objective": 8192,
+          "verification_status": "exact",
+          "generation_time": 2.1002394780516624,
+          "verification_time": 3.5391630455851555,
+          "objective_value": 8192,
+          "details": {
+            "rows": 8192,
+            "columns": 63,
+            "strength": 4,
+            "repeated_rows_allowed": true,
+            "balanced_parity_checks": 637392,
+            "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+            "rao_lower_bound": 2032,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 5.870066076517105,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "Open in the primary source and no later closure was found in searches through 2026-11-06.",
+        "lower_bound": "Rao bound 2017, plus N divisible by 16, gives 2032.",
+        "notes": "The primary paper explicitly says optimality of the Kerdock construction is unknown. Searches for exact OA(2048,63,2,4) and F*(63,2,4) did not find a later proof."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T091-C01": {
+      "objective": 16384,
+      "objective_value": 16384,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.25
+    }
+  }
+}

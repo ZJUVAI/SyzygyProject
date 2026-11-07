@@ -1,0 +1,28 @@
+{
+  "elements": [
+    4334,
+    6591,
+    7711,
+    8281,
+    8566,
+    8714,
+    8791,
+    8831,
+    8851,
+    8862,
+    8868,
+    8871,
+    8873,
+    8874,
+    8875
+  ],
+  "search_metadata": {
+    "algorithm": "greedy descending scan with exact subset-sum bitset, over a seeded fixed cap grid",
+    "seed": 0,
+    "cap_start": 8000,
+    "cap_stop": 10000,
+    "cap_step": 25,
+    "cap_trials_completed": 81,
+    "reference_data_read": false
+  }
+}

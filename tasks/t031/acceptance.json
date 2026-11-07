@@ -1,0 +1,396 @@
+{
+  "task_id": "T031",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T031 --label admission_fixed_20261106",
+  "configurations": {
+    "T031-C01": {
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T031",
+            "config_id": "T031-C01",
+            "validity": 1.0,
+            "combined_score": 0.16760204081632654,
+            "objective": 35280,
+            "verification_status": "exact",
+            "generation_time": 0.16504056379199028,
+            "verification_time": 0.16460776701569557,
+            "objective_value": 35280,
+            "details": {
+              "symbols": 7,
+              "required_permutations": 5040,
+              "distinct_permutations_found": 5040,
+              "windows_checked": 35274,
+              "claimed_score_ignored": true,
+              "containment": "contiguous_substring"
+            },
+            "eval_time": 0.3333609439432621,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "string_length": 35280,
+            "required_substrings_checked": 5040
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T031",
+            "config_id": "T031-C01",
+            "validity": 1.0,
+            "combined_score": 0.9475961538461538,
+            "objective": 6240,
+            "verification_status": "exact",
+            "generation_time": 0.26479119807481766,
+            "verification_time": 0.16465960070490837,
+            "objective_value": 6240,
+            "details": {
+              "symbols": 7,
+              "required_permutations": 5040,
+              "distinct_permutations_found": 5040,
+              "windows_checked": 6234,
+              "claimed_score_ignored": true,
+              "containment": "contiguous_substring"
+            },
+            "eval_time": 0.4327433817088604,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "string_length": 6240,
+            "required_substrings_checked": 5040
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T031",
+            "config_id": "T031-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 5913,
+            "verification_status": "exact",
+            "generation_time": 0.16462674736976624,
+            "verification_time": 0.16471023857593536,
+            "objective_value": 5913,
+            "details": {
+              "symbols": 7,
+              "required_permutations": 5040,
+              "distinct_permutations_found": 5040,
+              "windows_checked": 5907,
+              "claimed_score_ignored": true,
+              "containment": "contiguous_substring"
+            },
+            "eval_time": 0.3324318453669548,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "string_length": 5913,
+            "required_substrings_checked": 5040
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T031",
+            "config_id": "T031-C01",
+            "validity": 1.0,
+            "combined_score": 1.001354784081287,
+            "objective": 5905,
+            "verification_status": "exact",
+            "generation_time": 0.21464842557907104,
+            "verification_time": 0.16461127623915672,
+            "objective_value": 5905,
+            "details": {
+              "symbols": 7,
+              "required_permutations": 5040,
+              "distinct_permutations_found": 5040,
+              "windows_checked": 5899,
+              "claimed_score_ignored": true,
+              "containment": "contiguous_substring"
+            },
+            "eval_time": 0.3821674585342407,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "string_length": 5905,
+            "required_substrings_checked": 5040
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T031",
+            "config_id": "T031-C01",
+            "validity": 1.0,
+            "combined_score": 0.9475961538461538,
+            "objective": 6240,
+            "verification_status": "exact",
+            "generation_time": 0.26483435928821564,
+            "verification_time": 0.2148056998848915,
+            "objective_value": 6240,
+            "details": {
+              "symbols": 7,
+              "required_permutations": 5040,
+              "distinct_permutations_found": 5040,
+              "windows_checked": 6234,
+              "claimed_score_ignored": true,
+              "containment": "contiguous_substring"
+            },
+            "eval_time": 0.4828045852482319,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "string_length": 6240,
+            "required_substrings_checked": 5040
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T031",
+        "config_id": "T031-C01",
+        "validity": 1.0,
+        "combined_score": 0.16760204081632654,
+        "objective": 35280,
+        "verification_status": "exact",
+        "generation_time": 0.16458673030138016,
+        "verification_time": 0.16470439732074738,
+        "objective_value": 35280,
+        "details": {
+          "symbols": 7,
+          "required_permutations": 5040,
+          "distinct_permutations_found": 5040,
+          "windows_checked": 35274,
+          "claimed_score_ignored": true,
+          "containment": "contiguous_substring"
+        },
+        "eval_time": 0.3305450417101383,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T031",
+          "config_id": "T031-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t031/runs/admission_fixed_20261106/T031-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.1658599004149437,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T031",
+          "config_id": "T031-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20535612106323242,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T031",
+          "config_id": "T031-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.16553670912981033,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      },
+      "configuration": {
+        "id": "T031-C01",
+        "parameters": {
+          "symbols": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "direction": "minimize",
+        "human_reference": 5913
+      },
+      "configuration_capture_stage": "sol_review"
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "2207654cd2e386c7028d2bc86712ec4ba2a76bb7c3a0a25cbcda6f3365a9774e",
+    "README.md": "dc1ffed14d8cdbe8f6dd56aa9bc3d069cc8974961cbbd063166063d0b5fab44a",
+    "baseline.py": "9b65d3e261e2ddef03bde56ef8d7f2d1977f2dfafaf33341ef32d231af8ef502",
+    "check.py": "f47cc343e8f31defb4d631c061387fd96e236a48fcf4b48b9d7a762210fba43f",
+    "data/reference/human_ashlock_tillotson_5913.txt": "115550fd796c1db7babe54ea6fe1d9bd6b77530e2a8280030e9e7b89ac3f9ae2",
+    "data/reference/public_5905_attachment.txt": "f0208fb0e8ea98b015799b8f0dfaadc58d5909bad4a089603f2c9c4768536f67",
+    "evaluator.py": "730ee5cba482580c6808d89a7ee86d928b4035528df03bd0a7a35fc555afdafd",
+    "evolution.py": "2c13d67f52cbf2bd95f9098577f154cb2dc0bf67e5cafaa90248f0e32f63bbcf",
+    "human.py": "b712004e9f70b14772313c2ba67ecbf7b57c8e4217a4d7742518cd87969d32a4",
+    "init_program.py": "473ca7966cd206b720e7c58404de8a126cc3a4e3c26713eb212f956068b596db",
+    "instruction.txt": "6a3289e857132973a8faaac1fd5d4efe4263f0aa5bdcf0c880c42f57457b31db",
+    "records.json": "90edee20a4eb9ecb307f5c5a17afe7d2bfcae2af0060c8a15ca0233f2b7ef813",
+    "reference.py": "5d4cb9a130543ebf6db43541cb46f33ae9ac459f0c4456345a7fadc937efbb7b",
+    "test_task.py": "e26b8ae317a470cc2cbf69f48e161d462b6440fe8f66e420ca8f3bb17dca1e70"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "数学模型": "固定七符号，最小化包含全部5040排列连续子串的字符串长度。",
+    "人类来源": "按Houston2014第1节重建Ashlock–Tillotson递归规则，得5913。公开5905来自Teodorescu2026-08-17附件，其AI使用情况未披露。",
+    "独立验算": "主代理另行下载5907字节原附件，SHA与保存文件一致。逐个查找全部5040目标字符串，独立于任务滑动窗口检查。修复资产路径后重跑五程序及完整控制通过。",
+    "开放状态与限制": "5898和更强5901下界工件均未关闭5905。5901包有未求值方程。本地未重建这些证明，只验证构造。"
+  },
+  "post_acceptance_test_reviews": [
+    {
+      "date": "2026-11-06",
+      "reviewer": "Sol main agent",
+      "new_sha256": "e26b8ae317a470cc2cbf69f48e161d462b6440fe8f66e420ca8f3bb17dca1e70",
+      "file": "test_task.py",
+      "reason": "An error-reporting control used a 2 second startup wall limit and timed out under shared host load during the formal67 suite. Use the specified300 second generation limit for the RuntimeError control; retain the deliberate0.1 second timeout control unchanged. Checker and constructions unchanged.",
+      "verification": ".venv/bin/python -m pytest tasks/t031/test_task.py::test_generation_runner_reports_candidate_error_and_timeout -q: 1 passed in0.56s"
+    }
+  ]
+}

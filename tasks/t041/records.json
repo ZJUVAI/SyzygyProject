@@ -1,0 +1,205 @@
+{
+  "survey_cutoff": "2026-11-06",
+  "best_human": {
+    "value": {
+      "T041-C01": "4"
+    },
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "square_count": 17,
+      "container": "closed unit square [0,1]^2",
+      "orientation": "arbitrary",
+      "objective": "sum of side lengths"
+    },
+    "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+    "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
+    "origin_type": "human mathematical construction, reconstructed for this task",
+    "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
+    "witness_file": "data/human_grid_witness.json",
+    "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
+  },
+  "best_public": {
+    "value": {
+      "T041-C01": "2190452873/547596200"
+    },
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "square_count": 17,
+      "container": "closed unit square [0,1]^2",
+      "orientation": "arbitrary",
+      "objective": "sum of side lengths"
+    },
+    "url": "https://github.com/Sprite143/erdos-106-counterexample",
+    "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+    "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+    "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+    "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+    "witness_file": "data/public_witness.json",
+    "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+  },
+  "best_reproduced": {
+    "value": {
+      "T041-C01": "2190452873/547596200"
+    },
+    "date_reproduced": "2026-11-06",
+    "witness_file": "data/public_witness.json",
+    "source_files": [
+      "data/source/public_construct.py",
+      "data/source/CERTIFICATE_n17.json",
+      "data/source/repository.tar.gz"
+    ],
+    "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+    "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
+    "original_search_certificate_value": "2000062156200269/500000000000000",
+    "actual_value": {
+      "T041-C01": "2190452873/547596200"
+    },
+    "verification_status": "exact",
+    "pairs_checked": 136,
+    "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
+    "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
+    "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+  },
+  "other_public_results": [
+    {
+      "value": {
+        "T041-C01": "4"
+      },
+      "source": "https://arxiv.org/abs/2511.02864",
+      "source_version": "v1, 2025-11, section 6.35",
+      "provenance": "AlphaEvolve search result. The paper says its run matched the known value 4 for n=17; this is a search result, not an upper-bound proof.",
+      "origin_type": "AI-assisted search",
+      "same_parameters": true,
+      "evidence_state": "reported in the paper; below the pinned exact rational construction"
+    }
+  ],
+  "configuration_records": {
+    "T041-C01": {
+      "parameters": {
+        "square_count": 17,
+        "container": "closed unit square [0,1]^2",
+        "orientation": "arbitrary",
+        "interior_disjoint": true,
+        "objective": "sum of the 17 side lengths"
+      },
+      "acceptance_status": "pending_sol_review",
+      "human_reference": "4",
+      "public_lower_bound": "2190452873/547596200",
+      "optimality_status": "open; no matching upper bound located",
+      "generic_upper_bound": "sqrt(17)",
+      "limitations": [
+        "The public construction is AI-assisted and has not had human referee review, according to the checked public record.",
+        "The checker accepts exact rational inputs. Rational unit directions are dense, and strict shrinking followed by rational perturbation preserves the unrestricted supremum.",
+        "The public witness proves a lower bound only. It does not establish the optimum."
+      ]
+    }
+  },
+  "survey_scope_note": "The best-public label is limited to the sources listed in tasks/t041/sota.json and checked on 2026-11-06; this is not a complete literature survey.",
+  "configurations": {
+    "T041-C01": {
+      "best_human": {
+        "value": {
+          "T041-C01": "4"
+        },
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "square_count": 17,
+          "container": "closed unit square [0,1]^2",
+          "orientation": "arbitrary",
+          "objective": "sum of side lengths"
+        },
+        "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+        "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
+        "origin_type": "human mathematical construction, reconstructed for this task",
+        "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
+        "witness_file": "data/human_grid_witness.json",
+        "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
+      },
+      "best_public": {
+        "value": {
+          "T041-C01": "2190452873/547596200"
+        },
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "square_count": 17,
+          "container": "closed unit square [0,1]^2",
+          "orientation": "arbitrary",
+          "objective": "sum of side lengths"
+        },
+        "url": "https://github.com/Sprite143/erdos-106-counterexample",
+        "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+        "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+        "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+        "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+        "witness_file": "data/public_witness.json",
+        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+      },
+      "best_reproduced": {
+        "value": {
+          "T041-C01": "2190452873/547596200"
+        },
+        "date_reproduced": "2026-11-06",
+        "witness_file": "data/public_witness.json",
+        "source_files": [
+          "data/source/public_construct.py",
+          "data/source/CERTIFICATE_n17.json",
+          "data/source/repository.tar.gz"
+        ],
+        "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+        "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
+        "original_search_certificate_value": "2000062156200269/500000000000000",
+        "actual_value": {
+          "T041-C01": "2190452873/547596200"
+        },
+        "verification_status": "exact",
+        "pairs_checked": 136,
+        "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
+        "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
+        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe",
+        "review_status": "reviewed_by_sol"
+      },
+      "other_public_results": [
+        {
+          "value": {
+            "T041-C01": "4"
+          },
+          "source": "https://arxiv.org/abs/2511.02864",
+          "source_version": "v1, 2025-11, section 6.35",
+          "provenance": "AlphaEvolve search result. The paper says its run matched the known value 4 for n=17; this is a search result, not an upper-bound proof.",
+          "origin_type": "AI-assisted search",
+          "same_parameters": true,
+          "evidence_state": "reported in the paper; below the pinned exact rational construction"
+        }
+      ],
+      "survey_scope_note": "The best-public label is limited to the sources listed in tasks/t041/sota.json and checked on 2026-11-06; this is not a complete literature survey.",
+      "parameters": {
+        "square_count": 17,
+        "container": "closed unit square [0,1]^2",
+        "orientation": "arbitrary",
+        "interior_disjoint": true,
+        "objective": "sum of the 17 side lengths"
+      },
+      "acceptance_status": "pending_sol_review",
+      "human_reference": "4",
+      "public_lower_bound": "2190452873/547596200",
+      "optimality_status": "open; no matching upper bound located",
+      "generic_upper_bound": "sqrt(17)",
+      "limitations": [
+        "The public construction is AI-assisted and has not had human referee review, according to the checked public record.",
+        "The checker accepts exact rational inputs. Rational unit directions are dense, and strict shrinking followed by rational perturbation preserves the unrestricted supremum.",
+        "The public witness proves a lower bound only. It does not establish the optimum."
+      ],
+      "review_status": "pending_sol_review"
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T041-C01": {
+      "objective": "1",
+      "objective_value": "1",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.25
+    }
+  }
+}

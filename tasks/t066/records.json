@@ -1,78 +1,86 @@
 {
-  "best_human": {
-    "value": 24,
-    "date_checked": "2026-11-04",
-    "parameters": {
-      "n": 68,
-      "k": 15,
-      "q": 2
-    },
-    "url": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
-    "provenance": "Grassl's BKLC page reports a [68,15,24] construction. It gives a construction chain through a [68,18,24] parent and a 15-dimensional subcode.",
-    "evidence_state": "published_lower_bound; matrix not retrieved or independently reproduced"
+  "task_id": "T066",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T066-C01": {
+      "parameters": {
+        "point_count": 17,
+        "ambient_space": "Euclidean plane R^2",
+        "objective": "number of distinct lines containing exactly 3 input points"
+      },
+      "best_human": {
+        "value": 40,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 17
+        },
+        "witness_file": "data/reference/cubic_tangent_17.json",
+        "url": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Theorem 2.5 and Proposition 2.6; the acnodal-cubic subgroup of order 17",
+        "provenance": "Human-published cubic group construction reconstructed from the stated parametrization and subgroup formula. Pegg's page separately provides same-parameter evidence, but the coordinates here are not claimed to match the figure.",
+        "ai_provenance": "not stated by source",
+        "actual_value": 40,
+        "evidence_state": "exact checker verifies 17 distinct points and 40 distinct lines incident with exactly three points"
+      },
+      "best_public": {
+        "value": 40,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "point_count": 17
+        },
+        "url": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Proposition 2.6; n=17 gives 40 three-rich lines; Pegg's 2018 page also shows a 17-point, 40-line figure",
+        "additional_same_parameter_source": "https://blog.wolfram.com/2018/02/02/cultivating-new-solutions-for-the-orchard-planting-problem/",
+        "provenance": "Best same-parameter feasible construction found in checked sources. Current tables retain the range 40-42.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "public construction independently reconstructed and exactly checked; optimum remains unresolved in checked sources"
+      },
+      "best_reproduced": {
+        "value": 40,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 17
+        },
+        "witness_file": "data/reference/cubic_tangent_17.json",
+        "witness_sha256": "0575565b5d4993e07ffcf34a3f4a7799bf214b2486b36c9d1bcec6b966fef77c",
+        "provenance": "Independently generated from the classical cubic-curve tangent-angle parametrization and checked using rational polynomial arithmetic in Q(tan(pi/17)); not claimed to reproduce the exact coordinates in Pegg's figure.",
+        "ai_provenance": "benchmark reconstruction",
+        "actual_value": 40,
+        "evidence_state": "exact degree-16 field checker; independent determinant identity confirms the 40 zero-sum triples",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 40,
+        "parameters": {
+          "point_count": 17
+        },
+        "witness_file": "data/reference/cubic_tangent_17.json",
+        "provenance": "Same-parameter Pegg result used as public baseline evidence; exact witness independently rebuilt by the classical cubic-curve method."
+      },
+      "highest_reported": {
+        "value": 40,
+        "metric": "distinct lines containing exactly three of 17 points",
+        "direction": "maximize",
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Proposition 2.6; cubic subgroup construction at n=17",
+        "additional_same_parameter_source": "https://blog.wolfram.com/2018/02/02/cultivating-new-solutions-for-the-orchard-planting-problem/",
+        "reproduction_status": "The exact subgroup construction is reproduced. The exact maximum at n=17 remains within the reported interval 40-42; Pegg's figure is independent same-parameter evidence."
+      },
+      "optimality_status": {
+        "lower_bound": 40,
+        "upper_bound": 42,
+        "evidence_state": "Current OEIS and Friedman tables checked on 2026-11-06 list a(17) in {40,41,42}; no closure located."
+      }
+    }
   },
-  "best_public": {
-    "value": 24,
-    "date_checked": "2026-11-05",
-    "parameters": {
-      "n": 68,
-      "k": 15,
-      "q": 2
-    },
-    "url": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
-    "evidence_state": "published table lower bound with a saved Magma BKLC database witness independently verified by rank and exact enumeration; construction attribution is not named",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 19,
-    "date_reproduced": "2026-11-04",
-    "parameters": {
-      "n": 68,
-      "k": 15,
-      "q": 2
-    },
-    "witness_file": "data/search_generator.json",
-    "provenance": "AI implementation of classical systematic-generator simulated annealing, 60 iterations, seed0; not a historical human record",
-    "ai_provenance": "Generated by this project classical annealing baseline, seed0, fixed60iterations. Saved matrix has exact minimum distance19.",
-    "actual_value": 19,
-    "evidence_state": "saved fixed-count seed0 local search witness, all32767nonzero words independently checked"
-  },
-  "published_derived_human": {
-    "value": 8,
-    "date_reproduced": "2026-11-04",
-    "parameters": {
-      "n": 68,
-      "k": 15,
-      "q": 2
-    },
-    "witness_file": "data/human_generator.json",
-    "url": "https://ocw.mit.edu/courses/6-451-principles-of-digital-communication-ii-spring-2005/bb895c1dee9ce0b39d6846e0aa984981_MIT6_451S05_FullLecNotes.pdf",
-    "provenance": "Three direct-sum copies of the public RM(1,4) [16,5,8] construction, followed by 20 zero coordinates.",
-    "ai_provenance": "Generated in this task from the public Reed-Muller evaluation construction; not claimed as a published [68,15] record.",
-    "actual_value": 8,
-    "evidence_state": "saved witness, rank, and distance independently verified exactly"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "reconstruction of a published human method; weaker than best public record",
-  "reproduced_sota": {
-    "value": 24,
-    "date_reproduced": "2026-11-05",
-    "parameters": {
-      "n": 68,
-      "k": 15,
-      "q": 2
-    },
-    "source_url": "https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2",
-    "construction_source": "Magma BKLC database, queried through the public Magma calculator (version 2.30-1)",
-    "witness_file": "data/sota_generator.json",
-    "program": "sota.py",
-    "reproduction_script": "data/reproduce_sota.m",
-    "provenance": "Returned by BestKnownLinearCode(GF(2),68,15). The table does not name an individual constructor.",
-    "evidence_state": "saved Magma database witness independently verified by rank and exact enumeration of all 32767 nonzero codewords",
-    "matches_public_best": true,
-    "limitations": [
-      "Best-known lower bound 24; published upper bound 26, so optimality is not proved."
-    ]
+  "initial_results": {
+    "T066-C01": {
+      "objective": 0,
+      "objective_value": 0,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0
+    }
   }
 }

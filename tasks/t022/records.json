@@ -1,0 +1,71 @@
+{
+  "task_id": "T022",
+  "snapshot_date": "2026-11-06",
+  "best_human": {
+    "value": 42,
+    "parameters": {
+      "clique_size": 5,
+      "independent_set_size": 5
+    },
+    "source": "Geoffrey Exoo, A lower bound for r(5,5), Journal of Graph Theory 13 (1989), 97-98.",
+    "source_url": "https://doi.org/10.1002/jgt.3190130113",
+    "date_checked": "2026-11-06",
+    "evidence_state": "Exoo proves the 42-vertex lower-bound construction. The archive row used for local reproduction is not individually attributed, so this exact graph6 line is not assigned to Exoo personally.",
+    "ai_provenance": "AI decoded a public archive row; it did not infer the individual discoverer."
+  },
+  "best_public": {
+    "value": 42,
+    "parameters": {
+      "clique_size": 5,
+      "independent_set_size": 5
+    },
+    "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+    "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
+    "evidence_state": "McKay archive documents 328 catalogued (5,5,42)-graphs; the other 328 are their complements. The first archive line is a public witness; its individual discoverer is not identified.",
+    "date_checked": "2026-11-06"
+  },
+  "best_reproduced": {
+    "value": 42,
+    "parameters": {
+      "clique_size": 5,
+      "independent_set_size": 5
+    },
+    "witness": "data/human_witness.json",
+    "verification_status": "exact",
+    "edge_count": 425,
+    "date_checked": "2026-11-06",
+    "source_graph6_sha256": "ab0b10364ac62ab07f662c0ed4e8b47a44956f63a78356b64ae64ccb6520ecb0"
+  },
+  "limitations": [
+    "The 42-vertex graph proves only the lower bound R(5,5) >= 43.",
+    "The checker uses the published upper bound R(5,5) <= 46 to set the 45-vertex maximum candidate order.",
+    "No proof establishes that 42 is the maximum feasible graph order."
+  ],
+  "same_parameter_bounds": [
+    {
+      "value": 46,
+      "meaning": "R(5,5) <= 46; upper bound, not a construction",
+      "parameters": {
+        "clique_size": 5,
+        "independent_set_size": 5
+      },
+      "url": "https://arxiv.org/abs/2409.15709v2",
+      "authors": [
+        "Vigleik Angeltveit",
+        "Brendan D. McKay"
+      ],
+      "version_date": "2025-09-01",
+      "evidence_state": "Published proof. This same-parameter upper bound leaves R(5,5) in [43,46]."
+    }
+  ],
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T022-C01": {
+      "objective": 5,
+      "objective_value": 5,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.11904761904761904
+    }
+  }
+}

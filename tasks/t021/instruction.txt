@@ -1,0 +1,16 @@
+Place n distinct points on the unit sphere S². Minimize the Coulomb energy
+
+    E = sum_{1 <= i < j <= n} 1 / ||x_i - x_j||_2,
+
+where every charge is +1 and the sphere radius is 1. Return a JSON object with
+one key, "points", containing n pairs [u, v]. Each pair represents the exact
+unit-sphere point
+
+    (2u, 2v, 1-u²-v²) / (1+u²+v²).
+
+Coordinates may be integers, finite numbers, or rational strings. The evaluator
+reconstructs all points and recomputes the energy with exact rational arithmetic
+and conservative rational bounds. Do not include a claimed score as evidence.
+The checker rejects duplicate points and any incorrect point count.
+
+Define run_code() with no arguments. Use MATHBENCH_CONFIG_ID to select n=32 (C01), n=40 (C02), or n=50 (C03); use MATHBENCH_SEED when needed. Generation has a 300-second limit. Verification has a separate 60-second limit. Memory is limited to 4 GiB, with one CPU thread. Human and public-record witnesses are external comparison data and must not enter the model workspace.

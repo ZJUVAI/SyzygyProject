@@ -1,0 +1,48 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "init_program.py",
+  "generation_record": {
+    "task_id": "T094",
+    "config_id": "T094-C01",
+    "validity": 1.0,
+    "combined_score": 0.9833733788588176,
+    "objective": "2931818210481793092388544/1989043790736546673845383",
+    "verification_status": "certified",
+    "generation_time": 0.4356791153550148,
+    "verification_time": 1.999903567135334,
+    "objective_value": "2931818210481793092388544/1989043790736546673845383",
+    "details": {
+      "objective_interval": [
+        "122159092103408045516187/82876824614022778076891",
+        "2931818210481793092388544/1989043790736546673845383"
+      ],
+      "scale": "1000000000000000000000000",
+      "vertices": 120,
+      "edges": 237,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 2.4448557011783123,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "3c060ccc329ba27280bff367521b29df50a698ff1b3b01a397157500b4a7ade1",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T094 tasks/t094/best/T094-C01/solution.json --config T094-C01"
+}

@@ -3,7 +3,7 @@
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
-      "id": "T002-C03",
+      "id": "T002-C02",
       "parameters": {
         "n": 29
       },
@@ -11,7 +11,7 @@
       "human_reference": 5.933885799813026
     },
     {
-      "id": "T002-C04",
+      "id": "T002-C03",
       "parameters": {
         "n": 38
       },

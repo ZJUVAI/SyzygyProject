@@ -1,0 +1,33 @@
+{
+  "task_id": "T020",
+  "config_id": "T020-C01",
+  "validity": 1.0,
+  "combined_score": 0.9950738916256158,
+  "objective": 203,
+  "verification_status": "exact",
+  "generation_time": 243.04539481177926,
+  "verification_time": 0.699349369853735,
+  "objective_value": 203,
+  "details": {
+    "target": "6277101735386680763835789423207666416083908700390324961277",
+    "chain_entries": 204,
+    "configuration_id": "T020-C01",
+    "strictly_increasing": true,
+    "all_steps_verified": true
+  },
+  "eval_time": 243.75397195667028,
+  "seed": 111,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 7
+  }
+}

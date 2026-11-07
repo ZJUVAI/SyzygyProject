@@ -1,0 +1,41 @@
+{
+  "expression": "((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((1+1))*(1+1))+(1)))*(1+1)))*(1+1+1+1+1+1))+(1)))*(1+1+1)))*(1+1+1+1)))*(1+1+1+1+1+1+1))+(1+1+1+1+1+1)))*(1+1+1+1+1+1)))*(1+1+1+1))+(1+1)))*(1+1+1+1)))*(1+1+1+1+1))+(1+1+1)))*(1+1+1+1)))*(1+1+1+1))+(1)))*(1+1+1))+(1+1)))*(1+1)))*(1+1+1)))*(1+1+1+1))+(1+1+1)))*(1+1+1+1+1+1+1))+(1)))*(1+1+1+1)))*(1+1+1+1+1))+(1+1+1)))*(1+1)))*(1+1+1+1+1))+(1)))*(1+1+1)))*(1+1+1))+(1)))*(1+1+1+1+1+1+1+1))+(1)))*(1+1+1)))*(1+1+1+1+1+1)))*(1+1)))*(1+1+1+1+1+1+1))+(1+1+1)))*(1+1+1+1))+(1+1+1)))*(1+1+1+1))+(1+1+1)))*(1+1))+(1))",
+  "search_metadata": {
+    "algorithm": "seeded random mixed-radix Horner enumeration",
+    "seed": 0,
+    "iterations": 1000,
+    "iteration_limit": 1000,
+    "best_ones": 166,
+    "radix_set": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "reference_data_read": false,
+    "budget": {
+      "mode": "fixed_iteration_count",
+      "requested_iterations": 1000,
+      "actual_iterations": 1000,
+      "requested_wall_clock_seconds": null
+    }
+  },
+  "replay_metadata": {
+    "command": ".venv/bin/python -c \"from tasks.t060.evolution import run_code; print(run_code())\"",
+    "python": "3.13.12",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "seed": 0,
+    "budget": {
+      "mode": "fixed_iteration_count",
+      "requested_iterations": 1000,
+      "actual_iterations": 1000,
+      "requested_wall_clock_seconds": null
+    },
+    "recomputed_objective": 166,
+    "verification_status": "exact",
+    "human_or_reference_files_read": false
+  }
+}

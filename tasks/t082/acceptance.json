@@ -1,0 +1,465 @@
+{
+  "task_id": "T082",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T082 --label admission_20261106",
+  "configurations": {
+    "T082-C01": {
+      "configuration": {
+        "id": "T082-C01",
+        "parameters": {
+          "board_size": 30,
+          "queen_movement": "standard row, column, and diagonal",
+          "equal_armies": true,
+          "same_color_attacks_allowed": true
+        },
+        "direction": "maximize",
+        "human_reference": 131
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T082",
+            "config_id": "T082-C01",
+            "validity": 1.0,
+            "combined_score": 0.007633587786259542,
+            "objective": 1,
+            "verification_status": "exact",
+            "generation_time": 0.46619972214102745,
+            "verification_time": 0.4450044371187687,
+            "objective_value": 1,
+            "details": {
+              "board_size": 30,
+              "army_size_each_color": 1,
+              "total_queens": 2,
+              "cross_color_pairs_checked": 1,
+              "cross_color_attacking_pairs": 0,
+              "cross_color_square_overlap": false,
+              "occupied_rows": {
+                "white": 1,
+                "black": 1,
+                "disjoint": true
+              },
+              "occupied_columns": {
+                "white": 1,
+                "black": 1,
+                "disjoint": true
+              },
+              "proven_upper_bound": 225,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 0.9186315387487411,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "army_size": 1,
+            "finite_upper_bound": 225,
+            "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T082",
+            "config_id": "T082-C01",
+            "validity": 1.0,
+            "combined_score": 0.3435114503816794,
+            "objective": 45,
+            "verification_status": "exact",
+            "generation_time": 4.2805106192827225,
+            "verification_time": 1.0496071428060532,
+            "objective_value": 45,
+            "details": {
+              "board_size": 30,
+              "army_size_each_color": 45,
+              "total_queens": 90,
+              "cross_color_pairs_checked": 2025,
+              "cross_color_attacking_pairs": 0,
+              "cross_color_square_overlap": false,
+              "occupied_rows": {
+                "white": 14,
+                "black": 16,
+                "disjoint": true
+              },
+              "occupied_columns": {
+                "white": 16,
+                "black": 14,
+                "disjoint": true
+              },
+              "proven_upper_bound": 225,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 5.33737164363265,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "army_size": 45,
+            "finite_upper_bound": 225,
+            "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T082",
+            "config_id": "T082-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 131,
+            "verification_status": "exact",
+            "generation_time": 1.5318257175385952,
+            "verification_time": 0.564779419451952,
+            "objective_value": 131,
+            "details": {
+              "board_size": 30,
+              "army_size_each_color": 131,
+              "total_queens": 262,
+              "cross_color_pairs_checked": 17161,
+              "cross_color_attacking_pairs": 0,
+              "cross_color_square_overlap": false,
+              "occupied_rows": {
+                "white": 15,
+                "black": 15,
+                "disjoint": true
+              },
+              "occupied_columns": {
+                "white": 14,
+                "black": 16,
+                "disjoint": true
+              },
+              "proven_upper_bound": 225,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 2.1353443078696728,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "army_size": 131,
+            "finite_upper_bound": 225,
+            "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T082",
+            "config_id": "T082-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 131,
+            "verification_status": "exact",
+            "generation_time": 0.4438643828034401,
+            "verification_time": 0.43398309499025345,
+            "objective_value": 131,
+            "details": {
+              "board_size": 30,
+              "army_size_each_color": 131,
+              "total_queens": 262,
+              "cross_color_pairs_checked": 17161,
+              "cross_color_attacking_pairs": 0,
+              "cross_color_square_overlap": false,
+              "occupied_rows": {
+                "white": 15,
+                "black": 15,
+                "disjoint": true
+              },
+              "occupied_columns": {
+                "white": 14,
+                "black": 16,
+                "disjoint": true
+              },
+              "proven_upper_bound": 225,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 0.88566043227911,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "army_size": 131,
+            "finite_upper_bound": 225,
+            "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T082",
+            "config_id": "T082-C01",
+            "validity": 1.0,
+            "combined_score": 0.44274809160305345,
+            "objective": 58,
+            "verification_status": "exact",
+            "generation_time": 0.9880991689860821,
+            "verification_time": 0.3665984533727169,
+            "objective_value": 58,
+            "details": {
+              "board_size": 30,
+              "army_size_each_color": 58,
+              "total_queens": 116,
+              "cross_color_pairs_checked": 3364,
+              "cross_color_attacking_pairs": 0,
+              "cross_color_square_overlap": false,
+              "occupied_rows": {
+                "white": 17,
+                "black": 13,
+                "disjoint": true
+              },
+              "occupied_columns": {
+                "white": 15,
+                "black": 15,
+                "disjoint": true
+              },
+              "proven_upper_bound": 225,
+              "claimed_objective_ignored": true,
+              "strict": true
+            },
+            "eval_time": 1.367559790611267,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "army_size": 58,
+            "finite_upper_bound": 225,
+            "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T082",
+        "config_id": "T082-C01",
+        "validity": 1.0,
+        "combined_score": 0.007633587786259542,
+        "objective": 1,
+        "verification_status": "exact",
+        "generation_time": 0.29277612268924713,
+        "verification_time": 0.3660796768963337,
+        "objective_value": 1,
+        "details": {
+          "board_size": 30,
+          "army_size_each_color": 1,
+          "total_queens": 2,
+          "cross_color_pairs_checked": 1,
+          "cross_color_attacking_pairs": 0,
+          "cross_color_square_overlap": false,
+          "occupied_rows": {
+            "white": 1,
+            "black": 1,
+            "disjoint": true
+          },
+          "occupied_columns": {
+            "white": 1,
+            "black": 1,
+            "disjoint": true
+          },
+          "proven_upper_bound": 225,
+          "claimed_objective_ignored": true,
+          "strict": true
+        },
+        "eval_time": 0.6607419960200787,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T082",
+          "config_id": "T082-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t082/runs/admission_20261106/T082-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.38116084411740303,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T082",
+          "config_id": "T082-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20715686306357384,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T082",
+          "config_id": "T082-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.2893177755177021,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "f77aecddbf3601bc6b0db0f447069122fa3be3aab0c5dc6c6e2f64901a4bbfe9",
+    "README.md": "a20a6e79e93345478261859bbe7a82b6ae994a937bfe435bfb03b3a724b3d555",
+    "baseline.py": "484b704725bb123399d56ed19f65837c7615d9b7cce1573827ba65b2f8aabbba",
+    "check.py": "7e0d1fd8bc0007848ffddb82193cf88755a7003de8d4f3e2bda7c358cbea176d",
+    "construction.py": "4a8374514339f59d8f905771aa51cac5e759bee9e099beaba206e8560991b901",
+    "data/reference/peaceable_queens_n30_131.json": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
+    "data/source/kamenetsky_2019.txt": "a5da2c9d852ecc24f8abcfcdc1b219d998e58d27ca6758cc4757041714fb4cfc",
+    "data/source/source_notes.json": "198d37bd59a51d79bde787837673c4b876c77816caea73e3593e7a51786cbd32",
+    "evaluator.py": "fb63b4d2006857101ab4d904fe8ae2748c99d92819380a32cb44b9cb1e0c3462",
+    "evolution.py": "39dedca48218c8c28e9aa9bcb4bf0ad1ac508e7bf55a97672d591fec44d6d273",
+    "human.py": "1280512835169d05207e7d83b930d24f563c624b2348fe7c9b92147a3dfd64ae",
+    "init_program.py": "cc3988a00ecf9454dd354b22858bec7737221ac180881647431710b75285d52d",
+    "instruction.txt": "5cec024397e4647a61d380e6d8b8d40c2b37bf1939bf670ce4e10d98246b6d00",
+    "records.json": "57c6fb86dc7ff9e4988820157df5ef1a489ece12f63273d1da48f3bf68bb8f25",
+    "reference.py": "769e6194d55d385c1856919453ae9df87886abf1425c539ac5fc25ffe771106d",
+    "test_task.py": "95a6c48e81f91746aa031f61cf37248b1d4399b61ff7011544dde16132ccecc8"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "Two equal armies of standard queens on30x30, maximize each army size. Same-color attacks allowed; no opposite-color attacks. Empty armies valid. No line-color-template restriction.",
+    "primary_source": "Kamenetsky2019 explicit n30 layout in OEIS A250000 author data a250000_3.txt. Root separately downloaded original10168 bytes SHAa5da2c9d852ecc24f8abcfcdc1b219d998e58d27ca6758cc4757041714fb4cfc and verified131 queens each with17161 nonattacking opposite-color pairs. Agent reconstruction matches.",
+    "open_status": "Clinch/Drescher/Huynh/Saffidine2024/ALENEX2025 and reviewed current records give constructions not finite30 optimality. DiMichele/Forbes INFORMS2025 proves16=37; that closed instance is excluded. Asymptotic bounds with sufficiently-large hypotheses are not applied to30.",
+    "independent_method": "Root reconstructs occupied row,column,sum-diagonal,difference-diagonal sets, and proves opposite-color line-label sets disjoint. Formal checker independently enumerates all cross-color pairs. Finite rook bound225 follows from min(rc,(30-r)(30-c))<=225; no conditional asymptotic bound.",
+    "admission": "Initial1, traditional45, evolution58, human/reference131. All five strict entries, whole-return claim invariance, overlap damage rejection, independent quantities, replay, cold export, and program-error/nonfinite/timeout controls pass."
+  }
+}

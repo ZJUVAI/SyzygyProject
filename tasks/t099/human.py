@@ -1,8 +1,11 @@
-"""Thomas Engelsma's 2013 published witness, copied from the audited source artifact."""
+"""Replay of the published 54 by 55, 270-copy human construction."""
 import json
+import os
 from pathlib import Path
 
 
 def run_code():
-    record = json.loads((Path(__file__).parent / "data" / "human_343.json").read_text())
-    return {"tuple": record["witness"]}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T099-C01") != "T099-C01":
+        raise ValueError("unknown T099 configuration")
+    path = Path(__file__).parent / "data/reference/11P1_54x55.json"
+    return json.loads(path.read_text())

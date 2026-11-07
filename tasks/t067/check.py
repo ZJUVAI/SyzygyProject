@@ -1,30 +1,67 @@
-"""Exact pairwise-distance validator for binary A(17,6) witnesses."""
-N, D = 17, 6
+"""Exact feasibility checker for binary constant-weight codes."""
 
-def _word(value):
-    if type(value) is int:
-        if value < 0 or value >= (1 << N): raise ValueError('integer codeword out of range')
-        return value
-    if not isinstance(value, (list, tuple)) or len(value) != N: raise ValueError('codeword must be an integer or 17-bit list')
-    packed = 0
-    for i, bit in enumerate(value):
-        if type(bit) is not int or bit not in (0, 1): raise ValueError('bits must be integer 0 or 1; bool is rejected')
-        packed |= bit << i
-    return packed
+from collections.abc import Mapping
+import re
+
+
+CONFIG_ID = "T067-C01"
+PARAMETERS = {
+    "length": 17,
+    "minimum_hamming_distance": 4,
+    "constant_weight": 5,
+    "objective": "codeword_count",
+}
+_WORD_RE = re.compile(r"[01]{17}\Z")
+
+
+def _check_config(config):
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration must fix A(17,4,5)")
+
+
+def _parse_words(solution):
+    raw_words = solution.get("codewords")
+    if not isinstance(raw_words, (list, tuple)):
+        raise ValueError("codewords must be a list of 17-character binary strings")
+    words = []
+    for index, value in enumerate(raw_words):
+        if not isinstance(value, str) or not _WORD_RE.fullmatch(value):
+            raise ValueError(f"codeword {index} must be a 17-character binary string")
+        if value.count("1") != 5:
+            raise ValueError(f"codeword {index} must have weight 5")
+        words.append(int(value, 2))
+    if len(set(words)) != len(words):
+        raise ValueError("codewords must be distinct")
+    return words
+
 
 def validate(solution, config, strict=False):
-    if config.get('parameters') != {'n': 17, 'distance': 6}: raise ValueError('unsupported configuration')
-    if not isinstance(solution, dict) or 'codewords' not in solution: raise ValueError('solution must contain codewords')
-    raw = solution['codewords']
-    if not isinstance(raw, (list, tuple)) or not raw: raise ValueError('codewords must be a non-empty list')
-    words = [_word(x) for x in raw]
-    if len(set(words)) != len(words): raise ValueError('duplicate codewords')
-    min_distance, checked = N, 0
-    for i, a in enumerate(words):
-        for b in words[i+1:]:
-            dist = bin(a ^ b).count('1'); checked += 1
-            if dist < D: raise ValueError('pairwise distance below 6')
-            min_distance = min(min_distance, dist)
-    claimed = solution.get('objective')
-    mismatch = claimed is not None and (type(claimed) is not int or claimed != len(words))
-    return {'objective': len(words), 'verification_status': 'exact', 'details': {'n': N, 'minimum_pairwise_distance': min_distance if len(words)>1 else None, 'pairs_checked': checked, 'claimed_objective_mismatch': mismatch}}
+    """Recompute size and every pairwise Hamming distance exactly."""
+    _check_config(config)
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be an object")
+    words = _parse_words(solution)
+    pair_count = 0
+    minimum_distance = 17
+    for i, word in enumerate(words):
+        for other in words[:i]:
+            distance = (word ^ other).bit_count()
+            if distance < 4:
+                raise ValueError("every pair of codewords must have Hamming distance at least 4")
+            minimum_distance = min(minimum_distance, distance)
+            pair_count += 1
+    return {
+        "objective": len(words),
+        "verification_status": "exact",
+        "details": {
+            "codeword_count": len(words),
+            "unordered_pairs_checked": pair_count,
+            "minimum_pairwise_distance": minimum_distance if pair_count else None,
+            "word_length": 17,
+            "constant_weight": 5,
+            "claimed_objective_ignored": True,
+            "strict": bool(strict),
+        },
+    }

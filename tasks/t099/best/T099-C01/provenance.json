@@ -1,0 +1,49 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T099",
+    "config_id": "T099-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 270,
+    "verification_status": "exact",
+    "generation_time": 1.2407823652029037,
+    "verification_time": 2.1487886272370815,
+    "objective_value": 270,
+    "details": {
+      "tile_count": 270,
+      "rectangle": [
+        54,
+        55
+      ],
+      "area": 2970,
+      "covered_cells": 2970,
+      "orientation_group": "D4: four rotations and four reflected rotations",
+      "claimed_score_ignored": true
+    },
+    "eval_time": 3.5473447889089584,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "1a7f476072c632f208501cc15f1c8b9eaf5d6185a5c359e388bbcf83531300b4",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T099 tasks/t099/best/T099-C01/solution.json --config T099-C01"
+}

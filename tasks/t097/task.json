@@ -1,73 +1,66 @@
 {
   "task_id": "T097",
-  "name": "Shortest addition chain for the P-192 inversion exponent",
+  "name": "Minimum convex cover of socg_fixed92",
   "acceptance_status": "accepted_by_sol",
+  "category": "computational_geometry",
+  "definition": "Cover the fixed polygonal region socg_fixed92 with the fewest convex polygons. Every cover polygon must lie inside the region. Cover polygons may overlap.",
+  "solution_format": "An object with algebraic_field {minimal_polynomial, isolating_interval} and polygons. Every vertex coordinate is a rational-coefficient polynomial in the selected real root alpha of the irreducible integer minimal_polynomial. Both interval endpoints are rational and the open interval must contain exactly one real root. A single field Q(alpha) is shared by all coordinates. No field-degree or coefficient-size cap is imposed.",
+  "objective": {
+    "name": "number_of_convex_polygons",
+    "unit": "polygons",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "The input is the official CG:SHOP 2023 instance socg_fixed92: a simple 92-vertex polygon with no holes.",
+    "Each output polygon has positive area, is convex, and is contained in the input polygon.",
+    "The union of all output polygons equals the input polygon exactly. Overlap between cover polygons is allowed.",
+    "The mathematical domain includes arbitrary real coordinates. The output format encodes all algebraic coordinates in one real algebraic number field. For this rational input, any finite real-coordinate cover has an algebraic-coordinate witness of the same size: cover feasibility is a first-order formula over the reals with rational coefficients, and the real algebraic numbers form a real closure of Q. Every finite algebraic tuple lies in a simple number field.",
+    "No coordinate, denominator, field-degree, polygon-count, or vertex-count cap is imposed. The runner's output and time limits remain in force."
+  ],
   "configurations": [
     {
       "id": "T097-C01",
       "parameters": {
-        "target": "2^192-2^64-3"
+        "instance": "socg_fixed92",
+        "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+        "boundary_vertices": 92,
+        "holes": 0,
+        "cover_domain": "all real convex polygons",
+        "overlap_allowed": true
       },
       "direction": "minimize",
-      "human_reference": 202
-    },
-    {
-      "id": "T097-C02",
-      "parameters": {
-        "target": "2^221-5"
-      },
-      "direction": "minimize",
-      "human_reference": 230,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T097-C03",
-      "parameters": {
-        "target": "2^521-3"
-      },
-      "direction": "minimize",
-      "human_reference": 532,
-      "acceptance_status": "accepted_by_sol"
+      "human_reference": 15
     }
   ],
+  "sources": [
+    "https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2023/",
+    "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+    "https://github.com/gfonsecabr/shadoks-CGSHOP2023/tree/117a793196dee7bdab0e30c3b501055eebffda08",
+    "https://doi.org/10.4230/LIPIcs.SoCG.2023.67",
+    "https://doi.org/10.57717/cgt.v5i4.115",
+    "https://arxiv.org/abs/2106.02335",
+    "https://arxiv.org/abs/2604.17983",
+    "https://arxiv.org/abs/2403.01354v2"
+  ],
+  "verification": "The checker validates a common real algebraic number field exactly. It checks convexity by exact orientation tests, then forms the full arrangement of input and cover edges. It tests every open cell in an exact vertical decomposition for membership in the input and in the union of cover pieces. Equality of the interiors proves equality of the closed regions. The official input bytes are checked against the recorded SHA256.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
-  },
-  "configuration_expansion_review": {
-    "reviewer": "GPT-6.1 Sol",
-    "implementation_agent": "/root/expand_t097",
-    "implementation_model": "gpt-6-luna",
-    "date": "2026-11-04",
-    "acceptance_status": "accepted_by_sol",
-    "configuration_ids": [
-      "T097-C02",
-      "T097-C03"
-    ],
-    "evidence": "PLAN.md",
-    "checks": [
-      "source and parameter review",
-      "four strict program runs per configuration",
-      "cold seed export",
-      "independent key quantity",
-      "damaged witness rejected",
-      "claimed score ignored"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定官方socg_fixed92简单多边形，92顶点且无洞。用内部凸多边形覆盖整个区域，允许重叠，最小化片数。完整目标允许任意实坐标，不限输入顶点或有理顶点。",
+      "domain_completeness": "对固定有限片数及顶点数，覆盖可行性是有理系数的实闭域一阶公式。实代数数域保持该公式的可满足性；有限实代数坐标可共属一个单生成数域。因此任意代数次数、同一实根域的格式不改变最优片数。正式评测器用不可约多项式、Sturm隔离及精确域运算处理全部坐标。",
+      "primary_source": "Sol核查官方输入与Shadoks公开viewer，以及2026凸覆盖文献的实代数坐标问题。源输入SHA256为573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38。viewer的CPLEX Optimal仅针对候选片集合，不能证明完整MCC最优。",
+      "human_and_public_record": "公开viewer报告同参数15片。经逆仿射与附近整数重建得到15片有效覆盖，未声称恢复原提交坐标或唯一原始坐标。重建文件SHA256为caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0。AI使用源未披露。官方排名仅总分，其他队伍的单实例清单不完整，不声称15为全榜最新纪录。",
+      "independent_method": "Sol不用正式竖直排列和代数域内核。对本次全部有理构造，用Fraction内部对角线递归三角化，证明每片的包含面积，并逐片裁去覆盖后的凸补集。目标面积206848，未覆盖面积0；初始90片、自有26片、人类与参考15片均独立通过。独立工具曾将空交集零转为浮点，已改为精确Fraction零并加非二进制有理面积回归样例，随后完整重验。",
+      "admission": "最新标签五程序90、26、15、15、26及全部破坏、完整结果声明篡改、重放、冷导出、错误/非有限数/超时控制通过。人类与参考图像、重建文件不进入导出，只导出官方输入。任务38项测试及最新源哈希和高次域2项专测通过。"
+    }
   }
 }

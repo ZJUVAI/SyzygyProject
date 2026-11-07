@@ -1,38 +1,59 @@
 {
   "task_id": "T082",
-  "name": "Erdős minimum overlap, 51 steps",
+  "name": "Peaceable queens on a 30 by 30 board",
   "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_optimization",
+  "definition": "Place the same number m of white and black queens on a standard 30 by 30 chessboard. A white queen may not attack any black queen by a row, column, or diagonal move. Queens of the same color may attack each other. Maximize m.",
+  "solution_format": "An object with white and black arrays of [row,column] integer coordinates in 0..29.",
+  "objective": {
+    "name": "army_size",
+    "unit": "queens of each color",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "The board has 30 rows and 30 columns indexed 0..29.",
+    "White and black each have exactly m queens.",
+    "No two queens occupy the same square.",
+    "No white queen attacks a black queen along a row, column, or diagonal.",
+    "Queens of the same color may attack each other."
+  ],
   "configurations": [
     {
       "id": "T082-C01",
       "parameters": {
-        "steps": 51,
-        "support": "[0,2]",
-        "range": "0≤f≤1",
-        "integral": 1
+        "board_size": 30,
+        "queen_movement": "standard row, column, and diagonal",
+        "equal_armies": true,
+        "same_color_attacks_allowed": true
       },
-      "direction": "minimize",
-      "human_reference": 0.38092685343308696
+      "direction": "maximize",
+      "human_reference": 131
     }
   ],
+  "sources": [
+    "https://oeis.org/A250000",
+    "https://oeis.org/A250000/a250000_3.txt",
+    "https://arxiv.org/abs/2406.06974",
+    "https://pubsonline.informs.org/doi/full/10.1287/ited.2024.0122"
+  ],
+  "verification": "The checker validates integer coordinates and exact army counts, then tests every white-black pair for row, column, and diagonal attacks.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Two equal armies of standard queens on30x30, maximize each army size. Same-color attacks allowed; no opposite-color attacks. Empty armies valid. No line-color-template restriction.",
+      "primary_source": "Kamenetsky2019 explicit n30 layout in OEIS A250000 author data a250000_3.txt. Root separately downloaded original10168 bytes SHAa5da2c9d852ecc24f8abcfcdc1b219d998e58d27ca6758cc4757041714fb4cfc and verified131 queens each with17161 nonattacking opposite-color pairs. Agent reconstruction matches.",
+      "open_status": "Clinch/Drescher/Huynh/Saffidine2024/ALENEX2025 and reviewed current records give constructions not finite30 optimality. DiMichele/Forbes INFORMS2025 proves16=37; that closed instance is excluded. Asymptotic bounds with sufficiently-large hypotheses are not applied to30.",
+      "independent_method": "Root reconstructs occupied row,column,sum-diagonal,difference-diagonal sets, and proves opposite-color line-label sets disjoint. Formal checker independently enumerates all cross-color pairs. Finite rook bound225 follows from min(rc,(30-r)(30-c))<=225; no conditional asymptotic bound.",
+      "admission": "Initial1, traditional45, evolution58, human/reference131. All five strict entries, whole-return claim invariance, overlap damage rejection, independent quantities, replay, cold export, and program-error/nonfinite/timeout controls pass."
+    }
   }
 }

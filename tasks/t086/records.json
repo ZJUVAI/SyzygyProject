@@ -1,0 +1,84 @@
+{
+  "task_id": "T086",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T086-C01": {
+      "parameters": {
+        "n": 4,
+        "m": 4,
+        "dimension": 3,
+        "norm": "Schatten 2"
+      },
+      "best_human": {
+        "value": 1,
+        "source": "Duchi's COLT 2012 inside-sum matrix inequality; take all four matrices to be I3.",
+        "source_url": "https://citeseerx.ist.psu.edu/document?doi=619325d9c18b896b94f4de0bd5be63a749a1f21c&repid=rep1&type=pdf",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional exact identity construction, reconstructed at the fixed complex 3x3 Schatten-2 configuration.",
+        "evidence_state": "All 280 product norms equal sqrt(3), so the ratio is exactly 1.",
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7"
+      },
+      "best_public": {
+        "value": 1,
+        "source": "Duchi identity upper-bound example; AlphaEvolve arXiv:2511.02864v1 §6.47 reports no better example in its search, including the selected (4,4,3) and Schatten-2 choice.",
+        "source_url": "https://arxiv.org/abs/2511.02864",
+        "date_checked": "2026-11-06",
+        "provenance": "The upper-bound witness is a traditional identity construction. AlphaEvolve is separately identified as AI-assisted search; the paper does not claim a new distinct identity witness.",
+        "evidence_state": "Witness and ratio are exactly reproduced. A lower bound of 1 is not proved.",
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7"
+      },
+      "ai_assisted_search_report": {
+        "source": "AlphaEvolve, arXiv:2511.02864v1 §6.47.",
+        "source_url": "https://arxiv.org/abs/2511.02864",
+        "provenance": "The paper reports an AI-assisted search over this parameter tuple and Schatten-2 among tested norms, and reports finding no construction below the identity upper bound. It does not provide a distinct witness for the exact fixed norm and dimension.",
+        "evidence_state": "Unverified as an AI-search witness; this is a report of search failure to improve, not an optimality result.",
+        "reported_reference_bound": 1
+      },
+      "best_reproduced": {
+        "value": "1",
+        "date_reproduced": "2026-11-06",
+        "program": "reference.py",
+        "verification_status": "certified",
+        "verification_method": "Exact rational Hermitian/PSD checks and exact cancellation of the identical product means.",
+        "objective_interval": [
+          "1",
+          "1"
+        ],
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 1,
+        "witness_program": "human.py",
+        "witness": "data/reference/identity_psd_n4_d3.json",
+        "witness_sha256": "ed32b4e108875d14fdb1aec7308b6ebe902c95c9004bb3bdc5a155a1d0018eb7",
+        "endpoint_policy": "Use the exact score 1 as H for H/J."
+      },
+      "highest_reported": {
+        "value": 1,
+        "source": "AlphaEvolve arXiv:2511.02864v1 §6.47 and the traditional identity upper-bound witness.",
+        "source_url": "https://arxiv.org/abs/2511.02864",
+        "reproduction_status": "The score-1 witness is exactly reproduced; no lower value or proof of the infimum is reported in the checked sources."
+      },
+      "optimality_status": {
+        "status": "open in sources checked",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The primary source states m>=4 is open and includes (4,4,3) with Schatten 2 among the examined cases. The 2020 and 2026 Recht-Re results concern the norm-outside-sum statement, not this Duchi inside-sum ratio.",
+        "limitations": "The 2026 Evidence Press low-length result is an unrefereed Recht-Re candidate and reports no unaffiliated rerun; it cannot be used to close this configuration."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T086-C01": {
+      "objective": "1",
+      "objective_value": "1",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 1.0
+    }
+  }
+}

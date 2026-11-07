@@ -1,0 +1,41 @@
+{
+  "primary_record": {
+    "title": "Diverse beam search to find densest-known planar unit distance graphs",
+    "authors": [
+      "Peter Engel",
+      "Owen Hammond-Lee",
+      "Yiheng Su",
+      "Dániel Varga",
+      "Pál Zsámboki"
+    ],
+    "version": "arXiv:2406.15317v3, 2025-06-13",
+    "url": "https://arxiv.org/html/2406.15317v3",
+    "locations": "Definition 2.4, Theorems 2.3 and 2.5, Table 2 (n=100 row), §6.1",
+    "reported_n100_edges": 439,
+    "reported_n100_isomorphism_classes": 22,
+    "reported_search_scope": "Moser-lattice diverse backtracking beam search, with a database of about sixty million discovered graphs",
+    "provenance_note": "The paper describes classical GPU beam search. Section 6.1 mentions AI only as a possible future use of the graph database; it does not report generative-AI assistance in the search that produced Table 2."
+  },
+  "authors_repository": {
+    "url": "https://codeberg.org/zsamboki/dbs-udg",
+    "commit": "3202dade2cd02b712c182368789a108db02e82c8",
+    "commit_date": "2025-05-26T15:38:10+02:00",
+    "readme_blob_sha1": "3075d7fb452b7eb316333b30ae769b841dff8fab",
+    "readme_sha256": "21c6a797d300bbad65be3e33ff3cf553af3456d85250a22f96d557b106f4d022",
+    "main_py_blob_sha1": "52a9923c359a643f9ee2fa444ad42df7fbfccb2c",
+    "main_py_sha256": "ca059395e6e7e715baa7733285454f02c5c35c6b6116fe54cfd78dedc4408209",
+    "readme_description": "Code for the published beam search. Its README links the Moser-coordinate graph database through a Figshare sharing URL."
+  },
+  "database_access": {
+    "source_url": "https://figshare.com/s/a7e6426c318e1d550366",
+    "status": "not downloaded; browser access returned HTTP 403 and direct access was met with a WAF challenge",
+    "effect": "The n=100 439-point-list witness is not reproduced here. The reported value remains a source claim and is kept separate from the reproduced 261 human baseline."
+  },
+  "current_frontier_check": {
+    "date_checked": "2026-11-06",
+    "survey": "https://eventcompute.com/en/challenges/unit-distances/",
+    "survey_reading_date": "2026-10-13",
+    "finding": "The survey cites 439 as the largest reported value for real-plane n=100 from arXiv:2406.15317v3, reports exact values through n=21 from arXiv:2412.11914v2, and notes that arXiv:2606.29415v2 publishes no n=100 comparison table. The latter paper reports AI code-assistant use for code optimization, but gives no competing 100-point result.",
+    "optimality": "open; no upper-bound proof for u(100) matching 439 was found in the checked sources"
+  }
+}

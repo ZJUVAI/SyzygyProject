@@ -1,0 +1,29 @@
+{
+  "task_id": "T026",
+  "name": "Schur number lower-bound coloring with six colors",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T026-C01",
+      "parameters": {
+        "colors": 6,
+        "color_limit": "at most"
+      },
+      "direction": "maximize",
+      "human_reference": 536
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "human_source": "Sol read Fredricksen–Sweet 2000 pp.2,6 and matched the six representative lists, including the 179/358 symmetry exception. The reconstructed six-color partition covers every integer 1..536.",
+      "public_source": "Sol read arXiv:2610.31362v1 dated 2026-10-22: authors report a 537-element six-color partition and make no exact S(6) claim. Certificate commit 92a9d5f1336a5a064b2bfe6597d967f59191e365 is fixed. AI assistance remains undisclosed.",
+      "independent_check": "All x<=y pairs, including x=y, checked separately for human536 and reference537; 143916 and 144453 pairs respectively. No monochromatic x+y=z.",
+      "normalization": "Frozen human H remains536. Best reproduced reference is537, not the historical human536.",
+      "limits": "This is a checked-source open-status review, not an exhaustive proof search."
+    }
+  }
+}

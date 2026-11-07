@@ -1,0 +1,57 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T049",
+    "config_id": "T049-C01",
+    "validity": 1.0,
+    "combined_score": 0.6938775510204082,
+    "objective": 49,
+    "verification_status": "exact",
+    "generation_time": 1.2471571750938892,
+    "verification_time": 2.400658458471298,
+    "objective_value": 49,
+    "details": {
+      "point_count": 91,
+      "unordered_pair_count": 4095,
+      "distinct_positive_distances": 49,
+      "coordinate_field_degree": 1,
+      "minimal_polynomial_irreducible": true,
+      "real_root_isolated_by_sturm_count": 1,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 3.653519358485937,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "sample 91-point subsets of the integer 10x10 square grid; keep lowest exact integer squared-distance count",
+    "seed": 0,
+    "iteration_limit": 128,
+    "iterations": 128,
+    "budget": {
+      "iteration_limit": 128
+    },
+    "reference_data_read": false,
+    "search_seconds_cutoff": null
+  },
+  "solution_sha256": "0bb02ca8a6c8ce882b7876f00defc4d170dce3d3d7a755662a6109b903348167",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T049 tasks/t049/best/T049-C01/solution.json --config T049-C01"
+}

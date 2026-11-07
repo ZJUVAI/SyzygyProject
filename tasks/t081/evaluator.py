@@ -1,3 +1,5 @@
+"""Shared evaluator adapter for T081."""
+
 from mathbench.evaluate import evaluate_candidate
 
 

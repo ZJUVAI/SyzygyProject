@@ -1,0 +1,63 @@
+{
+  "source_date": "2026-11-06",
+  "survey_scope_note": "Fixed CG:SHOP 2020 uniform-0000500-1 instance. The objective is the minimum number of empty convex faces in a straight-line partition of the convex hull using the 500 input points.",
+  "best_human": {
+    "value": 384,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "quantity": "bounded convex face count"
+    },
+    "url": "https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html",
+    "ai_provenance": "Traditional method described by Eder, Held, de Lorenzo, and Palfrader (SoCG 2020, section 2.2, pages 85:2-3); the local deterministic reconstruction was implemented with AI assistance. It is not the authors' code or run.",
+    "evidence_state": "The local deterministic Delaunay-plus-convex-merge reconstruction is exactly checked and yields 384 faces. This is a reconstructed human-method baseline, not a published best result or a literal reproduction of the paper's randomized edge-removal method.",
+    "origin_type": "traditional computational baseline, locally reconstructed"
+  },
+  "best_public": {
+    "value": 271,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "quantity": "bounded convex face count"
+    },
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "ai_provenance": "The archive gives a solution and timestamp but does not identify the solver, algorithm, or AI contribution. Provenance is therefore marked undisclosed.",
+    "evidence_state": "The archived 770-edge construction is pinned locally and independently passes the exact checker with 271 bounded faces. It is a feasible result, not a proof of optimality.",
+    "origin_type": "competition archive result with undisclosed solver provenance"
+  },
+  "best_reproduced": {
+    "value": 271,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "edge_count": 770
+    },
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "witness": "data/reference/uniform-0000500-1.official_solution.json",
+    "ai_provenance": "The original archive does not state solver provenance. This task replays and verifies the supplied witness.",
+    "evidence_state": "Exact check confirms all 500 vertices are used, the straight-line graph is planar and connected, every bounded face is empty and convex, and face areas sum to the hull area. Euler's formula gives 770-500+1=271 faces.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "Delaunay triangulation followed by deterministic greedy convex-face merging",
+  "configurations": {
+    "T095-C01": {
+      "human_reference_value": 384,
+      "public_value": 271,
+      "reproduced_value": 271,
+      "optimality_status": "Open in sources checked through 2026-11-06. Cambazard's project page describes optimality results up to 100 points and lower bounds up to 300 points; it does not prove optimality for this 500-point instance."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T095-C01": {
+      "objective": 979,
+      "objective_value": 979,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.3922369765066394
+    }
+  }
+}

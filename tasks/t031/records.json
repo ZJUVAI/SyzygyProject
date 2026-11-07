@@ -1,0 +1,126 @@
+{
+  "task_id": "T031",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T031-C01": {
+      "best_human": {
+        "value": 5913,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "source": "Ashlock and Tillotson (1993), recursive construction; reproduced from the rule restated in Houston (2014), Section 1",
+        "source_url": "https://arxiv.org/abs/1408.5108",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The recursive construction was reimplemented, saved as a witness, and checked against every required contiguous permutation. The resulting length is 5913.",
+        "ai_provenance": "This record is the published human recursive method, reimplemented for this task."
+      },
+      "best_public": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+        "evidence_state": "The source post attaches a 5905-symbol word. One attachment was downloaded, hashed, and independently checked against all 5040 permutations.",
+        "date_checked": "2026-11-06",
+        "origin_type": "public search result; AI provenance not disclosed"
+      },
+      "best_reproduced": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "witness": "data/reference/public_5905_attachment.txt",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "All length-7 windows of the normalized attachment were checked; their valid permutation set equals all 5040 permutations.",
+        "witness_sha256": "f0208fb0e8ea98b015799b8f0dfaadc58d5909bad4a089603f2c9c4768536f67",
+        "claimed_score_ignored": true,
+        "date_reproduced": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      },
+      "optimality_status": {
+        "status": "not established",
+        "source_review_date": "2026-11-06",
+        "sources": [
+          {
+            "citation": "Andrei Teodorescu, n=7 superpermutation of length 5905, Superpermutators Google Group, 2026-08-17",
+            "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+            "finding": "A concrete 5905 witness is attached and community checked."
+          },
+          {
+            "citation": "jhalfar/superpermutations, L(7) >= 5,901, state of 2026-11-01",
+            "url": "https://github.com/jhalfar/superpermutations/blob/main/proofs/n7_5901/README.md",
+            "finding": "Conditional computer-assisted lower bound; twenty-three Lean equations are unevaluated and many search counts rely on one program."
+          },
+          {
+            "citation": "jlebar/superperm7-ge-5898, audited Lean proof release",
+            "url": "https://github.com/jlebar/superperm7-ge-5898",
+            "finding": "Formalized lower bound 5898 and checked 5906 construction; the repository explicitly discloses AI-generated authorship of its proof development."
+          }
+        ],
+        "lower_bound": 5898,
+        "upper_bound": 5905,
+        "bound_note": "The best available lower-bound evidence is computer assisted. The stronger 5901 claim is conditional and is not treated as fully replayed."
+      },
+      "highest_reported": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "source": {
+          "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+          "title": "n=7 superpermutation of length 5905",
+          "claim": "A public 5905 string and a report that all 5040 permutations were checked.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "downloaded and exactly replayed; AI contribution not disclosed"
+      },
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": [
+        {
+          "value": 5905,
+          "parameters": {
+            "symbols": 7,
+            "permutations_required": 5040,
+            "containment": "contiguous_substring"
+          },
+          "source_url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+          "description": "The post does not disclose whether the public search result used AI."
+        }
+      ],
+      "reproduced_search_baseline": {
+        "value": 6240,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040
+        },
+        "seed": 0,
+        "iterations": 8,
+        "witness": "best/greedy_seed0_result.json",
+        "verification": "best/greedy_seed0_verification.json",
+        "provenance": "best/greedy_seed0_provenance.json",
+        "verification_status": "exact",
+        "evidence_state": "The seeded maximum-overlap greedy baseline was run eight times; the best returned word has length 6240 and the checker verified all 5040 required permutations."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T031-C01": {
+      "objective": 35280,
+      "objective_value": 35280,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.16760204081632654
+    }
+  }
+}

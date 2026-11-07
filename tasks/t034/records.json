@@ -1,0 +1,95 @@
+{
+  "task_id": "T034",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T034-C01": {
+      "best_human": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "source": "Rabung power-residue method as reconstructed and reported by Herwig et al. (2007), Table 3; prime 617, no zipping.",
+        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6",
+        "date_checked": "2026-11-06",
+        "evidence_state": "Formula reconstructed in human.py and checked exactly by the task checker and an independent enumeration. Attribution is to the cited reported construction, not an asserted original Rabung computation.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "witness_program": "human.py"
+      },
+      "best_public": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "source": "Herwig, Heule, van Lambalgen, and van Maaren (2007), Table 3; confirmed by Monroe (2025), Table 1.",
+        "source_url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+        "date_checked": "2026-11-06",
+        "origin_type": "published mathematical construction; not described as AI-assisted",
+        "evidence_state": "The same-parameter value is reproduced from the published power-residue formula and checked exactly.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb"
+      },
+      "best_reproduced": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Enumerated every starting position and positive common difference for all 7-term progressions in [1,3703].",
+        "date_reproduced": "2026-11-06",
+        "ai_provenance": "The historical construction source does not report AI use.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "review_status": "reviewed_by_sol"
+      },
+      "program": "reference.py",
+      "reproduced_value": 3703,
+      "public_value": 3703,
+      "highest_reported": {
+        "value": 3703,
+        "source": "Herwig et al. (2007), Table 3; same entry in Monroe (2025), Table 1.",
+        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+        "reproduction_status": "formula reconstructed and exact witness check completed; no stronger same-parameter report found in the sources checked on 2026-11-06"
+      },
+      "ai_assisted_records": [],
+      "source_unattributed_records": [],
+      "unmatched_parameter_records": [],
+      "optimality_status": {
+        "status": "open; this task certifies a lower bound only",
+        "relevant_exact_case_excluded": "W(2,6)=1132 is solved and outside this configuration",
+        "newer_result_check": {
+          "source": "Campos, Fox, and Schildkraut, arXiv:2608.20824 (2026)",
+          "url": "https://arxiv.org/abs/2608.20824",
+          "finding": "The paper proves a general asymptotic lower bound but gives no explicit k=7 construction above 3703."
+        }
+      },
+      "source_review": {
+        "status": "reviewed_by_sol",
+        "survey_note": "Checked Herwig et al. (2007), Monroe (2025), and the 2026 arXiv paper listed above. This is not a complete literature survey.",
+        "monroe_repository": {
+          "url": "https://github.com/hmonroe/vdw",
+          "commit": "f1223097f4adc0a41ccb92ace51ebafd2b996fb1",
+          "files_sha256": {
+            "data/source/monroe_README.md": "63a5af99ce0a1195acaa1e8fdabd4564f1b577d7296af4151a4d584d809c94c9",
+            "data/source/monroe_uc2.cpp": "1394039f3fd6cf8dfba601a960b7aa7d2558c7448e4bb915a1318a8317098391"
+          },
+          "scope": "Source snapshot linked by Monroe2025; not executed by human.py. Historical power-residue formula is independently rebuilt, not a replay of BOINC computation."
+        }
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T034-C01": {
+      "objective": 6,
+      "objective_value": 6,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0016203078584931137
+    }
+  }
+}

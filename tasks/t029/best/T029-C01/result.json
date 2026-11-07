@@ -1,0 +1,35 @@
+{
+  "task_id": "T029",
+  "config_id": "T029-C01",
+  "validity": 1.0,
+  "combined_score": 0.8846153846153846,
+  "objective": 26,
+  "verification_status": "exact",
+  "generation_time": 0.21493526175618172,
+  "verification_time": 0.21512143313884735,
+  "objective_value": 26,
+  "details": {
+    "matrix_order": 3,
+    "field": "Q",
+    "tensor_coefficients_recomputed": 729,
+    "input_forms": "alpha(A) * beta(B), separate linear forms",
+    "output_convention": "gamma[i,k] contributes to C[i,k]",
+    "claimed_objective_ignored": true,
+    "max_terms_is_resource_cap_not_an_optimality_bound": true
+  },
+  "eval_time": 0.4347046725451946,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

@@ -12,7 +12,7 @@
       "human_reference": 5.621320343559642
     },
     {
-      "id": "T002-C03",
+      "id": "T002-C02",
       "parameters": {
         "n": 29
       },
@@ -21,7 +21,7 @@
       "acceptance_status": "accepted_by_sol"
     },
     {
-      "id": "T002-C04",
+      "id": "T002-C03",
       "parameters": {
         "n": 38
       },
@@ -57,8 +57,8 @@
     "date": "2026-11-04",
     "acceptance_status": "accepted_by_sol",
     "configuration_ids": [
-      "T002-C03",
-      "T002-C04"
+      "T002-C02",
+      "T002-C03"
     ],
     "evidence": "PLAN.md",
     "checks": [

@@ -1,0 +1,119 @@
+{
+  "task_id": "T026",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T026-C01": {
+      "parameters": {
+        "colors": 6,
+        "color_limit": "at most"
+      },
+      "direction": "maximize",
+      "objective": "largest N for an exact ordinary Schur-free coloring of [1,N], including x=y",
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 536,
+        "H_source": "reproduced Fredricksen-Sweet 2000 human partition"
+      },
+      "best_human": {
+        "value": 536,
+        "parameters": {
+          "colors": 6
+        },
+        "source": "Harold Fredricksen and Melvin M. Sweet, Symmetric Sum-Free Partitions and Lower Bounds for Schur Numbers, Electronic Journal of Combinatorics 7 (2000), R32, Constructions.",
+        "url": "https://doi.org/10.37236/1510",
+        "witness": "data/fredricksen_sweet_536_halfsets.json",
+        "witness_program": "human.py",
+        "evidence_state": "Published same-parameter partition rebuilt from the listed half-sets and independently checked exactly.",
+        "date_checked": "2026-11-06"
+      },
+      "best_public": {
+        "value": 537,
+        "parameters": {
+          "colors": 6
+        },
+        "source": "Zhiyang Chen, Ligeng Zhu, and Fan Long, A new lower bound for the sixth Schur number: S(6) >= 537, arXiv:2610.31362v1, 2026-10-22.",
+        "url": "https://arxiv.org/abs/2610.31362v1",
+        "repository_commit": "92a9d5f1336a5a064b2bfe6597d967f59191e365",
+        "witness": "data/chen_zhu_long_537_certificate.col",
+        "witness_sha256": "5f950ad88a5437108a0c6ab4b9d40cc2832a43dd474b5c4b269e02ac81258315",
+        "ai_provenance": "Undisclosed. The paper reports search-derived partitions but does not state whether AI or LLM tools were used.",
+        "evidence_state": "Pinned public certificate; reproduced by reference.py and exactly rechecked by this task's checker.",
+        "date_checked": "2026-11-06"
+      },
+      "best_reproduced": {
+        "value": 537,
+        "parameters": {
+          "colors": 6
+        },
+        "program": "reference.py",
+        "witness": "data/chen_zhu_long_537_certificate.col",
+        "verification_status": "exact",
+        "date_reproduced": "2026-11-06",
+        "origin_type": "public search-derived certificate; AI assistance undisclosed"
+      },
+      "program": "reference.py",
+      "reproduced_value": 537,
+      "public_value": 537,
+      "highest_reported": {
+        "value": 537,
+        "url": "https://arxiv.org/abs/2610.31362v1",
+        "reproduction_status": "exact certificate independently replayed; authors do not claim optimality"
+      },
+      "highest_reported_source": "https://arxiv.org/abs/2610.31362v1",
+      "checked_at": "2026-11-06",
+      "open_status": "No exact value or non-colorability proof at N=538 is claimed by the cited 2026 preprint; this configuration certifies lower bounds only.",
+      "unmatched_parameter_results": [],
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T026",
+          "config_id": "T026-C01",
+          "validity": 1.0,
+          "combined_score": 1.001865671641791,
+          "objective": 537,
+          "verification_status": "exact",
+          "generation_time": 0.530246302485466,
+          "verification_time": 2.7508312202990055,
+          "objective_value": 537,
+          "details": {
+            "n": 537,
+            "color_limit": 6,
+            "colors_used": 6,
+            "continuous_prefix": true,
+            "all_pairs_checked_including_equal_terms": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 3.9862340912222862,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "prefix_length": 537,
+          "pairs_including_equal": 144453,
+          "monochromatic_sums": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "7ebf944cc6ecdc1fa76d52f707472c4e6ae237b5eda90bfb8280bb788a5d8277"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

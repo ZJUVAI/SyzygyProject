@@ -1,0 +1,30 @@
+{
+  "instance_id": "b4794d123e18a908924d3d33cdeeae3b",
+  "family": "inconsistency-measurement",
+  "submitted_in": 2023,
+  "submitted_by": "unknown",
+  "submitted_as": "im-hit-A-2-stb_547_485.tgf.pl.wcnf.gz",
+  "wcnf_standardized_file": "b4794d123e18a908924d3d33cdeeae3b.wcnf",
+  "sha256": "cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195",
+  "variables": 1630,
+  "clauses": 6799,
+  "hard_clauses": 6150,
+  "soft_clauses": 649,
+  "soft_weights": {
+    "distinct_values": [1],
+    "total": 649
+  },
+  "benchmark_record": {
+    "url": "https://doi.org/10.5281/zenodo.21283148",
+    "version": "2026",
+    "license": "CC-BY-4.0",
+    "metadata_source": "MaxSAT Evaluation complete benchmark collection, meta.db and benchmark-metadata.csv"
+  },
+  "evaluation_record": {
+    "url": "https://doi.org/10.5281/zenodo.21358014",
+    "version": "v1",
+    "publication_date": "2026-07-14",
+    "metadata_best_known_unsatisfied_soft_cost": 62,
+    "metadata_optimal_cost": "unknown"
+  }
+}

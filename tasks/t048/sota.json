@@ -1,0 +1,362 @@
+{
+  "task_id": "T048",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T048-C01": {
+      "program": "reference.py",
+      "reproduced_value": 71,
+      "public_value": 71,
+      "best_human": {
+        "value": 71,
+        "source": {
+          "title": "Using Symmetry and Evolutionary Search to Minimize Sorting Networks",
+          "authors": [
+            "Vinod K. Valsalam",
+            "Risto Miikkulainen"
+          ],
+          "url": "https://www.jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf",
+          "publication": "Journal of Machine Learning Research 14(9) (2013), 303-331",
+          "claim": "Reports a 17-input sorting network with 71 comparators, found through symmetry and evolutionary search.",
+          "reproduction_status": "published_result; AI provenance not reported"
+        },
+        "ai_provenance": "Not stated in the cited paper."
+      },
+      "best_public": {
+        "value": 71,
+        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "reproduction_status": "current table network copied and exactly zero-one verified",
+        "ai_provenance": "Unknown; the page identifies SorterHunter generation but does not report AI use."
+      },
+      "best_reproduced": {
+        "value": 71,
+        "program": "reference.py",
+        "witness": "data/reference/sorterhunter_17_71_12.json",
+        "method": "Pinned SorterHunter table witness, with 71 comparators and 12 layers.",
+        "ai_provenance": "Not reported by the source.",
+        "reproduction_status": "exactly_verified_pending_Sol_review"
+      },
+      "highest_reported": {
+        "value": 71,
+        "source": {
+          "title": "List of sorting networks",
+          "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+          "repository": "https://github.com/bertdobbelaere/SorterHunter",
+          "repository_commit": "8ba90df607cbdc339409e0b173b5a2ffd60fc911",
+          "network_id": "N17L71D12",
+          "claim": "Current page lists 71 comparators in 12 layers; it says the size matches Valsalam and Miikkulainen (2013), while depth improves from 17 to 12.",
+          "snapshot": "data/reference/sorterhunter_sorting_networks.html",
+          "snapshot_sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "current witness independently exhaustively checked over all 131,072 binary inputs"
+      },
+      "known_bounds": {
+        "minimum_size_lower_bound": 63,
+        "published_work_lower_bound": 60,
+        "feasible_size_upper_bound": 71,
+        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "source_statement": "For 17 inputs the table gives minimum-size bounds 63...71.",
+        "lower_bound_provenance": "The listed 63 bound was added in 2025 based on an unpublished suggestion by Jelmer Firet and principles from Van Voorhis (1972). The best lower bound derived from published work in the current review is 60, chained from the proved 12-input value.",
+        "status": "open size gap; 71 is not proved minimum; 63 is an unrefereed bound"
+      },
+      "depth_note": {
+        "minimum_depth": 10,
+        "status": "proven optimal in the current table's cited sources",
+        "not_the_task_objective": true,
+        "17_input_10_layer_network_size": 74
+      },
+      "source_files": {
+        "sorterhunter_table_snapshot": {
+          "path": "data/reference/sorterhunter_sorting_networks.html",
+          "sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6"
+        },
+        "valsalam_miikkulainen_2013_pdf": {
+          "path": "data/reference/valsalam_miikkulainen_2013.pdf",
+          "sha256": "59522734f52c0b4927e80eba4971a49ba6cc756ea5d072e382af57648544df3e"
+        }
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T048",
+          "config_id": "T048-C01",
+          "validity": 1.0,
+          "combined_score": 1.1971830985915493,
+          "objective": 71,
+          "verification_status": "exact",
+          "generation_time": 0.47281453013420105,
+          "verification_time": 0.7500740885734558,
+          "objective_value": 71,
+          "details": {
+            "inputs": 17,
+            "comparators_checked": 71,
+            "binary_inputs_checked": 131072,
+            "asap_depth": 12,
+            "zero_one_principle": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.2295114025473595,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "comparator_count": 71,
+          "binary_words_simulated": 131072,
+          "arithmetic": "exact uint32 conditional swaps"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "own_search_seed_0": {
+        "value": 126,
+        "program": "evolution.py",
+        "iterations": 256,
+        "seed": 0,
+        "witness": "best/seed_0.json",
+        "verification_status": "exact",
+        "binary_inputs_checked": 131072
+      },
+      "limitations": [
+        "The current 71-comparator network is a feasible witness, not a proof of minimum size.",
+        "The table lists an unrefereed lower bound of 63; the best lower bound derived from published work is 60.",
+        "The source does not disclose whether AI was used for the listed network or the 2013 evolutionary result."
+      ],
+      "review_status": "accepted_by_sol"
+    },
+    "T048-C02": {
+      "program": "reference.py",
+      "reproduced_value": 77,
+      "public_value": 77,
+      "best_human": {
+        "value": 90,
+        "source": {
+          "title": "Sorting networks: the odd-even merge sort",
+          "author": "Kenneth E. Batcher",
+          "url": "https://doi.org/10.1145/1468075.1468121",
+          "claim": "Conventional odd-even mergesort padded to the next power of two; sentinel-wire comparisons are removed."
+        },
+        "reproduction_status": "reconstructed and exhaustively zero-one verified",
+        "ai_provenance": "Classical published construction."
+      },
+      "best_public": {
+        "value": 77,
+        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "reproduction_status": "SorterHunter sequence copied from pinned table and exhaustively checked",
+        "ai_provenance": "Unknown; page reports SorterHunter generation but does not state AI use."
+      },
+      "best_reproduced": {
+        "value": 77,
+        "program": "reference.py",
+        "witness": "data/reference/sorterhunter_18_77_12.json",
+        "method": "Pinned current table network N18L77D12.",
+        "reproduction_status": "exactly_verified_pending_Sol_review"
+      },
+      "highest_reported": {
+        "value": 77,
+        "source": {
+          "title": "List of sorting networks",
+          "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+          "repository": "https://github.com/bertdobbelaere/SorterHunter",
+          "repository_commit": "8ba90df607cbdc339409e0b173b5a2ffd60fc911",
+          "network_id": "N18L77D12",
+          "snapshot": "data/reference/sorterhunter_sorting_networks.html",
+          "snapshot_sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6",
+          "checked_at": "2026-11-07",
+          "claim": "Current table lists size 77, depth 12; the network is labeled auto-generated by SorterHunter."
+        },
+        "reproduction_status": "All 262144 binary inputs exhaustively checked."
+      },
+      "known_bounds": {
+        "minimum_size_lower_bound": 68,
+        "feasible_size_upper_bound": 77,
+        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "source_statement": "Table gives size bounds 68…77.",
+        "status": "open size gap; no size-optimality proof identified."
+      },
+      "depth_note": {
+        "network_depth": 12,
+        "lower_bound": "10…11",
+        "not_task_objective": true
+      },
+      "limitations": [
+        "The public witness is a feasible upper bound; minimum size is not proved.",
+        "Depth lower bounds are reported separately and do not prove a comparator-count lower bound.",
+        "AI provenance for the SorterHunter output is not stated."
+      ],
+      "acceptance_status": "accepted_by_sol",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T048",
+          "config_id": "T048-C02",
+          "validity": 1.0,
+          "combined_score": 1.1688311688311688,
+          "objective": 77,
+          "verification_status": "exact",
+          "generation_time": 0.21441533043980598,
+          "verification_time": 1.2165257595479488,
+          "objective_value": 77,
+          "details": {
+            "inputs": 18,
+            "comparators_checked": 77,
+            "binary_inputs_checked": 262144,
+            "asap_depth": 12,
+            "zero_one_principle": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.4332692325115204,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "comparator_count": 77,
+          "binary_words_simulated": 262144,
+          "arithmetic": "exact uint32 conditional swaps"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    },
+    "T048-C03": {
+      "program": "reference.py",
+      "reproduced_value": 85,
+      "public_value": 85,
+      "best_human": {
+        "value": 98,
+        "source": {
+          "title": "Sorting networks: the odd-even merge sort",
+          "author": "Kenneth E. Batcher",
+          "url": "https://doi.org/10.1145/1468075.1468121",
+          "claim": "Conventional odd-even mergesort padded to the next power of two; sentinel-wire comparisons are removed."
+        },
+        "reproduction_status": "reconstructed and exhaustively zero-one verified",
+        "ai_provenance": "Classical published construction."
+      },
+      "best_public": {
+        "value": 85,
+        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "reproduction_status": "SorterHunter sequence copied from pinned table and exhaustively checked",
+        "ai_provenance": "Unknown; page reports SorterHunter generation but does not state AI use."
+      },
+      "best_reproduced": {
+        "value": 85,
+        "program": "reference.py",
+        "witness": "data/reference/sorterhunter_19_85_12.json",
+        "method": "Pinned current table network N19L85D12.",
+        "reproduction_status": "exactly_verified_pending_Sol_review"
+      },
+      "highest_reported": {
+        "value": 85,
+        "source": {
+          "title": "List of sorting networks",
+          "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+          "repository": "https://github.com/bertdobbelaere/SorterHunter",
+          "repository_commit": "8ba90df607cbdc339409e0b173b5a2ffd60fc911",
+          "network_id": "N19L85D12",
+          "snapshot": "data/reference/sorterhunter_sorting_networks.html",
+          "snapshot_sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6",
+          "checked_at": "2026-11-07",
+          "claim": "Current table lists size 85, depth 12; the network is labeled auto-generated by SorterHunter."
+        },
+        "reproduction_status": "All 524288 binary inputs exhaustively checked."
+      },
+      "known_bounds": {
+        "minimum_size_lower_bound": 73,
+        "feasible_size_upper_bound": 85,
+        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "source_statement": "Table gives size bounds 73…85.",
+        "status": "open size gap; no size-optimality proof identified."
+      },
+      "depth_note": {
+        "network_depth": 12,
+        "lower_bound": "10…11",
+        "not_task_objective": true
+      },
+      "limitations": [
+        "The public witness is a feasible upper bound; minimum size is not proved.",
+        "Depth lower bounds are reported separately and do not prove a comparator-count lower bound.",
+        "AI provenance for the SorterHunter output is not stated."
+      ],
+      "acceptance_status": "accepted_by_sol",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T048",
+          "config_id": "T048-C03",
+          "validity": 1.0,
+          "combined_score": 1.1529411764705881,
+          "objective": 85,
+          "verification_status": "exact",
+          "generation_time": 0.21448002755641937,
+          "verification_time": 4.170572690665722,
+          "objective_value": 85,
+          "details": {
+            "inputs": 19,
+            "comparators_checked": 85,
+            "binary_inputs_checked": 524288,
+            "asap_depth": 12,
+            "zero_one_principle": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 4.387432925403118,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "comparator_count": 85,
+          "binary_words_simulated": 524288,
+          "arithmetic": "exact uint32 conditional swaps"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+Choose 32 distinct positive integers with no upper bound on their size. Minimize
+
+    max(|A+A|, |AA|),
+
+where A+A={a+b : a,b in A} and AA={a*b : a,b in A}. The sumset and product set include diagonal pairs and store each resulting value only once.
+
+Return JSON with an `elements` array of exactly 32 positive integers. Do not return repeated elements. The evaluator recomputes both set sizes with exact integer arithmetic and ignores any score in your output.
+
+Start from the supplied simple initial program. Do not read human, reference, source, or best-witness files. Use the `run_code()` interface and respect the configured time and memory limits.

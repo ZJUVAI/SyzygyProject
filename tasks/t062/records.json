@@ -1,0 +1,84 @@
+{
+  "task_id": "T062",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T062-C01": {
+      "parameters": {
+        "N": 42025,
+        "forbidden_difference": "positive perfect square",
+        "objective": "cardinality"
+      },
+      "best_human": {
+        "value": 2460,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "N": 42025
+        },
+        "witness_file": "data/reference/lewko205_n42025.json",
+        "url": "https://doi.org/10.37236/4656",
+        "source_location": "Theorem 3; the 12 residues modulo 205 in Section 3",
+        "provenance": "Human-authored 2015 theorem's residue construction, expanded at the selected finite N.",
+        "ai_provenance": "not stated by source",
+        "actual_value": 2460,
+        "evidence_state": "exact checker confirms all elements are in [1,42025] and no two differ by a positive square"
+      },
+      "best_public": {
+        "value": 2460,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "N": 42025
+        },
+        "url": "https://doi.org/10.37236/4656",
+        "source_location": "Theorem 3 and Section 3 residue construction",
+        "provenance": "Strongest same-parameter feasible construction found in checked sources. Its finite witness is reconstructed from the published residue set; the paper's theorem is asymptotic and does not report 2460 as D(42025).",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "publicly specified formula, independently reconstructed and exactly verified; not an asserted optimum"
+      },
+      "best_reproduced": {
+        "value": 2460,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "N": 42025
+        },
+        "witness_file": "data/reference/lewko205_n42025.json",
+        "witness_sha256": "c31651d54da1b1bdd2b8ce73d74096ad5bdc259e9dd99799f6d9f9509aab7730",
+        "provenance": "Rebuilt as {1+a+205b : a in A, 0<=b<205}, using Lewko's printed residue set A.",
+        "ai_provenance": "benchmark reconstruction",
+        "actual_value": 2460,
+        "evidence_state": "exact check of all 204 positive-square translations",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 2460,
+        "parameters": {
+          "N": 42025
+        },
+        "witness_file": "data/reference/lewko205_n42025.json",
+        "provenance": "Theorem 3 residue construction, expanded to this N and exactly verified."
+      },
+      "highest_reported": {
+        "value": 2460,
+        "metric": "cardinality of a feasible square-difference-free subset of [42025]",
+        "direction": "maximize",
+        "date_checked": "2026-11-06",
+        "url": "https://doi.org/10.37236/4656",
+        "source_location": "Theorem 3 and Section 3",
+        "reproduction_status": "This is the strongest same-parameter construction found in checked sources, rebuilt from a published formula. It is a feasible lower bound; no exact optimum claim is made."
+      },
+      "optimality_status": {
+        "lower_bound": 2460,
+        "upper_bound": 42025,
+        "evidence_state": "No exact value at N=42025 found in checked sources as of 2026-11-06. Existing exact finite computations located cover N<=300 and a linked table through 410."
+      }
+    }
+  },
+  "initial_results": {
+    "T062-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0004065040650406504
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "task_id": "T076",
+  "config_id": "T076-C03",
+  "validity": 1.0,
+  "combined_score": 0.9863695183321352,
+  "objective": 34775,
+  "verification_status": "exact",
+  "generation_time": 6.126311458647251,
+  "verification_time": 0.3648279160261154,
+  "objective_value": 34775,
+  "details": {
+    "element_count": 17,
+    "subset_sums_verified": 131072,
+    "elements_positive": true,
+    "elements_distinct": true,
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 6.493650682270527,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

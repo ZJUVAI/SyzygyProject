@@ -1,0 +1,147 @@
+{
+  "task_id": "T051",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T051-C01": {
+      "program": "reference.py",
+      "reproduced_value": 130000,
+      "public_value": 130000,
+      "highest_reported": {
+        "value": 130000,
+        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and author data page; fixed 2026-11-06 source snapshot.",
+        "reproduction_status": "Feasible unrestricted C=3 sequence recovered from a publicly linked notebook and exactly checked. This is a lower bound on the unknown finite maximum, not an optimality proof. The recovered text is not claimed byte-identical to the original compressed author download."
+      },
+      "best_human": {
+        "value": 130000,
+        "parameters": {
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted",
+          "objective": "length"
+        },
+        "source": "Konev and Lisitsa, Computer-Aided Proof of Erdős Discrepancy Properties, arXiv:1405.3097v2, §4 and author data page.",
+        "url": "https://arxiv.org/html/1405.3097v2",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional SAT-based computational construction. The paper reports an unrestricted sequence of length 130000, with its first 127600 entries completely multiplicative.",
+        "evidence_state": "A full 130000-sign witness is recovered from a public Wolfram Community notebook discussing this problem and passes exact local checking. The discussion cites the Konev-Lisitsa work and author data page. Notebook data may be a re-encoding; byte identity with the original compressed file is not asserted.",
+        "witness": "data/source/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
+      },
+      "best_public": {
+        "value": 130000,
+        "parameters": {
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted",
+          "objective": "length"
+        },
+        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and author data page.",
+        "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
+        "date_checked": "2026-11-06",
+        "provenance": "Published traditional SAT search; the paper reports the construction, not a proof that it is longest.",
+        "evidence_state": "The paper and author page identify the 130000 unrestricted construction. The saved full witness was reconstructed from a public Wolfram Community notebook discussing this problem and independently verified.",
+        "witness": "data/reference/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
+      },
+      "best_reproduced": {
+        "value": 130000,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted",
+          "objective": "length"
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Integer arithmetic scans every homogeneous progression difference d and every prefix length k, checking |sum(x[d], x[2d], ..., x[kd])| <= 3.",
+        "witness": "data/reference/sequence_130000.txt",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
+        "origin_type": "published SAT construction recovered from a public Wolfram Community notebook; exact constraint verification, original compressed-file byte identity not established"
+      },
+      "restricted_results_not_this_configuration": [
+        {
+          "value": 1160,
+          "scope": "unrestricted discrepancy cap C=2",
+          "status": "proved exact maximum; excluded"
+        },
+        {
+          "value": 127645,
+          "scope": "completely multiplicative discrepancy cap C=3",
+          "status": "proved exact maximum; restricted problem, excluded"
+        }
+      ],
+      "optimality_status": {
+        "status": "open; at least 130000, exact finite maximum unknown",
+        "source_survey_date": "2026-11-06",
+        "evidence": "Konev and Lisitsa report the 130000 unrestricted construction but do not prove optimality. Their exact 127645 result is for the completely multiplicative restriction. The 2026 Princeton thesis concerns the solved C=2 case. Tao's theorem rules out infinite bounded-discrepancy sequences but gives no exact finite maximum.",
+        "limitations": "Current-source survey establishes the distinction between the unrestricted and restricted problems; it does not derive a useful finite upper bound for the selected unrestricted C=3 instance."
+      },
+      "source_pins": {
+        "paper": {
+          "version": "arXiv:1405.3097v2",
+          "url": "https://arxiv.org/html/1405.3097v2",
+          "record_location": "§4"
+        },
+        "author_data": {
+          "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
+          "date_checked": "2026-11-06"
+        },
+        "recovered_notebook": {
+          "url": "https://community.wolfram.com/uploads/short-url/tecwlpwuwx7kcTAYpoVaduRt9FD.nb",
+          "discussion_url": "https://community.wolfram.com/t/discrepancy-conjecture/6798",
+          "sha256": "cc6066cefd3c28435aee484b8ad4c952f6d17919732acc5e21a412ed45cadbca"
+        },
+        "recovered_sign_text_sha256": "a46775e377eed611fe5e7c086fc761ea8aeec22c2048924c2cd28392f34883fa"
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "task_id": "T051",
+        "status": "pending_source_review",
+        "run": {
+          "task_id": "T051",
+          "config_id": "T051-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 130000,
+          "verification_status": "exact",
+          "generation_time": 1.5008401684463024,
+          "verification_time": 1.3104558661580086,
+          "objective_value": 130000,
+          "details": {
+            "sequence_length": 130000,
+            "discrepancy": 3,
+            "maximizing_prefix": {
+              "difference": 1,
+              "prefix_length": 91,
+              "signed_sum": 3
+            },
+            "homogeneous_progression_prefixes_checked": 1550902,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 2.8781457766890526,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "sequence_length": 130000,
+          "discrepancy": 3,
+          "prefixes_checked": 1550902
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "1968a02e3e8394f9e9cabccf3bfeae0b424fd28e9e830d341d6a9cac2ea14eda"
+      }
+    }
+  }
+}

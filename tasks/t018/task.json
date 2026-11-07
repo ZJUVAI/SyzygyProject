@@ -1,0 +1,41 @@
+{
+  "task_id": "T018",
+  "name": "Maximum determinant of sign matrices",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T018-C01",
+      "parameters": {
+        "n": 29,
+        "entries": "±1"
+      },
+      "direction": "maximize",
+      "human_reference": 1188957517256767569920,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T018-C02",
+      "parameters": {
+        "n": 27,
+        "entries": "±1"
+      },
+      "direction": "maximize",
+      "human_reference": 12611693314584870912,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximum absolute determinant of n-by-n unrestricted +/-1 matrices. Existing n29 and new n27. Integer Bareiss formal score, no float determinant used for ranking.",
+      "public_source": "Sol reviewed Brent order27 page https://maths-people.anu.edu.au/~brent/maxdet/order27/ and the authors paper/table https://maths-people.anu.edu.au/~brent/pd/Brent-maxdet-RMIT.pdf. They attribute the conjectured Gram matrix to Tamura2005 and give feasible determinant546*6^11*2^26 with an Ehlich upper ratio strictly below565, leaving a gap.",
+      "baseline_distinction": "Frozen H for n27 is the older Orrick-Solomon-Dowdeswell-Smith2003 printed matrix12611693314584870912. The downloaded Brent representative has13293406466724593664 and is used as the fixed reference. Both are exact; baseline is deliberately weaker than the located public record.",
+      "independent_method": "Sol personally ran human/reference in the shared runner and recomputed determinants independently with sympy domain-ge exact elimination, distinct from the task Bareiss checker. Witness dimensions and sign entries checked. Root independently evaluated546*6^11*2^26. All five programs have matching exact repeated scores, forged declarations are ignored and illegal entries are rejected.",
+      "scope": "Only n27 is added. The n31 draft was withdrawn because its current public record was not established. Public conjectural status checked in primary source; no exhaustive literature absence claim.",
+      "admission": "Complete generation/checker/replay/cold-export/malformed/claim/error/nonfinite/timeout admission passes for both configurations. Existing n29 own best equals this admission result; original saved artifact is backed up in the admission run."
+    }
+  }
+}

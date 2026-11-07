@@ -1,0 +1,11 @@
+Choose 480 nonnegative rational heights `h[0]` through `h[479]`. Define
+
+`f(x) = h[i]` for `i*(13/4800) <= x < (i+1)*(13/4800)`, and `f(x)=0` elsewhere.
+
+Maximize
+
+`min_{0 <= t <= 1} integral_R f(x) f(x+t) dx / (integral_R f(x) dx)^2`.
+
+Return JSON data with a `heights` list of exactly 480 nonnegative rational values. Encode non-integer rational values as strings such as `"3/7"`. The checker uses exact rational arithmetic and checks the whole interval of shifts, including the endpoint `t=1`; it does not sample the interval. It ignores any score you report.
+
+The initial program is the uniform profile. Do not use human or reference witnesses in your search. Keep the default search deterministic for a fixed seed and within the fixed iteration budget.

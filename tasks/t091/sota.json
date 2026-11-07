@@ -1,0 +1,152 @@
+{
+  "task_id": "T091",
+  "configurations": {
+    "T091-C01": {
+      "program": "reference.py",
+      "reproduced_value": 4096,
+      "public_value": 2048,
+      "highest_reported": {
+        "value": 2048,
+        "source": "Carlet, Kiss, Nagy, https://doi.org/10.1007/s10623-022-01105-4, Proposition 10 and Remark 11",
+        "reproduction_status": "The paper reports a shortened Kerdock-code construction with 2048 rows for 63 columns and strength 4. The explicit witness was not rebuilt here. The paper states that optimality is unknown."
+      },
+      "best_human": {
+        "value": 4096,
+        "witness": "data/human/bch_dual_oa4096.json",
+        "verification_status": "exact",
+        "evidence": "Rebuilt from the paper's BCH-dual construction; exact parity-character verification."
+      },
+      "best_public": {
+        "value": 2048,
+        "witness": null,
+        "evidence": "Reported same-parameter Kerdock construction; no witness reproduced by this task."
+      },
+      "best_reproduced": {
+        "value": 4096,
+        "program": "reference.py",
+        "witness": "data/reference/bch_dual_oa4096.json",
+        "verification_status": "exact"
+      },
+      "best_own_search": {
+        "value": 8192,
+        "objective_value": 8192,
+        "program": "baseline.py",
+        "witness": "best/T091-C01/solution.json",
+        "witness_sha256": "3d410c4003e174ffa0c9eebd80c1df6592a6220c3ffc398e090b2d96c15a945a",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4,
+          "row_repetition": "allowed"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "seed": 0,
+          "seed_dimension": 13,
+          "label_proposals": 4098,
+          "iterations_requested": 12,
+          "proposals_evaluated": 12,
+          "moves_accepted": 0,
+          "seed_rows": 8192,
+          "row_deletion_proposal_size": 16,
+          "comparison_data_read": false
+        },
+        "generation_record": {
+          "task_id": "T091",
+          "config_id": "T091-C01",
+          "validity": 1.0,
+          "combined_score": 0.5,
+          "objective": 8192,
+          "verification_status": "exact",
+          "generation_time": 2.1002394780516624,
+          "verification_time": 3.5391630455851555,
+          "objective_value": 8192,
+          "details": {
+            "rows": 8192,
+            "columns": 63,
+            "strength": 4,
+            "repeated_rows_allowed": true,
+            "balanced_parity_checks": 637392,
+            "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+            "rao_lower_bound": 2032,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 5.870066076517105,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T091",
+          "config_id": "T091-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 4096,
+          "verification_status": "exact",
+          "generation_time": 1.7984983325004578,
+          "verification_time": 3.0992070361971855,
+          "objective_value": 4096,
+          "details": {
+            "rows": 4096,
+            "columns": 63,
+            "strength": 4,
+            "repeated_rows_allowed": true,
+            "balanced_parity_checks": 637392,
+            "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+            "rao_lower_bound": 2032,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 4.907632991671562,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "row_count": 4096,
+          "distinct_rows": 4096,
+          "linear_span_dimension": 12,
+          "four_column_projections": 595665,
+          "rao_lower_bound": 2032,
+          "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

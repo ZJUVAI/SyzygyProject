@@ -1,0 +1,447 @@
+{
+  "task_id": "T092",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T092 --label admission_20261106",
+  "configurations": {
+    "T092-C01": {
+      "configuration": {
+        "id": "T092-C01",
+        "parameters": {
+          "degree": 20,
+          "domain": "real spherical harmonics on S^2",
+          "coefficient_domain": "rational dense subspace",
+          "objective": "normalized L4/L2 ratio"
+        },
+        "direction": "maximize",
+        "human_reference": 1.5315529249613
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T092",
+            "config_id": "T092-C01",
+            "validity": 1.0,
+            "combined_score": 0.8898894180725347,
+            "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+            "verification_status": "certified",
+            "generation_time": 0.42804452031850815,
+            "verification_time": 0.999307669699192,
+            "objective_value": "1362912741141099729/1000000000000000000",
+            "details": {
+              "degree": 20,
+              "monomial_count": 231,
+              "harmonic_laplacian_residual_terms": 0,
+              "sphere_average_M2": "1/41",
+              "sphere_average_M4": "2694004334609126893281/1312483334084147263957009",
+              "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+              "objective_interval": [
+                "1362912741141099729/1000000000000000000",
+                "136291274114109973/100000000000000000"
+              ],
+              "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.4352668598294258,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "ratio_interval": [
+              "340728185285274932338293916656234518745663125619225293729449/250000000000000000000000000000000000000000000000000000000000",
+              "1362912741141099729353175666624938074982652502476901174917797/1000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "M2": "1/41",
+            "M4": "2694004334609126893281/1312483334084147263957009",
+            "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+            "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T092",
+            "config_id": "T092-C01",
+            "validity": 1.0,
+            "combined_score": 0.8898894180725347,
+            "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+            "verification_status": "certified",
+            "generation_time": 2.047195829451084,
+            "verification_time": 0.8740438334643841,
+            "objective_value": "1362912741141099729/1000000000000000000",
+            "details": {
+              "degree": 20,
+              "monomial_count": 231,
+              "harmonic_laplacian_residual_terms": 0,
+              "sphere_average_M2": "9/41",
+              "sphere_average_M4": "218214351103339278355761/1312483334084147263957009",
+              "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+              "objective_interval": [
+                "1362912741141099729/1000000000000000000",
+                "136291274114109973/100000000000000000"
+              ],
+              "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 4.264358565211296,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "ratio_interval": [
+              "340728185285274932338293916656234518745663125619225293729449/250000000000000000000000000000000000000000000000000000000000",
+              "1362912741141099729353175666624938074982652502476901174917797/1000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "M2": "9/41",
+            "M4": "218214351103339278355761/1312483334084147263957009",
+            "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+            "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T092",
+            "config_id": "T092-C01",
+            "validity": 1.0,
+            "combined_score": 1.000000000000001,
+            "objective": "fourth_root(58188232951867590/10575651537777253)",
+            "verification_status": "certified",
+            "generation_time": 0.5081733167171478,
+            "verification_time": 0.4663974456489086,
+            "objective_value": "382888231240325373/250000000000000000",
+            "details": {
+              "degree": 20,
+              "monomial_count": 231,
+              "harmonic_laplacian_residual_terms": 0,
+              "sphere_average_M2": "137438953472/1412926920405",
+              "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+              "fourth_power_ratio": "58188232951867590/10575651537777253",
+              "objective_interval": [
+                "382888231240325373/250000000000000000",
+                "1531552924961301493/1000000000000000000"
+              ],
+              "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 0.9865150190889835,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "ratio_interval": [
+              "76577646248065074643930091879523927990731951116442781741251/50000000000000000000000000000000000000000000000000000000000",
+              "1531552924961301492878601837590478559814639022328855634825021/1000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "M2": "137438953472/1412926920405",
+            "M4": "37778931862957161709568/725673658950019191115935",
+            "fourth_power_ratio": "58188232951867590/10575651537777253",
+            "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T092",
+            "config_id": "T092-C01",
+            "validity": 1.0,
+            "combined_score": 1.000000000000001,
+            "objective": "fourth_root(58188232951867590/10575651537777253)",
+            "verification_status": "certified",
+            "generation_time": 2.3960646614432335,
+            "verification_time": 3.100992616266012,
+            "objective_value": "382888231240325373/250000000000000000",
+            "details": {
+              "degree": 20,
+              "monomial_count": 231,
+              "harmonic_laplacian_residual_terms": 0,
+              "sphere_average_M2": "137438953472/1412926920405",
+              "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+              "fourth_power_ratio": "58188232951867590/10575651537777253",
+              "objective_interval": [
+                "382888231240325373/250000000000000000",
+                "1531552924961301493/1000000000000000000"
+              ],
+              "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 5.503613777458668,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "ratio_interval": [
+              "76577646248065074643930091879523927990731951116442781741251/50000000000000000000000000000000000000000000000000000000000",
+              "1531552924961301492878601837590478559814639022328855634825021/1000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "M2": "137438953472/1412926920405",
+            "M4": "37778931862957161709568/725673658950019191115935",
+            "fourth_power_ratio": "58188232951867590/10575651537777253",
+            "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T092",
+            "config_id": "T092-C01",
+            "validity": 1.0,
+            "combined_score": 0.8898894180725347,
+            "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+            "verification_status": "certified",
+            "generation_time": 8.363980889320374,
+            "verification_time": 1.6479557640850544,
+            "objective_value": "1362912741141099729/1000000000000000000",
+            "details": {
+              "degree": 20,
+              "monomial_count": 231,
+              "harmonic_laplacian_residual_terms": 0,
+              "sphere_average_M2": "25/41",
+              "sphere_average_M4": "1683752709130704308300625/1312483334084147263957009",
+              "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+              "objective_interval": [
+                "1362912741141099729/1000000000000000000",
+                "136291274114109973/100000000000000000"
+              ],
+              "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 10.020827408879995,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "ratio_interval": [
+              "340728185285274932338293916656234518745663125619225293729449/250000000000000000000000000000000000000000000000000000000000",
+              "1362912741141099729353175666624938074982652502476901174917797/1000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "M2": "25/41",
+            "M4": "1683752709130704308300625/1312483334084147263957009",
+            "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+            "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T092",
+        "config_id": "T092-C01",
+        "validity": 1.0,
+        "combined_score": 0.8898894180725347,
+        "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+        "verification_status": "certified",
+        "generation_time": 1.2650549821555614,
+        "verification_time": 5.920118097215891,
+        "objective_value": "1362912741141099729/1000000000000000000",
+        "details": {
+          "degree": 20,
+          "monomial_count": 231,
+          "harmonic_laplacian_residual_terms": 0,
+          "sphere_average_M2": "1/41",
+          "sphere_average_M4": "2694004334609126893281/1312483334084147263957009",
+          "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+          "objective_interval": [
+            "1362912741141099729/1000000000000000000",
+            "136291274114109973/100000000000000000"
+          ],
+          "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 7.18715425953269,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T092",
+          "config_id": "T092-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t092/runs/admission_20261106/T092-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 3.745336662977934,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T092",
+          "config_id": "T092-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 1.5481978133320808,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T092",
+          "config_id": "T092-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 3.0968496277928352,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "103f768520c084cf95207a313745d674d4ab0cd3a57a2cf0e20e82c37ca73cc7",
+    "README.md": "5e30182593545127576a9afecdd8c776ae70037810d617c96e069424b126dfad",
+    "baseline.py": "73fffe16c8e66347e7f369a74e66ecd5bc916a61322ccbdb338cd166a2195139",
+    "check.py": "4dacc52b3eb6b50fc0b3701f26d7034d13715969d7a615e5562f33d25cc442b8",
+    "data/human/highest_weight_degree20.json": "9b0df1bac229ada5412a85446fef29f09f03dceed2b69d963c2faa5e24191d0b",
+    "data/reference/highest_weight_degree20.json": "9b0df1bac229ada5412a85446fef29f09f03dceed2b69d963c2faa5e24191d0b",
+    "evaluator.py": "3ba6e1462925abd9ce3b3b1ee84f8c27362cbe08dddd3c0950a72c34e78faa46",
+    "evolution.py": "6d2c2cbb95e0c63ff9b7f1f8d7bc1c8e0a104bdb89e4e1b46ad0d1dddba4a4b0",
+    "human.py": "ce2e2413b7164f3ce1619e4a21bac8d6ebc5b1bcbbcdc4a469a8cd0d4c514a16",
+    "init_program.py": "1acdb0afbe73eb57c73dd2bba783330c2dda5d5b6e0482229a5a1e8a25a31841",
+    "instruction.txt": "fbc181880984ade9d1ec0221334fce326cdc33da81c2764569368ce42699cd87",
+    "records.json": "9b9d74b7a94316241741cf5438ef653e034dbcacdb4e019e70743ec856a2a9b8",
+    "reference.py": "a0ae090db397b22939b06f217a1c46a03573b4f2b97f1e81b709ab6a8c4c6688",
+    "search_core.py": "2e5bab19a938eb3a7495f5500cbc2efd2c510ea4449d9df1daab62dcc99e6b00",
+    "test_task.py": "987ff47b7a95ff95f1c4750cca4b418fb3448fca1037eef455adbba7d9e5e826"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "Fixed degree20 real homogeneous harmonic polynomial on S2, maximize normalized L4/L2. Full231-coefficient rational dense kernel, dimension41, no magnitude cap. Corrects old Rudin-minimum naming to actual maximum direction.",
+    "primary_source": "Root checked Stanton-Weinstein1981 DOI10.1017/S0305004100058229 local maximality of real highest-weight harmonic; global finite20 optimum not proved there. Sogge asymptotic order and2026Rudin bounded holomorphic bases do not prove this constant. Current finite20 closure search found none.",
+    "human_method": "Re((x+i*y)^20), M2=B20/2 and M4=3B40/8, Bk=4^k*(k!)^2/(2k+1)!. Root independently recomputed these exact quantities and fourth-power ratio58188232951867590/10575651537777253. Human ratio~1.5315529249613015.",
+    "independent_method": "Root clears coefficient denominators and uses symmetric integer products. It integrates first over azimuth using central binomial coefficients, then over latitude with a finite alternating binomial integral. Exact M2,M4 and their ratio match formal double-factorial moments for all five entries; independent fourth-root bounds1e-60 lie inside formal1e-18 interval.",
+    "admission": "Five strict programs and full controls passed. Initial and own searches use Legendre zonal harmonics, not highest-weight reference. Damaged nonharmonic polynomial rejected; full returned result ignores claims; replay,cold export,error,nonfinite,timeout controls pass. Agent28tests pass. Checker direction omission returned and fixed before frozen admission."
+  }
+}

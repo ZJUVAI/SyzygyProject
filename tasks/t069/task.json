@@ -1,0 +1,32 @@
+{
+  "task_id": "T069",
+  "name": "Mona Lisa 100K Euclidean traveling salesman tour",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T069-C01",
+      "parameters": {
+        "instance": "mona-lisa100K",
+        "cities": 100000,
+        "edge_weight_type": "EUC_2D; nearest-integer rounding",
+        "tour": "one Hamiltonian cycle through all cities",
+        "objective": "sum of integer edge lengths, including return edge"
+      },
+      "direction": "minimize",
+      "human_reference": 5757191
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Fixed 100000-city TSPLIB MonaLisa100K minimum closed Hamiltonian tour, integer EUC_2D distances. The scalar is the sum of individually rounded edges, not the rounded sum of real distances.",
+      "source": "Read official live page: Nagata genetic algorithm March17 2009 tour5757191, reported Concorde lower5757084 July27 2012, gap107. Cook, Helsgaun, Hougardy and Schroeder2024 Local elimination DOI10.1007/s12532-024-00262-y §3.1 explicitly calls this instance unproved. No full Concorde lower-bound recertification claimed.",
+      "independent": "Root independently downloaded exact TSPLIB1658328bytes SHA532fefbfb9ad66cc2550bece766fa069acaa8e34ee511ac1949ae101da4d70ad and official689030byte tour SHAd8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88. Checked all cities once and all100000 closing edges. Admission independently parses raw coordinates and binary-searches midpoint inequalities, separate from checker isqrt method.",
+      "isolation": "Initial ID ordering, baseline spatial bands and bounded local2opt, evolution alias baseline use only public coordinates, no comparison witness. Cold export whitelists only input coordinates. All strict five runs, full-return score invariance, broken permutation, replay and failure controls passed.",
+      "limits": "Reference result verified; published lower bound only reported. No optimality claim. Formal100000 input avoids materializing full distance matrix. Distinct from CVRP capacity/route-count model."
+    }
+  }
+}

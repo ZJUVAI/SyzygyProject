@@ -1,0 +1,1 @@
+Find a large subset of {1,...,42025} with no two distinct elements whose difference is a positive perfect square. Return JSON with an `elements` array of distinct integers in the allowed range. The evaluator computes the cardinality and checks every constraint. Do not return a claimed score in place of a valid set.

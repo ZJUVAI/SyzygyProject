@@ -1,0 +1,58 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "init_program.py",
+  "generation_record": {
+    "task_id": "T086",
+    "config_id": "T086-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": "1",
+    "verification_status": "certified",
+    "generation_time": 3.6298404559493065,
+    "verification_time": 3.0044665597379208,
+    "objective_value": "1",
+    "details": {
+      "n": 4,
+      "m": 4,
+      "dimension": 3,
+      "field": "complex rational",
+      "norm": "Schatten 2 / Frobenius",
+      "products_with_replacement": 256,
+      "products_without_replacement": 24,
+      "common_product_norm_squared": "3",
+      "objective_interval": [
+        "1",
+        "1"
+      ],
+      "upper_bound_for_minimization": "1",
+      "psd_verified_by_all_principal_minors": true,
+      "without_replacement_denominator_positive": true,
+      "identical_products_cancel_exactly": true,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 6.643980678170919,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "9c23bbf7b8565d9aca54ebbedf2b72f67e0906b8dd399c36b8b0ab6de505ceb3",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T086 tasks/t086/best/T086-C01/solution.json --config T086-C01"
+}

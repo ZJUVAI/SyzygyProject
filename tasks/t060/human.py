@@ -1,23 +1,25 @@
-"""Gordon--Kuperberg--Patashnik (1995), finite geometry and induced coverings.
+"""Rebuild a traditional base-3 Horner expression; no witness file is read."""
 
-The restriction is an implementation choice, not the historical 23-block record.
-"""
-DELETED = {1, 8, 13, 15, 16, 24, 28, 31}
+TARGET = 2**61 - 1
+
+
+def _ones(count):
+    return "+".join(["1"] * count)
+
+
+def build_expression(target=TARGET):
+    digits = []
+    while target:
+        target, digit = divmod(target, 3)
+        digits.append(digit)
+    digits.reverse()
+    expression = _ones(digits[0])
+    for digit in digits[1:]:
+        expression = f"({expression}*(1+1+1))"
+        if digit:
+            expression = f"({expression}+{_ones(digit)})"
+    return expression
 
 
 def run_code():
-    points = sorted(set(range(32)) - DELETED)
-    labels = {x: i for i, x in enumerate(points)}
-    blocks = set()
-    for normal in range(1, 32):
-        for offset in (0, 1):
-            plane = {x for x in range(32) if (normal & x).bit_count() % 2 == offset}
-            assert len(plane & DELETED) >= 2
-            block = {labels[x] for x in plane if x in labels}
-            for x in range(24):
-                if len(block) == 14:
-                    break
-                block.add(x)
-            assert len(block) == 14
-            blocks.add(tuple(sorted(block)))
-    return {"blocks": [list(b) for b in sorted(blocks)]}
+    return {"expression": build_expression()}

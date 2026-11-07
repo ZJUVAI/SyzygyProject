@@ -1,0 +1,62 @@
+{
+  "task_id": "T045",
+  "configurations": {
+    "T045-C01": {
+      "best_human": {
+        "value": 95242,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "graph": "gd96a",
+          "vertices": 1096,
+          "edges": 1676
+        },
+        "url": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+        "provenance": "The 2011 paper attributes the 95,242 heuristic result to Rodriguez-Tello et al. (2008). It is a traditional computational result; AI provenance is not stated.",
+        "evidence_state": "reported in literature; original ordering not recovered or independently reproduced"
+      },
+      "best_public": {
+        "value": 95242,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "graph": "gd96a",
+          "vertices": 1096,
+          "edges": 1676
+        },
+        "url": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+        "evidence_state": "published best-known heuristic value in the 2011 primary paper; ordering artifact unavailable in checked source package",
+        "origin_type": "traditional heuristic search; AI provenance not reported"
+      },
+      "best_reproduced": {
+        "value": 147653,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "graph": "gd96a",
+          "vertices": 1096,
+          "edges": 1676
+        },
+        "url": "https://www.cs.upc.edu/~jpetit/MinLA/Experiments/",
+        "provenance": "Recomputed a Fiedler-vector spectral ordering on the official graph and applied strict-improvement adjacent-swap descent for at most 200 sweeps.",
+        "ai_provenance": "AI-assisted implementation and replay of a traditional published method. The 147,653 score is task-local and is not attributed to the source paper.",
+        "actual_value": 147653,
+        "evidence_state": "ordering saved locally; exact permutation and all 1,676 edge lengths independently recomputed",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 147653,
+        "type": "reproduced traditional method; weaker than the reported 95,242 value",
+        "witness": "data/reference/spectral_adjacent_ordering.json"
+      },
+      "survey_scope_note": "The 95,242 value is a literature report, not a replayed witness. The reproduced frozen reference is weaker. Current source checks are bounded and are not an exhaustive literature search."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T045-C01": {
+      "objective": 579874,
+      "objective_value": 579874,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.25462945398483117
+    }
+  }
+}

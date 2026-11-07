@@ -1,0 +1,37 @@
+{
+  "task_id": "T099",
+  "config_id": "T099-C01",
+  "validity": 1.0,
+  "combined_score": 1.0,
+  "objective": 270,
+  "verification_status": "exact",
+  "generation_time": 1.2407823652029037,
+  "verification_time": 2.1487886272370815,
+  "objective_value": 270,
+  "details": {
+    "tile_count": 270,
+    "rectangle": [
+      54,
+      55
+    ],
+    "area": 2970,
+    "covered_cells": 2970,
+    "orientation_group": "D4: four rotations and four reflected rotations",
+    "claimed_score_ignored": true
+  },
+  "eval_time": 3.5473447889089584,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

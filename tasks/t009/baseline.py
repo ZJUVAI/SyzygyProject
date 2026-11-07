@@ -1,56 +1,81 @@
 from mathbench.search import search_deadline, search_steps
-"""Deterministic multistart local search over 16 nonzero 3D directions."""
+"""Bounded simulated annealing on systematic binary generator matrices."""
 import math
 import os
+import random
 import time
-import numpy as np
-from scipy.optimize import minimize
 
-def _n():
-    return {"T009-C02": 16, "T009-C03": 17, "T009-C04": 19}.get(os.environ.get("MATHBENCH_CONFIG_ID", "T009-C02"))
+N, K = 68, 15
 
-def _score(z):
-    n = _n()
-    if n is None: raise ValueError("unknown T009 configuration")
-    p = np.asarray(z, dtype=float).reshape(n, 3)
-    norms = np.linalg.norm(p, axis=1)
-    if np.any(norms == 0): return -1.0
-    p = p / norms[:, None]
-    dots = p @ p.T
-    return math.acos(float(np.max(dots[np.triu_indices(n, 1)])))
+
+def _make_systematic(seed, n=N, k=K):
+    rng = random.Random(seed)
+    rows=[]
+    for i in range(k):
+        row=1 << i
+        for j in range(k, n):
+            if rng.getrandbits(1):
+                row |= 1 << j
+        rows.append(row)
+    return rows
+
+
+def _distance(rows, n=N, k=None):
+    """Exact minimum weight over all nonzero linear combinations."""
+    k = len(rows) if k is None else k
+    words=[0] * (1 << k)
+    best=n+1
+    for mask in range(1, 1 << k):
+        bit=mask & -mask
+        index=bit.bit_length()-1
+        words[mask]=words[mask ^ bit] ^ rows[index]
+        weight=bin(words[mask]).count('1')
+        if weight < best:
+            best=weight
+    return best
+
+
+def _mutate_parity(rows, rng, max_flips=4, n=N, k=K):
+    """Flip 1..max_flips entries in P of [I|P], preserving rank."""
+    candidate=rows[:]
+    count=rng.randint(1, max_flips)
+    for _ in range(count):
+        row=rng.randrange(k)
+        col=rng.randrange(k, n)
+        candidate[row] ^= 1 << col
+    return candidate
+
 
 def run_code():
-    n = _n()
-    if n is None: raise ValueError("unknown T009 configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    rng = np.random.default_rng(seed)
-    budget = max(.1, min(30., float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
+    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T009-C01')
+    if config_id == 'T009-C02': n,k=80,20
+    elif config_id == 'T009-C03': n,k=100,20
+    elif config_id == 'T009-C01': n,k=N,K
+    else: raise ValueError('unsupported configuration')
+    seed=int(os.environ.get('MATHBENCH_SEED','0'))
+    rng=random.Random(seed)
+    current=_make_systematic(seed,n,k)
+    current_d=_distance(current,n,k)
+    best=current[:]
+    best_d=current_d
+    budget=max(0.0, min(float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2')), 30.0))
     deadline = search_deadline()
-    k=np.arange(n); z=1-2*(k+.5)/n; phi=k*math.pi*(3-math.sqrt(5)); r=np.sqrt(1-z*z)
-    best=np.column_stack((r*np.cos(phi),r*np.sin(phi),z))
-    best_score = _score(best)
-    starts = 0
-    for _attempt in search_steps(2):
-        x = rng.normal(size=(n,3))
-        x /= np.linalg.norm(x, axis=1)[:,None]
-        def objective(z):
-            p=np.asarray(z).reshape(n,3)
-            norms=np.linalg.norm(p,axis=1)
-            if np.any(norms < 1e-10): return 1e3
-            p=p/norms[:,None]
-            return float(np.max((p @ p.T)[np.triu_indices(n,1)]))
-        res=minimize(objective,x.ravel(),method="L-BFGS-B",options={"maxiter":180,"ftol":1e-11})
-        candidate=np.asarray(res.x).reshape(n,3)
-        score=_score(candidate)
-        if np.isfinite(score) and score > best_score:
-            best,best_score=candidate.copy(),score
-        starts+=1
-    if best is None:
-        # Well-defined deterministic fallback, independent of the human file.
-        k=np.arange(n); z=1-2*(k+.5)/n; phi=k*math.pi*(3-math.sqrt(5)); r=np.sqrt(1-z*z)
-        best=np.column_stack((r*np.cos(phi),r*np.sin(phi),z))
-    return {"points": [[float(x) for x in row] for row in best]}
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    steps=0
+    attempts = 5 if config_id != 'T009-C01' else 60
+    steps=0
+    for _attempt in search_steps(attempts):
+        candidate=_mutate_parity(current, rng, n=n, k=k)
+        candidate_d=_distance(candidate,n,k)
+        steps += 1
+        steps += 1
+        if candidate_d > best_d:
+            best,best_d=candidate[:],candidate_d
+        # A cooling schedule permits occasional downhill moves to escape plateaus.
+        temperature=max(0.15, 2.0 * (1.0 - min(steps, 200) / 200.0))
+        delta=candidate_d-current_d
+        if delta >= 0 or rng.random() < math.exp(delta/temperature):
+            current,current_d=candidate,candidate_d
+    matrix=[[((row >> j) & 1) for j in range(n)] for row in best]
+    return {'generator_matrix':matrix, 'search_metadata': {
+        'algorithm':'simulated annealing over systematic parity matrices',
+        'iterations':steps, 'seed':seed}}

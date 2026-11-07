@@ -1,4 +1,9 @@
-Find a finite set A of distinct integers in [-1000000, 1000000], with 2 <= |A| <= 512, that maximizes log(|A+A|/|A|) / log(|A-A|/|A|). Here A+A={a+b:a,b in A} and A-A={a-b:a,b in A}. Return a JSON object with a `set` list of integers. The score is defined only when |A+A| > |A-A| > |A|. Implement a no-argument run_code() function. The verifier computes both sets exactly; do not rely on a claimed score.
+Find a low-cost capacitated vehicle routing solution for T057-C01.
 
+Return a JSON object with a `routes` list. Each route must be a nonempty list of TSPLIB node IDs. Customer IDs are 2 through 1001; node 1 is the depot and must not appear in a route. Every customer must occur exactly once. The sum of customer demands on each route must be at most 131.
 
-Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact or conservative interval verification. Compatibility feedback is J/H for maximization or H/J for minimization, where H is the frozen external reference. Start from the supplied initial program.
+The number of routes is unrestricted. The `k43` text is part of the benchmark instance name and does not impose a maximum or exact route count. Route count is at least 43 because total demand is 5557 and capacity is 131, but solutions may use more routes.
+
+Minimize total travel cost. Each route starts at depot 1, visits its listed customers in order, and returns to depot 1. For nodes i and j, the edge cost is TSPLIB EUC_2D: round sqrt((x_i-x_j)^2+(y_i-y_j)^2) to the nearest integer. The trusted checker computes this exactly with integer arithmetic.
+
+Start from the supplied simple program. Do not read human, reference, or best witness files. Declared scores are ignored.

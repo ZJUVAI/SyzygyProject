@@ -1,64 +1,179 @@
 {
+  "task_id": "T005",
+  "source_date": "2026-11-04",
   "best_human": {
-    "value": {
-      "T005-C01": 2.50542078826,
-      "T005-C02": 2.811460994816
-    },
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "container": "unit square",
-      "radii": "equal in source construction; variable in task"
-    },
-    "url": "https://packomania.com/csq/txt/csq26.txt",
-    "provenance": "The 26-circle source file supplies equal-radius coordinates with r=0.096362339010, attributed in the selected research summary to Nurmela–Östergård (1999). The 32-circle source file supplies r=0.087858157088; the selected research summary attributes that construction to D. W. Boll, J. Donovan, R. L. Graham, and B. D. Lubachevsky (2000). Each coordinate set is translated from a square centered at the origin. Every radius is reduced by 1/10^9 for exact feasibility after decimal rounding. These feasible equal-circle constructions are transferred to the variable-radius class; they do not establish variable-radius optimality.",
-    "evidence_state": "source coordinate files saved; conservative witnesses independently pass exact Fraction wall and pair-distance checks"
-  },
-  "best_public": {
-    "value": {
-      "T005-C01": 2.635983084919,
-      "T005-C02": 2.939572771205
-    },
+    "value": "1/27",
     "date_checked": "2026-11-04",
     "parameters": {
-      "container": "unit square",
-      "radii": "variable",
-      "n": {
-        "T005-C01": 26,
-        "T005-C02": 32
-      }
+      "n": 11,
+      "domain": "unit square"
     },
-    "url": "https://www.packomania.com/csqv/csqv.html",
-    "provenance": "Packomania variable-radius table, lastupdate2026-10-31, rows26 and32 report sums2.635983084919 and2.939572771205. Exact record witnesses were not replayed; frozen human baselines use equal-radius constructions.",
-    "evidence_state": "same-parameter primary table checked; best-public witness not reproduced",
+    "url": "https://math.tejstead.com/heilbronn/square/11/points.txt",
+    "ai_provenance": "AI transcribed the publicly posted Goldberg coordinates as rational numbers.",
+    "evidence_state": "Main reviewer verified all165 triangle areas exactly; minimum1/27."
+  },
+  "best_public": {
+    "value": "1/27",
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "n": 11,
+      "domain": "unit square"
+    },
+    "url": "https://math.tejstead.com/heilbronn/square/11/points.txt",
+    "ai_provenance": "The public record credits Michael Goldberg (1972); no claim of AI discovery.",
+    "evidence_state": "publicly attributed construction; exact checker run pending; not an optimality proof",
     "origin_type": "unknown unless attribution is stated in source/provenance"
   },
   "best_reproduced": {
-    "value": {
-      "T005-C01": 2.50542078826,
-      "T005-C02": 2.811460994816
-    },
-    "date_reproduced": "2026-11-03",
+    "value": "1/27",
+    "date_checked": "2026-11-04",
     "parameters": {
-      "container": "unit square",
-      "radii": "variable",
-      "n": {
-        "T005-C01": 26,
-        "T005-C02": 32
-      }
+      "n": 11,
+      "domain": "unit square"
     },
-    "witness_file": {
-      "T005-C01": "data/human26.json",
-      "T005-C02": "data/human32.json"
-    },
-    "provenance": "Recomputed from the saved Packomania equal-circle ASCII coordinates after translating centers by (1/2,1/2) and reducing each source radius by 1/10^9.",
-    "ai_provenance": "No AI-generated coordinates. The radius safety reduction and exact rational verification were performed for this benchmark.",
-    "actual_value": {
-      "T005-C01": 2.50542078826,
-      "T005-C02": 2.811460994816
-    },
-    "evidence_state": "saved witnesses pass exact rational wall, pairwise non-overlap, and objective checks"
+    "url": "https://math.tejstead.com/heilbronn/square/11/points.txt",
+    "ai_provenance": "AI transcribed the publicly posted Goldberg coordinates as rational numbers.",
+    "evidence_state": "Main reviewer ran the exact checker: all165 triangle areas checked, minimum1/27.",
+    "witness": "human.py"
   },
   "implementation_review_date": "2026-11-04",
   "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class"
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T005-C02": {
+      "best_human": {
+        "parameters": {
+          "n": 12,
+          "domain": "unit square"
+        },
+        "date_checked": "2026-11-04",
+        "url": "https://math.tejstead.com/heilbronn/square/12/points.txt",
+        "credit": "F. Comellas and J. Yebra, December 2001",
+        "evidence_state": "All 220 triangle areas recomputed exactly from the published 30-digit coordinate literals; this is not the exact algebraic coordinate representation and not an optimality proof.",
+        "value": "0.0325988586918196982187640066232",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "parameters": {
+          "n": 12,
+          "domain": "unit square"
+        },
+        "date_checked": "2026-11-04",
+        "url": "https://math.tejstead.com/heilbronn/square/12/points.txt",
+        "credit": "F. Comellas and J. Yebra, December 2001",
+        "evidence_state": "All 220 triangle areas recomputed exactly from the published 30-digit coordinate literals; this is not the exact algebraic coordinate representation and not an optimality proof.",
+        "value": "0.0325988586918196982187640066232",
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "parameters": {
+          "n": 12,
+          "domain": "unit square"
+        },
+        "date_checked": "2026-11-04",
+        "url": "https://math.tejstead.com/heilbronn/square/12/points.txt",
+        "credit": "F. Comellas and J. Yebra, December 2001",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+        "actual_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+        "verification_status": "exact",
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+        "verification_status": "exact",
+        "witness": "tasks/t005/data/verified_human_t005-c02.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T005-C03": {
+      "best_human": {
+        "parameters": {
+          "n": 16,
+          "domain": "unit square"
+        },
+        "date_checked": "2026-11-04",
+        "url": "https://math.tejstead.com/heilbronn/square/16/points.txt",
+        "credit": "Mark Beyleveld, August 2006",
+        "evidence_state": "All 560 triangle areas recomputed exactly from rational coordinates; this is a feasible witness, not an optimality proof.",
+        "value": "7/341",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "parameters": {
+          "n": 16,
+          "domain": "unit square"
+        },
+        "date_checked": "2026-11-04",
+        "url": "https://math.tejstead.com/heilbronn/square/16/points.txt",
+        "credit": "Mark Beyleveld, August 2006",
+        "evidence_state": "All 560 triangle areas recomputed exactly from rational coordinates; this is a feasible witness, not an optimality proof.",
+        "value": "7/341",
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "parameters": {
+          "n": 16,
+          "domain": "unit square"
+        },
+        "date_checked": "2026-11-04",
+        "url": "https://math.tejstead.com/heilbronn/square/16/points.txt",
+        "credit": "Mark Beyleveld, August 2006",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "value": "7/341",
+        "actual_value": "7/341",
+        "verification_status": "exact",
+        "ai_provenance": "Luna reconstructed or transcribed the public witness. Sol independently checked the saved construction and score. This is baseline reproduction, not a new discovery."
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": "7/341",
+        "verification_status": "exact",
+        "witness": "tasks/t005/data/verified_human_t005-c03.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  },
+  "initial_results": {
+    "T005-C01": {
+      "objective": "1/1000",
+      "objective_value": "1/1000",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.027000000000000003
+    },
+    "T005-C02": {
+      "objective": "1/1331",
+      "objective_value": "1/1331",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.023047273157759705
+    },
+    "T005-C03": {
+      "objective": "1/3375",
+      "objective_value": "1/3375",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.014433862433862434
+    }
+  }
 }

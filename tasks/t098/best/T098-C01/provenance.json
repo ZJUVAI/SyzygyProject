@@ -1,0 +1,47 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "init_program.py",
+  "generation_record": {
+    "task_id": "T098",
+    "config_id": "T098-C01",
+    "validity": 1.0,
+    "combined_score": 0.0740273396424816,
+    "objective": 4755,
+    "verification_status": "exact",
+    "generation_time": 0.16487320885062218,
+    "verification_time": 0.16480188816785812,
+    "objective_value": 4755,
+    "details": {
+      "order": 38,
+      "outer_side": 4755,
+      "distinct_sizes": 38,
+      "primitive_gcd": 1,
+      "area_sum": 22610025,
+      "proper_subrectangles_checked": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 0.3327709063887596,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {},
+  "solution_sha256": "ba88bfc18fa5fff0c31ff9527a40c7e96f08bb2b49607e8ee4c40be7be4dbe7c",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T098 tasks/t098/best/T098-C01/solution.json --config T098-C01"
+}

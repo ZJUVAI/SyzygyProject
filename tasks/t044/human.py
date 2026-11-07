@@ -1,18 +1,21 @@
-"""Cube20 Golomb rulers, reconstructed from its public ruler archive."""
-import json
-import os
+"""Replay the published 70-vertex Alegre-Fiol-Yebra graph witness."""
+
 from pathlib import Path
 
-_C01 = {"marks": [0, 7, 11, 31, 43, 53, 100, 121, 144, 150, 202, 220,
-                   229, 268, 284, 285, 356, 371, 390, 416, 430, 465,
-                   467, 528, 582, 590, 595, 620, 623]}
+
+def _load_upper_triangle(path):
+    edges = set()
+    for raw_line in path.read_text(encoding="ascii").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        values = [int(value) for value in line.split()]
+        source, neighbors = values[0], values[1:]
+        for target in neighbors:
+            edges.add((min(source, target), max(source, target)))
+    return {"n": 70, "edges": [list(edge) for edge in sorted(edges)]}
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T044-C01")
-    if config_id == "T044-C01":
-        return {"marks": list(_C01["marks"])}
-    if config_id not in ("T044-C02", "T044-C03"):
-        raise ValueError(f"unknown T044 configuration: {config_id}")
-    data = json.loads((Path(__file__).parent / "data" / "public_30_32.json").read_text())
-    return {"marks": list(data[config_id]["marks"])}
+    path = Path(__file__).parent / "data" / "reference" / "afy_70_adjlist_nx.txt"
+    return _load_upper_triangle(path)

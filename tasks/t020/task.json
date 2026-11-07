@@ -1,0 +1,73 @@
+{
+  "task_id": "T020",
+  "name": "Shortest addition chain for the P-192 inversion exponent",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T020-C01",
+      "parameters": {
+        "target": "2^192-2^64-3"
+      },
+      "direction": "minimize",
+      "human_reference": 202
+    },
+    {
+      "id": "T020-C02",
+      "parameters": {
+        "target": "2^221-5"
+      },
+      "direction": "minimize",
+      "human_reference": 230,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T020-C03",
+      "parameters": {
+        "target": "2^521-3"
+      },
+      "direction": "minimize",
+      "human_reference": 532,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "GPT-6.1 Sol",
+    "implementation_agent": "/root/expand_t020",
+    "implementation_model": "gpt-6-luna",
+    "date": "2026-11-04",
+    "acceptance_status": "accepted_by_sol",
+    "configuration_ids": [
+      "T020-C02",
+      "T020-C03"
+    ],
+    "evidence": "PLAN.md",
+    "checks": [
+      "source and parameter review",
+      "four strict program runs per configuration",
+      "cold seed export",
+      "independent key quantity",
+      "damaged witness rejected",
+      "claimed score ignored"
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+Construct a set of 31 distinct integers. Every sum of three elements, where repetition is allowed and order does not matter, must be different. Minimize the diameter `max(elements) - min(elements)`.
+
+Return JSON data with an `elements` list of 31 integers. The evaluator recomputes every three-term sum and the diameter. It ignores any score you report. Use exact integer values. You may translate the set without changing its score.
+
+Start from the simple construction in the provided initial program. Do not use human or reference witnesses. Improve the construction through your own search. Keep your default search bounded and deterministic for a fixed seed.

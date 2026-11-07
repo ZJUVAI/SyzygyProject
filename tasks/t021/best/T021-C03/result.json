@@ -1,0 +1,38 @@
+{
+  "task_id": "T021",
+  "config_id": "T021-C03",
+  "validity": 1.0,
+  "combined_score": 0.998815371188142,
+  "objective": "422573518645315440662588683/400000000000000000000000",
+  "verification_status": "certified",
+  "generation_time": 0.6149785742163658,
+  "verification_time": 0.1650681532919407,
+  "objective_value": "422573518645315440662588683/400000000000000000000000",
+  "details": {
+    "objective_interval": [
+      "211286759322657720331294317/200000000000000000000000",
+      "422573518645315440662588683/400000000000000000000000"
+    ],
+    "point_count": 50,
+    "pairs_checked": 1225,
+    "coordinate_model": "exact rational stereographic projection",
+    "sqrt_bound_scale": "10000000000000000000000000",
+    "energy_bound_scale": "1000000000000000000000000000000",
+    "claimed_score_ignored": true
+  },
+  "eval_time": 0.7824146188795567,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

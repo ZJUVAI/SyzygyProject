@@ -1,0 +1,3 @@
+Construct a 14 by 19 matrix of integer entries 0 or 1. Maximize the number of ones, subject to this rule: no choice of three rows and three columns forms a 3 by 3 submatrix whose nine entries are all 1. Return JSON data as {"matrix": [[...], ...]}. The evaluator recomputes the objective and checks every row triple. Do not include a claimed score as evidence. The fixed configuration is T032-C01.
+
+Define run_code() with no arguments. Generation:300 seconds; separate verification:60 seconds; memory:4 GiB; one CPU thread. MATHBENCH_SEED sets the search seed.

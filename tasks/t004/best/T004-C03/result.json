@@ -1,0 +1,37 @@
+{
+  "task_id": "T004",
+  "config_id": "T004-C03",
+  "validity": 1.0,
+  "combined_score": 1.0000000000000002,
+  "objective": 0.8323809277763073,
+  "verification_status": "certified",
+  "generation_time": 241.23096545413136,
+  "verification_time": 3.2018451243638992,
+  "objective_value": 0.8323809277763073,
+  "details": {
+    "n": 19,
+    "pairs_checked": 171,
+    "objective_name": "minimum_pairwise_angular_separation_radians",
+    "angle_interval": [
+      0.8323809277763073,
+      0.8323809277763085
+    ],
+    "claimed_objective_mismatch": false,
+    "directions_normalized_for_scoring": true
+  },
+  "eval_time": 244.4908417351544,
+  "seed": 10,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 67
+  }
+}

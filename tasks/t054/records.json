@@ -1,0 +1,249 @@
+{
+  "task_id": "T054",
+  "snapshot_date": "2026-11-06",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T054-C01": {
+      "parameters": {
+        "length": 100,
+        "alphabet": [
+          -1,
+          1
+        ],
+        "correlation": "aperiodic"
+      },
+      "objective": {
+        "name": "peak sidelobe level",
+        "definition": "max(abs(C[k])) for k=1,...,99",
+        "direction": "minimize",
+        "unit": "integer correlation amplitude"
+      },
+      "best_human": {
+        "value": 5,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 100,
+          "correlation": "aperiodic"
+        },
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "source": "Nunn and Coxson (2008), Table 2, row N=100.",
+        "provenance": "Traditional computational search; the complete code is printed in hexadecimal. The 2008 source reports no AI contribution.",
+        "evidence_state": "Hex code decoded to 100 signs and exactly verified with PSL 5.",
+        "witness": "data/source/nunn_coxson_length100.json",
+        "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
+      },
+      "best_public": {
+        "value": 5,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 100,
+          "correlation": "aperiodic"
+        },
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "source": "Nunn and Coxson (2008), Table 2; 2026 v2 survey still cites this table for lengths 71-105.",
+        "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
+        "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim.",
+        "witness": "data/reference/nunn_coxson_length100.json",
+        "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
+      },
+      "best_reproduced": {
+        "value": 5,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 100,
+          "correlation": "aperiodic"
+        },
+        "witness": "data/reference/nunn_coxson_length100.json",
+        "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384",
+        "verification_status": "exact",
+        "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 5,
+        "witness_program": "human.py",
+        "witness": "data/source/nunn_coxson_length100.json",
+        "note": "Published Nunn-Coxson hexadecimal construction for the same length and objective."
+      },
+      "optimality_status": {
+        "status": "not established; PSL 5 is a best-known feasible value in the checked sources",
+        "survey_date": "2026-11-06",
+        "source": "Brest et al., 2026 v2, §1, says exact minima are known through n=61 and n=64 and cites Nunn-Coxson for lengths 71-105."
+      },
+      "distinct_from_T013": {
+        "same_length_examples": [
+          {
+            "source": "T013-C01 Dantus L=100 witness",
+            "energy": 578,
+            "psl": 8
+          },
+          {
+            "source": "Nunn-Coxson T054-C01 witness",
+            "energy": 874,
+            "psl": 5
+          }
+        ],
+        "note": "Exact recalculation gives opposite rankings: the first has lower energy but worse PSL. The sum-of-squares energy and maximum absolute sidelobe are not monotone transforms of each other."
+      }
+    },
+    "T054-C02": {
+      "parameters": {
+        "length": 101,
+        "alphabet": [
+          -1,
+          1
+        ],
+        "correlation": "aperiodic"
+      },
+      "objective": {
+        "name": "peak sidelobe level",
+        "definition": "max(abs(C[k])) for k=1,...,99",
+        "direction": "minimize",
+        "unit": "integer correlation amplitude"
+      },
+      "best_human": {
+        "value": 5,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 101,
+          "correlation": "aperiodic"
+        },
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "source": "Nunn and Coxson (2008), Table 2, row N=101.",
+        "provenance": "Traditional computational search; the complete code is printed in hexadecimal. The 2008 source reports no AI contribution.",
+        "evidence_state": "Hex code decoded to 100 signs and exactly verified with PSL 5.",
+        "witness": "data/source/nunn_coxson_length101.json",
+        "witness_sha256": "c334b13ff4f803f956a993944ba2e77b30b1f04b9ca9aa0c721820736e7b2780"
+      },
+      "best_public": {
+        "value": 5,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 101,
+          "correlation": "aperiodic"
+        },
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "source": "Nunn and Coxson (2008), Table 2, row N=101.",
+        "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
+        "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim.",
+        "witness": "data/reference/nunn_coxson_length101.json",
+        "witness_sha256": "c334b13ff4f803f956a993944ba2e77b30b1f04b9ca9aa0c721820736e7b2780"
+      },
+      "best_reproduced": {
+        "value": 5,
+        "date_reproduced": "2026-11-07",
+        "parameters": {
+          "length": 101,
+          "correlation": "aperiodic"
+        },
+        "witness": "data/reference/nunn_coxson_length101.json",
+        "witness_sha256": "c334b13ff4f803f956a993944ba2e77b30b1f04b9ca9aa0c721820736e7b2780",
+        "verification_status": "exact",
+        "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums.",
+        "review_status": "reviewed_by_sol",
+        "source": "Nunn and Coxson (2008), Table 2, row N=101.",
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf"
+      },
+      "frozen_human_baseline": {
+        "value": 5,
+        "witness_program": "human.py",
+        "witness": "data/source/nunn_coxson_length101.json"
+      },
+      "optimality_status": {
+        "status": "pending_sol_review; no optimality proof found in checked sources",
+        "source": "Brest et al. (2026), v2, §1."
+      }
+    },
+    "T054-C03": {
+      "parameters": {
+        "length": 102,
+        "alphabet": [
+          -1,
+          1
+        ],
+        "correlation": "aperiodic"
+      },
+      "objective": {
+        "name": "peak sidelobe level",
+        "definition": "max(abs(C[k])) for k=1,...,99",
+        "direction": "minimize",
+        "unit": "integer correlation amplitude"
+      },
+      "best_human": {
+        "value": 5,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 102,
+          "correlation": "aperiodic"
+        },
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "source": "Nunn and Coxson (2008), Table 2, row N=102.",
+        "provenance": "Traditional computational search; the complete code is printed in hexadecimal. The 2008 source reports no AI contribution.",
+        "evidence_state": "Hex code decoded to 100 signs and exactly verified with PSL 5.",
+        "witness": "data/source/nunn_coxson_length102.json",
+        "witness_sha256": "33e7a6c64c2e3ac444ebeb9ef02daaa32ea47a097fd7602d50f0949fd691d763"
+      },
+      "best_public": {
+        "value": 5,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 102,
+          "correlation": "aperiodic"
+        },
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+        "source": "Nunn and Coxson (2008), Table 2, row N=102.",
+        "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
+        "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim.",
+        "witness": "data/reference/nunn_coxson_length102.json",
+        "witness_sha256": "33e7a6c64c2e3ac444ebeb9ef02daaa32ea47a097fd7602d50f0949fd691d763"
+      },
+      "best_reproduced": {
+        "value": 5,
+        "date_reproduced": "2026-11-07",
+        "parameters": {
+          "length": 102,
+          "correlation": "aperiodic"
+        },
+        "witness": "data/reference/nunn_coxson_length102.json",
+        "witness_sha256": "33e7a6c64c2e3ac444ebeb9ef02daaa32ea47a097fd7602d50f0949fd691d763",
+        "verification_status": "exact",
+        "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums.",
+        "review_status": "reviewed_by_sol",
+        "source": "Nunn and Coxson (2008), Table 2, row N=102.",
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf"
+      },
+      "frozen_human_baseline": {
+        "value": 5,
+        "witness_program": "human.py",
+        "witness": "data/source/nunn_coxson_length102.json"
+      },
+      "optimality_status": {
+        "status": "pending_sol_review; no optimality proof found in checked sources",
+        "source": "Brest et al. (2026), v2, §1."
+      }
+    }
+  },
+  "initial_results": {
+    "T054-C01": {
+      "objective": 99,
+      "objective_value": 99,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.050505050505050504
+    },
+    "T054-C02": {
+      "objective": 100,
+      "objective_value": 100,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.05
+    },
+    "T054-C03": {
+      "objective": 101,
+      "objective_value": 101,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.04950495049504951
+    }
+  }
+}

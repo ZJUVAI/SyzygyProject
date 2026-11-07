@@ -1,0 +1,17 @@
+{
+  "parameters": {
+    "colors": 6
+  },
+  "seed": 0,
+  "budget": {
+    "algorithm": "seeded randomized sequential greedy coloring with restarts",
+    "seed": 0,
+    "placements": 50000,
+    "placement_budget": 50000,
+    "restarts": 820,
+    "wall_clock_cutoff_seconds": null,
+    "reference_data_read": false
+  },
+  "recomputed_objective": 104,
+  "verification_status": "exact"
+}

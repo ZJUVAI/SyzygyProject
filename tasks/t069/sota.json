@@ -1,0 +1,101 @@
+{
+  "task_id": "T069",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T069-C01": {
+      "program": "reference.py",
+      "reproduced_value": 5757191,
+      "public_value": 5757191,
+      "highest_reported": {
+        "value": 5757191,
+        "source": "https://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html",
+        "source_location": "Status and March 17, 2009 computation log; tour file monalisa_5757191.tour",
+        "reproduction_status": "The official Nagata tour is frozen locally and independently re-evaluated with exact integer EUC_2D rounding on all 100000 closed-cycle edges. The tour is a feasible upper bound; no optimality claim is made.",
+        "ai_provenance": "The page credits Yuichi Nagata and says the record was found by his genetic algorithm. This is a traditional computational search; no generative-AI provenance is stated."
+      },
+      "parameters": {
+        "instance": "mona-lisa100K",
+        "cities": 100000,
+        "edge_weight_type": "EUC_2D; nearest-integer rounding",
+        "tour": "one Hamiltonian cycle through all cities",
+        "objective": "sum of integer edge lengths, including return edge"
+      },
+      "instance_file": "data/source/mona-lisa100K.tsp",
+      "instance_sha256": "532fefbfb9ad66cc2550bece766fa069acaa8e34ee511ac1949ae101da4d70ad",
+      "known_lower_bound": {
+        "value": 5757084,
+        "source": "https://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html",
+        "source_location": "Official current status; Concorde bound found July 27, 2012",
+        "status": "Reported lower bound. The benchmark does not independently re-certify the Concorde proof artifact."
+      },
+      "optimality_gap": {
+        "reported_absolute_gap": 107,
+        "reported_relative_gap_percent": 0.0019,
+        "interpretation": "gap between the reported upper and lower bounds, not an exact optimum gap"
+      },
+      "open_status": {
+        "evidence": "The official Mona Lisa page retains the 5757191 tour and 5757084 bound. Cook, Helsgaun, Hougardy and Schroeder, Local elimination in the traveling salesman problem (Mathematical Programming Computation 16 (2024), §3.1), explicitly list mona-lisa100k among instances not solved to proven optimality.",
+        "checked_sources": [
+          "https://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html",
+          "https://d-nb.info/1354402197/34",
+          "https://link.springer.com/article/10.1007/s12532-024-00262-y"
+        ],
+        "status": "No later proof of optimality was found in sources checked on 2026-11-06."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T069",
+          "config_id": "T069-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 5757191,
+          "verification_status": "exact",
+          "generation_time": 1.3442737571895123,
+          "verification_time": 1.0385448671877384,
+          "objective_value": 5757191,
+          "details": {
+            "instance": "mona-lisa100K",
+            "instance_sha256": "532fefbfb9ad66cc2550bece766fa069acaa8e34ee511ac1949ae101da4d70ad",
+            "city_count": 100000,
+            "unique_city_count": 100000,
+            "closed_tour_edge_count": 100000,
+            "distance_rule": "isqrt(squared_distance), rounded to nearest integer with exact half-up comparison",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 3.397431891411543,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "tour_cost": 5757191,
+          "independent_method": "binary search integer rounding thresholds, direct raw TSPLIB parse",
+          "closed_edges_checked": 100000
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "e9f5bc338725dbaf3512189b7ec39b7028dc9dbd2dfa8d88dc38b72513c4bab2"
+      },
+      "witness": "data/reference/monalisa_5757191.tour",
+      "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88"
+    }
+  }
+}

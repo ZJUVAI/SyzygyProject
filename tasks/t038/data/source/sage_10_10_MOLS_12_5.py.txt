@@ -1,0 +1,30 @@
+def MOLS_12_5():
+    r"""
+    Return 5 MOLS of order 12.
+
+    These MOLS have been found by Brendan McKay.
+
+    EXAMPLES::
+
+        sage: from sage.combinat.designs.latin_squares import are_mutually_orthogonal_latin_squares
+        sage: from sage.combinat.designs.database import MOLS_12_5
+        sage: MOLS = MOLS_12_5()                                                        # needs sage.modules
+        sage: print(are_mutually_orthogonal_latin_squares(MOLS))                        # needs sage.modules
+        True
+    """
+    M = """
+        abcdefghijkl abcdefghijkl abcdefghijkl abcdefghijkl abcdefghijkl
+        badcfehgjilk ghefklijcdab dcbahgfelkji jilkbadcfehg klijcdabghef
+        cdabghefklij efghijklabcd lkjidcbahgfe ijklabcdefgh fehgjilkbadc
+        dcbahgfelkji cdabghefklij ghefklijcdab badcfehgjilk hgfelkjidcba
+        ijklabcdefgh klijcdabghef efghijklabcd fehgjilkbadc jilkbadcfehg
+        jilkbadcfehg fehgjilkbadc hgfelkjidcba dcbahgfelkji lkjidcbahgfe
+        klijcdabghef hgfelkjidcba jilkbadcfehg cdabghefklij dcbahgfelkji
+        lkjidcbahgfe ijklabcdefgh badcfehgjilk efghijklabcd ghefklijcdab
+        efghijklabcd jilkbadcfehg fehgjilkbadc lkjidcbahgfe cdabghefklij
+        fehgjilkbadc dcbahgfelkji cdabghefklij ghefklijcdab badcfehgjilk
+        ghefklijcdab badcfehgjilk klijcdabghef hgfelkjidcba ijklabcdefgh
+        hgfelkjidcba lkjidcbahgfe ijklabcdefgh klijcdabghef efghijklabcd
+        """
+
+    return _MOLS_from_string(M,5)

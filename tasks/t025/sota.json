@@ -1,0 +1,123 @@
+{
+  "task_id": "T025",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T025-C01": {
+      "parameters": {
+        "dimension": 7,
+        "field_order": 3
+      },
+      "direction": "maximize",
+      "objective": "cardinality of a subset of F_3^7 with no three distinct points summing to zero",
+      "best_human": {
+        "value": 236,
+        "resulting_bound": "r_3(7) >= 236",
+        "date_checked": "2026-11-06",
+        "source": "Calderbank and Fishburn (1994); construction reproduced in Edel and Bierbrauer (2001), Table 2 and Theorem 5.",
+        "url": "https://doi.org/10.1007/BF01388452",
+        "construction_source_url": "https://doi.org/10.1023/A:1011216716700",
+        "witness_url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "witness": "data/edel_bierbrauer_248_projective_matrix.txt",
+        "evidence_state": "Published construction, rebuilt from public coordinates and exactly verified."
+      },
+      "best_public": {
+        "value": 236,
+        "date_checked": "2026-11-06",
+        "url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "witness_url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "evidence_state": "The affine part of the public projective matrix has 236 points. Leaps in Bounds also has a checked transcription submitted on 2026-11-05; the local replay here uses Edel's author page."
+      },
+      "best_reproduced": {
+        "value": 236,
+        "date_checked": "2026-11-06",
+        "witness": "data/human_witness.json",
+        "program": "human.py",
+        "verification_status": "exact",
+        "verification_method": "Check all distinct pairs against the complete point set using modular arithmetic.",
+        "claimed_score_ignored": true
+      },
+      "public_value": 236,
+      "public_source": {
+        "url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "title": "Yves Edel, A 248 cap in PG(7,3)",
+        "claim": "The last check-matrix row has 236 ones, which define the affine slice after dropping that coordinate.",
+        "checked_at": "2026-11-06"
+      },
+      "reproduced_value": 236,
+      "program": "human.py",
+      "witness": "data/human_witness.json",
+      "matches_public_best": true,
+      "highest_reported": {
+        "value": 236,
+        "source": {
+          "url": "https://doi.org/10.1023/A:1011216716700",
+          "title": "Edel and Bierbrauer, Large caps in small spaces",
+          "claim": "Table 2 and Theorem 5 give the 236-cap in AG(7,3)."
+        },
+        "reproduction_status": "reproduced"
+      },
+      "same_parameter_bounds": [
+        {
+          "value": 288,
+          "meaning": "maximum cap size is at most 288; not a construction",
+          "authors": [
+            "Henry Robert Thackeray"
+          ],
+          "version": "arXiv:2206.09804, submitted 2022-06-20",
+          "url": "https://arxiv.org/abs/2206.09804",
+          "evidence_state": "Theorem: there are no 289-cap 7-flats. Exact maximum remains open."
+        }
+      ],
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T025",
+          "config_id": "T025-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 236,
+          "verification_status": "exact",
+          "generation_time": 0.4497612193226814,
+          "verification_time": 0.5179061554372311,
+          "objective_value": 236,
+          "details": {
+            "dimension": 7,
+            "field_order": 3,
+            "point_count": 236,
+            "distinct_points": true,
+            "all_distinct_pairs_checked": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.0023250617086887,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "points": 236,
+          "triples_checked": 2162940,
+          "affine_lines": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "checked_at": "2026-11-06",
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

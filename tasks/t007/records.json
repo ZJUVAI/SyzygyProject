@@ -1,0 +1,209 @@
+{
+  "source_date": "2026-11-03",
+  "best_human": {
+    "value": 623,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "marks": 29,
+      "construction": "projective plane",
+      "prime_power": 29
+    },
+    "url": "https://cube20.org/golomb/",
+    "ai_provenance": "AI reconstructed the listed ruler from cube20's public modular-ruler gaps and multiplier, then checked it exactly.",
+    "evidence_state": "public witness reconstructed; all 406 differences checked; optimality unknown"
+  },
+  "best_public": {
+    "value": 623,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "marks": 29,
+      "construction": "projective plane",
+      "prime_power": 29
+    },
+    "url": "https://cube20.org/golomb/",
+    "ai_provenance": "Published construction attributed by the public table to Atkinson and Hassenklover (1984).",
+    "evidence_state": "public data reconstructs a valid witness; best-public status reflects sources checked, not proven optimality",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 623,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "marks": 29,
+      "construction": "projective plane",
+      "prime_power": 29,
+      "multiplier": 188
+    },
+    "url": "https://cube20.org/golomb/",
+    "ai_provenance": "Reconstructed by applying multiplier 188 modulo 871 to the public projective modular ruler, sorting cyclically, and taking the 29-mark window of span 623.",
+    "evidence_state": "independently checked by exact enumeration of all 406 positive differences"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {
+    "T007-C02": {
+      "best_human": {
+        "value": 680,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "marks": 30,
+          "construction": "projective-plane modular ruler",
+          "prime_power": 29,
+          "multiplier": 71,
+          "modulus": 871
+        },
+        "url": "https://cube20.org/golomb/",
+        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
+        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
+        "evidence_state": "public witness reproduced; 435 positive differences checked exactly; optimality unknown",
+        "status": "accepted_by_sol",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 680,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "marks": 30,
+          "construction": "projective-plane modular ruler",
+          "prime_power": 29,
+          "multiplier": 71,
+          "modulus": 871
+        },
+        "url": "https://cube20.org/golomb/",
+        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
+        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
+        "evidence_state": "public witness reproduced; 435 positive differences checked exactly; optimality unknown",
+        "status": "accepted_by_sol",
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "value": 680,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "marks": 30,
+          "construction": "projective-plane modular ruler",
+          "prime_power": 29,
+          "multiplier": 71,
+          "modulus": 871
+        },
+        "url": "https://cube20.org/golomb/",
+        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
+        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "status": "accepted_by_sol",
+        "actual_value": 680,
+        "verification_status": "exact"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 680,
+        "verification_status": "exact",
+        "witness": "tasks/t007/data/verified_human_t007-c02.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    },
+    "T007-C03": {
+      "best_human": {
+        "value": 784,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "marks": 32,
+          "construction": "projective-plane modular ruler",
+          "prime_power": 31,
+          "multiplier": 116,
+          "modulus": 993
+        },
+        "url": "https://cube20.org/golomb/",
+        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
+        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
+        "evidence_state": "public witness reproduced; 496 positive differences checked exactly; optimality unknown",
+        "status": "accepted_by_sol",
+        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+      },
+      "best_public": {
+        "value": 784,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "marks": 32,
+          "construction": "projective-plane modular ruler",
+          "prime_power": 31,
+          "multiplier": 116,
+          "modulus": 993
+        },
+        "url": "https://cube20.org/golomb/",
+        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
+        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
+        "evidence_state": "public witness reproduced; 496 positive differences checked exactly; optimality unknown",
+        "status": "accepted_by_sol",
+        "origin_type": "Source does not state whether AI assisted this result; unknown."
+      },
+      "best_reproduced": {
+        "value": 784,
+        "date_checked": "2026-11-04",
+        "parameters": {
+          "marks": 32,
+          "construction": "projective-plane modular ruler",
+          "prime_power": 31,
+          "multiplier": 116,
+          "modulus": 993
+        },
+        "url": "https://cube20.org/golomb/",
+        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
+        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
+        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
+        "status": "accepted_by_sol",
+        "actual_value": 784,
+        "verification_status": "exact"
+      },
+      "acceptance_status": "accepted_by_sol",
+      "sol_review": {
+        "reviewer": "GPT-6.1 Sol",
+        "date": "2026-11-04",
+        "actual_objective": 784,
+        "verification_status": "exact",
+        "witness": "tasks/t007/data/verified_human_t007-c03.json",
+        "independent_audit": "PLAN.md",
+        "checks": [
+          "all four programs strict valid",
+          "independent key quantity",
+          "damaged witness rejected",
+          "claimed score ignored",
+          "cold export valid"
+        ]
+      }
+    }
+  },
+  "initial_results": {
+    "T007-C01": {
+      "objective": 1158,
+      "objective_value": 1158,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5379965457685665
+    },
+    "T007-C02": {
+      "objective": 1311,
+      "objective_value": 1311,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5186880244088482
+    },
+    "T007-C03": {
+      "objective": 1522,
+      "objective_value": 1522,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5151116951379764
+    }
+  }
+}

@@ -1,186 +1,108 @@
 {
-  "source_date": "2026-11-03",
-  "best_human": {
-    "value": 623,
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "marks": 29,
-      "construction": "projective plane",
-      "prime_power": 29
-    },
-    "url": "https://cube20.org/golomb/",
-    "ai_provenance": "AI reconstructed the listed ruler from cube20's public modular-ruler gaps and multiplier, then checked it exactly.",
-    "evidence_state": "public witness reconstructed; all 406 differences checked; optimality unknown"
-  },
-  "best_public": {
-    "value": 623,
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "marks": 29,
-      "construction": "projective plane",
-      "prime_power": 29
-    },
-    "url": "https://cube20.org/golomb/",
-    "ai_provenance": "Published construction attributed by the public table to Atkinson and Hassenklover (1984).",
-    "evidence_state": "public data reconstructs a valid witness; best-public status reflects sources checked, not proven optimality",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 623,
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "marks": 29,
-      "construction": "projective plane",
-      "prime_power": 29,
-      "multiplier": 188
-    },
-    "url": "https://cube20.org/golomb/",
-    "ai_provenance": "Reconstructed by applying multiplier 188 modulo 871 to the public projective modular ruler, sorting cyclically, and taking the 29-mark window of span 623.",
-    "evidence_state": "independently checked by exact enumeration of all 406 positive differences"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula",
-  "configuration_records": {
-    "T044-C02": {
+  "task_id": "T044",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T044-C01": {
+      "parameters": {
+        "maximum_degree": 3,
+        "diameter_at_most": 5
+      },
       "best_human": {
-        "value": 680,
-        "date_checked": "2026-11-04",
+        "value": 70,
         "parameters": {
-          "marks": 30,
-          "construction": "projective-plane modular ruler",
-          "prime_power": 29,
-          "multiplier": 71,
-          "modulus": 871
+          "maximum_degree": 3,
+          "diameter_at_most": 5
         },
-        "url": "https://cube20.org/golomb/",
-        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
-        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
-        "evidence_state": "public witness reproduced; 435 positive differences checked exactly; optimality unknown",
-        "status": "accepted_by_sol",
-        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
+        "source": "C. von Conta (1983); independently reported by Alegre, Fiol, and Yebra (1986), Theorem/table construction for a cubic graph of diameter 5 and order 70.",
+        "source_url": "https://doi.org/10.1002/jgt.3190100211",
+        "additional_source": "https://ieeexplore.ieee.org/document/1676297",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The published AFY adjacency list is archived, replayed by human.py, and exactly checked for 70 vertices, maximum degree 3, connectivity, and diameter 5.",
+        "optimality": "A feasible historical construction only; the 70 entry is not marked optimal in the current table.",
+        "witness": "data/reference/afy_70_adjlist_nx.txt",
+        "witness_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "origin_type": "published human graph construction"
       },
       "best_public": {
-        "value": 680,
-        "date_checked": "2026-11-04",
+        "value": 70,
         "parameters": {
-          "marks": 30,
-          "construction": "projective-plane modular ruler",
-          "prime_power": 29,
-          "multiplier": 71,
-          "modulus": 871
+          "maximum_degree": 3,
+          "diameter_at_most": 5
         },
-        "url": "https://cube20.org/golomb/",
-        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
-        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
-        "evidence_state": "public witness reproduced; 435 positive differences checked exactly; optimality unknown",
-        "status": "accepted_by_sol",
-        "origin_type": "Source does not state whether AI assisted this result; unknown."
+        "source": "Comellas's current largest-known degree-diameter table, entry (3,5); source references vC83 and AFY86.",
+        "source_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "detail_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "date_checked": "2026-11-06",
+        "evidence_state": "Table lists 70, does not bold the entry, and gives Moore bound 94. Detail page lists the original references and an explicit adjacency file.",
+        "ai_provenance": "The historical graph is attributed to the 1983/1986 sources. The current table page states its material is AI-free except for some SageMath scripts; the checked source does not link the historical graph to those scripts.",
+        "witness": "data/reference/afy_70_adjlist_nx.txt",
+        "witness_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "origin_type": "published human graph construction"
       },
       "best_reproduced": {
-        "value": 680,
-        "date_checked": "2026-11-04",
+        "value": 70,
         "parameters": {
-          "marks": 30,
-          "construction": "projective-plane modular ruler",
-          "prime_power": 29,
-          "multiplier": 71,
-          "modulus": 871
+          "maximum_degree": 3,
+          "diameter_at_most": 5
         },
-        "url": "https://cube20.org/golomb/",
-        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
-        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
-        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
-        "status": "accepted_by_sol",
-        "actual_value": 680,
-        "verification_status": "exact"
-      },
-      "acceptance_status": "accepted_by_sol",
-      "sol_review": {
-        "reviewer": "GPT-6.1 Sol",
-        "date": "2026-11-04",
-        "actual_objective": 680,
+        "program": "reference.py",
         "verification_status": "exact",
-        "witness": "tasks/t044/data/verified_human_t044-c02.json",
-        "independent_audit": "PLAN.md",
-        "checks": [
-          "all four programs strict valid",
-          "independent key quantity",
-          "damaged witness rejected",
-          "claimed score ignored",
-          "cold export valid"
+        "verification_method": "The checker validates the second published adjacency list and runs BFS from every vertex.",
+        "date_reproduced": "2026-11-06",
+        "witness": "data/reference/coxeter_70_adjlist_nx.txt",
+        "witness_sha256": "2b62872f9ac8ca2f8bed3f6495033aa7e7acd97d16e1427a3532c638100dbde5",
+        "source_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "construction": "Comellas (2024), form the 70-vertex graph from the 28-vertex Coxeter graph by pairing its edges, as described on the detail page. The saved file is the author's adjacency-list output; this task verifies that output rather than re-running the SageMath construction script.",
+        "review_status": "reviewed_by_sol"
+      },
+      "highest_reported": {
+        "value": 70,
+        "source": "Comellas's current degree-diameter table entry (3,5)",
+        "url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "reproduction_status": "The 70-vertex record is exactly reproduced from two published adjacency lists. The table does not mark it optimal."
+      },
+      "upper_bound": {
+        "value": 94,
+        "source": "Moore bound for maximum degree 3 and diameter 5: 1 + 3(1 + 2 + 4 + 8 + 16) = 94.",
+        "evidence_state": "The bound is exact as a general upper bound, but it is not attained or shown tight for this configuration."
+      },
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 70,
+        "note": "H is the reproduced historical order-70 graph."
+      },
+      "optimality_status": {
+        "status": "open; 70 <= maximum order <= 94",
+        "checked_sources": [
+          "Current Comellas degree-diameter table checked 2026-11-06.",
+          "Detail page for (3,5), last modified 2026-10-14.",
+          "von Conta (1983) and Alegre, Fiol, and Yebra (1986) as cited by the detail page."
+        ],
+        "limitations": [
+          "The latest table entry is not bold and does not prove order 70 optimal.",
+          "The 2024 Coxeter construction is replayed from its published adjacency file; this implementation does not rerun SageMath's edge-orbit construction.",
+          "The current table page says that some SageMath scripts were made with ChatGPT, but does not identify whether the cited Coxeter script is among them. The human baseline uses the historical AFY graph instead."
         ]
+      },
+      "source_review": {
+        "current_table_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "current_table_checked": "2026-11-06",
+        "detail_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "detail_last_modified": "2026-10-14",
+        "historical_witness_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/adjacencies/adjD5/AlFiYe70_Z_adjlist.txt",
+        "coxeter_witness_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/adjacencies/adjD5/70fromCoxeter_adjlist.txt",
+        "review_status": "source checked; pending Sol review"
       }
-    },
-    "T044-C03": {
-      "best_human": {
-        "value": 784,
-        "date_checked": "2026-11-04",
-        "parameters": {
-          "marks": 32,
-          "construction": "projective-plane modular ruler",
-          "prime_power": 31,
-          "multiplier": 116,
-          "modulus": 993
-        },
-        "url": "https://cube20.org/golomb/",
-        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
-        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
-        "evidence_state": "public witness reproduced; 496 positive differences checked exactly; optimality unknown",
-        "status": "accepted_by_sol",
-        "origin_type": "Public human construction or traditional computer search; see provenance for attribution limits."
-      },
-      "best_public": {
-        "value": 784,
-        "date_checked": "2026-11-04",
-        "parameters": {
-          "marks": 32,
-          "construction": "projective-plane modular ruler",
-          "prime_power": 31,
-          "multiplier": 116,
-          "modulus": 993
-        },
-        "url": "https://cube20.org/golomb/",
-        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
-        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
-        "evidence_state": "public witness reproduced; 496 positive differences checked exactly; optimality unknown",
-        "status": "accepted_by_sol",
-        "origin_type": "Source does not state whether AI assisted this result; unknown."
-      },
-      "best_reproduced": {
-        "value": 784,
-        "date_checked": "2026-11-04",
-        "parameters": {
-          "marks": 32,
-          "construction": "projective-plane modular ruler",
-          "prime_power": 31,
-          "multiplier": 116,
-          "modulus": 993
-        },
-        "url": "https://cube20.org/golomb/",
-        "witness_source": "https://cube20.org/golomb/rulers-all-00.zip",
-        "ai_provenance": "Reconstructed from the public rulers-all-00 row; checked against public metadata and then rechecked exactly in the task checker.",
-        "evidence_state": "Sol replayed this witness and independently recomputed its key quantity.",
-        "status": "accepted_by_sol",
-        "actual_value": 784,
-        "verification_status": "exact"
-      },
-      "acceptance_status": "accepted_by_sol",
-      "sol_review": {
-        "reviewer": "GPT-6.1 Sol",
-        "date": "2026-11-04",
-        "actual_objective": 784,
-        "verification_status": "exact",
-        "witness": "tasks/t044/data/verified_human_t044-c03.json",
-        "independent_audit": "PLAN.md",
-        "checks": [
-          "all four programs strict valid",
-          "independent key quantity",
-          "damaged witness rejected",
-          "claimed score ignored",
-          "cold export valid"
-        ]
-      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T044-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.014285714285714285
     }
   }
 }

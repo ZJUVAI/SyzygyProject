@@ -1,0 +1,106 @@
+{
+  "task_id": "T029",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T029-C01": {
+      "parameters": {
+        "matrix_order": 3,
+        "field": "Q",
+        "bilinear": true
+      },
+      "direction": "minimize",
+      "objective": "number of nonzero simple tensor terms (equivalently, scalar multiplications in a bilinear algorithm)",
+      "best_human": {
+        "value": 23,
+        "source": "Laderman (1976), Bulletin of the AMS 82(1), 126-128.",
+        "url": "https://doi.org/10.1090/S0002-9904-1976-13988-2",
+        "witness": "data/laderman_rank23.json",
+        "evidence_state": "First-party Lille Maple tensor source normalized to lambda=1; exact local tensor replay."
+      },
+      "best_public": {
+        "value": 23,
+        "source": "Laderman (1976), as represented in the Université de Lille Fast Matrix Multiplication database.",
+        "url": "https://fmm.univ-lille.fr/3x3x3.html",
+        "witness_url": "https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2",
+        "date_checked": "2026-11-06",
+        "evidence_state": "Exact replay of the locally archived first-party representation."
+      },
+      "bounds": {
+        "lower_bound": 19,
+        "upper_bound": 23,
+        "status": "open",
+        "primary_source": "Tejasvi Singh Tomar, The rank of 3x3 matrix multiplication over F2 is 23, arXiv:2610.11823v3, Introduction, 19 October 2026.",
+        "primary_source_url": "https://arxiv.org/html/2610.11823v3",
+        "source_statement": "The paper states that over fields of characteristic zero rank remains unknown and lies between 19 and 23. Its rank-23 optimality theorem is over F2; the integer-coefficient corollary does not settle arbitrary rational coefficients.",
+        "scope_warning": "Do not transfer the F2 or integer-coefficient lower bound to Q."
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T029",
+          "config_id": "T029-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 23,
+          "verification_status": "exact",
+          "generation_time": 0.16489629819989204,
+          "verification_time": 0.2151218168437481,
+          "objective_value": 23,
+          "details": {
+            "matrix_order": 3,
+            "field": "Q",
+            "tensor_coefficients_recomputed": 729,
+            "input_forms": "alpha(A) * beta(B), separate linear forms",
+            "output_convention": "gamma[i,k] contributes to C[i,k]",
+            "claimed_objective_ignored": true,
+            "max_terms_is_resource_cap_not_an_optimality_bound": true
+          },
+          "eval_time": 0.38410696014761925,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "rank_terms": 23,
+          "basis_pairs": 81,
+          "output_coefficients_checked": 729
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "045cb07c26dc32a20e27396671fa14ff70c5c79b72948d0fdea9c57d3f6eaefe"
+      },
+      "review_status": "accepted_by_sol",
+      "program": "reference.py",
+      "reproduced_value": "23",
+      "public_value": "23",
+      "highest_reported": {
+        "value": "23",
+        "source": {
+          "value": 23,
+          "source": "Laderman (1976), as represented in the Université de Lille Fast Matrix Multiplication database.",
+          "url": "https://fmm.univ-lille.fr/3x3x3.html",
+          "witness_url": "https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2",
+          "date_checked": "2026-11-06",
+          "evidence_state": "Exact replay of the locally archived first-party representation."
+        },
+        "reproduction_status": "witness reproduced exactly"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

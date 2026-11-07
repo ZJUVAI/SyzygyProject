@@ -1,4 +1,12 @@
-Find a 29 by 29 matrix whose entries are all -1 or +1. Return JSON with a single key, "matrix", whose value is a list of 29 lists of 29 integer entries. The objective is to maximize the absolute value of the exact determinant. Do not include Boolean entries. A claimed score is ignored.
+Find a polynomial-Gaussian witness for the one-dimensional sign-uncertainty problem.
 
+Use a finite polynomial p with exact rational coefficients and define
 
-Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact or conservative interval verification. Compatibility feedback is J/H for maximization or H/J for minimization, where H is the frozen external reference. Start from the supplied initial program.
+    f(x) = p(pi*x^2) exp(-pi*x^2)
+    fhat(xi) = q(pi*xi^2) exp(-pi*xi^2),
+
+where fhat uses the Fourier transform integral f(x) exp(-2*pi*i*x*xi) dx. The checker derives q from p. Require p(0)<0 and q(0)<0. Both polynomials must be nonnegative for all sufficiently large nonnegative arguments.
+
+Minimize A(f) A(fhat), where A(g)=inf{r>0: g(x)>=0 whenever |x|>=r}. The checker finds the last negative-to-positive root of each polynomial by exact rational root isolation. It returns a certified rational interval and ranks the construction by its conservative upper endpoint. Do not report a floating-point root or a claimed score as proof.
+
+Return JSON with a `coefficients` array in ascending powers of t. Each coefficient may be an integer, a finite JSON number interpreted as its exact binary rational, or a rational string such as `-3/2`. Do not read task data, human witnesses, or reference files. Keep the degree finite; there is no configured degree cap.

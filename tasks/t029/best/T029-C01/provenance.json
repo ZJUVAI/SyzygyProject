@@ -1,0 +1,52 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T029",
+    "config_id": "T029-C01",
+    "validity": 1.0,
+    "combined_score": 0.8846153846153846,
+    "objective": 26,
+    "verification_status": "exact",
+    "generation_time": 0.21493526175618172,
+    "verification_time": 0.21512143313884735,
+    "objective_value": 26,
+    "details": {
+      "matrix_order": 3,
+      "field": "Q",
+      "tensor_coefficients_recomputed": 729,
+      "input_forms": "alpha(A) * beta(B), separate linear forms",
+      "output_convention": "gamma[i,k] contributes to C[i,k]",
+      "claimed_objective_ignored": true,
+      "max_terms_is_resource_cap_not_an_optimality_bound": true
+    },
+    "eval_time": 0.4347046725451946,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "schoolbook outside upper-left 2x2 block plus Strassen's seven products",
+    "seed": 0,
+    "iterations": 1,
+    "reference_data_read": false
+  },
+  "solution_sha256": "03a3b9d3ed4d9975736c51b2ec0ff1eadd27b13c5ce1339bb854ed3b672c42a3",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T029 tasks/t029/best/T029-C01/solution.json --config T029-C01"
+}

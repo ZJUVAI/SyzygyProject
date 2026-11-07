@@ -1,0 +1,10 @@
+# Task: improve the two-color van der Waerden lower bound for 7-term progressions
+
+Return a JSON-compatible object with:
+
+- `n`: a positive integer;
+- `colors`: a list of exactly `n` integer labels from `{0,1}`.
+
+Entry `colors[i]` colors the positive integer `i+1`. The list must describe the full consecutive prefix `[1,n]`. It must contain no monochromatic seven-term arithmetic progression with positive integer common difference. The objective is to maximize `n`.
+
+The evaluator recomputes the objective and checks all progressions. Do not include a claimed score as evidence. The required configuration is T034-C01. Follow the `run_code()` interface and read `MATHBENCH_CONFIG_ID` if needed.

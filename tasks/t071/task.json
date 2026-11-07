@@ -1,0 +1,32 @@
+{
+  "task_id": "T071",
+  "name": "Maximum binary single-deletion-correcting code at length 16",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T071-C01",
+      "parameters": {
+        "length": 16,
+        "alphabet": "{0,1}",
+        "correctable_errors": "one deletion",
+        "decoding_condition": "distinct codewords have disjoint sets of length-15 deletion outputs",
+        "objective": "number of codewords"
+      },
+      "direction": "maximize",
+      "human_reference": 3856
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Binary length16 single-deletion correcting code; maximize distinct codewords with disjoint sets of length15 deletion outputs. No restriction to VTsyndrome family.",
+      "human": "Reconstructed classical VT0 checksum modulo17 on all65536words, obtaining3856; root independently constructed same set before implementation. Modernsource2504.00613v2 §2.2 gives definition and classical attribution; AI rediscovery only matches the human family, no newcodebreakthroughclaim.",
+      "public_and_open": "Read current2026 revised paper2504.00613v2 §1 and§2.2 explicitly finiteoptimality known onlythrough11; Table1n16 has classical3856 and LPupper4202. LPbound reported,not independently dual-certified. Reaching every32768deletion output does not prove optimal cardinality because deletion-ball sizes vary.",
+      "independent": "Admission independently formats each codewordas16-character string and slices every deletion index; per-word repeated outputs removed, no shared output among words. This is separate from formal bitmask deletion arithmetic. All32768 outputs of human/ref assigned once.",
+      "isolation": "Initialsinglezero word, baseline/evolution random-ordergreedy over65536words with genericdeletionarithmetic only; no comparisondata. Strictfiveprogramruns,full-returnclaiminvariance,broken0/1sharedoutput,replay,coldexport,failurecontrols passed."
+    }
+  }
+}

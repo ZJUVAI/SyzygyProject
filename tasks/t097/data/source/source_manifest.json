@@ -1,0 +1,56 @@
+{
+  "snapshot_date": "2026-11-06",
+  "sources": [
+    {
+      "name": "Official CG:SHOP 2023 input archive",
+      "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2023/instances_v2.zip",
+      "archive_sha256": "a0f802d05a0f8984879af462ad9c4c2eaf213e0c991632f8f061f357dcb0bb39",
+      "extracted_file": "socg_fixed92.instance.json",
+      "extracted_file_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+      "metadata": "The instance has 92 boundary vertices and no holes."
+    },
+    {
+      "name": "Shadoks CG:SHOP 2023 solution viewer",
+      "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+      "page": "socg_fixed92.mergeB_autor.20221118-085951",
+      "file": "socg_fixed92_solution.html",
+      "file_sha256": "3d5d8c4107e79622cf349ac23bcf49826eb8257502a767915ff9601b9b5e1270",
+      "reported_piece_count": 15,
+      "scope": "A Shadoks-team public report. The SVG displays rounded coordinates. Nearby integer coordinates were inferred and exactly validated as one feasible same-count 15-piece witness; the original submitted coordinates are not recovered uniquely. This is not a global-optimum certificate."
+    },
+    {
+      "name": "Official CG:SHOP 2023 aggregate ranking",
+      "url": "https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2023/#ranking",
+      "file": "cgshop2023_official_ranking.html",
+      "file_sha256": "f5444fb346b74026aaf31d6c2c41bc5e00bfbfc866fe5607af5e737b8f178894",
+      "scope": "The ranking lists aggregate team scores only. It does not publish per-instance values. DIKU (AMW) ranks first overall and Shadoks second overall."
+    },
+    {
+      "name": "Minimum Coverage by Convex Polygons: The CG:SHOP Challenge 2023",
+      "url": "https://doi.org/10.57717/cgt.v5i4.115",
+      "scope": "The challenge article describes exact validation and the winning teams' algorithms. It treats best values as submitted solutions and does not claim that socg_fixed92 is globally solved."
+    },
+    {
+      "name": "Shadoks CG:SHOP 2023 source repository",
+      "url": "https://github.com/gfonsecabr/shadoks-CGSHOP2023",
+      "commit": "117a793196dee7bdab0e30c3b501055eebffda08",
+      "scope": "Repository head snapshot checked on 2026-11-06; used as a source-code link for the published team's method, not executed to produce this witness."
+    },
+    {
+      "name": "Covering Polygons is Even Harder",
+      "url": "https://arxiv.org/abs/2106.02335",
+      "scope": "Shows that minimum convex covers can require irrational coordinates of unbounded algebraic degree on some rational polygons. This supports keeping all-real-coordinate semantics."
+    },
+    {
+      "name": "Peeling Rotten Potatoes for a Faster Approximation of Convex Cover",
+      "url": "https://arxiv.org/abs/2604.17983",
+      "scope": "Submitted 2026-04-20. Gives an O(log n)-approximation algorithm; it does not report a proof for this fixed instance."
+    },
+    {
+      "name": "An Overview of Minimum Convex Cover and Maximum Hidden Set, v2",
+      "url": "https://arxiv.org/abs/2403.01354v2",
+      "scope": "Revised 2026-04-28. Reviewed for results on this fixed instance; no global optimality proof located."
+    }
+  ],
+  "public_record_limitations": "The official competition page publishes only aggregate team rankings. The Shadoks viewer contains its own per-instance witnesses, but no complete all-team per-instance archive was found. Therefore 15 is a verified public witness from the checked Shadoks source, not a claim that it is the best result from every team."
+}

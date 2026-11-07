@@ -1,59 +1,73 @@
 {
   "task_id": "T082",
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 0.38092685343308696,
-    "exact_value": "64757565083624785688821235069923/170000000000000000000000000000000",
-    "parameters": {
-      "steps": 51,
-      "support": "[0,2]",
-      "range": "0≤f≤1",
-      "integral": 1
-    },
-    "authors": [
-      "Jan Kristian Haugland"
-    ],
-    "year": 2016,
-    "url": "https://arxiv.org/abs/1609.08000",
-    "evidence_state": "printed decimals transcribed as exact decimal rationals; exact mass and full real-shift objective independently recomputed",
-    "optimality": "feasible historical upper-bound witness; no optimality claim",
-    "witness": "data/human_t082.json"
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T082-C01": {
+      "parameters": {
+        "board_size": 30,
+        "equal_armies": true
+      },
+      "best_human": {
+        "value": 131,
+        "source": "Stephen Ainley, Mathematical Puzzles (1977), attributed in OEIS A250000; the layout is transcribed in Kamenetsky's 2019 file.",
+        "source_url": "https://oeis.org/A250000/a250000_3.txt",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional human construction. It predates modern generative AI; the saved witness is a later public transcription.",
+        "evidence_state": "The complete board is reproduced and passes exact pairwise checking.",
+        "witness": "data/reference/peaceable_queens_n30_131.json",
+        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4"
+      },
+      "best_public": {
+        "value": 131,
+        "source": "OEIS A250000, Kamenetsky's best-known-solution file, line headed a(30)>=131.",
+        "source_url": "https://oeis.org/A250000/a250000_3.txt",
+        "date_checked": "2026-11-06",
+        "provenance": "Public construction attributed to Ainley (1977), with a later 2019 layout transcription. No AI authorship claim is made for the historical construction.",
+        "evidence_state": "Verified as a feasible lower bound; no n=30 optimum claim.",
+        "witness": "data/reference/peaceable_queens_n30_131.json",
+        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4"
+      },
+      "best_reproduced": {
+        "value": 131,
+        "date_reproduced": "2026-11-06",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Recount each army and check every white-black pair for row, column, and diagonal attacks.",
+        "witness": "data/reference/peaceable_queens_n30_131.json",
+        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
+        "origin_type": "historical construction parsed from an OEIS public layout",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 131,
+        "witness_program": "human.py",
+        "witness": "data/reference/peaceable_queens_n30_131.json",
+        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
+        "endpoint_policy": "Freeze the exact integer arm size as H for J/H."
+      },
+      "highest_reported": {
+        "value": 131,
+        "source": "OEIS A250000, Kamenetsky, Best known solutions for 12<=n<=30.",
+        "source_url": "https://oeis.org/A250000/a250000_3.txt",
+        "reproduction_status": "The layout is reproduced. It establishes a lower bound only; optimality at n=30 is open in the sources checked."
+      },
+      "optimality_status": {
+        "status": "open in sources checked",
+        "source_survey_date": "2026-11-06",
+        "lower_bound": 131,
+        "upper_bound": 225,
+        "evidence": "The finite 225 row/column bound follows from disjoint occupied rows and columns for opposite colors. The 2025 asymptotic upper bound is stated only for sufficiently large n and is not applied to n=30. A separate INFORMS paper establishes n=16=37, not n=30."
+      }
+    }
   },
-  "best_public": {
-    "value": 0.380926853433087,
-    "parameters": {
-      "steps": 51,
-      "support": "[0,2]",
-      "range": "0≤f≤1",
-      "integral": 1
-    },
-    "url": "https://arxiv.org/abs/1609.08000",
-    "evidence_state": "paper reports the 51-step value rounded upward; our rational transcription reproduces a slightly lower exact value",
-    "optimality": "published upper bound for the limiting constant; not an optimality proof",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 0.38092685343308696,
-    "exact_value": "64757565083624785688821235069923/170000000000000000000000000000000",
-    "parameters": {
-      "steps": 51,
-      "support": "[0,2]",
-      "range": "0≤f≤1",
-      "integral": 1
-    },
-    "provenance": "task-local rational transcription of the 51 printed decimal heights in Haugland (2016)",
-    "evidence_state": "exact 51-lag-pair correlation computed; piecewise linearity certifies all real shifts"
-  },
-  "baseline_seed": {
-    "provenance": "constant height 1/2 in init_program.py",
-    "evidence_state": "valid exact-mass initial point; not a published result"
-  },
-  "source_notes": [
-    "The 51 printed decimals sum to 25.5, so the corresponding 51 equal bins have exact integral (2/51)*25.5=1; no correction was applied.",
-    "The paper states a rounded-up value of 0.3809268534330870. Exact arithmetic on the decimal-rational transcription gives 0.38092685343308696.",
-    "The paper also discusses a 19-step construction with a smaller value; it does not match this fixed 51-step configuration."
-  ],
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T082-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.007633587786259542
+    }
+  }
 }

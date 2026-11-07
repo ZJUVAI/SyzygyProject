@@ -1,11 +1,51 @@
 {
-  "classification": "ai_assisted_local_search",
+  "reviewer": "Sol main agent",
   "status": "reviewed_by_sol",
-  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
   "independent_quantity": {
-    "radius": "96362339009/1000000000000",
-    "smallest_squared_pair_margin": "385449356037/1000000000000000000000000"
+    "radius": "96362339009887/1000000000000000",
+    "smallest_squared_pair_margin": "0"
   },
   "claimed_score_ignored": true,
-  "damaged_construction_rejected": true
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "group": "geometry"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 11,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "30.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 64
+  },
+  "source_sha256": {
+    "tasks/t001/baseline.py": "3846cbedb7b977bd0318f934b0b5068296f2145aed84ef3b908aa2d96accd39c",
+    "tasks/t001/check.py": "7426ffdd74a04e69050cf4ca117ce7e043e0fc0be1c2a4ef894aa4135e632557",
+    "tasks/t001/evaluator.py": "eea34603c87c91387a12dfd612816b008faf21511dabd40d23908690943ecc67",
+    "tasks/t001/evolution.py": "1348c72ecf73bb9dd3d682fbfd9c9fdcec8446b2f42b6a715ae1b2c08b719007",
+    "tasks/t001/human.py": "4ea6a4097ea20f5d11813cf55056456309782765d4d650904de162ea7e31e345",
+    "tasks/t001/init_program.py": "9e00278a17d62ee13ca8c3d884f969f1b898724b95f9c3f5c51a50ebbdccb624",
+    "tasks/t001/reduce_sota.py": "f8a1d53157fcc5653706fcf9409b0aa3f600963621f17196f1472823f2b4fa86",
+    "tasks/t001/reference.py": "0338564e127ccc4dd57dc406fabc23bfef463c61378109baabcf1fd89ff52d92",
+    "tasks/t001/sota.py": "e37070977b45898312bda94776732286bc9704f45a347de577ff8674dea161ca",
+    "tasks/t001/test_task.py": "0c445a50fd4473aa2adaa438862cd131ca5c35934c566e186157c61791f28ae0"
+  },
+  "warm_start_sha256": "d24cf5f8bfedd410b0975a5112a35c637f887645c7084b0ca0516c55f824dbbe",
+  "replay_command": "python -m mathbench replay T001 tasks/t001/best/T001-C01/solution.json --config T001-C01"
 }

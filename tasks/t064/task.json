@@ -1,0 +1,49 @@
+{
+  "task_id": "T064",
+  "name": "Minimum non-obtuse triangulation of ortho40",
+  "candidate_id": "minimum-nonobtuse-triangulation",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T064-C01",
+      "parameters": {
+        "instance_uid": "ortho_40_56a6f463",
+        "input_file": "data/source/ortho40.instance.json",
+        "input_sha256": "f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7",
+        "input_vertices": 40,
+        "region_boundary_vertices": 40,
+        "additional_constraints": 0,
+        "objective": "number of added Steiner points",
+        "objective_unit": "Steiner points",
+        "coordinate_domain": "rational",
+        "coordinate_encoding": "finite JSON floats are interpreted as exact binary rationals",
+        "resource_guard_max_steiner_points": 2000,
+        "feasibility": "straight-line triangulation of the complete simple polygon; all input vertices included; all edges inside the polygon; all 40 boundary segments covered; no crossings; every bounded face is a non-degenerate non-obtuse triangle"
+      },
+      "direction": "minimize",
+      "human_reference": 129
+    }
+  ],
+  "search_metadata": {
+    "algorithm": "seeded enumeration of orthogonal grid triangulation patterns",
+    "default_seed": 0,
+    "default_iterations": 20,
+    "candidate_reads_reference_witness": false,
+    "budget_note": "Fixed iteration count and seed by default. Explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定ortho_40_56a6f463输入40点无额外约束，最小化非钝角完整剖分的额外Steiner点数；仅完全合法非钝角构造进入排名，不把少量钝角惩罚作正式解。",
+      "primary_source": "Sol亲读SoCG2025.79 Figure10的该实例19点记录，重取固定77920a0e578e5bff13c710f988ec1c52d61dcfd8仓库merged_summaries_3.zip内对应完整解，核对官方输入SHA f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7。另阅读SoCG2025.80正交多边形网格传统方法，独立在同参重建弱人类129点。",
+      "independent_math": "正式checker清除公分母转整数后作平面与角度检查。Sol另直接用Fraction精确构建半边面、查所有边对交叉/重叠、连通、40条边界子段无缝覆盖、每个有界面三角及全部角点积非负；59点121边63三角，所有三角双面积之和与原多边形均2711189126024。相同独立方法检查五种构造。",
+      "domain_and_resources": "接口明确为任意精度有理坐标版本，不声称覆盖原几何实坐标模型。移除未经证明的128字符与8192共同分母bit限制，依赖公共资源预算。2000额外点cap不排除任何优于19的解，因为改进仅需≤18点。",
+      "open_status": "论文、获胜工件及所查2026资料没有该实例19的匹配最优性证明；19只记可行公开纪录。2026 Bishop最优角度范围结果不同于最少Steiner点，不用于闭合本题。获胜搜索AI参与情况未披露，human129传统网格重建与public19分开。",
+      "controls": "初始/传统/演化/人类129，公开固定参考19。五程序、删边破坏、完整声明不变、严格回放、仅公开输入冷导出、程序异常/非有限/超时均通过。任务及共享检查46项通过。",
+      "limits": "未证明19最优，未重跑作者300000CPU小时发现过程；未将有理接口可行性推广为覆盖全部实数坐标构造。"
+    }
+  }
+}

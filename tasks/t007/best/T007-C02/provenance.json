@@ -1,0 +1,51 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "distinct_positive_differences": 435,
+    "span": 680
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "group": "combinatorics"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 10,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "30.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 80
+  },
+  "source_sha256": {
+    "tasks/t007/baseline.py": "cbc1e4961fa6632742d762945f03e4f6e9543db67093a0ff153216f76d4b4d3b",
+    "tasks/t007/check.py": "133b57bc977396c53b262e29afb8ba6a47c9dcf155e66597a56c347b44b0e247",
+    "tasks/t007/evaluator.py": "b1759ba0fc9874c906c6af6fd7060ef1e3f38469ffc526c9a4ff0b5a218ff493",
+    "tasks/t007/evolution.py": "4c3339aee5d985c50a48e14f0d91ce055006abafea5a92850591c3011d42b2ae",
+    "tasks/t007/human.py": "6d230266dbf58e8aa7627f7174a1fec654636924042242abe4d8f3d239f818e9",
+    "tasks/t007/init_program.py": "3450fac6f6fd1d2692a3228742c1f5f22538e335b0cbd9e7d55d96afad2c2ff3",
+    "tasks/t007/reference.py": "ea0c4308579142d58934abf21985f3dc2eff2d02e36cbc8cc10f67189c7847a2",
+    "tasks/t007/sota.py": "8ce8a3eb0c484c95bd630ce7cfcbc86386dd73ea75e4c11bcbd7f79f02f0d38e",
+    "tasks/t007/test_singer_constructor.py": "f2753a9a1f9677ea4560fc7202625c6405f689966675c5613ee45ea913a8f43b",
+    "tasks/t007/test_task.py": "c44dd1277daff5a0ce9e2f2537f388eec3a102cc277c8e9670795f3e0e84d6dd"
+  },
+  "warm_start_sha256": "6c1c9a6a75947249c68a5d876c2287fb9d599f046eeede25acb58bdb394055cf",
+  "replay_command": "python -m mathbench replay T007 tasks/t007/best/T007-C02/solution.json --config T007-C02"
+}

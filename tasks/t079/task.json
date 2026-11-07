@@ -1,40 +1,61 @@
 {
   "task_id": "T079",
-  "name": "Nonnegative convolution extremum, 208 steps",
+  "name": "Minimum Kakeya set in F_31^3",
   "acceptance_status": "accepted_by_sol",
+  "category": "finite_geometry",
+  "definition": "Choose one affine line in every projective direction of F_31^3 and minimize the cardinality of the union of all chosen lines.",
+  "solution_format": "An object with lines, a list of 993 objects. Each object has direction and origin, three integer coordinates in [0,30]. Directions use the canonical representative whose last nonzero coordinate is 1.",
+  "objective": {
+    "name": "union_cardinality",
+    "unit": "points in F_31^3",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "The field is F_31, with arithmetic modulo 31, and the ambient dimension is 3.",
+    "There are 993 projective directions. Each direction must occur exactly once.",
+    "A direction is represented by its unique nonzero vector whose last nonzero coordinate is 1.",
+    "Each line is {origin + t*direction : t in F_31} for one origin in F_31^3.",
+    "All 31 points on every represented line belong to the candidate union. The objective is the exact number of distinct points in that union."
+  ],
   "configurations": [
     {
       "id": "T079-C01",
       "parameters": {
-        "steps": 208,
-        "support": [
-          "-1/4",
-          "1/4"
-        ],
-        "nonnegative": true
+        "field_order": 31,
+        "dimension": 3,
+        "direction_count": 993,
+        "construction": "one affine line in each projective direction",
+        "objective": "cardinality of the union of the represented lines"
       },
       "direction": "minimize",
-      "human_reference": 1.5097201507458786
+      "human_reference": 8641
     }
   ],
+  "sources": [
+    "https://arxiv.org/abs/2108.00074",
+    "https://arxiv.org/html/2608.23691v2",
+    "https://dualverse.ai/station/math/finite-field-kakeya/",
+    "https://arxiv.org/abs/2511.02864"
+  ],
+  "verification": "The checker requires exactly one canonical line for each of the 993 projective directions. It generates all 31 points per line using integer arithmetic modulo 31, forms the exact union, and returns its cardinality.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Minimum Kakeya set in F31^3, specified by one arbitrary affine line in each of993 projective directions. Taking union does not restrict the minimum: every Kakeya set contains such a choice and its union is no larger. No quadratic-template restriction in formal candidate domain.",
+      "human_source": "Classical odd-field quadratic residue construction as recorded in Bukh-Chao2021 section4. Root independently generates its membership predicate on all29791 points and matches human line union exactly:8641 =30*16^2+31^2.",
+      "public_reference": "Station/Dualverse Chung-Du-Wesley2608.23691v2 section6.1 S1 equation1, AI-generated construction. Root independently builds the quadratic membership set plus the rational one-pole plane boundary; formula(2p^3+7p^2+3)/8 gives8289 at31 and matches saved reference line union exactly. First-party notebook and paper archived. Non-primary8288 claim excluded; AlphaEvolve8290 remains a separately scoped un-reproduced report.",
+      "open_status": "Bukh-Chao leading constant1/4 is asymptotically sharp, not an exact finite31 optimum. Finite reported lower bound ceil(31^5/61^2)=7694, arithmetic recomputed; underlying general theorem cited. Station section6.1 explicitly leaves lower-order corrections open. No same-parameter optimality proof located.",
+      "independent_method": "Root projectivizes all30790 nonzero vectors and obtains993 directions, then iterates modular additions into a dense29791-byte bitmap. Formal checker uses a prescribed chart and sets of t-times-direction triples. Additional independent full-space membership reconstruction verifies both external formulas.",
+      "initial_search_and_admission": "Standalone all-lines-through-origin seed29791. Own generic baseline17574 and evolution15534; external human8641/reference8289 never read by candidate searches. All five strict runs, claim-invariant complete checker returns, duplicate-direction damage, replay, cold export and error/nonfinite/timeout controls passed."
+    }
   }
 }

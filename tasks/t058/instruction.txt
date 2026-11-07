@@ -1,0 +1,7 @@
+Find a schedule with as many rounds as possible for 35 players.
+
+Return a JSON object with a `rounds` list. Each round must be a list of exactly 7 groups. Each group must be a list of exactly 5 distinct player IDs from 0 through 34. Every player must appear in exactly one group in each round. No unordered pair of players may share a group in more than one round.
+
+The objective is to maximize the number of valid rounds. A counting argument gives an upper bound of 8 rounds: each player can meet at most 34 other players, and meets 4 new players per round.
+
+Start from the supplied simple one-round program. Do not read reference, human, or best witness files. Declared objective and score fields are ignored.

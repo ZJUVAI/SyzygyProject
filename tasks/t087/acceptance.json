@@ -1,0 +1,423 @@
+{
+  "task_id": "T087",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T087 --label admission_20261106_revised",
+  "configurations": {
+    "T087-C01": {
+      "configuration": {
+        "id": "T087-C01",
+        "parameters": {
+          "steps": 480,
+          "step_size": "13/4800",
+          "support": "13/10",
+          "height_domain": "nonnegative_rational"
+        },
+        "direction": "maximize",
+        "human_reference": 0.361601515732983
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T087",
+            "config_id": "T087-C01",
+            "validity": 1.0,
+            "combined_score": 0.49091274559393805,
+            "objective": "30/169",
+            "verification_status": "exact",
+            "generation_time": 6.383139904588461,
+            "verification_time": 1.54909198731184,
+            "objective_value": "30/169",
+            "details": {
+              "steps": 480,
+              "step_size": "13/4800",
+              "support_length": "13/10",
+              "l1_norm": "13/10",
+              "minimum_autocorrelation": "3/10",
+              "minimum_location": {
+                "type": "endpoint",
+                "t": "1"
+              },
+              "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 7.9545757211744785,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "minimum_autocorrelation_ratio": "30/169",
+            "minimum_autocorrelation": "3/10",
+            "l1_mass": "13/10",
+            "method": "exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T087",
+            "config_id": "T087-C01",
+            "validity": 1.0,
+            "combined_score": 0.8343746010848101,
+            "objective": "40960/135759",
+            "verification_status": "exact",
+            "generation_time": 0.9885320141911507,
+            "verification_time": 1.0996268466114998,
+            "objective_value": "40960/135759",
+            "details": {
+              "steps": 480,
+              "step_size": "13/4800",
+              "support_length": "13/10",
+              "l1_norm": "767/320",
+              "minimum_autocorrelation": "26/15",
+              "minimum_location": {
+                "type": "grid_node",
+                "k": 264
+              },
+              "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.09765562415123,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "minimum_autocorrelation_ratio": "40960/135759",
+            "minimum_autocorrelation": "26/15",
+            "l1_mass": "767/320",
+            "method": "exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T087",
+            "config_id": "T087-C01",
+            "validity": 1.0,
+            "combined_score": 0.9999999999999993,
+            "objective": "15833948850637600/43788391811747427",
+            "verification_status": "exact",
+            "generation_time": 1.396692905575037,
+            "verification_time": 0.9002004377543926,
+            "objective_value": "15833948850637600/43788391811747427",
+            "details": {
+              "steps": 480,
+              "step_size": "13/4800",
+              "support_length": "13/10",
+              "l1_norm": "120814447/80000000",
+              "minimum_autocorrelation": "19792436063297/24000000000000",
+              "minimum_location": {
+                "type": "endpoint",
+                "t": "1"
+              },
+              "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.3067864291369915,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "minimum_autocorrelation_ratio": "15833948850637600/43788391811747427",
+            "minimum_autocorrelation": "19792436063297/24000000000000",
+            "l1_mass": "120814447/80000000",
+            "method": "exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T087",
+            "config_id": "T087-C01",
+            "validity": 1.0,
+            "combined_score": 1.104015185841681,
+            "objective": "2378625/5958277",
+            "verification_status": "exact",
+            "generation_time": 0.6428713202476501,
+            "verification_time": 0.9065290875732899,
+            "objective_value": "2378625/5958277",
+            "details": {
+              "steps": 480,
+              "step_size": "13/4800",
+              "support_length": "13/10",
+              "l1_norm": "8801/72000",
+              "minimum_autocorrelation": "82459/13824000",
+              "minimum_location": {
+                "type": "grid_node",
+                "k": 216
+              },
+              "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.56043965741992,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "minimum_autocorrelation_ratio": "2378625/5958277",
+            "minimum_autocorrelation": "82459/13824000",
+            "l1_mass": "8801/72000",
+            "method": "exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T087",
+            "config_id": "T087-C01",
+            "validity": 1.0,
+            "combined_score": 0.8651389135004939,
+            "objective": "3345600/10694437",
+            "verification_status": "exact",
+            "generation_time": 1.3972857184708118,
+            "verification_time": 0.7488060034811497,
+            "objective_value": "3345600/10694437",
+            "details": {
+              "steps": 480,
+              "step_size": "13/4800",
+              "support_length": "13/10",
+              "l1_norm": "11791/4800",
+              "minimum_autocorrelation": "9061/4800",
+              "minimum_location": {
+                "type": "grid_node",
+                "k": 224
+              },
+              "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.1542585603892803,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "minimum_autocorrelation_ratio": "3345600/10694437",
+            "minimum_autocorrelation": "9061/4800",
+            "l1_mass": "11791/4800",
+            "method": "exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling"
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T087",
+        "config_id": "T087-C01",
+        "validity": 1.0,
+        "combined_score": 0.49091274559393805,
+        "objective": "30/169",
+        "verification_status": "exact",
+        "generation_time": 2.097992241382599,
+        "verification_time": 1.0510561242699623,
+        "objective_value": "30/169",
+        "details": {
+          "steps": 480,
+          "step_size": "13/4800",
+          "support_length": "13/10",
+          "l1_norm": "13/10",
+          "minimum_autocorrelation": "3/10",
+          "minimum_location": {
+            "type": "endpoint",
+            "t": "1"
+          },
+          "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 3.176064755767584,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T087",
+          "config_id": "T087-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t087/runs/admission_20261106_revised/T087-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.4351651519536972,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T087",
+          "config_id": "T087-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.25168633833527565,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T087",
+          "config_id": "T087-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 1.243620291352272,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "489c8177109caa9c2db0ba949638580cbd3d4dec71c5a5b9eebf74450931ecdf",
+    "README.md": "62afb8d1e353bbd9e0910b8f290e05b1e80786f7a075621b57cf9266b08827de",
+    "baseline.py": "99430364354e0f0437b833759e799df0b4d0d2629c4747426991524bae06101e",
+    "check.py": "e013a2f5442fe4789d0e081abdd1b1af375a07f28b1a4cbe2e3aeaef687f4b73",
+    "data/reference/public_ai_certificate_n480.json": "11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa",
+    "data/source/certificate_n480.json": "11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa",
+    "data/source/upstream_license.txt": "dc3b36410c37f2fe2aef65d698e49fe7a7c59a3ad4c35b45df4e67940e7c6442",
+    "data/source/upstream_readme.md": "8ca651fe69b976aa3901f02c94f7494f7396ad5f554d711ae09554c4cacbeef0",
+    "evaluator.py": "6febe26f945db491377bb4bd9edb64c7b88858eaa92896447fafc14e12166c3d",
+    "evolution.py": "e6d485a32ecb3a299ac8d9731b233505cdc47fd0b334c69e5ebd088880f5d619",
+    "human.py": "66580c444ef7acccd39885add812b0fd32f3eada91d55f520be73da15bde0f26",
+    "init_program.py": "aed511346eab70e1b74f9283b15ed36e8e2a77bfeabf53b804d8d1fd44af4c14",
+    "instruction.txt": "dc153dd3e281c69d792e54d57e3bc6a76e333aa328f9ea862989a9caa20958d0",
+    "records.json": "8fcd90e78e74331fd9f2159ceca7902422cfaa208433a6ddd8dd3038d46128c1",
+    "reference.py": "c4860db9e9470883d3fb8363f51680946646cded5deea554d23f6a147b98bce3",
+    "test_task.py": "4dfe00a6d745cfd8ba4e3188787bc4fffcf5c660b8cebdfafe5a2d10c1422df4"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "480 nonnegative rational heights, width13/4800 and support13/10. Maximize exact minimum autocorrelation on shifts[0,1] divided by squared L1 mass. Piecewise linearity reduces full interval to nodes0..369 and exact endpoint interpolation at369+3/13.",
+    "human_source": "BarnardSteinerberger1903.08731v2 section2.3 modified arcsine formula, epsilon.025,480 midpoint values rounded to1/100000. Reconstructed weak finite-grid score15833948850637600/43788391811747427. Continuous paper score.37 is not assigned to these480 heights.",
+    "public_source": "Root downloaded pinned KevinRussell/CHRONOS certificate b23f2d386eda9963e33c7531eeeb35c8f54cba37 and verified original SHA25611cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa; repository exact bytes checked separately. Reproduced2378625/5958277 with minimum82459/13824000 and L1mass8801/72000. AI assisted, separate from human.",
+    "open_status": "ChenGu2610.18888v1 gives continuous.410377977432121 with atom-polynomial and atom removal, not this fixed480-grid witness. Continuous Fourier upper.410767488189405 is not attained proof for this grid. Reviewed sources do not establish grid optimum.",
+    "independent_method": "Root scales rational heights to integers, encodes polynomial and reversal in radix exceeding sum of squared heights, multiplies big integers and extracts correlation coefficients without carry. Independent of formal array pair products. Minimum nodes and exact endpoint computed with Fractions.",
+    "admission": "All5 strict runs, damaged all-zero heights, whole-return claim invariance, independent quantities, saved replay, cold export and program error/nonfinite/timeout passed. Initial30/169, baseline40960/135759, evolution3345600/10694437. Revised admission fixes root broken-fixture key heights; no checker relaxation."
+  }
+}

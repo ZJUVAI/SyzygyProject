@@ -1,0 +1,35 @@
+{
+  "task_id": "T090",
+  "name": "Minimum periodic autocorrelation energy for binary sequences of length 64",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T090-C01",
+      "parameters": {
+        "length": 64,
+        "alphabet": [
+          -1,
+          1
+        ],
+        "boundary": "periodic",
+        "correlation": "C_k = sum_i s_i s_(i+k mod 64), for k=1..63",
+        "objective": "sum of squared off-peak periodic autocorrelations"
+      },
+      "direction": "minimize",
+      "human_reference": 240
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Exactly64signs, periodic Ck=sum_i s_i*s_(i+k mod64), minimize sum_k1..63 Ck^2. Distinct from aperiodicT073; root saves explicit same-length strict ordering reversal under periodic/aperiodic energies.",
+      "primary_human_source": "Root directly viewed PDF title andTable2, Tyler & Loftsson, Periodic Binary Sequences With Very Good Autocorrelation Properties, TDA ProgressReport42-82AprJune1985 pp143-158, JPL82O.PDF andNTRS19860000930. Original agent attributionKeston1980/URL was wrong and returned; now correctedallfiles and provenance. n64hexB24FEAE7E4529CF0, P4,M(240). TablefootnoteZZ citesJ.WatkinsJune1985communication; no invented named-discoverer claim.",
+      "public_source": "MertensBessenrodtcondmat9707104 section4.2Table4 n64 DeltaE14 gives224, groundstate?; onlyN<=40 exhaustive for4t lengths.224witness not recovered. Newaperiodicn64results/periodicPSL4proof do not close periodicenergy; current checked-source audit found no sameobjective optimum proof.",
+      "independent_method": "Root64-bit cyclic rotations, XOR population counts give Ck=64-2HammingDistance, independently of formal product sums. All63correlations, energy240, PSL4 andsum63plusC0=(sum signs)^2 checked exactly; human decoded publishedhex directly.",
+      "admission": "Initial258048, baseline608, human240, reference240, evolution608. Five strict runs, damagedzero sign, whole-return declaration invariance, independent correlations,replay,coldexport and allfailurecontrols passed. Config deep types rejectalphabet[-1,true]. Formalbest stores own608 not external240."
+    }
+  }
+}

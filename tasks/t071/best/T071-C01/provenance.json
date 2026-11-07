@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T071",
+    "config_id": "T071-C01",
+    "validity": 1.0,
+    "combined_score": 0.5033713692946058,
+    "objective": 1941,
+    "verification_status": "exact",
+    "generation_time": 1.6469864286482334,
+    "verification_time": 0.5169058926403522,
+    "objective_value": 1941,
+    "details": {
+      "length": 16,
+      "alphabet_size": 65536,
+      "codeword_count": 1941,
+      "distinct_deletion_outputs": 15787,
+      "possible_deletion_outputs": 32768,
+      "pairwise_disjoint_deletion_outputs": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 2.702037863433361,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "random-order greedy selection of an independent set in the deletion-conflict graph",
+    "seed": 0,
+    "trial_limit": 2,
+    "trials_completed": 2,
+    "candidate_visits": 131072,
+    "reference_data_read": false,
+    "search_seconds_cutoff": null
+  },
+  "solution_sha256": "8f3b209d779e952a1c197dd3c3530c1f10d266ca04c8e36502ff3e47849bd9ce",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T071 tasks/t071/best/T071-C01/solution.json --config T071-C01"
+}

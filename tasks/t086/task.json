@@ -1,0 +1,65 @@
+{
+  "task_id": "T086",
+  "name": "Duchi inside-sum Schatten-2 ratio for four PSD matrices",
+  "acceptance_status": "accepted_by_sol",
+  "category": "matrix_inequalities",
+  "definition": "For four complex Hermitian positive-semidefinite 3x3 matrices A1,...,A4, minimize the mean Frobenius norm of all 4^4 ordered products divided by the mean Frobenius norm of the 4! products that use each matrix exactly once.",
+  "solution_format": "An object with matrices: four 3x3 complex matrices. Each entry is [real,imaginary], and each component is an integer or an exact rational string.",
+  "objective": {
+    "name": "with_replacement_over_without_replacement_frobenius_mean",
+    "unit": "dimensionless ratio",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "There are exactly four matrices, each 3x3.",
+    "Each matrix is complex Hermitian positive semidefinite.",
+    "The norm is the Schatten 2 norm, equal to the Frobenius norm.",
+    "The numerator is the mean over all 4^4 ordered index tuples, with repetition allowed.",
+    "The denominator is the mean over the 4! ordered tuples containing every index once.",
+    "The denominator must be positive so the ratio is defined."
+  ],
+  "configurations": [
+    {
+      "id": "T086-C01",
+      "parameters": {
+        "n": 4,
+        "m": 4,
+        "dimension": 3,
+        "field": "complex",
+        "matrix_class": "Hermitian positive semidefinite",
+        "norm": "Schatten 2 / Frobenius",
+        "numerator": "mean norm over 256 ordered products with replacement",
+        "denominator": "mean norm over 24 ordered products without replacement"
+      },
+      "direction": "minimize",
+      "human_reference": 1
+    }
+  ],
+  "sources": [
+    "https://arxiv.org/html/2511.02864v1",
+    "https://proceedings.mlr.press/v23/",
+    "https://citeseerx.ist.psu.edu/document?doi=619325d9c18b896b94f4de0bd5be63a749a1f21c&repid=rep1&type=pdf",
+    "https://proceedings.mlr.press/v119/lai20a.html",
+    "https://www.evidencepress.org/releases/exact-low-length-recht-re-inequalities/"
+  ],
+  "verification": "Parse every matrix entry as an exact rational complex number, verify Hermitian symmetry and all principal minors exactly, form all products exactly, and enclose each Frobenius norm with rational square-root bounds. Return the upper endpoint for minimization.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Fixedn=m4,d3 complex Hermitian PSD matrices, minimize mean of256 Frobenius product norms divided by mean of24 distinct-index product norms; positive denominator. Norm is inside each summation. Rational Hermitian matrices with positive-definite perturbations preserve infimum.",
+      "primary_source": "AlphaEvolve2511.02864v1 section6.47 explicitly states m>=4 open and lists(4,4,3) and Schatten2 tests. Duchi2012 inside-sum variant and Israel/Krahmer/Ward2016 proof for3 distinguished from RechtRe outside-sum counterexamples and2026 outside-sum claims.",
+      "human_and_reference": "Four identity matrices give exact1 by the traditional equality case explicitly stated in primary source. This is a feasible upper bound on the infimum, not a proved minimum. Failed AI searches in source are not optimality evidence.",
+      "independent_method": "Root Symbolic SymPy matrices independently verify all principal minors, every ordered product, and trace(M.H*M). Finer rational root enclosures certify every interval. Additional unequal diagonal and noncommuting complex fixtures give ratios about1.19204425349 and1.25270204220; both checked independently, recorded under runs/sol_additional_noncommuting_20261106.json.",
+      "admission": "All five entries attain1, identity ratios cancel exactly. Root reruns all required strict controls, invalid negative minor, full-return claim invariance, saved replay, cold export, and program-error/nonfinite/timeout. Checker has no arbitrary coefficient-precision cap."
+    }
+  }
+}

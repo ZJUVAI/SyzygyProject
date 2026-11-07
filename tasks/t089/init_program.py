@@ -1,12 +1,15 @@
+"""Small exact polynomial-Gaussian starting point."""
+
 import os
-import random
 
 
 def run_code():
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T089-C01")
+    if config_id != "T089-C01":
+        raise ValueError(f"unknown T089 configuration: {config_id}")
     # EVOLVE-BLOCK-START
-    n = 29
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    # A deterministic nonsingular seed: 2I-J has eigenvalues 2 (mult. 28), -27.
-    matrix = [[(1 if i == j else -1) for j in range(n)] for i in range(n)]
+    return {
+        "coefficients": ["-1/4", "-3/2", "1"],
+        "method": "self-Fourier fourth Hermite mode with a negative constant",
+    }
     # EVOLVE-BLOCK-END
-    return {"matrix": matrix}

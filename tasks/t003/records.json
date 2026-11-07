@@ -1,0 +1,145 @@
+{
+  "best_human": {
+    "value": {
+      "T003-C01": 2.50542078826,
+      "T003-C02": 2.811460994816,
+      "T003-C03": 3.16747010068
+    },
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "container": "unit square",
+      "radii": "equal in source construction; variable in task"
+    },
+    "url": "https://www.packomania.com/csq/csq.html",
+    "provenance": "The 26-circle source file supplies equal-radius coordinates with r=0.096362339010, attributed in the selected research summary to Nurmela–Östergård (1999). The 32-circle source file supplies r=0.087858157088; the selected research summary attributes that construction to D. W. Boll, J. Donovan, R. L. Graham, and B. D. Lubachevsky (2000). Each coordinate set is translated from a square centered at the origin. Every radius is reduced by 1/10^9 for exact feasibility after decimal rounding. These feasible equal-circle constructions are transferred to the variable-radius class; they do not establish variable-radius optimality. For T003-C03 the public variable-radius order-40 Packomania witness was conservatively reproduced from the saved same-parameter coordinate source. C03 uses the classical equal-circle N=40 construction listed under [11], R. L. Graham and B. D. Lubachevsky (1996); coordinates are saved and each radius is conservatively reduced. The N=40 equal-circle row cites reference [11], Graham and Lubachevsky (1996); source coordinates are saved at data/csq40_source.txt and the exact objective is 79186752517/25000000000.",
+    "evidence_state": "source coordinate files saved; conservative witnesses independently pass exact Fraction wall and pair-distance checks",
+    "authors_by_configuration": {
+      "T003-C03": [
+        "R. L. Graham",
+        "B. D. Lubachevsky"
+      ]
+    },
+    "year_by_configuration": {
+      "T003-C03": 1996
+    },
+    "witness_files": {
+      "T003-C03": "data/human40.json"
+    },
+    "source_files": {
+      "T003-C03": "data/csq40_source.txt"
+    },
+    "source_url_by_configuration": {
+      "T003-C03": "https://www.packomania.com/csq/csq.html#csq40"
+    }
+  },
+  "best_public": {
+    "value": {
+      "T003-C01": 2.635983084919,
+      "T003-C02": 2.939572771205,
+      "T003-C03": 3.292391572608
+    },
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "container": "unit square",
+      "radii": "variable",
+      "n": {
+        "T003-C01": 26,
+        "T003-C02": 32,
+        "T003-C03": 40
+      }
+    },
+    "url": "https://www.packomania.com/csqv/csqv.html",
+    "provenance": "Packomania variable-radius table, lastupdate2026-10-31, rows26 and32 report sums2.635983084919 and2.939572771205. Exact record witnesses were not replayed; frozen human baselines use equal-radius constructions.",
+    "evidence_state": "same-parameter primary table checked; best-public witness not reproduced",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": {
+      "T003-C01": 2.50542078826,
+      "T003-C02": 2.811460994816,
+      "T003-C03": 3.16747010068
+    },
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "container": "unit square",
+      "radii": "variable",
+      "n": {
+        "T003-C01": 26,
+        "T003-C02": 32
+      }
+    },
+    "witness_file": {
+      "T003-C01": "data/human26.json",
+      "T003-C02": "data/human32.json",
+      "T003-C03": "data/human40.json"
+    },
+    "provenance": "Recomputed from the saved Packomania equal-circle ASCII coordinates after translating centers by (1/2,1/2) and reducing each source radius by 1/10^9. The C03 human comparison is the equal-circle N=40 construction credited to Graham and Lubachevsky (1996). Its archived radii need no reduction. The variable-radius public witness is a separate comparison.",
+    "ai_provenance": "No AI-generated coordinates. The radius safety reduction and exact rational verification were performed for this benchmark.",
+    "actual_value": {
+      "T003-C01": 2.50542078826,
+      "T003-C02": 2.811460994816,
+      "T003-C03": 3.16747010068
+    },
+    "evidence_state": "saved witnesses pass exact rational wall, pairwise non-overlap, and objective checks"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class",
+  "configurations": {
+    "T003-C03": {
+      "best_human": {
+        "value": "79186752517/25000000000",
+        "parameters": {
+          "n": 40,
+          "container": "unit square",
+          "radii": "variable"
+        },
+        "source": "Graham and Lubachevsky (1996), Repeated Patterns of Dense Packings of Equal Disks in a Square, Packomania equal-circle table reference [11]",
+        "source_url": "https://www.packomania.com/csq/txt/csq40.txt",
+        "witness": "data/human40.json",
+        "witness_sha256": "faa29741b78bf0f97df633241bf50d7a1678f282ae9a5fd4c5ef1f7ea04b7373",
+        "evidence_state": "Exact rational equal-radius construction is feasible in the variable-radius class. Source coordinates translated by (1/2,1/2); radius unchanged."
+      },
+      "best_public": {
+        "value": "3.292391572608",
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "source_attribution": "Haowei Lin, packing_records (July 2026), Packomania reference [8]",
+        "origin_type": "source method not confirmed",
+        "witness": "data/sota40.json",
+        "witness_sha256": "a3b657a02a6385c5b030e2b808719a4ee73e5333e3c17450b31e2b3f2ea161c0",
+        "witness_relation": "Conservatively repaired from the published coordinates; exact feasible sum differs from rounded reported value."
+      },
+      "best_reproduced": {
+        "value": "82309789314588599/25000000000000000",
+        "witness": "data/sota40.json",
+        "witness_sha256": "a3b657a02a6385c5b030e2b808719a4ee73e5333e3c17450b31e2b3f2ea161c0",
+        "verification_status": "certified",
+        "review_status": "reviewed_by_sol"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T003-C01": {
+      "objective": "13/6",
+      "objective_value": "13/6",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.8647915259661447
+    },
+    "T003-C02": {
+      "objective": "8/3",
+      "objective_value": "8/3",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.948498546337183
+    },
+    "T003-C03": {
+      "objective": "5/2",
+      "objective_value": "5/2",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.7892734329088991
+    }
+  }
+}

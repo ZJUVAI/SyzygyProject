@@ -1,18 +1,12 @@
-import os
-import random
+"""Simple valid starting set: a 4 by 3 integer grid."""
 
-def _config():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C02")
-    if config_id != "T081-C02":
-        raise ValueError("unsupported configuration: " + config_id)
-    return config_id
+import os
+
 
 def run_code():
-    _config()
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C01")
+    if chosen != "T081-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    coefficients = [rng.uniform(-0.15, 1.0) for _ in range(208)]
-    mean = sum(coefficients) / len(coefficients)
-    coefficients = [x - mean + 1.0 for x in coefficients]
+    return {"points": [[x, y] for y in range(3) for x in range(4)]}
     # EVOLVE-BLOCK-END
-    return {"coefficients": coefficients}

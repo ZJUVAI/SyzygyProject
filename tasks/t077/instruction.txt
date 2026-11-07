@@ -1,0 +1,9 @@
+Choose a set A of 2 through 512 distinct integers in [-1000000,1000000]. Maximize
+
+    ln(|A-A|) / ln(|A+A|),
+
+where A+A={a+b : a,b in A} and A-A={a-b : a,b in A}. Use all ordered pairs, including diagonal pairs, and count distinct resulting integers. Both set sizes exceed one for every valid input, so the logarithms are defined.
+
+Return JSON with a `set` array. The evaluator recomputes both cardinalities exactly and uses an outward-rounded interval for the logarithmic score. Any score field in your output is ignored.
+
+Start from the supplied simple initial set `{0,1,3}`. Do not read human, reference, source, or best-witness files. Use the `run_code()` interface and respect the configured time and memory limits.

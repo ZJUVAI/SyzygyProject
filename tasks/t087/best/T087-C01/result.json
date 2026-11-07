@@ -1,0 +1,39 @@
+{
+  "task_id": "T087",
+  "config_id": "T087-C01",
+  "validity": 1.0,
+  "combined_score": 0.8651389135004939,
+  "objective": "3345600/10694437",
+  "verification_status": "exact",
+  "generation_time": 1.3972857184708118,
+  "verification_time": 0.7488060034811497,
+  "objective_value": "3345600/10694437",
+  "details": {
+    "steps": 480,
+    "step_size": "13/4800",
+    "support_length": "13/10",
+    "l1_norm": "11791/4800",
+    "minimum_autocorrelation": "9061/4800",
+    "minimum_location": {
+      "type": "grid_node",
+      "k": 224
+    },
+    "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 2.1542585603892803,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

@@ -1,53 +1,50 @@
-"""Exact rational validator for circles in the unit square."""
+"""Exact checker for T005 Heilbronn configurations in the unit square."""
 from fractions import Fraction
+from itertools import combinations
 import math
 
-_CONFIGS = {"T005-C01": 26, "T005-C02": 32}
 
-def _q(value):
-    if type(value) is int:
+def _fraction(value):
+    if isinstance(value, bool):
+        raise ValueError("boolean coordinates are invalid")
+    if isinstance(value, Fraction):
+        return value
+    if isinstance(value, int):
         return Fraction(value)
     if isinstance(value, str):
-        try:
-            return Fraction(value)
-        except Exception as exc:
-            raise ValueError("invalid rational") from exc
+        return Fraction(value)
     if isinstance(value, float):
         if not math.isfinite(value):
-            raise ValueError("non-finite number")
-        return Fraction.from_float(value)
-    raise ValueError("values must be integers, finite floats, or rational strings")
+            raise ValueError("coordinates must be finite")
+        return Fraction(str(value))
+    raise TypeError("coordinates must be integers, decimal strings, or finite floats")
+
+
+def triangle_area2(a, b, c):
+    return abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]))
+
 
 def validate(solution, config, strict=False):
-    config_id = config.get("id")
-    n = _CONFIGS.get(config_id)
-    if n is None:
-        raise ValueError("unsupported configuration")
-    if not isinstance(solution, dict) or not isinstance(solution.get("circles"), (list, tuple)):
-        raise ValueError("solution must contain circles")
-    circles = solution["circles"]
-    if len(circles) != n:
-        raise ValueError(f"expected exactly {n} circles")
+    parameters = config.get("parameters", {}) if isinstance(config, dict) else {}
+    n = parameters.get("n")
+    if not isinstance(n, int) or isinstance(n, bool) or n < 3:
+        raise ValueError("configuration must specify an integer n>=3")
+    points = solution.get("points") if isinstance(solution, dict) else solution
+    if not isinstance(points, (list, tuple)) or len(points) != n:
+        raise ValueError(f"solution must contain exactly {n} points")
     parsed = []
-    for circle in circles:
-        if not isinstance(circle, dict) or not all(k in circle for k in ("x", "y", "r")):
-            raise ValueError("each circle needs x, y, and r")
-        x, y, r = (_q(circle[k]) for k in ("x", "y", "r"))
-        if r <= 0:
-            raise ValueError("radii must be positive")
-        if x-r < 0 or x+r > 1 or y-r < 0 or y+r > 1:
-            raise ValueError("circle crosses the unit-square wall")
-        parsed.append((x, y, r))
-    for i, (x1, y1, r1) in enumerate(parsed):
-        for x2, y2, r2 in parsed[:i]:
-            if (x1-x2)**2 + (y1-y2)**2 < (r1+r2)**2:
-                raise ValueError("circle interiors overlap")
-    objective = sum((r for _, _, r in parsed), Fraction())
-    claimed = solution.get("objective")
-    mismatch = claimed is not None and _q(claimed) != objective
+    for point in points:
+        if not isinstance(point, (list, tuple)) or len(point) != 2:
+            raise ValueError("each point must have two coordinates")
+        xy = tuple(_fraction(v) for v in point)
+        if any(v < 0 or v > 1 for v in xy):
+            raise ValueError("all points must lie in the unit square")
+        parsed.append(xy)
+    if len(set(parsed)) != n:
+        raise ValueError("points must be distinct")
+    value = min(triangle_area2(*triple) for triple in combinations(parsed, 3)) / 2
     return {
-        "objective": str(objective),
-        "verification_status": "certified" if strict else "exact",
-        "details": {"n": n, "pair_checks": n*(n-1)//2,
-                    "claimed_objective_mismatch": mismatch},
+        "objective": str(value),
+        "verification_status": "exact",
+        "details": {"triangles_checked": len(parsed) * (len(parsed)-1) * (len(parsed)-2) // 6},
     }

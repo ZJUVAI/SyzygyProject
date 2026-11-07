@@ -1,0 +1,124 @@
+{
+  "task_id": "T042",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T042-C01": {
+      "parameters": {
+        "N": 212
+      },
+      "best_human": {
+        "value": 32,
+        "parameters": {
+          "N": 212
+        },
+        "source": "Odlyzko and Stanley (1978), greedy sequence S(1), rebuilt in human.py",
+        "source_url": "https://www-users.cse.umn.edu/~odlyzko/unpublished/greedy.sequence.pdf",
+        "formula": "{1 + sum(epsilon_i * 3^i for i=0..4) : epsilon_i in {0,1}}",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The formula is rebuilt and exactly checked at N=212; it has 32 elements and maximum 122.",
+        "optimality": "A feasible human-method baseline only; it is not a claim of optimality.",
+        "witness_program": "human.py",
+        "witness": "data/reference/odlyzko_stanley_n212_32.json",
+        "witness_sha256": "9c4230152b0e0f1e8a98a35d78944fd190b9d94b0c14ba4a458b640c8fdaf24b",
+        "origin_type": "published classical construction"
+      },
+      "best_public": {
+        "value": 43,
+        "parameters": {
+          "N": 212
+        },
+        "source": "Mehmet Ergezer, arXiv:2606.04016v1, §2.1 and §5.5; repository results/N212_K43_witness.json",
+        "source_url": "https://arxiv.org/abs/2606.04016",
+        "repository_url": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The saved witness was extracted from the pinned arXiv v1 source archive and independently checked by this task's exact evaluator.",
+        "ai_provenance": "The current maintained paper discloses Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 use for writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration. It does not state whether AI proposed or searched for this specific witness; witness-specific discovery provenance is undisclosed.",
+        "witness": "data/reference/ergezer_n212_k43_witness.json",
+        "source_archive_sha256": "5eac2ce62cd26fd5114ec0a2fd2d8df48ffcc77cfa82e46e59d5ba208b45ae22",
+        "source_witness_file_sha256": "41377c0db2e50f2d7753434ac472e82d831d093013562a477fffb068f117eb28",
+        "optimality": "No 44-element set was reported, but the upper-bound proof is incomplete; this is a feasible lower-bound witness only.",
+        "origin_type": "public construction with witness-specific discovery provenance undisclosed"
+      },
+      "best_reproduced": {
+        "value": 43,
+        "parameters": {
+          "N": 212
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "This task checks every pair a<b from the witness and rejects if 2b-a is also selected; integer range, element types, and uniqueness are checked first.",
+        "date_reproduced": "2026-11-06",
+        "witness": "data/reference/ergezer_n212_k43_witness.json",
+        "ai_provenance": "The current maintained paper discloses broad AI collaboration, but does not state whether AI proposed or searched for this specific witness. Reproduction does not establish discovery provenance.",
+        "review_status": "reviewed_by_sol"
+      },
+      "highest_reported": {
+        "value": 43,
+        "parameters": {
+          "N": 212
+        },
+        "source": "Ergezer, arXiv:2606.04016v1 and linked repository witness",
+        "url": "https://arxiv.org/abs/2606.04016",
+        "reproduction_status": "The public 43-set is reproduced and exactly validated. No 44-set or complete upper-bound certificate was found in the checked sources."
+      },
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 32,
+        "note": "H is the reproduced weak human-method baseline. The public 43-set is reported separately and is not substituted for the human reference."
+      },
+      "optimality_status": {
+        "status": "open; 43 <= r_3(212) <= 44",
+        "paper_v1_state": "The paper reports no 44-set and leaves the upper bound unresolved. Its original T1c residual contained two chunks; this is not the current repository status.",
+        "current_repository_state": "Current repository README says both historical T1c chunks have independently verified DRAT proofs. Its T2 portfolio closes 6,045/6,071 chunks without proof logs. The complete T3 cube space is not certificate-checked, so the full upper bound remains open.",
+        "current_repository_commit": "cfd76934bff8cb5d5016e9f599063d698a09d47e",
+        "current_repository_tag": "mpc-submission-v1.4",
+        "current_repository_tag_commit": "4c5811007a286c0b10c9b8bf4a91f79653847b55",
+        "current_zenodo_version": "10.5281/zenodo.21413746, version v2, modified 2026-07-18",
+        "limitations": [
+          "The task verifies the lower-bound witness, not the upper bound.",
+          "The paper's solver campaign and the later partial closures do not cover the full T3 cube space with machine-checkable certificates.",
+          "The current maintained paper discloses broad AI collaboration, but does not state whether AI proposed or searched for the 43-element construction.",
+          "The source survey is limited to the paper, linked repository, and Zenodo v2 record checked on 2026-11-06."
+        ]
+      },
+      "source_review": {
+        "paper": {
+          "title": "Witness-split + window-cardinality refinement for r_3(N): architecture, empirical results, and a structural hard pocket",
+          "authors": [
+            "Mehmet Ergezer"
+          ],
+          "url": "https://arxiv.org/abs/2606.04016",
+          "version": "v1, submitted 2026-05-31; HTML body date 2026-08-24",
+          "source_archive_url": "https://arxiv.org/src/2606.04016v1",
+          "source_archive_sha256": "5eac2ce62cd26fd5114ec0a2fd2d8df48ffcc77cfa82e46e59d5ba208b45ae22"
+        },
+        "repository": {
+          "submission_snapshot": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
+          "submission_tag_commit": "53d46832df562b316e5e2b279dc107f6f2a6869d",
+          "current_readme": "https://github.com/memoatwit/erdos_1194/blob/main/erdos_r3/README.md",
+          "generative_ai_declaration": "https://github.com/memoatwit/erdos_1194/blob/cfd76934bff8cb5d5016e9f599063d698a09d47e/erdos_r3/paper/paper.tex#L211-L220",
+          "current_commit": "cfd76934bff8cb5d5016e9f599063d698a09d47e",
+          "current_tag": "mpc-submission-v1.4",
+          "current_tag_commit": "4c5811007a286c0b10c9b8bf4a91f79653847b55",
+          "witness_path": "erdos_r3/results/N212_K43_witness.json"
+        },
+        "zenodo_v2": {
+          "url": "https://doi.org/10.5281/zenodo.21413746",
+          "modified": "2026-07-18",
+          "status": "The 44-set upper-bound question remains open; no complete certificate-checked cube cover is reported."
+        },
+        "review_status": "source checked; pending Sol review"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T042-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.03125
+    }
+  }
+}

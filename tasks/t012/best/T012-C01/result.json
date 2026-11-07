@@ -1,0 +1,53 @@
+{
+  "task_id": "T012",
+  "config_id": "T012-C01",
+  "validity": 1.0,
+  "combined_score": 1.056340465389221,
+  "objective": "1.119502330710319871777636210474561041436290349626630799132351816185988802111957788107",
+  "verification_status": "certified",
+  "generation_time": 2.6094493493437767,
+  "verification_time": 1.3294358924031258,
+  "objective_value": "1.119502330710319871777636210474561041436290349626630799132351816185988802111957788107",
+  "details": {
+    "cardinality": 512,
+    "sumset_size": 3145,
+    "difference_set_size": 2591,
+    "objective_interval": [
+      "1.119502330710319871777636210474561041436290349626630799132351816185988802111957788107",
+      "1.119502330710319871777636210474561041436290349626630799132351816185988802111957792324"
+    ],
+    "objective_lower_bound": "1.119502330710319871777636210474561041436290349626630799132351816185988802111957788107",
+    "claimed_objective_mismatch": false,
+    "sumset_exact": true,
+    "difference_set_exact": true
+  },
+  "eval_time": 3.9451574347913265,
+  "seed": 5,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  },
+  "evaluation_purpose": "Strict replay of retained 5-second exploratory output; no new search",
+  "generation_record": {
+    "budget_seconds": 5,
+    "actual_elapsed_seconds": 6.18699137121439,
+    "trials": 6740,
+    "seed": 5,
+    "method": "periodic interior expansion of own native-search candidate",
+    "source_witness_sha256": "fc13e6c9672409e446f838ee59a0b2abe1da8fa37acbd9ce021110ec48a087df",
+    "generation_resource_limits_enforced": false,
+    "threads_used": 1,
+    "python": "3.13.12 (main, Mar 10 2026, 18:17:38) [Clang 21.1.4 ]",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "note": "The exploratory helper ran in the local Python process without runner limits. Its saved construction is verified below with the standard strict runner. The retained replay result runtime describes verification, not a new search."
+  }
+}

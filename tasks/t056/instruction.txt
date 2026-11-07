@@ -1,0 +1,9 @@
+# Task: improve the ta41 job-shop schedule
+
+Minimize the makespan for Taillard's fixed `ta41` instance (30 jobs, 20 machines). This is a general job-shop problem. Each job follows its own machine route; machines do not share one global job permutation.
+
+The exact public input is in `data/source/ta41_instance.json`. It contains `operations[job][operation] = [zero_based_machine, positive_integer_duration]`. The original official source snapshot is `data/source/tai30_20.txt`.
+
+Return JSON with `machine_orders`: a list of 20 rows. Each row must be a permutation of job indices `0` through `29`, giving the processing order on that machine. The checker enforces the job routes, detects cycles in the combined precedence graph, and recomputes makespan exactly.
+
+Start from the simple construction in `init_program.py`. Do not read `human.py`, `reference.py`, `data/reference/`, or public record schedules. Preserve every job operation and machine capacity constraint. Report a construction; the evaluator ignores any claimed score.

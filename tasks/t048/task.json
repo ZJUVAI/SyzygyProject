@@ -1,0 +1,88 @@
+{
+  "task_id": "T048",
+  "name": "Minimum size of an n-input sorting network",
+  "acceptance_status": "accepted_by_sol",
+  "category": "sorting_networks",
+  "definition": "For a fixed number of input wires, minimize the number of compare-exchange elements in a network that sorts every input sequence. Layer count is secondary.",
+  "solution_format": "An object with comparators, an ordered list of two-element lists [left_wire, right_wire] using zero-based wire indices from 0 to inputs-1.",
+  "objective": {
+    "name": "comparator_count",
+    "unit": "compare-exchange elements",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "Each comparator uses two distinct wire indices from 0 through inputs-1, with left_wire less than right_wire.",
+    "Comparators execute in listed order. Comparators on disjoint wires can run in parallel.",
+    "The network sorts every input sequence in a totally ordered domain.",
+    "By the zero-one principle, the checker exhaustively tests all 2^inputs binary input sequences."
+  ],
+  "configurations": [
+    {
+      "id": "T048-C01",
+      "parameters": {
+        "inputs": 17
+      },
+      "direction": "minimize",
+      "human_reference": 85,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T048-C02",
+      "parameters": {
+        "inputs": 18
+      },
+      "direction": "minimize",
+      "human_reference": 90,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T048-C03",
+      "parameters": {
+        "inputs": 19
+      },
+      "direction": "minimize",
+      "human_reference": 98,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.1145/1468075.1468121",
+    "https://www.jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf",
+    "https://bertdobbelaere.github.io/sorting_networks.html",
+    "https://github.com/bertdobbelaere/SorterHunter"
+  ],
+  "verification": "Exact bit-parallel replay of all 2^inputs binary inputs. The zero-one principle certifies the network on every totally ordered input domain.",
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定17输入比较排序网络，最小化compare-exchange个数；不限制深度，不将已证最优深度10当作本任务目标。",
+      "primary_sources": "亲自核对Dobbelaere当前表及固定SorterHunter提交8ba90df607cbdc339409e0b173b5a2ffd60fc911；重新下载固定原始HTML，与本地快照逐字节一致，SHAfb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6。逐一解析71个比较器，与保存参考一致；该大小匹配Valsalam–Miikkulainen2013传统进化搜索，但网络深度已由17变12，没有声称是2013同一网络。",
+      "human_baseline": "冻结H85来自Batcher1968 odd-even mergesort，补至32线并移除正无穷哨兵比较；实际对17线全输入复核。人类文献71报告与较弱冻结85分开。SorterHunter自动搜索与未知具体AI来源明确记录。",
+      "open_status": "当前表size63–71，其中63为2025未发表、未评审的加强；主审记录从已发表结论可推出的60，不将63当作已独立复核数学证书。无最少比较器数71的最优性证明。",
+      "independent_verification": "五个网络逐一独立以uint32字打包131072个二元输入，条件交换位并与按位数应得的排序词比较；与正式检查器逐线巨位向量AND/OR不同。由零一原则可覆盖任意全序输入。",
+      "isolation_repair": "初稿baseline导入human并从85对照开始，已退回；当前baseline与evolution均只从136简单程序开始，不读human/reference/data/reference，静态依赖检查通过。初始136、传统136、人类85、参考71、演化126。",
+      "controls": "五种程序、空网络破坏、完整声明成绩不变性、严格回放、冷导出及三类运行失败检查通过；任务及共享检查49项通过。",
+      "limits": "未重做2013完整传统搜索或最优性下界SAT证明；131072输入验证的是可行性，不证明比较器个数最少。"
+    }
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Minimize comparator count of an ascending sorting network; retain17 wires, add18 and19. Depth is reported separately and is not the objective.",
+      "primary_source": "Sol read Dobbelaere SorterHunter table at https://bertdobbelaere.github.io/sorting_networks.html. Live size intervals are68–77 for18 and73–85 for19; lowest listed depth is a separate field. Exact77/85 comparator lists archived from pinned author revision8ba90df607cbdc339409e0b173b5a2ffd60fc911. AI-use status is not disclosed.",
+      "human_method": "Reconstruct Batcher odd-even merge with sentinel wires trimmed from32 to n. With +infinity on high padding wires and min-to-low comparators, padding never enters real wire positions. Traditional90/98 comparator baselines reproduced and verified.",
+      "independent_method": "Sol personally ran human and reference. In contrast to the checker bitset per wire, the audit packs each binary input as its own uint32 and uses conditional swaps, then checks the exact sorted popcount pattern for all262144 and524288 inputs. Feasible public scores77/85 match. No known size optimality proof found in checked sources.",
+      "admission": "All five strict programs and complete declared-score, malformed, cold export, error/nonfinite/timeout and replay controls passed. The task agent restored immutable input-pattern caching before final replay to fit default search budget, without reducing binary cases. Original17-wire archives retained."
+    },
+    "configuration_ids": [
+      "T048-C02",
+      "T048-C03"
+    ]
+  }
+}

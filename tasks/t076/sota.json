@@ -1,0 +1,395 @@
+{
+  "task_id": "T076",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T076-C01": {
+      "program": "reference.py",
+      "reproduced_value": 8635,
+      "public_value": 8635,
+      "highest_reported": {
+        "value": 8635,
+        "source": "https://oeis.org/A276661",
+        "source_location": "Current comments give a(15)<=8635; linked a-file has the n=15 explicit witness, transcribed here from rows 9–10",
+        "reproduction_status": "The linked 15-element list was transcribed into a local JSON witness and exactly checked to have all 32768 subset sums distinct. It is not claimed to be a raw-byte copy of the upstream file, and the value is an upper bound rather than a proven minimum.",
+        "ai_provenance": "Not disclosed in the OEIS entry for contributor Zachary Sharp; no human or AI provenance is inferred."
+      },
+      "parameters": {
+        "element_count": 15,
+        "elements": "positive integers",
+        "constraint": "all 2^15 subset sums are distinct",
+        "objective": "largest element"
+      },
+      "witness": "data/reference/sharp_8635_transcribed.json",
+      "witness_sha256": "e5b1c66298ad4643ecc22e6d589c764a4aba20c0b18ce0656def98a18d7b0fa0",
+      "known_bounds": {
+        "lower_bound": 7060,
+        "upper_bound": 8635,
+        "lower_bound_source": "https://arxiv.org/html/2609.27941v1",
+        "lower_bound_location": "Costa and Della Fiore (2026), Theorem 1.1 and Proposition 2.2; integer sum independently recomputed by Sol, cited bandwidth theorem not locally re-proved",
+        "upper_bound_source": "https://oeis.org/A276661",
+        "upper_bound_location": "Checked current comments and linked A-file for n=15",
+        "status": "Reviewed finite bounds 7060 <= a(15) <= 8635; no exact minimum located. Asymptotic statements do not settle this finite configuration.",
+        "lower_bound_method": "sum(binomial(j,floor(j/2)), j=0..14)",
+        "historical_2021_bound": {
+          "value": 6435,
+          "source": "https://arxiv.org/abs/2006.12988"
+        },
+        "other_2026_bound": {
+          "value": 6864,
+          "source": "https://arxiv.org/html/2610.32580v1",
+          "formula": "2*binomial(14,7)"
+        }
+      },
+      "human_method_baseline": {
+        "value": 8807,
+        "source": "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "additional_source": "https://oeis.org/A005318",
+        "source_location": "Conway-Guy sequence recurrence and difference construction; Bohman (1998), §2 and Theorem 2.1 prove distinct subset sums for the Conway-Guy family",
+        "reproduction_status": "The n=15 Conway-Guy list is regenerated from the recurrence and set formula, then independently checked. It is a weaker human-method baseline than the newer 8635 list."
+      },
+      "checked_sources": [
+        "https://oeis.org/A276661",
+        "https://oeis.org/A276661/a276661_1.txt",
+        "https://oeis.org/A005318",
+        "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "https://arxiv.org/html/2006.12988"
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T076",
+          "config_id": "T076-C01",
+          "validity": 1.0,
+          "combined_score": 1.0199189345686162,
+          "objective": 8635,
+          "verification_status": "exact",
+          "generation_time": 0.38016870990395546,
+          "verification_time": 1.0495176129043102,
+          "objective_value": 8635,
+          "details": {
+            "element_count": 15,
+            "subset_sums_verified": 32768,
+            "elements_positive": true,
+            "elements_distinct": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.4375139512121677,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "largest_element": 8635,
+          "subset_sums_checked": 32768,
+          "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    },
+    "T076-C02": {
+      "program": "reference.py",
+      "reproduced_value": 17072,
+      "public_value": 17072,
+      "parameters": {
+        "element_count": 16,
+        "elements": "positive integers",
+        "constraint": "all 2^16 subset sums are distinct",
+        "objective": "largest element"
+      },
+      "best_human": {
+        "value": 17305,
+        "source": {
+          "title": "Bohman, A construction for sets of integers with distinct subset sums",
+          "authors": [
+            "Tom Bohman"
+          ],
+          "url": "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+          "source_location": "Section 2, Theorem 2.1; Conway-Guy recurrence"
+        },
+        "reproduction_status": "Conway-Guy recurrence reconstructed and all subset sums exactly checked.",
+        "witness": "data/human/conway_guy_n16.json",
+        "witness_sha256": "b841bd8525247acdb88fd95b30aed08d958f35c03dd1e842225c261c70abb62e",
+        "source_origin": "traditional human construction"
+      },
+      "best_public": {
+        "value": 17072,
+        "source": {
+          "title": "Integer Sets with Distinct Subset-Sums",
+          "authors": [
+            "W. F. Lunnon"
+          ],
+          "year": 1988,
+          "url": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+          "doi": "10.1090/S0025-5718-1988-0917837-5",
+          "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756."
+        },
+        "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756.",
+        "reproduction_status": "Reconstructed from the published sequence and set formula; all 2^n subset sums are exactly distinct. This is a feasible upper bound, not a proven minimum.",
+        "ai_provenance": "Traditional published construction; no AI involvement indicated.",
+        "witness": "data/reference/lunnon_w2_n16.json",
+        "witness_sha256": "83b6f13bfbb510f910addba8ff41a6ba21e31e36a30107f758228813b7a5bc4f"
+      },
+      "best_reproduced": {
+        "value": 17072,
+        "witness": "data/reference/lunnon_w2_n16.json",
+        "witness_sha256": "83b6f13bfbb510f910addba8ff41a6ba21e31e36a30107f758228813b7a5bc4f",
+        "verification_status": "exact",
+        "subset_sums_checked": 65536
+      },
+      "highest_reported": {
+        "value": 17072,
+        "metric": "largest element of an n-element positive integer set with distinct subset sums",
+        "direction": "minimize",
+        "source": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756.",
+        "reproduction_status": "reconstructed and exactly verified feasible upper bound; optimality not established."
+      },
+      "known_bounds": {
+        "lower_bound": 12870,
+        "upper_bound": 17072,
+        "lower_bound_source": "https://arxiv.org/abs/2006.12988",
+        "lower_bound_method": "binomial(n,floor(n/2))",
+        "status": "open; checked upper bound 17072; no exact minimum found in cited sources.",
+        "upper_bound_source": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "upper_bound_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756."
+      },
+      "limitations": [
+        "The witness is an upper bound, not a proof of the minimum.",
+        "The source search is limited to the cited OEIS records and Conway-Guy/Bohman construction; no exhaustive literature survey is claimed."
+      ],
+      "acceptance_status": "accepted_by_sol",
+      "witness": "data/reference/lunnon_w2_n16.json",
+      "public_witness": "data/reference/lunnon_w2_n16.json",
+      "matches_public_best": true,
+      "checked_sources": [
+        "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "https://oeis.org/A006756",
+        "https://oeis.org/A005318",
+        "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "https://arxiv.org/abs/2006.12988",
+        "https://arxiv.org/html/2609.27941v1",
+        "https://arxiv.org/html/2610.32580v1"
+      ],
+      "optimality_status": {
+        "state": "open; no proof of exact minimum identified in sources checked",
+        "lower_bound": 12870,
+        "upper_bound": 17072,
+        "lower_bound_source": "https://arxiv.org/abs/2006.12988"
+      },
+      "previously_selected_public_candidate": {
+        "value": 17270,
+        "witness": "data/reference/sharp_extension_n16.json",
+        "witness_sha256": "92df064e977a641240ce3fd292006e4813d80261fa2e6521fa03becac03d5d0c",
+        "note": "Previously stored and verified, but weaker than the Lunnon w^2 construction."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T076",
+          "config_id": "T076-C02",
+          "validity": 1.0,
+          "combined_score": 1.0136480787253983,
+          "objective": 17072,
+          "verification_status": "exact",
+          "generation_time": 0.11441775038838387,
+          "verification_time": 0.21464232727885246,
+          "objective_value": 17072,
+          "details": {
+            "element_count": 16,
+            "subset_sums_verified": 65536,
+            "elements_positive": true,
+            "elements_distinct": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.3313441500067711,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "largest_element": 17072,
+          "subset_sums_checked": 65536,
+          "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    },
+    "T076-C03": {
+      "program": "reference.py",
+      "reproduced_value": 33531,
+      "public_value": 33531,
+      "parameters": {
+        "element_count": 17,
+        "elements": "positive integers",
+        "constraint": "all 2^17 subset sums are distinct",
+        "objective": "largest element"
+      },
+      "best_human": {
+        "value": 34301,
+        "source": {
+          "title": "Bohman, A construction for sets of integers with distinct subset sums",
+          "authors": [
+            "Tom Bohman"
+          ],
+          "url": "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+          "source_location": "Section 2, Theorem 2.1; Conway-Guy recurrence"
+        },
+        "reproduction_status": "Conway-Guy recurrence reconstructed and all subset sums exactly checked.",
+        "witness": "data/human/conway_guy_n17.json",
+        "witness_sha256": "e93b523cea1219064e91dd6ee65456fdcf7fc7c3fc82a03c6bb730e32915a300",
+        "source_origin": "traditional human construction"
+      },
+      "best_public": {
+        "value": 33531,
+        "source": {
+          "title": "Integer Sets with Distinct Subset-Sums",
+          "authors": [
+            "W. F. Lunnon"
+          ],
+          "year": 1988,
+          "url": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+          "doi": "10.1090/S0025-5718-1988-0917837-5",
+          "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756."
+        },
+        "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756.",
+        "reproduction_status": "Reconstructed from the published sequence and set formula; all 2^n subset sums are exactly distinct. This is a feasible upper bound, not a proven minimum.",
+        "ai_provenance": "Traditional published construction; no AI involvement indicated.",
+        "witness": "data/reference/lunnon_w2_n17.json",
+        "witness_sha256": "fb49f881464b6d9b526926ba5507ed6e9c06951bf8b590892ed836513ee81eb6"
+      },
+      "best_reproduced": {
+        "value": 33531,
+        "witness": "data/reference/lunnon_w2_n17.json",
+        "witness_sha256": "fb49f881464b6d9b526926ba5507ed6e9c06951bf8b590892ed836513ee81eb6",
+        "verification_status": "exact",
+        "subset_sums_checked": 131072
+      },
+      "highest_reported": {
+        "value": 33531,
+        "metric": "largest element of an n-element positive integer set with distinct subset sums",
+        "direction": "minimize",
+        "source": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "source_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756.",
+        "reproduction_status": "reconstructed and exactly verified feasible upper bound; optimality not established."
+      },
+      "known_bounds": {
+        "lower_bound": 24310,
+        "upper_bound": 33531,
+        "lower_bound_source": "https://arxiv.org/abs/2006.12988",
+        "lower_bound_method": "binomial(n,floor(n/2))",
+        "status": "open; checked upper bound 33531; no exact minimum found in cited sources.",
+        "upper_bound_source": "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "upper_bound_location": "Table 1, column w^2, row for this n; associated-set formula (1.4). The table and recurrence data are also listed in OEIS A006756."
+      },
+      "limitations": [
+        "The witness is an upper bound, not a proof of the minimum.",
+        "The source search is limited to the cited OEIS records and Conway-Guy/Bohman construction; no exhaustive literature survey is claimed."
+      ],
+      "acceptance_status": "accepted_by_sol",
+      "witness": "data/reference/lunnon_w2_n17.json",
+      "public_witness": "data/reference/lunnon_w2_n17.json",
+      "matches_public_best": true,
+      "checked_sources": [
+        "https://doi.org/10.1090/S0025-5718-1988-0917837-5",
+        "https://oeis.org/A006756",
+        "https://oeis.org/A005318",
+        "https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf",
+        "https://arxiv.org/abs/2006.12988",
+        "https://arxiv.org/html/2609.27941v1",
+        "https://arxiv.org/html/2610.32580v1"
+      ],
+      "optimality_status": {
+        "state": "open; no proof of exact minimum identified in sources checked",
+        "lower_bound": 24310,
+        "upper_bound": 33531,
+        "lower_bound_source": "https://arxiv.org/abs/2006.12988"
+      },
+      "previously_selected_public_candidate": {
+        "value": 34301,
+        "witness": "data/reference/conway_guy_n17.json",
+        "witness_sha256": "ba3bbeec7e56c8845af03d52f1fb78cda95de421c23b8a4caa6dd0d62994ea0a",
+        "note": "Previously stored and verified, but weaker than the Lunnon w^2 construction."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T076",
+          "config_id": "T076-C03",
+          "validity": 1.0,
+          "combined_score": 1.022963824520593,
+          "objective": 33531,
+          "verification_status": "exact",
+          "generation_time": 0.1143084317445755,
+          "verification_time": 0.3645486608147621,
+          "objective_value": 33531,
+          "details": {
+            "element_count": 17,
+            "subset_sums_verified": 131072,
+            "elements_positive": true,
+            "elements_distinct": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.4815183952450752,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "largest_element": 33531,
+          "subset_sums_checked": 131072,
+          "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

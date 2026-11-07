@@ -1,0 +1,36 @@
+{
+  "task_id": "T095",
+  "config_id": "T095-C01",
+  "validity": 1.0,
+  "combined_score": 1.0434782608695652,
+  "objective": 368,
+  "verification_status": "exact",
+  "generation_time": 1.2174758277833462,
+  "verification_time": 0.9161881804466248,
+  "objective_value": 368,
+  "details": {
+    "point_count": 500,
+    "edge_count": 867,
+    "face_count": 368,
+    "convex_hull_vertex_count_including_collinear": 19,
+    "hull_area_twice": 1736930960,
+    "bounded_face_area_twice_sum": 1736930960,
+    "euler_edge_face_check": 368,
+    "claimed_score_ignored": true
+  },
+  "eval_time": 2.1377727948129177,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

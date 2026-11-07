@@ -1,0 +1,57 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T043",
+    "config_id": "T043-C01",
+    "validity": 1.0,
+    "combined_score": 0.6906906906906907,
+    "objective": 230,
+    "verification_status": "exact",
+    "generation_time": 3.7967361137270927,
+    "verification_time": 0.9989944361150265,
+    "objective_value": 230,
+    "details": {
+      "codewords_checked": 230,
+      "pairs_checked": 26335,
+      "minimum_subspace_distance": 4,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 4.8047163374722,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded randomized greedy packing of enumerated 3-spaces by 2-space supports",
+    "seed": 0,
+    "iterations_requested": 12,
+    "iterations_run": 12,
+    "best_pass": 5,
+    "candidate_subspaces_enumerated": 11811,
+    "line_supports": 2667,
+    "generation_seconds": 2.890214778482914,
+    "budget": {
+      "mode": "fixed_iterations unless MATHBENCH_SEARCH_SECONDS is set",
+      "runner_generation_limit_seconds": 300
+    }
+  },
+  "solution_sha256": "a2632249d23633476e01a81132e397543d24eeb35fe41c9bbaa85c555fa2ef0e",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T043 tasks/t043/best/T043-C01/solution.json --config T043-C01"
+}

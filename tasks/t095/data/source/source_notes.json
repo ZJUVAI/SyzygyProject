@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-11-06",
+  "instance": {
+    "name": "uniform-0000500-1",
+    "point_count": 500,
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip",
+    "local_file": "data/source/uniform-0000500-1.instance.json",
+    "sha256": "c8ea5c524c52a6d7e0188f566482c124856a8cbd0318e518ff4419f09844c31a",
+    "coordinate_check": "The original JSON coordinate literals are finite decimal values with integer values. The checker reads them as Decimal and converts only exact integers.",
+    "geometry_audit": "An exact integer determinant scan of all 20,708,500 point triples found no collinear triple in this fixed instance."
+  },
+  "problem_definition_source": {
+    "author": "Hadrien Cambazard",
+    "title": "Minimum convex partition problem",
+    "url": "https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html",
+    "definition": "Partition the point-set convex hull into empty convex polygons whose extreme points belong to the input, with pairwise disjoint interiors; minimize the number of internal faces."
+  },
+  "optimality_status_source": {
+    "url": "https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html",
+    "statement": "The page says 100-point data sets are solved to optimality and lower bounds can be computed up to 300 points. It gives no optimality proof for this 500-point instance."
+  },
+  "public_solution": {
+    "archive_url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "local_file": "data/reference/uniform-0000500-1.official_solution.json",
+    "sha256": "f3de71a8fa4f98adf3314ccc2aa780e594e933b051e3d7cc715d1944eeb01190",
+    "archive_metadata": {
+      "date": "2020-02-21 16:53:53",
+      "edge_count": 770,
+      "verified_bounded_face_count": 271
+    },
+    "solver_and_ai_provenance": "Not stated in the archived solution metadata."
+  },
+  "local_human_method": {
+    "method": "SciPy Delaunay triangulation plus deterministic greedy merging whenever two adjacent faces have a convex union.",
+    "method_source": "Eder, Held, de Lorenzo, and Palfrader, CG:SHOP 2020, DOI 10.4230/LIPIcs.SoCG.2020.85, section 2.2, pages 85:2-3, describes a Delaunay triangulation followed by randomized edge removal while preserving convexity.",
+    "reproduced_value": 384,
+    "status": "AI-assisted local reconstruction of the traditional method, using deterministic edge/merge ordering. It is not the paper's code or reported score and is not a published 500-point record."
+  }
+}

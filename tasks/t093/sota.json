@@ -1,0 +1,134 @@
+{
+  "task_id": "T093",
+  "source_checked": "2026-11-06",
+  "configurations": {
+    "T093-C01": {
+      "program": "reference.py",
+      "reproduced_value": 2304,
+      "public_value": 2304,
+      "objective": "sum of selected item values in a feasible integer-translation packing",
+      "direction": "maximize",
+      "source_instance": {
+        "url": "https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2024/",
+        "source_location": "Challenge instances; random_cf2_74ae2d30_50",
+        "file": "data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json",
+        "sha256": "f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92"
+      },
+      "highest_reported": {
+        "value": 2304,
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
+        "source_location": "Shadoks solution, value 2304, 23 included items; solution file linked from result page",
+        "reproduction_status": "exact public witness recovered and independently checked"
+      },
+      "reproduced_witness": {
+        "value": 2304,
+        "file": "data/reference/shadoks2304.json",
+        "sha256": "f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1",
+        "provenance": "Public Shadoks witness. Exact integer translations and source polygon coordinates were used.",
+        "evidence_state": "exact simple-polygon triangulation, exact rational clipping, and objective recomputation"
+      },
+      "open_status": {
+        "evidence": "The official CG:SHOP 2024 page describes a heuristic challenge and the current Shadoks results page lists team solutions, with Shadoks at 2304, SmartPlacer at 2268, and CGA Lab Salzburg at 2105. The source check on 2026-11-06 found no proof that 2304 is optimal for this instance.",
+        "claim_limit": "This records the checked contest and author sources; it does not claim an exhaustive literature survey."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T093",
+          "config_id": "T093-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 2304,
+          "verification_status": "exact",
+          "generation_time": 0.48475420102477074,
+          "verification_time": 0.5162832029163837,
+          "objective_value": 2304,
+          "details": {
+            "instance": "random_cf2_74ae2d30_50",
+            "instance_sha256": "f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92",
+            "container_vertices": 15,
+            "item_types": 44,
+            "available_items_total": 50,
+            "selected_items": 23,
+            "selected_type_counts": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              1,
+              1,
+              0,
+              0,
+              1,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              0,
+              1,
+              1,
+              0,
+              1,
+              0,
+              1,
+              1,
+              0,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.0186917930841446,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "packed_value": 2304,
+          "placed_items": 23,
+          "method": "Exact rational vertical sections in all arrangement slabs; convex-container halfplanes; no triangulation or triangle clipping."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "0530a2a715a45afbd19d0f27941337eb054054bb51df2d18e7053fb8ae9b3ad7"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

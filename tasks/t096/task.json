@@ -1,0 +1,32 @@
+{
+  "task_id": "T096",
+  "name": "Benguria-Loss ovals variational problem",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T096-C01",
+      "parameters": {
+        "dimension": 2,
+        "curve_class": "smooth strictly convex simple closed plane curves",
+        "length": "2*pi",
+        "objective": "minimize joint Rayleigh quotient over curve and nonzero periodic trial function"
+      },
+      "direction": "minimize",
+      "human_reference": 1
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定周长2π的光滑简单闭凸平面曲线。通过曲线和实周期试验函数的联合Rayleigh商最小化求原特征值下确界。正式分数为该商的有理认证上端；非圆构造不声称已求出其真实第一特征值。",
+      "primary_source": "Sol亲读Denzler1301.6322定理1：最小者存在且为平面、解析、正曲率凸曲线；放宽问题的digon值为1。又读Suragan2609.10775v1§1，其报告下界约0.9618316523，明确最优1仍开放。撤回的2503.02431不作为闭合证据。",
+      "domain_and_certificate": "ρ为任意有限有理三角多项式，均值1且第一谐波零，正下界δ保证曲线闭合、长度及严格凸性。Fejer逼近与有理系数扰动保持ρ条件，H1逼近保持试验函数Rayleigh商；结合Denzler正曲率结论不改变全局下确界。几何级数与全域尾界给精确有理区间。",
+      "returned_corrections": "Sol发现负多项式−t²会被原0点符号锚误判非负；现检查首项符号及全部实根重数。还纠正了把每个Fourier系数实部条件误当实函数条件的问题，现接受Hermitian对称的正弦项。区间已改为真实Rayleigh包围区间，未标作特征值双侧区间。",
+      "independent_method": "五个最终构造均为圆与常数试验函数，Sol用Parseval精确复算1。另独立认证非圆ρ=1+a cos2θ+b sin2θ和一阶试验函数：商等于有理因子除以sqrt(1−a²−b²)。三个非圆/正弦样例包围区间全部吻合，伪造δ=3/2导致旧假分2/3的攻击已拒绝，证据runs/sol_noncircle_audit_20261106.json。",
+      "admission": "五程序均为原始分数1/1。全部严格程序、破坏、完整结果声明篡改、重放、冷导出、错误及超时控制通过。7项任务测试通过。圆作为简单起点与经典人类对照同值，搜索未读取比较数据，未声称本轮改善公开纪录。"
+    }
+  }
+}

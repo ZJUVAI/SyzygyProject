@@ -1,0 +1,32 @@
+{
+  "task_id": "T100",
+  "name": "Minimum triangles in a 50-vertex graph with 700 edges",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T100-C01",
+      "parameters": {
+        "vertices": 50,
+        "edges": 700,
+        "graph": "simple undirected graph",
+        "objective": "number of triangles"
+      },
+      "direction": "minimize",
+      "human_reference": 1817
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定50个标记顶点、700条简单无向边，最小化真实三角形数。允许全部一般图，不限多部图或H*家族。",
+      "primary_source": "Sol读Liu–Pikhurko–Staden arxiv1712.00633v2 Definition1.1/Theorem1.9/Conjecture1.11。H*分部23,23,4共713条边，删去13条同一小部顶点的星边，恰700边；各删边消去23个三角形，得1817。",
+      "open_status": "Sol核对2025 Liu/Pikhurko note(arxiv2311.18753v2，正确修订日2024-10-07)只修订r>=4构造猜想；2026 Li/Feng/Peng arxiv2408.01709v2重述近Mantel定理要求q<n/2。本行q75，不适用。LPS大n定理的未给出阈值不自动覆盖50。本行密度下界49000/27只得整数1815，尚差2。题包同参未证标签仅补充有限状态快照，文献检索有范围，不声称穷尽。",
+      "screening": "九行题包中6行由密度下界取整或近Mantel定理已闭合，虽包称未证也排除。12,40的下界32-32sqrt6/9介于23与24，24构造已证最优。不把渐近开放套到任意小n。只选50,700。",
+      "independent": "Sol独立生成23,23,4删13边，并以int64邻接矩阵trace(A^3)/6得到1817；全部候选同法复算。50³<2^63确保整数矩阵无溢出。正式checker用位集公共邻点，算法独立。",
+      "admission": "首次admission_20261107失败是checker拒绝完整标准配置，旧记录保留。原代理已返修严格核标准四字段、方向及固定参数，新增真实公共evaluate接口测试。新标签五程序5219、2444、1817、1817、3414及全部破坏、完整分数篡改、重放、冷导出、错误、非有限数、超时控制通过。最终25项任务测试通过。传统/演化不读取人类或参考构造。"
+    }
+  }
+}

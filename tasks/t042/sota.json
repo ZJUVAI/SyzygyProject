@@ -1,0 +1,143 @@
+{
+  "task_id": "T042",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T042-C01": {
+      "objective": {
+        "name": "maximum cardinality of a subset of [1, 212] with no nontrivial three-term arithmetic progression",
+        "unit": "integers",
+        "direction": "maximize",
+        "constraints": [
+          "the universe is exactly [1, 212]",
+          "each selected element is an integer",
+          "elements are distinct",
+          "no selected a < b < c satisfy a + c = 2b"
+        ]
+      },
+      "program": "reference.py",
+      "public_value": 43,
+      "reproduced_value": 43,
+      "highest_reported": {
+        "value": 43,
+        "source": "Ergezer, arXiv:2606.04016v1, §2.1 and §5.5; results/N212_K43_witness.json",
+        "url": "https://arxiv.org/abs/2606.04016",
+        "reproduction_status": "The witness was extracted from the pinned arXiv v1 source archive and independently checked exactly. No 44-set or complete upper-bound proof is reported in the checked sources."
+      },
+      "best_human": {
+        "value": 32,
+        "parameters": {
+          "N": 212
+        },
+        "source": "Odlyzko and Stanley (1978), greedy sequence S(1) with ternary digits restricted to 0 and 1; rebuilt by human.py",
+        "url": "https://www-users.cse.umn.edu/~odlyzko/unpublished/greedy.sequence.pdf",
+        "witness_program": "human.py",
+        "evidence_state": "The formula is replayed and exactly checked at N=212.",
+        "witness": "data/reference/odlyzko_stanley_n212_32.json",
+        "witness_sha256": "9c4230152b0e0f1e8a98a35d78944fd190b9d94b0c14ba4a458b640c8fdaf24b",
+        "origin_type": "published classical construction"
+      },
+      "best_public": {
+        "value": 43,
+        "parameters": {
+          "N": 212
+        },
+        "source": "Ergezer, arXiv:2606.04016v1 and linked repository",
+        "url": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
+        "evidence_state": "Public 43-element witness, exactly reproduced by the task checker.",
+        "ai_provenance": "The current maintained paper discloses Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 use for writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration. It does not state whether AI proposed or searched for this specific witness; witness-specific discovery provenance is undisclosed.",
+        "witness": "data/reference/ergezer_n212_k43_witness.json",
+        "witness_sha256": "41377c0db2e50f2d7753434ac472e82d831d093013562a477fffb068f117eb28",
+        "origin_type": "public construction with witness-specific discovery provenance undisclosed"
+      },
+      "best_reproduced": {
+        "value": 43,
+        "parameters": {
+          "N": 212
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Check all selected pairs a<b and reject if 2b-a is selected; validate range, integer type, and uniqueness.",
+        "witness": "data/reference/ergezer_n212_k43_witness.json",
+        "ai_provenance": "The current maintained paper discloses broad AI collaboration, but not whether AI proposed or searched for this witness. Reproduction does not establish discovery provenance."
+      },
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 32,
+        "note": "H is the reproduced Odlyzko-Stanley human-method baseline."
+      },
+      "checked_at": "2026-11-06",
+      "optimality_status": {
+        "status": "open; current certified range is 43 through 44",
+        "paper_v1": "No 44-set was found; the paper leaves the upper bound unresolved. Its original T1c residual had two chunks.",
+        "current_repository": "Current main README says the historical T1c chunks are now DRAT-closed and 6,045/6,071 T2 chunks are solver-attested closed. The full T3 space remains without complete certificate checking, so r_3(212) <= 43 is not proved.",
+        "current_repository_commit": "cfd76934bff8cb5d5016e9f599063d698a09d47e",
+        "zenodo_v2": "10.5281/zenodo.21413746, modified 2026-07-18; states that the upper-bound question remains open."
+      },
+      "limitations": [
+        "The 43 construction establishes only r_3(212) >= 43.",
+        "No checked source certifies the complete upper bound at N=212.",
+        "The current maintained paper discloses broad AI collaboration, but not whether AI proposed or searched for the 43-element construction.",
+        "The source check is limited to the cited paper, linked repository, and Zenodo v2 record."
+      ],
+      "source_review": {
+        "paper_url": "https://arxiv.org/abs/2606.04016",
+        "paper_version": "v1, submitted 2026-05-31; HTML body date 2026-08-24",
+        "repository_snapshot_url": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
+        "current_repository_url": "https://github.com/memoatwit/erdos_1194/blob/main/erdos_r3/README.md",
+        "generative_ai_declaration_url": "https://github.com/memoatwit/erdos_1194/blob/cfd76934bff8cb5d5016e9f599063d698a09d47e/erdos_r3/paper/paper.tex#L211-L220",
+        "current_repository_tag": "mpc-submission-v1.4",
+        "current_repository_tag_commit": "4c5811007a286c0b10c9b8bf4a91f79653847b55",
+        "generative_ai_declaration": "paper/paper.tex §Use of generative AI states Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 assisted writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration; the specific discovery path for the 43-set is not stated.",
+        "artifact_record_url": "https://doi.org/10.5281/zenodo.21413746"
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T042",
+          "config_id": "T042-C01",
+          "validity": 1.0,
+          "combined_score": 1.34375,
+          "objective": 43,
+          "verification_status": "exact",
+          "generation_time": 2.4941090419888496,
+          "verification_time": 0.6171908974647522,
+          "objective_value": 43,
+          "details": {
+            "N": 212,
+            "selected_size": 43,
+            "midpoint_pairs_checked": 903,
+            "claimed_score_ignored": true,
+            "strict_full_domain_check": true
+          },
+          "eval_time": 3.267093040049076,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "cardinality": 43,
+          "endpoint_pairs_checked": 903
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "15dc9d41be4a2b360480d3a25428a4dbb8d86fd72906018b682d9b676883ce81"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "hex_sequence": "B24FEAE7E4529CF0",
+  "length": 64,
+  "encoding": "64-bit hexadecimal, most-significant bit first; 1 maps to +1, 0 maps to -1",
+  "source_title": "Periodic Binary Sequences With Very Good Autocorrelation Properties",
+  "authors": ["S. Tyler", "J. Loftsson"],
+  "publication_year": 1985,
+  "publication": "TDA Progress Report 42-82, April-June 1985, pages 143-158",
+  "source_url": "https://ipnpr.jpl.nasa.gov/progress_report/42-82/82O.PDF",
+  "ntrs_record": "https://ntrs.nasa.gov/citations/19860000930",
+  "source_location": "Table 2, period 64 matched sequence; M=(240), peak sidelobe 4; footnote ZZ cites J. Watkins, personal communication, June 1985",
+  "source_pdf_sha256": "edc332b8a9410cb0d8f14d6db65225469f592c5096c88fa3e8051315282d63cf"
+}

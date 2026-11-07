@@ -1,0 +1,51 @@
+{
+  "snapshot_date": "2026-11-06",
+  "literature_sources": [
+    {
+      "url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6",
+      "description": "Official 2007 EJC publication record and full paper, including Table 3",
+      "retrieval_status": "read online; local PDF copy not saved",
+      "local_file": null,
+      "local_file_sha256": null
+    },
+    {
+      "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+      "description": "Monroe paper, Tables 1-2 and construction description",
+      "retrieval_status": "read online; local copy not saved",
+      "local_file": null,
+      "local_file_sha256": null
+    },
+    {
+      "url": "https://github.com/hmonroe/vdw",
+      "description": "Author code repository cited by Monroe",
+      "repository_commit": null,
+      "retrieval_status": "repository identified; commit not pinned"
+    },
+    {
+      "url": "https://www.cs.utexas.edu/~marijn/publications/waerden.pdf",
+      "description": "Author-hosted 2005 pre-publication manuscript of the same paper",
+      "retrieval_status": "read online; local PDF retrieval failed",
+      "local_file": null,
+      "local_file_sha256": null
+    }
+  ],
+  "reconstructed_witness": {
+    "path": "data/reconstructed_3703_coloring.json",
+    "sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb"
+  },
+  "reconstruction_programs": {
+    "human.py": "c0c7b5ed5a286ef88f2bf493e702c855c0109c2f4a53b8ea4e07a3c5375afe84",
+    "reference.py": "0db56f4f16ba75ce1bfcf355f4048e03b5b362b3687527bdb4c18726c4f5b575"
+  },
+  "source_notes": {
+    "path": "data/source/source_notes.md",
+    "sha256": "5ea5c433fce6054613c684dfb78dbf6d02db9debbbacd7ac9fcfad4151d03981"
+  },
+  "method_parameters": {
+    "prime": 617,
+    "power_residue_exponent": 2,
+    "zippings": 0,
+    "interval_positions": "0 through 6*617 inclusive",
+    "exceptional_positions": "multiples of 617 through 5*617 receive color 0; endpoint 6*617 receives color 1"
+  }
+}

@@ -1,0 +1,433 @@
+{
+  "task_id": "T099",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T099 --label admission_20261107",
+  "configurations": {
+    "T099-C01": {
+      "configuration": {
+        "id": "T099-C01",
+        "parameters": {
+          "polyomino": "11P1",
+          "tile_area": 11,
+          "congruence": "translations, rotations, and reflections allowed",
+          "region": "any axis-aligned integer rectangle",
+          "objective": "minimize number of congruent tile copies"
+        },
+        "direction": "minimize",
+        "human_reference": 270
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T099",
+            "config_id": "T099-C01",
+            "validity": 1.0,
+            "combined_score": 0.5,
+            "objective": 540,
+            "verification_status": "exact",
+            "generation_time": 0.6283269785344601,
+            "verification_time": 0.799665804952383,
+            "objective_value": 540,
+            "details": {
+              "tile_count": 540,
+              "rectangle": [
+                54,
+                110
+              ],
+              "area": 5940,
+              "covered_cells": 5940,
+              "orientation_group": "D4: four rotations and four reflected rotations",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.4826448559761047,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "tile_count": 540,
+            "rectangle": [
+              54,
+              110
+            ],
+            "covered_area": 5940,
+            "row_intervals": 2188,
+            "method": "Independent Gaussian-integer D4 transformations and complete sorted row-interval partitions; all gaps and overlaps excluded by exact integer endpoints."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T099",
+            "config_id": "T099-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 270,
+            "verification_status": "exact",
+            "generation_time": 1.2407823652029037,
+            "verification_time": 2.1487886272370815,
+            "objective_value": 270,
+            "details": {
+              "tile_count": 270,
+              "rectangle": [
+                54,
+                55
+              ],
+              "area": 2970,
+              "covered_cells": 2970,
+              "orientation_group": "D4: four rotations and four reflected rotations",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 3.5473447889089584,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "tile_count": 270,
+            "rectangle": [
+              54,
+              55
+            ],
+            "covered_area": 2970,
+            "row_intervals": 1094,
+            "method": "Independent Gaussian-integer D4 transformations and complete sorted row-interval partitions; all gaps and overlaps excluded by exact integer endpoints."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T099",
+            "config_id": "T099-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 270,
+            "verification_status": "exact",
+            "generation_time": 0.4967711605131626,
+            "verification_time": 0.49949638545513153,
+            "objective_value": 270,
+            "details": {
+              "tile_count": 270,
+              "rectangle": [
+                54,
+                55
+              ],
+              "area": 2970,
+              "covered_cells": 2970,
+              "orientation_group": "D4: four rotations and four reflected rotations",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 1.0046889781951904,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "tile_count": 270,
+            "rectangle": [
+              54,
+              55
+            ],
+            "covered_area": 2970,
+            "row_intervals": 1094,
+            "method": "Independent Gaussian-integer D4 transformations and complete sorted row-interval partitions; all gaps and overlaps excluded by exact integer endpoints."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T099",
+            "config_id": "T099-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 270,
+            "verification_status": "exact",
+            "generation_time": 0.6996913142502308,
+            "verification_time": 2.7487871646881104,
+            "objective_value": 270,
+            "details": {
+              "tile_count": 270,
+              "rectangle": [
+                54,
+                55
+              ],
+              "area": 2970,
+              "covered_cells": 2970,
+              "orientation_group": "D4: four rotations and four reflected rotations",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 3.5090512558817863,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "tile_count": 270,
+            "rectangle": [
+              54,
+              55
+            ],
+            "covered_area": 2970,
+            "row_intervals": 1094,
+            "method": "Independent Gaussian-integer D4 transformations and complete sorted row-interval partitions; all gaps and overlaps excluded by exact integer endpoints."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T099",
+            "config_id": "T099-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 270,
+            "verification_status": "exact",
+            "generation_time": 7.646628346294165,
+            "verification_time": 1.8495007269084454,
+            "objective_value": 270,
+            "details": {
+              "tile_count": 270,
+              "rectangle": [
+                54,
+                55
+              ],
+              "area": 2970,
+              "covered_cells": 2970,
+              "orientation_group": "D4: four rotations and four reflected rotations",
+              "claimed_score_ignored": true
+            },
+            "eval_time": 9.50324286147952,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "tile_count": 270,
+            "rectangle": [
+              54,
+              55
+            ],
+            "covered_area": 2970,
+            "row_intervals": 1094,
+            "method": "Independent Gaussian-integer D4 transformations and complete sorted row-interval partitions; all gaps and overlaps excluded by exact integer endpoints."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T099",
+        "config_id": "T099-C01",
+        "validity": 1.0,
+        "combined_score": 0.5,
+        "objective": 540,
+        "verification_status": "exact",
+        "generation_time": 0.6501105800271034,
+        "verification_time": 0.4973032474517822,
+        "objective_value": 540,
+        "details": {
+          "tile_count": 540,
+          "rectangle": [
+            54,
+            110
+          ],
+          "area": 5940,
+          "covered_cells": 5940,
+          "orientation_group": "D4: four rotations and four reflected rotations",
+          "claimed_score_ignored": true
+        },
+        "eval_time": 1.150577500462532,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T099",
+          "config_id": "T099-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t099/runs/admission_20261107/T099-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.5418951287865639,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T099",
+          "config_id": "T099-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.212296761572361,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T099",
+          "config_id": "T099-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.5193301104009151,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "eee8614ca550ff69098e75ea19ec9fdcefbee48cc1f2e446581596f634ee7eed",
+    "README.md": "52acedf62028944c93b424035c6ad813e5daea1a451647ed44e6bc1ee3ccdb99",
+    "baseline.py": "3b01ed65285d6dd89be628fa30aac0dc3bbc8e8eb48fa874e0d57a259b94bdaa",
+    "check.py": "e628260bdef236611ae6597fb1888d6249f79b3bdce655f67df72dd754e61dd6",
+    "construction.py": "15ea99160ee282dd7fa96f04bc10274ebdea606f4007cd294c4e62363fa23474",
+    "data/reference/11P1_54x55.json": "4ca03f1b4984073bc481c76e90e1cabfd4c49351831784813f070686fb7877f0",
+    "data/source/11P1.json": "e547baef5aed720511c8e413bc19f80e1e33070efde1dfc3095df5d57f2f03b6",
+    "data/source/source_notes.json": "4f36e0855c7345872392132d352d440dbf1ff584e93b9a24bcf613e3487dfff6",
+    "evaluator.py": "105d73d42487c313a2005d80ae4b17e46713fa615fe701f54aae4ed20e96508c",
+    "evolution.py": "f6a7b8943aeed9fc5e9e4f96ec123ddfc004a2c2c501ddf8a97e5e633a5ef165",
+    "human.py": "82323e7c6b40b7cf6e479105802f38a11871d2177a412e65fd0ff25c17a93f9c",
+    "init_program.py": "25a6f605c7a728461d7495991c1daa8ef0020a3c3c89d3150870e4c7bb74bd3f",
+    "instruction.txt": "79f3bfaeb4a494934a203eea73dbeef8e5d653945b25708a53c4061c00b17071",
+    "records.json": "2753890cd20b34cf5a296249a7f5b99fbe32d9720deca7d5dd8473e140e6848d",
+    "reference.py": "02205e3e08056cadc4c2cfa9c0753edcf6ee0ca15b97756dbdfa01b3debcf901",
+    "search_exact_cover.py": "6f4b69046a97b13fc533d50f2eb1dad92944d39b3ff696705e98eddb1faec0c4",
+    "test_task.py": "d07ebfd974b851c665d51b76efd652412168587b442db6c5c66549e9542f0585"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-07",
+  "source_review": {
+    "definition": "固定P1 11格形状：底行5格，上方两行各3格。采用标准正方格点模型，允许D4八种旋转反射及整数平移。对任意正整数边长矩形，最小化铺满所需的块数；未把区域固定为54乘55。",
+    "primary_source": "Sol核对polyominoes.org/data/11P1的order<=270及smallest known rectangle、MIT Tiling Search data113/K12的270块54乘55记录。后者说明来自Karl Dahlke1997与Wichmann图案档案；不将网站版权年份当作发现年份。270是可行上界，没有匹配最小阶证明。",
+    "human": "源SVG重建270块，同参历史布局由Sol亲自运行human复现。精确覆盖2970格。D4及平移由独立Gaussian整数单位变换复算，所有行区间完整拼合，无重叠无缺口。",
+    "independent_seed": "自有CP-SAT只读11格形状，seed20261106、单线程、1800秒上限，477.481秒找到独立270块。脚本及版本9.15.6755与统计、SHA保存。固定54乘55满足模型的OPTIMAL不证明全矩形最小值。另47乘99的600.281秒UNKNOWN失败保留。",
+    "isolation": "简单程序独立保存自有270布局并重复成540块。传统和演化程序从该自有起点用通用边界切口找270块，不读历史或参考布局。离线搜索477秒与正式生成300秒分开报告；正式静态起点及各搜索在预算内。",
+    "admission": "Sol完成五程序540、270、270、270、270，所有合法与破坏、完整分数声明篡改、严格重放、冷导出、错误、非有限数和超时控制通过。独立行区间核验初始5940格及其他2970格。Sol另跑任务8项测试通过。"
+  }
+}

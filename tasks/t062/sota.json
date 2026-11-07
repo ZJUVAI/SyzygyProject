@@ -1,0 +1,97 @@
+{
+  "task_id": "T062",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T062-C01": {
+      "program": "reference.py",
+      "reproduced_value": 2460,
+      "public_value": 2460,
+      "highest_reported": {
+        "value": 2460,
+        "source": "https://doi.org/10.37236/4656",
+        "source_location": "Theorem 3 and Section 3 residue set, expanded by Ruzsa's construction to N=42025",
+        "reproduction_status": "The paper gives the 12 residues modulo 205 and an asymptotic theorem. The value 2460 is the exact count of the finite N=42025 witness reconstructed from those residues and independently checked; it is not a published claim that D(42025)=2460 or that this is the finite optimum.",
+        "ai_provenance": "not stated by source"
+      },
+      "parameters": {
+        "N": 42025,
+        "set": "subset of {1,...,N}",
+        "forbidden_difference": "positive perfect square",
+        "objective": "cardinality"
+      },
+      "witness": "data/reference/lewko205_n42025.json",
+      "witness_sha256": "c31651d54da1b1bdd2b8ce73d74096ad5bdc259e9dd99799f6d9f9509aab7730",
+      "known_bounds": {
+        "lower_bound": 2460,
+        "upper_bound": 42025,
+        "lower_bound_source": "https://doi.org/10.37236/4656",
+        "lower_bound_location": "Theorem 3 construction using the 12 residues modulo 205",
+        "finite_exact_computation_range": "Dean et al. report exact D(S,N) computations for N<=300; OEIS A100719 links a table through N=410.",
+        "finite_exact_computation_source": "https://alexricemath.com/wp-content/uploads/2025/08/ForbiddenDifferencesPaper4.pdf",
+        "finite_exact_computation_location": "Abstract and Section 4",
+        "status": "No exact value at N=42025 was found in the sources checked on 2026-11-06. This is an evidence-limited status, not a proof that no later or unpublished result exists."
+      },
+      "asymptotic_results": [
+        {
+          "result": "liminf log D(N)/log N >= 0.7527964558...",
+          "source": "https://arxiv.org/abs/2608.01325",
+          "source_location": "Version 1 abstract, submitted 2026-08-02",
+          "scope": "asymptotic exponent; it gives no exact value at N=42025"
+        },
+        {
+          "result": "D(N) >= N^(0.7580758318008816-o(1))",
+          "source": "https://hexagonmath.org/search?advanced=1&subject=math.NT",
+          "source_location": "hexagon:2610.00151v1, submitted October 2026",
+          "scope": "computer-assisted asymptotic construction; it gives no exact value at N=42025"
+        }
+      ],
+      "cube_difference_warning": "Lewko's separate 14-residue construction modulo 91 in Theorem 4 concerns cube differences, not this square-difference task.",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T062",
+          "config_id": "T062-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 2460,
+          "verification_status": "exact",
+          "generation_time": 2.5936298705637455,
+          "verification_time": 2.898808978497982,
+          "objective_value": 2460,
+          "details": {
+            "N": 42025,
+            "cardinality": 2460,
+            "positive_square_translations_checked": 334952,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 5.507863357663155,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "cardinality": 2460,
+          "positive_square_shifts_checked": 204
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

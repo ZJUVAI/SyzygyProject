@@ -1,0 +1,100 @@
+{
+  "task_id": "T087",
+  "configurations": {
+    "T087-C01": {
+      "program": "reference.py",
+      "reproduced_value": "2378625/5958277",
+      "public_value": "2378625/5958277",
+      "highest_reported": {
+        "value": "2378625/5958277",
+        "source": "Kevin Russell / ProjectForty2, CHRONOS-assisted exact-rational certificate, minimum-autocorrelation-bound, certificate_n480.json",
+        "reproduction_status": "Independently recomputed with exact rational arithmetic over all 370 grid nodes and the exact t=1 interpolation; all certificate values match."
+      },
+      "source": {
+        "repository": "https://github.com/techno-optimist/minimum-autocorrelation-bound",
+        "commit": "b23f2d386eda9963e33c7531eeeb35c8f54cba37",
+        "certificate_path": "certs/certificate_n480.json",
+        "certificate_sha256": "11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa",
+        "zenodo_version_doi": "10.5281/zenodo.21227362",
+        "checked_at": "2026-11-06"
+      },
+      "parameters": {
+        "steps": 480,
+        "step_size": "13/4800",
+        "support": "13/10",
+        "height_domain": "nonnegative_rational"
+      },
+      "notes": [
+        "This is an AI-assisted public construction; CHRONOS provenance is disclosed in the source note.",
+        "No optimality claim is made for this 480-height vector.",
+        "The 2026 continuous lower bound 0.410377977432121... is reported separately because its source does not give this fixed 480-cell witness."
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T087",
+          "config_id": "T087-C01",
+          "validity": 1.0,
+          "combined_score": 1.104015185841681,
+          "objective": "2378625/5958277",
+          "verification_status": "exact",
+          "generation_time": 0.6428713202476501,
+          "verification_time": 0.9065290875732899,
+          "objective_value": "2378625/5958277",
+          "details": {
+            "steps": 480,
+            "step_size": "13/4800",
+            "support_length": "13/10",
+            "l1_norm": "8801/72000",
+            "minimum_autocorrelation": "82459/13824000",
+            "minimum_location": {
+              "type": "grid_node",
+              "k": 216
+            },
+            "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.56043965741992,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "minimum_autocorrelation_ratio": "2378625/5958277",
+          "minimum_autocorrelation": "82459/13824000",
+          "l1_mass": "8801/72000",
+          "method": "exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "563e34af84fc3b2503772d3e903d2fd85f0f4b2b04d082222d7c174b33fb9fca"
+      }
+    }
+  },
+  "related_continuous_results": [
+    {
+      "value": "0.4103779774321214877852987...",
+      "type": "lower bound for the unrestricted continuous minimum-autocorrelation constant; not a T087-C01 witness score",
+      "source": "Shenai Chen and EnHao Gu, An improved lower bound for the minimum-autocorrelation constant, arXiv:2610.18888v1, submitted 2026-10-08",
+      "url": "https://arxiv.org/abs/2610.18888v1",
+      "checked_at": "2026-11-06"
+    }
+  ],
+  "review_status": "accepted_by_sol"
+}

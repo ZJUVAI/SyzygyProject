@@ -1,0 +1,54 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T081",
+    "config_id": "T081-C01",
+    "validity": 1.0,
+    "combined_score": 0.9180395253107768,
+    "objective": "48625/5274",
+    "verification_status": "exact",
+    "generation_time": 0.9477156437933445,
+    "verification_time": 0.4486778825521469,
+    "objective_value": "48625/5274",
+    "details": {
+      "dimension": 2,
+      "point_count": 12,
+      "pair_distances_verified": 66,
+      "minimum_squared_distance": "2637/2048",
+      "maximum_squared_distance": "48625/4096",
+      "minimum_distance_pair_count": 1,
+      "maximum_distance_pair_count": 1,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 1.406277347356081,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "single-point coordinate simulated annealing on the 1/64 rational grid",
+    "seed": 0,
+    "iterations_completed": 12000,
+    "grid_denominator": 64,
+    "reference_data_read": false
+  },
+  "solution_sha256": "01c137deb93ee07bb8283226cae26d055db037f7ce1d185d4ba1ae4e131241c6",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T081 tasks/t081/best/T081-C01/solution.json --config T081-C01"
+}

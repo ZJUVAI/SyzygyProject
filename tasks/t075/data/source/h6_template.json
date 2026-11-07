@@ -1,0 +1,17 @@
+{
+  "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+  "source_location": "Section 6.3, page 27; H6 attributed there to Frankl and Furedi (1984)",
+  "vertices": 6,
+  "edges_zero_based": [
+    [0, 1, 2],
+    [1, 2, 3],
+    [2, 3, 4],
+    [0, 3, 4],
+    [0, 1, 4],
+    [0, 2, 5],
+    [2, 4, 5],
+    [1, 4, 5],
+    [1, 3, 5],
+    [0, 3, 5]
+  ]
+}

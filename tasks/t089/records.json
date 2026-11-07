@@ -1,51 +1,68 @@
 {
-  "task_id": "T089",
-  "snapshot_date": "2026-11-04",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "T089-C01 fixes d=1 and searches finite rational polynomial-Gaussian witnesses with no configured degree cap. The frozen human witness is exact and independently checked. The stronger 0.3089 Station result is an AI-assisted public report with a pinned exact source witness; its high-degree certificate was not replayed by this task.",
   "best_human": {
-    "value": 1188957517256767569920,
+    "value": 0.3102,
+    "date_checked": "2026-11-06",
     "parameters": {
-      "n": 29,
-      "entries": "±1"
+      "dimension": 1,
+      "problem": "unrestricted sign uncertainty constant",
+      "candidate_family_membership": "Not established; the cited source does not provide a witness in this task's polynomial-Gaussian family."
     },
-    "authors": [
-      "William P. Orrick",
-      "Bruce Solomon",
-      "Roland Dowdeswell",
-      "Warren D. Smith"
-    ],
-    "year": 2003,
-    "url": "https://arxiv.org/abs/math/0304410",
-    "evidence_state": "published witness transcribed and exactly reproduced",
-    "optimality": "best-known construction; no proof of global optimality is claimed",
-    "witness": "data/human_order29.json"
+    "url": "https://arxiv.org/abs/2511.02864v1",
+    "ai_provenance": "Reported as unpublished human work by Cohn, de Laat, and Gonçalves; the primary paper does not publish its witness in the checked section.",
+    "evidence_state": "Reported in AlphaEvolve's paper, not independently reproduced here.",
+    "origin_type": "reported traditional human mathematics"
   },
   "best_public": {
-    "value": 1188957517256767569920,
+    "value": 0.3089,
+    "date_checked": "2026-11-06",
     "parameters": {
-      "n": 29,
-      "entries": "±1"
+      "dimension": 1,
+      "candidate_family": "polynomial times a single Gaussian; degree 226 witness"
     },
-    "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
-    "evidence_state": "source reports Solomon/Orrick construction and hosts Gram/decomposition data; task uses the printed sign matrix in Orrick et al.",
-    "optimality": "conjectural, not certified",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
+    "url": "https://arxiv.org/abs/2608.23691",
+    "witness_url": "https://github.com/dualverse-ai/station_data_v2/tree/a4ae9192fa75b7ffc6909ed018a712510062378b/artifacts/sign_uncertainty",
+    "ai_provenance": "The Station paper describes the result as agent-produced. Its method section says the Station used GPT-5.5, Claude Opus 4.8, and Gemini 3.1 Pro agents; it does not attribute this particular polynomial to a named model family.",
+    "evidence_state": "The exact rational witness and formal certificate are public and pinned. The task preserves the witness coefficients but has not replayed the high-degree certificate.",
+    "origin_type": "AI-assisted construction with disclosed system-level provenance"
   },
   "best_reproduced": {
-    "value": 1188957517256767569920,
+    "value": "4847473933581553567755311941934806519116753438640640949945718167096752328611591055235873043718099753413785918422388544557855667783683899955818362133495327515104839424588199861944901676872776280017283447032472309956574463285505771636962890625/10148017438266133846068567435383270425825381650282977294397171830317828651292734315766082678923238736964491044901745758869722885562165767328610709451894456267018744378065049859463803923302242463373016821032897424652209603365039502307302047744",
+    "date_checked": "2026-11-06",
     "parameters": {
-      "n": 29,
-      "entries": "±1"
+      "dimension": 1,
+      "family": "finite rational polynomial times one Gaussian",
+      "degree": 2
     },
-    "provenance": "human published witness",
-    "evidence_state": "independently recomputed by integer Bareiss elimination"
+    "url": "https://doi.org/10.1016/j.jmaa.2017.02.030",
+    "witness": "human.py",
+    "ai_provenance": "The Hermite-Gaussian method is from published human mathematics. The rational strict-origin perturbation is an independent benchmark reconstruction.",
+    "evidence_state": "The exact Fourier transform and both last sign-change roots are independently recomputed. This stored score is the certified rational upper endpoint; the exact mathematical value is (3/4+sqrt(1127/2000))/pi.",
+    "verification_status": "certified"
   },
-  "baseline_seed": {
-    "value": 7247757312,
-    "formula": "27*2^28",
-    "provenance": "deterministic seed 2I-J, constructed in init_program.py",
-    "evidence_state": "exact determinant; not attributed as a published record"
+  "frozen_human_baseline_type": "published Hermite-Gaussian eigenfunction with an exact rational strict-origin perturbation",
+  "configurations": {
+    "T089-C01": {
+      "human_reference_exact": "(3/4+sqrt(1127/2000))/pi",
+      "human_reference_score_upper": "4847473933581553567755311941934806519116753438640640949945718167096752328611591055235873043718099753413785918422388544557855667783683899955818362133495327515104839424588199861944901676872776280017283447032472309956574463285505771636962890625/10148017438266133846068567435383270425825381650282977294397171830317828651292734315766082678923238736964491044901745758869722885562165767328610709451894456267018744378065049859463803923302242463373016821032897424652209603365039502307302047744",
+      "human_reference_json_value": 0.4776769416361765,
+      "public_value": 0.3089,
+      "reproduced_value": "4847473933581553567755311941934806519116753438640640949945718167096752328611591055235873043718099753413785918422388544557855667783683899955818362133495327515104839424588199861944901676872776280017283447032472309956574463285505771636962890625/10148017438266133846068567435383270425825381650282977294397171830317828651292734315766082678923238736964491044901745758869722885562165767328610709451894456267018744378065049859463803923302242463373016821032897424652209603365039502307302047744",
+      "public_result_ai_assisted": true,
+      "public_witness_pin": "a4ae9192fa75b7ffc6909ed018a712510062378b",
+      "optimality_status": "Open in the sources checked through 2026-11-06; no proof of the unrestricted one-dimensional optimum was found.",
+      "scope_warning": "Tomar's 2026 0.30349081 bound uses a mixture of Gaussians, outside this single-Gaussian polynomial family."
+    }
   },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T089-C01": {
+      "objective": "5334336507326387871389270736189435929866600685206923634069849444877253847223957127371255805640849108443346846460455064032002576029071192150810530367826695103357484082676040584446997055824340299771371860793056640659415279515087604522705078125/10148017438266133846068567435383270425825381650282977294397171830317828651292734315766082678923238736964491044901745758869722885562165767328610709451894456267018744378065049859463803923302242463373016821032897424652209603365039502307302047744",
+      "objective_value": "5334336507326387871389270736189435929866600685206923634069849444877253847223957127371255805640849108443346846460455064032002576029071192150810530367826695103357484082676040584446997055824340299771371860793056640659415279515087604522705078125/10148017438266133846068567435383270425825381650282977294397171830317828651292734315766082678923238736964491044901745758869722885562165767328610709451894456267018744378065049859463803923302242463373016821032897424652209603365039502307302047744",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.908730434783003
+    }
+  }
 }

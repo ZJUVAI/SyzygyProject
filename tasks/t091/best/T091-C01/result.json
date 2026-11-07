@@ -1,0 +1,36 @@
+{
+  "task_id": "T091",
+  "config_id": "T091-C01",
+  "validity": 1.0,
+  "combined_score": 0.5,
+  "objective": 8192,
+  "verification_status": "exact",
+  "generation_time": 2.1002394780516624,
+  "verification_time": 3.5391630455851555,
+  "objective_value": 8192,
+  "details": {
+    "rows": 8192,
+    "columns": 63,
+    "strength": 4,
+    "repeated_rows_allowed": true,
+    "balanced_parity_checks": 637392,
+    "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+    "rao_lower_bound": 2032,
+    "claimed_score_ignored": true
+  },
+  "eval_time": 5.870066076517105,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

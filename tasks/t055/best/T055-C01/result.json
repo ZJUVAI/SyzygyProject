@@ -1,0 +1,35 @@
+{
+  "task_id": "T055",
+  "config_id": "T055-C01",
+  "validity": 1.0,
+  "combined_score": 1.0,
+  "objective": 360,
+  "verification_status": "exact",
+  "generation_time": 6.681229680776596,
+  "verification_time": 0.9270443506538868,
+  "objective_value": 360,
+  "details": {
+    "variables_checked": 1630,
+    "hard_clauses_satisfied": 6150,
+    "hard_clauses_total": 6150,
+    "soft_clauses_satisfied_weight": 360,
+    "soft_unsatisfied_weight": 289,
+    "soft_total_weight": 649,
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 7.616731617599726,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

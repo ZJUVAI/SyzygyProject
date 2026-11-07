@@ -1,0 +1,393 @@
+{
+  "task_id": "T060",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T060 --label admission_20261106_main",
+  "configurations": {
+    "T060-C01": {
+      "configuration": {
+        "id": "T060-C01",
+        "parameters": {
+          "target": "2^61-1",
+          "target_value": "2305843009213693951",
+          "allowed_expression_grammar": "1, +, *, parentheses",
+          "expression_model": "binary expression tree; repeated text denotes separate occurrences; no shared subexpressions"
+        },
+        "direction": "minimize",
+        "human_reference": 153
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T060",
+            "config_id": "T060-C01",
+            "validity": 1.0,
+            "combined_score": 0.8453038674033149,
+            "objective": 181,
+            "verification_status": "exact",
+            "generation_time": 0.5171656236052513,
+            "verification_time": 0.5280873216688633,
+            "objective_value": 181,
+            "details": {
+              "target": "2305843009213693951",
+              "expression_value": "2305843009213693951",
+              "ones_count": 181,
+              "expression_tree": true,
+              "certified_lower_bound": 116,
+              "selfridge_max_at_115": "1801135623563989452",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.0528618171811104,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "one_count": 181,
+            "exact_value": 2305843009213693951,
+            "strict_lower_bound": 116
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T060",
+            "config_id": "T060-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 153,
+            "verification_status": "exact",
+            "generation_time": 0.5465838685631752,
+            "verification_time": 0.5534985885024071,
+            "objective_value": 153,
+            "details": {
+              "target": "2305843009213693951",
+              "expression_value": "2305843009213693951",
+              "ones_count": 153,
+              "expression_tree": true,
+              "certified_lower_bound": 116,
+              "selfridge_max_at_115": "1801135623563989452",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.1082188747823238,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "one_count": 153,
+            "exact_value": 2305843009213693951,
+            "strict_lower_bound": 116
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T060",
+            "config_id": "T060-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 153,
+            "verification_status": "exact",
+            "generation_time": 0.8479876704514027,
+            "verification_time": 3.3992618396878242,
+            "objective_value": 153,
+            "details": {
+              "target": "2305843009213693951",
+              "expression_value": "2305843009213693951",
+              "ones_count": 153,
+              "expression_tree": true,
+              "certified_lower_bound": 116,
+              "selfridge_max_at_115": "1801135623563989452",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 4.253134910017252,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "one_count": 153,
+            "exact_value": 2305843009213693951,
+            "strict_lower_bound": 116
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T060",
+            "config_id": "T060-C01",
+            "validity": 1.0,
+            "combined_score": 1.204724409448819,
+            "objective": 127,
+            "verification_status": "exact",
+            "generation_time": 3.798034332692623,
+            "verification_time": 4.200659189373255,
+            "objective_value": 127,
+            "details": {
+              "target": "2305843009213693951",
+              "expression_value": "2305843009213693951",
+              "ones_count": 127,
+              "expression_tree": true,
+              "certified_lower_bound": 116,
+              "selfridge_max_at_115": "1801135623563989452",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 8.007797997444868,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "one_count": 127,
+            "exact_value": 2305843009213693951,
+            "strict_lower_bound": 116
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T060",
+            "config_id": "T060-C01",
+            "validity": 1.0,
+            "combined_score": 0.9216867469879518,
+            "objective": 166,
+            "verification_status": "exact",
+            "generation_time": 3.197170276194811,
+            "verification_time": 3.8504809997975826,
+            "objective_value": 166,
+            "details": {
+              "target": "2305843009213693951",
+              "expression_value": "2305843009213693951",
+              "ones_count": 166,
+              "expression_tree": true,
+              "certified_lower_bound": 116,
+              "selfridge_max_at_115": "1801135623563989452",
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 8.060754552483559,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "one_count": 166,
+            "exact_value": 2305843009213693951,
+            "strict_lower_bound": 116
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T060",
+        "config_id": "T060-C01",
+        "validity": 1.0,
+        "combined_score": 0.8453038674033149,
+        "objective": 181,
+        "verification_status": "exact",
+        "generation_time": 4.249099794775248,
+        "verification_time": 2.100349470973015,
+        "objective_value": 181,
+        "details": {
+          "target": "2305843009213693951",
+          "expression_value": "2305843009213693951",
+          "ones_count": 181,
+          "expression_tree": true,
+          "certified_lower_bound": 116,
+          "selfridge_max_at_115": "1801135623563989452",
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 7.68537288159132,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T060",
+          "config_id": "T060-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t060/runs/admission_20261106_main/T060-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.5964720360934734,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T060",
+          "config_id": "T060-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.2090454325079918,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T060",
+          "config_id": "T060-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.4022967144846916,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "5ee26c33c2f6d60d4160caa8bcd1fdd5c4d9c7f8ea40323d5eb7f1f58a975b78",
+    "README.md": "97d63bf3e48edac58a483577797762813c8444746d11163b0f57f1782adf2518",
+    "baseline.py": "78296da0520c967733821a3c39c39fe6f69591f42a00d4509f7b8fba79479247",
+    "check.py": "656b890af45e767a2733ac9af51175bf89e39e85f299fc6a1b23b81b20d5ce6b",
+    "data/human/human_base3_expression.json": "85ecfaf67d279b5160d7bec4aab0bbe3df94fca2b6f9ec75896ea9a978998347",
+    "data/reference/public_127_expression.json": "946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449",
+    "evaluator.py": "d45d0e68f6dc47ad53ce305cc0b24936ee77373e6b7a19dcc88eedccb1f04c23",
+    "evolution.py": "cab49030dd45eb60ee07958a0962ebfefb0857d66076b5cc67cc44b52588c155",
+    "human.py": "898901ee52d4403b8713ea4315533dabbeede8a4ddab00fb0b4f5488abe8fc4d",
+    "init_program.py": "5b5a7e35062cf0ed5b3cf7d2d44201b2b3bd1f928bc620e6b6bb34e3225551c6",
+    "instruction.txt": "801c8a0345023078723e1d538023919c321538ea7fb5747ca8d23c33e1ba3c6a",
+    "records.json": "4baca0a581336f9ff4743ccf897a5482e884cc14de6cdfccfee1953577c33427",
+    "reference.py": "156864530cf5ad187abf30a1724add96b083d2146617fff4f4e4e2f5d4fd76fb",
+    "test_task.py": "4452cee22d15a5c6db502137314c456ec6f3293328d3e940d35efe55e8362398"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "固定M61=2305843009213693951，表达式树叶子仅1、内部仅加乘，最小化叶子数。重复文本单独计数，禁止DAG、减法、幂；与加法链目标不同。",
+    "primary_source": "Sol亲自读取Altman2019综述导言及Theorem1.1，确认整数复杂度定义、Horner方法、Selfridge极值公式；同参重建三进制39位Horner表达式153个1。该153为弱传统方法基线，不声称文献最强。",
+    "record_and_status": "Sol下载PR4固定6b79a6324891b4b196731f78fcd7a9b978524b25的689字节127表达式，SHA256 946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449；独立AST求值正确。EventCompute明确披露生成式AI协作，记录为AI辅助。PR仍开放未合并，不影响表达式可行性。所查页面与仓库未给M61最优性证明，116至127间仍未闭合。",
+    "independent_math": "正式checker用整数栈语法解析；Sol另用受限Python AST逐节点求值及计数。另独立动态规划枚举所有二叉根分裂，复算115个1的最大数1801135623563989452，小于M61，从而下界116，不调用任务公式。",
+    "resource_scope": "100000字符只限输入资源；k叶二叉树总可规范化至4k-3字符，任何优于153的解都存在不足609字符的表示，不排除更优表达式。",
+    "controls": "初始181、传统153、演化166、人类153、参考127。五程序、故意加1破坏、完整声明不变、严格重放、冷导出、异常和超时均通过，任务及共享检查43项通过。",
+    "limits": "未重跑公开127的发现过程，未证明127最优；未将挑战150基线或AI辅助127称为纯人类纪录。开放性结论限所列来源。"
+  }
+}

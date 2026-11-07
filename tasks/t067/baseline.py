@@ -1,28 +1,66 @@
-from mathbench.search import search_deadline, search_steps
-"""Seeded randomized greedy search, starting from an extended BCH code."""
-import os, random, time
+"""Seeded greedy packing search over all weight-five 17-bit words."""
 
-def _start():
-    g=(1<<8)|(1<<7)|(1<<6)|(1<<4)|1
-    out=[]
-    for m in range(128):
-        w=0
-        for i in range(7):
-            if (m>>i)&1: w ^= g<<i
-        w |= (bin(w).count('1')%2)<<15
-        out.append(w)
-    return out
+from itertools import combinations
+import os
+import random
+import time
+
+from mathbench.search import search_steps
+
+
+def _candidates():
+    words = []
+    for positions in combinations(range(17), 5):
+        word = 0
+        for position in positions:
+            word |= 1 << position
+        words.append(word)
+    return words
+
+
+def _greedy(order):
+    selected = []
+    for word in order:
+        if all((word ^ old).bit_count() >= 4 for old in selected):
+            selected.append(word)
+    return selected
+
 
 def run_code():
-    if os.environ.get('MATHBENCH_CONFIG_ID','T067-C01') != 'T067-C01': raise ValueError('unsupported configuration')
-    rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
-    seconds=max(0.0,min(float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2')),30.0))
-    deadline = search_deadline()
-    best=_start()
-    # Greedy independent sets in the graph whose edges join words at distance < 6.
-    for _attempt in search_steps(1):
-        order=list(range(1<<17)); rng.shuffle(order); chosen=[]
-        for x in order:
-            if all(bin(x^y).count('1')>=6 for y in chosen): chosen.append(x)
-        if len(chosen)>len(best): best=chosen
-    return {'codewords':best}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T067-C01") != "T067-C01":
+        raise ValueError("unsupported configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    restarts = max(1, min(20, int(os.environ.get("MATHBENCH_RESTARTS", "8"))))
+    candidates = _candidates()
+    rng = random.Random(seed ^ 0x068B)
+    best = [candidates[0]]
+    start = time.monotonic()
+    iterations = 0
+    for _ in search_steps(restarts):
+        order = list(candidates)
+        rng.shuffle(order)
+        candidate = _greedy(order)
+        if len(candidate) > len(best):
+            best = candidate
+        iterations += 1
+    return {
+        "codewords": [format(word, "017b") for word in best],
+        "search_metadata": {
+            "algorithm": "random-order greedy independent-set packing on the fixed weight-five conflict graph",
+            "seed": seed,
+            "candidate_words": len(candidates),
+            "restarts_requested": restarts,
+            "restarts_run": iterations,
+            "best_size": len(best),
+            "generation_seconds": time.monotonic() - start,
+            "budget": {
+                "mode": "fixed restart count unless MATHBENCH_SEARCH_SECONDS is set",
+                "runner_generation_limit_seconds": 300,
+            },
+        },
+    }
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

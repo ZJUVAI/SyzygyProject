@@ -1,0 +1,34 @@
+{
+  "task_id": "T047",
+  "candidate_id": "minimum-integer-difference-basis",
+  "name": "Minimum difference basis for [1, 6166]",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T047-C01",
+      "parameters": {
+        "N": 6166,
+        "ambient_group": "integers_under_subtraction",
+        "required_differences": "positive_integers_1_through_N"
+      },
+      "direction": "minimize",
+      "human_reference": 158
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定N6166，最小化不同整数的有限集合基数，使每个1..6166均可表示为两个集合元素之差；允许元素和差值超出[0,6166]。未偷换为受限稀疏尺。",
+      "primary_record": "亲自核对Banakh–Gavrylkiv1702.02631v6 Theorem4.1及Table3：历史人类上界128，表中仅≤，不是已证明最优。AlphaEvolve2025 Problem6.7再次列6166/128旧纪录，并将49109/360新AI纪录分开。",
+      "stronger_lower_bound": "由文献Theorem4.1的inf_n Δ(n)^2/n界，取phi=pi/2，pi<22/7给C>80/33；122^2*33=491172<80*6166=493280，故Δ6166≥123。无需将2.434打印近似当精确证书。112仅为较弱成对计数界。",
+      "human_baseline": "冻结H158为公开Wichmann W(38,3)公式重建，158个标记、长度6548；其受限尺见证是本任务无限制整数模型的合法构造。历史最好人类报告128与该弱冻结对照分开。",
+      "independent_reconstruction": "Sol独立在F31[x]/(x^3-2x^2-3)中重建：检查三次多项式无根、x为29790阶生成元、32个trace零指数；乘172 mod993，992个非零循环差各出现一次，普通差前缀208。与{0,1,4,6}产品生成的全部128个整数逐一匹配保存见证。仅称独立重建同样大小，不称找回历史原始名单。",
+      "independent_verification": "五种构造按每个必需平移d检查存在x及x+d，独立于正式检查器的点对扫描。所有6166个平移均覆盖。初始6167、传统搜索/演化234、人类158、固定参考128。",
+      "controls": "五种程序、缺失差值破坏、完整声明成绩不变性、严格回放、冷导出及三类运行失败检查通过。",
+      "limits": "未重做全局最小基数搜索；来源核查范围内未找到匹配下界128的最优性证明。"
+    }
+  }
+}

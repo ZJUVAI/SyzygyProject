@@ -1,0 +1,10 @@
+Find 100 distinct points in the Euclidean plane that maximize the number of unordered pairs at distance exactly 1.
+
+Return JSON with:
+- minimal_polynomial: ascending integer coefficients of a primitive irreducible polynomial over Q; integer coefficients may also be given as decimal strings;
+- isolating_interval: two rational endpoints selecting exactly one real root alpha of that polynomial;
+- points: exactly 100 objects, each with x and y arrays of rational polynomial coefficients in ascending powers of alpha.
+
+All coordinates share the one selected real algebraic number alpha. The checker proves irreducibility, proves the interval contains exactly one real root, reduces each coordinate modulo the minimal polynomial, rejects duplicate points, and counts all 4,950 pairs by exact algebraic equality of squared distance to 1. No floating-point tolerance or claimed score is used.
+
+The task is unrestricted over real planar point sets. Do not restrict your search to the Moser lattice or to rational coordinates. A finite real unit-distance pattern can be represented in a common real algebraic number field. Start from init_program.py. Do not read files under data/reference or data/source. Generation has a 300-second budget. Verification has a separate 60-second budget, 4 GiB of memory, and one thread.

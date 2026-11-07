@@ -1,0 +1,85 @@
+{
+  "task_id": "T088",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T088-C01": {
+      "id": "T088-C01",
+      "parameters": {
+        "instance": "arc130.mtx.rnd",
+        "vertices": 130,
+        "edges": 715
+      },
+      "best_human": {
+        "value": 202,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "arc130.mtx.rnd",
+          "vertices": 130,
+          "edges": 715
+        },
+        "url": "https://www.uv.es/rmarti/paper/docs/other15.pdf",
+        "source_location": "Marti et al. (2013), Appendix, Table 9, arc130 upper-bound entry",
+        "provenance": "Reported result from a conventional branch-and-bound and GRASP optimization study; the entry's exact witness was not recovered.",
+        "ai_provenance": "The cited source predates current generative AI systems.",
+        "evidence_state": "reported value only; not locally reproduced"
+      },
+      "best_public": {
+        "value": 202,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "arc130.mtx.rnd",
+          "vertices": 130,
+          "edges": 715
+        },
+        "url": "https://grafo.etsii.urjc.es/optsicom/cutwidth.html",
+        "source_location": "Current instance/results links; historical table entry in Marti et al. (2013), Appendix, Table 9",
+        "provenance": "Public best reported upper bound found in the checked source; no later closed optimum was found.",
+        "ai_provenance": "not stated by the source",
+        "evidence_state": "reported upper bound, with reported lower bound 62; exact witness not recovered"
+      },
+      "best_reproduced": {
+        "value": 229,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "arc130.mtx.rnd",
+          "vertices": 130,
+          "edges": 715
+        },
+        "witness_file": "data/reference/grasp_reconstruction_229.json",
+        "provenance": "Independent local reconstruction of the published GRASP construction and insertion local-search method family. This run does not claim to reproduce the paper's 202 ordering.",
+        "ai_provenance": "benchmark reconstruction",
+        "actual_value": 229,
+        "evidence_state": "exact permutation validation and exact recomputation of all 129 cuts",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 229,
+        "parameters": {
+          "instance": "arc130.mtx.rnd",
+          "vertices": 130,
+          "edges": 715
+        },
+        "witness_file": "data/source/human_reconstruction_229.json",
+        "provenance": "Three seeded randomized constructions, alpha 0.20, each followed by one bounded insertion pass over eight shuffled vertices."
+      },
+      "highest_reported": {
+        "value": 202,
+        "metric": "maximum number of graph edges crossing one prefix cut",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://www.uv.es/rmarti/paper/docs/other15.pdf",
+        "source_location": "Appendix, Table 9, arc130 upper-bound entry",
+        "reproduction_status": "reported; exact ordering not reproduced; paper reports lower bound 62 and upper bound 202"
+      }
+    }
+  },
+  "initial_results": {
+    "T088-C01": {
+      "objective": 357,
+      "objective_value": 357,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.6414565826330533
+    }
+  }
+}

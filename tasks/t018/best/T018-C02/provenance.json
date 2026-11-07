@@ -1,0 +1,46 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T018",
+    "config_id": "T018-C02",
+    "validity": 1.0,
+    "combined_score": 0.7327286935876042,
+    "objective": 9240949566323294208,
+    "verification_status": "exact",
+    "generation_time": 45.26262691244483,
+    "verification_time": 0.21477435156702995,
+    "objective_value": 9240949566323294208,
+    "details": {
+      "signed_determinant": -9240949566323294208,
+      "n": 27
+    },
+    "eval_time": 45.480189349502325,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "restarts": 7176,
+    "budget_seconds": 45.0,
+    "method": "single-entry ascent with exact planar two-row proposals"
+  },
+  "solution_sha256": "4499cde89f3586ab1a2b09f5e90fd796ec5e2bb1487bfdd17f99c43c4381e000",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T018 tasks/t018/best/T018-C02/solution.json --config T018-C02"
+}

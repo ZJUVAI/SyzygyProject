@@ -1,0 +1,5 @@
+Construct a subset of the fixed universe {1, 2, ..., 212} with maximum cardinality.
+
+The set must contain no nontrivial three-term arithmetic progression: there must not be distinct selected integers a < b < c with a + c = 2b. Return JSON data as {"elements": [integer, ...]}. The evaluator checks the elements and recomputes the cardinality. Do not rely on a claimed score.
+
+The task has one configuration, T042-C01. The objective is to maximize |A|. Every element must be an integer in [1, 212], and duplicate elements are invalid.

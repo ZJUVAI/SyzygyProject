@@ -1,44 +1,19 @@
 from mathbench.search import search_deadline, search_steps
-"""Bounded random-restart coordinate search baseline."""
-import random
-import os
-import time
-from itertools import combinations
+"""Seeded local edits; this search does not read the human witness."""
+import os, random, time
+from tasks.t014.init_program import run_code as initial
+from fractions import Fraction
 
-from .check import triangle_area2, validate
-
-
-def _score(points):
-    return min(triangle_area2(*triple) for triple in combinations(points, 3)) / 2
-
+def _score(a):
+    mass=sum(a); return Fraction(416)*max(sum((a[i]*a[k-i] for i in range(max(0,k-207),min(207,k)+1)),Fraction(0)) for k in range(415))/(mass*mass)
 
 def run_code():
-    seed, restarts, steps = int(os.environ.get('MATHBENCH_SEED', '0')), 8, 1200
-    n = {'T014-C01': 11, 'T014-C02': 12, 'T014-C03': 16}.get(os.environ.get('MATHBENCH_CONFIG_ID', 'T014-C01'), 11)
+    rng=random.Random(int(os.environ.get("MATHBENCH_SEED","0")))
+    best=[Fraction(x) for x in initial()["coefficients"]]; score=_score(best)
     deadline = search_deadline()
-    rng = random.Random(seed)
-    best = None
-    for _ in range(restarts):
-        points = [(rng.random(), rng.random()) for _ in range(n)]
-        score = _score(points)
-        scale = 0.18
-        for step in range(steps):
-            if time.monotonic() >= deadline:
-                break
-            i = rng.randrange(n)
-            candidate = list(points)
-            x, y = candidate[i]
-            candidate[i] = (min(1., max(0., x + rng.gauss(0, scale))),
-                            min(1., max(0., y + rng.gauss(0, scale))))
-            new_score = _score(candidate)
-            if new_score >= score:
-                points, score = candidate, new_score
-            if (step + 1) % 200 == 0:
-                scale *= .65
-        if best is None or score > best[0]:
-            best = (score, points)
-        if time.monotonic() >= deadline:
-            break
-    solution = {"points": [[format(x, ".17g"), format(y, ".17g")] for x, y in best[1]]}
-    validate(solution, {"parameters": {"n": n}})
-    return solution
+    for _attempt in search_steps(20):
+        cand=best[:]; i=rng.randrange(208); cand[i]=max(Fraction(0),cand[i]+rng.randint(-100,100))
+        if not any(cand): continue
+        value=_score(cand)
+        if value<score: best,score=cand,value
+    return {"coefficients":[str(x) for x in best]}

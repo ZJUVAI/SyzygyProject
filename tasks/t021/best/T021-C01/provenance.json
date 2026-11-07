@@ -1,0 +1,56 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "origin": "Seeded traditional search from the simple task construction; no public witness read.",
+  "seed": 0,
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T021",
+    "config_id": "T021-C01",
+    "validity": 1.0,
+    "combined_score": 0.9982605418149413,
+    "objective": "4129796354576887307637304251/10000000000000000000000000",
+    "verification_status": "certified",
+    "generation_time": 2.0978739708662033,
+    "verification_time": 0.598570067435503,
+    "objective_value": "4129796354576887307637304251/10000000000000000000000000",
+    "details": {
+      "objective_interval": [
+        "825959270915377461527460751/2000000000000000000000000",
+        "4129796354576887307637304251/10000000000000000000000000"
+      ],
+      "point_count": 32,
+      "pairs_checked": 496,
+      "coordinate_model": "exact rational stereographic projection",
+      "sqrt_bound_scale": "10000000000000000000000000",
+      "energy_bound_scale": "1000000000000000000000000000000",
+      "claimed_score_ignored": true
+    },
+    "eval_time": 2.7032869830727577,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded coordinate perturbation with simulated-annealing acceptance and best-witness retention",
+    "seed": 0,
+    "actual_iterations": 600,
+    "iteration_budget": 600,
+    "requested_seconds": null
+  },
+  "solution_sha256": "15d70b85eb54271cf8982a277000657e6e047e49c868726f4284a7feae6a092e",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T021 tasks/t021/best/T021-C01/solution.json --config T021-C01"
+}

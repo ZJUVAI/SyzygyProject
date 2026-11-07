@@ -1,0 +1,253 @@
+{
+  "task_id": "T003",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T003-C01": {
+      "public_value": "2.635983084919",
+      "public_source": {
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv26.txt",
+        "checked_date": "2026-11-05",
+        "table_update": "2026-10-31",
+        "attribution": "Packomania attributes the N=26 best-known value to Haowei Lin [8], via packing_records / Jonathan Viquerat's policy-based optimization.",
+        "coordinate_provenance": "Official Packomania ASCII coordinate file; 26 circles in the unit square, centered-coordinate convention."
+      },
+      "reproduced_value": "658995771226364683/250000000000000000",
+      "program": "reference.py",
+      "witness": "data/sota26.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 3385317/250000000000000000 (1.3541268e-11)",
+      "limitations": [
+        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 260409/500000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
+        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
+        "The public table value is a best-known record, not a proof of optimality."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania26_source.txt",
+        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
+        "minimal_grid_decrement": "260409/500000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T003",
+          "config_id": "T003-C01",
+          "validity": 1.0,
+          "combined_score": 1.052111923576771,
+          "objective": "658995771226364683/250000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11425818502902985,
+          "verification_time": 0.11421089991927147,
+          "objective_value": "658995771226364683/250000000000000000",
+          "details": {
+            "n": 26,
+            "pair_checks": 325,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.23064319044351578,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "sum_radii": "658995771226364683/250000000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "report_recheck": {
+        "checked_at": "2026-11-06",
+        "table_url": "https://www.packomania.com/csqv/csqv.html",
+        "table_last_update": "2026-10-31",
+        "reported_value": "2.635983084919",
+        "decimal_places": 12,
+        "note": "The table still displays the archived value. A tiny difference from a certified construction must account for source rounding and numeric error before any public-record claim."
+      },
+      "review_status": "accepted_by_sol"
+    },
+    "T003-C02": {
+      "public_value": "2.939572771205",
+      "public_source": {
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv32.txt",
+        "checked_date": "2026-11-05",
+        "table_update": "2026-10-31",
+        "attribution": "Packomania lists reference [7], Sebastian Pokutta, for N=32; the page notes this value appeared on 25-Jul-2026. Attribution is based on the table reference, not independently established authorship of the coordinates.",
+        "coordinate_provenance": "Official Packomania ASCII coordinate file; 32 circles in the unit square, centered-coordinate convention."
+      },
+      "reproduced_value": "91861649099589859/31250000000000000",
+      "program": "reference.py",
+      "witness": "data/sota32.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 566391/31250000000000000 (1.8124512e-11)",
+      "limitations": [
+        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 566391/1000000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
+        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
+        "The public table value is a best-known record, not a proof of optimality."
+      ],
+      "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania32_source.txt",
+        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
+        "minimal_grid_decrement": "566391/1000000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T003",
+          "config_id": "T003-C02",
+          "validity": 1.0,
+          "combined_score": 1.0455676876211686,
+          "objective": "91861649099589859/31250000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11430643126368523,
+          "verification_time": 0.1644301451742649,
+          "objective_value": "91861649099589859/31250000000000000",
+          "details": {
+            "n": 32,
+            "pair_checks": 496,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.2810966186225414,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "sum_radii": "91861649099589859/31250000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "report_recheck": {
+        "checked_at": "2026-11-06",
+        "table_url": "https://www.packomania.com/csqv/csqv.html",
+        "table_last_update": "2026-10-31",
+        "reported_value": "2.939572771205",
+        "decimal_places": 12,
+        "note": "The table still displays the archived value. A tiny difference from a certified construction must account for source rounding and numeric error before any public-record claim."
+      },
+      "review_status": "accepted_by_sol"
+    },
+    "T003-C03": {
+      "public_value": "3.292391572608",
+      "public_source": {
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv40.txt",
+        "checked_date": "2026-11-07",
+        "table_update": "2026-10-31",
+        "attribution": "Packomania row N=40 cites reference [8]. The checked table does not establish whether the construction was human-generated or AI-assisted; origin_type remains unknown.",
+        "coordinate_provenance": "Official Packomania ASCII file; variable radii; centered square coordinates translated by (1/2,1/2).",
+        "origin_type": "unknown"
+      },
+      "reproduced_value": "82309789314588599/25000000000000000",
+      "program": "reference.py",
+      "witness": "data/sota40.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "Source coordinates are rounded decimal data. Radii were uniformly reduced by the minimum feasible amount on the 1e-18 grid; public displayed value is retained as an external record, not claimed exactly reproduced.",
+        "Best-known feasible value, not a proof of optimality.",
+        "The public variable-radius witness is a comparison asset. Human authorship or AI assistance is not confirmed. The frozen human baseline is the separate classical equal-circle order-40 construction."
+      ],
+      "reproduction_method": {
+        "source_snapshot": "data/packomania40_source.txt",
+        "algorithm": "Exact Fraction binary search for minimum common radius decrement on the 1e-18 grid.",
+        "minimal_grid_decrement": "611401/1000000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true
+      },
+      "acceptance_status": "accepted_by_sol",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T003",
+          "config_id": "T003-C03",
+          "validity": 1.0,
+          "combined_score": 1.039438879589337,
+          "objective": "82309789314588599/25000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11422587931156158,
+          "verification_time": 0.1642691120505333,
+          "objective_value": "82309789314588599/25000000000000000",
+          "details": {
+            "n": 40,
+            "pair_checks": 780,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.2809376046061516,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "sum_radii": "82309789314588599/25000000000000000"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "sol_review": {
+    "T003-C01": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T003-C02": {
+      "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  }
+}

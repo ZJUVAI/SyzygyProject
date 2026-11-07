@@ -1,0 +1,32 @@
+{
+  "task_id": "T033",
+  "config_id": "T033-C01",
+  "validity": 1.0,
+  "combined_score": 1.0366759517177344,
+  "objective": 8932,
+  "verification_status": "exact",
+  "generation_time": 8.885328214615583,
+  "verification_time": 0.1648205816745758,
+  "objective_value": 8932,
+  "details": {
+    "n": 10000,
+    "m": 9999,
+    "cut_edges": 8932,
+    "graph_sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
+  },
+  "eval_time": 9.054857909679413,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

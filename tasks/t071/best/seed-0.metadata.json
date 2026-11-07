@@ -1,0 +1,30 @@
+{
+  "task_id": "T071",
+  "configuration_id": "T071-C01",
+  "objective": 1941,
+  "verification_status": "exact",
+  "verification_details": {
+    "length": 16,
+    "alphabet_size": 65536,
+    "codeword_count": 1941,
+    "distinct_deletion_outputs": 15787,
+    "possible_deletion_outputs": 32768,
+    "pairwise_disjoint_deletion_outputs": true,
+    "claimed_objective_ignored": true
+  },
+  "seed": 0,
+  "algorithm": "random-order greedy selection of an independent set in the deletion-conflict graph",
+  "trial_limit": 2,
+  "trials_completed": 2,
+  "candidate_visits": 131072,
+  "elapsed_seconds": 0.991895,
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "memory_limit_gib": 4,
+  "threads": 1,
+  "python": "3.13.12 (main, Mar 10 2026, 18:17:38) [Clang 21.1.4 ]",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "replay_command": "MATHBENCH_CONFIG_ID=T071-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t071.baseline import run_code; print(run_code())\"",
+  "witness_file": "best/seed-0.json",
+  "witness_sha256": "20d34e4203605a8d73298adfcb8de3cde0ee6abac47c9aa781f8fcd529484e02"
+}

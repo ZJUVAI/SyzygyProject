@@ -1,0 +1,110 @@
+{
+  "task_id": "T028",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T028-C01": {
+      "parameters": {
+        "instance": "Ta051",
+        "jobs": 50,
+        "machines": 20,
+        "schedule_type": "permutation"
+      },
+      "direction": "minimize",
+      "objective": "makespan (integer time units)",
+      "best_human": {
+        "value": 3846,
+        "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Annals of Operations Research 199(1), 269-284.",
+        "url": "https://doi.org/10.1007/s10479-011-0965-2",
+        "witness": "data/human_witness.json",
+        "witness_archive": "Olivier Brunner, Zenodo record 18272308, v8, Taillard_UB_Schedules v8.csv, Ta051 row.",
+        "witness_archive_url": "https://zenodo.org/records/18272308",
+        "evidence_state": "Human published permutation; local exact replay on official processing times returned 3846."
+      },
+      "bounds": {
+        "lower_bound": 3771,
+        "upper_bound": 3846,
+        "current_bounds_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+        "source_snapshot_date": "2026-06-03",
+        "upper_bound_source": "RRMRP (2012)",
+        "lower_bound_source": "Va (as listed by Taillard)",
+        "schedule_scope": "Only permutation schedules are allowed.",
+        "status": "open"
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T028",
+          "config_id": "T028-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 3846,
+          "verification_status": "exact",
+          "generation_time": 0.16518879681825638,
+          "verification_time": 0.16534177958965302,
+          "objective_value": 3846,
+          "details": {
+            "instance": "Ta051",
+            "jobs": 50,
+            "machines": 20,
+            "schedule_type": "permutation",
+            "all_operations_recomputed": true,
+            "processing_times_source_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.3347446173429489,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "makespan": 3846,
+          "operations": 1000
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "147f8a658081507499421b0d01310ddeda3f1726df4cddc185f6fbee4ca67bd1"
+      },
+      "optimality_status_review": {
+        "paper": "Gmys et al. (2022), Exactly Solving Hard Permutation Flowshop Scheduling Problems on Peta-Scale GPU-Accelerated Supercomputers.",
+        "url": "https://doi.org/10.1287/ijoc.2022.1193",
+        "finding": "Ta051 is listed among instances that remained open in the paper's experiments.",
+        "latest_archive_checked": "Zenodo record 21715941, v11, published 2026-07-31.",
+        "latest_archive_url": "https://zenodo.org/records/21715941",
+        "caveat": "The v11 page warns that the Optimal column needs extreme caution. This record relies on Taillard's live bounds and the Gmys paper instead."
+      },
+      "review_status": "accepted_by_sol",
+      "program": "reference.py",
+      "reproduced_value": "3846",
+      "public_value": "3846",
+      "highest_reported": {
+        "value": "3846",
+        "source": {
+          "value": 3846,
+          "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Annals of Operations Research 199(1), 269-284.",
+          "url": "https://doi.org/10.1007/s10479-011-0965-2",
+          "witness": "data/human_witness.json",
+          "witness_archive": "Olivier Brunner, Zenodo record 18272308, v8, Taillard_UB_Schedules v8.csv, Ta051 row.",
+          "witness_archive_url": "https://zenodo.org/records/18272308",
+          "evidence_state": "Human published permutation; local exact replay on official processing times returned 3846."
+        },
+        "reproduction_status": "witness reproduced exactly"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

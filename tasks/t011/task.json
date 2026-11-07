@@ -1,0 +1,74 @@
+{
+  "task_id": "T011",
+  "name": "Independent sets in strong powers of C7",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T011-C01",
+      "parameters": {
+        "q": 7,
+        "power": 5
+      },
+      "direction": "maximize",
+      "human_reference": 367,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T011-C02",
+      "parameters": {
+        "q": 7,
+        "power": 4
+      },
+      "direction": "maximize",
+      "human_reference": 100,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T011-C03",
+      "parameters": {
+        "q": 7,
+        "power": 6
+      },
+      "direction": "maximize",
+      "human_reference": 1101,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-04",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximum independent word count in the strong powers of C7. Keep power5 and add powers4 and6; adjacency is coordinatewise equality or cyclic distance1 in every coordinate.",
+      "power4_record": "Sol read Itty et al. arXiv2607.21517v2 section2, explicitly reports fourth power alpha unknown and lower108, attributed to Vesel-Zerovnik2002. The exact108-word list was not recovered from the figure. The local confirmed traditional comparator is a Cartesian product of two verified10-word independent sets in C7^2, giving100. Report108 remains a separate source record; no claimed exact replay of108.",
+      "power6_record": "Itty et al. v2 Table5 reports1120 and explains previous1101=367*3. The 367 set is Polak-Schrijver2019; extend with symbols0,2,4 to reproduce1101. The new1120 source explicitly uses iterative LLM interaction and is classified AI-assisted. Sol fetched pinned fe8966079013abaac21d1c08441500100f8e3b86 CC_6_7_1120.txt; SHA25638e4e1f2cb7a30d3caed2d2b8be223016c823261bdd362ba5ee74ef6ea5928a7.",
+      "independent_method": "Sol ran each human and reference program and independently tested every unordered pair by modular residue membership; the task checker instead computes minimum cyclic distances. C03 public1120 yields626640 pairs; traditional1101, C02 human/reference100, and all seeds remain exact. Duplicated word is rejected, full return ignores score claims, and all cold/error/timeout/nonfinite/replay controls pass.",
+      "open_status": "Power3 is solved and excluded. No power6 optimality proof was found in the checked sources. Existing C01 comparison and saved incumbent retained. New C02 report-only108 limitation recorded."
+    },
+    "configuration_ids": [
+      "T011-C02",
+      "T011-C03"
+    ]
+  }
+}

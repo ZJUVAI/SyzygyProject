@@ -1,0 +1,32 @@
+{
+  "task_id": "T029",
+  "candidate_id": "rational-matrix-multiplication-rank",
+  "name": "3x3 matrix multiplication tensor rank over Q",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T029-C01",
+      "parameters": {
+        "matrix_order": 3,
+        "field": "Q",
+        "coefficient_domain": "arbitrary rational strings or exact Fraction values",
+        "max_terms": 27,
+        "term_count_is_scalar_multiplication_count": true
+      },
+      "direction": "minimize",
+      "human_reference": 23
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "最小化有理数域上3×3矩阵乘法的双线性乘积数。允许非整数有理系数。27项只作资源上限。",
+      "人类来源": "Lille保存的Laderman1976张量设置参数lambda=1，按来源约定转置第三因子。重建23项。",
+      "独立验算": "主代理逐一输入81对基矩阵，精确检查729个输出系数。五程序与完整验收控制通过。",
+      "开放状态与限制": "主代理读arXiv:2610.11823v3第1节，特征零秩仍未知，报告19–23。其有限域和整数系数最优性定理不适用于此配置。局部Strassen基线26项，删除搜索未改善27项起点。"
+    }
+  }
+}

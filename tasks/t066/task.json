@@ -1,37 +1,32 @@
 {
   "task_id": "T066",
-  "name": "Best minimum distance of binary linear codes",
+  "name": "Maximum number of exactly-three-point lines among 17 planar points",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
       "id": "T066-C01",
       "parameters": {
-        "n": 68,
-        "k": 15,
-        "q": 2
+        "point_count": 17,
+        "ambient_space": "Euclidean plane R^2",
+        "coordinate_domain": "real algebraic coordinates in a common real algebraic number field",
+        "objective": "number of distinct lines containing exactly 3 input points"
       },
       "direction": "maximize",
-      "human_reference": 8
+      "human_reference": 40
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开方法对照距离8，本地传统搜索距离19。公开距离24矩阵未取到。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定17个互异平面点，最大化含恰好3个输入点的不同直线数；4点或更多共线不计。共同实代数域可覆盖有限实点incidence模式，不限制特定三次曲线。",
+      "primary_source": "Sol亲自读取Green–Tao1208.4714v3 §2 Theorem2.5后acnodal y²=x²(x−1)的cot参数化和Proposition2.6有限子群计数。取k/17，原齐次[sinθ,cosθ,sin³θ]交换后两坐标，odd17的cosθ非零，得(tanθ,tan³θ/(1+tan²θ))。Pegg2018只作同参数40线公开证据，不声称所保存坐标与其图片相同。",
+      "independent_math": "正式checker用自实现分式多项式域运算，规范化每条直线并统计完整incidence。Sol另用Sympy模多项式除法及逆元重建17阶tangent循环，逐点验证坐标及v(1+u²)=u³，t17=0；独立符号行列式分解为Vandermonde乘abc−a−b−c。三次曲线无直线分支，故至多3点共线；index和0mod17的无序三元组恰40。初始及搜索有理构造另用Fraction行列式incidence集合独立计数。",
+      "open_status": "当前OEIS A003035与Friedman原作者表仍给17点40–42；15点2026新增闭合31、16点37均排除。Green–Tao上界定理仅充分大n，其全局最优性证明不用于n17；有限子群构造公式则对n≥3适用。",
+      "controls": "初始0、传统及演化13、人类及参考40。五程序、重复点破坏、完整声明不变、严格回放、冷导出、异常/非有限/超时均通过，任务及共享检查21项通过。移除无证明的坐标多项式长度上限，整数任意精度受公共资源预算控制。",
+      "limits": "未证明40最优；没有从Pegg图片提取舍入点或声称运行完整原始研究搜索。独立群公式审计只针对保存的经典构造，正式checker支持一般实代数点。"
+    }
   }
 }

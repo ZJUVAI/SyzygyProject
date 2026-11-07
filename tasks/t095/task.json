@@ -1,0 +1,33 @@
+{
+  "task_id": "T095",
+  "name": "minimum convex partition of a fixed planar point set",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T095-C01",
+      "parameters": {
+        "instance": "uniform-0000500-1",
+        "point_count": 500,
+        "input_coordinates": "exact integer coordinates",
+        "partition": "straight-line planar graph; all input points are vertices; bounded faces are empty convex polygons",
+        "objective": "minimize number of internal convex faces"
+      },
+      "direction": "minimize",
+      "human_reference": 384
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定CGSHOP2020的uniform-0000500-1，500个整数点。全部输入点作为平面直线图顶点，凸包边界固定，内部面为空凸多边形。最小化内部面数；不允许Steiner点或遗漏输入点。",
+      "primary_source": "Sol亲读Cambazard作者页的定义与精确求解范围，以及Eder、Held、de Lorenzo、Palfrader的SoCG2020论文§2.2。后者从Delaunay三角剖分删边并保持凸性。该500点实例未在所查来源中找到最优性证明。",
+      "human_method": "同参数弱人类方法对照384面，是论文Delaunay加凸合并思想的确定性重建；明确由AI协助实现，非原论文代码或原论文成绩。官方770边见证重放得271面；源未披露该见证的算法与AI使用，按未披露分类。",
+      "source_versions": "输入SHA256为c8ea5c524c52a6d7e0188f566482c124856a8cbd0318e518ff4419f09844c31a。官方见证SHA256为f3de71a8fa4f98adf3314ccc2aa780e594e933b051e3d7cc715d1944eeb01190。归档URL已修正为instances_01.zip，并重新完成整个验收。",
+      "independent_method": "Sol重新解析原始整数点和边。独立检查直线交叉与边上其他输入点，再用并查集统计基本回路维数；对连通平面图，它等于内部面数。此法不调用正式评测器的有向面遍历。人类384面对应883条边，公开271面对应770条边。",
+      "admission": "五程序分数为979、398、384、271、368。全部严格重放、破坏构造、完整结果声明篡改、冷导出及错误/非有限数/超时控制通过。仅导出公开输入。任务9项测试通过；Sol相关几何与分析测试24项通过。"
+    }
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "task_id": "T036",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T036-C01": {
+      "parameters": {
+        "vertices": 28,
+        "graph": "complete graph K28"
+      },
+      "direction": "minimize",
+      "objective": {
+        "name": "number of crossing pairs of disjoint straight edges",
+        "unit": "crossing pairs",
+        "direction": "minimize",
+        "constraints": [
+          "28 distinct planar points",
+          "no three points collinear",
+          "include every edge of K28"
+        ]
+      },
+      "best_reproduced_value": 20475,
+      "best_reproduced_witness": "data/human_witness.json",
+      "best_reproduced_program": "reference.py",
+      "best_reproduced_verification": "data/human_verification.json",
+      "best_human": {
+        "value": 7234,
+        "source": {
+          "url": "https://oeis.org/A014540/internal",
+          "author": "Bernardo M. Abrego",
+          "location": "2008-05-05 first-party comment; revision41dated2026-09-14",
+          "finding": "Author states that n28 remains unknown between7233 and7234. No coordinate witness is attached in this entry."
+        },
+        "evidence_state": "first-party literature report; coordinate witness not reproduced",
+        "witness": null,
+        "ai_provenance": "pre-LLM computational drawing record; exact discovery method not replayed"
+      },
+      "best_public": {
+        "value": 7234,
+        "parameters": {
+          "vertices": 28
+        },
+        "source": {
+          "url": "https://oeis.org/A014540/internal",
+          "author": "Bernardo M. Abrego",
+          "location": "2008-05-05 first-party comment; revision41dated2026-09-14",
+          "finding": "Author states that n28 remains unknown between7233 and7234. No coordinate witness is attached in this entry."
+        },
+        "source_url": "https://oeis.org/A014540/internal",
+        "reported_lower_bound": 7233,
+        "witness": null,
+        "reproduction_status": "reported; coordinate witness not obtained or replayed in this task",
+        "ai_provenance": "not stated in the checked record"
+      },
+      "highest_reported": {
+        "value": 7234,
+        "parameters": {
+          "vertices": 28
+        },
+        "source": {
+          "url": "https://oeis.org/A014540/internal",
+          "author": "Bernardo M. Abrego",
+          "location": "2008-05-05 first-party comment; revision41dated2026-09-14",
+          "finding": "Author states that n28 remains unknown between7233 and7234. No coordinate witness is attached in this entry."
+        },
+        "reproduction_status": "literature report; witness not reproduced locally",
+        "source_url": "https://oeis.org/A014540/internal"
+      },
+      "optimality": {
+        "status": "open; no proof of optimality found in reviewed sources",
+        "source_review_date": "2026-11-06",
+        "reported_bounds": {
+          "lower_bound": 7233,
+          "upper_bound": 7234
+        },
+        "evidence": [
+          {
+            "citation": "Abrego, Fernández-Merchant, and Salazar (2011 survey), The Rectilinear Crossing Number of K_n, p. 4.",
+            "url": "https://www.csun.edu/~sf70713/publications/survey.pdf",
+            "finding": "The survey identifies n=28 and n=29 as open; n<=27 and n=30 are solved."
+          },
+          {
+            "citation": "Discrete Mathematics & Theoretical Computer Science (2024), Voronoi diagrams and rectilinear crossing numbers.",
+            "url": "https://dmtcs.episciences.org/14337/pdf",
+            "finding": "States that only orders up to 27 and order 30 are solved."
+          },
+          {
+            "citation": "Wolfram MathWorld, Rectilinear Crossing Number, citing M. Schaefer (2026), p. 86; checked 2026-11-06.",
+            "url": "https://mathworld.wolfram.com/RectilinearCrossingNumber.html",
+            "finding": "Identifies K28 as the smallest unresolved case and gives the two possible values 7,233 and 7,234."
+          },
+          {
+            "url": "https://oeis.org/A014540/internal",
+            "author": "Bernardo M. Abrego",
+            "location": "2008-05-05 first-party comment; revision41dated2026-09-14",
+            "finding": "Author states that n28 remains unknown between7233 and7234. No coordinate witness is attached in this entry."
+          }
+        ],
+        "limitation": "The lower bound and 7,234 witness were not independently reconstructed in this task."
+      },
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": [
+        {
+          "value": 7234,
+          "parameters": {
+            "vertices": 28
+          },
+          "evidence_state": "Publicly reported upper bound; provenance of the specific record construction is not established here and its witness was not replayed."
+        }
+      ],
+      "traditional_search": {
+        "value": 12516,
+        "parameters": {
+          "vertices": 28
+        },
+        "seed": 0,
+        "iteration_limit": 80,
+        "actual_iterations": 80,
+        "accepted_moves": 16,
+        "witness": "best/seed0_search.json",
+        "verification": "best/seed0_search_verification.json",
+        "algorithm": "seeded random general-position integer points with greedy single-point replacement",
+        "provenance": "best/seed0_search_provenance.json",
+        "evidence_state": "locally run and exactly verified; not a public or human record"
+      },
+      "frozen_human_baseline": {
+        "value": 20475,
+        "parameters": {
+          "vertices": 28
+        },
+        "source": "L. Lovász, K. Vesztergombi, U. Wagner, and E. Welzl (2003), Convex Quadrilaterals and k-Sets, introductory discussion of convex position and crossings.",
+        "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2003-06.pdf",
+        "construction": "Reconstructed integer parabola points (i, i^2), i=0,...,27; each four-set is convex and contributes exactly one crossing.",
+        "reproduction_status": "method_reconstructed; generated witness and exact crossing count independently recomputed locally",
+        "witness": "data/human_witness.json",
+        "verification": "data/human_verification.json",
+        "ai_provenance": "No AI provenance is stated for the cited classical construction."
+      },
+      "program": "reference.py",
+      "reproduced_value": 20475,
+      "public_value": 7234,
+      "best_reproduced": {
+        "value": 20475,
+        "witness": "data/human_witness.json",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "method": "Local reconstruction of published convex-position formula, not the7234drawing."
+      },
+      "source_correction": "The downloaded2011survey hasTable1only, which excludesopen28and29; it has no2012Table3giving7233–7234. Numericinterval attribution corrected toAbrego ownOEIScomment. Currentcrossingconstants page reportsasymptoticconstant, notK28record.",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T036",
+          "config_id": "T036-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 20475,
+          "verification_status": "exact",
+          "generation_time": 0.16454719379544258,
+          "verification_time": 0.16453919932246208,
+          "objective_value": 20475,
+          "details": {
+            "vertices": 28,
+            "general_position_triples_checked": 3276,
+            "disjoint_edge_pairings_checked": 61425,
+            "crossings_recomputed": 20475,
+            "claimed_objective_ignored": true,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.33144093304872513,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "crossings": 20475,
+          "quadruples_checked": 20475
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

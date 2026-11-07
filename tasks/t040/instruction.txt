@@ -1,0 +1,7 @@
+Construct the configured number of distinct points on the unit sphere in R^3 that maximize the Euclidean volume of their convex hull.
+
+Return JSON data from `run_code()`. The checker accepts either exact Cartesian triples on the unit sphere or stereographic pairs, one per point. A stereographic pair `(u,v)` maps to `(2u/d, 2v/d, (1-u²-v²)/d)`, where `d=1+u²+v²`; rational strings are allowed. Every point must be distinct. The checker recomputes the exact convex hull volume and ignores any score in your output.
+
+Use `MATHBENCH_CONFIG_ID`. T040-C01 has 11 points, T040-C02 has 13 points, and T040-C03 has 15 points on S². The objective is to maximize hull volume in unit-radius cubed units. The current best reproduced reference is an external comparison only. Do not read any reference or best-witness files.
+
+Your program must expose `run_code()` with no arguments. Use `MATHBENCH_SEED` for a deterministic seed when needed. Keep generation bounded and use only the documented output structure. Numerical hull computations may guide search; they do not replace the exact checker.

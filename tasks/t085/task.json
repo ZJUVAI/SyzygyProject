@@ -1,0 +1,61 @@
+{
+  "task_id": "T085",
+  "name": "Cover the largest disk with 21 unit disks",
+  "acceptance_status": "accepted_by_sol",
+  "category": "geometric_covering",
+  "definition": "Choose the centers of 21 unit disks in the plane so their union covers a closed disk centered at the origin. Maximize the target disk radius.",
+  "solution_format": "An object with positive rational radius and exactly 21 centers [[x,y]]. Coordinates and radius are exact rational strings or integers. Repeated centers are allowed.",
+  "objective": {
+    "name": "target_radius",
+    "unit": "unit covering-circle radii",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "There are exactly 21 circles of radius 1.",
+    "The target is the closed disk centered at (0,0) with the submitted positive rational radius.",
+    "Circle centers may be any rational coordinates; there is no coordinate range or denominator cap.",
+    "Repeated circle centers are allowed.",
+    "Every point of the target disk must lie in at least one covering disk.",
+    "The rational-coordinate and rational-radius domain has the same supremum as the unrestricted real domain: contract all centers and the target disk by a rational factor below 1 to create coverage slack, approximate the centers by rationals, and choose a rational target radius approaching the original radius."
+  ],
+  "configurations": [
+    {
+      "id": "T085-C01",
+      "parameters": {
+        "circle_count": 21,
+        "covering_circle_radius": 1,
+        "target": "closed disk centered at origin",
+        "center_domain": "unbounded rational coordinates",
+        "radius_domain": "positive rational"
+      },
+      "direction": "maximize",
+      "human_reference": 3.5
+    }
+  ],
+  "sources": [
+    "https://erich-friedman.github.io/packing/circovcir/",
+    "https://doi.org/10.2307/2371320",
+    "https://erich-friedman.github.io/packing/circovcir/21.png"
+  ],
+  "verification": "The checker proves continuous coverage by exactly enumerating restricted Voronoi vertices, circle-boundary bisector intersections, boundary distance extrema, and fixed representatives. Every candidate coverage test uses exact rational or quadratic-field arithmetic; there is no sampling.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Exactly21 unit disks, arbitrary unbounded rational centers, maximize positive rational radius of a concentric covered disk. Duplicate centers allowed. Contracting centers and target, then rational approximation, preserves the continuous supremum.",
+      "human_source": "Classical Kershner1939 triangular lattice covering method, finite19-site hexagonal patch with2 repeated origins. This local finite-method reconstruction covers7/2; it is not claimed as a separately published21-circle score. Tan2018 reported radius3.804 remains an unreproduced best public value in reviewed Friedman sources.",
+      "independent_method": "Root proves ideal scaled triangular tessellation covers the plane with radius999/1000; every omitted site has norm>=scale*sqrt21>7/2+1, so covering sites for the target are retained. Exact rational sqrt3 perturbation error<10^-60 gives retained-center displacement<=2scale*10^-60 and total covering radius<1. Root checks witness equality to this finite formula. Cold/search constructions contain an origin unit disk and haveR1. Formal checker instead enumerates restricted Voronoi vertices and boundary extrema.",
+      "audit_scope": "Independent analytic audit covers these admission constructions; other search structures require a separate independent proof before promotion. Formal verifier accepts general rational center layouts and performs full-domain checking.",
+      "open_status": "Friedman currently reports21 Tan2018 as Found, with no optimality claim. New2026 proof tags for11..20 do not apply21. Infinite-plane optimal-density theorem is not a finite21 optimality proof.",
+      "admission": "Initial/traditional/evolution1, human/reference7/2. All five strict runs, damaged-radius rejection, entire-checker score invariance, analytic independent proof, replay, cold export and all failure controls pass. No sampled-coverage certificate."
+    }
+  }
+}

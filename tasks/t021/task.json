@@ -1,0 +1,71 @@
+{
+  "task_id": "T021",
+  "name": "Thomson problem: charges on the unit sphere",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T021-C01",
+      "parameters": {
+        "n": 32,
+        "space": "unit sphere S2",
+        "potential": "sum over unordered pairs 1 / Euclidean distance",
+        "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+      },
+      "direction": "minimize",
+      "human_reference": 412.2612746505293,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T021-C02",
+      "parameters": {
+        "n": 40,
+        "space": "unit sphere S2",
+        "potential": "sum over unordered pairs 1 / Euclidean distance",
+        "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+      },
+      "direction": "minimize",
+      "human_reference": 660.6752788,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T021-C03",
+      "parameters": {
+        "n": 50,
+        "space": "unit sphere S2",
+        "potential": "sum over unordered pairs 1 / Euclidean distance",
+        "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+      },
+      "direction": "minimize",
+      "human_reference": 1055.1823147,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "search_metadata": {
+    "algorithm": "fixed-iteration coordinate perturbation with simulated-annealing acceptance and best-witness retention",
+    "iterations": 600,
+    "default_seed": 0,
+    "objective_feedback": "floating-point exploratory energy; formal scores are recomputed exactly with conservative bounds"
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Thomson equal-unit-charge Coulomb energy on exact unit S2; retain n32 and add n40/n50. Minimize reciprocal pair distances with exact stereographic points.",
+      "primary_sources": "Sol personally fetched CCD /Thomson/xyz/40.xyz and /50.xyz and compared exact saved bytes and SHA256. CCD /Thomson/table.html reports rounded energies660.6752788 and1055.1823147. Wales-Ulker2006 conventional optimization coordinates are reconstructed; the archive does not supply global certificates.",
+      "open_status": "CCD and Chen-Mehta2014 status evidence reviewed; no proof for n40/50 was found in reviewed sources. Small-n solved cases do not establish these instances. No exhaustive claim.",
+      "independent_method": "Sol personally ran both human baselines and fixed references. Separate Fraction pair distances and integer-division-before-isqrt sums at scale1e35 enclose all780/1225 terms. Audit intervals fit formal scale1e25 bounds. Unit-sphere equations, distinctness, full claim invariance and corrupted points checked.",
+      "admission": "All five strict programs and replay,cold export,error,nonfinite,timeout controls passed for all3 configs; source metadata and exact reference scores reconciled before final acceptance. Isolated single-file -I generation tests pass. Own incumbent preserved when its replay is at least as good."
+    }
+  },
+  "configuration_expansion_review": {
+    "status": "accepted_by_sol",
+    "configurations": [
+      "T021-C02",
+      "T021-C03"
+    ],
+    "evidence": "CCD table rows and original xyz files archived in data/; witnesses independently rationalized and certified.",
+    "open_status_source": "Chen and Mehta (2014), §III, report deterministic Thomson global-minimum results only for N=2,3,4,5,6,12; exact optima for N=40 and N=50 remain unestablished in the checked source."
+  }
+}

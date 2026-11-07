@@ -1,17 +1,17 @@
-# T079: Nonnegative convolution extremum, 208 steps
-
-## English
-
-Return 208 nonnegative rational coefficients, with positive total mass. The support is `[-1/4, 1/4]`. The checker normalizes the coefficients to integral 1, then computes `J = 2 n max(convolution(a,a)) / (sum(a))^2` for `n=208`. It uses exact rational arithmetic over the full convolution array. Since all coefficients are nonnegative, the maximum absolute value equals the maximum value. The checker verifies a feasible score; it does not prove optimality.
-
-The local historical witness comes from Matolcsi and Vinuesa (2009), arXiv:0907.1379. Its 208 coefficients were extracted, rationalized as decimal fractions, and its score was independently recomputed as `1.5097201507458786`. This is a historical construction, not a current-record or optimality claim. The baseline starts from seeded random positive coefficients, then makes nonnegative local edits. It does not read the human witness.
+# T079：有限域 Kakeya 集 / Finite-field Kakeya set
 
 ## 中文
 
-返回 208 个非负有理数系数，且系数总和大于零。支撑区间为 `[-1/4, 1/4]`。检查器先将系数归一化为积分 1，再精确计算 `J = 2 n max(convolution(a,a)) / (sum(a))^2`，其中 `n=208`。检查器用有理数运算计算完整卷积数组。系数非负，因此绝对值最大值等于最大值。检查器验证可行解和分数，不证明最优性。
+固定任务是在三维向量空间 `F_31^3` 中，为 993 个射影方向各选一条仿射直线，并使所有直线的点集并集尽量小。射影方向的标准表示取最后一个非零坐标为 1。每条直线包含 31 个点，所有坐标运算均模 31。
 
-本地历史见证来自 Matolcsi 和 Vinuesa 于 2009 年发表的论文 arXiv:0907.1379。任务提取了 208 个系数，将小数精确转成有理数，并独立重算得到分数 `1.5097201507458786`。这是一项历史构造，不代表当前纪录或最优性。基线从带固定随机种子的正系数开始，再进行保持非负的局部修改。它不读取人类见证。
+评测器会检查方向集合是否完整且无重复，并重新生成全部直线点后精确计算并集大小。简单起点把所有方向的直线都放在原点上，覆盖全部 29,791 个点。传统对照采用二次剩余构造，精确复算为 8,641 点。公开的 Station AI 论文给出 8,289 点构造；本任务按论文公式重建直线见证并精确复核。该值是构造上界，不是最优性证明。
 
-## Full-domain certificate
+主要来源：Bukh 与 Chao，*Sharp density bounds on the finite field Kakeya problem* (2021)，第 4 节关于传统奇数阶构造；Chung、Du 与 Wesley，*Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment* (2026)，第 6.1 节及其形式化验证材料。
 
-With bin width h=1/(2n), f*f is linear between adjacent convolution knots. At each knot its value is h times an entry of the discrete convolution. The extrema are therefore attained at knots. Integral-one normalization gives J=2n max(b)/(sum(a))². This is a full-domain argument.
+## English
+
+For the fixed task, choose one affine line in each of the 993 projective directions of `F_31^3`. Minimize the size of their union. Use the unique direction representative whose last nonzero coordinate is 1. Each line has 31 points, and all coordinate arithmetic is modulo 31.
+
+The checker requires a complete, duplicate-free direction list. It rebuilds every point on every line and computes the union size exactly. The simple seed puts all lines through the origin and covers all 29,791 points. The traditional quadratic-residue construction has 8,641 points after exact checking. A 2026 Station AI paper gives an 8,289-point construction. This task rebuilds its line witnesses from the published formula and verifies them exactly. The value is a construction bound, not an optimality proof.
+
+Main sources: Bukh and Chao, *Sharp density bounds on the finite field Kakeya problem* (2021), Section 4 on the traditional odd-field construction; Chung, Du, and Wesley, *Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment* (2026), Section 6.1 and its formal verification material.

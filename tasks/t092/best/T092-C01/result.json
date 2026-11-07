@@ -1,0 +1,40 @@
+{
+  "task_id": "T092",
+  "config_id": "T092-C01",
+  "validity": 1.0,
+  "combined_score": 0.8898894180725347,
+  "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+  "verification_status": "certified",
+  "generation_time": 0.42804452031850815,
+  "verification_time": 0.999307669699192,
+  "objective_value": "1362912741141099729/1000000000000000000",
+  "details": {
+    "degree": 20,
+    "monomial_count": 231,
+    "harmonic_laplacian_residual_terms": 0,
+    "sphere_average_M2": "1/41",
+    "sphere_average_M4": "2694004334609126893281/1312483334084147263957009",
+    "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+    "objective_interval": [
+      "1362912741141099729/1000000000000000000",
+      "136291274114109973/100000000000000000"
+    ],
+    "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+    "claimed_score_ignored": true
+  },
+  "eval_time": 1.4352668598294258,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

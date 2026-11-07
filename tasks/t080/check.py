@@ -1,55 +1,90 @@
-"""Exact checker for T080's equally spaced step-function AC2 objective."""
-from fractions import Fraction
-import math
+"""Exact finite set checks and a certified T080 logarithmic objective."""
+
+from collections.abc import Mapping
 
 
-def _fraction(value):
-    if isinstance(value, bool):
-        raise ValueError("boolean coefficients are invalid")
-    if isinstance(value, Fraction):
-        return value
-    if isinstance(value, int):
-        return Fraction(value)
-    if isinstance(value, float):
-        if not math.isfinite(value):
-            raise ValueError("coefficient must be finite")
-        return Fraction(str(value))
-    if isinstance(value, str):
-        try:
-            return Fraction(value)
-        except (ValueError, ZeroDivisionError) as exc:
-            raise ValueError("coefficient string must represent a rational") from exc
-    raise ValueError("coefficients must be rational numbers")
+CONFIG_ID = "T080-C01"
+MIN_CARDINALITY = 2
+MAX_CARDINALITY = 512
+MAX_ELEMENT = 1_000_000
+PARAMETERS = {
+    "min_cardinality": 2,
+    "max_cardinality": 512,
+    "contains_zero": True,
+    "integer_interval": [0, 1_000_000],
+    "require_difference_size_lt_q": True,
+    "q_definition": "2*max(U)+1",
+    "objective": "1+ln(|U-U|/|U+U|)/ln(q)",
+}
 
 
-def objective_fraction(coefficients):
-    b = [sum((coefficients[j] * coefficients[k-j]
-              for j in range(max(0, k-len(coefficients)+1), min(k, len(coefficients)-1)+1)), Fraction(0))
-         for k in range(2*len(coefficients)-1)]
-    numerator = 2 * sum((x*x for x in b), Fraction(0))
-    numerator += sum((b[i]*b[i+1] for i in range(len(b)-1)), Fraction(0))
-    denominator = 3 * max(b) * sum(coefficients, Fraction(0))**2
-    return numerator / denominator, b
+def _check_config(config):
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration must fix the T080 cardinality, interval, and objective")
+
+
+def _endpoint_text(endpoint, lower):
+    text = str(endpoint).strip().strip("[]")
+    parts = text.split(",", 1)
+    return parts[0].strip() if lower else parts[-1].strip()
 
 
 def validate(solution, config, strict=False):
-    del strict
-    if not isinstance(solution, dict) or not isinstance(config, dict):
-        raise ValueError("solution and config must be objects")
-    params = config.get("parameters", config)
-    if not isinstance(params, dict) or params.get("steps") != 20 or params.get("support") != ["-1/4", "1/4"] or params.get("nonnegative") is not True:
-        raise ValueError("configuration must be T080-C01 (20 steps on [-1/4, 1/4])")
-    raw = solution.get("coefficients")
-    if not isinstance(raw, list) or len(raw) != 20:
-        raise ValueError("coefficients must be a list of exactly 20 entries")
-    coefficients = [_fraction(value) for value in raw]
-    if any(value < 0 for value in coefficients):
-        raise ValueError("coefficients must be nonnegative")
-    mass = sum(coefficients, Fraction(0))
-    if mass <= 0:
-        raise ValueError("coefficient mass must be positive")
-    value, b = objective_fraction(coefficients)
-    return {"objective": str(value), "verification_status": "exact",
-            "details": {"objective_fraction": str(value), "objective_float": float(value),
-                        "mass": str(mass), "convolution": [str(x) for x in b],
-                        "steps": 20}}
+    """Recompute s,d,q exactly and certify a conservative lower score endpoint."""
+    _check_config(config)
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be an object")
+    raw = solution.get("set")
+    if not isinstance(raw, (list, tuple)):
+        raise ValueError("set must be a list of nonnegative integers")
+    n = len(raw)
+    if not MIN_CARDINALITY <= n <= MAX_CARDINALITY:
+        raise ValueError("set cardinality must be in 2..512")
+    values = []
+    for index, item in enumerate(raw):
+        if type(item) is not int:
+            raise ValueError(f"element {index} must be an integer; bool is invalid")
+        if item < 0 or item > MAX_ELEMENT:
+            raise ValueError(f"element {index} lies outside [0,1000000]")
+        values.append(item)
+    if len(set(values)) != n:
+        raise ValueError("set elements must be distinct")
+    if 0 not in values:
+        raise ValueError("U must contain zero")
+
+    sumset = {a + b for a in values for b in values}
+    difference_set = {a - b for a in values for b in values}
+    sum_size = len(sumset)
+    difference_size = len(difference_set)
+    q = 2 * max(values) + 1
+    if not difference_size < q:
+        raise ValueError("the strict finite-lemma condition |U-U| < 2*max(U)+1 must hold")
+    if sum_size <= 1 or difference_size <= 1 or q <= 1:
+        raise ValueError("sumset, difference set, and q must give positive logarithm arguments")
+
+    from mpmath import iv
+    iv.dps = 80
+    ratio_interval = iv.ln(iv.mpf(difference_size) / iv.mpf(sum_size)) / iv.ln(iv.mpf(q))
+    score_interval = 1 + ratio_interval
+    lower = _endpoint_text(score_interval.a, lower=True)
+    upper = _endpoint_text(score_interval.b, lower=False)
+    return {
+        "objective": lower,
+        "objective_value": lower,
+        "verification_status": "certified",
+        "details": {
+            "cardinality": n,
+            "sumset_size": sum_size,
+            "difference_set_size": difference_size,
+            "q": q,
+            "strict_difference_bound_verified": True,
+            "objective_interval": [lower, upper],
+            "objective_lower_bound": lower,
+            "sumset_exact": True,
+            "difference_set_exact": True,
+            "claimed_objective_ignored": True,
+            "strict": bool(strict),
+        },
+    }

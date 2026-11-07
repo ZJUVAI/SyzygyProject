@@ -1,0 +1,9 @@
+Find a dissection of the fixed 1000 by 1000 square into as few integer-sided squares as possible.
+
+Return JSON with `squares`, a list of `[x,y,side]` triples. Each tile is an axis-aligned square whose lower-left corner is `(x,y)`. Coordinates and side lengths must be integers. Each side must be from 1 through 999. Tiles must have disjoint interiors and cover the entire outer square. The greatest common divisor of the tile side lengths must be 1. Compound arrangements and sub-quilts are allowed.
+
+The score is the number of squares. The checker reads all tiles and recomputes the score. It checks exact integer area, overlap, coverage, and side gcd. It ignores any claimed score fields.
+
+Start from `init_program.py`. Do not read comparison constructions under `data/source` or `data/reference`. Improve the dissection by your own search.
+
+Read the configuration from `MATHBENCH_CONFIG_ID` and the random seed from `MATHBENCH_SEED`. Use deterministic defaults. Generation has a 300-second limit. Verification has a separate 60-second limit, 4 GiB of memory, and one compute thread.

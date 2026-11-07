@@ -1,0 +1,32 @@
+{
+  "task_id": "T088",
+  "name": "Cutwidth minimization for the arc130 graph",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T088-C01",
+      "parameters": {
+        "instance": "arc130.mtx.rnd",
+        "vertices": 130,
+        "edges": 715,
+        "graph": "undirected simple graph; 1-based source labels",
+        "objective": "minimum over linear vertex orders of the maximum number of edges crossing any prefix cut"
+      },
+      "direction": "minimize",
+      "human_reference": 229
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Fixed arc130 simple undirected graph with130vertices715edges. Minimize maximum number of edges crossing any proper prefix of a vertex permutation. Distinct from bandwidth maximum label gap and minimum linear arrangement sum label gaps.",
+      "primary_source": "Root read Marti et al2013 COR manuscript AppendixTable9 and currentofficialOptsicom instance/XLS. GraphSHA256be272e3c2b11280c2c8335ae966c3d14ecef94fb4cb8fc2b049ecd7d676734a8, maxdegree124. Reported62<=OPT<=202; public202ordering not recovered. Current same-instance cutwidth searches did not identify a proof closing gap; bandwidth63closed belongs different objective.",
+      "human_baseline": "Reconstruction of cited GRASP family,3trials8shuffledvertices gives229. Frozen weak human and reference229 distinct from reported202. Own6trial search221. No best-record claim.",
+      "independent_method": "Root reparses source file, checks unique715edges, and for each129prefix builds actual vertex set and counts edges with exactly one endpoint in it. Independent of formal edge-position difference arrays. Degree124 yields cutwidth>=ceil124/2=62 because immediately before/after the degree124vertex, crossing-edge counts sum>=124.",
+      "admission": "Initial357, baseline221, human229, reference229, evolution221. All five strict entries, full-result declaration invariance, repeated-label damage rejection, independent full cut profiles, strict replay, cold export and all failure controls passed. Only source arc130 file added to public export, no witness or reference scores."
+    }
+  }
+}

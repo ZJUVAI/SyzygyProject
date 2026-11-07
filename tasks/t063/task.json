@@ -1,0 +1,59 @@
+{
+  "task_id": "T063",
+  "name": "Minimum Mahler measure at degree 100",
+  "acceptance_status": "accepted_by_sol",
+  "category": "number_theory",
+  "definition": "Find a primitive irreducible polynomial P in Z[x] of exact degree 100, excluding cyclotomic polynomials, that minimizes its Mahler measure M(P)=|a_100| times the product over all complex roots z of max(1, |z|). Polynomials need not be monic.",
+  "solution_format": "An object with coefficients_ascending (101 integer coefficients from constant through leading term) and root_disks (100 pairwise disjoint rational complex disks, each certified by the exact Rouche check).",
+  "objective": {
+    "name": "Mahler_measure",
+    "unit": "dimensionless multiplicative measure",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "The polynomial has exact degree 100.",
+    "All coefficients are integers and their greatest common divisor is 1.",
+    "The polynomial is irreducible over Q.",
+    "The polynomial is noncyclotomic; the checker establishes Mahler measure greater than 1.",
+    "The 100 submitted rational root disks are pairwise disjoint and each contains exactly one root, certified with exact rational arithmetic."
+  ],
+  "configurations": [
+    {
+      "id": "T063-C01",
+      "parameters": {
+        "degree": 100,
+        "polynomial": "primitive_irreducible_integer",
+        "domain": "Z[x]",
+        "cyclotomic": "excluded",
+        "objective": "Mahler_measure"
+      },
+      "direction": "minimize",
+      "human_reference": 1.247365098371
+    }
+  ],
+  "sources": [
+    "https://github.com/mossinghoff/Mahler-Measure-Database/tree/7e3798516710370a758e16eb5de6bccbee98bb6a",
+    "https://arxiv.org/html/2610.30277v1"
+  ],
+  "verification": "Exact content and irreducibility checks over Q; rational Rouché certificates for all roots; exact rational bounds on the complete Mahler measure interval. The checker returns the certified upper endpoint for minimization.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "恰为100次、本原、不可约、非分圆的整数多项式最小Mahler测度；不限制互反、稀疏或单首项，与最大根模或Chebyshev范数不同。",
+      "primary_source": "Sol核对Mossinghoff固定7e3798516710370a758e16eb5de6bccbee98bb6a的BestByDegree_200.txt第100行51个系数及报告值1.247365098370，互反展开101项。2026-10-21 Chervonyi–Gukov–Luong2610.30277v1仅列六个其他次数改进，100仍为旧记录；该工作AI协作已披露，不将全部新数据声称纯人类。旧100行逐条发现过程未详述，历史传统搜索归属与现代AI论文分开。",
+      "independent_math": "正式checker精确Rouche根盘与导数余项。Sol另以纯整数Horner值建立Weierstrass插值矩阵，使用列Gershgorin定理认证100个半径1e-20的两两不交圆盘，独立覆盖全部根；根模乘积相对宽9.95685e-19，完全包含于正式区间内，约1.2473650983703855。另模2因子度50+50与模13因子度12+88的子集和交集仅0、100，独立排除有理非平凡因子。自身简单/搜索x100-p由Eisenstein不可约且精确M=p核对。",
+      "scoring": "正式成绩为精确有理区间上端，相对宽≤1e-10；冻结H=1.247365098371是向上取整的固定对照，不称精确Mahler值。采样或浮点根建议不作证书。",
+      "controls": "初始/传统/演化均为x100-2，正式上界约2.000000000002003；人类及参考约1.2473650983705。五程序全部成功，独立量、破坏多项式、完整声明不变、严格回放、冷导出、程序异常/非有限/超时均通过。实际严格验证最高29.50秒，低于60秒。任务代理6项测试通过。",
+      "limits": "未证明100次全局最优。检查器接受任意精度有理根证书及任意整数系数，受公共时间/内存/输出限制；未将只证到54次的排除范围用于闭合100。未重跑历史搜索或现代大规模AI搜索。"
+    }
+  }
+}

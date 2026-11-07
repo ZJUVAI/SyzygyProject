@@ -1,0 +1,156 @@
+{
+  "task_id": "T023",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T023-C01": {
+      "best_human": {
+        "value": 39,
+        "source": {
+          "url": "https://www.data2intelligence.de/ColbournTables/t4v2.html",
+          "title": "Frozen November 2024 Colbourn covering-array table, strength 4, binary alphabet",
+          "location": "t=4, v=2 table; k=20, N=39; Hadamard (Colbourn-Keri) with NCK postoptimization",
+          "snapshot_date": "2024-11",
+          "evidence_state": "reported_human_construction_upper_bound",
+          "witness_status": "not_downloaded",
+          "ai_provenance": "No AI provenance stated in the table entry."
+        }
+      },
+      "best_public": {
+        "value": 39,
+        "public_value": 39,
+        "source": {
+          "url": "https://www.data2intelligence.de/ColbournTables/t4v2.html",
+          "title": "Frozen November 2024 Colbourn covering-array table, strength 4, binary alphabet",
+          "location": "t=4, v=2 table; k=20, N=39; Hadamard (Colbourn-Keri) with NCK postoptimization",
+          "snapshot_date": "2024-11",
+          "evidence_state": "reported_upper_bound",
+          "witness_status": "not_downloaded",
+          "ai_provenance": "No AI provenance stated in the table entry."
+        }
+      },
+      "best_reproduced": {
+        "value": 65,
+        "reproduced_value": 65,
+        "program": "human.py",
+        "witness": "data/nist_ca_t4_v2_k20.txt",
+        "source": {
+          "url": "https://math.nist.gov/coveringarrays/ipof/tables/table.4.2.html",
+          "title": "NIST Covering Array Tables, CA(4,k,2), IPOG-F arrays",
+          "location": "k=20 row links to ca.4.2^20.txt.zip",
+          "snapshot_date": "2026-11-06",
+          "ai_provenance": "No AI provenance stated; NIST identifies the arrays as IPOG-F generated.",
+          "asset_sha256": "fd79ad1d35cdcbf6a8f594ffc7aab18abd6358e3722cad78039559223de4a12c",
+          "completion_rule": "Replace each '-' entry with 0; exact checker verifies the completed binary array.",
+          "evidence_state": "independently_replayed_and_accepted_by_sol"
+        }
+      },
+      "highest_reported": {
+        "value": 39,
+        "source": {
+          "url": "https://www.data2intelligence.de/ColbournTables/t4v2.html",
+          "snapshot_date": "2024-11",
+          "location": "t=4, v=2; k=20, N=39; Hadamard (Colbourn-Keri) postoptimization NCK",
+          "evidence_state": "reported, witness not reproduced"
+        },
+        "reproduction_status": "reported construction only"
+      },
+      "bounds": {
+        "lower_bound": 32,
+        "lower_bound_method": "Deleting 7 columns from any CA(4;20,2) yields a CA(4;13,2). Izquierdo-Marquez and Torres-Jimenez prove CAN(4,13,2)=32, so CAN(4,20,2)>=32.",
+        "lower_bound_source": {
+          "url": "https://arxiv.org/abs/1711.10040",
+          "title": "New Covering Array Numbers",
+          "version": "v2, 2020-01-22",
+          "location": "Theorem/results proving CAN(4,13,2)=32"
+        },
+        "upper_bound": 39,
+        "upper_bound_source": "Colbourn frozen November 2024 table, k=20, t=4, v=2.",
+        "gap": "32 <= CAN(4,20,2) <= 39. The cited paper proves the 13-column value, not the 20-column value. No exact proof for CAN(4,20,2) was located in this bounded source check."
+      },
+      "independent_recomputation": {
+        "checker": "tasks/t023/check.py",
+        "method": "Enumerate all C(20,4)=4845 four-column projections and all 16 binary patterns per projection.",
+        "verification_status": "exact"
+      },
+      "program": "reference.py",
+      "reproduced_value": 65,
+      "public_value": 39,
+      "checked_at": "2026-11-06",
+      "search_metadata": {
+        "algorithm": "256 seeded random rows, exact uncovered-pattern repair, then seeded greedy row deletion",
+        "seed": 7,
+        "iterations": 512,
+        "iteration_limit": 100000,
+        "wall_clock_cutoff_seconds": null,
+        "generation_seconds": 4.064,
+        "verification_seconds": 0.095,
+        "verification_status": "exact",
+        "objective_rows": 96,
+        "environment": {
+          "python": "3.13.12",
+          "platform": "Linux x86_64"
+        }
+      },
+      "verification": {
+        "task_id": "T023",
+        "status": "reviewed_by_sol",
+        "run": {
+          "task_id": "T023",
+          "config_id": "T023-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 65,
+          "verification_status": "exact",
+          "generation_time": 1.0490393787622452,
+          "verification_time": 0.5998209118843079,
+          "objective_value": 65,
+          "details": {
+            "rows": 65,
+            "columns": 20,
+            "strength": 4,
+            "alphabet_size": 2,
+            "projection_count": 4845,
+            "uncovered_tuples": 0,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 2.357653431594372,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "rows": 65,
+          "column_subsets": 4845,
+          "required_tuples_per_subset": 16
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "evidence": "acceptance.json",
+        "source_review": "Sol independently checked the same-parameter sources and the limits listed in PLAN.md.",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "a9b09b9e631f14596dee31ed0535d44172d09b0cd5afa7c5617582923541944e"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "checked_at": "2026-11-06",
+  "limitations": [
+    "The Colbourn 39-row construction has no witness at the cited table URL. It is recorded as a reported upper bound, not a reproduced result.",
+    "The NIST 65-row IPOG-F witness is a reproduced human-method baseline and is weaker than the Colbourn report.",
+    "The lower bound 32 follows from the proven 13-column subproblem. The interval remains open by seven rows.",
+    "The open-status source check included the arXiv paper and frozen Colbourn tables plus exact-parameter searches. It is not a complete literature survey."
+  ]
+}

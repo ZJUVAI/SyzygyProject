@@ -1,0 +1,51 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "codewords": 257,
+    "minimum_distance": 6
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "group": "codes_graphs"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 0,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "0.01",
+    "MATHBENCH_EVOLUTION_SECONDS": "4.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 86
+  },
+  "source_sha256": {
+    "tasks/t010/baseline.py": "56542ecaf06e477b6e0be3619fa2084c1626398b81fe2cc837703dcb0535f94c",
+    "tasks/t010/check.py": "978efac1d54649894d9ee952df654fb92f8138accc3c41db5ea242ad36ee14c8",
+    "tasks/t010/evaluator.py": "e8911fb3d24f2142c4dd731f643c37407d527ec193ca73c59200c89c7ba786d6",
+    "tasks/t010/evolution.py": "63d69818fd20af8a803c061a09fa1e82940cb4b4c7d891aa03135e23cd27a456",
+    "tasks/t010/human.py": "5aa1e773ea0b7839070e96a7122df9cf10e23bfe42ace6c69d53546af7191b57",
+    "tasks/t010/init_program.py": "1248d48cd8576efde5b2a128718f4fe8ab7ce8d11379403e89fc056d88712df3",
+    "tasks/t010/reference.py": "56085c56e6a2e07848beb4c193a35ff1dde871b2cf50694da8a03894c4abb123",
+    "tasks/t010/sota.py": "693b5eb8be2a702cfc9b1a43391983fbdb3d8e0774c7ab825cf1be7879284159",
+    "tasks/t010/test_evolution_structured.py": "d78dc2c33d26db4eb6557b84c58f8d9aa26777b03e57030881fcae54e28336e5",
+    "tasks/t010/test_task.py": "9ac17fa14199e601eb8ff11ac68931604674acf7de2e5f15eb4d4aa62ec6210c"
+  },
+  "warm_start_sha256": "206eeb57c9db730243d67803a7e04957f9168d01c67de292886f85a95fb31a92",
+  "replay_command": "python -m mathbench replay T010 tasks/t010/best/T010-C01/solution.json --config T010-C01"
+}

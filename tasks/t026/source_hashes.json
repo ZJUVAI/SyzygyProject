@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-06",
+  "fredricksen_sweet_2000": {
+    "url": "https://www.combinatorics.org/ojs/index.php/eljc/article/download/v7i1r32/pdf",
+    "local_file": "data/fredricksen_sweet_2000.pdf",
+    "sha256": "ae8541c564efd65785a0e1d2c778108d58fec4c060707d7c277dd7f3eecad259",
+    "transcribed_witness_sha256": "ef578ef4eb5c737b67d519f2bffc115e62826f535c5e1002fec630ece3a1072f"
+  },
+  "arxiv_2610_31362_v1": {
+    "url": "https://arxiv.org/abs/2610.31362v1",
+    "repository_url": "https://github.com/jeffchen006/Schur-Number-6",
+    "repository_commit": "92a9d5f1336a5a064b2bfe6597d967f59191e365",
+    "commit_date": "2026-10-23T06:28:04Z",
+    "checksum_file": "data/chen_zhu_long_SHA256SUMS",
+    "checksum_file_sha256": "c9e35a2b5548935b626d933fd0ff0b90087048f4882ea212a8868baab43030e7",
+    "certificate_file": "data/chen_zhu_long_537_certificate.col",
+    "certificate_sha256": "5f950ad88a5437108a0c6ab4b9d40cc2832a43dd474b5c4b269e02ac81258315",
+    "ai_provenance": "undisclosed by the paper; it reports search-derived partitions"
+  }
+}

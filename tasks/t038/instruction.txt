@@ -1,0 +1,13 @@
+Build as many pairwise orthogonal Latin squares of order 12 as you can.
+
+Return a JSON object with a `squares` list. Each square must be a 12 by 12 list
+of integers from 0 through 11. Every row and column must contain each symbol
+once. For every two different squares, the 144 ordered symbol pairs must each
+occur once. The evaluator reads and checks the squares. It ignores any score
+that your program reports.
+
+Implement `run_code()` with no arguments. Read the selected configuration from
+`MATHBENCH_CONFIG_ID` and the random seed from `MATHBENCH_SEED`. Use CPU only,
+one thread, at most 4 GiB of memory, and no more than 300 seconds to generate
+the result. The separate exact verification step has a 60 second limit. Do not
+read human or reference witness files.

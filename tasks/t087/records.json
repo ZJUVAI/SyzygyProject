@@ -1,0 +1,75 @@
+{
+  "source_date": "2026-11-06",
+  "survey_scope_note": "Same-configuration records refer to N=480, d=13/4800, support 13/10, nonnegative rational heights. Related continuous-function results are recorded separately and are not treated as scores for this fixed grid.",
+  "best_human": {
+    "value": "15833948850637600/43788391811747427",
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "steps": 480,
+      "step_size": "13/4800",
+      "support": "13/10"
+    },
+    "url": "https://arxiv.org/abs/1903.08731v2",
+    "ai_provenance": "The modified-arcsine formula is from Barnard and Steinerberger. The 480 cell-center sampling and 1/100000 rational rounding are an independent benchmark reconstruction.",
+    "evidence_state": "The exact checker verifies this finite rational step function. The paper's continuous 0.37 lower bound is not claimed as this finite-grid score.",
+    "origin_type": "published analytic method, independently discretized for this configuration"
+  },
+  "best_public": {
+    "value": "2378625/5958277",
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "steps": 480,
+      "step_size": "13/4800",
+      "support": "13/10",
+      "height_domain": "nonnegative rational"
+    },
+    "url": "https://github.com/techno-optimist/minimum-autocorrelation-bound/tree/b23f2d386eda9963e33c7531eeeb35c8f54cba37",
+    "witness_url": "https://github.com/techno-optimist/minimum-autocorrelation-bound/blob/b23f2d386eda9963e33c7531eeeb35c8f54cba37/certs/certificate_n480.json",
+    "ai_provenance": "The note states that it was prepared computer-assisted with CHRONOS under Kevin Russell's direction; the author reviewed the mathematics and takes responsibility.",
+    "evidence_state": "Pinned exact-rational certificate replayed. This is a feasible score, not a proof of the 480-variable optimum.",
+    "origin_type": "AI-assisted construction with disclosed provenance"
+  },
+  "best_reproduced": {
+    "value": "2378625/5958277",
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "steps": 480,
+      "step_size": "13/4800",
+      "support": "13/10",
+      "height_domain": "nonnegative rational"
+    },
+    "url": "https://github.com/techno-optimist/minimum-autocorrelation-bound/tree/b23f2d386eda9963e33c7531eeeb35c8f54cba37",
+    "witness": "data/reference/public_ai_certificate_n480.json",
+    "ai_provenance": "Public AI-assisted witness; CHRONOS disclosure is preserved from the source README and paper.",
+    "evidence_state": "Exact independent recomputation gave 2378625/5958277, min autocorrelation 82459/13824000, and L1 norm 8801/72000.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "published modified-arcsine method, independently discretized and rationalized at the fixed grid",
+  "configurations": {
+    "T087-C01": {
+      "human_reference_exact": "15833948850637600/43788391811747427",
+      "human_reference_json_value": 0.361601515732983,
+      "public_value": "2378625/5958277",
+      "reproduced_value": "2378625/5958277",
+      "public_result_ai_assisted": true,
+      "source_repository_commit": "b23f2d386eda9963e33c7531eeeb35c8f54cba37",
+      "source_certificate_sha256": "11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa",
+      "optimality_status": "No proof of optimality for the fixed 480-height configuration was found in sources checked through 2026-11-06.",
+      "related_continuous_result": {
+        "value": "0.4103779774321214877852987...",
+        "source": "https://arxiv.org/abs/2610.18888v1",
+        "status": "Stronger bound for the unrestricted continuous problem. The paper gives a different atomic-polynomial profile and does not provide this fixed 480-cell vector."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T087-C01": {
+      "objective": "30/169",
+      "objective_value": "30/169",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.49091274559393805
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "task_id": "T061",
+  "config_id": "T061-C01",
+  "validity": 1.0,
+  "combined_score": 0.6717171717171717,
+  "objective": 198,
+  "verification_status": "exact",
+  "generation_time": 12.328848157078028,
+  "verification_time": 17.948335375636816,
+  "objective_value": 198,
+  "details": {
+    "vertices": 100,
+    "edge_count": 198,
+    "simple_c6_free": true,
+    "saturated": true,
+    "missing_pairs_checked": 4752,
+    "simple_5_path_endpoint_pairs": 4752,
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 30.306443579494953,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

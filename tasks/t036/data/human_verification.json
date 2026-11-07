@@ -1,0 +1,13 @@
+{
+  "objective": 20475,
+  "verification_status": "exact",
+  "details": {
+    "vertices": 28,
+    "general_position_triples_checked": 3276,
+    "disjoint_edge_pairings_checked": 61425,
+    "crossings_recomputed": 20475,
+    "claimed_objective_ignored": true,
+    "claimed_score_ignored": true
+  },
+  "witness_method": "generated from (i,i^2), i=0,...,27"
+}

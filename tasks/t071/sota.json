@@ -1,0 +1,107 @@
+{
+  "task_id": "T071",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T071-C01": {
+      "program": "reference.py",
+      "reproduced_value": 3856,
+      "public_value": 3856,
+      "highest_reported": {
+        "value": 3856,
+        "source": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1, Table 1, row VT_0(n) code, column n=16; also row Ours (search over s=1)",
+        "reproduction_status": "The n=16 VT_0 witness is frozen locally and exactly verified. The paper's LLM-guided search rediscovers a priority function proved equivalent to VT_0; it does not establish maximum cardinality at n=16.",
+        "ai_provenance": "The paper reports an LLM-guided evolutionary rediscovery of the classical VT_0 construction, with a proof of equivalence. It reports the same 3856 size, not a larger code or a finite-n optimality proof."
+      },
+      "parameters": {
+        "length": 16,
+        "alphabet": "{0,1}",
+        "correctable_errors": "one deletion",
+        "decoding_condition": "distinct codewords have disjoint sets of length-15 deletion outputs",
+        "objective": "number of codewords"
+      },
+      "witness": "data/reference/vt16_3856.json",
+      "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
+      "known_bounds": {
+        "lower_bound": 3856,
+        "upper_bound": 4202,
+        "lower_bound_source": "https://arxiv.org/html/2504.00613v2",
+        "lower_bound_location": "§5.1, Table 1, VT_0(n) code row, n=16 column",
+        "upper_bound_source": "https://arxiv.org/html/2504.00613v2",
+        "upper_bound_location": "§5.1, Table 1, LP upper bound row, n=16 column",
+        "status": "A feasible 3856-word code is known. The paper states that VT_0 is conjectured largest for all finite lengths; optimality is proved only through n=11. Its n=16 LP upper bound is 4202. The exact maximum at n=16 remains open in the sources checked on 2026-11-06."
+      },
+      "human_construction": {
+        "source": "https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper",
+        "deletion_correctness_source": "https://nymity.ch/sybilhunting/pdf/Levenshtein1966a.pdf",
+        "additional_source": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "Varshamov and Tenengolts (1965) introduce the checksum class for single asymmetric-error correction. Levenshtein (1965 original/1966 English translation) establishes its single-deletion-correcting property; the current paper §2.2 states the VT checksum definition.",
+        "rule": "VT_0(16) = {x in {0,1}^16 : sum(i*x_i, i=1..16) = 0 mod 17}",
+        "size": 3856,
+        "reproduction_status": "Generated from the modular checksum formula and checked by the exact pairwise deletion-output checker."
+      },
+      "ai_assisted_record": {
+        "source": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1 and Figure 3; Table 1, n=16",
+        "reported_value": 3856,
+        "status": "The LLM-guided search rediscovers a function proved equivalent to VT_0. This is recorded separately from the classical human construction and does not improve its cardinality or prove the n=16 maximum."
+      },
+      "checked_sources": [
+        "https://arxiv.org/html/2504.00613v2",
+        "https://arxiv.org/abs/2504.00613",
+        "https://nymity.ch/sybilhunting/pdf/Levenshtein1966a.pdf",
+        "https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper"
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T071",
+          "config_id": "T071-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 3856,
+          "verification_status": "exact",
+          "generation_time": 0.527297168970108,
+          "verification_time": 0.6500364691019058,
+          "objective_value": 3856,
+          "details": {
+            "length": 16,
+            "alphabet_size": 65536,
+            "codeword_count": 3856,
+            "distinct_deletion_outputs": 32768,
+            "possible_deletion_outputs": 32768,
+            "pairwise_disjoint_deletion_outputs": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.1860318928956985,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "code_size": 3856,
+          "distinct_outputs": 32768,
+          "method": "independent string slicing at each deletion index, with per-word duplicates removed"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

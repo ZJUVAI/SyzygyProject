@@ -1,0 +1,20 @@
+{
+  "task_id": "T081",
+  "config_id": "T081-C01",
+  "seed": 0,
+  "program": "baseline.py",
+  "algorithm": "single-point coordinate simulated annealing on the 1/64 rational grid",
+  "budget": {
+    "fixed_iterations": 12000,
+    "generation_limit_seconds": 300,
+    "verification_limit_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "actual_generation_seconds": 1.6942940466105938,
+  "python": "3.13.12",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "objective": "48625/5274",
+  "verification_status": "exact",
+  "replay": "MATHBENCH_CONFIG_ID=T081-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t081.baseline import run_code; print(run_code())\""
+}

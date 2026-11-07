@@ -1,11 +1,54 @@
 {
-  "classification": "ai_assisted_local_search",
   "status": "reviewed_by_sol",
-  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
-  "independent_quantity": {
-    "exact_objective": "22792719962110433360226643050388593818742591482178914026158380019616532094658187884760478695398575870273498010725730284691505990850443667790319057881158638876605874317752252132023667594152805790261999563638772376484856345537574631543630686265487707239435792533324594552415506004561/26652990069438001833563872137336789552125651158413426109441930679154473071252016875513738536484681032122472821237279062196686837932828280596578834949026372554983788627795318082734168423935993053326333059808191559129606495390119820769232493368026698402480800519393965379906773588960",
-    "convolution_entries": 39
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "init_program.py",
+  "generation_record": {
+    "task_id": "T080",
+    "config_id": "T080-C01",
+    "validity": 1.0,
+    "combined_score": 0.9597300686173565,
+    "objective": "1.070156997794982411484200596369848431883442847231181525749168816720600498660948701749",
+    "verification_status": "certified",
+    "generation_time": 3.2218718267977238,
+    "verification_time": 1.8964289501309395,
+    "objective_value": "1.070156997794982411484200596369848431883442847231181525749168816720600498660948701749",
+    "details": {
+      "cardinality": 3,
+      "sumset_size": 6,
+      "difference_set_size": 7,
+      "q": 9,
+      "strict_difference_bound_verified": true,
+      "objective_interval": [
+        "1.070156997794982411484200596369848431883442847231181525749168816720600498660948701749",
+        "1.070156997794982411484200596369848431883442847231181525749168816720600498660948703857"
+      ],
+      "objective_lower_bound": "1.070156997794982411484200596369848431883442847231181525749168816720600498660948701749",
+      "sumset_exact": true,
+      "difference_set_exact": true,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 5.129443317651749,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
   },
-  "claimed_score_ignored": true,
-  "damaged_construction_rejected": true
+  "search_metadata": {},
+  "solution_sha256": "7fe22877a4941f5ef2af9206a3bf042cf9ff987774c49ae752370857f1a06638",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T080 tasks/t080/best/T080-C01/solution.json --config T080-C01"
 }

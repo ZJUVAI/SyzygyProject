@@ -1,0 +1,25 @@
+{
+  "upstream_repository": "https://github.com/Sprite143/erdos-106-counterexample",
+  "pinned_commit": "edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+  "public_witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe",
+  "human_witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02",
+  "human_method_paper": {
+    "file": "../erdos_graham_1975.pdf",
+    "sha256": "247d216a1125a0138a41af9742e633e6b6504c7d1edd1c5524d36521a8ba6738"
+  },
+  "deepmind_paper": {
+    "file": "deepmind_2511.02864v1.pdf",
+    "sha256": "1944e56460842129c3f6148c15ade453d0ac6900751b70e69b54afefd2284c02"
+  },
+  "sha256": {
+    "source/repository.tar.gz": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+    "source/public_construct.py": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
+    "source/CERTIFICATE_n17.json": "dcb170e3a42200d1423800fed033c487c71806955bdf5a9d14431eb8d9288f6a",
+    "source/LICENSE": "fbbb9c645a164136be3835115568b05c62022242a1ee260a7578d94911bae7b1",
+    "source/original_grid17_human_asset.json": "f5d7fbdf0a093610eecaf4a79b9e49dff575359b98e6b3c332b68531903a9404",
+    "public_witness.json": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe",
+    "human_grid_witness.json": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02",
+    "erdos_graham_1975.pdf": "247d216a1125a0138a41af9742e633e6b6504c7d1edd1c5524d36521a8ba6738",
+    "source/deepmind_2511.02864v1.pdf": "1944e56460842129c3f6148c15ade453d0ac6900751b70e69b54afefd2284c02"
+  }
+}

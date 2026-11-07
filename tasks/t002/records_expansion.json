@@ -1,7 +1,7 @@
 {
   "configurations": [
     {
-      "id": "T002-C03",
+      "id": "T002-C02",
       "best_human": {
         "value": 5.933885799813026,
         "date_checked": "2026-11-04",
@@ -38,7 +38,7 @@
       }
     },
     {
-      "id": "T002-C04",
+      "id": "T002-C03",
       "best_human": {
         "value": 6.707106781186548,
         "date_checked": "2026-11-04",

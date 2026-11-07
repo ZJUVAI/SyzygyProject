@@ -1,0 +1,169 @@
+{
+  "task_id": "T031",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T031-C01": {
+      "objective": {
+        "name": "length of a string containing every permutation as a contiguous substring",
+        "unit": "symbols",
+        "direction": "minimize",
+        "constraints": [
+          "the string uses exactly the symbols 1 through 7",
+          "each of the 5040 permutations of 1 through 7 occurs as a contiguous length-7 substring"
+        ]
+      },
+      "best_public": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "source": "Andrei Teodorescu, Superpermutators Google Group post and attachment 5905_7_sol1.txt",
+        "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+        "evidence_state": "downloaded from the source attachment; all 5040 contiguous permutations independently replayed and length recomputed as 5905",
+        "date_checked": "2026-11-06",
+        "origin_type": "public search result; human/AI contribution not disclosed in the source checked"
+      },
+      "best_reproduced_human": {
+        "value": 5913,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "witness": "data/reference/human_ashlock_tillotson_5913.txt",
+        "source_url": "https://arxiv.org/abs/1408.5108",
+        "evidence_state": "the recursive construction described by Ashlock and Tillotson was independently implemented, saved, and exactly checked"
+      },
+      "optimality": {
+        "status": "not established; best construction found in the reviewed sources has length 5905",
+        "references": [
+          {
+            "citation": "Andrei Teodorescu, n=7 superpermutation of length 5905, Superpermutators Google Group, 2026-08-17",
+            "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+            "finding": "The post attaches four words of length 5905. Andrew Balint reported independently checking all 5040 permutations. The source does not disclose AI involvement."
+          },
+          {
+            "citation": "jhalfar/superpermutations, L(7) >= 5,901, snapshot checked 2026-11-06",
+            "url": "https://github.com/jhalfar/superpermutations/blob/main/proofs/n7_5901/README.md",
+            "finding": "A computer-assisted lower-bound package claims 5901, with a Lean-checked reduction conditional on thirty search equations. Twenty-three of the thirty rely on searches where most are by one program; the README says twenty-three Lean equations are not evaluated. This is not treated here as a fully replayed certificate."
+          },
+          {
+            "citation": "jlebar/superperm7-ge-5898, lower bound audit checked 2026-11-06",
+            "url": "https://github.com/jlebar/superperm7-ge-5898",
+            "finding": "A distinct Lean development states 5898 <= s(7) <= 5906 and has explicit AI-generated authorship disclosure. It independently supports that the exact minimum is unresolved in that artifact, but its upper bound is older than the 5905 construction."
+          }
+        ],
+        "lower_bound": 5898,
+        "upper_bound": 5905,
+        "bound_note": "The 5898 lower bound is a formalized computer-assisted result with a native evaluator/compiler trust base. The stronger 5901 result is recorded as conditional computer-assisted evidence and was not independently replayed for this task. No optimality proof is claimed."
+      },
+      "highest_reported": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "source": {
+          "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+          "title": "Andrei Teodorescu, n=7 superpermutation of length 5905",
+          "claim": "Four length-5905 strings were posted; Andrew Balint reports verifying each as a complete superpermutation.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "one attached witness downloaded and exactly replayed; source does not report AI provenance"
+      },
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": [
+        {
+          "value": 5905,
+          "parameters": {
+            "symbols": 7,
+            "permutations_required": 5040,
+            "containment": "contiguous_substring"
+          },
+          "source_url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+          "description": "The public construction and its search code are named, but the post does not disclose whether AI contributed."
+        }
+      ],
+      "best_reproduced": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "witness": "data/reference/public_5905_attachment.txt",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "strip source attachment whitespace; enumerate all length-7 windows; compare the valid-window set with all 5040 permutations; recompute string length",
+        "witness_sha256": "f0208fb0e8ea98b015799b8f0dfaadc58d5909bad4a089603f2c9c4768536f67",
+        "normalized_word_sha256": "98564c93f955c9256ca69c819e1b106a2be79e3286be2635d8374bc5595be6ac",
+        "claimed_score_ignored": true,
+        "date_reproduced": "2026-11-06"
+      },
+      "human_method_baseline": {
+        "value": 5913,
+        "witness": "data/reference/human_ashlock_tillotson_5913.txt",
+        "program": "human.py",
+        "source": "Ashlock and Tillotson (1993), Construction of small superpermutations and minimal injective superstrings, Congressus Numerantium 93, 91-98; recursive rule restated in Houston (2014), Section 1, arXiv:1408.5108",
+        "source_url": "https://arxiv.org/abs/1408.5108",
+        "reproduction_level": "method reconstructed independently from the published recursive rule; not a transcription of the authors' length-seven string"
+      },
+      "program": "reference.py",
+      "reproduced_value": "5905",
+      "public_value": "5905",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T031",
+          "config_id": "T031-C01",
+          "validity": 1.0,
+          "combined_score": 1.001354784081287,
+          "objective": 5905,
+          "verification_status": "exact",
+          "generation_time": 0.21464842557907104,
+          "verification_time": 0.16461127623915672,
+          "objective_value": 5905,
+          "details": {
+            "symbols": 7,
+            "required_permutations": 5040,
+            "distinct_permutations_found": 5040,
+            "windows_checked": 5899,
+            "claimed_score_ignored": true,
+            "containment": "contiguous_substring"
+          },
+          "eval_time": 0.3821674585342407,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "string_length": 5905,
+          "required_substrings_checked": 5040
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "6ba79de473c1c64f18d07e0c38fc9c5c9b73194ffa4e946fca4ac50744a6124c"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

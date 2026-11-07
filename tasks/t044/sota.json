@@ -1,47 +1,122 @@
 {
   "task_id": "T044",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T044-C01": {
-      "public_value": "623",
-      "public_source": {
-        "url": "https://cube20.org/golomb/",
-        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
-        "archive": "cube20.org rulers-all-00, 5-999 marks",
-        "checked_at": "2026-11-05",
-        "record_parameters": {
-          "marks": 29
-        },
-        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+      "objective": {
+        "name": "maximum order of a simple undirected connected graph with maximum degree at most 3 and diameter at most 5",
+        "unit": "vertices",
+        "direction": "maximize",
+        "constraints": [
+          "the graph is simple and undirected",
+          "the graph is connected",
+          "every vertex has degree at most 3",
+          "the diameter is at most 5"
+        ]
       },
-      "reproduced_value": "623",
-      "program": "sota.py",
-      "witness": "data/public_29.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "limitations": [
-        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
-        "The archive is the cited public source checked for the same-parameter record."
-      ],
-      "checked_at": "2026-11-05",
+      "program": "reference.py",
+      "public_value": 70,
+      "reproduced_value": 70,
+      "highest_reported": {
+        "value": 70,
+        "source": "Comellas current largest-known degree-diameter table, entry (3,5), citing von Conta (1983) and Alegre, Fiol, and Yebra (1986).",
+        "url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "reproduction_status": "Both the historical AFY list and the Comellas Coxeter list pass exact degree, connectivity, and all-pairs distance checks. The current table does not mark order 70 optimal."
+      },
+      "best_human": {
+        "value": 70,
+        "parameters": {
+          "maximum_degree": 3,
+          "diameter_at_most": 5
+        },
+        "source": "von Conta (1983), independently reported by Alegre, Fiol, and Yebra (1986).",
+        "url": "https://doi.org/10.1002/jgt.3190100211",
+        "witness_program": "human.py",
+        "witness": "data/reference/afy_70_adjlist_nx.txt",
+        "witness_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "evidence_state": "Historical adjacency list replayed and exact-checker verified at the fixed parameter.",
+        "origin_type": "published human graph construction"
+      },
+      "best_public": {
+        "value": 70,
+        "parameters": {
+          "maximum_degree": 3,
+          "diameter_at_most": 5
+        },
+        "source": "Comellas current table, detail entry (3,5).",
+        "url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "witness": "data/reference/afy_70_adjlist_nx.txt",
+        "witness_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "evidence_state": "The row says order 70 and Moore bound 94; it is not bolded as optimal.",
+        "ai_provenance": "The table attributes this graph to 1983/1986 sources. Its general page says some SageMath scripts were AI-assisted but does not link the historic graph to those scripts.",
+        "origin_type": "published human graph construction"
+      },
+      "best_reproduced": {
+        "value": 70,
+        "parameters": {
+          "maximum_degree": 3,
+          "diameter_at_most": 5
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Every edge is checked; BFS from each of 70 vertices establishes connectedness and diameter 5.",
+        "witness": "data/reference/coxeter_70_adjlist_nx.txt",
+        "witness_sha256": "2b62872f9ac8ca2f8bed3f6495033aa7e7acd97d16e1427a3532c638100dbde5",
+        "construction": "Comellas's 2024 Coxeter edge-pairing alternative; the published adjacency output is replayed. The SageMath script itself is not run."
+      },
+      "moore_bound": {
+        "value": 94,
+        "formula": "1 + 3 * (1 + 2 + 4 + 8 + 16)",
+        "status": "general upper bound, not attained by the checked witness"
+      },
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 70,
+        "note": "H is the reproduced historical human graph."
+      },
+      "checked_at": "2026-11-06",
+      "optimality_status": {
+        "status": "open; best checked construction 70, Moore upper bound 94",
+        "table_entry_bold": false,
+        "detail_page_last_modified": "2026-10-14",
+        "limitations": [
+          "No checked source proves that 70 is the maximum order.",
+          "This implementation verifies constructions, not graph nonexistence above order 70.",
+          "The 2024 Coxeter adjacency list is checked as data; the construction script is not independently executed."
+        ]
+      },
+      "source_review": {
+        "current_table_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "detail_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "historical_paper_doi": "https://doi.org/10.1002/jgt.3190100211",
+        "historical_adjacency_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "coxeter_adjacency_sha256": "2b62872f9ac8ca2f8bed3f6495033aa7e7acd97d16e1427a3532c638100dbde5"
+      },
       "verification": {
-        "task_id": "T044",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T044",
           "config_id": "T044-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 623,
+          "objective": 70,
           "verification_status": "exact",
-          "generation_time": 0.5664435066282749,
-          "verification_time": 0.2660170719027519,
-          "objective_value": 623,
+          "generation_time": 0.49804916977882385,
+          "verification_time": 0.4676273241639137,
+          "objective_value": 70,
           "details": {
-            "marks": 29,
-            "differences_checked": 406
+            "order": 70,
+            "edge_count": 105,
+            "maximum_degree": 3,
+            "diameter": 5,
+            "all_source_distances_checked": 4900,
+            "claimed_score_ignored": true,
+            "strict_full_graph_check": true,
+            "moore_bound": 94
           },
-          "eval_time": 0.8415292724967003,
+          "eval_time": 1.0072221755981445,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -51,168 +126,25 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t044/data/public_29.json",
         "independent_quantity": {
-          "distinct_positive_differences": 406,
-          "span": 623
+          "order": 70,
+          "floyd_warshall_diameter": 5,
+          "edge_count": 105,
+          "maximum_degree": 3
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
-        "snapshot_date": "2026-11-05"
-      }
-    },
-    "T044-C02": {
-      "public_value": "680",
-      "public_source": {
-        "url": "https://cube20.org/golomb/",
-        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
-        "archive": "cube20.org rulers-all-00, 5-999 marks",
-        "checked_at": "2026-11-05",
-        "record_parameters": {
-          "marks": 30
-        },
-        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "e1a78f7cffd375180064d1d332b47fc151fc9e4cc6669f6d559dc7f748a9e227"
       },
-      "reproduced_value": "680",
-      "program": "sota.py",
-      "witness": "data/public_30_32.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "limitations": [
-        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
-        "The archive is the cited public source checked for the same-parameter record."
-      ],
-      "checked_at": "2026-11-05",
-      "verification": {
-        "task_id": "T044",
-        "status": "reproduced",
-        "run": {
-          "task_id": "T044",
-          "config_id": "T044-C02",
-          "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 680,
-          "verification_status": "exact",
-          "generation_time": 0.46590616926550865,
-          "verification_time": 0.4497265852987766,
-          "objective_value": 680,
-          "details": {
-            "marks": 30,
-            "differences_checked": 435
-          },
-          "eval_time": 0.9201054684817791,
-          "seed": 0,
-          "strict": true,
-          "budget": {
-            "generation_seconds": 300,
-            "verification_seconds": 60,
-            "memory_bytes": 4294967296,
-            "threads": 1
-          },
-          "environment": {
-            "python": "3.13.2",
-            "platform": "linux",
-            "worker_cpu": 0
-          }
-        },
-        "witness": "tasks/t044/data/public_30_32.json",
-        "independent_quantity": {
-          "distinct_positive_differences": 435,
-          "span": 680
-        },
-        "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
-        "snapshot_date": "2026-11-05"
-      }
-    },
-    "T044-C03": {
-      "public_value": "784",
-      "public_source": {
-        "url": "https://cube20.org/golomb/",
-        "witness_url": "https://cube20.org/golomb/rulers-all-00.zip",
-        "archive": "cube20.org rulers-all-00, 5-999 marks",
-        "checked_at": "2026-11-05",
-        "record_parameters": {
-          "marks": 32
-        },
-        "source_status": "cube20.org describes its computed rulers as possibly optimal; it does not provide a proof of optimality for this record."
-      },
-      "reproduced_value": "784",
-      "program": "sota.py",
-      "witness": "data/public_30_32.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "limitations": [
-        "The cube20.org archive reports a feasible ruler and presents its records as possibly optimal; no global optimality proof is claimed.",
-        "The archive is the cited public source checked for the same-parameter record."
-      ],
-      "checked_at": "2026-11-05",
-      "verification": {
-        "task_id": "T044",
-        "status": "reproduced",
-        "run": {
-          "task_id": "T044",
-          "config_id": "T044-C03",
-          "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 784,
-          "verification_status": "exact",
-          "generation_time": 0.26512131467461586,
-          "verification_time": 0.2651984691619873,
-          "objective_value": 784,
-          "details": {
-            "marks": 32,
-            "differences_checked": 496
-          },
-          "eval_time": 0.5341822504997253,
-          "seed": 0,
-          "strict": true,
-          "budget": {
-            "generation_seconds": 300,
-            "verification_seconds": 60,
-            "memory_bytes": 4294967296,
-            "threads": 1
-          },
-          "environment": {
-            "python": "3.13.2",
-            "platform": "linux",
-            "worker_cpu": 0
-          }
-        },
-        "witness": "tasks/t044/data/public_30_32.json",
-        "independent_quantity": {
-          "distinct_positive_differences": 496,
-          "span": 784
-        },
-        "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked cube20 source construction and archive provenance for 29, 30 and 32 marks, independently enumerated all positive differences, rejected duplicate marks, and confirmed forged objective values have no effect.",
-        "snapshot_date": "2026-11-05"
-      }
-    }
-  },
-  "sol_review": {
-    "T044-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    },
-    "T044-C02": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    },
-    "T044-C03": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
+      "review_status": "accepted_by_sol"
     }
   }
 }

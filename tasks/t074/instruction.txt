@@ -1,0 +1,7 @@
+Place exactly 12 distinct rational points in the plane, with no three collinear. There is no coordinate bound and no fixed outer container. Maximize
+
+    (minimum area of a triangle formed by three points) / (area of the convex hull of all 12 points).
+
+Return JSON with a `points` array of 12 coordinate pairs. Integer coordinates, rational strings such as `"3/2"`, and finite decimal numbers are supported. The checker treats each decimal number as the exact rational represented by its decimal text. It checks all 220 triples and computes the convex hull and ratio with exact rational arithmetic. Do not include repeated points or collinear triples.
+
+Start from the simple parabola seed in the supplied initial program. Do not read human, reference, source, or best-witness files. Use the `run_code()` interface and respect the configured time and memory limits.

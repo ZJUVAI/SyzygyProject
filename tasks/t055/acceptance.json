@@ -1,0 +1,400 @@
+{
+  "task_id": "T055",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T055 --label admission_20261106_comment_fix",
+  "configurations": {
+    "T055-C01": {
+      "configuration": {
+        "id": "T055-C01",
+        "parameters": {
+          "instance": "b4794d123e18a908924d3d33cdeeae3b",
+          "family": "inconsistency-measurement",
+          "variables": 1630,
+          "hard_clauses": 6150,
+          "soft_clauses": 649,
+          "soft_total_weight": 649,
+          "objective": "max_satisfied_soft_weight"
+        },
+        "direction": "maximize",
+        "human_reference": 360
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T055",
+            "config_id": "T055-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 360,
+            "verification_status": "exact",
+            "generation_time": 6.681229680776596,
+            "verification_time": 0.9270443506538868,
+            "objective_value": 360,
+            "details": {
+              "variables_checked": 1630,
+              "hard_clauses_satisfied": 6150,
+              "hard_clauses_total": 6150,
+              "soft_clauses_satisfied_weight": 360,
+              "soft_unsatisfied_weight": 289,
+              "soft_total_weight": 649,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 7.616731617599726,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "satisfied_soft_weight": 360,
+            "unsatisfied_soft_weight": 289,
+            "hard_clauses": 6150
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T055",
+            "config_id": "T055-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 360,
+            "verification_status": "exact",
+            "generation_time": 7.346993692219257,
+            "verification_time": 4.60456620529294,
+            "objective_value": 360,
+            "details": {
+              "variables_checked": 1630,
+              "hard_clauses_satisfied": 6150,
+              "hard_clauses_total": 6150,
+              "soft_clauses_satisfied_weight": 360,
+              "soft_unsatisfied_weight": 289,
+              "soft_total_weight": 649,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 11.960253201425076,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "satisfied_soft_weight": 360,
+            "unsatisfied_soft_weight": 289,
+            "hard_clauses": 6150
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T055",
+            "config_id": "T055-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 360,
+            "verification_status": "exact",
+            "generation_time": 2.3970223255455494,
+            "verification_time": 0.3993593752384186,
+            "objective_value": 360,
+            "details": {
+              "variables_checked": 1630,
+              "hard_clauses_satisfied": 6150,
+              "hard_clauses_total": 6150,
+              "soft_clauses_satisfied_weight": 360,
+              "soft_unsatisfied_weight": 289,
+              "soft_total_weight": 649,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 2.8046697601675987,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "satisfied_soft_weight": 360,
+            "unsatisfied_soft_weight": 289,
+            "hard_clauses": 6150
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T055",
+            "config_id": "T055-C01",
+            "validity": 1.0,
+            "combined_score": 1.6305555555555555,
+            "objective": 587,
+            "verification_status": "exact",
+            "generation_time": 0.4979998543858528,
+            "verification_time": 0.6484330631792545,
+            "objective_value": 587,
+            "details": {
+              "variables_checked": 1630,
+              "hard_clauses_satisfied": 6150,
+              "hard_clauses_total": 6150,
+              "soft_clauses_satisfied_weight": 587,
+              "soft_unsatisfied_weight": 62,
+              "soft_total_weight": 649,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 1.1565328985452652,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "satisfied_soft_weight": 587,
+            "unsatisfied_soft_weight": 62,
+            "hard_clauses": 6150
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T055",
+            "config_id": "T055-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 360,
+            "verification_status": "exact",
+            "generation_time": 11.941338934004307,
+            "verification_time": 0.4667244553565979,
+            "objective_value": 360,
+            "details": {
+              "variables_checked": 1630,
+              "hard_clauses_satisfied": 6150,
+              "hard_clauses_total": 6150,
+              "soft_clauses_satisfied_weight": 360,
+              "soft_unsatisfied_weight": 289,
+              "soft_total_weight": 649,
+              "claimed_objective_ignored": true
+            },
+            "eval_time": 12.449481789022684,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "satisfied_soft_weight": 360,
+            "unsatisfied_soft_weight": 289,
+            "hard_clauses": 6150
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T055",
+        "config_id": "T055-C01",
+        "validity": 1.0,
+        "combined_score": 1.0,
+        "objective": 360,
+        "verification_status": "exact",
+        "generation_time": 3.6794031895697117,
+        "verification_time": 0.6983503885567188,
+        "objective_value": 360,
+        "details": {
+          "variables_checked": 1630,
+          "hard_clauses_satisfied": 6150,
+          "hard_clauses_total": 6150,
+          "soft_clauses_satisfied_weight": 360,
+          "soft_unsatisfied_weight": 289,
+          "soft_total_weight": 649,
+          "claimed_objective_ignored": true
+        },
+        "eval_time": 4.381991937756538,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T055",
+          "config_id": "T055-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t055/runs/admission_20261106_comment_fix/T055-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.3950129486620426,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T055",
+          "config_id": "T055-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.20971742272377014,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T055",
+          "config_id": "T055-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.4361878111958504,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "404510e5bb12e3df2db6119bcb075760d69a1b2953a4c644e98abd08633d8d4a",
+    "README.md": "9e2c643ac220d239aa30e831260d7151ceffcc4b948ed1cc789adabb1453374a",
+    "baseline.py": "da2e495252c9894de9b521c06f789ccaaad66c2446c4f092cf807d19ff4b348a",
+    "check.py": "e15e2f358b581c0b03d7910c3e4f3752d81517d6d6e366f38bdb5134287aaa61",
+    "data/reference/human_dpll_assignment.json": "da78d29bc9625dd3f6fcae85ea8e990c66c02fb95243a9f4aa61d8e9f11e216f",
+    "data/reference/mse2026_boums_60_assignment.json": "c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543",
+    "data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf": "cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195",
+    "data/source/instance_metadata.json": "7944ce9aa0ea5e8e4f82e46cd0dc359784692cca90d01cdc8aa3ecd9069d7041",
+    "evaluator.py": "7cfd86fcb0057801ab91a4e2d1005c0b300312df3dca409f9b4fe406b46670e0",
+    "evolution.py": "58a8f222d1f5d855edae8a515b3a5e9b295e4a84ae149c998cfa6706272cc0a7",
+    "human.py": "61a04f9a11f73abf39cd1d2f8be9bf64c362ff75a6df699c2c6b77bfb4078801",
+    "init_program.py": "4142e465ede3c5d7b0eb83b3417fcdb19c1e7907290efdada3bd0ed414744920",
+    "instruction.txt": "3c3568ecc654b73129bd328b3253b3ffcce61b94a65616beefab2a5fbeb2d130",
+    "maxsat.py": "9b2a1fb5918eb127594c9559fd1b111655dd6add0dfef983c8d36b5b463a0001",
+    "records.json": "2b047f6794a24ada0a168a772c705b6d2d555cccdbf75402921aaffa77831dc4",
+    "reference.py": "9d792e0f4f28d441e8a2d4cb69bc1293b9b61a0d790de0466c1c6629a9f80a56",
+    "test_task.py": "7987461b7e1c6a7a9add7f99bcb53a1824166e69164c98408b29dfebaaf94850"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "通用partial MaxSAT的原生inconsistency-measurement竞赛输入；全部硬子句必须成立，最大化软满足权。649减未满足权只是同一目标换算，不另计任务。",
+    "primary_sources": "Sol亲自读取Zenodo21358014 v1官方metadata、完整集合21283148的meta.db及原始WCNF。实例hash b4794d123e18a908924d3d33cdeeae3b，原始输入SHA256 cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195。1630变量、6150硬、649软、总软权649。",
+    "record_recovery": "Sol通过HTTP范围读取官方logs.zip中央目录和BouMS ANYTIME-UW/60对应成员，独立核对ZIP CRC32，未下载完整1.8GB。原始.o日志完整v位串长度1630，.c报告62 VERIFIED；保存assignment SHA256 c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543。",
+    "independent_math": "首先逐子句独立检查全部硬约束及softcost62/score587；正式验收另用任意精度整数的正负文字bitmask与assignment位集判断满足，独立于正式逐literal布尔求值。五种构造均核对。",
+    "human_baseline": "DPLL1962公开传统方法和SymPy1.14实现重建硬SAT，再作保持硬可行的一位爬坡，H360。这是明确较弱的人类方法复现，不假称竞赛发表360或最强人类结果。官方BouMS587的AI协助来源未披露，单独保留unknown。",
+    "open_status": "2026官方metadata optimal_cost=unknown、best_known_cost=62，结果记录未给本参数最优性证明。未把SATISFIABLE或VERIFIED误当OPTIMUM。",
+    "controls": "初始/传统/人类/演化360、参考587；全false破坏、完整声明成绩不变性、严格回放、仅公开WCNF冷导出、错误/非有限数/超时均通过。首次独立审计漏识别c{注释行而失败，修正后完整重跑，失败记录保留。",
+    "limits": "未复跑竞赛完整solver搜索或证明全局最优，不把不同MaxSAT实例另计任务。"
+  }
+}

@@ -1,83 +1,107 @@
-"""Exact checks for a simple connected 4-regular graph with girth at least 10."""
-from collections import deque
+"""Exact checker for point sets with no convex seven-point subset."""
+
+from fractions import Fraction
+from itertools import combinations
 
 
-def _integer(x):
-    return type(x) is int
+def _coordinate(value):
+    if type(value) is int:
+        return value
+    if isinstance(value, str):
+        try:
+            return Fraction(value)
+        except (ValueError, ZeroDivisionError) as exc:
+            raise ValueError("coordinate strings must be rational numbers") from exc
+    raise ValueError("coordinates must be integers or rational strings such as '3/5'")
 
 
-def _parse(solution):
-    if not isinstance(solution, dict):
-        raise ValueError('solution must be an object')
-    n = solution.get('vertices')
-    edges = solution.get('edges')
-    if not _integer(n) or n < 1:
-        raise ValueError('vertices must be a positive integer')
-    if not isinstance(edges, (list, tuple)):
-        raise ValueError('edges must be a list')
-    if len(edges) != 2*n:
-        raise ValueError('a 4-regular graph must have exactly 2*vertices edges')
-    pairs=[]; seen=set()
-    for edge in edges:
-        if not isinstance(edge, (list, tuple)) or len(edge) != 2:
-            raise ValueError('each edge must contain two endpoints')
-        u,v=edge
-        if not _integer(u) or not _integer(v):
-            raise ValueError('edge endpoints must be integers; bool is rejected')
-        if not (0 <= u < n and 0 <= v < n):
-            raise ValueError('edge endpoint out of range')
-        if u == v:
-            raise ValueError('self-loops are not allowed')
-        e=(min(u,v),max(u,v))
-        if e in seen:
-            raise ValueError('duplicate edges are not allowed')
-        seen.add(e); pairs.append(e)
-    adj=[[] for _ in range(n)]
-    for u,v in pairs:
-        adj[u].append(v); adj[v].append(u)
-    if any(len(row) != 4 for row in adj):
-        raise ValueError('every vertex must have degree exactly 4')
-    reached={0}; q=[0]
-    for u in q:
-        for v in adj[u]:
-            if v not in reached:
-                reached.add(v); q.append(v)
-    if len(reached) != n:
-        raise ValueError('graph must be connected')
-    return n,pairs,adj
+def _orient(a, b, c):
+    return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
 
 
-def _girth(adj, stop_at=10):
-    """Certify no cycle shorter than stop_at and detect a stop_at-cycle."""
-    n=len(adj); found_boundary_cycle=False
-    for root in range(n):
-        dist=[-1]*n; parent=[-1]*n; dist[root]=0; q=deque([root])
-        while q:
-            u=q.popleft()
-            if dist[u] >= stop_at//2:
+def _has_convex_seven(points):
+    """Search exactly using the fact that a set is convex iff all 4-subsets are."""
+    n = len(points)
+    triple_masks = {}
+    for i, j, k in combinations(range(n), 3):
+        a, b, c = points[i], points[j], points[k]
+        mask = 0
+        for q, p in enumerate(points):
+            if q in (i, j, k):
                 continue
-            for v in adj[u]:
-                if dist[v] == -1:
-                    dist[v]=dist[u]+1; parent[v]=u; q.append(v)
-                elif parent[u] != v and parent[v] != u:
-                    length=dist[u]+dist[v]+1
-                    if length < stop_at:
-                        return length
-                    if length == stop_at:
-                        found_boundary_cycle=True
-    return stop_at if found_boundary_cycle else None
+            quad = (a, b, c, p)
+            convex = True
+            for u in range(4):
+                triangle = [quad[v] for v in range(4) if v != u]
+                z = quad[u]
+                x = _orient(triangle[0], triangle[1], z)
+                y = _orient(triangle[1], triangle[2], z)
+                w = _orient(triangle[2], triangle[0], z)
+                # In general position, a vertex is outside the triangle of
+                # the other three iff these signs are mixed.
+                if (x > 0 and y > 0 and w > 0) or (x < 0 and y < 0 and w < 0):
+                    convex = False
+                    break
+            if convex:
+                mask |= 1 << q
+        triple_masks[(i, j, k)] = mask
+
+    def extend(chosen, candidates):
+        if len(chosen) == 7:
+            return True
+        while candidates:
+            bit = candidates & -candidates
+            candidates ^= bit
+            q = bit.bit_length() - 1
+            next_candidates = candidates
+            triples = list(combinations(chosen + [q], 3))
+            for triple in triples:
+                next_candidates &= triple_masks[triple]
+                if not next_candidates:
+                    break
+            if len(chosen) + 1 == 7:
+                return True
+            if next_candidates and extend(chosen + [q], next_candidates):
+                return True
+        return False
+
+    if n < 7:
+        return False
+    # Start with each increasing triple; each candidate mask is restricted to
+    # indices above the last selected point, so every subset is visited once.
+    for i, j, k in combinations(range(n), 3):
+        candidates = ((1 << n) - 1) ^ ((1 << (k + 1)) - 1)
+        candidates &= triple_masks[(i, j, k)]
+        if candidates and extend([i, j, k], candidates):
+            return True
+    return False
 
 
 def validate(solution, config, strict=False):
-    if not isinstance(config, dict) or config.get('parameters') != {'degree':4,'girth':10}:
-        raise ValueError('unsupported configuration')
-    n,edges,adj=_parse(solution)
-    girth=_girth(adj,10)
-    if girth is not None and girth < 10:
-        raise ValueError(f'girth must be at least 10 (found {girth})')
-    claimed=solution.get('objective')
-    mismatch=claimed is not None and (not _integer(claimed) or claimed != n)
-    return {'objective':n,'verification_status':'exact','details':{
-        'degree':4,'girth':girth,'girth_lower_bound':10,'vertices':n,'edges':len(edges),
-        'connected':True,'claimed_objective_mismatch':mismatch,
-        'optimality_proved':False}}
+    del strict
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    parameters = config.get("parameters", config)
+    if not isinstance(parameters, dict) or parameters.get("forbidden_convex_polygon_vertices") != 7:
+        raise ValueError("configuration must forbid a convex 7-gon")
+    raw_points = solution.get("points")
+    if not isinstance(raw_points, list):
+        raise ValueError("points must be a list")
+    points = []
+    for point in raw_points:
+        if not isinstance(point, (list, tuple)) or len(point) != 2:
+            raise ValueError("each point must have two coordinates")
+        points.append((_coordinate(point[0]), _coordinate(point[1])))
+    if len(set(points)) != len(points):
+        raise ValueError("points must be distinct")
+    for a, b, c in combinations(points, 3):
+        if _orient(a, b, c) == 0:
+            raise ValueError("every three points must be noncollinear")
+    if _has_convex_seven(points):
+        raise ValueError("point set contains a convex 7-gon")
+    return {
+        "objective": len(points),
+        "verification_status": "exact",
+        "details": {"point_count": len(points), "general_position": True,
+                    "convex_seven_gon": False, "claimed_objective_ignored": True},
+    }

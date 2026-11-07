@@ -1,12 +1,67 @@
 {
-  "classification": "ai_assisted_local_search",
   "status": "reviewed_by_sol",
-  "scope": "Frozen own result; not a public SOTA claim or isolated model comparison.",
-  "independent_quantity": {
-    "maximum_overlap": "161933713644708191/425000000000000000",
-    "integral": "1",
-    "knots_including_zero_exterior": 103
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T082",
+    "config_id": "T082-C01",
+    "validity": 1.0,
+    "combined_score": 0.44274809160305345,
+    "objective": 58,
+    "verification_status": "exact",
+    "generation_time": 0.9880991689860821,
+    "verification_time": 0.3665984533727169,
+    "objective_value": 58,
+    "details": {
+      "board_size": 30,
+      "army_size_each_color": 58,
+      "total_queens": 116,
+      "cross_color_pairs_checked": 3364,
+      "cross_color_attacking_pairs": 0,
+      "cross_color_square_overlap": false,
+      "occupied_rows": {
+        "white": 17,
+        "black": 13,
+        "disjoint": true
+      },
+      "occupied_columns": {
+        "white": 15,
+        "black": 15,
+        "disjoint": true
+      },
+      "proven_upper_bound": 225,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 1.367559790611267,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
   },
-  "claimed_score_ignored": true,
-  "damaged_construction_rejected": true
+  "search_metadata": {
+    "algorithm": "elitist evolutionary search over feasible layouts with pair removal and randomized valid pair extension",
+    "seed": 0,
+    "generations_requested": 30,
+    "generations_run": 30,
+    "population_size": 4,
+    "generation_seconds": 0.6642911620438099,
+    "budget": "fixed generations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds"
+  },
+  "solution_sha256": "3d6326606f895554b89fdfbb105a1098285c0de29a0f87fb589e55b86f0974e5",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T082 tasks/t082/best/T082-C01/solution.json --config T082-C01"
 }

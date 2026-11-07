@@ -1,0 +1,88 @@
+{
+  "task_id": "T071",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T071-C01": {
+      "parameters": {
+        "length": 16,
+        "alphabet": "{0,1}",
+        "correctable_errors": "one deletion"
+      },
+      "best_human": {
+        "value": 3856,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 16,
+          "correctable_errors": "one deletion"
+        },
+        "witness_file": "data/human/vt16_3856.json",
+        "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
+        "url": "https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper",
+        "source_location": "Varshamov and Tenengolts (1965) introduce the checksum class; Levenshtein establishes single-deletion correction; 2026 paper §2.2 states the code definition.",
+        "provenance": "Reconstructed directly from VT_0(16): sum(i*x_i) is 0 modulo 17.",
+        "ai_provenance": "Classical human construction; no generative-AI provenance.",
+        "actual_value": 3856,
+        "evidence_state": "The exact checker confirms no two codewords share any one-deletion output."
+      },
+      "best_public": {
+        "value": 3856,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 16,
+          "correctable_errors": "one deletion"
+        },
+        "url": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1, Table 1, VT_0(n) row, n=16",
+        "provenance": "Table records the classical VT_0(16) code size as 3856. This is a feasible-code record, not a claim that 3856 is the maximum.",
+        "ai_provenance": "Classical construction; source separately reports an AI-assisted rediscovery with the same size.",
+        "evidence_state": "The locally frozen code and exact deletion-output check reproduce the size."
+      },
+      "best_reproduced": {
+        "value": 3856,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 16,
+          "correctable_errors": "one deletion"
+        },
+        "witness_file": "data/reference/vt16_3856.json",
+        "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
+        "provenance": "Frozen VT_0(16) list independently compared with the checksum formula and fully verified.",
+        "ai_provenance": "The 2026 paper reports an AI-assisted priority-function rediscovery equivalent to VT_0; this task's witness is generated from the classical formula.",
+        "actual_value": 3856,
+        "evidence_state": "Exact pairwise check over all distinct deletion outputs.",
+        "review_status": "reviewed_by_sol"
+      },
+      "ai_assisted_record": {
+        "value": 3856,
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1, Figure 3 and Table 1",
+        "provenance": "LLM-guided evolutionary search rediscovered a priority function proved to generate VT_0; same cardinality as the classical code.",
+        "evidence_state": "Reported by source; separately identified as AI-assisted and not a larger code or an optimality proof."
+      },
+      "highest_reported": {
+        "value": 3856,
+        "metric": "codewords in a binary length-16 one-deletion-correcting code",
+        "direction": "maximize",
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1, Table 1, VT_0(n) row, n=16",
+        "reproduction_status": "The reported feasible construction is reproduced exactly. The source gives an LP upper bound of 4202, so the finite maximum is not settled."
+      },
+      "optimality_status": {
+        "lower_bound": 3856,
+        "upper_bound": 4202,
+        "state": "open; the paper says the VT maximum-size conjecture is proved only for lengths up to 11"
+      }
+    }
+  },
+  "initial_results": {
+    "T071-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.00025933609958506224
+    }
+  }
+}

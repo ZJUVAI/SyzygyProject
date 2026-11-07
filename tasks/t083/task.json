@@ -1,0 +1,58 @@
+{
+  "task_id": "T083",
+  "name": "Pack four unit equilateral triangles in a square",
+  "acceptance_status": "accepted_by_sol",
+  "category": "geometric_packing",
+  "definition": "Place four non-overlapping unit equilateral triangles, each with independent translation and rotation, inside an axis-aligned square with lower-left corner (0,0). Minimize the square side.",
+  "solution_format": "An object with side=[a,b] and triangles containing four {anchor:[[ax,bx],[ay,by]], direction:[u,v]} records. A pair [a,b] denotes a+b*sqrt(3) with exact rational coefficient strings. The direction is a rational unit vector; it is the first edge from the anchor, and the third vertex is obtained by a counterclockwise 60-degree rotation.",
+  "objective": {
+    "name": "container_side",
+    "unit": "unit triangle side lengths",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "There are exactly four triangles, each with side length 1.",
+    "The square is [0,L] x [0,L], with L>0 and sides parallel to the coordinate axes.",
+    "Every triangle vertex lies in the square.",
+    "Triangle interiors are pairwise disjoint; boundary contact is allowed.",
+    "The formal pose domain uses translations in Q(sqrt(3)) and rational unit edge directions. This domain is dense in all real translations and rotations, so it has the same infimum as the unrestricted pose problem. It need not represent every real pose exactly."
+  ],
+  "configurations": [
+    {
+      "id": "T083-C01",
+      "parameters": {
+        "triangle_count": 4,
+        "triangle_side": 1,
+        "container": "axis-aligned square with lower-left corner (0,0)",
+        "pose_domain": "dense Q(sqrt(3)) translations and rational unit directions"
+      },
+      "direction": "minimize",
+      "human_reference": 1.577350269189626
+    }
+  ],
+  "sources": [
+    "https://erich-friedman.github.io/packing/triinsqu/",
+    "https://erich-friedman.github.io/packing/triinsqu/t4.gif"
+  ],
+  "verification": "The checker reconstructs each exact triangle in Q(sqrt(3)), checks all four vertices against the square, and uses exact separating-axis tests for all six pairs. It returns the exact algebraic side and a rational interval with a conservative upper endpoint.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Four freely translated and independently rotated unit equilateral triangles inside an axis-aligned square, interiors disjoint, minimize side. Dense Q(sqrt3) translations and rational unit directions preserve the unrestricted real infimum via shrink-about-centroids, approximation and rescaling. No coordinate cap.",
+      "primary_source": "Friedman triinsqu n4, found1996 side1+sqrt3/3, source image t4.gif. Root separately reconstructed exact pinwheel vertices from the diagram and checked12 unit sides, containment and6 pair separations. This is reconstructed geometry, not original author coordinate bytes. The n3 proof listed October2026 does not settle4.",
+      "independent_method": "Root uses symbolic SymPy algebraic coordinates and exact convex polygon clipping for each pair, checking zero intersection area. Formal checker uses independently coded Q(sqrt3) ordered-field arithmetic and separating-axis projections. Side is the exact pair[a,b]; objective_value is its conservative rational upper endpoint, checked to enclose the exact algebraic side.",
+      "scoring": "Frozen H1.577350269189626 is an upward rounded feasible reference. Raw exact algebraic side is preserved. Initial/traditional/evolution side2, human/reference1+sqrt3/3. No score is taken from candidate claims.",
+      "open_status": "Current primary table distinguishes found and proved;4 remains a found construction with no optimality proof located. Adjacent n3 closure is excluded.",
+      "admission": "All five strict runs, complete-return score invariance, duplicate-triangle rejection, independent area and score checks, replay, cold export, and program-error/nonfinite/timeout controls pass. First shared review attempt failed because the main audit expected rational raw objective; main audit corrected to use the existing objective_value contract, then all checks rerun. Task implementation unchanged."
+    }
+  }
+}

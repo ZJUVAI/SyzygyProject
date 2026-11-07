@@ -1,0 +1,56 @@
+{
+  "task_id": "T049",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T049-C01": {
+      "parameters": {
+        "point_count": 91,
+        "ambient_space": "Euclidean plane R^2"
+      },
+      "best_human": {
+        "value": 34,
+        "source": "Erdos and Fishburn (1996), Table 1, triangular lattice, s=6, n=91",
+        "url": "https://doi.org/10.1016/0012-365X(95)00153-N",
+        "date": "1996",
+        "ai_provenance": "not stated by the source",
+        "evidence_state": "coordinate construction reconstructed and exact score independently verified"
+      },
+      "best_public": {
+        "value": 34,
+        "source": "Erdos and Fishburn (1996), Table 1; best same-parameter explicit result found in the sources checked",
+        "url": "https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/Erdos2.pdf",
+        "date": "1996",
+        "ai_provenance": "not stated by the source",
+        "evidence_state": "reported construction reproduced from its formula; not a proof of optimality"
+      },
+      "best_reproduced": {
+        "value": 34,
+        "program": "reference.py",
+        "witness": "data/reference/hexagon_n91.json",
+        "reproduced_coordinate_sha256": "0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac",
+        "evidence_state": "exact field arithmetic verifies 91 distinct points and 34 distinct squared distances",
+        "review_status": "reviewed_by_sol"
+      },
+      "known_lower_bound": {
+        "value": 9,
+        "meaning": "Erdos 1946, Theorem 1: n-1 <= k(k+1) when k distinct distances are determined; for n=91, 90 <= k(k+1), so k >= 9",
+        "source": "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf"
+      },
+      "limitations": [
+        "The 34-distance construction is an upper bound on the minimum, not an exact optimum result.",
+        "The literature check did not locate an exact value for n=91; this survey is not exhaustive.",
+        "The checker handles exact real algebraic coordinates. Candidate programs that output only floating-point coordinates are invalid."
+      ]
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T049-C01": {
+      "objective": 90,
+      "objective_value": 90,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.37777777777777777
+    }
+  }
+}

@@ -1,0 +1,4 @@
+Read `MATHBENCH_CONFIG_ID`. Construct a binary code with the configured length `n` and minimum pairwise Hamming distance at least the configured distance `d`. Maximize the number of codewords. Return JSON with a non-empty `codewords` list. Each codeword must be an integer in `[0, 2^n)` or a list of `n` integer bits. Do not return a claimed objective as evidence.
+
+
+Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact verification. Compatibility feedback is J/H, where H is the frozen external reference. Start from the supplied initial program.

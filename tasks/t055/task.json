@@ -1,0 +1,64 @@
+{
+  "task_id": "T055",
+  "name": "Partial MaxSAT on the 2026 inconsistency-measurement instance",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_search",
+  "definition": "Given a fixed weighted CNF formula with hard and soft clauses, assign every Boolean variable so that all hard clauses are satisfied and the total weight of satisfied soft clauses is maximized.",
+  "solution_format": "An object with assignment, a list of 1630 Boolean values. Position i gives the value of variable i+1.",
+  "objective": {
+    "name": "satisfied_soft_weight",
+    "unit": "weight units",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Every variable is assigned exactly once.",
+    "All 6150 hard clauses must be satisfied.",
+    "The objective is the sum of weights of satisfied soft clauses.",
+    "The 649 soft clauses each have weight 1, so the maximum possible objective is 649."
+  ],
+  "configurations": [
+    {
+      "id": "T055-C01",
+      "parameters": {
+        "instance": "b4794d123e18a908924d3d33cdeeae3b",
+        "family": "inconsistency-measurement",
+        "variables": 1630,
+        "hard_clauses": 6150,
+        "soft_clauses": 649,
+        "soft_total_weight": 649,
+        "objective": "max_satisfied_soft_weight"
+      },
+      "direction": "maximize",
+      "human_reference": 360
+    }
+  ],
+  "sources": [
+    "https://doi.org/10.5281/zenodo.21358014",
+    "https://doi.org/10.5281/zenodo.21283148",
+    "https://doi.org/10.1145/368273.368557",
+    "https://docs.sympy.org/1.14.0/modules/logic.html"
+  ],
+  "verification": "Exact integer-literal evaluation of all hard clauses and all soft clauses; no declared score is used.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "通用partial MaxSAT的原生inconsistency-measurement竞赛输入；全部硬子句必须成立，最大化软满足权。649减未满足权只是同一目标换算，不另计任务。",
+      "primary_sources": "Sol亲自读取Zenodo21358014 v1官方metadata、完整集合21283148的meta.db及原始WCNF。实例hash b4794d123e18a908924d3d33cdeeae3b，原始输入SHA256 cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195。1630变量、6150硬、649软、总软权649。",
+      "record_recovery": "Sol通过HTTP范围读取官方logs.zip中央目录和BouMS ANYTIME-UW/60对应成员，独立核对ZIP CRC32，未下载完整1.8GB。原始.o日志完整v位串长度1630，.c报告62 VERIFIED；保存assignment SHA256 c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543。",
+      "independent_math": "首先逐子句独立检查全部硬约束及softcost62/score587；正式验收另用任意精度整数的正负文字bitmask与assignment位集判断满足，独立于正式逐literal布尔求值。五种构造均核对。",
+      "human_baseline": "DPLL1962公开传统方法和SymPy1.14实现重建硬SAT，再作保持硬可行的一位爬坡，H360。这是明确较弱的人类方法复现，不假称竞赛发表360或最强人类结果。官方BouMS587的AI协助来源未披露，单独保留unknown。",
+      "open_status": "2026官方metadata optimal_cost=unknown、best_known_cost=62，结果记录未给本参数最优性证明。未把SATISFIABLE或VERIFIED误当OPTIMUM。",
+      "controls": "初始/传统/人类/演化360、参考587；全false破坏、完整声明成绩不变性、严格回放、仅公开WCNF冷导出、错误/非有限数/超时均通过。首次独立审计漏识别c{注释行而失败，修正后完整重跑，失败记录保留。",
+      "limits": "未复跑竞赛完整solver搜索或证明全局最优，不把不同MaxSAT实例另计任务。"
+    }
+  }
+}

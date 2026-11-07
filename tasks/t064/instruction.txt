@@ -1,0 +1,7 @@
+For the fixed polygon `ortho_40_56a6f463`, produce a triangulation with as few added Steiner points as possible.
+
+The input polygon has 40 vertices and no additional constraints. The construction must include all input vertices and cover the complete polygon. Every bounded face must be a non-degenerate triangle with all angles at most 90 degrees. Edges may meet only at shared endpoints, may not leave the polygon, and must cover every boundary segment. Right angles are valid.
+
+Return JSON with `steiner_points_x`, `steiner_points_y`, and `edges`. The coordinate arrays list added points in the order used by edge indices after the 40 fixed input vertices. Use arbitrary-precision integers or exact rational strings such as `"17/5"`; finite JSON floats are checked as exact binary rationals. There can be at most 2,000 Steiner points. The checker does not trust claimed scores.
+
+Begin with the self-contained Cartesian-grid seed in `init_program.py`. You may use the public input file `data/source/ortho40.instance.json`. Do not inspect or use the human, reference, best, or SOTA comparison witnesses.

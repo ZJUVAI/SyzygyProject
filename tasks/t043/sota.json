@@ -1,0 +1,159 @@
+{
+  "task_id": "T043",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T043-C01": {
+      "public_value": 333,
+      "public_source": {
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "preprint_url": "https://arxiv.org/abs/1708.06224",
+        "title": "A subspace code of size 333 in the setting of a binary q-analog of the Fano plane",
+        "authors": [
+          "Daniel Heinlein",
+          "Michael Kiermaier",
+          "Sascha Kurz",
+          "Alfred Wassermann"
+        ],
+        "version": "arXiv v5 dated 2019-03-22; first arXiv version dated 2017-08-21; journal version 2019",
+        "construction_method": "The paper reports an integer-linear-programming search and prints the orbit representatives and G_{4,6} generators.",
+        "ai_provenance": "Not reported in the source; do not describe the result as unaided hand construction.",
+        "witness_reconstruction": "data/source/heinlein_2019_appendix_c.json",
+        "source_tex_sha256": "26622afb1178db82948f215c7befe73172f8c30338f0632d1ae0786d487f2eb7",
+        "checked_at": "2026-11-06"
+      },
+      "reproduced_value": 333,
+      "program": "reference.py",
+      "comparison_tolerance": "0",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T043",
+          "config_id": "T043-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 333,
+          "verification_status": "exact",
+          "generation_time": 0.5679113566875458,
+          "verification_time": 0.5998651869595051,
+          "objective_value": 333,
+          "details": {
+            "codewords_checked": 333,
+            "pairs_checked": 55278,
+            "minimum_subspace_distance": 4,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.2367259971797466,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "code_size": 333,
+          "distinct_two_spaces": 2331,
+          "ambient_two_spaces": 2667,
+          "counting_upper_bound": 381
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "a63ee7e1769a267c4e4dbf7db1a09ed6c1b95ae9bbc84b4b26c654072cc2b8ce"
+      },
+      "highest_reported": {
+        "value": 333,
+        "source": {
+          "title": "A subspace code of size 333 in the setting of a binary q-analog of the Fano plane",
+          "url": "https://doi.org/10.3934/amc.2019029",
+          "claim": "Explicit same-parameter lower-bound construction of size 333; this is not an optimum claim.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "reconstructed_and_exactly_verified_pending_Sol_review"
+      },
+      "upper_bound_claims": [
+        {
+          "value": 381,
+          "claim_type": "unconditional exact-counting upper bound",
+          "derivation": "There are [7 choose 2]_2=2667 two-dimensional subspaces, each 3-space contains [3 choose 2]_2=7, and no 2-space can occur in two codewords; floor(2667/7)=381.",
+          "source": "https://miplib.zib.de/instance_details_cdc7-4-3-2.html",
+          "checked_at": "2026-11-06"
+        },
+        {
+          "claim": "A_2(7,4;3) <= 378 or A_2(7,4;3) = 381",
+          "claim_type": "conditional upper-bound alternative",
+          "source": "https://doi.org/10.15495/EPub_UBT_00008787",
+          "version": "2025 survey, section on the binary q-analog of the Fano plane",
+          "checked_at": "2026-11-06"
+        }
+      ],
+      "current_status_check": {
+        "checked_at": "2026-11-06",
+        "sources": [
+          "https://miplib.zib.de/instance_details_cdc7-4-3-2.html",
+          "https://doi.org/10.15495/EPub_UBT_00008787"
+        ],
+        "result": "The live MIPLIB instance retains 333 as the lower bound and 381 as the upper bound. The 2025 Kurz survey gives the conditional 378-or-381 alternative. No later exact optimum or 381-code proof was located in this check. The live specialist table endpoint returned a gateway error. This is a bounded source check, not a proof that no later result exists."
+      },
+      "limitations": [
+        "The witness proves a lower bound of 333, not optimality.",
+        "The conditional 378-or-381 result does not give an unconditional upper bound of 378.",
+        "No 381-subspace code or proof of nonexistence was found in the checked sources."
+      ],
+      "best_human": {
+        "value": 333,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "provenance": "Heinlein, Kiermaier, Kurz, and Wassermann report an integer-linear-programming search and print the 333-subspace construction. AI provenance is not reported.",
+        "evidence_state": "witness reconstructed from Appendix B/C and independently checked exactly"
+      },
+      "best_public": {
+        "value": 333,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "evidence_state": "same-parameter published construction; witness independently replayed",
+        "origin_type": "human/computational; AI provenance not reported"
+      },
+      "best_reproduced": {
+        "value": 333,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "provenance": "Parsed the Appendix C RREF representatives, decoded each column digit as a+2b+4c, and applied the Appendix B G_{4,6} group action.",
+        "ai_provenance": "The paper reports an ILP-based search. It does not state whether AI tools were used; no unaided-human claim is made.",
+        "actual_value": 333,
+        "evidence_state": "all 333 row spaces and 55,278 pairwise intersections checked exactly over GF(2)"
+      },
+      "review_status": "accepted_by_sol",
+      "witness": "data/source/heinlein_2019_appendix_c.json"
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "points": [
+    [
+      2623,
+      3781
+    ],
+    [
+      -8674,
+      -1516
+    ],
+    [
+      6753,
+      5922
+    ],
+    [
+      3268,
+      -62
+    ],
+    [
+      5617,
+      1732
+    ],
+    [
+      9116,
+      -2843
+    ],
+    [
+      -7999,
+      -9254
+    ],
+    [
+      -765,
+      -5421
+    ],
+    [
+      -5582,
+      -2132
+    ],
+    [
+      7451,
+      9723
+    ],
+    [
+      -9889,
+      -3004
+    ],
+    [
+      4289,
+      -4092
+    ],
+    [
+      -7001,
+      2128
+    ],
+    [
+      -8468,
+      -4572
+    ],
+    [
+      -7907,
+      -1506
+    ],
+    [
+      361,
+      -3300
+    ],
+    [
+      -2284,
+      -2949
+    ],
+    [
+      -462,
+      -5911
+    ],
+    [
+      986,
+      -3762
+    ],
+    [
+      7979,
+      -9540
+    ],
+    [
+      1703,
+      2735
+    ],
+    [
+      -9963,
+      6173
+    ],
+    [
+      916,
+      -2008
+    ],
+    [
+      656,
+      -7937
+    ],
+    [
+      5788,
+      1541
+    ],
+    [
+      -2736,
+      -2182
+    ],
+    [
+      5299,
+      -8367
+    ],
+    [
+      4679,
+      -7012
+    ]
+  ],
+  "claimed_objective": 12516,
+  "search_metadata": {
+    "algorithm": "seeded random general-position integer initialization with greedy single-point replacement",
+    "configuration_id": "T036-C01",
+    "seed": 0,
+    "iterations": 80,
+    "iteration_limit": 80,
+    "accepted_moves": 16,
+    "wall_clock_cutoff_seconds": null,
+    "reference_data_read": false,
+    "budget": {
+      "iteration_limit": 80,
+      "wall_clock_cutoff_seconds": null
+    }
+  }
+}

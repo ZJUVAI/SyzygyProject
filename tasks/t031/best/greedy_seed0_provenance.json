@@ -1,0 +1,16 @@
+{
+  "algorithm": "seeded randomized maximum-overlap greedy path through all permutations",
+  "configuration_id": "T031-C01",
+  "seed": 0,
+  "iterations": 8,
+  "iteration_limit": 8,
+  "wall_clock_seconds": 0.091629,
+  "python": "3.13.12",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "cpu_threads": 1,
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "memory_limit_bytes": 4294967296,
+  "command": ".venv/bin/python -c \"from tasks.t031.baseline import run_code; print(run_code())\"",
+  "reference_data_read": false
+}

@@ -1,0 +1,57 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "exact_objective": "18009806284982901355212166903378540500617160123/20251451259389692452287000000000000000000000000",
+    "convolution_entries": 39
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 60402,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "1.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 88
+  },
+  "source_sha256": {
+    "tasks/t015/baseline.py": "51dd35ceef1f9135f83251bc94796492c89ce6d2a4689d0e53a422a7d114a934",
+    "tasks/t015/check.py": "5890c8395866e3e91514ed5e4c01078f32d1eece22d73984012da201d25140ff",
+    "tasks/t015/evaluator.py": "16b1f81a8d20fa5c2515c9b7a33a430052f8b9673868a1878b6250a51badffe3",
+    "tasks/t015/evolution.py": "c95aeaedc2f8666e7f997e5174b4841d65ff9eb7e875df3cb806520a81ac1335",
+    "tasks/t015/human.py": "dc35d11a009796e95efa88d769e625769125d21f7d9f847138ed9dcaa40d124c",
+    "tasks/t015/init_program.py": "23e3ebb6dca7a277c3d216d786b10ad110e1b8b397fb0171f71ad069cdab64a5",
+    "tasks/t015/reference.py": "130cf4f1a98a1f350f37be3d287024bca2c3464f76efac920efe6e0be0bb985c",
+    "tasks/t015/sota.py": "bab382f55ab0a74852f293ce5faa70a08b2503ab7691442d5db43cc21e76790b",
+    "tasks/t015/test_task.py": "16e9c84f8146aad176eb4e1bcc40255a08a5ce224d37ab932ca3d9a2c5c40938"
+  },
+  "warm_start_sha256": "1180d0d1551c41bbf1e553894e4ba23ca744087c4cf6381ca560be3ed7ffe452",
+  "replay_command": "python -m mathbench replay T015 tasks/t015/best/T015-C01/solution.json --config T015-C01",
+  "independent_continuous_integrals": {
+    "method": "Exact rational integration of each linear segment, with zero endpoints. Unit-width input bins are permitted by scale and translation invariance.",
+    "steps": 20,
+    "L1": "1",
+    "L2_squared": "18009806284982901355212166903378540500617160123/500000000000000000000000000000000000000000000000",
+    "Linf": "20251451259389692452287/500000000000000000000000",
+    "objective": "18009806284982901355212166903378540500617160123/20251451259389692452287000000000000000000000000"
+  }
+}

@@ -1,38 +1,39 @@
 {
   "task_id": "T009",
-  "name": "Tammes problem: 16 points on S²",
+  "name": "Best minimum distance of binary linear codes",
   "acceptance_status": "accepted_by_sol",
   "configurations": [
     {
-      "id": "T009-C02",
+      "id": "T009-C01",
       "parameters": {
-        "n": 16,
-        "space": "S2",
-        "objective": "minimum pairwise angular separation in radians"
+        "n": 68,
+        "k": 15,
+        "q": 2
       },
       "direction": "maximize",
-      "human_reference": 0.9118367215999165
+      "human_reference": 8,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T009-C02",
+      "parameters": {
+        "n": 80,
+        "k": 20,
+        "q": 2
+      },
+      "direction": "maximize",
+      "human_reference": 25,
+      "acceptance_status": "accepted_by_sol"
     },
     {
       "id": "T009-C03",
       "parameters": {
-        "n": 17,
-        "space": "S2",
-        "objective": "minimum pairwise angular separation in radians"
+        "n": 100,
+        "k": 20,
+        "q": 2
       },
       "direction": "maximize",
-      "human_reference": 0.8916944491515696,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T009-C04",
-      "parameters": {
-        "n": 19,
-        "space": "S2",
-        "objective": "minimum pairwise angular separation in radians"
-      },
-      "direction": "maximize",
-      "human_reference": 0.8323809277763071,
+      "human_reference": 34,
       "acceptance_status": "accepted_by_sol"
     }
   ],
@@ -53,27 +54,23 @@
       "same-parameter record provenance"
     ],
     "limitations": [
-      "采用开放的16点配置，替换已获最优性证明的15点配置。正式成绩使用角度区间下界。"
+      "公开方法对照距离8，本地传统搜索距离19。公开距离24矩阵未取到。"
     ]
   },
   "configuration_expansion_review": {
-    "reviewer": "GPT-6.1 Sol",
-    "implementation_agent": "/root/expand_t009",
-    "implementation_model": "gpt-6-luna",
-    "date": "2026-11-04",
-    "acceptance_status": "accepted_by_sol",
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximize minimum nonzero codeword weight of a k-dimensional binary linear code of length n. Retain[68,15] and add[80,20] and[100,20].",
+      "primary_source": "Sol checked exact-parameter Grassl BKLC pages, [80,20] gives25–30 and [100,20] gives34–40. Compared every stored generator polynomial exponent to the source. Both construct from Chen Zhi1994 quasi-cyclic polynomials. C02 builds 3x27 blocks and punctures coordinate81; C03 builds 3x33 blocks and appends a zero coordinate. Source vintage is recorded; no matching optimality proof was found in checked sources.",
+      "independent_method": "Sol personally ran the human QC reconstruction and the fixed reference. Independent set closure under XOR of integer-packed rows gives exactly1048576 codewords and minimum nonzero weights25 and34. This differs from the checker Gray traversal. Accepted rank, objective, and exact bit checks passed; duplicated generator row rejected.",
+      "admission": "Five strict programs per config and full score-claim invariance, replay, cold export and error/nonfinite/timeout checks passed. During review the new reference loader initially returned weaker search matrices; it now returns exact archived public generators for new configs. Original C01 reference19 and separate SOTA24 are preserved, with final full runner recheck."
+    },
     "configuration_ids": [
-      "T009-C03",
-      "T009-C04"
-    ],
-    "evidence": "PLAN.md",
-    "checks": [
-      "source and parameter review",
-      "four strict program runs per configuration",
-      "cold seed export",
-      "independent key quantity",
-      "damaged witness rejected",
-      "claimed score ignored"
+      "T009-C02",
+      "T009-C03"
     ]
   }
 }

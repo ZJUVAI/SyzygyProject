@@ -1,0 +1,103 @@
+{
+  "task_id": "T027",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T027-C01": {
+      "program": "reference.py",
+      "reproduced_value": "44759294",
+      "public_value": "44759294",
+      "highest_reported": {
+        "value": "44759294",
+        "source": {
+          "url": "https://qaplib.mgi.polymtl.ca/",
+          "instance_url": "https://coral.ise.lehigh.edu/data-sets/qaplib/qaplib-problem-instances-and-solutions/",
+          "witness_url": "https://sources.debian.org/src/r-cran-qap/0.1-1-2/inst/qaplib/tai256c.sln",
+          "title": "QAPLIB tai256c record and archived solution",
+          "classification": "best reported feasible objective on the checked QAPLIB pages; not an optimality proof",
+          "method_label": "ANT",
+          "method_provenance": "QAPLIB table labels 44,759,294 as ANT; QAPLIB history credits T. Stützle with an improved tai256c solution in June 1997. The archived permutation is replayed, but the original ANT run is not reproduced."
+        },
+        "reproduction_status": "archived witness reproduced exactly"
+      },
+      "checked_at": "2026-11-06",
+      "public_source": {
+        "url": "https://qaplib.mgi.polymtl.ca/",
+        "instance_url": "https://coral.ise.lehigh.edu/data-sets/qaplib/qaplib-problem-instances-and-solutions/",
+        "witness_url": "https://sources.debian.org/src/r-cran-qap/0.1-1-2/inst/qaplib/tai256c.sln",
+        "title": "QAPLIB tai256c record and archived solution",
+        "classification": "best reported feasible objective on the checked QAPLIB pages; not an optimality proof",
+        "method_label": "ANT",
+        "method_provenance": "QAPLIB table labels 44,759,294 as ANT; QAPLIB history credits T. Stützle with an improved tai256c solution in June 1997. The archived permutation is replayed, but the original ANT run is not reproduced."
+      },
+      "lower_bound_source": {
+        "url": "https://arxiv.org/abs/2401.09439v2",
+        "title": "An Exceptionally Difficult Binary Quadratic Optimization Problem with Symmetry: a Challenge for The Largest Unsolved QAP Instance Tai256c",
+        "version": "arXiv v2; submitted 2023-12-20, last revised 2024-09-30 in the arXiv version history. The v2 PDF title page says revised 2024-10-01.",
+        "reported_lower_bound": "44200000",
+        "reported_gap": "1.25%",
+        "evidence": "The v2 PDF states that target lower bound 44,200,000 was obtained with a 1.25% gap (PDF p. 3; Table 4 on p. 18). The v2 abstract still describes the earlier 1.48% gap.",
+        "checked_at": "2026-11-06"
+      },
+      "matrix": "data/tai256c.dat",
+      "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The original ANT search is not replayed; only the archived feasible permutation and exact score are reproduced.",
+        "The checked QAPLIB pages disagree on the older lower bound: the Lehigh table gives 43,849,646, while the QAPLIB mirror gives 44,095,032. The arXiv v2 paper discusses 44,095,032 as the previous bound and reports an improved 44,200,000. Searches on 2026-11-06 found no later primary result or proof of optimality; this search was not exhaustive.",
+        "The lower bound is a result reported by the cited paper; the task checker verifies feasible scores, not optimality or lower-bound certificates."
+      ],
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T027",
+          "config_id": "T027-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 44759294,
+          "verification_status": "exact",
+          "generation_time": 0.26518185809254646,
+          "verification_time": 0.2657204009592533,
+          "objective_value": 44759294,
+          "details": {
+            "instance": "tai256c",
+            "n": 256,
+            "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+            "permutation_bijection_verified": true,
+            "objective_terms": 65536,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.5353591740131378,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "quadratic_cost": 44759294,
+          "terms": 65536,
+          "inverse_permutation_checked": true
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "ec3bd69f6ffc0dfab851bdf59ab886ac0450c84b333a17af8590db5b2d544864"
+      },
+      "review_status": "accepted_by_sol",
+      "witness": "data/tai256c.sln",
+      "witness_sha256": "066452382541a9139b2de34113105afbfaf14949a367fe5acef468d80556dcb0"
+    }
+  }
+}

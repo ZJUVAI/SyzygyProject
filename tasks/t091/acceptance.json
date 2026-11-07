@@ -1,0 +1,415 @@
+{
+  "task_id": "T091",
+  "reviewer": "Sol main agent",
+  "command": ".venv/bin/python scripts/admit_tasks.py T091 --label admission_20261106",
+  "configurations": {
+    "T091-C01": {
+      "configuration": {
+        "id": "T091-C01",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4,
+          "row_repetition": "allowed"
+        },
+        "direction": "minimize",
+        "human_reference": 4096
+      },
+      "configuration_capture_stage": "admission_generation",
+      "programs": {
+        "init_program": {
+          "run": {
+            "task_id": "T091",
+            "config_id": "T091-C01",
+            "validity": 1.0,
+            "combined_score": 0.25,
+            "objective": 16384,
+            "verification_status": "exact",
+            "generation_time": 1.2174477130174637,
+            "verification_time": 2.547943774610758,
+            "objective_value": 16384,
+            "details": {
+              "rows": 16384,
+              "columns": 63,
+              "strength": 4,
+              "repeated_rows_allowed": true,
+              "balanced_parity_checks": 637392,
+              "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+              "rao_lower_bound": 2032,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 3.979821752756834,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "row_count": 16384,
+            "distinct_rows": 16384,
+            "linear_span_dimension": 14,
+            "four_column_projections": 595665,
+            "rao_lower_bound": 2032,
+            "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "baseline": {
+          "run": {
+            "task_id": "T091",
+            "config_id": "T091-C01",
+            "validity": 1.0,
+            "combined_score": 0.5,
+            "objective": 8192,
+            "verification_status": "exact",
+            "generation_time": 2.1002394780516624,
+            "verification_time": 3.5391630455851555,
+            "objective_value": 8192,
+            "details": {
+              "rows": 8192,
+              "columns": 63,
+              "strength": 4,
+              "repeated_rows_allowed": true,
+              "balanced_parity_checks": 637392,
+              "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+              "rao_lower_bound": 2032,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 5.870066076517105,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "row_count": 8192,
+            "distinct_rows": 8192,
+            "linear_span_dimension": 13,
+            "four_column_projections": 595665,
+            "rao_lower_bound": 2032,
+            "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "human": {
+          "run": {
+            "task_id": "T091",
+            "config_id": "T091-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 4096,
+            "verification_status": "exact",
+            "generation_time": 1.1459757424890995,
+            "verification_time": 1.397979762405157,
+            "objective_value": 4096,
+            "details": {
+              "rows": 4096,
+              "columns": 63,
+              "strength": 4,
+              "repeated_rows_allowed": true,
+              "balanced_parity_checks": 637392,
+              "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+              "rao_lower_bound": 2032,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 2.5577388741075993,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "row_count": 4096,
+            "distinct_rows": 4096,
+            "linear_span_dimension": 12,
+            "four_column_projections": 595665,
+            "rao_lower_bound": 2032,
+            "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "reference": {
+          "run": {
+            "task_id": "T091",
+            "config_id": "T091-C01",
+            "validity": 1.0,
+            "combined_score": 1.0,
+            "objective": 4096,
+            "verification_status": "exact",
+            "generation_time": 1.7984983325004578,
+            "verification_time": 3.0992070361971855,
+            "objective_value": 4096,
+            "details": {
+              "rows": 4096,
+              "columns": 63,
+              "strength": 4,
+              "repeated_rows_allowed": true,
+              "balanced_parity_checks": 637392,
+              "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+              "rao_lower_bound": 2032,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 4.907632991671562,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "row_count": 4096,
+            "distinct_rows": 4096,
+            "linear_span_dimension": 12,
+            "four_column_projections": 595665,
+            "rao_lower_bound": 2032,
+            "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        },
+        "evolution": {
+          "run": {
+            "task_id": "T091",
+            "config_id": "T091-C01",
+            "validity": 1.0,
+            "combined_score": 0.5,
+            "objective": 8192,
+            "verification_status": "exact",
+            "generation_time": 3.708618003875017,
+            "verification_time": 2.2447933442890644,
+            "objective_value": 8192,
+            "details": {
+              "rows": 8192,
+              "columns": 63,
+              "strength": 4,
+              "repeated_rows_allowed": true,
+              "balanced_parity_checks": 637392,
+              "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+              "rao_lower_bound": 2032,
+              "claimed_score_ignored": true
+            },
+            "eval_time": 5.966072931885719,
+            "seed": 0,
+            "strict": true,
+            "budget": {
+              "generation_seconds": 300,
+              "verification_seconds": 60,
+              "memory_bytes": 4294967296,
+              "threads": 1
+            },
+            "environment": {
+              "python": "3.13.12",
+              "platform": "linux",
+              "memory_limit_enforced": true,
+              "worker_cpu": 0
+            }
+          },
+          "independent_quantity": {
+            "row_count": 8192,
+            "distinct_rows": 8192,
+            "linear_span_dimension": 13,
+            "four_column_projections": 595665,
+            "rao_lower_bound": 2032,
+            "method": "Exact completeness of the submitted binary linear row space, equal multiplicities, and independent rank4 of all four-column projections. Surjective linear projections give every pattern N/16 times; no parity-character row counts are reused."
+          },
+          "claimed_score_ignored": true,
+          "damaged_construction_rejected": true,
+          "strict_replay_passed": true
+        }
+      },
+      "cold_seed_export": {
+        "task_id": "T091",
+        "config_id": "T091-C01",
+        "validity": 1.0,
+        "combined_score": 0.25,
+        "objective": 16384,
+        "verification_status": "exact",
+        "generation_time": 3.1917117945849895,
+        "verification_time": 6.293003607541323,
+        "objective_value": 16384,
+        "details": {
+          "rows": 16384,
+          "columns": 63,
+          "strength": 4,
+          "repeated_rows_allowed": true,
+          "balanced_parity_checks": 637392,
+          "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
+          "rao_lower_bound": 2032,
+          "claimed_score_ignored": true
+        },
+        "eval_time": 9.493877358734608,
+        "seed": 0,
+        "strict": true,
+        "budget": {
+          "generation_seconds": 300,
+          "verification_seconds": 60,
+          "memory_bytes": 4294967296,
+          "threads": 1
+        },
+        "environment": {
+          "python": "3.13.12",
+          "platform": "linux",
+          "memory_limit_enforced": true,
+          "worker_cpu": 0
+        }
+      },
+      "failure_checks": {
+        "program_error": {
+          "task_id": "T091",
+          "config_id": "T091-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 52, in main\n    result = module.run_code()\n  File \"/C20545/home/zhuminfeng/SyzygyProject/tasks/t091/runs/admission_20261106/T091-C01/program_error.py\", line 2, in run_code\n    raise RuntimeError('admission error')\nRuntimeError: admission error\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.8463567495346069,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "timeout": {
+          "task_id": "T091",
+          "config_id": "T091-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "TimeoutError",
+          "error": "Wall time limit exceeded",
+          "failed_phase": "generation",
+          "error_category": "generation_timeout",
+          "eval_time": 0.2086719386279583,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 0.2,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "nonfinite": {
+          "task_id": "T091",
+          "config_id": "T091-C01",
+          "validity": 0.0,
+          "combined_score": 0.0,
+          "objective": null,
+          "verification_status": "failed",
+          "error_type": "RuntimeError",
+          "error": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 69, in <module>\n    main()\n    ~~~~^^\n  File \"/C20545/home/zhuminfeng/SyzygyProject/mathbench/worker.py\", line 62, in main\n    payload = json.dumps(result, default=convert, allow_nan=False)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/C20545/home/zhuminfeng/.local/share/uv/python/cpython-3.13.12-linux-x86_64-gnu/lib/python3.13/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: nan\n",
+          "failed_phase": "generation",
+          "error_category": "program_error",
+          "eval_time": 0.5360119827091694,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 5,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "IMPLEMENTATION.md": "af94c1c3f180e083f787e474e65d139014b84e80ede318e5679c2abf04c60373",
+    "README.md": "39d4aea910c2a932ae9584aefe5992f073609b72d03b6f4aba0d3013c9946f78",
+    "baseline.py": "c0b70afbcecebd1072b5adc72fa28a8a66ba94e4eb555238a4929bbbac5545a1",
+    "check.py": "6285e87585762ec91be01b4eadb6ef1a8ec63b484af859426ca6258d7a6c318a",
+    "data/human/bch_dual_oa4096.json": "5e0d4a8af8c61f51e155197ba9b6a392ac2d1cfc575f5b856daf2acef1eec7c9",
+    "data/reference/bch_dual_oa4096.json": "5e0d4a8af8c61f51e155197ba9b6a392ac2d1cfc575f5b856daf2acef1eec7c9",
+    "data/source/carlet_kiss_nagy_2023.pdf": "77f9cc38166c80b07cae8777730ecf0281c2dff065a2676b77aa6c7f6f9f2870",
+    "evaluator.py": "bf1e64f59bcc0dd4ad7ebff8349f15f85f4fc0fa5944bb3c41f05b2b71aadef8",
+    "evolution.py": "ec75dcb2725aaf765ae038379ad82c8c8f548e81e6585c3451da827331729a25",
+    "human.py": "108ee132c55ff4f26b9be0a079b7032f2e2163c1dd412a8a9bcceb8ec848b759",
+    "init_program.py": "64e9e8535b490a2b2c871863d46657f283f3de07f4136a2a2ee93989b03bb73d",
+    "instruction.txt": "be6189675036f1873fb397db202244031433c5bd0d00781afa8d4117e1441400",
+    "records.json": "d30ac68229a0638f9414b3db63f30d505186e3ae8dfb2de1ba51ae0662b14557",
+    "reference.py": "bf5b4e98e130dcc9b4f1766bc10e2bbdbd381a8cf6f57916c2e706096c4a0a8f",
+    "search_core.py": "3e26c9b6a824291fb6c3e64eb79ab09521c9c1d657e5af28be1c25428853b329",
+    "test_task.py": "41beed47695b1a1ca3d3e81b80e6a21331f8b57299b3179e8ae9c78c94f0afbd"
+  },
+  "status": "accepted_by_sol",
+  "date": "2026-11-06",
+  "source_review": {
+    "definition": "Binary strength-four orthogonal arrays with 63 columns; minimize positive row count, repeated rows allowed. No linearity restriction in the checker.",
+    "primary_source": "Root read Carlet, Kiss and Nagy DOI10.1007/s10623-022-01105-4, Remark5 BCH-dual reconstruction, Proposition10 and Remark11 shortened Kerdock2048 with unknown optimality. Rao2017 and divisibility16 imply2032, leaving16-row gap. Closed15-column128-row case excluded. Current same-parameter proof search found no closure.",
+    "human_method": "GF64 primitive polynomial x6+x+1; all4096 linear forms on column labels(x,x3). Public2048 reported separately without reproduced witness. Human/reference4096 independently reproduced.",
+    "isolation": "Root returned initial BCH construction that exposed the comparison method. Revised initializer uses generic random greedy labels in F2^14,16384 rows; baseline/evolution independently use F2^13,8192 rows. Neither reads comparison witnesses or BCH formulas.",
+    "independent_method": "Root Gaussian-eliminates actual row space, proves full uniformly repeated binary linear space, and verifies rank4 of all595665 four-column projections by checking each fourth label outside the triple span. This differs from formal637392 balanced parity-character counts. Human rank12 yields256 of each pattern.",
+    "admission": "All five strict runner programs passed, initial16384, baseline/evolution8192, human/reference4096. Bit corruption rejected; complete checker result invariant under claimed-score tampering; saved witnesses replay, cold export and program-error/nonfinite/timeout controls passed. Task tests27 passed57.55s."
+  }
+}

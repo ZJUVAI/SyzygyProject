@@ -1,0 +1,67 @@
+{
+  "source_date": "2026-11-06",
+  "survey_scope_note": "The status reflects the named sources and searches checked on 2026-11-06. It is not a claim that every publication has been surveyed.",
+  "best_human": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness_url": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+    "ai_provenance": "The 2021 paper does not state whether AI assisted the construction. The local table transcription and replay were made for this benchmark.",
+    "evidence_state": "The Table 3 entry was independently checked as a feasible B3 set; optimality is not established.",
+    "origin_type": "published construction, AI provenance not stated"
+  },
+  "best_public": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness_url": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+    "ai_provenance": "Not stated by the source.",
+    "evidence_state": "Strongest same-parameter value found in the checked sources; no proof of optimality is claimed.",
+    "origin_type": "source does not state whether AI assisted the result"
+  },
+  "best_reproduced": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness": "data/reference/public_m31_19407.json",
+    "ai_provenance": "Transcribed for this benchmark from the web-rendered Table 3 entry; not a byte-identical PDF extraction.",
+    "evidence_state": "Exact checker confirmed 31 distinct elements, all 5,456 triple sums distinct, and diameter 19,407.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "published same-parameter construction reproduced from the author's table",
+  "configurations": {
+    "T084-C01": {
+      "best_human": 19407,
+      "best_public": 19407,
+      "best_reproduced": 19407,
+      "open_instance": true,
+      "open_evidence": "Checked through 2026-11-06. The source paper says its constructions are near-optimal and reports exact B3 optimality only through cardinality 7; no later closure for 31 was found in the checked sources.",
+      "lower_bound": 4737,
+      "lower_bound_evidence": "Cited Atkinson-Santoro-Urrutia inequality G3(m+1)>10m^3/57 with m=30; DOI 10.1109/TCOM.1986.1096587; https://people.scs.carleton.ca/~santoro/Reports/DistinctSums.pdf.",
+      "source_transcription": "Table 3 copied from web-rendered author full text. The original PDF was not archived because the publisher endpoint rejected automated retrieval.",
+      "ai_provenance": "Source construction provenance is not stated. Repository transcription and replay were generated for this benchmark."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T084-C01": {
+      "objective": 288230376151711744,
+      "objective_value": 288230376151711744,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 6.733155699656379e-14
+    }
+  }
+}

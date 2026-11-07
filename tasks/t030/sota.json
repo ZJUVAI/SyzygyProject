@@ -1,0 +1,240 @@
+{
+  "task_id": "T030",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T030-C01": {
+      "parameters": {
+        "instance": "DSJC1000.5",
+        "vertices": 1000,
+        "edges": 249826,
+        "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+      },
+      "direction": "minimize",
+      "objective": {
+        "name": "number of distinct colors in a proper vertex coloring",
+        "unit": "colors",
+        "direction": "minimize",
+        "constraints": [
+          "assign one integer color to each of the 1000 fixed vertices",
+          "the endpoint colors differ on all 249826 fixed edges"
+        ]
+      },
+      "program": "reference.py",
+      "search_program": "baseline.py",
+      "reference_program": "reference.py",
+      "reproduced_value": 82,
+      "public_value": 82,
+      "best_human": {
+        "value": 82,
+        "parameters": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges": 249826
+        },
+        "source": "Olawale Titiloye and Alan Crispin, Parameter Tuning Patterns for Random Graph Coloring with Quantum Annealing (2012), plus author-hosted certificate archive.",
+        "source_url": "https://doi.org/10.1371/journal.pone.0050060",
+        "author_page_url": "https://sites.google.com/site/olawaletitiloye/graphcoloring/qacol",
+        "witness_url": "https://drive.google.com/file/d/1ZF6m_-3Kem_MYyytcMJUbJPqI8My25Ta/view",
+        "witness": "data/source/DSJC1000.5_K82_col.txt",
+        "witness_sha256": "0e73778bb2934ee8a828b59cbd3b5deaaadc88716d5010af67ec7cdaec2c5109",
+        "verification": "data/DSJC1000.5_K82_verification.json",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The published certificate was downloaded and independently verified on the frozen instance; all 1000 labels are present, 82 distinct colors are used, and no edge conflicts.",
+        "origin_type": "Human-authored quantum-annealing heuristic result.",
+        "ai_provenance": "No AI provenance is stated in the paper or author certificate archive."
+      },
+      "best_public": {
+        "value": 82,
+        "parameters": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges": 249826
+        },
+        "source": "Olawale Titiloye and Alan Crispin, Parameter Tuning Patterns for Random Graph Coloring with Quantum Annealing (2012), plus author-hosted certificate archive.",
+        "source_url": "https://doi.org/10.1371/journal.pone.0050060",
+        "author_page_url": "https://sites.google.com/site/olawaletitiloye/graphcoloring/qacol",
+        "witness_url": "https://drive.google.com/file/d/1ZF6m_-3Kem_MYyytcMJUbJPqI8My25Ta/view",
+        "witness": "data/source/DSJC1000.5_K82_col.txt",
+        "witness_sha256": "0e73778bb2934ee8a828b59cbd3b5deaaadc88716d5010af67ec7cdaec2c5109",
+        "verification": "data/DSJC1000.5_K82_verification.json",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The published certificate was downloaded and independently verified on the frozen instance; all 1000 labels are present, 82 distinct colors are used, and no edge conflicts."
+      },
+      "best_reproduced": {
+        "value": 82,
+        "parameters": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges": 249826
+        },
+        "witness": "data/source/DSJC1000.5_K82_col.txt",
+        "program": "reference.py",
+        "verification": "data/DSJC1000.5_K82_verification.json",
+        "verification_status": "exact",
+        "verification_method": "Recompute the distinct color count and inspect each of the 249826 graph edges.",
+        "witness_sha256": "0e73778bb2934ee8a828b59cbd3b5deaaadc88716d5010af67ec7cdaec2c5109",
+        "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd",
+        "claimed_score_ignored": true,
+        "date_reproduced": "2026-11-06"
+      },
+      "best_public_reproduced": {
+        "value": 82,
+        "parameters": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges": 249826
+        },
+        "witness": "data/source/DSJC1000.5_K82_col.txt",
+        "verification": "data/DSJC1000.5_K82_verification.json",
+        "verification_status": "exact",
+        "claimed_score_ignored": true,
+        "witness_sha256": "0e73778bb2934ee8a828b59cbd3b5deaaadc88716d5010af67ec7cdaec2c5109",
+        "date_reproduced": "2026-11-06"
+      },
+      "highest_reported": {
+        "value": 82,
+        "parameters": {
+          "instance": "DSJC1000.5",
+          "vertices": 1000,
+          "edges": 249826
+        },
+        "source": {
+          "citation": "O. Titiloye and A. Crispin (2012), Parameter Tuning Patterns for Random Graph Coloring with Quantum Annealing, PLOS ONE 7(11), e50060.",
+          "url": "https://doi.org/10.1371/journal.pone.0050060",
+          "author_page_url": "https://sites.google.com/site/olawaletitiloye/graphcoloring/qacol",
+          "claim": "The paper reports successful 82-coloring runs for DSJC1000.5; the author-hosted certificate archive contains DSJC1000.5_K82_col.txt."
+        },
+        "reproduction_status": "reported result and certificate independently replayed"
+      },
+      "bounds": {
+        "lower_bound": 73,
+        "lower_bound_source": "Held, Cook, and Sewell (2012), Table 2; also Cazenave et al. (2025), Table 4.",
+        "lower_bound_evidence_state": "reported, not independently recomputed locally",
+        "upper_bound": 82,
+        "upper_bound_source": "Titiloye and Crispin (2012) author-hosted certificate, independently replayed",
+        "interval": [
+          73,
+          82
+        ]
+      },
+      "optimality": {
+        "status": "open; exact chromatic number not established",
+        "source_review_date": "2026-11-06",
+        "reported_bounds": {
+          "lower_bound": 73,
+          "upper_bound": 82
+        },
+        "lower_bound_evidence_state": "The value 73 is reported in the cited papers. It was not independently recomputed in this task.",
+        "upper_bound_evidence_state": "An 82-color certificate was independently verified against all edges.",
+        "sources": [
+          {
+            "citation": "T. Cazenave, B. Negrevergne, and F. Sikora (2025), Monte Carlo Graph Coloring, arXiv:2504.03277v1; MCS 2020 proceedings version.",
+            "url": "https://arxiv.org/abs/2504.03277v1",
+            "version": "v1, submitted 2025-04-04",
+            "location": "Section 6.2, Table 4 caption and introductory sentence, PDF page 12.",
+            "finding": "The authors say the chromatic numbers of these very difficult instances seem unknown and only lower bounds are known. The DSJC1000.5 row reports lower bound 73 and table upper bound 83."
+          },
+          {
+            "citation": "S. Held, W. Cook, and E. C. Sewell (2012), Maximum-weight stable sets and safe lower bounds for graph coloring, Mathematical Programming Computation 4, 363-381.",
+            "url": "https://doi.org/10.1007/s12532-012-0042-3",
+            "location": "Table 2, DSJC1000.5 row.",
+            "finding": "The paper reports a safe lower bound of 73. The task does not locally reproduce its lower-bound computation."
+          },
+          {
+            "citation": "A. Hertz, M. Plumettaz, and N. Zufferey (2008), Variable space search for graph coloring, Discrete Applied Mathematics 156(13), 2551-2560.",
+            "url": "https://doi.org/10.1016/j.dam.2008.03.022",
+            "finding": "The table marks χ unknown for DSJC1000.5 and lists k*=83."
+          }
+        ],
+        "lower_bound": 73,
+        "upper_bound": 82,
+        "bound_note": "The open classification is supported by explicit literature statements. The lower bound 73 is recorded as reported, not independently verified here."
+      },
+      "prior_public_result": {
+        "value": 83,
+        "source_url": "https://sites.google.com/site/olawaletitiloye/graphcoloring/qacol",
+        "witness": "data/source/DSJC1000.5_K83.txt",
+        "witness_sha256": "1b7deb4d7e6d376a76eb027f645262ee8ca35e57bec0f87ce547800de5b2aca7",
+        "evidence_state": "Author-hosted QA-col certificate retained as historical evidence; superseded by the 82-color result."
+      },
+      "human_program": "human.py",
+      "human_reference": 86,
+      "frozen_human_reference": {
+        "value": 86,
+        "witness": "data/human_witness.json",
+        "program": "human.py",
+        "source": "Samir Loudni, Intensification/Diversification VNS for Graph Coloring Problem, JFPC 2011.",
+        "source_url": "https://loudni.users.greyc.fr/Coloring.html",
+        "witness_url": "https://loudni.users.greyc.fr/coloring/DSJC1000.5.sol",
+        "witness_sha256": "de1106b17304b59fb18809d285e91ad78f8414a892e2e5ea1e7fedbfaa630007",
+        "verification_status": "exact",
+        "date_reproduced": "2026-11-06",
+        "note": "Frozen H used as the task scoring denominator. A stronger human-authored 82-color construction is separately reproduced."
+      },
+      "best_reproduced_human_reference": {
+        "value": 86,
+        "witness": "data/human_witness.json",
+        "program": "human.py",
+        "source": "Samir Loudni, Intensification/Diversification VNS for Graph Coloring Problem, JFPC 2011.",
+        "source_url": "https://loudni.users.greyc.fr/Coloring.html",
+        "witness_url": "https://loudni.users.greyc.fr/coloring/DSJC1000.5.sol",
+        "witness_sha256": "de1106b17304b59fb18809d285e91ad78f8414a892e2e5ea1e7fedbfaa630007",
+        "verification_status": "exact",
+        "date_reproduced": "2026-11-06",
+        "note": "Frozen H used as the task scoring denominator. A stronger human-authored 82-color construction is separately reproduced."
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T030",
+          "config_id": "T030-C01",
+          "validity": 1.0,
+          "combined_score": 1.048780487804878,
+          "objective": 82,
+          "verification_status": "exact",
+          "generation_time": 0.1648307889699936,
+          "verification_time": 0.715893104672432,
+          "objective_value": 82,
+          "details": {
+            "instance": "DSJC1000.5",
+            "vertices": 1000,
+            "edges_checked": 249826,
+            "distinct_colors_recomputed": 82,
+            "claimed_objective_ignored": true,
+            "claimed_score_ignored": true,
+            "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+          },
+          "eval_time": 0.8848899938166142,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "color_count": 82,
+          "within_color_pairs_checked": 5747,
+          "original_dimacs_edges_matched": 249826
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "7e4b0028de0beca3f3b744b0d1326335b5cb486dd8170189e6c126f65a884d4a"
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

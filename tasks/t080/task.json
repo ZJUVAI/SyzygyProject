@@ -1,40 +1,63 @@
 {
   "task_id": "T080",
-  "name": "Second autocorrelation inequality (AC2), 20 nonnegative steps",
+  "name": "Maximum finite difference-over-sum exponent certificate",
   "acceptance_status": "accepted_by_sol",
+  "category": "additive_combinatorics",
+  "definition": "Choose U containing 0 from the nonnegative integers, with 2 through 512 elements and max(U)<=1000000. Require |U-U|<2 max(U)+1. Maximize 1+ln(|U-U|/|U+U|)/ln(2 max(U)+1). The strict inequality is the hypothesis of the finite construction lemma in the cited paper.",
+  "solution_format": "An object with set, a list of distinct nonnegative integer elements that includes 0.",
+  "objective": {
+    "name": "finite_projection_exponent",
+    "unit": "dimensionless logarithmic exponent",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "U contains 0 and consists of integers.",
+    "The set has 2 through 512 distinct elements.",
+    "Every element is in [0,1000000].",
+    "Let s=|U+U| and d=|U-U|, with all ordered pairs included and duplicate values removed.",
+    "Require the strict inequality d<q, where q=2 max(U)+1.",
+    "Maximize 1+ln(d/s)/ln(q)."
+  ],
   "configurations": [
     {
       "id": "T080-C01",
       "parameters": {
-        "steps": 20,
-        "support": [
-          "-1/4",
-          "1/4"
+        "min_cardinality": 2,
+        "max_cardinality": 512,
+        "contains_zero": true,
+        "integer_interval": [
+          0,
+          1000000
         ],
-        "nonnegative": true
+        "require_difference_size_lt_q": true,
+        "q_definition": "2*max(U)+1",
+        "objective": "1+ln(|U-U|/|U+U|)/ln(q)"
       },
       "direction": "maximize",
-      "human_reference": 0.8892261730897966
+      "human_reference": 1.1150604037411407
     }
   ],
+  "sources": [
+    "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf"
+  ],
+  "verification": "The checker recomputes exact integer sum and difference sets, checks the strict d<q lemma hypothesis, and evaluates the objective using outward-rounded logarithm intervals. The lower endpoint is returned as the conservative maximization objective.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximize theta=1+(ln|U-U|-ln|U+U|)/ln(2maxU+1), for distinct nonnegative integers U containing0, cardinality2..512, max<=1000000, and strict d<q. This is the finite certificate parameter for a two-set asymptotic lemma, not the one-set objectives T012/T077. Exact finite ranking reversals checked distinguish both objectives.",
+      "primary_source": "Root downloaded and read GHR May30 2008 manuscript pp4-6, the lemma, strict d<q hypothesis, and formulas13-15. Human m6L5 reconstructs462 integers,s8008,d39733,q1111111. Theta1.11506040374114. Published asymptotic constructions and optimum cardinality<=11 are not proofs for this finite domain.",
+      "independent_method": "Sorted pair-value transitions count sums and differences independently. Rational atanh series110 terms and exact geometric tail bound enclose all logarithms; four endpoint quotients handle either numerator sign. Exact equality d=s returns1. Independent enclosures lie within all formal80-digit intervals.",
+      "open_status": "The primary finite construction is feasible; no maximizing-U proof for the bounded512-element domain was located. The m6L5 score is a local instance of the published formula, not a separately printed numerical record or a claimed global optimum.",
+      "admission": "Five strict entries, entire returned-checker claim invariance, duplicate rejection, independent quantities, saved replay, isolated cold export, program error, timeout and nonfinite controls pass. Task and shared tests14passed."
+    }
   }
 }

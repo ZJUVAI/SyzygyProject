@@ -1,0 +1,21 @@
+{
+  "task_id": "T036",
+  "configuration_id": "T036-C01",
+  "command": "MATHBENCH_CONFIG_ID=T036-C01 MATHBENCH_SEED=0 .venv/bin/python -c 'from tasks.t036.baseline import run_code; print(run_code())'",
+  "algorithm": "seeded random general-position integer initialization with greedy single-point replacement",
+  "seed": 0,
+  "iteration_limit": 80,
+  "actual_iterations": 80,
+  "accepted_moves": 16,
+  "wall_clock_seconds": 3.1099996343255043,
+  "generation_budget_seconds": 300,
+  "verification_budget_seconds": 60,
+  "memory_bytes": 4294967296,
+  "threads": 1,
+  "python": "3.13.12",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "objective": 12516,
+  "verification_status": "exact",
+  "reference_data_read": false,
+  "notes": "Timing is machine-dependent. The fixed iteration count is the reproducible budget; no wall-clock cutoff was set."
+}

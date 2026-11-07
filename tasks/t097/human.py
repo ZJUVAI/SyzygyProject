@@ -1,16 +1,29 @@
-"""Reproduced public P-192 chain from Clift's downloadable text file."""
-import json
+"""Rebuild a feasible 15-piece integer cover inferred from the rounded Shadoks viewer."""
 import os
-from pathlib import Path
 
-FILES = {
-    "T097-C01": "human_t097.json",
-    "T097-C02": "human_t097_c02.json",
-    "T097-C03": "human_t097_c03.json",
-}
 
 def run_code():
-    name = FILES.get(os.environ.get("MATHBENCH_CONFIG_ID", "T097-C01"))
-    if name is None:
-        raise ValueError("unsupported T097 configuration")
-    return json.loads((Path(__file__).parent / "data" / name).read_text())
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T097-C01")
+    if config_id != "T097-C01":
+        raise ValueError(f"unsupported configuration: {config_id}")
+    polygons = [
+        [[96, 704], [512, 704], [512, 640], [96, 640]],
+        [[96, 608], [512, 608], [512, 544], [96, 544]],
+        [[96, 416], [512, 416], [512, 352], [96, 352]],
+        [[96, 320], [512, 320], [512, 256], [96, 256]],
+        [[128, 736], [176, 736], [176, 512], [128, 512]],
+        [[128, 448], [176, 448], [176, 224], [128, 224]],
+        [[96, 560], [128, 608], [288, 752], [320, 752], [480, 608], [512, 560], [432, 544], [176, 544]],
+        [[96, 400], [176, 416], [432, 416], [432, 320], [320, 176], [128, 352]],
+        [[192, 800], [416, 800], [416, 752], [192, 752]],
+        [[192, 208], [416, 208], [416, 160], [192, 160]],
+        [[224, 832], [384, 752], [384, 160], [224, 160]],
+        [[224, 832], [288, 832], [288, 128], [224, 128]],
+        [[320, 832], [384, 832], [384, 128], [320, 128]],
+        [[432, 736], [480, 736], [480, 512], [432, 512]],
+        [[432, 448], [480, 448], [480, 224], [432, 224]],
+    ]
+    return {
+        "algebraic_field": {"minimal_polynomial": ["0", "1"], "isolating_interval": ["-1", "1"]},
+        "polygons": [[[[str(x)], [str(y)]] for x, y in polygon] for polygon in polygons],
+    }

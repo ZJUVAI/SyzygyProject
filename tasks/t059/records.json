@@ -1,0 +1,113 @@
+{
+  "task_id": "T059",
+  "configurations": {
+    "T059-C01": {
+      "best_human": {
+        "value": 80,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "C2000.9",
+          "vertices": 2000,
+          "edges": 1799532
+        },
+        "source": {
+          "title": "Short Communication: Larger Cliques for a DIMACS Test",
+          "authors": "A. Grosso, M. Locatelli, W. J. Pullan",
+          "year": 2005,
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "description": "Reports a 79-vertex clique and then an 80-vertex clique found by a longer run."
+        },
+        "ai_provenance": "The source does not state whether AI tools were used. No AI-free claim is made.",
+        "evidence_state": "full 80-vertex witness copied from the paper and independently checked against all 3160 pairs"
+      },
+      "best_public": {
+        "value": 80,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "C2000.9",
+          "vertices": 2000,
+          "edges": 1799532
+        },
+        "source": {
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "witness": "data/reference/human_2005_clique80.json"
+        },
+        "evidence_state": "published feasible clique; not an optimality proof"
+      },
+      "best_reproduced": {
+        "value": 80,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "C2000.9",
+          "vertices": 2000,
+          "edges": 1799532
+        },
+        "program": "reference.py",
+        "witness": "data/reference/human_2005_clique80.json",
+        "witness_sha256": "02eecb1280588703bd1a57b55e10c4ce46e0f5672e87c8962182dca7f472ce1c",
+        "reproduction_status": "all selected pairs independently verified against the exact DIMACS input",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 80,
+        "program": "human.py",
+        "source": "Grosso, Locatelli, and Pullan (2005), 80-vertex clique",
+        "evidence_state": "downloaded and exactly checked"
+      },
+      "public_bounds": {
+        "known_clique_lower_bound": 80,
+        "lower_bound_source": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+        "reported_integer_upper_bound": 168,
+        "upper_bound_source": "https://arxiv.org/abs/2607.11726v1",
+        "upper_bound_method": "core reduction with Lovasz theta upper bound; tested directly at k=169",
+        "upper_bound_status": "reported as certified by the authors; not independently reproduced by this task",
+        "reported_runtime": "17 days 18 hours 8 minutes; 192 logical threads and 751 GiB RAM",
+        "exact_optimum_status": "unknown"
+      },
+      "upper_bound_source_pin": {
+        "paper_version": "arXiv 2607.11726v1, submitted 2026-07-13",
+        "code_repository": "https://github.com/Rudolfovoorg/Improving_Upper_Bounds_of_MCP_using_Reduction_Rules",
+        "repository_commit": "79d3fe7dcfb09237042ad5059a4f1352838e3ba2",
+        "commit_date": "2026-07-13",
+        "zenodo_record": "https://doi.org/10.5281/zenodo.21336337"
+      },
+      "source_data": {
+        "original_input": "C2000.9.clq",
+        "input_origin": "CMU COLOR04/DIMACS benchmark snapshot supplied for this task",
+        "uncompressed_sha256": "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16",
+        "compressed_file": "data/source/C2000.9.clq.gz",
+        "compressed_sha256": "936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639",
+        "uncompressed_bytes": 19602828,
+        "vertices": 2000,
+        "edges": 1799532
+      },
+      "own_search": {
+        "program": "evolution.py",
+        "witness": "best/seed_0.json",
+        "objective": 71,
+        "seed": 0,
+        "iterations": 256,
+        "candidates_checked": 256,
+        "best_improvements": 4,
+        "search_isolation": "starts from init_program.py; does not read data/reference or human.py"
+      },
+      "traditional_search_baseline": {
+        "program": "baseline.py",
+        "objective": 62,
+        "seed": 0,
+        "iterations": 16,
+        "candidates_checked": 16
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T059-C01": {
+      "objective": 1,
+      "objective_value": 1,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0125
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "task_id": "T075",
+  "config_id": "T075-C01",
+  "validity": 1.0,
+  "combined_score": 0.5612612612612613,
+  "objective": 1246,
+  "verification_status": "exact",
+  "generation_time": 3.0005540661513805,
+  "verification_time": 0.5178768746554852,
+  "objective_value": 1246,
+  "details": {
+    "vertex_count": 36,
+    "uniformity": 3,
+    "edge_count": 1246,
+    "four_vertex_sets_checked": 58905,
+    "maximum_triples_on_any_four_set": 2,
+    "double_counting_upper_bound": 3570,
+    "claimed_objective_ignored": true
+  },
+  "eval_time": 3.5517377592623234,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

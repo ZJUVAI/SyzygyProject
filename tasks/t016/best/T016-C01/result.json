@@ -1,0 +1,37 @@
+{
+  "task_id": "T016",
+  "config_id": "T016-C01",
+  "validity": 1.0,
+  "combined_score": 1.0349818960101316,
+  "objective": "2279206761619860631/1562500000000000000",
+  "verification_status": "exact",
+  "generation_time": 245.84046710655093,
+  "verification_time": 3.950288973748684,
+  "objective_value": "2279206761619860631/1562500000000000000",
+  "details": {
+    "steps": 208,
+    "coefficient_count": 208,
+    "mass": "1",
+    "max_abs_convolution": "175323597047681587/50000000000000000000",
+    "max_abs_indices": [
+      211
+    ],
+    "normalization": "integral-one normalization; objective is invariant under nonzero scaling",
+    "objective_definition": "416 * max_k(abs(sum_i a_i*a_(k-i))) / (sum_i a_i)^2"
+  },
+  "eval_time": 249.84466563910246,
+  "seed": 16,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 90
+  }
+}

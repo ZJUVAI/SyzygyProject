@@ -1,0 +1,40 @@
+{
+  "task_id": "T096",
+  "config_id": "T096-C01",
+  "validity": 1.0,
+  "combined_score": 1.0,
+  "objective": "1/1",
+  "verification_status": "certified",
+  "generation_time": 0.3150707557797432,
+  "verification_time": 1.0663508959114552,
+  "objective_value": "1/1",
+  "details": {
+    "objective_interval": [
+      "1/1",
+      "1/1"
+    ],
+    "objective_interval_meaning": "Certified interval for this trial Rayleigh quotient only; the reported objective is its conservative upper endpoint, not a two-sided interval for the first eigenvalue.",
+    "rayleigh_quotient_upper_bound": "1/1",
+    "curvature_radius_lower_bound": "1/1",
+    "curvature_radius_upper_bound": "1/1",
+    "geometric_series_tail_ratio": "0/1",
+    "series_terms": 0,
+    "curve_closure": "mean rho is one and first harmonics vanish exactly",
+    "score_claims_ignored": true
+  },
+  "eval_time": 1.3852947540581226,
+  "seed": 0,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  }
+}

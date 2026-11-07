@@ -1,0 +1,59 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T036",
+    "config_id": "T036-C01",
+    "validity": 1.0,
+    "combined_score": 1.6359060402684564,
+    "objective": 12516,
+    "verification_status": "exact",
+    "generation_time": 4.271468535065651,
+    "verification_time": 0.1647644378244877,
+    "objective_value": 12516,
+    "details": {
+      "vertices": 28,
+      "general_position_triples_checked": 3276,
+      "disjoint_edge_pairings_checked": 61425,
+      "crossings_recomputed": 12516,
+      "claimed_objective_ignored": true,
+      "claimed_score_ignored": true
+    },
+    "eval_time": 4.439024355262518,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded random general-position integer initialization with greedy single-point replacement",
+    "configuration_id": "T036-C01",
+    "seed": 0,
+    "iterations": 80,
+    "iteration_limit": 80,
+    "accepted_moves": 16,
+    "wall_clock_cutoff_seconds": null,
+    "reference_data_read": false,
+    "budget": {
+      "iteration_limit": 80,
+      "wall_clock_cutoff_seconds": null
+    }
+  },
+  "solution_sha256": "5adb22e8d745e07871f610cbef0a24d770968ed41d4a2d7c9b2bbe4066fa5a49",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T036 tasks/t036/best/T036-C01/solution.json --config T036-C01"
+}

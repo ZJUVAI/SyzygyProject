@@ -1,0 +1,50 @@
+{
+  "reviewer": "Sol main agent",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "sum_radii": "367446596400741/125000000000000"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "group": "geometry"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 10,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "30.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 66
+  },
+  "source_sha256": {
+    "tasks/t003/baseline.py": "a285d10d8467b03141c9c1b7488eaef8fd594f4c04ea230038d2330e0737c0d9",
+    "tasks/t003/check.py": "e8b9a63a91cc5f72ddf5de1e1d46f9445bb4dc61a9b8f84567d18a9812d6dc67",
+    "tasks/t003/evaluator.py": "e8b9dbdf9a644e3f2047949a2c8199ab155cf72678b4e775fef894aeb343ad18",
+    "tasks/t003/evolution.py": "83415d69abea1360bfb29b7528c2483c9b996d1909a2347e33c80a70896027d0",
+    "tasks/t003/human.py": "4e99441806edc19b954ddac4d52fe6978f222c7e6e9c20fe5c6cd8ec19ff295b",
+    "tasks/t003/init_program.py": "d733d8eb4bd50d2f1e78788a3179b0bbb84ee6eb87419e0764686de2b997c75d",
+    "tasks/t003/reduce_sota.py": "de9489a9b9370c594ae98a21fc1a9c910a4ee50efd1451d52b70777d5f364631",
+    "tasks/t003/reference.py": "9f56b877d81a935f69b1309d1939e973918ad1e02f65085d9784c964694ce881",
+    "tasks/t003/sota.py": "10fe69648a93e143639c7271a76f0e1dbc3d9a5b8722428309007cfb0507c1c3",
+    "tasks/t003/test_task.py": "69a890297a5e0b08312002e133acc8f41e7cf16de4e01e6ee0bb4e1d37ef48c1"
+  },
+  "warm_start_sha256": "4631a8b6810fb71e7fb6f1935ed118fd8c01b2d4d0431aa580141f239fb95cc8",
+  "replay_command": "python -m mathbench replay T003 tasks/t003/best/T003-C02/solution.json --config T003-C02"
+}

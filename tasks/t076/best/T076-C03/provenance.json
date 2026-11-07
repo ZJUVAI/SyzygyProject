@@ -1,0 +1,53 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T076",
+    "config_id": "T076-C03",
+    "validity": 1.0,
+    "combined_score": 0.9863695183321352,
+    "objective": 34775,
+    "verification_status": "exact",
+    "generation_time": 6.126311458647251,
+    "verification_time": 0.3648279160261154,
+    "objective_value": 34775,
+    "details": {
+      "element_count": 17,
+      "subset_sums_verified": 131072,
+      "elements_positive": true,
+      "elements_distinct": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 6.493650682270527,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "greedy descending scan with exact subset-sum bitset, over a seeded fixed cap grid",
+    "seed": 0,
+    "cap_start": 32000,
+    "cap_stop": 36995,
+    "cap_step": 555,
+    "cap_trials_completed": 10,
+    "reference_data_read": false
+  },
+  "solution_sha256": "0499a050803d198e67209a81c015abc6500d6283183e5efb33269e066f2ad60a",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T076 tasks/t076/best/T076-C03/solution.json --config T076-C03"
+}

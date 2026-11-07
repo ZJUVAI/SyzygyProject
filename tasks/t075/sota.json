@@ -1,0 +1,213 @@
+{
+  "task_id": "T075",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T075-C01": {
+      "program": "reference.py",
+      "reproduced_value": 2220,
+      "public_value": 2220,
+      "highest_reported": {
+        "value": 2220,
+        "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "reproduction_status": "Section 6.3 gives H6 and states that its iterated blow-ups are K4^--free. The n=36, two-level specialization was generated and exactly checked here; the paper does not print this finite edge count as a separate table entry."
+      },
+      "public_source": {
+        "title": "The codegree threshold of K4^-",
+        "url": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "doi": "10.1112/jlms.12722",
+        "section": "6.3, page 27",
+        "construction": "Frankl-Furedi H6 and iterated blow-up",
+        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "witness_sha256": "c1bc2f13395033be14f69bb0fd4700a2b82654acc355dcfa227875083841db13",
+        "same_parameters": true,
+        "ai_provenance": "The reviewed paper does not state whether AI tools were used.",
+        "optimality": "A construction is reported; no finite n=36 optimality proof is reported in the reviewed source."
+      },
+      "best_human": {
+        "value": 2220,
+        "date": "2026-11-06",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-"
+        },
+        "method": "two-level balanced H6 blow-up: 10*6^3 outer triples and six internal H6 copies",
+        "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "witness": "data/human/h6_iterated_blowup_n36.json",
+        "evidence_state": "Rebuilt from the published H6 edge list and blow-up rule; exact checker checks all 58,905 four-vertex sets.",
+        "ai_provenance": "Not stated in the reviewed paper."
+      },
+      "best_public": {
+        "value": 2220,
+        "date": "2026-11-06",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-"
+        },
+        "source": "https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf",
+        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "evidence_state": "Finite n=36 specialization of the published H6 iterated blow-up, independently checked to have 2,220 edges and no forbidden four-set.",
+        "ai_provenance": "The source does not state whether AI tools were used.",
+        "optimality": "Not proved for finite n=36."
+      },
+      "best_reproduced": {
+        "value": 2220,
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-"
+        },
+        "program": "reference.py",
+        "witness": "data/reference/h6_iterated_blowup_n36.json",
+        "evidence_state": "Exact task checker recomputes 2,220 edges and checks every four-vertex set.",
+        "verification_status": "exact"
+      },
+      "best_own_search": {
+        "value": 1246,
+        "objective_value": 1246,
+        "program": "evolution.py",
+        "witness": "best/T075-C01/solution.json",
+        "witness_sha256": "1da98fa5d4d5cfba31355950f598f57219d6b58f23d9e18ef4c54510e5c54608",
+        "parameters": {
+          "n": 36,
+          "uniformity": 3,
+          "forbidden_hypergraph": "K4^-: three triples on four vertices",
+          "forbidden_semantics": "ordinary non-induced subhypergraph",
+          "constraint": "every 4-vertex set spans at most 2 selected triples"
+        },
+        "seed": 0,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-06",
+        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "search_metadata": {
+          "algorithm": "seeded random-priority greedy edge addition",
+          "seed": 0,
+          "iterations": 8,
+          "iteration_limit": 8,
+          "trial_edge_counts": [
+            1231,
+            1216,
+            1230,
+            1236,
+            1232,
+            1246,
+            1236,
+            1237
+          ],
+          "best_edge_count": 1246,
+          "comparison_data_read": false,
+          "budget": {
+            "mode": "fixed_iterations",
+            "requested_iterations": 8,
+            "actual_iterations": 8,
+            "requested_wall_clock_seconds": null
+          }
+        },
+        "generation_record": {
+          "task_id": "T075",
+          "config_id": "T075-C01",
+          "validity": 1.0,
+          "combined_score": 0.5612612612612613,
+          "objective": 1246,
+          "verification_status": "exact",
+          "generation_time": 3.0005540661513805,
+          "verification_time": 0.5178768746554852,
+          "objective_value": 1246,
+          "details": {
+            "vertex_count": 36,
+            "uniformity": 3,
+            "edge_count": 1246,
+            "four_vertex_sets_checked": 58905,
+            "maximum_triples_on_any_four_set": 2,
+            "double_counting_upper_bound": 3570,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 3.5517377592623234,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed; see acceptance.json."
+      },
+      "lower_bound": {
+        "value": 2220,
+        "source": "H6 iterated blow-up, Section 6.3",
+        "status": "verified construction"
+      },
+      "upper_bound": {
+        "value": 3570,
+        "proof": "Every triple lies in 33 four-sets. Each of the C(36,4)=58,905 four-sets contains at most two selected triples. Thus 33|E|<=2*C(36,4), giving |E|<=3,570.",
+        "status": "direct exact double count"
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "finite_status": "The reviewed sources did not provide a finite n=36 upper bound matching 2,220 or an exact value proof. This is a bounded literature review, not an exhaustive claim.",
+        "ordinary_density": "The 2023 paper states that ordinary pi(K4^-) is unknown and cites the 2/7 conjecture.",
+        "scope_warning": "The codegree threshold of K4^- and uniform Turan density of the complete tetrahedron K4^(3) are separate problems and are not used as finite ordinary Turan results here."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T075",
+          "config_id": "T075-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 2220,
+          "verification_status": "exact",
+          "generation_time": 0.5479678772389889,
+          "verification_time": 0.49568314105272293,
+          "objective_value": 2220,
+          "details": {
+            "vertex_count": 36,
+            "uniformity": 3,
+            "edge_count": 2220,
+            "four_vertex_sets_checked": 58905,
+            "maximum_triples_on_any_four_set": 2,
+            "double_counting_upper_bound": 3570,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.0551140867173672,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "edge_count": 2220,
+          "link_graphs_checked": 36,
+          "double_counting_upper_bound": 3570,
+          "method": "all vertex links triangle-free, independent of formal four-set loads"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  }
+}

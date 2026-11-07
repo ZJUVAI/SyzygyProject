@@ -1,0 +1,52 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T009",
+    "config_id": "T009-C02",
+    "validity": 1.0,
+    "combined_score": 0.76,
+    "objective": 19,
+    "verification_status": "exact",
+    "generation_time": 4.570934284478426,
+    "verification_time": 0.31467725336551666,
+    "objective_value": 19,
+    "details": {
+      "parameters": {
+        "n": 80,
+        "k": 20,
+        "q": 2
+      },
+      "rank": 20,
+      "codewords_checked": 1048575,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 4.88837243616581,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "simulated annealing over systematic parity matrices",
+    "iterations": 10,
+    "seed": 0
+  },
+  "solution_sha256": "20a61b99ba943761f4af3c12fda8eaff138c6d21aea5cb125e395fbc23c5c6a7",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T009 tasks/t009/best/T009-C02/solution.json --config T009-C02"
+}

@@ -1,0 +1,122 @@
+{
+  "task_id": "T028",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T028-C01": {
+      "best_human": {
+        "value": 3846,
+        "parameters": {
+          "instance": "Ta051",
+          "jobs": 50,
+          "machines": 20,
+          "schedule_type": "permutation"
+        },
+        "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Parallel hybrid heuristics for the permutation flow shop problem, Annals of Operations Research 199(1), 269-284.",
+        "source_url": "https://doi.org/10.1007/s10479-011-0965-2",
+        "date_checked": "2026-11-06",
+        "evidence_state": "Published human permutation, independently replayed against Taillard's official Ta051 processing times.",
+        "ai_provenance": "The task author retrieved and transcribed a published schedule. No claim is made about authorship of the original construction."
+      },
+      "best_public": {
+        "value": 3846,
+        "parameters": {
+          "instance": "Ta051",
+          "jobs": 50,
+          "machines": 20,
+          "schedule_type": "permutation"
+        },
+        "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+        "witness_url": "https://zenodo.org/records/18272308",
+        "evidence_state": "Taillard's live bounds table lists upper bound 3846 and attributes it to RRMRP. Zenodo dataset v8 includes a Ta051 permutation. The local permutation is saved in data/human_witness.json and has been independently replayed.",
+        "date_checked": "2026-11-06",
+        "origin_type": "Human-authored published heuristic result; not an optimality proof."
+      },
+      "best_reproduced": {
+        "value": 3846,
+        "parameters": {
+          "instance": "Ta051",
+          "jobs": 50,
+          "machines": 20,
+          "schedule_type": "permutation"
+        },
+        "witness": "data/human_witness.json",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Recompute completion times for every job-machine operation with the standard integer recurrence on the frozen official Ta051 matrix.",
+        "processing_times_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+        "official_source_file_sha256": "cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba",
+        "claimed_score_ignored": true,
+        "date_reproduced": "2026-11-06",
+        "review_status": "reviewed_by_sol",
+        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see acceptance.json."
+      },
+      "bounds": {
+        "lower_bound": 3771,
+        "lower_bound_source": "Vaessens branch-and-bound result, as listed by Taillard.",
+        "upper_bound": 3846,
+        "upper_bound_source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012).",
+        "source_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+        "source_snapshot": "data/source/best_lb_up_2026-06-03.txt",
+        "source_snapshot_sha256": "1222a422ca2eeb2898f3afbf6c1d5b06dc835cc113cac4851757248b8c6a53c3",
+        "checked_date": "2026-11-06",
+        "open_interval": [
+          3771,
+          3846
+        ],
+        "status": "open; exact optimum not established"
+      },
+      "source_review": {
+        "primary_instance": {
+          "citation": "E. Taillard (1993), Benchmarks for basic scheduling problems, European Journal of Operational Research 64(2), 278-285.",
+          "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/tai50_20.txt",
+          "official_source_file": "data/source/tai50_20_official.txt",
+          "official_source_file_sha256": "cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba",
+          "input_file": "data/ta051.json",
+          "input_file_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+          "official_header": {
+            "jobs": 50,
+            "machines": 20,
+            "seed": 1539989115,
+            "original_upper_bound": 3875,
+            "original_lower_bound": 3480
+          }
+        },
+        "official_bounds_table": {
+          "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+          "header_date": "03.06.2026",
+          "instance_row": "ta051-055; Ta051 lower bound 3771 from Va, upper bound 3846 from RRMRP",
+          "schedule_scope": "The table states that only permutation schedules are allowed."
+        },
+        "upper_bound_reference": {
+          "citation": "M. G. Ravetti, C. Riveros, A. Mendes, M. G. Resende, and P. M. Pardalos (2012), Parallel hybrid heuristics for the permutation flow shop problem, Annals of Operations Research 199(1), 269-284.",
+          "url": "https://doi.org/10.1007/s10479-011-0965-2",
+          "witness_archive": "Olivier Brunner, Permutation Flow-shop: Taillard and VFR benchmarks, Zenodo v8, record 18272308, published 2026-01-16.",
+          "witness_archive_url": "https://zenodo.org/records/18272308",
+          "witness_archive_file": "Taillard_UB_Schedules v8.csv",
+          "replay": "The 50-job permutation was independently replayed on the official Ta051 matrix; makespan is 3846."
+        },
+        "optimality_status_review": {
+          "paper": "Jan Gmys et al. (2022), Exactly Solving Hard Permutation Flowshop Scheduling Problems on Peta-Scale GPU-Accelerated Supercomputers.",
+          "url": "https://doi.org/10.1287/ijoc.2022.1193",
+          "finding": "Ta051 is listed among the instances that remained open in the reported exact-solver experiments.",
+          "newest_schedule_archive_checked": "Olivier Brunner, Zenodo record 21715941, v11, published 2026-07-31.",
+          "newest_schedule_archive_url": "https://zenodo.org/records/21715941",
+          "warning": "The v11 record says its Optimal column must be interpreted with extreme caution. The task status is based on Taillard's live bound table and the Gmys paper, not that column."
+        }
+      },
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": []
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T028-C01": {
+      "objective": 5094,
+      "objective_value": 5094,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.7550058892815077
+    }
+  }
+}

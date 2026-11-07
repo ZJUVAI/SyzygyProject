@@ -1,0 +1,53 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "origin": "Seeded traditional search from the simple task construction; no public witness read.",
+  "seed": 0,
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T022",
+    "config_id": "T022-C01",
+    "validity": 1.0,
+    "combined_score": 0.42857142857142855,
+    "objective": 18,
+    "verification_status": "exact",
+    "generation_time": 0.6986666694283485,
+    "verification_time": 0.49971115216612816,
+    "objective_value": 18,
+    "details": {
+      "vertices": 18,
+      "edges": 82,
+      "clique_size": 5,
+      "independent_set_size": 5,
+      "clique_search_exhaustive": true,
+      "complement_clique_search_exhaustive": true
+    },
+    "eval_time": 1.2032916843891144,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded random one-vertex extension with exact K5 exclusion checks",
+    "seed": 0,
+    "iterations_attempted": 40,
+    "iteration_budget": 40,
+    "time_budget_seconds": null,
+    "vertex_cap": 45
+  },
+  "solution_sha256": "1012bbe4aa0724c0a1e405700d73a80ecea172eb599ddd885ec39ab429ef601a",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T022 tasks/t022/best/T022-C01/solution.json --config T022-C01"
+}

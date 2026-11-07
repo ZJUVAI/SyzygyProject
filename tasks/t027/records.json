@@ -1,0 +1,45 @@
+{
+  "task_id": "T027",
+  "configurations": {
+    "T027-C01": {
+      "best_human": {
+        "value": "44759294",
+        "date": "1997-06",
+        "parameters": "QAPLIB tai256c, n=256",
+        "source": "https://qaplib.mgi.polymtl.ca/",
+        "witness": "data/tai256c.sln",
+        "algorithm": "ANT, QAPLIB table attribution; archived permutation replayed",
+        "ai_provenance": "not reported",
+        "evidence_state": "witness_and_value_reproduced; original search run is not replayed"
+      },
+      "best_public": {
+        "value": "44759294",
+        "date": "checked 2026-11-06",
+        "parameters": "QAPLIB tai256c, n=256",
+        "source": "https://qaplib.mgi.polymtl.ca/",
+        "ai_provenance": "not reported",
+        "evidence_state": "QAPLIB reports this feasible value; archived witness independently scored"
+      },
+      "best_reproduced": {
+        "value": "44759294",
+        "program": "human.py",
+        "witness": "data/tai256c.sln",
+        "parameters": "QAPLIB tai256c, n=256",
+        "verification": "Exact integer recomputation over 65,536 terms; independently reproduced during implementation intake.",
+        "checked_at": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      },
+      "other_parameters": []
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T027-C01": {
+      "objective": 98685678,
+      "objective_value": 98685678,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.4535541013357582
+    }
+  }
+}

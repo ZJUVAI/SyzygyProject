@@ -1,0 +1,59 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T047",
+    "config_id": "T047-C01",
+    "validity": 1.0,
+    "combined_score": 0.6752136752136753,
+    "objective": 234,
+    "verification_status": "exact",
+    "generation_time": 7.646617114543915,
+    "verification_time": 2.352769959717989,
+    "objective_value": 234,
+    "details": {
+      "N": 6166,
+      "basis_size": 234,
+      "covered_distances": 6166,
+      "pair_checks_until_full_coverage": 23701,
+      "ambient_group": "integers_under_subtraction; differences larger than N are allowed",
+      "claimed_objective_ignored": true,
+      "strict_full_interval_check": true
+    },
+    "eval_time": 11.02531761303544,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded randomized greedy set cover over integer differences; each step samples candidate marks and includes an anchor-plus-smallest-missing-distance point to guarantee progress",
+    "configuration_id": "T047-C01",
+    "seed": 0,
+    "restart_limit": 6,
+    "random_candidates_per_step": 32,
+    "max_additions_per_restart": 320,
+    "completed_restarts": 6,
+    "total_additions": 1434,
+    "wall_clock_cutoff_seconds": null,
+    "comparison_data_read": false,
+    "fallback": "all marks 0..6166 if no restart completed"
+  },
+  "solution_sha256": "25908723a6d38579333c2c84f8d3af4a65a7105371073e4cc4398e10ab38da7b",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T047 tasks/t047/best/T047-C01/solution.json --config T047-C01"
+}

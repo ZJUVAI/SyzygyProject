@@ -1,0 +1,77 @@
+{
+  "task_id": "T025",
+  "configuration_id": "T025-C01",
+  "snapshot_date": "2026-11-06",
+  "best_human": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "source": "Calderbank and Fishburn, Maximal three-independent subsets of {0,1,2}^n, Designs, Codes and Cryptography 4 (1994), 203-211; reproduced and described by Edel and Bierbrauer (2001).",
+    "source_url": "https://doi.org/10.1007/BF01388452",
+    "construction_source": "Yves Edel and Jürgen Bierbrauer, Large caps in small spaces, Designs, Codes and Cryptography 23 (2001), 197-212, Table 2 and Theorem 5.",
+    "construction_source_url": "https://doi.org/10.1023/A:1011216716700",
+    "date_checked": "2026-11-06",
+    "evidence_state": "Published human construction. The same-parameter points were rebuilt from the authors' public projective matrix and checked exactly.",
+    "ai_provenance": "AI downloaded and parsed the public matrix page; no claim is made about who first found the individual matrix."
+  },
+  "best_public": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+    "witness_url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+    "evidence_state": "The page gives the 8 by 248 check matrix of a projective cap. Its last coordinate is 1 in 236 columns; dropping that coordinate gives the affine witness. The construction is also described in Edel and Bierbrauer (2001), Theorem 5.",
+    "date_checked": "2026-11-06",
+    "origin_type": "Published construction; Calderbank and Fishburn are credited for the first 236-cap."
+  },
+  "best_reproduced": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "witness": "data/human_witness.json",
+    "source_matrix": "data/edel_bierbrauer_248_projective_matrix.txt",
+    "source_matrix_sha256": "0e3ad612ca8ee9259290f4748af505cf6184c2107e77859d3ae6117fe24545eb",
+    "witness_sha256": "40e588a2a8b17cacb2443a60bd9cfd1c94ded78fdfdde13adee4d74af59c9159",
+    "verification_status": "exact",
+    "verification_method": "Rebuilt all columns whose eighth coordinate is 1, dropped that coordinate, then checked every distinct point pair with exact arithmetic modulo 3. No pair has a third point in the set.",
+    "date_reproduced": "2026-11-06"
+  },
+  "highest_reported": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "source": "Edel and Bierbrauer (2001), Table 2 and Theorem 5; they credit Calderbank and Fishburn (1994) with the original construction.",
+    "url": "https://doi.org/10.1023/A:1011216716700",
+    "evidence_state": "Same-parameter construction reproduced from the authors' public matrix."
+  },
+  "unmatched_parameter_records": [],
+  "bounds": {
+    "lower_bound": 236,
+    "lower_bound_url": "https://doi.org/10.1007/BF01388452",
+    "upper_bound": 288,
+    "upper_bound_url": "https://arxiv.org/abs/2206.09804",
+    "upper_bound_reason": "Thackeray proves that no 289-cap exists in AG(7,3).",
+    "status": "open interval [236, 288]"
+  },
+  "survey_scope_note": "Checked Edel and Bierbrauer's primary construction and matrix page, Calderbank and Fishburn's publication record, Thackeray's dimension-seven upper-bound paper, and current cap-set record pages on 2026-11-06. This is not a complete literature survey.",
+  "ai_assisted_records": [],
+  "source_unattributed_records": [],
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T025-C01": {
+      "objective": 128,
+      "objective_value": 128,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5423728813559322
+    }
+  }
+}

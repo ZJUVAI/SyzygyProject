@@ -1,0 +1,20 @@
+{
+  "task_id": "T078",
+  "config_id": "T078-C01",
+  "seed": 0,
+  "program": "baseline.py",
+  "algorithm": "seeded 32-trial selection and exact determinant ranking of scaled A10, D10, E8+A2, and 4I forms",
+  "budget": {
+    "fixed_trials": 32,
+    "generation_limit_seconds": 300,
+    "verification_limit_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "actual_generation_seconds": 0.00024999678134918213,
+  "python": "3.13.12",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "objective": 3072,
+  "verification_status": "exact",
+  "replay": "MATHBENCH_CONFIG_ID=T078-C01 MATHBENCH_SEED=0 .venv/bin/python -c \"from tasks.t078.baseline import run_code; print(run_code())\""
+}

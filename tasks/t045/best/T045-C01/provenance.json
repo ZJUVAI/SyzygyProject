@@ -1,0 +1,56 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "evolution.py",
+  "generation_record": {
+    "task_id": "T045",
+    "config_id": "T045-C01",
+    "validity": 1.0,
+    "combined_score": 0.6710615418876603,
+    "objective": 220029,
+    "verification_status": "exact",
+    "generation_time": 1.9263078682124615,
+    "verification_time": 0.5170565247535706,
+    "objective_value": 220029,
+    "details": {
+      "graph": "gd96a",
+      "vertices": 1096,
+      "edges_checked": 1676,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 2.4821836724877357,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "randomized RCM incumbent and simulated annealing with vertex-swap neighborhood",
+    "seed": 0,
+    "iterations_requested": 100000,
+    "iterations_run": 100000,
+    "accepted_moves": 55653,
+    "objective_recomputed": 220029,
+    "generation_seconds": 1.2013510800898075,
+    "budget": {
+      "fixed_iteration_limit": 100000,
+      "runner_generation_seconds": 300
+    }
+  },
+  "solution_sha256": "ce15d574afb661897d81eeb5d5f9141c5dcf494e37a1daa8a927a74d13ccbd39",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T045 tasks/t045/best/T045-C01/solution.json --config T045-C01"
+}

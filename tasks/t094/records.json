@@ -1,0 +1,79 @@
+{
+  "task_id": "T094",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T094-C01": {
+      "id": "T094-C01",
+      "parameters": {
+        "vertices": 120,
+        "polygon": "regular convex 120-gon, vertices in counterclockwise cyclic order",
+        "construction": "straight-line triangulation using polygon vertices only",
+        "objective": "minimize over triangulations the maximum, over distinct vertex pairs, of shortest-path length divided by Euclidean chord length",
+        "distance": "Euclidean chord length"
+      },
+      "best_human": {
+        "value": 1.449476373154,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": 120
+        },
+        "url": "https://www.cs.ubc.ca/labs/algorithms/tpsg/dilation.html",
+        "source_location": "6-fan construction for n divisible by 6",
+        "provenance": "The published 6-fan rule was rebuilt for n=120. The full edge set was checked, and its dilation was recomputed with rational interval bounds.",
+        "ai_provenance": "Classical human construction; no AI provenance stated by the source.",
+        "evidence_state": "same-parameter witness and certified score reproduced; score is the interval upper endpoint rounded upward"
+      },
+      "best_public": {
+        "value": 1.4482,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": "any regular polygon, including n=120"
+        },
+        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Theorem: dilation of vertices of any regular polygon is less than 1.4482",
+        "provenance": "Published universal upper bound on the optimum. The theorem's specific n=120 triangulation is not reconstructed here.",
+        "ai_provenance": "Human-authored 2019 paper.",
+        "evidence_state": "reported theorem bound; witness not locally reproduced"
+      },
+      "best_reproduced": {
+        "value": "481669373744614531460135/332305777911042658732591",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "vertices": 120
+        },
+        "witness_file": "data/reference/6fan_120.json",
+        "provenance": "Task-local rebuild of the UBC 6-fan rule; certified with rational chord and path intervals.",
+        "ai_provenance": "Benchmark reconstruction of a published human method.",
+        "actual_value": "481669373744614531460135/332305777911042658732591",
+        "evidence_state": "valid triangulation; objective enclosed by the interval in sota.json",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 1.449476373154,
+        "parameters": {
+          "vertices": 120
+        },
+        "witness_file": "data/reference/6fan_120.json",
+        "provenance": "Rebuilt UBC 6-fan construction; upward-rounded certified upper endpoint."
+      },
+      "highest_reported": {
+        "value": 1.4482,
+        "metric": "maximum shortest-path length divided by Euclidean chord length",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Universal regular-polygon upper-bound theorem",
+        "reproduction_status": "theorem bound reported; the specific 120-gon witness was not reconstructed"
+      }
+    }
+  },
+  "initial_results": {
+    "T094-C01": {
+      "objective": "2931818210481793092388544/1989043790736546673845383",
+      "objective_value": "2931818210481793092388544/1989043790736546673845383",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.9833733788588176
+    }
+  }
+}

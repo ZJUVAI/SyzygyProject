@@ -1,0 +1,32 @@
+{
+  "task_id": "T032",
+  "name": "Zarankiewicz number z(14,19;3,3)",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T032-C01",
+      "parameters": {
+        "rows": 14,
+        "columns": 19,
+        "forbidden_submatrix": [
+          3,
+          3
+        ]
+      },
+      "direction": "maximize",
+      "human_reference": 126
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "数学模型": "固定14×19二元矩阵，禁止全1的3×3子矩阵，最大化1的数量。此约束区别于一般图无四环。",
+      "人类方法来源": "Saurabh2026 v1附录矩阵126已逐项核对。原文明确传统kicked-greedy，无语言模型或学习模块；NOVA自主选择单元、运行和整理。未声称人工手工发现，也未重跑原随机搜索。",
+      "独立验算": "任务检查364个行三元组，主代理检查969个列三元组。最初搜索丢失较好构造，原代理修复保留全局最佳并加回归；重跑五程序及完整控制通过，传统和演化117。",
+      "开放状态与限制": "主来源表1报告126–135。相邻单元的2026精确结果不适用于本单元。后续搜索未发现闭合证明，并非穷尽文献。"
+    }
+  }
+}

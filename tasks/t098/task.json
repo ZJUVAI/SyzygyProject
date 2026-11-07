@@ -1,0 +1,34 @@
+{
+  "task_id": "T098",
+  "name": "Minimum side of a primitive simple perfect squared square of order 38",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T098-C01",
+      "parameters": {
+        "order": 38,
+        "object": "axis-aligned tiling of an integer-sided square by 38 smaller squares",
+        "perfect": "all 38 positive integer square side lengths are distinct",
+        "simple": "no proper rectangle is tiled by a subset of at least two component squares",
+        "primitive": "greatest common divisor of the 38 square side lengths is 1",
+        "objective": "minimum outer square side length over all valid tilings"
+      },
+      "direction": "minimize",
+      "human_reference": 352
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "38个互异正整数边长正方形组成原始简单完美正方形；最大公因子1；排除含至少两块的真子矩形。最小化外正方形边长，不限制排列类型。",
+      "source": "Williams2013的38阶352构造，squaring.net固定Bouwkamp文件SHA256 ec1858af8249dc4aba58e116f87646f31e3c240f1efdbcf030c72b4b603fcd5b。OEIS A129947明确将38至59阶数值称为上界；目录不完整，没有352匹配下界。",
+      "human": "Sol亲自运行human.py从历史Bouwkamp重建38块，独立复算外边352及面积123904。历史4920仅文献报告，未声称复现。",
+      "independent": "Sol独立用竖直截面检查整区覆盖，再用水平长度和切口检查所有候选真子矩形。与正式包含面积位集检查不同。人类352和自有4755均通过；自有面积22610025。",
+      "seed": "起点为本地离线图枚举独立发现的4755布局，未复制352参考。固定见证可精确重放。离线枚举使用按时间截断的前缀，原前缀未保存，因此不能保证另一机器重复发现相同布局；该限制与源码和命令存入元数据。传统搜索实际生成不同边长候选，未改善4755。",
+      "admission": "五程序及完整返回值的分数篡改不变性、破坏样例、重放、冷导出和全部失败控制通过。"
+    }
+  }
+}

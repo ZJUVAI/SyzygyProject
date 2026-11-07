@@ -1,0 +1,22 @@
+{
+  "task_id": "T094",
+  "config_id": "T094-C01",
+  "seed": 0,
+  "generation_seconds": 0.5560106001794338,
+  "verification_seconds": 6.712970457971096,
+  "python": "3.13.12",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+  "objective_upper_bound": "988771049923483424867388/666438216650371520024507",
+  "objective_interval": [
+    "2966313149770450274602155/1999314649951114560073522",
+    "988771049923483424867388/666438216650371520024507"
+  ],
+  "search_metadata": {
+    "algorithm": "uniform recursive split triangulations; retain the best floating feedback score",
+    "trials": 6,
+    "seed": 0,
+    "reference_data_read": false,
+    "feedback_is_certified": false
+  },
+  "command": ".venv/bin/python -c \"from tasks.t094.baseline import run_code; print(run_code())\""
+}

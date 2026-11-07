@@ -1,0 +1,71 @@
+{
+  "task_id": "T026",
+  "configuration_id": "T026-C01",
+  "snapshot_date": "2026-11-06",
+  "best_human": {
+    "value": 536,
+    "parameters": {
+      "colors": 6
+    },
+    "source": "Fredricksen and Sweet (2000), Constructions, symmetric partition of [1,536] into six sum-free sets.",
+    "source_url": "https://doi.org/10.37236/1510",
+    "source_pdf": "data/fredricksen_sweet_2000.pdf",
+    "source_pdf_sha256": "ae8541c564efd65785a0e1d2c778108d58fec4c060707d7c277dd7f3eecad259",
+    "witness": "data/fredricksen_sweet_536_halfsets.json",
+    "witness_program": "human.py",
+    "date_checked": "2026-11-06",
+    "evidence_state": "Same-parameter published human construction rebuilt from the paper's explicit set representatives and checked exactly."
+  },
+  "best_public": {
+    "value": 537,
+    "parameters": {
+      "colors": 6
+    },
+    "source": "Chen, Zhu, and Long, A new lower bound for the sixth Schur number: S(6) >= 537, arXiv:2610.31362v1.",
+    "source_url": "https://arxiv.org/abs/2610.31362v1",
+    "source_date": "2026-10-22",
+    "repository_url": "https://github.com/jeffchen006/Schur-Number-6",
+    "repository_commit": "92a9d5f1336a5a064b2bfe6597d967f59191e365",
+    "witness": "data/chen_zhu_long_537_certificate.col",
+    "witness_sha256": "5f950ad88a5437108a0c6ab4b9d40cc2832a43dd474b5c4b269e02ac81258315",
+    "date_checked": "2026-11-06",
+    "origin_type": "search-derived published certificate",
+    "ai_provenance": "undisclosed; the source does not identify AI or LLM involvement",
+    "evidence_state": "Pinned certificate rechecked by the task checker. The authors do not claim S(6)=537 or impossibility at 538."
+  },
+  "best_reproduced": {
+    "value": 537,
+    "parameters": {
+      "colors": 6
+    },
+    "program": "reference.py",
+    "witness": "data/chen_zhu_long_537_certificate.col",
+    "verification_status": "exact",
+    "date_reproduced": "2026-11-06",
+    "ai_provenance": "undisclosed; the historical human baseline remains 536"
+  },
+  "ai_assisted_records": [],
+  "source_unattributed_records": [
+    {
+      "value": 537,
+      "parameters": {
+        "colors": 6
+      },
+      "witness": "data/chen_zhu_long_537_certificate.col",
+      "source_url": "https://arxiv.org/abs/2610.31362v1",
+      "note": "The source credits a search but does not disclose whether AI tools were involved."
+    }
+  ],
+  "unmatched_parameter_records": [],
+  "survey_scope_note": "Checked the 2000 primary paper and the 2026 arXiv v1 plus its pinned public repository certificate on 2026-11-06. This is a source check, not a complete literature survey.",
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T026-C01": {
+      "objective": 4,
+      "objective_value": 4,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.007462686567164179
+    }
+  }
+}

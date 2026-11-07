@@ -1,0 +1,59 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T030",
+    "config_id": "T030-C01",
+    "validity": 1.0,
+    "combined_score": 0.7610619469026548,
+    "objective": 113,
+    "verification_status": "exact",
+    "generation_time": 1.5671168193221092,
+    "verification_time": 0.6656877994537354,
+    "objective_value": 113,
+    "details": {
+      "instance": "DSJC1000.5",
+      "vertices": 1000,
+      "edges_checked": 249826,
+      "distinct_colors_recomputed": 113,
+      "claimed_objective_ignored": true,
+      "claimed_score_ignored": true,
+      "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+    },
+    "eval_time": 2.2357003912329674,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "multi-start DSATUR greedy coloring with seeded random tie breaks",
+    "configuration_id": "T030-C01",
+    "seed": 0,
+    "iterations": 8,
+    "iteration_limit": 8,
+    "wall_clock_cutoff_seconds": null,
+    "reference_data_read": false,
+    "budget": {
+      "iteration_limit": 8,
+      "wall_clock_cutoff_seconds": null
+    }
+  },
+  "solution_sha256": "01de251b773ece1105dc4aca5b50fedbcca447cf53e60874c0f9b6d0872f8ba8",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T030 tasks/t030/best/T030-C01/solution.json --config T030-C01"
+}

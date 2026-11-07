@@ -1,0 +1,90 @@
+{
+  "task_id": "T074",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T074-C01": {
+      "parameters": {
+        "point_count": 12,
+        "coordinate_domain": "unbounded rational coordinates in the plane",
+        "container": "convex hull of the selected points",
+        "objective": "maximize minimum_triangle_area / convex_hull_area"
+      },
+      "best_human": {
+        "value": "2/51",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "source": "Result credited to David Cantrell, June 2007, by the current Heilbronn archive.",
+        "source_url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "date_checked": "2026-11-06",
+        "provenance": "The archive says later coordinate material was supplied by an external contributor and re-verified; it refers to a 2007 notebook received September 2026. The identity and AI provenance of that later coordinate contributor are not specified. Our rational points are a separate documented reconstruction.",
+        "evidence_state": "The archive's decimal JSON is saved. The local affine and rational reconstruction is exact-checked at 2/51.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "origin_type": "historical reported record with later coordinate reconstruction"
+      },
+      "best_public": {
+        "value": "2/51",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "source": "Current Heilbronn archive, Convex n=12 record.",
+        "source_url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "date_checked": "2026-11-06",
+        "provenance": "The value is credited to Cantrell in 2007. Later coordinate recovery is credited separately by the archive to an external contributor.",
+        "evidence_state": "The exact ratio is reproduced from the locally rationalized witness. No n=12 optimality proof was found in the checked sources.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4"
+      },
+      "best_reproduced": {
+        "value": "2/51",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "All 220 exact rational determinants are nonzero; minimum area is 1/4; exact hull shoelace area is 51/8; ratio is 2/51.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "origin_type": "local rationalization of archived record coordinates",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": "2/51",
+        "witness_program": "human.py",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "evidence_state": "Human replay reconstructs from the archived source JSON and passes exact validation."
+      },
+      "highest_reported": {
+        "value": "2/51",
+        "source": "Current Heilbronn archive's Convex n=12 record page.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "reproduction_status": "The archive reports 2/51 and current record status. The construction is exactly reproduced locally; no optimality proof for n=12 was found."
+      },
+      "optimality_status": {
+        "status": "open in the sources checked",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The current archive lists 2/51 as the n=12 record. Its cited machine-checked free-convex optimality results cover n=3 through n=8.",
+        "limitations": "No proof that 2/51 is globally maximal for n=12 was found. Rational configurations have the same supremum as real configurations by density, but this does not give an optimality proof."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T074-C01": {
+      "objective": "1/220",
+      "objective_value": "1/220",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.1159090909090909
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "task_id": "T070",
+  "configurations": {
+    "T070-C01": {
+      "program": "reference.py",
+      "reproduced_value": 27,
+      "public_value": 27,
+      "highest_reported": {
+        "value": 27,
+        "source": "Ed Pegg Jr, Mrs Perkins's Quilt Update, July 2017, row for outer size 1000 in MrsPerkinssQuilts.txt; archived from the squaring.net downloads page.",
+        "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "reproduction_status": "The source row's 27 integer side lengths are decoded by the lowest-leftmost skyline rule. The resulting 27 squares exactly tile the 1000 square and have side gcd 1. This is a reported construction, not a proof of minimum order."
+      },
+      "best_human": {
+        "value": 27,
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "source": "Ed Pegg Jr, July 2017 update to Mrs Perkins's quilts; source file row 1000 gives 27 squares and their side lengths.",
+        "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical and computer-assisted quilt search, credited by the source to Ed Pegg Jr. The page discusses computer programs and hand analysis; it does not discuss generative-AI use.",
+        "evidence_state": "The exact source row is archived. The skyline decoder reconstructs placements, and the checker verifies exact area, no overlap, complete coverage, and side gcd 1.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee"
+      },
+      "best_public": {
+        "value": 27,
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "source": "Pegg's July 2017 data row as archived from the primary squaring.net download.",
+        "url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional computer-assisted mathematical construction. No generative-AI contribution is stated by the source.",
+        "evidence_state": "The 27-piece construction is reproduced from its side-length row. Its minimum status at outer side 1000 remains unproved.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee"
+      },
+      "best_reproduced": {
+        "value": 27,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Check integer coordinates, bounds, side lengths and gcd. A 1000-bit occupancy mask for every integer x-column detects overlap and confirms full coverage; area is also summed exactly.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "origin_type": "published traditional computer-assisted dissection reconstructed from its size row"
+      },
+      "frozen_human_baseline": {
+        "value": 27,
+        "witness_program": "human.py",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "evidence_state": "Same-parameter 1000-square witness, reconstructed from the published 27-side row and exactly verified."
+      },
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": 27,
+        "note": "H is the reproduced 27-square human construction."
+      },
+      "optimality_status": {
+        "status": "open; 27 squares are a feasible construction, not a proved minimum",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The source page says most listed results past order 18 have not been proved best possible. Ed Wynn's exhaustive generation covers order at most 18. The page lists OEIS A005670 only for outer sizes 1 through 120.",
+        "limitations": "The checked sources do not prove that the 1000 square cannot be dissected into fewer than 27 coprime integer squares. Primitive means no sub-quilts in the source terminology; this task does not impose that restriction."
+      },
+      "source_pins": {
+        "primary_problem_page": {
+          "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+          "date_checked": "2026-11-06",
+          "relevant_sections": "Definition of Mrs Perkins's quilts; Best Known, Not Best Possible; July 2017 update by Ed Pegg Jr"
+        },
+        "published_data": {
+          "url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+          "zip_sha256": "ea43c7728ada8bec7fe93d4ffc3dfa88f3b37f0b6be9a36e1e8ea1b1b64bb98a",
+          "text_sha256": "ec6b0f9b21eda14648de00317371cf6f07f456c72fab235fa9ecaaffe798c2e7",
+          "row_number": 1000,
+          "saved_row_sha256": "011cbfe1a1933cf20ba51f78f4c721ca447636bc4e52d8ea1255b7cb92a5e880"
+        },
+        "exhaustive_low_order_source": {
+          "version": "arXiv:1308.5420v2",
+          "url": "https://arxiv.org/abs/1308.5420",
+          "scope": "Exhaustive generation for dissection order at most 18"
+        }
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T070",
+          "config_id": "T070-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 27,
+          "verification_status": "exact",
+          "generation_time": 0.5442399978637695,
+          "verification_time": 0.4991121403872967,
+          "objective_value": 27,
+          "details": {
+            "square_count": 27,
+            "outer_side": 1000,
+            "total_tile_area": 1000000,
+            "covered_area": 1000000,
+            "tile_side_gcd": 1,
+            "integer_columns_checked": 1000,
+            "claimed_objective_ignored": true,
+            "strict": true
+          },
+          "eval_time": 1.054809007793665,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "square_count": 27,
+          "total_area": 1000000,
+          "gcd": 1,
+          "method": "independent pairwise exact rectangle separation plus full area"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

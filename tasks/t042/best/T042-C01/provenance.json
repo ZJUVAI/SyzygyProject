@@ -1,0 +1,57 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-06",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T042",
+    "config_id": "T042-C01",
+    "validity": 1.0,
+    "combined_score": 1.09375,
+    "objective": 35,
+    "verification_status": "exact",
+    "generation_time": 0.8984684497117996,
+    "verification_time": 2.4488696083426476,
+    "objective_value": 35,
+    "details": {
+      "N": 212,
+      "selected_size": 35,
+      "midpoint_pairs_checked": 595,
+      "claimed_score_ignored": true,
+      "strict_full_domain_check": true
+    },
+    "eval_time": 3.358978897333145,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "seeded randomized greedy insertion with exact AP-triple incidence checks",
+    "configuration_id": "T042-C01",
+    "seed": 0,
+    "restarts": 48,
+    "restart_limit": 48,
+    "wall_clock_cutoff_seconds": null,
+    "comparison_data_read": false,
+    "budget": {
+      "restart_limit": 48,
+      "wall_clock_cutoff_seconds": null
+    }
+  },
+  "solution_sha256": "bfc37724ed52517c1af6db29e36b4f1e6d109ea41837581f3e3f9a214c921d82",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T042 tasks/t042/best/T042-C01/solution.json --config T042-C01"
+}

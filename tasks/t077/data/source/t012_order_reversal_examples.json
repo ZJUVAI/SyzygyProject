@@ -1,0 +1,47 @@
+{
+  "description": "Two finite integer sets used to demonstrate that the T012 normalized score and T077 raw-log score rank candidates in opposite orders.",
+  "A": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    12,
+    14
+  ],
+  "B": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    11,
+    12,
+    14,
+    1000,
+    1002,
+    1003,
+    1004,
+    1007,
+    1011,
+    1012,
+    1014
+  ],
+  "scores": {
+    "A": {
+      "n": 8,
+      "sumset_size": 26,
+      "difference_set_size": 25,
+      "T012": "1.03442121562599810782675435561",
+      "T077": "0.987962077643930544247803739894"
+    },
+    "B": {
+      "n": 16,
+      "sumset_size": 78,
+      "difference_set_size": 75,
+      "T012": "1.02538722804490589754688935681",
+      "T077": "0.990997628091872547144337913424"
+    }
+  }
+}

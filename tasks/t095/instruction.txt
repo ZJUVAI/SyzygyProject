@@ -1,0 +1,15 @@
+Partition the convex hull of the 500 points in the pinned instance
+uniform-0000500-1 into empty convex polygons. Use only straight edges
+between input points. Every input point must be a graph vertex. Polygon
+interiors must be disjoint, and no input point may lie in a polygon interior.
+The union of the polygons must equal the convex hull.
+
+Minimize the number of bounded faces. Return a JSON object with an edges
+array. Each edge is {"i": u, "j": v}, where u and v are point ids from the
+fixed input. Do not repeat edges or use self-loops.
+
+The checker reads the pinned point coordinates, verifies exact segment
+intersections, connectivity, all vertices, convex-hull boundary coverage,
+simple convex empty faces, and exact area coverage. It computes the face count
+from the verified planar embedding. Ignore any claimed score. Do not read
+human or reference solution files.

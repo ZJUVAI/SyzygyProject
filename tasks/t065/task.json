@@ -1,0 +1,62 @@
+{
+  "task_id": "T065",
+  "name": "Maximum unit-distance pairs among 100 planar points",
+  "acceptance_status": "accepted_by_sol",
+  "category": "discrete_geometry",
+  "definition": "Find 100 distinct points in the Euclidean plane that maximize the number of unordered pairs at distance exactly one.",
+  "solution_format": "An object with a primitive irreducible minimal_polynomial for a real algebraic number alpha, a rational isolating_interval selecting one real root, and 100 points. Each point has x and y arrays of rational polynomial coefficients in ascending powers of alpha.",
+  "objective": {
+    "name": "unit_distance_pairs",
+    "unit": "unordered point pairs",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Exactly 100 points are supplied.",
+    "All points are distinct in the selected real embedding.",
+    "Every coordinate is a polynomial in one common real algebraic number alpha over Q.",
+    "A pair counts exactly when the squared Euclidean distance is exactly 1 in the selected real embedding.",
+    "Every unordered point pair is checked with exact arithmetic; no floating-point tolerance is used."
+  ],
+  "configurations": [
+    {
+      "id": "T065-C01",
+      "parameters": {
+        "point_count": 100,
+        "ambient_space": "Euclidean plane R^2",
+        "objective": "unit_distance_pairs",
+        "coordinate_domain": "real algebraic coordinates in one common number field"
+      },
+      "direction": "maximize",
+      "human_reference": 261
+    }
+  ],
+  "sources": [
+    "https://arxiv.org/html/2406.15317v3",
+    "https://arxiv.org/html/2412.11914v2",
+    "https://codeberg.org/zsamboki/dbs-udg/src/commit/3202dade2cd02b712c182368789a108db02e82c8/README.md",
+    "https://arxiv.org/html/2606.29415v2",
+    "https://eventcompute.com/en/challenges/unit-distances/"
+  ],
+  "verification": "The checker proves the minimal polynomial irreducible over Q, uses a rational interval with exactly one real root, reduces coordinate polynomials modulo that polynomial, and checks all 4,950 squared distances for exact equality to 1.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定100个互异平面点，最大化精确距离1的无序点对。任意共同实代数域表示不限制Moser格，单位距离模式是有理半代数系统，实可行模式有代数实可行解，有限坐标有共同本原元。",
+      "primary_source": "Sol亲自读取Engel等2406.15317v3 Table2 n100行439/22同构类、Definition2.2中1与omega1三角格基及Section6.1 AI训练仅为未来方向。公开439的完整Figshare见证未取到，严格标未复现；不把弱261称文献最强纪录。原作者仓库固定3202dade2cd02b712c182368789a108db02e82c8。",
+      "human_reconstruction": "历史传统三角格10×10，点(i+j/2,sqrt3*j/2)，同参100点；三类单位方向90+90+81=261，H和reference冻结261。坐标经alpha=sqrt3+sqrt11编码，alpha³−20alpha=16sqrt3。",
+      "independent_math": "正式checker逐对计算共同代数域中平方距离余数。Sol另把保存的三角格坐标还原Q(sqrt3)，直接展开有理和sqrt3系数，逐对核对4950对；再对原整数(i,j)差以a²+ab+b²=1单独复算261。起点纯有理点距离2给0，搜索因子块给261。该额外量审计只限保存的这两个构造族，正式checker仍支持一般实代数域。",
+      "open_status": "Alexeev–Mixon–Parshall2412.11914v2精确范围仅至21；2026-10所查同参综述仍报告439，未找到n100匹配最优性证明。渐近或有理平面结果不自动适用有限实平面100点。",
+      "controls": "初始0、传统/演化/人类/固定参考261。五程序、重复点破坏、完整声明不变、严格回放、冷导出、异常/非有限/超时均通过，任务及共享检查12项通过。通用construction.py只包含编码/格公式和公开参数，没有读取或导入human/reference资产。",
+      "limits": "439仍是未复现公开报告，不能以比值超过1声称超过439。没有重跑GPU大规模搜索，没有证明261或439最优。"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "task_id": "T090",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T090-C01": {
+      "id": "T090-C01",
+      "parameters": {
+        "length": 64,
+        "alphabet": [
+          -1,
+          1
+        ],
+        "boundary": "periodic"
+      },
+      "best_human": {
+        "value": 224,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 64,
+          "boundary": "periodic"
+        },
+        "url": "https://arxiv.org/abs/cond-mat/9707104",
+        "source_location": "Mertens and Bessenrodt, §4.2, Table 4, N=64",
+        "provenance": "Numerical-search low-energy configuration, with ΔE=14 and E=224. The source marks ground-state status '?' and does not claim a proof.",
+        "ai_provenance": "The cited 1997 work predates current generative AI systems.",
+        "evidence_state": "reported score; exact sequence witness not recovered"
+      },
+      "best_public": {
+        "value": 224,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 64,
+          "boundary": "periodic"
+        },
+        "url": "https://arxiv.org/abs/cond-mat/9707104",
+        "source_location": "§4.2 Table 4, length 64 row; ΔE=14, ground state '?'",
+        "provenance": "Best fixed-length periodic energy found in checked sources; the article labels it a numerical low-energy configuration, not a proven ground state.",
+        "ai_provenance": "not applicable to the 1997 source",
+        "evidence_state": "reported value, no witness recovered, optimality open in source"
+      },
+      "best_reproduced": {
+        "value": 240,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 64,
+          "boundary": "periodic"
+        },
+        "witness_file": "data/reference/tyler_loftsson_64.json",
+        "witness_sha256": "d8ae678361582e011c5fbfff47b73f3ae232be9ee5b5107a67628ce4e9b935ad",
+        "provenance": "NASA Table 2 hex sequence in Tyler and Loftsson's 1985 report, decoded most-significant-bit first with 1 mapped to +1 and 0 mapped to -1. Footnote ZZ cites J. Watkins, personal communication, June 1985.",
+        "ai_provenance": "not applicable to the 1985 source",
+        "actual_value": 240,
+        "evidence_state": "all periodic correlations recomputed exactly; energy 240 and peak sidelobe 4",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 240,
+        "parameters": {
+          "length": 64,
+          "boundary": "periodic"
+        },
+        "witness_file": "data/source/tyler_loftsson_64.json",
+        "witness_sha256": "83722e5c571f39196c7cec008a0b0a28d5fc4606faca3651ccc833a398afb0e1",
+        "provenance": "Exact reconstruction of the NASA report's hex sequence. The table footnote cites J. Watkins, personal communication. This is weaker than the later Mertens-Bessenrodt reported score 224."
+      },
+      "highest_reported": {
+        "value": 224,
+        "metric": "sum of squared nonzero-shift periodic autocorrelations",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/abs/cond-mat/9707104",
+        "source_location": "§4.2 Table 4, N=64, ΔE=14 (E=16ΔE=224), ground-state marker '?'",
+        "reproduction_status": "reported numerical search result; no witness recovered and no optimality proof claimed"
+      }
+    }
+  },
+  "initial_results": {
+    "T090-C01": {
+      "objective": 258048,
+      "objective_value": 258048,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.0009300595238095238
+    }
+  }
+}

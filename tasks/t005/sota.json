@@ -1,55 +1,48 @@
 {
   "task_id": "T005",
   "review_status": "passed_sol",
+  "checked_at": "2026-11-05",
   "configurations": {
     "T005-C01": {
-      "public_value": "2.635983084919",
+      "public_value": "1/27",
       "public_source": {
-        "url": "https://www.packomania.com/csqv/csqv.html",
-        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv26.txt",
-        "checked_date": "2026-11-05",
-        "table_update": "2026-10-31",
-        "attribution": "Packomania attributes the N=26 best-known value to Haowei Lin [8], via packing_records / Jonathan Viquerat's policy-based optimization.",
-        "coordinate_provenance": "Official Packomania ASCII coordinate file; 26 circles in the unit square, centered-coordinate convention."
+        "url": "https://math.tejstead.com/heilbronn/square/11/",
+        "data_url": "https://math.tejstead.com/heilbronn/square/11/points.json",
+        "title": "Heilbronn — Square, n = 11 record",
+        "credit": "Michael Goldberg, 1972",
+        "same_parameters": {
+          "n": 11,
+          "domain": "unit square"
+        },
+        "verification": "The source reports exact value 1/27 and exact-arithmetic verification of all 165 triples.",
+        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
       },
-      "reproduced_value": "658995771226364683/250000000000000000",
+      "reproduced_value": "1/27",
       "program": "sota.py",
-      "witness": "data/sota26.json",
-      "matches_public_best": false,
-      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 3385317/250000000000000000 (1.3541268e-11)",
+      "witness": "human.py",
+      "matches_public_best": true,
+      "comparison_tolerance": "0; exact rational equality",
       "limitations": [
-        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 260409/500000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
-        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
-        "The public table value is a best-known record, not a proof of optimality."
+        "The witness establishes a feasible lower bound, not global optimality.",
+        "AlphaEvolve's reported n=11 value above 0.0365 concerns a unit-area equilateral triangle, not the unit square; it has different domain parameters."
       ],
-      "checked_at": "2026-11-05",
-      "reproduction_method": {
-        "script": "reduce_sota.py",
-        "source_snapshot": "data/packomania26_source.txt",
-        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
-        "minimal_grid_decrement": "260409/500000000000000000",
-        "feasible_at_decrement": true,
-        "infeasible_at_previous_grid_decrement": true
-      },
       "verification": {
         "task_id": "T005",
-        "status": "conservative_reproduction",
+        "status": "reproduced",
         "run": {
           "task_id": "T005",
           "config_id": "T005-C01",
           "validity": 1.0,
-          "combined_score": 1.052111923576771,
-          "objective": "658995771226364683/250000000000000000",
-          "verification_status": "certified",
-          "generation_time": 0.7658373676240444,
-          "verification_time": 0.26498862355947495,
-          "objective_value": "658995771226364683/250000000000000000",
+          "combined_score": 1.0,
+          "objective": "1/27",
+          "verification_status": "exact",
+          "generation_time": 0.21497340500354767,
+          "verification_time": 0.16492857038974762,
+          "objective_value": "1/27",
           "details": {
-            "n": 26,
-            "pair_checks": 325,
-            "claimed_objective_mismatch": false
+            "triangles_checked": 165
           },
-          "eval_time": 1.0363761000335217,
+          "eval_time": 0.383570309728384,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -64,45 +57,40 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t005/data/sota26.json",
+        "witness": "tasks/t005/human.py",
         "independent_quantity": {
-          "sum_radii": "658995771226364683/250000000000000000"
+          "minimum_triangle_area": "1/27",
+          "triangles": 165
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Packomania same-parameter public coordinates; exact strict and independent sum/constraints verified. Minimum 1e-18-grid radius reduction is certified; public-value gap is retained.",
+        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
         "snapshot_date": "2026-11-05"
       }
     },
     "T005-C02": {
-      "public_value": "2.939572771205",
+      "public_value": "unique real root of 64*A^3 + 80*A^2 + 28*A - 1 = 0 (0.0325988586918196982187640066235154080492419884...)",
       "public_source": {
-        "url": "https://www.packomania.com/csqv/csqv.html",
-        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv32.txt",
-        "checked_date": "2026-11-05",
-        "table_update": "2026-10-31",
-        "attribution": "Packomania lists reference [7], Sebastian Pokutta, for N=32; the page notes this value appeared on 25-Jul-2026. Attribution is based on the table reference, not independently established authorship of the coordinates.",
-        "coordinate_provenance": "Official Packomania ASCII coordinate file; 32 circles in the unit square, centered-coordinate convention."
+        "url": "https://math.tejstead.com/heilbronn/square/12/",
+        "data_url": "https://math.tejstead.com/heilbronn/square/12/points.json",
+        "title": "Heilbronn — Square, n = 12 record",
+        "credit": "F. Comellas and J. L. A. Yebra, December 2001",
+        "same_parameters": {
+          "n": 12,
+          "domain": "unit square"
+        },
+        "verification": "The current record page identifies the exact algebraic value from the published closed-form configuration and reports exact-arithmetic verification of all 220 triples.",
+        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
       },
-      "reproduced_value": "91861649099589859/31250000000000000",
+      "reproduced_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
       "program": "sota.py",
-      "witness": "data/sota32.json",
-      "matches_public_best": false,
-      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 566391/31250000000000000 (1.8124512e-11)",
+      "witness": "human.py",
+      "matches_public_best": true,
+      "comparison_tolerance": "absolute area difference <= 1e-30; human.py stores the published coordinates as 30-decimal rational literals, and its exact checked score differs from the public algebraic value by about 3.0001539101993535e-31",
       "limitations": [
-        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 566391/1000000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
-        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
-        "The public table value is a best-known record, not a proof of optimality."
+        "The local witness interprets the published 30-decimal coordinate literals as exact rationals; it does not encode the source's exact algebraic coordinates.",
+        "The witness establishes a feasible lower bound, not global optimality."
       ],
-      "checked_at": "2026-11-05",
-      "reproduction_method": {
-        "script": "reduce_sota.py",
-        "source_snapshot": "data/packomania32_source.txt",
-        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
-        "minimal_grid_decrement": "566391/1000000000000000000",
-        "feasible_at_decrement": true,
-        "infeasible_at_previous_grid_decrement": true
-      },
       "verification": {
         "task_id": "T005",
         "status": "conservative_reproduction",
@@ -110,18 +98,16 @@
           "task_id": "T005",
           "config_id": "T005-C02",
           "validity": 1.0,
-          "combined_score": 1.0455676876211686,
-          "objective": "91861649099589859/31250000000000000",
-          "verification_status": "certified",
-          "generation_time": 0.21531439945101738,
-          "verification_time": 0.1648130789399147,
-          "objective_value": "91861649099589859/31250000000000000",
+          "combined_score": 1.0,
+          "objective": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+          "verification_status": "exact",
+          "generation_time": 0.16483891010284424,
+          "verification_time": 0.16492298990488052,
+          "objective_value": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
           "details": {
-            "n": 32,
-            "pair_checks": 496,
-            "claimed_objective_mismatch": false
+            "triangles_checked": 220
           },
-          "eval_time": 0.383665319532156,
+          "eval_time": 0.3337561562657356,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -136,25 +122,97 @@
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t005/data/sota32.json",
+        "witness": "tasks/t005/human.py",
         "independent_quantity": {
-          "sum_radii": "91861649099589859/31250000000000000"
+          "minimum_triangle_area": "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000",
+          "triangles": 220
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Packomania same-parameter public coordinates; exact strict and independent sum/constraints verified. Minimum 1e-18-grid radius reduction is certified; public-value gap is retained.",
+        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
+        "public_value_approx": 0.0325988586918197,
+        "replay_minus_public": "-3.0001539101993535e-31",
+        "snapshot_date": "2026-11-05"
+      }
+    },
+    "T005-C03": {
+      "public_value": "7/341",
+      "public_source": {
+        "url": "https://math.tejstead.com/heilbronn/square/16/",
+        "data_url": "https://math.tejstead.com/heilbronn/square/16/points.json",
+        "title": "Heilbronn — Square, n = 16 record",
+        "credit": "Mark Beyleveld, August 2006",
+        "same_parameters": {
+          "n": 16,
+          "domain": "unit square"
+        },
+        "verification": "The source reports rational coordinates, exact value 7/341, and exact-arithmetic verification of all 560 triples.",
+        "exact_coordinate_source": "https://arxiv.org/abs/2603.11107"
+      },
+      "reproduced_value": "7/341",
+      "program": "sota.py",
+      "witness": "human.py",
+      "matches_public_best": true,
+      "comparison_tolerance": "0; exact rational equality",
+      "limitations": [
+        "The witness establishes a feasible lower bound, not global optimality."
+      ],
+      "verification": {
+        "task_id": "T005",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T005",
+          "config_id": "T005-C03",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "7/341",
+          "verification_status": "exact",
+          "generation_time": 0.16517840698361397,
+          "verification_time": 0.1673881746828556,
+          "objective_value": "7/341",
+          "details": {
+            "triangles_checked": 560
+          },
+          "eval_time": 0.33581633120775223,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t005/human.py",
+        "independent_quantity": {
+          "minimum_triangle_area": "7/341",
+          "triangles": 560
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the same-n unit-square record pages, independently recomputed all triangle areas, rejected duplicated points, and confirmed objective declarations have no effect. The n=12 rational coordinate replay is conservative with a documented 30-decimal truncation gap.",
         "snapshot_date": "2026-11-05"
       }
     }
   },
   "sol_review": {
     "T005-C01": {
-      "status": "conservative_reproduction",
+      "status": "reproduced",
       "reviewer": "Sol main agent",
       "date": "2026-11-05"
     },
     "T005-C02": {
       "status": "conservative_reproduction",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    },
+    "T005-C03": {
+      "status": "reproduced",
       "reviewer": "Sol main agent",
       "date": "2026-11-05"
     }

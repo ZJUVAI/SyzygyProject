@@ -1,0 +1,103 @@
+{
+  "task_id": "T050",
+  "name": "Maximum induced path in a hypercube",
+  "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_search",
+  "definition": "Find a longest induced path in the 9-dimensional hypercube Q9. The score is the number of edges in the path.",
+  "solution_format": "An object with vertices, an ordered list of integer labels 0 through 511, where each label encodes a 9-bit vertex.",
+  "objective": {
+    "name": "induced_path_edges",
+    "unit": "edges",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Every vertex label is an integer in [0, 512).",
+    "All listed vertices are distinct.",
+    "Every consecutive pair differs in exactly one bit.",
+    "Every nonconsecutive pair differs in at least two bits.",
+    "The objective is the number of consecutive edges, len(vertices)-1."
+  ],
+  "configurations": [
+    {
+      "id": "T050-C01",
+      "parameters": {
+        "dimension": 9,
+        "graph": "Q9",
+        "object": "induced_path",
+        "length_unit": "edges"
+      },
+      "direction": "maximize",
+      "human_reference": 190,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T050-C02",
+      "parameters": {
+        "dimension": 10,
+        "graph": "Q10",
+        "object": "induced_path",
+        "length_unit": "edges"
+      },
+      "direction": "maximize",
+      "human_reference": 191,
+      "acceptance_status": "accepted_by_sol"
+    },
+    {
+      "id": "T050-C03",
+      "parameters": {
+        "dimension": 11,
+        "graph": "Q11",
+        "object": "induced_path",
+        "length_unit": "edges"
+      },
+      "direction": "maximize",
+      "human_reference": 192,
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "sources": [
+    "https://arxiv.org/html/2607.15270v3",
+    "https://github.com/Math-AI-Caltech/Snake-in-the-Box",
+    "https://arxiv.org/html/1201.1647"
+  ],
+  "verification": "Exact integer checks on all vertices and every vertex pair; no sampling or declared score is used.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "固定Q9，最大化诱导路径的边数L，顶点数L+1；未把闭合coil或其他维数分别计成新任务。",
+      "primary_sources": "亲自读取Wynn1201.1647v1 SectionVI及完整190步列表，另读Orland等2607.15270v3（2026-09-30）§6、§8和AppendixE。主代理重新下载两篇原始HTML，逐个匹配全部190/191个转移索引，再从0逐步翻位重放，生成的191/192个顶点与保存列表完全一致。",
+      "provenance": "人类H190来自Wynn2012传统组合和置换搜索；公开191来自cube-surgery annealing。2026项目明确披露LLM协助论文、方法讨论、搜索代码和实验，未将其推断为这条具体见证的直接发现流程；未称191为已确认的非AI人类记录。",
+      "open_status": "2026v3明确9维为最小未知维数，并将192边蛇的存在列作开放问题。131个191边对称类为采样观察，未当作完备或最优证明。作者当前记录页Q9仍191，未用其他维数旧纪录。",
+      "independent_math": "逐顶点生成9个坐标翻转邻居，其在已选集合中的交集必须恰好等于路径前驱/后继；独立于正式检查器的全点对Hamming检查。额外推得保守上界：k顶点诱导路径外向边7k+2<=9(512-k)，故k<=287、L<=286；未声称这是最强文献上界。",
+      "controls": "五程序及完整控制通过，初始9、传统118、人类190、参考191、演化120。全部合法样例、闭合四环破坏、完整声明成绩不变性、严格回放、冷导出、程序错误/非有限数/超时均通过。",
+      "limits": "未重做原始大规模GPU/TPU搜索、对称类完备枚举或全局最优性证明。"
+    }
+  },
+  "configuration_expansion_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "Maximize edge count of an induced path in Q_d. Keep d=9 and add10/11. No repeated vertices or nonconsecutive cube neighbors. Coils and snakepits are different objectives.",
+      "primary_source": "Sol read Orland et al. arXiv2607.15270v3 Table1, exact optima known through dimension8, current paper constructions379 and746. The table footnote credits later750 to Echols2026a; it remains reported only in this archive. Paper discloses LLM assistance for search code. No global optimality proof for10/11 was found in checked sources.",
+      "witness_reconstruction": "Sol fetched record_snakes.csv.zip at authors commit46c765399353a588ea50444a5d6610f53102b1c2, size16721566, Git blob SHA1 7854e2592325dab85a35a8a4809314edb80f7af8. Extracted the matching rows and verified every transition against saved vertices. Certified scores379 and746.",
+      "human_method": "Wynn2012 190-edge Q9 path extended into Q10/Q11 by one endpoint move per new coordinate, giving191/192. In each added coordinate layer only the new endpoint is used, with exactly one neighbor in the preceding layer. This is a verified historical-method reconstruction and is weaker than the public record.",
+      "independent_method": "Sol ran human and reference. Separate neighbor-set enumeration over all d coordinate flips verifies precisely the path edges. Check crossing count (d-2)m+2 <= d*(2^d-m), giving upper bounds567/1125 edges. Complete score-claim invariance, bad vertices, strict replay, cold isolated generation and failure controls passed.",
+      "admission": "Five valid strict programs for all3 configs. Preserve original Q9 archives. Q11 formal public reference746; report750 remains separate."
+    },
+    "configuration_ids": [
+      "T050-C02",
+      "T050-C03"
+    ]
+  }
+}

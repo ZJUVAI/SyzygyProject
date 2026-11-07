@@ -1,0 +1,62 @@
+{
+  "primary_paper": {
+    "title": "Sums and Differences of Finite Sets",
+    "authors": [
+      "Katalin Gyarmati",
+      "François Hennecart",
+      "Imre Z. Ruzsa"
+    ],
+    "url": "https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf",
+    "date_on_manuscript": "2008-05-30",
+    "relevant_location": "Section 2, lemma preceding equation (11), definitions of s,d,q,theta; equations (13)-(15) define V(m,L), its counts, and projection weights.",
+    "finite_lemma": "For a finite nonempty U of nonnegative integers containing 0, define s=|U+U|, d=|U-U|, q=2 max(U)+1 and theta=1+log(d/s)/log(q). The lemma explicitly assumes the strict condition d<q before concluding that there are finite integer-set pairs A,B of arbitrarily large |B| with a sumset bound and a difference-over-sumset exponent theta.",
+    "why_the_strict_condition_is_used": "The strict inequality d<q is a stated hypothesis of the finite construction lemma. The checker enforces it exactly; equality is invalid.",
+    "scope": "T080 maximizes the finite exponent parameter theta over a bounded family of U. It is not the T012 or T077 one-set score, and it is not itself the asymptotic conclusion of the theorem."
+  },
+  "finite_witness": {
+    "path": "../reference/gyarmati_hennecart_ruzsa_m6_l5.json",
+    "sha256": "39cb22a35e93fdd3a2431a121f3b8fa015c0b8ce5c84ca5304cfcb1c59777f39",
+    "parameters": {
+      "m": 6,
+      "L": 5,
+      "cardinality": 462,
+      "sumset_size_s": 8008,
+      "difference_set_size_d": 39733,
+      "max_element": 555555,
+      "q": 1111111,
+      "weights": [
+        1,
+        11,
+        111,
+        1111,
+        11111,
+        111111
+      ]
+    },
+    "closed_form_counts": {
+      "cardinality": "C(11,6)=462",
+      "sumset": "C(16,6)=8008",
+      "difference_set": "sum_{k=0}^6 C(6,k)^2 C(11-k,6)=39733"
+    },
+    "strict_hypothesis": "39733 < 1111111",
+    "objective": {
+      "exact_expression": "1+ln(39733/8008)/ln(1111111)",
+      "equivalent_expression": "1+ln(39733/8008)/ln(2*555555+1)",
+      "certified_interval": [
+        "1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949",
+        "1.115060403741140735041045058838694409478537675104001271984446801146236339133304591057"
+      ]
+    }
+  },
+  "objective_distinction_examples": {
+    "path": "objective_distinction_examples.json",
+    "sha256": "629562217b2c9870bdd2d552c2440d984cda3096d572c8212ad280f9470f4d31",
+    "T012_vs_T080": "For A={0,2,3,4,7,11,12,14} and B=A union (A+1000), both satisfy T012's s>d>n check and T080's d<q check. T012 ranks A above B, but T080 ranks B above A.",
+    "T077_vs_T080": "For C=projection V(2,3) and D=projection V(18,1), both satisfy the T080 bounds. T077 ranks D above C, but T080 ranks C above D."
+  },
+  "open_status": {
+    "survey_date": "2026-11-06",
+    "evidence": "The cited lemma constructs asymptotic pairs from a finite U but does not prove that this U maximizes theta over the benchmark's bounded family. The small-set optimization for cardinality at most 11 does not settle the benchmark, which permits up to 512 elements.",
+    "limitation": "The finite score is a certificate parameter from the lemma. It is not an optimality proof for the finite search domain."
+  }
+}

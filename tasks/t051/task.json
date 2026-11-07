@@ -1,0 +1,35 @@
+{
+  "task_id": "T051",
+  "name": "Longest unrestricted sequence of discrepancy at most 3",
+  "acceptance_status": "accepted_by_sol",
+  "configurations": [
+    {
+      "id": "T051-C01",
+      "parameters": {
+        "discrepancy_cap": 3,
+        "entry_domain": [
+          -1,
+          1
+        ],
+        "constraint": "every prefix of every homogeneous arithmetic progression has absolute sum at most 3"
+      },
+      "direction": "maximize",
+      "human_reference": 130000
+    }
+  ],
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "evidence": "acceptance.json",
+    "source_review": {
+      "definition": "无乘法限制的±1序列；全部齐次等差子列的全部前缀绝对和≤3，最大化长度。C2与完全乘法C3已解结果均不属于此配置。",
+      "primary_source": "主代理亲自读取1405.3097v2 §4 Theorem11后段及表1，并读取Konev作者edp数据页的unrestricted但前127600完全乘法一节。文字明确构造130000；表1的>130000未当成额外已验证长度。",
+      "witness_provenance": "保存见证来自公开Wolfram讨论notebook的恢复数据，原作者bz2文件主代理直连403，未证明与作者压缩包字节相同。公开notebook和原论文来源分别记录，完整构造可行性可独立核验。",
+      "open_status": "原文仅证明完全乘法及乘法C3最大127645；无约束130000为下界。当前检索未找到无约束C3精确最大值；Tao无限定理排除无限序列但不确定本有限目标。",
+      "independent_math": "主代理以int64向量分片及前缀累加独立复算全部1550902个前缀，与正式Python整数逐项扫描一致；最大3。长度130000确保前缀绝对值远小于int64上限。",
+      "controls": "五程序重放初始1、传统55、演化55、人类及参考130000；四个+1破坏构造、完整声明分数不变性、严格回放、冷导出及错误/非有限数/超时全部通过。",
+      "limits": "未重跑2014 SAT发现过程或求出有限最大值。来源恢复的字节对应限制明确保留。"
+    }
+  }
+}

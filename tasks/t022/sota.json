@@ -1,0 +1,136 @@
+{
+  "task_id": "T022",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T022-C01": {
+      "parameters": {
+        "clique_size": 5,
+        "independent_set_size": 5
+      },
+      "direction": "maximize",
+      "objective": "vertex count N of a simple graph with no K5 and no independent 5-set",
+      "best_human": {
+        "value": 42,
+        "resulting_bound": "R(5,5) >= 43",
+        "date_checked": "2026-11-06",
+        "source": "Exoo 1989 establishes the 42-vertex lower bound. The specific graph6 row used here is not individually attributed in McKay’s archive.",
+        "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
+        "witness": "data/graph6.txt",
+        "evidence_state": "Exoo’s publication establishes R(5,5) >= 43. McKay’s archive row supplies the exact locally reproduced graph, but the row does not identify its individual discoverer.",
+        "origin_type": "Published mathematical construction / computational search; the archive line does not identify its individual discoverer.",
+        "ai_provenance": "AI decoded the public graph6 record and expanded it into adjacency lists; no attribution beyond the archive and cited literature is inferred."
+      },
+      "best_public": {
+        "value": 42,
+        "resulting_bound": "R(5,5) >= 43",
+        "date_checked": "2026-11-06",
+        "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
+        "evidence_state": "The archive documents 328 of the 656 catalogued 42-vertex graphs; the remaining 328 are complements. This is a published lower-bound witness, not an optimality proof.",
+        "origin_type": "Individual provenance not stated in the graph archive."
+      },
+      "best_reproduced": {
+        "value": 42,
+        "date_checked": "2026-11-06",
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "verification_method": "Trusted checker tested every possible 5-clique in the graph and every possible 5-clique in its complement; recomputed vertex count and edge count.",
+        "actual_edges": 425,
+        "claimed_scores_ignored": true
+      },
+      "unmatched_parameter_records": [],
+      "survey_scope_note": "Checked Exoo 1989, McKay public Ramsey data and archive, and Angeltveit-McKay arXiv v2/current 2026 journal record. The 42-vertex witness is the best located construction; the 46 result is a same-parameter upper bound, not a construction.",
+      "date_checked": "2026-11-06",
+      "checked_at": "2026-11-06",
+      "public_value": 42,
+      "public_source": {
+        "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
+        "title": "Brendan McKay, Ramsey graph data",
+        "claim": "The archive provides 328 catalogued (5,5,42)-graphs; their 328 complements complete the 656-graph catalog.",
+        "checked_at": "2026-11-06",
+        "attribution_note": "The first archive record is not individually attributed."
+      },
+      "reproduced_value": 42,
+      "program": "reference.py",
+      "witness": "data/human_witness.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0; exact graph6 witness and exact integer objective.",
+      "highest_reported": {
+        "value": 42,
+        "source": {
+          "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
+          "title": "McKay Ramsey graph archive",
+          "claim": "Public construction with 42 vertices, establishing R(5,5) >= 43."
+        },
+        "reproduction_status": "reproduced"
+      },
+      "same_parameter_bounds": [
+        {
+          "value": 46,
+          "meaning": "R(5,5) <= 46 (upper bound, not a construction)",
+          "authors": [
+            "Vigleik Angeltveit",
+            "Brendan D. McKay"
+          ],
+          "version": "arXiv v2, revised 2025-09-01; Journal of Graph Theory publication 2026",
+          "url": "https://arxiv.org/abs/2409.15709v2",
+          "evidence_state": "Published computer-assisted upper-bound proof; this same-parameter result does not prove the 42-vertex construction optimal."
+        }
+      ],
+      "verification": {
+        "task_id": "T022",
+        "status": "reviewed_by_sol",
+        "run": {
+          "task_id": "T022",
+          "config_id": "T022-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 42,
+          "verification_status": "exact",
+          "generation_time": 0.7370654754340649,
+          "verification_time": 0.6994385235011578,
+          "objective_value": 42,
+          "details": {
+            "vertices": 42,
+            "edges": 425,
+            "clique_size": 5,
+            "independent_set_size": 5,
+            "clique_search_exhaustive": true,
+            "complement_clique_search_exhaustive": true
+          },
+          "eval_time": 1.4447266310453415,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "vertices": 42,
+          "edges": 425,
+          "five_subsets_checked": 850668,
+          "forbidden_subsets": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "evidence": "acceptance.json",
+        "source_review": "Sol independently checked the same-parameter sources and the limits listed in PLAN.md."
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

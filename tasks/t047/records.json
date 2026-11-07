@@ -1,0 +1,112 @@
+{
+  "task_id": "T047",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T047-C01": {
+      "parameters": {
+        "N": 6166,
+        "ambient_group": "integers_under_subtraction"
+      },
+      "best_human": {
+        "value": 128,
+        "parameters": {
+          "N": 6166
+        },
+        "source": "Leech (1956), On the representation of 1,2,...,n by differences; Golay (1972), Notes on the representation of 1,2,...,n by differences. Reported in Banakh and Gavrylkiv (2017), Theorem 4.1 and Table 3, and Georgiev et al. (2025), arXiv:2511.02864v1, §6.3.",
+        "url": "https://arxiv.org/html/1702.02631",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The historical human source reports a 128-mark feasible construction. Its exact original point list was not recovered. A separately reconstructed Singer/Leech-family 128-point witness is saved and exactly verified; it is not claimed to be the identical historical construction.",
+        "ai_provenance": "The Leech and Golay sources predate modern LLM-based generative AI. No AI use is reported for this historical construction.",
+        "original_witness_recovered": false,
+        "independent_same_value_witness": "data/reference/singer_q31_leech_product_n6166_128.json",
+        "independent_same_value_witness_sha256": "e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c",
+        "origin_type": "source-reported human construction; exact original witness not recovered"
+      },
+      "best_public": {
+        "value": 128,
+        "parameters": {
+          "N": 6166
+        },
+        "source": "Leech (1956) and Golay (1972), recorded in Banakh and Gavrylkiv (2017), Theorem 4.1/Table 3; also Georgiev et al. (2025), arXiv:2511.02864v1, §6.3.",
+        "source_url": "https://arxiv.org/html/1702.02631",
+        "alphaevolve_paper_url": "https://arxiv.org/html/2511.02864v1#S6.S3",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The cited literature reports a feasible 128-mark construction. Our separately reconstructed 128-mark witness is exactly checked, but is not claimed to be the original historical list.",
+        "ai_provenance": "The Leech and Golay sources are traditional human mathematics and predate modern LLM-based generative AI. The AlphaEvolve paper separately reports an AI-assisted improvement at N=49109. AI involvement in the historical N=6166 construction is not indicated.",
+        "origin_type": "published human upper bound; exact historical witness not recovered"
+      },
+      "best_reproduced": {
+        "value": 128,
+        "parameters": {
+          "N": 6166
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Exact integer difference scan over the generated Singer/Leech-family set; verify all 6166 distances.",
+        "witness": "data/reference/singer_q31_leech_product_n6166_128.json",
+        "witness_sha256": "e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c",
+        "origin_type": "independent reconstruction, not asserted to be the source authors' original witness",
+        "review_status": "reviewed_by_sol"
+      },
+      "highest_reported": {
+        "value": 128,
+        "parameters": {
+          "N": 6166
+        },
+        "source": "Leech-Golay construction as cited by Banakh and Gavrylkiv and by Georgiev et al.",
+        "url": "https://arxiv.org/html/1702.02631",
+        "reproduction_status": "An independent Singer/Leech-family construction of the same cardinality is saved and exactly verified. The original historical witness list is not claimed to have been recovered."
+      },
+      "other_parameter_results": [
+        {
+          "value": 360,
+          "parameters": {
+            "N": 49109
+          },
+          "source": "Georgiev et al. (2025), arXiv:2511.02864v1, §6.3 and its AlphaEvolve repository notebook.",
+          "source_url": "https://arxiv.org/html/2511.02864v1#S6.S3",
+          "reported_metric": "360^2/49109 = 2.6390274695...",
+          "ai_provenance": "AlphaEvolve was given code for Singer-set construction by human researchers; the paper describes this as an AI-assisted improvement.",
+          "evidence_state": "Different N and an asymptotic-constant record; not substituted for the N=6166 record."
+        }
+      ],
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": 158,
+        "note": "H is the separately recorded 158-mark Wichmann W(38,3) frozen human baseline; 128 is the source-reported strongest human construction."
+      },
+      "optimality_status": {
+        "status": "open from checked sources; 123 <= Delta(6166) <= 128",
+        "analytic_lower_bound": "Banakh and Gavrylkiv (2017), Theorem 4.1: lim Delta(n)^2/n = inf Delta(n)^2/n >= 2 + max_{0<phi<pi} 2 sin(phi)/(phi+pi). At phi=pi/2 this is >= 2+4/(3*pi) > 80/33 because pi<22/7. Therefore 33*Delta(6166)^2 > 80*6166 = 493280. Since 122^2*33=491172<493280 and 123^2*33=499257>493280, Delta(6166)>=123.",
+        "counting_lower_bound": "The simpler pair-count bound is k(k-1)/2 >= 6166 and implies k >= 112; the analytic lower bound 123 is stronger.",
+        "upper_bound": "An exact 128-mark witness is saved and checked.",
+        "source_survey_date": "2026-11-06",
+        "limitation": "No exact value was found in the checked paper, cited classical sources, or current AlphaEvolve problem repository. This is a bounded source survey, not a proof that no later result exists."
+      },
+      "frozen_human_baseline": {
+        "value": 158,
+        "parameters": {
+          "N": 6166
+        },
+        "source": "Wichmann (1963), reconstructed as W(38,3); completeness formula and proof in Saarela and Vanhatalo (2026), Definitions 8 and 16 and Theorem 18.",
+        "url": "https://doi.org/10.1112/jlms/s1-38.1.465",
+        "additional_source": "https://doi.org/10.37236/13806",
+        "witness_program": "human.py",
+        "witness": "data/reference/wichmann_w38_s3_n6166_158.json",
+        "witness_sha256": "39bb5d5aaecf6a5ed3c38e088d18cc0759d28b40d2908d68a9ded3a3e7b9c6e4",
+        "evidence_state": "The 158-mark Wichmann construction has length 6548 and is exactly checked for every required distance 1..6166. This weaker baseline is distinct from the source-reported best human record of 128.",
+        "origin_type": "published human construction; restricted ruler is a feasible unrestricted integer difference basis"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T047-C01": {
+      "objective": 6167,
+      "objective_value": 6167,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.025620236743959787
+    }
+  }
+}

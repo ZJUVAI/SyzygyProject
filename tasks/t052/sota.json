@@ -1,0 +1,133 @@
+{
+  "task_id": "T052",
+  "configurations": {
+    "T052-C01": {
+      "program": "reference.py",
+      "reproduced_value": 1320,
+      "public_value": 1320,
+      "highest_reported": {
+        "value": 1320,
+        "source": "Smith and Montemanni, A New Table of Permutation Codes, Table 3 and §4 item 22; current-parameter literature survey checked 2026-11-06.",
+        "reproduction_status": "The published PGL(2,11) group code was independently reconstructed and all 870540 codeword pairs were checked exactly. The surveyed sources did not identify a higher (12,9) code. This is the highest located report, not a claim that all publications have been exhaustively searched."
+      },
+      "best_human": {
+        "value": 1320,
+        "parameters": {
+          "length": 12,
+          "minimum_hamming_distance": 9
+        },
+        "source": "D. H. Smith and R. Montemanni, A New Table of Permutation Codes, Designs, Codes and Cryptography 63 (2012), Table 3 and §4 item 22; DOI 10.1007/s10623-011-9551-8.",
+        "url": "https://doi.org/10.1007/s10623-011-9551-8",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional group-theoretic construction using PGL(2,11); the 2011/2012 source predates modern LLM-based generative AI and reports no AI contribution.",
+        "evidence_state": "The construction and score are fully reconstructed locally from the projective action on F_11 union {infinity}; exact all-pairs validation confirms 1320 words and minimum distance 10.",
+        "witness": "data/reference/pgl_2_11_n12_d9.json",
+        "witness_sha256": "f33140d3e4278b1ad4adcc43dbd0823c1e453ff6c97d47e6fb91e17ecb02fb06"
+      },
+      "best_public": {
+        "value": 1320,
+        "parameters": {
+          "length": 12,
+          "minimum_hamming_distance": 9
+        },
+        "source": "Smith and Montemanni, A New Table of Permutation Codes, Table 3 and §4 item 22.",
+        "url": "https://doi.org/10.1007/s10623-011-9551-8",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional PGL(2,11) construction; no generative AI contribution is reported in this pre-LLM source.",
+        "evidence_state": "The paper reports the 1320-element group orbit and internal minimum distance 10. The local witness is an independent reconstruction, not a transcription of the authors' data file.",
+        "witness": "data/reference/pgl_2_11_n12_d9.json",
+        "witness_sha256": "f33140d3e4278b1ad4adcc43dbd0823c1e453ff6c97d47e6fb91e17ecb02fb06"
+      },
+      "best_reproduced": {
+        "value": 1320,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 12,
+          "minimum_hamming_distance": 9
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Replay the saved PGL(2,11) projective actions, then recompute every pairwise Hamming distance with integer comparisons.",
+        "witness": "data/reference/pgl_2_11_n12_d9.json",
+        "witness_sha256": "f33140d3e4278b1ad4adcc43dbd0823c1e453ff6c97d47e6fb91e17ecb02fb06",
+        "origin_type": "independent reconstruction of a published group-theoretic construction"
+      },
+      "frozen_human_baseline": {
+        "value": 1320,
+        "witness_program": "human.py",
+        "witness": "data/reference/pgl_2_11_n12_d9.json",
+        "witness_sha256": "f33140d3e4278b1ad4adcc43dbd0823c1e453ff6c97d47e6fb91e17ecb02fb06",
+        "evidence_state": "Same-parameter published human group construction, reconstructed and exactly checked."
+      },
+      "optimality_status": {
+        "status": "open; reported bounds 1320 <= M(12,9) <= 11880 in the checked table",
+        "source_survey_date": "2026-11-06",
+        "evidence": "Smith and Montemanni's Table 3 gives lower bound 1320 and upper bound 11880 for (12,9); §4 item 22 supplies a PGL(2,11) code with internal distance 10. Their n=12,d=10 entry is solved at 1320, but that is a separate configuration. Bereg et al. (2025) report new lower bounds for other parameter pairs; their tables do not list (12,9). The current UTD permutation-array index was checked, but its general table endpoint returned HTTP 403; no source checked here reports a proof that M(12,9)=1320.",
+        "limitations": "The 11880 upper bound is the bound printed in the 2012 table, not certified as the strongest bound available in 2026. The literature survey found no stronger same-parameter lower bound but is not exhaustive."
+      },
+      "source_pins": {
+        "smith_montemanni": {
+          "version": "Published 2012 journal article; DOI record submitted/published online 2011",
+          "url": "https://doi.org/10.1007/s10623-011-9551-8",
+          "record_location": "Table 3; §4 item 22"
+        },
+        "bereg_et_al_2025": {
+          "version": "Entropy 27(10), article 1031, published 2025-10-01",
+          "url": "https://doi.org/10.3390/e27101031",
+          "record_location": "§5, Tables 3–5; no (12,9) entry"
+        },
+        "current_author_table": {
+          "url": "https://personal.utdallas.edu/~sxb027100/soft/permutation-arrays/",
+          "date_checked": "2026-11-06",
+          "access_note": "Index/root returned HTTP 403 to direct fetch; n-1 and n-2 tables were reachable but do not include the target (12,9) entry."
+        }
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "task_id": "T052",
+        "status": "pending_source_review",
+        "run": {
+          "task_id": "T052",
+          "config_id": "T052-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 1320,
+          "verification_status": "exact",
+          "generation_time": 1.920936431735754,
+          "verification_time": 1.8215419575572014,
+          "objective_value": 1320,
+          "details": {
+            "length": 12,
+            "minimum_distance_required": 9,
+            "minimum_distance_observed": 10,
+            "codewords_checked": 1320,
+            "pairs_checked": 870540,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 3.756293151527643,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "code_size": 1320,
+          "minimum_distance": 10
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

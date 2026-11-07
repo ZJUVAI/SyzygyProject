@@ -1,0 +1,149 @@
+{
+  "task_id": "T074",
+  "configurations": {
+    "T074-C01": {
+      "program": "reference.py",
+      "reproduced_value": "2/51",
+      "public_value": "2/51",
+      "highest_reported": {
+        "value": "2/51",
+        "source": "Heilbronn archive, Convex n=12 record page; entry credits David Cantrell, June 2007.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "reproduction_status": "The archive reports 2/51 and its coordinate record was re-verified later. This task separately reconstructs rational coordinates by affine normalization and denominator-100 rational reconstruction; the exact ratio is independently checked. No optimality proof for n=12 was found."
+      },
+      "best_human": {
+        "value": "2/51",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "source": "Historical result credited to David Cantrell, June 2007, as listed by the current Heilbronn archive.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "date_checked": "2026-11-06",
+        "provenance": "The record is credited to Cantrell in 2007. The current archive says coordinate material was supplied by an external contributor and re-verified later, citing a Cantrell 2007 Mathematica notebook received in September 2026. The contributor identity and AI provenance of that later coordinate recovery are not specified. The rational coordinates in this task are our documented reconstruction, not claimed as Cantrell's original coordinates.",
+        "evidence_state": "The archived decimal source is saved. Affine normalization and exact rational reconstruction yield a separate 12-point witness. Exact checking gives minimum triangle area 1/4, hull area 51/8, and ratio 2/51.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4"
+      },
+      "best_public": {
+        "value": "2/51",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "source": "Current Heilbronn archive's Convex n=12 record page, checked 2026-11-06.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "date_checked": "2026-11-06",
+        "provenance": "The site credits the 2007 result to Cantrell and documents later coordinate recovery by an external contributor. The attribution and coordinate history are kept separate.",
+        "evidence_state": "The archive reports 2/51. Its source decimals and this task's separately rationalized witness are saved and independently exact-checked. No n=12 optimality proof was found.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4"
+      },
+      "best_reproduced": {
+        "value": "2/51",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Parse all coordinates as exact rationals, reject every zero triangle determinant, enumerate all 220 triples, and compute the convex hull area by exact shoelace arithmetic after an exact monotone-chain hull.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "origin_type": "local affine and rational reconstruction of a later archived coordinate record"
+      },
+      "frozen_human_baseline": {
+        "value": "2/51",
+        "witness_program": "human.py",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "evidence_state": "human.py rebuilds the witness from the archived decimal source by a documented affine normalization and rational reconstruction; the result passes the exact checker."
+      },
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": "2/51",
+        "note": "H is the exact rational score of the reproduced historical construction."
+      },
+      "optimality_status": {
+        "status": "open in the checked sources; 2/51 is a record construction, not a proof of the maximum",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The current archive lists 2/51 as the n=12 free-convex record. Its proof list includes 2026 formal results for n=3 through n=8, not n=12.",
+        "limitations": "No matching upper bound for n=12 was found. The rational-domain task has the same supremum as the real-coordinate domain by density and continuity, but this fact does not certify optimality."
+      },
+      "source_pins": {
+        "record_page": {
+          "url": "https://math.tejstead.com/heilbronn/convex/12/",
+          "date_checked": "2026-11-06",
+          "record_value": "2/51",
+          "credit": "David Cantrell, June 2007"
+        },
+        "archived_source_coordinates": {
+          "url": "https://math.tejstead.com/heilbronn/convex/12/points.json",
+          "sha256": "c5eaf80a1b3f270b949fe891eb9777541f0330c6d33a33e7b3d1eaa267c03b27",
+          "description": "Current archive source JSON includes decimal coordinates and later coordinate provenance."
+        },
+        "site_methods": {
+          "url": "https://math.tejstead.com/heilbronn/methods/",
+          "date_checked": "2026-11-06",
+          "scope": "Coordinate provenance, reconstruction policy, exact verification, and n=3 through n=8 free-convex proofs."
+        }
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T074",
+          "config_id": "T074-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "2/51",
+          "verification_status": "exact",
+          "generation_time": 2.893059618771076,
+          "verification_time": 5.750130265951157,
+          "objective_value": "2/51",
+          "details": {
+            "point_count": 12,
+            "triangles_checked": 220,
+            "minimum_triangle_area": "1/4",
+            "convex_hull_area": "51/8",
+            "hull_vertex_count": 9,
+            "claimed_objective_ignored": true,
+            "strict": true
+          },
+          "eval_time": 8.65799344331026,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "area_ratio": "2/51",
+          "minimum_triangle_area": "1/4",
+          "hull_area": "51/8",
+          "support_edges": 9,
+          "triangles_checked": 220
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

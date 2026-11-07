@@ -1,0 +1,81 @@
+{
+  "configurations": {
+    "T095-C01": {
+      "program": "reference.py",
+      "reproduced_value": 271,
+      "public_value": 271,
+      "highest_reported": {
+        "value": 271,
+        "source": "CG:SHOP 2020 best_solutions.zip, uniform-0000500-1.solution.json",
+        "reproduction_status": "Pinned archive witness with 770 edges passes the exact checker and gives 271 bounded faces. Archive metadata does not identify the producing solver or prove optimality."
+      },
+      "source": {
+        "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+        "input_url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip",
+        "checked_at": "2026-11-06"
+      },
+      "parameters": {
+        "instance": "uniform-0000500-1",
+        "point_count": 500,
+        "input_coordinates": "exact integer coordinates",
+        "partition": "straight-line planar graph; all input points are vertices; bounded faces are empty convex polygons",
+        "objective": "minimize number of internal convex faces"
+      },
+      "optimality_status": "Open: the pinned witness gives a feasible value of 271. No proof of optimality for this 500-point instance was found in checked sources through 2026-11-06.",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T095",
+          "config_id": "T095-C01",
+          "validity": 1.0,
+          "combined_score": 1.4169741697416973,
+          "objective": 271,
+          "verification_status": "exact",
+          "generation_time": 0.1647304855287075,
+          "verification_time": 0.7664335668087006,
+          "objective_value": 271,
+          "details": {
+            "point_count": 500,
+            "edge_count": 770,
+            "face_count": 271,
+            "convex_hull_vertex_count_including_collinear": 19,
+            "hull_area_twice": 1736930960,
+            "bounded_face_area_twice_sum": 1736930960,
+            "euler_edge_face_check": 271,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.9352919720113277,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "face_count": 271,
+          "point_count": 500,
+          "edge_count": 770,
+          "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json",
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "f058b9152556ea7f25132fa464dce64389dfbb65a09f9b5c9af97fab6ca5b7f0"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

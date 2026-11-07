@@ -1,0 +1,52 @@
+{
+  "status": "reviewed_by_sol",
+  "reviewer": "Sol main agent",
+  "date": "2026-11-07",
+  "seed": 0,
+  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
+  "program": "baseline.py",
+  "generation_record": {
+    "task_id": "T100",
+    "config_id": "T100-C01",
+    "validity": 1.0,
+    "combined_score": 0.7434533551554828,
+    "objective": 2444,
+    "verification_status": "exact",
+    "generation_time": 25.696777112782,
+    "verification_time": 0.8064485341310501,
+    "objective_value": 2444,
+    "details": {
+      "vertices": 50,
+      "edge_count": 700,
+      "triangle_count": 2444,
+      "simple_undirected": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 26.511059168726206,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "search_metadata": {
+    "algorithm": "fixed-seed greedy edge swaps with a 250-step kick",
+    "seed": 0,
+    "iterations_requested": 5000,
+    "iterations_completed": 5000,
+    "best_triangle_count": 2444,
+    "comparison_data_read": false
+  },
+  "solution_sha256": "a9cc4d46db18ae738fd26a082a8227a77b360967a86b705d4f806aed39b9b835",
+  "acceptance_evidence": "../../acceptance.json",
+  "replay_command": "python -m mathbench replay T100 tasks/t100/best/T100-C01/solution.json --config T100-C01"
+}

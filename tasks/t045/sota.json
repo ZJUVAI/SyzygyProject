@@ -1,0 +1,141 @@
+{
+  "task_id": "T045",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T045-C01": {
+      "program": "reference.py",
+      "reproduced_value": 147653,
+      "public_value": 95242,
+      "best_human": {
+        "value": 95242,
+        "source": {
+          "title": "Decorous Lower Bounds for Minimum Linear Arrangement",
+          "authors": [
+            "Alberto Caprara",
+            "Adam N. Letchford",
+            "Juan-José Salazar-González"
+          ],
+          "url": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+          "claim": "Table 1 reports 95,242 as the best heuristic for gd96a and attributes it to Rodriguez-Tello et al. (2008).",
+          "reproduction_status": "reported_only; ordering_not_recovered"
+        },
+        "ai_provenance": "Not reported by the cited source."
+      },
+      "best_public": {
+        "value": 95242,
+        "source": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+        "reproduction_status": "published_value; witness_unavailable_in_checked_sources"
+      },
+      "best_reproduced": {
+        "value": 147653,
+        "program": "human.py",
+        "witness": "data/reference/spectral_adjacent_ordering.json",
+        "method": "Fiedler-vector spectral sequencing followed by strict adjacent-swap descent; 200 sweep maximum.",
+        "ai_provenance": "AI-assisted reproduction of a traditional heuristic; this score is not claimed as a published result.",
+        "reproduction_status": "exactly_verified_pending_Sol_review"
+      },
+      "public_source": {
+        "title": "Decorous Lower Bounds for Minimum Linear Arrangement",
+        "authors": [
+          "Alberto Caprara",
+          "Adam N. Letchford",
+          "Juan-José Salazar-González"
+        ],
+        "url": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+        "doi": "10.1287/ijoc.1100.0390",
+        "published_version": "INFORMS Journal on Computing 23(1) (2011), 26-40",
+        "reported_best_heuristic": 95242,
+        "reported_lower_bound": 77860,
+        "relative_gap_percent": 18.3,
+        "record_attribution": "Table 1 says the best heuristic value is reported in Rodriguez-Tello et al. (2008).",
+        "checked_at": "2026-11-06"
+      },
+      "graph_source": {
+        "page": "https://www.cs.upc.edu/~jpetit/MinLA/Experiments/",
+        "archive_url": "https://www.cs.upc.edu/~jpetit/MinLA/Experiments/jpetit-extra.tar.gz",
+        "archive_path": "CodeJEA/Graphs/gd96a.rmf",
+        "archive_sha256": "69f2b258f866122ed1cd8517ad41c5866940db1a3642db0e1b4e1315715d7621",
+        "graph_file": "data/source/gd96a.rmf",
+        "graph_sha256": "a3f6f97b8c084f41b6312a02544d71b293bfb8e809f627e4c5e7a04495061f4c",
+        "graph_parameters": {
+          "vertices": 1096,
+          "edges": 1676
+        }
+      },
+      "upper_bound_claims": [
+        {
+          "value": 95242,
+          "source": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+          "status": "reported feasible heuristic value; exact witness not recovered"
+        }
+      ],
+      "lower_bound_claims": [
+        {
+          "value": 77860,
+          "source": "https://www.lancaster.ac.uk/staff/letchfoa/articles/2011-linear-arrangement.pdf",
+          "status": "published LP lower bound; no standalone LP certificate is stored with this task"
+        }
+      ],
+      "current_status_check": {
+        "checked_at": "2026-11-06",
+        "sources": [
+          "https://www.cs.upc.edu/~jpetit/MinLA/Experiments/upperbounds.html",
+          "https://www.cs.upc.edu/~jpetit/MinLA/Experiments/lowerbounds.html",
+          "https://doi.org/10.1007/s10732-026-09604-6"
+        ],
+        "result": "The current Petit upperbounds page lists a best spectral sequencing value of 170,903 and a best simulated-annealing value of 96,342 for gd96a; neither improves on the reported 95,242. Its lowerbounds page gives older raw-method values. The 2026 Small Boundary paper evaluates a different set of 26 large real-world graphs and does not mention gd96a. No proof of optimality or later same-parameter value was found in the checked sources."
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T045",
+          "config_id": "T045-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 147653,
+          "verification_status": "exact",
+          "generation_time": 0.5942888222634792,
+          "verification_time": 0.547903124243021,
+          "objective_value": 147653,
+          "details": {
+            "graph": "gd96a",
+            "vertices": 1096,
+            "edges_checked": 1676,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.1482814252376556,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "linear_arrangement_cost": 147653,
+          "prefix_cuts_checked": 1096,
+          "original_edges_checked": 1676
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "evidence": "acceptance.json"
+      },
+      "limitations": [
+        "The reported 95,242 ordering was not recovered. The fixed reference is the weaker verified value 147,653.",
+        "The published 77,860 lower bound is recorded from the paper and was not independently replayed from a stored LP certificate.",
+        "A literature check cannot prove that no later result exists."
+      ],
+      "review_status": "accepted_by_sol"
+    }
+  }
+}

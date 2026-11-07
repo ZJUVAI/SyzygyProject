@@ -1,0 +1,32 @@
+{
+  "task_id": "T093",
+  "config_id": "T093-C01",
+  "seed": 0,
+  "algorithm": "value-density ordered random first-fit translations; exact geometric feasibility kernel checks each proposal",
+  "search_metadata": {
+    "algorithm": "value-density ordered random first-fit translations; exact geometric feasibility kernel checks each proposal",
+    "seed": 0,
+    "trial_limit": 3,
+    "trials_completed": 3,
+    "placement_attempt_limit_per_copy": 30,
+    "placement_attempts": 3435,
+    "placements_found_across_trials": 50,
+    "reference_data_read": false,
+    "time_cutoff_enabled": false
+  },
+  "elapsed_seconds": 18.761402644217014,
+  "environment": {
+    "python": "3.13.12",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "threads": 1
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "verified_objective": 711,
+  "verification_status": "exact",
+  "replay_command": ".venv/bin/python -c \"from tasks.t093.baseline import run_code; from tasks.t093.check import validate; import json; cfg=json.load(open('tasks/t093/task.json'))['configurations'][0]; print(validate(run_code(),cfg,strict=True))\""
+}

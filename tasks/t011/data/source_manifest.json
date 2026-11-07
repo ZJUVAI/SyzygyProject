@@ -1,0 +1,20 @@
+{
+  "C7^4": {
+    "record": 108,
+    "source": "Vesel and \u017derovnik (2002), Improved lower bound on the Shannon capacity of C7, Information Processing Letters 81(5), 277\u2013282, DOI 10.1016/S0020-0190(01)00229-0",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0020019001002290",
+    "open_check": "Itty et al. (2026), arXiv:2607.21517 v2, \u00a72, explicitly states alpha(C7^4) is unknown and only >=108 is known.",
+    "open_url": "https://arxiv.org/abs/2607.21517v2",
+    "witness_limit": "The 2002 article reports 108 and displays a figure, but a machine-readable word list is not available in the checked public archive. We do not claim to reproduce that 108-word witness. Frozen local traditional witness is 100 words."
+  },
+  "C7^6": {
+    "record": 1120,
+    "paper": "Itty, Rosin, Carstensen, Reichman (2026), Improved lower bounds for the Shannon capacity of odd cycles, arXiv:2607.21517 v2 (2026-07-30)",
+    "paper_url": "https://arxiv.org/abs/2607.21517v2",
+    "repo": "https://github.com/nathanielitty/lower-bounds-for-shannon-capacity",
+    "commit": "fe8966079013abaac21d1c08441500100f8e3b86",
+    "file": "CC_6_7_1120.txt",
+    "sha256": "38e4e1f2cb7a30d3caed2d2b8be223016c823261bdd362ba5ee74ef6ea5928a7",
+    "provenance": "The paper states the construction was found through iterative LLM interactions. Record as AI-assisted."
+  }
+}

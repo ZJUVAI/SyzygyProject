@@ -1,81 +1,112 @@
 {
-  "snapshot_date": "2026-11-04",
-  "scope": {
-    "max_cardinality": 512,
-    "integer_interval": [
-      -1000000,
-      1000000
-    ],
-    "objective": "log(|A+A|/|A|)/log(|A-A|/|A|)"
+  "task_id": "T057",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T057-C01": {
+      "id": "T057-C01",
+      "parameters": {
+        "instance": "X-n1001-k43",
+        "customers": 1000,
+        "depot_node_id": 1,
+        "vehicle_capacity": 131,
+        "distance": "TSPLIB EUC_2D nearest-integer rounding",
+        "route_count": "unrestricted; k43 is part of the instance name, not a fleet-size constraint"
+      },
+      "best_human": {
+        "value": 77398,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "witness_file": "data/source/human_clarke_wright_77398.json",
+        "url": "https://doi.org/10.1287/opre.12.4.568",
+        "provenance": "Weak deterministic Clarke-Wright method reconstruction for this benchmark. This is a traditional method baseline, not the best reported human result.",
+        "ai_provenance": "benchmark reconstruction",
+        "actual_value": 77398,
+        "evidence_state": "route feasibility and full cost recomputed exactly",
+        "review_status": "pending_sol_review"
+      },
+      "best_public": {
+        "value": 72332,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "url": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "source_location": "X-n1001-k43 bound history row dated 2026-10-24",
+        "provenance": "CVRPLIB says the submission starts from published BKS solutions and improves them; submission details do not identify whether AI tools contributed.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "current public best-known solution; instance table says Opt=no",
+        "witness_file": "data/reference/public_72332.sol",
+        "witness_sha256": "6ea65ad25adab07adfb5d3fc2f0e591fa1c3ae7dd3ee6833d895702036fc86ff"
+      },
+      "best_reproduced": {
+        "value": 72332,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "witness_file": "data/reference/public_72332.sol",
+        "provenance": "Official CVRPLIB solution file, converted from its customer labels to TSPLIB node IDs and rechecked by the local validator.",
+        "ai_provenance": "not stated by source",
+        "actual_value": 72332,
+        "evidence_state": "43 routes; all 1000 customers covered once; maximum route load 131; exact integer distance recomputed",
+        "review_status": "reviewed_by_sol"
+      },
+      "historical_public": {
+        "value": 72355,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "url": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "source_location": "literature value through 2025",
+        "witness_file": "data/reference/historical_72355.sol",
+        "witness_sha256": "21ee38abc7e1b130444bd30406d5b81aba4f5a08e2c3688e9da63df0da8c2903",
+        "actual_value": 72355,
+        "evidence_state": "historical public result, independently rechecked; superseded by 72332"
+      },
+      "frozen_human_baseline": {
+        "value": 77398,
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "witness_file": "data/source/human_clarke_wright_77398.json",
+        "provenance": "Deterministic Clarke-Wright savings construction from the published method."
+      },
+      "highest_reported": {
+        "value": 72332,
+        "metric": "total TSPLIB EUC_2D route distance",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "source_location": "X-n1001-k43 bound history row dated 2026-10-24",
+        "reproduction_status": "official witness rechecked exactly; public best-known bound only, not a proved optimum"
+      }
+    }
   },
-  "best_human": {
-    "value": 1.0597930945472454,
-    "witness": [
-      0,
-      1,
-      2,
-      4,
-      5,
-      9,
-      12,
-      13,
-      14,
-      16,
-      17,
-      21,
-      24,
-      25,
-      26,
-      28,
-      29
-    ],
-    "cardinality": 17,
-    "sumset_size": 59,
-    "difference_set_size": 55,
-    "author": "Pigarev-Freiman construction, reproduced by Martin-O'Bryant",
-    "year": 2006,
-    "url": "https://arxiv.org/abs/math/0608131",
-    "evidence_state": "witness_and_counts_reproduced"
-  },
-  "best_public": {
-    "value": 1.0597930945472454,
-    "witness": [
-      0,
-      1,
-      2,
-      4,
-      5,
-      9,
-      12,
-      13,
-      14,
-      16,
-      17,
-      21,
-      24,
-      25,
-      26,
-      28,
-      29
-    ],
-    "cardinality": 17,
-    "sumset_size": 59,
-    "difference_set_size": 55,
-    "source": "Martin-O'Bryant (2006), arXiv:math/0608131",
-    "snapshot_date": "2026-11-04",
-    "evidence_state": "public_source_witness_reproduced",
-    "note": "Finite public snapshot; not a world-best claim.",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 1.0597930945472454,
-    "witness_file": "human.py",
-    "sumset_size": 59,
-    "difference_set_size": 55,
-    "evidence_state": "exact_integer_recomputation"
-  },
-  "ai_provenance": "No AI-generated witness is recorded as a public or human result. The search baseline is an independent local add/delete search.",
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  "initial_results": {
+    "T057-C01": {
+      "objective": 1376372,
+      "objective_value": 1376372,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.05623334389249418
+    }
+  }
 }
