@@ -1,78 +1,38 @@
-"""Greedy prime transfers from the simple 1*2*...*N initial factorization."""
-
+from mathbench.search import search_deadline, search_steps
+"""Greedy set cover on sampled blocks, with a guaranteed seed fallback."""
 import os
 import random
 import time
-
-from tasks.t053.check import PARAMETERS, validate
-from tasks.t053.init_program import N, run_code as initial_run
-
-
-def _spf(limit):
-    result = [0] * (limit + 1)
-    primes = []
-    for value in range(2, limit + 1):
-        if result[value] == 0:
-            result[value] = value
-            primes.append(value)
-        for prime in primes:
-            multiple = value * prime
-            if multiple > limit or prime > result[value]:
-                break
-            result[multiple] = prime
-    return result
+from itertools import combinations
+from tasks.t053.init_program import run_code as seed_cover
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T053-C01") != "T053-C01":
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T053-C01")
+    if config_id != "T053-C01":
         raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = max(1, min(10000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "64"))))
-    from mathbench.search import search_steps
-
-    start = time.monotonic()
-    factors = list(initial_run()["factors"])
-    spf = _spf(N)
-    rng = random.Random(seed)
-    accepted = 0
-    iterations_run = 0
-    for _ in search_steps(iterations):
-        floor_value = min(factors)
-        receiver = next(i for i, value in enumerate(factors) if value == floor_value)
-        for _attempt in range(256):
-            donor = rng.randrange(1, N)
-            if donor == receiver:
-                continue
-            value = factors[donor]
-            if value <= 1 or value > N:
-                continue
-            prime = spf[value]
-            remainder = value // prime
-            if remainder < floor_value:
-                continue
-            factors[receiver] *= prime
-            factors[donor] = remainder
-            accepted += 1
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    try:
+        budget = min(2.0, max(0.01, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
+    except ValueError:
+        budget = 2.0
+    deadline = search_deadline()
+    blocks = [tuple(b) for b in seed_cover()["blocks"]]
+    index = {q: i for i, q in enumerate(combinations(range(24), 4))}
+    pool = set()
+    for _ in search_steps(500):
+        pool.add(tuple(sorted(rng.sample(range(24), 14))))
+    # Add the seed blocks to ensure the candidate pool covers every four-set.
+    pool = sorted(pool | set(blocks))
+    masks = [sum(1 << index[q] for q in combinations(b, 4)) for b in pool]
+    remaining = (1 << 10626) - 1
+    chosen = []
+    while remaining and time.monotonic() < deadline:
+        i = max(range(len(pool)), key=lambda j: (masks[j] & remaining).bit_count())
+        if not (masks[i] & remaining):
             break
-        iterations_run += 1
-    checked = validate({"factors": factors}, {"parameters": PARAMETERS})
-    return {
-        "factors": factors,
-        "search_metadata": {
-            "algorithm": "seeded greedy transfer of one prime from a donor factor to a smallest factor; exact product preserved by each transfer",
-            "seed": seed,
-            "initial_objective": 1,
-            "iterations_requested": iterations,
-            "iterations_run": iterations_run,
-            "accepted_transfers": accepted,
-            "objective_recomputed": checked["objective"],
-            "generation_seconds": time.monotonic() - start,
-            "budget": {"mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
-                       "runner_generation_seconds": 300},
-        },
-    }
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+        chosen.append(pool[i])
+        remaining &= ~masks[i]
+    if not remaining and len(chosen) < len(blocks):
+        blocks = chosen
+    return {"blocks": [list(b) for b in blocks]}

@@ -1,22 +1,12 @@
-import json
-import os
-import random
-
+"""Deterministic axis-aligned grid seed selected by MATHBENCH_CONFIG_ID."""
+import json, os
 # EVOLVE-BLOCK-START
 
 def run_code():
-    config = os.environ.get("MATHBENCH_CONFIG_ID", "T003-C02")
-    if config != "T003-C02":
-        raise ValueError(f"unsupported T003 configuration: {config}")
-    n = 32
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    # A 6 by 6 grid with radius 1/12 gives a simple exact feasible start.
-    circles = [{"x": f"{2*c+1}/12", "y": f"{2*r+1}/12", "r": "1/12"}
-               for r in range(6) for c in range(6)][:n]
-    rng.random()  # Keep the configured seed part of the deterministic program interface.
-    return {"circles": circles}
+    cid = os.environ.get('MATHBENCH_CONFIG_ID', 'T003-C01')
+    if cid != 'T003-C01':
+        raise ValueError('unknown T003 configuration')
+    return {'squares':[{'x':str(2*(i%5)+1)+'/2','y':str(2*(i//5)+1)+'/2','t':'0'} for i in range(26)]}
 
 # EVOLVE-BLOCK-END
-
-if __name__ == "__main__":
-    print(json.dumps(run_code()))
+if __name__ == '__main__': print(json.dumps(run_code()))

@@ -26,7 +26,7 @@ def _packed_has_edge(data, u, v):
 
 
 def independent_quantity(task, s, config=None):
-    if task == 'T101':
+    if task == 'T024':
         import numpy as np
         points = s['points']
         n = config['parameters']['grid_size']
@@ -37,7 +37,7 @@ def independent_quantity(task, s, config=None):
         squared = np.sort((delta * delta).sum(axis=2), axis=1)
         assert np.all(np.diff(squared, axis=1) > 0)
         return {'point_count': len(points), 'method': 'Sort exact squared distances from each apex; every row must increase strictly.'}
-    if task == 'T102':
+    if task == 'T084':
         pairs = [tuple(map(F, pair)) for pair in s['pairs']]
         m = config['parameters']['m']
         assert len(pairs) == m and all(0 <= u and 0 <= v and u + v <= 1 for u, v in pairs)
@@ -52,10 +52,10 @@ def independent_quantity(task, s, config=None):
         value = F(min(max(map(abs, load)) for load in loads), scale)
         return {'discrepancy': str(value), 'routing_count': len(loads),
                 'method': 'Exact integer edge-load vectors, combined over both routes of every demand.'}
-    if task == 'T099':
+    if task == 'T010':
         from scripts.audits.polyomino_rectangle_audit import audit
         return audit(s)
-    if task == 'T100':
+    if task == 'T036':
         import numpy as np
         edges=s['edges'];assert len(edges)==700
         A=np.zeros((50,50),dtype=np.int64);seen=set()
@@ -66,33 +66,33 @@ def independent_quantity(task, s, config=None):
             A[u,v]=A[v,u]=1
         trace=int(np.trace((A@A)@A));assert trace%6==0
         return {'triangle_count':trace//6,'edge_count':len(seen),'vertex_count':50,'method':'Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63).'}
-    if task == 'T098':
+    if task == 'T009':
         from scripts.audits.perfect_square_audit import audit
         return audit(s)
-    if task == 'T095':
+    if task == 'T028':
         from scripts.audits.convex_partition_audit import audit
         return audit(s)
-    if task == 'T094':
+    if task == 'T027':
         from scripts.audits.regular_dilation_audit import audit_edges
         return audit_edges(s['edges'])
-    if task == 'T097':
+    if task == 'T029':
         from scripts.audits.convex_cover_audit import audit_polygons
-        data=json.loads((ROOT/'tasks/t097/data/source/socg_fixed92.instance.json').read_text())
+        data=json.loads((ROOT/'tasks/t029/data/source/socg_fixed92.instance.json').read_text())
         assert not data['holes']
         assert list(map(F,s['algebraic_field']['minimal_polynomial']))==[0,1]
         polygon=[(v['x'],v['y']) for v in data['outer_boundary']]
         covers=[[(F(x[0]) if x else F(0),F(y[0]) if y else F(0)) for x,y in q] for q in s['polygons']]
         return audit_polygons(polygon,covers)
-    if task == 'T092':
+    if task == 'T082':
         from scripts.audits.spherical_harmonic_audit import audit
         return audit(s)
-    if task == 'T093':
+    if task == 'T006':
         from scripts.audits.polygon_packing_audit import audit
         return audit(s)
-    if task == 'T091':
+    if task == 'T055':
         from scripts.audits.orthogonal_array_audit import audit
         return audit(s)
-    if task == 'T090':
+    if task == 'T075':
         a=s['sequence'];assert len(a)==64 and all(type(v)is int and abs(v)==1 for v in a)
         mask=(1<<64)-1;bits=sum((v==1)<<i for i,v in enumerate(a));corr=[64]
         for k in range(1,64):
@@ -100,11 +100,11 @@ def independent_quantity(task, s, config=None):
             corr.append(64-2*(bits^rotated).bit_count())
         assert sum(corr)==sum(a)**2
         return {'energy':sum(v*v for v in corr[1:]),'correlations':corr,'peak_sidelobe':max(map(abs,corr[1:])),'sum_of_signs':sum(a),'method':'Cyclic bit rotation and XOR Hamming weights; independently verifies sum of all cyclic correlations equals squared sign sum.'}
-    if task == 'T089':
+    if task == 'T081':
         from scripts.audits.sign_uncertainty_audit import audit
         return audit(s)
-    if task == 'T088':
-        rows=(ROOT/'tasks/t088/data/source/arc130.mtx.rnd').read_text().splitlines()
+    if task == 'T044':
+        rows=(ROOT/'tasks/t044/data/source/arc130.mtx.rnd').read_text().splitlines()
         assert list(map(int,rows[1].split()))==[130,130,715]
         edges=[tuple(map(int,line.split())) for line in rows[2:]]
         assert len(edges)==len(set(tuple(sorted(e)) for e in edges))==715
@@ -116,7 +116,7 @@ def independent_quantity(task, s, config=None):
         degrees=[sum(v in e for e in edges) for v in range(1,131)]
         assert max(degrees)==124
         return {'cutwidth':max(cuts),'cut_profile':cuts,'maximum_degree_lower_bound':62,'method':'Independent direct set bipartition edge counts for every prefix; degree/2 lower bound, integer arithmetic.'}
-    if task == 'T087':
+    if task == 'T079':
         a=list(map(F,s['heights']));assert len(a)==480 and min(a)>=0 and sum(a)>0
         D=math.lcm(*(v.denominator for v in a));h=[int(v*D) for v in a]
         B=sum(x*x for x in h)+1
@@ -128,10 +128,10 @@ def independent_quantity(task, s, config=None):
         values=[F(coeff[479+k]) for k in range(lag+1)]
         values.append((1-f)*coeff[479+lag]+f*coeff[480+lag])
         return {'minimum_autocorrelation_ratio':str(min(values)/(d*sum(h)**2)),'minimum_autocorrelation':str(d*min(values)/(D*D)),'l1_mass':str(d*sum(h)/D),'method':'exact integer Kronecker polynomial multiplication for all correlation coefficients, plus exact endpoint interpolation; no sampling'}
-    if task == 'T085':
+    if task == 'T007':
         from scripts.audits.disk_cover_audit import audit
         return audit(s)
-    if task == 'T084':
+    if task == 'T061':
         from collections import defaultdict
         a=[int(v) for v in s['elements']];assert len(a)==len(set(a))==31
         coeff=defaultdict(int)
@@ -140,10 +140,10 @@ def independent_quantity(task, s, config=None):
         for x in a:coeff[3*x]+=2
         assert len(coeff)==5456 and set(coeff.values())=={6}
         return {'diameter':max(a)-min(a),'triple_sums':len(coeff),'counting_lower_bound':1819,'method':'Newton complete-symmetric identity h3=(p1^3+3p1*p2+2p3)/6, exact sparse polynomial coefficients all equal one'}
-    if task == 'T083':
+    if task == 'T005':
         from scripts.audits.triangle_packing_audit import audit
         return audit(s)
-    if task == 'T082':
+    if task == 'T045':
         armies=[s['white'],s['black']]
         assert len(armies[0])==len(armies[1])
         line_sets=[]
@@ -153,14 +153,14 @@ def independent_quantity(task, s, config=None):
             line_sets.append([{f(r,c) for r,c in pts} for f in (lambda r,c:r,lambda r,c:c,lambda r,c:r-c,lambda r,c:r+c)])
         assert all(not(a&b) for a,b in zip(*line_sets))
         return {'army_size':len(armies[0]),'finite_upper_bound':225,'method':'disjoint occupied line labels in each of four queen directions; independent of pairwise attacks'}
-    if task == 'T081':
+    if task == 'T023':
         p=[tuple(map(F,v)) for v in s['points']]
         assert len(p)==12 and len(set(p))==12 and all(len(v)==2 for v in p)
         norm=[sum(c*c for c in v) for v in p]
         distances=[norm[i]+norm[j]-2*sum(a*b for a,b in zip(p[i],p[j])) for i,j in itertools.combinations(range(12),2)]
         assert min(distances)>0
         return {'distance_ratio':str(max(distances)/min(distances)),'minimum_squared_distance':str(min(distances)),'maximum_squared_distance':str(max(distances)),'pairs_checked':len(distances),'method':'exact Gram matrix identity for every pair, independently reconstructed from rational coordinates'}
-    if task == 'T079':
+    if task == 'T066':
         p=31
         projective=set()
         for v in itertools.product(range(p),repeat=3):
@@ -180,12 +180,12 @@ def independent_quantity(task, s, config=None):
             assert (a,b,c)==o
         assert seen==projective
         return {'union_cardinality':sum(mask),'directions_checked':993,'line_incidences_checked':30783,'bukh_chao_lower_bound':math.ceil(F(31**5,61**2)),'method':'projectivize every nonzero vector; repeated modular additions and dense finite-space bitmap'}
-    if task == 'T078':
+    if task == 'T014':
         from scripts.audits.lattice_audit import audit
         return audit(s)
-    if task in ('T077', 'T080'):
+    if task in ('T070', 'T071'):
         a=s['set'];assert 2<=len(a)<=512 and len(a)==len(set(a))
-        assert all(type(v)is int and (-1000000 if task=='T077' else 0)<=v<=1000000 for v in a)
+        assert all(type(v)is int and (-1000000 if task=='T070' else 0)<=v<=1000000 for v in a)
         sums=sorted(x+y for x,y in itertools.combinations_with_replacement(a,2))
         diffs=sorted(x-y for x,y in itertools.product(a,repeat=2))
         ns=sum(i==0 or v!=sums[i-1] for i,v in enumerate(sums))
@@ -200,13 +200,13 @@ def independent_quantity(task, s, config=None):
             return l+k*l2,h+k*h2
         dl,dh=log_bounds(nd);sl,sh=log_bounds(ns)
         interval=(dl/sh,dh/sl)
-        if task=='T080':
+        if task=='T071':
             q=2*max(a)+1;assert 0 in a and nd<q
             ql,qh=log_bounds(q)
             bounds=[n/d for n in (dl-sh,dh-sl) for d in (ql,qh)]
             interval=(F(1)+min(bounds),F(1)+max(bounds)) if nd!=ns else (F(1),F(1))
         return {'ratio_interval':list(map(str,interval)),'sumset_size':ns,'difference_set_size':nd,'cardinality':len(a),'method':'sorted pair values and exact rational atanh series with geometric remainder, independent of mpmath intervals'}
-    if task == 'T075':
+    if task == 'T037':
         edges=[tuple(sorted(e)) for e in s['edges']]
         assert len(edges)==len(set(edges)) and all(len(set(e))==3 and all(type(v)is int and 0<=v<36 for v in e) for e in edges)
         links=[[[False]*36 for _ in range(36)] for _ in range(36)]
@@ -217,7 +217,7 @@ def independent_quantity(task, s, config=None):
             for a,b,c in itertools.combinations([u for u in range(36) if u!=v],3):
                 assert not (links[v][a][b] and links[v][b][c] and links[v][a][c])
         return {'edge_count':len(edges),'link_graphs_checked':36,'double_counting_upper_bound':3570,'method':'all vertex links triangle-free, independent of formal four-set loads'}
-    if task == 'T076':
+    if task == 'T062':
         a=[int(v) for v in s['elements']]
         count = config['parameters']['element_count']
         assert len(a)==len(set(a))==count and min(a)>0
@@ -225,7 +225,7 @@ def independent_quantity(task, s, config=None):
         for v in a:sums=sums+[x+v for x in sums]
         assert len(sums)==len(set(sums))==1<<count
         return {'largest_element':max(a),'subset_sums_checked':len(sums),'method':'direct recursively doubled integer sum list, no modular fingerprints or Gray traversal'}
-    if task == 'T074':
+    if task == 'T018':
         p=[tuple(F(str(v)) for v in row) for row in s['points']]
         assert len(p)==len(set(p))==12
         def det(a,b,c):
@@ -237,7 +237,7 @@ def independent_quantity(task, s, config=None):
         area2=sum(a[0]*b[1]-a[1]*b[0] for a,b in edges)
         assert area2>0
         return {'area_ratio':str(min(triangles)/area2),'minimum_triangle_area':str(min(triangles)/2),'hull_area':str(area2/2),'support_edges':len(edges),'triangles_checked':220}
-    if task == 'T073':
+    if task == 'T016':
         import sympy as sp
         x=sp.Symbol('x');poly=sum(int(c)*x**i for i,c in enumerate(s['minimal_polynomial']))
         lo,hi=map(sp.Rational,s['isolating_interval'])
@@ -267,7 +267,7 @@ def independent_quantity(task, s, config=None):
         ns=sum(i==0 or x!=sums[i-1] for i,x in enumerate(sums))
         np=sum(i==0 or x!=products[i-1] for i,x in enumerate(products))
         return {'max_size':max(ns,np),'sumset_size':ns,'productset_size':np,'unordered_pairs_with_replacement':528}
-    if task == 'T071':
+    if task == 'T049':
         words=s['codewords'];assert len(words)==len(set(words))
         assert all(type(w) is int and 0<=w<65536 for w in words)
         owners={}
@@ -277,7 +277,7 @@ def independent_quantity(task, s, config=None):
             for output in outputs:
                 assert output not in owners;owners[output]=word
         return {'code_size':len(words),'distinct_outputs':len(owners),'method':'independent string slicing at each deletion index, with per-word duplicates removed'}
-    if task == 'T070':
+    if task == 'T008':
         squares=s['squares'];area=0;sides=[]
         for i,(x,y,d) in enumerate(squares):
             assert all(type(v) is int for v in (x,y,d)) and 0<d<1000
@@ -286,8 +286,8 @@ def independent_quantity(task, s, config=None):
             for a,b,c in squares[:i]:assert x+d<=a or a+c<=x or y+d<=b or b+c<=y
         assert area==1000000 and math.gcd(*sides)==1
         return {'square_count':len(squares),'total_area':area,'gcd':1,'method':'independent pairwise exact rectangle separation plus full area'}
-    if task == 'T069':
-        with gzip.open(ROOT / 'tasks/t069/data/source/mona-lisa100K.tsp.gz', 'rt', encoding='ascii') as stream:
+    if task == 'T096':
+        with gzip.open(ROOT / 'tasks/t096/data/source/mona-lisa100K.tsp.gz', 'rt', encoding='ascii') as stream:
             rows = stream.read().split('NODE_COORD_SECTION', 1)[1].split('EOF', 1)[0].splitlines()
         points={}
         for row in rows:
@@ -305,13 +305,13 @@ def independent_quantity(task, s, config=None):
                 else:lo=mid+1
             total+=lo
         return {'tour_cost':total,'independent_method':'binary search integer rounding thresholds, direct raw TSPLIB parse','closed_edges_checked':100000}
-    if task == 'T068':
+    if task == 'T050':
         words=s['codewords'];assert len(words)==len(set(words))
         assert all(type(w) is int and 0<=w<1024 for w in words)
         distances=[min((x^w).bit_count() for w in words) for x in range(1024)]
         assert max(distances)<=1
         return {'code_size':len(words),'words_checked':1024,'maximum_distance':max(distances),'sphere_bound':94}
-    if task == 'T067':
+    if task == 'T048':
         seen=set();blocks=set()
         for word in s['codewords']:
             assert type(word) is str and len(word)==17 and set(word)<={'0','1'}
@@ -321,10 +321,10 @@ def independent_quantity(task, s, config=None):
                 assert subset not in blocks;blocks.add(subset)
         assert len(blocks)==5*len(seen)<=math.comb(17,4)
         return {'code_size':len(seen),'distinct_four_subsets':len(blocks),'packing_bound':math.comb(17,4)//5}
-    if task == 'T066':
+    if task == 'T022':
         from scripts.audits.orchard_audit import audit
         return audit(s)
-    if task == 'T065':
+    if task == 'T021':
         # Reduce saved lattice constructions to rational quadratic forms.
         polynomial=s['minimal_polynomial']
         if polynomial==[-3,0,1] or (len(polynomial)==5 and polynomial!=[64,0,-28,0,1]):
@@ -371,17 +371,17 @@ def independent_quantity(task, s, config=None):
             if a*a+33*b*b+3*c*c+11*d*d==1 and a*b+c*d==0:
                 count+=1
         return {'unit_pairs':count,'unordered_pairs_checked':4950,'method':'independent expansion of the rational and sqrt(33) distance coefficients'}
-    if task == 'T064':
+    if task == 'T026':
         from scripts.audits.nonobtuse_audit import audit
         return audit(s)
-    if task == 'T062':
+    if task == 'T064':
         values=s['elements'];assert len(values)==len(set(values))
         assert all(type(v) is int and 1<=v<=42025 for v in values)
         mask=sum(1<<(v-1) for v in values)
         for root in range(1,205):assert not mask&(mask<<(root*root))
         assert mask.bit_count()==len(values)
         return {'cardinality':len(values),'positive_square_shifts_checked':204}
-    if task == 'T063':
+    if task == 'T092':
         coefficients=s['coefficients_ascending']
         assert len(coefficients)==101 and all(type(a) is int for a in coefficients)
         assert math.gcd(*coefficients)==1 and coefficients[-1]!=0
@@ -450,7 +450,7 @@ def independent_quantity(task, s, config=None):
         if lifted:
             result['irreducibility_power_obstructions'] = power_obstructions
         return result
-    if task == 'T061':
+    if task == 'T035':
         from collections import defaultdict
         edges={tuple(sorted(e)) for e in s['edges']}
         assert s['vertices']==100 and len(edges)==len(s['edges'])
@@ -483,7 +483,7 @@ def independent_quantity(task, s, config=None):
                 assert found,(u,v)
                 missing+=1
         return {'edge_count':len(edges),'missing_pairs_checked':missing,'simple_c6_free':True}
-    if task == 'T060':
+    if task == 'T089':
         import ast
         expression=s['expression'];tree=ast.parse(expression,mode='eval')
         def walk(node):
@@ -500,7 +500,7 @@ def independent_quantity(task, s, config=None):
             extrema.append(max(max(extrema[j]+extrema[k-j],extrema[j]*extrema[k-j]) for j in range(1,k)))
         assert extrema[115]==1801135623563989452<value
         return {'one_count':ones,'exact_value':value,'strict_lower_bound':116}
-    if task == 'T058':
+    if task == 'T057':
         rounds=s['rounds'];assert 1<=len(rounds)<=8
         opponents=[0]*35
         for groups in rounds:
@@ -517,18 +517,18 @@ def independent_quantity(task, s, config=None):
             assert occupied==(1<<35)-1
         assert all(mask.bit_count()==4*len(rounds) for mask in opponents)
         return {'round_count':len(rounds),'distinct_pairs':sum(m.bit_count() for m in opponents)//2}
-    if task == 'T059':
+    if task == 'T039':
         vertices = s['vertices']
         assert all(type(v) is int and 0 <= v < 2000 for v in vertices)
         assert len(vertices) == len(set(vertices))
-        data = _packed_graph_bytes(ROOT / 'tasks/t059/data/source/C2000.9.bits', 2000, 1799532)
+        data = _packed_graph_bytes(ROOT / 'tasks/t039/data/source/C2000.9.bits', 2000, 1799532)
         required = 0
         for u, v in itertools.combinations(vertices, 2):
             assert _packed_has_edge(data, u, v)
             required += 1
         return {'clique_cardinality': len(vertices), 'required_edges_found': required}
-    if task == 'T057':
-        path=ROOT/'tasks/t057/data/source/X-n1001-k43.vrp'
+    if task == 'T097':
+        path=ROOT/'tasks/t097/data/source/X-n1001-k43.vrp'
         coords={};demands={};mode=None
         for raw in path.read_text().splitlines():
             line=raw.strip()
@@ -552,10 +552,10 @@ def independent_quantity(task, s, config=None):
                 cost+=lo
         assert len(routes)>=(5557+130)//131
         return {'route_cost':cost,'routes':len(routes),'maximum_load':maximum_load}
-    if task == 'T055':
+    if task == 'T098':
         assignment=s['assignment'];assert len(assignment)==1630 and all(type(v) is bool for v in assignment)
         bits=sum(v<<i for i,v in enumerate(assignment));hard=0;soft=0;cost=0
-        path=ROOT/'tasks/t055/data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz'
+        path=ROOT/'tasks/t098/data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz'
         for line in gzip.decompress(path.read_bytes()).decode().splitlines():
             fields=line.split()
             if not fields or fields[0].startswith(('c','p','%')):continue
@@ -569,8 +569,8 @@ def independent_quantity(task, s, config=None):
                 weight=int(fields[0]);soft+=weight*satisfied;cost+=weight*(not satisfied)
         assert hard==6150 and soft+cost==649
         return {'satisfied_soft_weight':soft,'unsatisfied_soft_weight':cost,'hard_clauses':hard}
-    if task == 'T056':
-        operations=json.loads((ROOT/'tasks/t056/data/source/ta41_instance.json').read_text())['operations']
+    if task == 'T095':
+        operations=json.loads((ROOT/'tasks/t095/data/source/ta41_instance.json').read_text())['operations']
         orders=s['machine_orders']
         assert len(orders)==20 and all(sorted(o)==list(range(30)) for o in orders)
         job_index=[0]*30;machine_index=[0]*20;job_ready=[0]*30;machine_ready=[0]*20
@@ -588,14 +588,14 @@ def independent_quantity(task, s, config=None):
                 job_index[j]+=1;machine_index[machine]+=1;remaining-=1;progress=True
             assert progress,'precedence deadlock'
         return {'makespan':max(job_ready),'operations_dispatched':600}
-    if task == 'T054':
+    if task == 'T074':
         length = config['parameters']['length']
         signs=s['sequence'];assert len(signs)==length and all(type(x) is int and x in (-1,1) for x in signs)
         bits=sum((x==1)<<i for i,x in enumerate(signs))
         # Bit XOR counts mismatches; no multiply-and-sum correlation loop.
         values=[length-k-2*(((bits^(bits>>k))&((1<<(length-k))-1)).bit_count()) for k in range(1,length)]
         return {'peak_sidelobe':max(map(abs,values)),'energy':sum(x*x for x in values),'correlations':values}
-    if task == 'T053':
+    if task == 'T090':
         factors=s['factors']
         assert len(factors)==100000 and all(type(x) is int and x>0 for x in factors)
         # Divide each factor using an independent smallest-prime-factor sieve.
@@ -619,7 +619,7 @@ def independent_quantity(task, s, config=None):
             while power<=n: expected+=n//power;power*=p
             assert exponent==expected
         return {'minimum_factor':min(factors),'factor_count':n,'prime_exponents_checked':len(residuals)}
-    if task == 'T051':
+    if task == 'T083':
         import numpy as np
         signs=np.array(s['sequence'],dtype=np.int64)
         assert all(type(x) is int and x in (-1,1) for x in s['sequence'])
@@ -641,7 +641,7 @@ def independent_quantity(task, s, config=None):
             minimum=min(minimum,12-int(matches.max()))
         assert minimum>=9
         return {'code_size':len(words),'minimum_distance':minimum}
-    if task == 'T050':
+    if task == 'T041':
         path=s['vertices']
         dimension = config['parameters']['dimension']
         vertex_count = 1 << dimension
@@ -662,7 +662,7 @@ def independent_quantity(task, s, config=None):
         upper = (dimension * vertex_count - 2) // (2 * dimension - 2) - 1
         return {'induced_path_edges': total_degree//2, 'neighbor_memberships_checked': dimension*len(path),
                 'crossing_edges': crossing, 'analytic_edge_upper_bound': upper}
-    if task == 'T049':
+    if task == 'T020':
         polynomial=s['minimal_polynomial']
         if polynomial==[0,1]:
             points=[(F(point['x'][0]),F(point['y'][0])) for point in s['points']]
@@ -681,7 +681,7 @@ def independent_quantity(task, s, config=None):
         assert min(distances)>0
         return {'distance_count': len(distances), 'ordered_displacement_types': len(displacements),
                 'audit_scope': 'Saved rational and triangular-lattice witnesses; checker permits all real algebraic fields'}
-    if task == 'T048':
+    if task == 'T099':
         import numpy as np
         wires = config['parameters']['inputs']
         inputs=np.arange(1<<wires,dtype=np.uint32)
@@ -696,7 +696,7 @@ def independent_quantity(task, s, config=None):
         assert np.array_equal(inputs,expected)
         return {'comparator_count': len(s['comparators']),
                 'binary_words_simulated': 1<<wires, 'arithmetic': 'exact uint32 conditional swaps'}
-    if task == 'T047':
+    if task == 'T060':
         basis = s['basis']
         assert len(basis)==len(set(basis)) and all(type(x) is int for x in basis)
         selected=set(basis)
@@ -708,7 +708,7 @@ def independent_quantity(task, s, config=None):
             witnesses+=1
         return {'difference_basis_size': len(basis), 'required_translations_checked': witnesses,
                 'span': max(basis)-min(basis)}
-    if task == 'T046':
+    if task == 'T091':
         coefficients = list(map(F,s['coefficients']))
         while len(coefficients)>1 and coefficients[-1]==0: coefficients.pop()
         assert len(coefficients)<=147 and any(coefficients)
@@ -757,8 +757,8 @@ def independent_quantity(task, s, config=None):
         # Bernstein control coefficients and dyadic subdivision.
         return {'exact_supnorm': str(norm), 'root_multiplicities_0_1_half': powers,
                 'audit_scope': 'Analytic norm of saved factor-family witnesses, not a restriction on candidate inputs'}
-    if task == 'T045':
-        raw = (ROOT / 'tasks/t045/data/source/gd96a.rmf').read_text().splitlines()
+    if task == 'T043':
+        raw = (ROOT / 'tasks/t043/data/source/gd96a.rmf').read_text().splitlines()
         assert raw[0].split() == ['p','ghct','1096','1676']
         neighbors = {i: [] for i in range(1,1097)}
         for line in raw[1:]:
@@ -781,7 +781,7 @@ def independent_quantity(task, s, config=None):
         assert cut == 0
         return {'linear_arrangement_cost': total, 'prefix_cuts_checked': 1096,
                 'original_edges_checked': 1676}
-    if task == 'T044':
+    if task == 'T031':
         n = s['n']
         assert type(n) is int and 1 <= n <= 94
         distances = [[0 if i == j else n+1 for j in range(n)] for i in range(n)]
@@ -805,7 +805,7 @@ def independent_quantity(task, s, config=None):
         assert diameter <= 5
         return {'order': n, 'floyd_warshall_diameter': diameter,
                 'edge_count': len(unique), 'maximum_degree': max(degree)}
-    if task == 'T043':
+    if task == 'T051':
         used_lines = set()
         for codeword in s['codewords']:
             rows = codeword if all(type(x) is int for x in codeword) else [
@@ -822,7 +822,7 @@ def independent_quantity(task, s, config=None):
             used_lines.update(lines)
         return {'code_size': len(s['codewords']), 'distinct_two_spaces': len(used_lines),
                 'ambient_two_spaces': 127*126//6, 'counting_upper_bound': 381}
-    if task == 'T042':
+    if task == 'T063':
         selected = sorted(s['elements'])
         assert len(selected) == len(set(selected))
         assert all(type(x) is int and 1 <= x <= 212 for x in selected)
@@ -832,7 +832,7 @@ def independent_quantity(task, s, config=None):
             assert (a+c)%2 or (a+c)//2 not in selected
             pairs += 1
         return {'cardinality': len(selected), 'endpoint_pairs_checked': pairs}
-    if task == 'T041':
+    if task == 'T004':
         polygons = []
         sides = []
         for square in s['squares']:
@@ -866,7 +866,7 @@ def independent_quantity(task, s, config=None):
             checked += 1
         assert len(sides) == 17 and sum(a*a for a in sides) <= 1
         return {'sum_sides': str(sum(sides,F())), 'clipped_pairs': checked}
-    if task == 'T040':
+    if task == 'T015':
         count = config['parameters']['n']
         if 'points' in s:
             points = [tuple(map(F,p)) for p in s['points']]
@@ -900,7 +900,7 @@ def independent_quantity(task, s, config=None):
         assert facets == 2 * count - 4
         return {'volume': str(volume6/6), 'centroid_pyramids': facets,
                 'audit_scope': 'Saved simplicial witnesses; coplanar-face cases covered by task tests'}
-    if task == 'T039':
+    if task == 'T059':
         rows = s['rows']
         assert len(rows) == 7 and all(len(row) == 6 for row in rows)
         # Sorting all absolute differences independently checks both intra-row
@@ -910,7 +910,7 @@ def independent_quantity(task, s, config=None):
         assert all(a < b for a,b in zip(differences, differences[1:]))
         return {'scope': differences[-1], 'distinct_positive_differences': 105,
                 'sum_positive_differences': sum(differences)}
-    if task == 'T038':
+    if task == 'T056':
         squares = s['squares']
         # Convert to the equivalent strength-two orthogonal array. This single
         # projection test includes row/column Latin conditions and MOLS pairs.
@@ -922,7 +922,7 @@ def independent_quantity(task, s, config=None):
             checked += 1
         return {'square_count': len(squares), 'orthogonal_array_rows': 144,
                 'two_column_projections_checked': checked}
-    if task == 'T037':
+    if task == 'T013':
         vectors = []
         for row in s['directions']:
             rational = list(map(F, row))
@@ -942,7 +942,7 @@ def independent_quantity(task, s, config=None):
             checked += 1
         return {'direction_count': len(vectors), 'integer_pair_checks': checked,
                 'primitive_integer_directions': len(set(vectors))}
-    if task == 'T036':
+    if task == 'T025':
         points = [tuple(map(F, point)) for point in s['points']]
         def turn(a, b, c):
             return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])
@@ -961,7 +961,7 @@ def independent_quantity(task, s, config=None):
                 total += len(chain)-1
             convex += total == 4
         return {'crossings': convex, 'quadruples_checked': math.comb(28,4)}
-    if task == 'T035':
+    if task == 'T019':
         points = [tuple(map(F, point)) for point in s['points']]
         def turn(a, b, c):
             return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])
@@ -988,7 +988,7 @@ def independent_quantity(task, s, config=None):
             checked += 1
         return {'point_count': len(points), 'seven_subsets_checked': checked,
                 'convex_four_subsets': len(convex_four), 'convex_seven_subsets': 0}
-    if task == 'T034':
+    if task == 'T068':
         colors = s['colors']
         assert s['n'] == len(colors)
         checked = 0
@@ -998,8 +998,8 @@ def independent_quantity(task, s, config=None):
                 assert len({colors[end-j*step] for j in range(7)}) == 2
                 checked += 1
         return {'prefix_length': len(colors), 'arithmetic_progressions_checked': checked}
-    if task == 'T033':
-        with gzip.open(ROOT / 'tasks/t033/data/source/G70.gz', 'rt', encoding='ascii') as stream:
+    if task == 'T042':
+        with gzip.open(ROOT / 'tasks/t042/data/source/G70.gz', 'rt', encoding='ascii') as stream:
             raw = stream.read().splitlines()
         n, m = map(int, raw[0].split())
         assert (n, m) == (10000, 9999)
@@ -1011,7 +1011,7 @@ def independent_quantity(task, s, config=None):
         assert (sum(w for _, _, w in edges)-energy) % 2 == 0
         return {'cut_weight': (sum(w for _, _, w in edges)-energy)//2,
                 'ising_energy': energy, 'original_edges_checked': m}
-    if task == 'T032':
+    if task == 'T034':
         matrix = s['matrix']
         checked = 0
         # The task uses row masks; this audit uses column triples and row sums.
@@ -1022,8 +1022,8 @@ def independent_quantity(task, s, config=None):
             checked += 1
         return {'ones': sum(sum(row) for row in matrix),
                 'column_triples_checked': checked, 'forbidden_submatrices': 0}
-    if task == 'T030':
-        data = _packed_graph_bytes(ROOT / 'tasks/t030/data/DSJC1000.5.bits', 1000, 249826)
+    if task == 'T038':
+        data = _packed_graph_bytes(ROOT / 'tasks/t038/data/DSJC1000.5.bits', 1000, 249826)
         groups = {}
         assert len(s['colors']) == 1000
         for vertex, color in enumerate(s['colors']):
@@ -1035,7 +1035,7 @@ def independent_quantity(task, s, config=None):
                 checked += 1
         return {'color_count': len(groups), 'within_color_pairs_checked': checked,
                 'graph_edge_count': 249826}
-    if task == 'T031':
+    if task == 'T100':
         word = s['word']
         # Test each required word by independent substring lookup, rather than
         # classifying the candidate's sliding windows as the task checker does.
@@ -1043,9 +1043,9 @@ def independent_quantity(task, s, config=None):
             assert ''.join(permutation) in word
         assert set(word) == set('1234567')
         return {'string_length': len(word), 'required_substrings_checked': 5040}
-    if task == 'T028':
+    if task == 'T094':
         data = json.loads((ROOT /
-            'tasks/t028/data/ta051.json').read_text())['processing_times']
+            'tasks/t094/data/ta051.json').read_text())['processing_times']
         permutation = s['permutation']
         assert sorted(permutation) == list(range(1, 51))
         # Full table in machine order, separate from the rolling job-order checker.
@@ -1055,7 +1055,7 @@ def independent_quantity(task, s, config=None):
                 table[machine][position] = max(table[machine-1][position],
                     table[machine][position-1]) + data[machine-1][permutation[position-1]-1]
         return {'makespan': table[20][50], 'operations': 1000}
-    if task == 'T029':
+    if task == 'T086':
         terms = [(list(map(F, term['alpha'])), list(map(F, term['beta'])),
                   list(map(F, term['gamma']))) for term in s['terms']]
         # All pairs of input basis matrices determine a bilinear map exactly.
@@ -1075,8 +1075,8 @@ def independent_quantity(task, s, config=None):
                 checked += 9
         return {'rank_terms': len(terms), 'basis_pairs': 81,
                 'output_coefficients_checked': checked}
-    if task == 'T027':
-        with gzip.open(ROOT / 'tasks/t027/data/tai256c.dat.gz', 'rt', encoding='ascii') as stream:
+    if task == 'T093':
+        with gzip.open(ROOT / 'tasks/t093/data/tai256c.dat.gz', 'rt', encoding='ascii') as stream:
             values = list(map(int, stream.read().split()))
         n = values[0]
         assert n == 256 and len(values) == 1+2*n*n
@@ -1091,7 +1091,7 @@ def independent_quantity(task, s, config=None):
                    for u in range(n) for v in range(n))
         return {'quadratic_cost': cost, 'terms': n*n,
                 'inverse_permutation_checked': True}
-    if task == 'T026':
+    if task == 'T067':
         colors = s['colors']
         n = len(colors)
         assert s['n'] == n
@@ -1103,7 +1103,7 @@ def independent_quantity(task, s, config=None):
                 checked += 1
         return {'prefix_length': n, 'pairs_including_equal': checked,
                 'monochromatic_sums': 0}
-    if task == 'T025':
+    if task == 'T065':
         points = s['points']
         assert all(len(point) == 7 for point in points)
         checked = 0
@@ -1112,7 +1112,7 @@ def independent_quantity(task, s, config=None):
             checked += 1
         return {'points': len(points), 'triples_checked': checked,
                 'affine_lines': 0}
-    if task == 'T024':
+    if task == 'T033':
         neighbors = [set(row) for row in s['adjacency']]
         assert len(neighbors) == config['parameters']['vertices']
         checked = 0
@@ -1123,7 +1123,7 @@ def independent_quantity(task, s, config=None):
             checked += 1
         return {'edges': sum(len(row) for row in neighbors)//2,
                 'four_subsets_checked': checked, 'four_cycles': 0}
-    if task == 'T021':
+    if task == 'T012':
         points = []
         for u, v in s['points']:
             u, v = F(u), F(v)
@@ -1146,7 +1146,7 @@ def independent_quantity(task, s, config=None):
         return {'energy_interval': [str(F(total, scale)), str(F(total+pairs, scale))],
                 'pairs': pairs, 'minimum_squared_distance': str(min(distances)),
                 'unit_sphere_equations_exact': True}
-    if task == 'T022':
+    if task == 'T032':
         adjacency = [set(row) for row in s['adjacency']]
         count = 0
         for subset in itertools.combinations(range(len(adjacency)), 5):
@@ -1155,7 +1155,7 @@ def independent_quantity(task, s, config=None):
             count += 1
         return {'vertices': len(adjacency), 'edges': sum(map(len, adjacency))//2,
                 'five_subsets_checked': count, 'forbidden_subsets': 0}
-    if task == 'T023':
+    if task == 'T054':
         parameters = config['parameters']
         array = s['array']
         required = set(itertools.product(range(parameters['alphabet_size']),
@@ -1171,7 +1171,7 @@ def independent_quantity(task, s, config=None):
         margin = min((x-u)**2+(y-v)**2-4*r*r for (x,y),(u,v) in itertools.combinations(p,2))
         assert margin >= 0
         return {"radius": str(r), "smallest_squared_pair_margin": str(margin)}
-    if task == "T002":
+    if task == "T003":
         import sympy as sp
         def q(x): return sp.sympify(str(x).replace('sqrt2','sqrt(2)'))
         xs, ys = [], []
@@ -1181,38 +1181,38 @@ def independent_quantity(task, s, config=None):
             for a,b in itertools.product((-1,1),repeat=2):
                 xs.append(sp.expand(x+(a*c-b*sn)/2)); ys.append(sp.expand(y+(a*sn+b*c)/2))
         side=max(sp.simplify(max(v)-min(v)) for v in (xs,ys))
-        if config is None or config['id']=='T002-C01':
+        if config is None or config['id']=='T003-C01':
             assert sp.simplify(side-(7+3*sp.sqrt(2))/2)==0
         return {"bounding_side": str(side)}
-    if task == "T003":
+    if task == "T002":
         return {"sum_radii": str(sum((F(c['r']) for c in s['circles']),F(0)))}
-    if task == "T004":
+    if task == "T011":
         import mpmath as mp
         with mp.workdps(80):
             p=[[mp.mpf(str(F(x).numerator))/F(x).denominator for x in v] for v in s['points']]
             cosine=max(sum(x*y for x,y in zip(a,b))/mp.sqrt(sum(x*x for x in a)*sum(y*y for y in b)) for a,b in itertools.combinations(p,2))
             return {"minimum_angle_80_digits": mp.nstr(mp.acos(cosine),80)}
-    if task == "T005":
+    if task == "T017":
         p=[[F(x) for x in v] for v in s['points']]
         area=min(abs(a[0]*b[1]+b[0]*c[1]+c[0]*a[1]-a[1]*b[0]-b[1]*c[0]-c[1]*a[0])/2 for a,b,c in itertools.combinations(p,3))
-        if config is None or config['id']=='T005-C01': assert area==F(1,27)
+        if config is None or config['id']=='T017-C01': assert area==F(1,27)
         return {"minimum_triangle_area":str(area),"triangles":math.comb(len(p),3)}
-    if task == "T006":
+    if task == "T030":
         import networkx as nx
         parameters = config['parameters']
         g=nx.Graph();g.add_nodes_from(range(s['vertices']));g.add_edges_from(s['edges'])
         assert nx.is_connected(g) and set(dict(g.degree()).values())=={parameters['degree']}
         girth=nx.girth(g); assert girth>=parameters['girth']
         return {"order":len(g),"networkx_girth":girth}
-    if task == "T007":
+    if task == "T058":
         differences=[abs(a-b) for a,b in itertools.combinations(s['marks'],2)]
         expected=math.comb(len(s['marks']),2)
         assert len(differences)==len(set(differences))==expected and min(differences)>0
         return {"distinct_positive_differences":expected,"span":max(s['marks'])-min(s['marks'])}
-    if task == "T012":
+    if task == "T069":
         a=s['set']; ns=len({x+y for x,y in itertools.product(a,repeat=2)});nd=len({x-y for x,y in itertools.product(a,repeat=2)})
         return {"cardinality":len(a),"sumset":ns,"difference_set":nd,"ratio":math.log(ns/len(a))/math.log(nd/len(a))}
-    if task == "T008":
+    if task == "T053":
         params = config['parameters']
         v, k, t = (params[name] for name in ('v', 'k', 't'))
         blocks = s['blocks']
@@ -1223,7 +1223,7 @@ def independent_quantity(task, s, config=None):
             mask = sum(1 << x for x in subset)
             assert any(mask & block == mask for block in masks)
         return {"blocks": len(masks), "subsets_checked": math.comb(v, t), "subset_size": t}
-    if task == "T009":
+    if task == "T046":
         params = config['parameters']
         matrix = s['generator_matrix']
         assert len(matrix) == params['k'] and all(len(row) == params['n'] for row in matrix)
@@ -1232,7 +1232,7 @@ def independent_quantity(task, s, config=None):
         for row in rows: space |= {x^row for x in list(space)}
         assert len(space)==1<<params['k']
         return {"codewords":len(space),"minimum_distance":min(x.bit_count() for x in space if x)}
-    if task == "T010":
+    if task == "T047":
         params = config['parameters']
         words = s['codewords']
         assert len(words) == len(set(words))
@@ -1240,19 +1240,19 @@ def independent_quantity(task, s, config=None):
         d = min(((a ^ b).bit_count() for a, b in itertools.combinations(words, 2)), default=None)
         assert d is None or d >= params['distance']
         return {"codewords":len(words),"minimum_distance":d}
-    if task == "T013":
+    if task == "T073":
         a=s['sequence']; bits=sum((x==1)<<i for i,x in enumerate(a))
         correlations=[len(a)-k-2*((bits^(bits>>k))&((1<<(len(a)-k))-1)).bit_count() for k in range(1,len(a))]
         return {"energy":sum(x*x for x in correlations),"lags":len(correlations)}
-    if task in ('T014','T015','T016'):
+    if task in ('T076','T078','T077'):
         a=[F(x) for x in s['coefficients']];b=[F(0)]*(2*len(a)-1)
         for i,x in enumerate(a):
             for j,y in enumerate(a): b[i+j]+=x*y
         mass=sum(a)
-        if task=='T015': value=(2*sum(x*x for x in b)+sum(x*y for x,y in zip(b,b[1:])))/(3*max(b)*mass*mass)
+        if task=='T078': value=(2*sum(x*x for x in b)+sum(x*y for x,y in zip(b,b[1:])))/(3*max(b)*mass*mass)
         else: value=2*len(a)*max(abs(x) for x in b)/(mass*mass)
         return {"exact_objective":str(value),"convolution_entries":len(b)}
-    if task == 'T017':
+    if task == 'T080':
         a=[F(x) for x in s['heights']];h=F(2,51); values=[]
         # Integrate segment intersections directly; no checker lag function.
         for lag in range(-51,52):
@@ -1264,17 +1264,17 @@ def independent_quantity(task, s, config=None):
             values.append(value)
         assert h*sum(a)==1
         return {"maximum_overlap":str(max(values)),"integral":"1","knots_including_zero_exterior":103}
-    if task == 'T011':
+    if task == 'T040':
         words=s['words']
         q = config['parameters']['q']
         power = config['parameters']['power']
         assert all(len(word) == power and all(0 <= x < q for x in word) for word in words)
         for a,b in itertools.combinations(words,2): assert any((x-y)%q not in (0,1,q-1) for x,y in zip(a,b))
         return {"independent_words":len(words),"pairs":len(words)*(len(words)-1)//2}
-    if task == 'T018':
+    if task == 'T085':
         from sympy import Matrix
         return {"absolute_determinant":str(abs(Matrix(s['matrix']).det(method='domain-ge')))}
-    if task == 'T019':
+    if task == 'T087':
         a = s['tuple']
         count = config['parameters']['k']
         assert len(a) == len(set(a)) == count
@@ -1285,7 +1285,7 @@ def independent_quantity(task, s, config=None):
             residues = {x % prime for x in a}
             missing[str(prime)] = next(r for r in range(prime) if r not in residues)
         return {"diameter":max(a)-min(a),"primes":len(primes),"missing_residues":missing}
-    if task == 'T020':
+    if task == 'T088':
         a=s['chain'];seen={1};assert a[0]==1
         for value in a[1:]:
             assert value>max(seen) and any(value-x in seen for x in seen);seen.add(value)

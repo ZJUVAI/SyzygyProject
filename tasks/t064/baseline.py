@@ -1,46 +1,57 @@
-"""Fixed-seed search over traditional grid-diagonal patterns."""
+"""Deterministic fixed-seed greedy search for large independent sets."""
+
+import math
 import os
 import random
+import time
 
-from mathbench.search import search_steps
-from tasks.t064.grid_method import build_grid
+from tasks.t064.check import CONFIG_ID, N
 
-ITERATION_LIMIT = 3
+
+def _greedy(order):
+    chosen = set()
+    for value in order:
+        if all(value - k * k not in chosen and value + k * k not in chosen
+               for k in range(1, math.isqrt(N) + 1)):
+            chosen.add(value)
+    return {"elements": sorted(chosen)}
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T064-C01") != "T064-C01":
-        raise ValueError("unsupported T064 configuration")
+    chosen_config = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen_config != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen_config}")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    order = [0, 1, 2]
-    random.Random(seed).shuffle(order)
-    best = None
-    best_count = None
-    tested = []
-    for index in search_steps(ITERATION_LIMIT):
-        pattern = order[index]
-        candidate = build_grid(pattern)
-        count = len(candidate["steiner_points_x"])
-        tested.append(pattern)
-        if best_count is None or count < best_count:
-            best, best_count = candidate, count
-    if best is None:
-        best = build_grid(0)
-        best_count = len(best["steiner_points_x"])
-    best["search_metadata"] = {
-        "algorithm": "fixed-count comparison of Cartesian-grid diagonal patterns",
-        "seed": seed,
-        "tested_patterns": tested,
-        "iterations": len(tested),
-        "iteration_limit": ITERATION_LIMIT,
-        "reference_data_read": False,
-        "budget": {
-            "mode": "wall_clock_cutoff" if seconds is not None else "fixed_iteration_count",
-            "requested_iterations": ITERATION_LIMIT,
-            "actual_iterations": len(tested),
-            "requested_wall_clock_seconds": seconds,
+    trials = int(os.environ.get("T064_SEARCH_TRIALS", "3"))
+    if trials < 0:
+        raise ValueError("trial count must be nonnegative")
+    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds_text is not None:
+        seconds = float(seconds_text)
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + seconds
+
+    best = _greedy(range(1, N + 1))
+    rng = random.Random(seed)
+    completed = 0
+    for _ in range(trials):
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        order = list(range(1, N + 1))
+        rng.shuffle(order)
+        candidate = _greedy(order)
+        completed += 1
+        if len(candidate["elements"]) > len(best["elements"]):
+            best = candidate
+    return {
+        **best,
+        "search": {
+            "algorithm": "ascending greedy incumbent plus fixed-seed random-order greedy",
+            "seed": seed,
+            "trial_limit": trials,
+            "trials_completed": completed,
+            "reference_data_read": False,
         },
     }
-    best.pop("construction_metadata", None)
-    return best

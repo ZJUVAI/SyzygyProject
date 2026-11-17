@@ -1,21 +1,38 @@
-# T071 implementation record
+# T071 implementation and verification
 
 Status: `accepted_by_sol`.
 
-The fixed configuration is a binary length-16 code correcting one deletion. A candidate is valid when no two distinct codewords share any length-15 string obtained by deleting one bit. The checker forms every distinct one-deletion output and checks pairwise disjointness exactly. It does not assume that each codeword has 16 distinct outputs.
+## Sources and scope
 
-The frozen VT_0(16) witness is stored at `data/human/vt16_3856.json`, SHA-256 `f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae`. The human asset is a separate copy at `data/human/vt16_3856.json` with the same hash. The formula program independently reconstructs all 3,856 words from the checksum modulo 17, and the checker confirms their deletion outputs are disjoint.
+- Primary source: Gyarmati, Hennecart, and Ruzsa, *Sums and Differences of Finite Sets*, manuscript dated 2008-05-30, Section 2 lemma before equation (11) and equations (13)-(15): <https://gyarmatikati.web.elte.hu/publ/sumdiffv.pdf>.
+- The lemma requires the strict finite condition `d<q`, where `d=|U-U|` and `q=2 max(U)+1`. The checker enforces this exact hypothesis.
+- The human baseline is the published `V(6,5)` projection formula reconstructed locally. Exact recounting gives 462 points, `s=8008`, `d=39733`, `max(U)=555555`, and `q=1111111`. The witness is `data/reference/gyarmati_hennecart_ruzsa_m6_l5.json`, SHA-256 `39cb22a35e93fdd3a2431a121f3b8fa015c0b8ce5c84ca5304cfcb1c59777f39`.
+- No optimality proof for the bounded benchmark domain was identified. The paper's small-set result for cardinality at most 11 does not cover this domain, which allows up to 512 elements. The finite witness score is not an asymptotic exponent.
+- `data/source/objective_distinction_examples.json` records exact ranking reversals against T069 and T070. It is not read by any search program.
 
-The 2026 paper, arXiv:2504.00613v2, §1 and §2.2 says VT codes are conjectured maximum for all finite lengths and that optimality is proved only for n≤11. Its §5.1 Table 1 records 3,856 at n=16 for VT_0 and an LP upper bound of 4,202. The same paper reports an AI-assisted priority-function rediscovery proved equivalent to VT_0; it reaches the same 3,856 and does not prove the n=16 maximum. Classical and AI-assisted provenance are recorded separately.
+## Programs and isolation
 
-The initial program returns the valid one-word code `{0}`. The fixed-seed traditional baseline greedily scans two random permutations of all 65,536 words, adding a word only if all its deletion outputs are new. Seed 0 yielded 1,941 codewords after 131,072 candidate visits in 0.992 seconds. The verified witness is saved in `data/search/seed-0.json`; the replay command and environment are in `data/search/seed-0.metadata.json`. The baseline does not read either comparison witness.
+`init_program.py` returns the simple set `{0,1,4}`. `baseline.py` and `evolution.py` start from that seed and use only their own integer-set mutations and exact finite sum/difference counts for heuristic feedback. They do not import `human.py`, `reference.py`, or comparison data. Their defaults are 500 local-search iterations and 60 evolutionary generations with population 6. Both use seed 0 by default and accept `MATHBENCH_SEED`; the runner may also set `MATHBENCH_SEARCH_SECONDS` for a wall-clock exploration cutoff.
 
-Validation command:
+`human.py` generates the finite simplex projection from the cited formula. `reference.py` replays the frozen JSON witness. The source file is local to this task. The evaluator adapter uses the shared runner; no shared code or registry was changed.
 
-```sh
-.venv/bin/python -m pytest tasks/t071/test_task.py -q
-```
+## Verification
 
-The tests cover all five entries, the exact VT checksum witness, repeated deletion outputs within a word, a deliberately colliding pair, duplicates, invalid types and ranges, ignored claimed scores, repeatable seeded search, and `_run` error/timeout behavior without changing the task registry. Default generation and verification budgets are 300 and 60 seconds, with 4 GiB and one thread.
+The checker rejects non-integer values (including booleans), duplicates, missing zero, invalid cardinality, out-of-range elements, configuration drift, and candidates with `d>=q`. It recomputes both sets from all ordered pairs. It ignores candidate score fields and evaluates the logarithms with outward-rounded mpmath intervals at 80 decimal digits. The returned objective is the lower interval endpoint for maximization.
 
-Result: 15 passed in 24.29 seconds on Python 3.13.12, Linux x86_64. JSON syntax checks passed for the task definition, SOTA, records, and saved run metadata. `git diff --check -- tasks/t071` passed.
+The saved `V(6,5)` witness has interval:
+
+`[1.115060403741140735041045058838694409478537675104001271984446801146236339133304588949, 1.115060403741140735041045058838694409478537675104001271984446801146236339133304591057]`.
+
+The conservative lower endpoint is frozen as the compatibility baseline `H`. The strict condition, formula counts, witness hash, interval, and ranking reversal examples are covered by task-local tests.
+
+## Commands run
+
+Environment: repository `.venv/bin/python` (Python 3.13); seed 0; default fixed search budgets. Each program was run through its module entry point with `MATHBENCH_CONFIG_ID=T071-C01` and `MATHBENCH_SEED=0`.
+
+- `.venv/bin/python -m pytest tasks/t071 -q` — 9 passed.
+- Ran `init_program`, `baseline`, `evolution`, `human`, and `reference`; all returned valid output. The simple seed and both search methods returned 3-element sets; human and reference returned the 462-element witness.
+- Validated `task.json`, `bestknown.json`, and both source JSON files with `python -m json.tool` — passed.
+- `git diff --check -- tasks/t071` — passed.
+
+Task-local tests cover formula counts and strict inequality, human/reference replay, all five entry points, ranking reversals, boundaries, invalid inputs, declared-score tampering, record consistency, and runner error/timeout paths. Full upstream model comparisons have not been run.

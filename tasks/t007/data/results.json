@@ -3,21 +3,24 @@
     "task_id": "T007",
     "config_id": "T007-C01",
     "validity": 1.0,
-    "combined_score": 1.0,
-    "objective": 623,
+    "combined_score": 1.087006436884857,
+    "objective": "3804522529097/1000000000000",
     "verification_status": "exact",
-    "generation_time": 241.0876658372581,
-    "verification_time": 0.16488481312990189,
-    "objective_value": 623,
+    "generation_time": 121.94957322627306,
+    "verification_time": 0.5159133672714233,
+    "objective_value": "3804522529097/1000000000000",
     "details": {
-      "marks": 29,
-      "differences_checked": 406
+      "circle_count": 21,
+      "target_radius": "3804522529097/1000000000000",
+      "critical_points_checked": 1550,
+      "coverage_certificate": "All restricted Voronoi vertices, pair-bisector boundary crossings, boundary distance extrema, and fixed boundary representatives were checked exactly.",
+      "claimed_score_ignored": true
     },
-    "eval_time": 241.25665834918618,
-    "seed": 10,
+    "eval_time": 122.47750220820308,
+    "seed": 6708501,
     "strict": true,
     "budget": {
-      "generation_seconds": 300,
+      "generation_seconds": 145,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -26,35 +29,56 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 80
+      "worker_cpu": 125
     }
+  },
+  "initial_result": {
+    "objective": "1",
+    "objective_value": "1",
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.2857142857142857
   },
   "provenance": {
     "reviewer": "Sol main agent",
     "status": "reviewed_by_sol",
-    "date": "2026-11-06",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t085/runs/search_gap36_20261109_gap36_exactscale/summary.json",
     "source_hashes_verified": true,
     "independent_quantity": {
-      "distinct_positive_differences": 406,
-      "span": 623
+      "radius": "3804522529097/1000000000000",
+      "circle_count": 21,
+      "distinct_centers": 21,
+      "boxes_checked": 7501,
+      "method": "Exact dyadic subdivision; each retained box lies in one unit disk."
     },
     "claimed_score_ignored": true,
     "damaged_construction_rejected": true,
     "initial_baseline_human_valid": true,
     "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-    "search_agent": {
-      "model": "gpt-6.1-sol",
-      "reasoning_effort": "low",
-      "group": "combinatorics"
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 145,
+      "seed": 6708501,
+      "method": "Search exact rational scale and radius on the saved covering, and test polished Delaunay layouts near the public precision"
     },
     "classification": "ai_assisted_local_continuation",
-    "seed": 10,
+    "seed": 6708501,
     "controls": {
-      "MATHBENCH_SEARCH_SECONDS": "30.0",
-      "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+      "trials": [
+        [
+          "warm",
+          142,
+          142,
+          "512",
+          6708501
+        ]
+      ],
+      "prior_control_summary": "tasks/t085/runs/search_sol1200/summary.json"
     },
     "budget": {
-      "generation_seconds": 300,
+      "generation_seconds": 145,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -63,65 +87,296 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 80
+      "worker_cpu": 125
     },
     "source_sha256": {
-      "tasks/t007/baseline.py": "cbc1e4961fa6632742d762945f03e4f6e9543db67093a0ff153216f76d4b4d3b",
-      "tasks/t007/check.py": "133b57bc977396c53b262e29afb8ba6a47c9dcf155e66597a56c347b44b0e247",
-      "tasks/t007/evaluator.py": "b1759ba0fc9874c906c6af6fd7060ef1e3f38469ffc526c9a4ff0b5a218ff493",
-      "tasks/t007/evolution.py": "4c3339aee5d985c50a48e14f0d91ce055006abafea5a92850591c3011d42b2ae",
-      "tasks/t007/human.py": "6d230266dbf58e8aa7627f7174a1fec654636924042242abe4d8f3d239f818e9",
-      "tasks/t007/init_program.py": "3450fac6f6fd1d2692a3228742c1f5f22538e335b0cbd9e7d55d96afad2c2ff3",
-      "tasks/t007/reference.py": "ea0c4308579142d58934abf21985f3dc2eff2d02e36cbc8cc10f67189c7847a2",
-      "tasks/t007/sota.py": "8ce8a3eb0c484c95bd630ce7cfcbc86386dd73ea75e4c11bcbd7f79f02f0d38e",
-      "tasks/t007/test_singer_constructor.py": "f2753a9a1f9677ea4560fc7202625c6405f689966675c5613ee45ea913a8f43b",
-      "tasks/t007/test_task.py": "c44dd1277daff5a0ce9e2f2537f388eec3a102cc277c8e9670795f3e0e84d6dd"
+      "tasks/t085/baseline.py": "e42903d9809261cdac3deeec0592209f4c8403a8c4fb80c454a663e186b20227",
+      "tasks/t085/check.py": "c60c336df39cf8f63de103bb3cb93b1d2d0cc5fdcaf9cd55156d516650a17d40",
+      "tasks/t085/evaluator.py": "c531c654c1dfd0e1a8bdd5af3d8673880bc2ae2491c8a556e3a431523940c2c5",
+      "tasks/t085/evolution.py": "67fbef252fffb194b5c580bc091af335461180d0d1d193ad06294ebea84fcf92",
+      "tasks/t085/human.py": "f97feb4df35995ac2330cca8742d12c49fa432b7076699a276c169bb6b331e98",
+      "tasks/t085/init_program.py": "1d7f689b8f589ccf14a075cca53c2c12839f630be3ac0dd5570ea5ff70faca83",
+      "tasks/t085/reference.py": "738586ed8fe39a6317d86be946ad4ca315e96fb281f8254a3489795a4d28a95b",
+      "tasks/t085/search_core.py": "eb2d1dcbb6724a885ae5dbe7f2c5be232973254cee948285d61c48f7f6b322f4",
+      "tasks/t085/test_task.py": "adca9d36628f0a8f6a2edd6191334500e3d2f7e5fff69328f910cf3292b29f98",
+      "program.py": "4e700174d3a5c48870b1c64b58e3ca8022e9c51087ab655e9ff85ce5d66ae8ab",
+      "plan.json": "6e0fecff510b921e8e03a6590ea075aeea28935b71f57f339cb10c44a7f92ef1"
     },
-    "warm_start_sha256": "42c7eb789f4fa37cfa4d5969c4e6cb21665018253f98b8a88354c6770e42002d",
-    "replay_command": "python -m mathbench replay T007 tasks/t007/data/results.json --config T007-C01"
-  },
-  "initial_result": {
-    "objective": 1158,
-    "objective_value": 1158,
-    "validity": 1.0,
-    "verification_status": "exact",
-    "combined_score": 0.5379965457685665
+    "warm_start_sha256": "343f603e41d2d6d4255d6ae2de74a84cf7e883e01676914902b809e19be9ce7a",
+    "replay_command": ".venv/bin/python -m mathbench replay T007 tasks/t007/data/results.json --config T007-C01",
+    "prior_result_records": {
+      "bestknown": {
+        "T085-C01": {
+          "best_own_search": {
+            "value": "3804522529097/1000000000000",
+            "objective_value": "3804522529097/1000000000000",
+            "witness": "data/results.json",
+            "witness_sha256": "c2e2d39b66133ad79d2c95ab27fc5cde008fe21361f98bf60d85e8d4a1d0c5ca",
+            "parameters": {
+              "circle_count": 21,
+              "covering_circle_radius": 1,
+              "target": "closed disk centered at origin",
+              "center_domain": "unbounded rational coordinates",
+              "radius_domain": "positive rational"
+            },
+            "seed": 6708501,
+            "verification_status": "exact",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "attempts": 1325,
+              "exact_checks": 24,
+              "improvements": [
+                3.80452108162419,
+                3.804522270536285,
+                3.8045224191407856,
+                3.8045224934430357,
+                3.804522502726061,
+                3.804522507367574,
+                3.804522507938252,
+                3.804522508204568,
+                3.804522508356749,
+                3.804522529059,
+                3.804522529082,
+                3.804522529083,
+                3.804522529084,
+                3.80452252909,
+                3.804522529097
+              ]
+            },
+            "generation_record": {
+              "task_id": "T085",
+              "config_id": "T085-C01",
+              "validity": 1.0,
+              "combined_score": 1.087006436884857,
+              "objective": "3804522529097/1000000000000",
+              "verification_status": "exact",
+              "generation_time": 121.94957322627306,
+              "verification_time": 0.5159133672714233,
+              "objective_value": "3804522529097/1000000000000",
+              "details": {
+                "circle_count": 21,
+                "target_radius": "3804522529097/1000000000000",
+                "critical_points_checked": 1550,
+                "coverage_certificate": "All restricted Voronoi vertices, pair-bisector boundary crossings, boundary distance extrema, and fixed boundary representatives were checked exactly.",
+                "claimed_score_ignored": true
+              },
+              "eval_time": 122.47750220820308,
+              "seed": 6708501,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 145,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 125
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed."
+          }
+        }
+      },
+      "records": {
+        "T085-C01": {
+          "best_own_search": {
+            "value": "3804522529097/1000000000000",
+            "objective_value": "3804522529097/1000000000000",
+            "witness": "data/results.json",
+            "witness_sha256": "c2e2d39b66133ad79d2c95ab27fc5cde008fe21361f98bf60d85e8d4a1d0c5ca",
+            "parameters": {
+              "circle_count": 21,
+              "covering_circle_radius": 1,
+              "target": "closed disk centered at origin",
+              "center_domain": "unbounded rational coordinates",
+              "radius_domain": "positive rational"
+            },
+            "seed": 6708501,
+            "verification_status": "exact",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "attempts": 1325,
+              "exact_checks": 24,
+              "improvements": [
+                3.80452108162419,
+                3.804522270536285,
+                3.8045224191407856,
+                3.8045224934430357,
+                3.804522502726061,
+                3.804522507367574,
+                3.804522507938252,
+                3.804522508204568,
+                3.804522508356749,
+                3.804522529059,
+                3.804522529082,
+                3.804522529083,
+                3.804522529084,
+                3.80452252909,
+                3.804522529097
+              ]
+            },
+            "generation_record": {
+              "task_id": "T085",
+              "config_id": "T085-C01",
+              "validity": 1.0,
+              "combined_score": 1.087006436884857,
+              "objective": "3804522529097/1000000000000",
+              "verification_status": "exact",
+              "generation_time": 121.94957322627306,
+              "verification_time": 0.5159133672714233,
+              "objective_value": "3804522529097/1000000000000",
+              "details": {
+                "circle_count": 21,
+                "target_radius": "3804522529097/1000000000000",
+                "critical_points_checked": 1550,
+                "coverage_certificate": "All restricted Voronoi vertices, pair-bisector boundary crossings, boundary distance extrema, and fixed boundary representatives were checked exactly.",
+                "claimed_score_ignored": true
+              },
+              "eval_time": 122.47750220820308,
+              "seed": 6708501,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 145,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 125
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed."
+          }
+        }
+      }
+    },
+    "task_id_migration": {
+      "from": "T085",
+      "to": "T007",
+      "source_revision": "c9f93552f9ad54f779b1f9cca2e13f39e5ab8d30",
+      "date": "2026-11-17",
+      "note": "Reordered by research direction. Construction bytes and objective are unchanged. Historical source paths and hashes are preserved."
+    }
   },
   "solution": {
-  "marks": [
-    0,
-    3,
-    28,
-    33,
-    41,
-    95,
-    156,
-    158,
-    193,
-    207,
-    233,
-    252,
-    267,
-    338,
-    339,
-    355,
-    394,
-    403,
-    421,
-    473,
-    479,
-    502,
-    523,
-    570,
-    580,
-    592,
-    612,
-    616,
-    623
+  "radius": "3804522529097/1000000000000",
+  "centers": [
+    [
+      "27358058817/1000000000000",
+      "10733732371/200000000000"
+    ],
+    [
+      "884385076981/500000000000",
+      "594133402829/1000000000000"
+    ],
+    [
+      "884540852147/1000000000000",
+      "408955224287/250000000000"
+    ],
+    [
+      "-55814673481/100000000000",
+      "1780460332401/1000000000000"
+    ],
+    [
+      "-409482996567/250000000000",
+      "60362845833/100000000000"
+    ],
+    [
+      "-70659557067/50000000000",
+      "-1001894115017/1000000000000"
+    ],
+    [
+      "9641710133/500000000000",
+      "-866101157699/500000000000"
+    ],
+    [
+      "290127805393/200000000000",
+      "-970999417863/1000000000000"
+    ],
+    [
+      "3167780203011/1000000000000",
+      "1187281018391/1000000000000"
+    ],
+    [
+      "2160627998883/1000000000000",
+      "2487858987201/1000000000000"
+    ],
+    [
+      "372131948511/500000000000",
+      "3209955325703/1000000000000"
+    ],
+    [
+      "-899896623727/1000000000000",
+      "652218947129/200000000000"
+    ],
+    [
+      "-137954934003/62500000000",
+      "2345156457717/1000000000000"
+    ],
+    [
+      "-408993789413/125000000000",
+      "109994226829/100000000000"
+    ],
+    [
+      "-3089469570331/1000000000000",
+      "-458785112931/1000000000000"
+    ],
+    [
+      "-356873796787/125000000000",
+      "-2049813936579/1000000000000"
+    ],
+    [
+      "-1421270682329/1000000000000",
+      "-174235162057/62500000000"
+    ],
+    [
+      "18115739759/1000000000000",
+      "-878647980247/250000000000"
+    ],
+    [
+      "180432895453/125000000000",
+      "-2769787753029/1000000000000"
+    ],
+    [
+      "2812123857109/1000000000000",
+      "-2001870059221/1000000000000"
+    ],
+    [
+      "319448686133/100000000000",
+      "-51099424959/125000000000"
+    ]
   ],
-  "search_method": "Singer multiplier/deletion family and bounded multi-mark exact refill",
-  "search_iterations": 181068,
-  "accepted_moves": 156
+  "search_metadata": {
+    "attempts": 1325,
+    "exact_checks": 24,
+    "improvements": [
+      3.80452108162419,
+      3.804522270536285,
+      3.8045224191407856,
+      3.8045224934430357,
+      3.804522502726061,
+      3.804522507367574,
+      3.804522507938252,
+      3.804522508204568,
+      3.804522508356749,
+      3.804522529059,
+      3.804522529082,
+      3.804522529083,
+      3.804522529084,
+      3.80452252909,
+      3.804522529097
+    ]
+  }
 }
 
 }

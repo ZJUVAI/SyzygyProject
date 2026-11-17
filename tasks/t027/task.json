@@ -1,43 +1,34 @@
 {
   "task_id": "T027",
-  "name": "Quadratic assignment on QAPLIB tai256c",
+  "name": "Minimum dilation triangulation of the regular 120-gon",
   "acceptance_status": "accepted_by_sol",
-  "candidate_id": "quadratic-assignment",
   "official_configuration": "T027-C01",
   "configurations": [
     {
       "id": "T027-C01",
       "parameters": {
-        "instance": "QAPLIB tai256c",
-        "n": 256,
-        "matrix_file": "data/tai256c.dat.gz",
-        "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
-        "permutation_convention": "zero-based location assigned to each zero-based facility",
-        "objective": "sum_{i=0}^{255} sum_{j=0}^{255} A[i,j] * B[p[i],p[j]]",
-        "objective_unit": "QAPLIB objective units",
-        "feasibility": "p is a bijection from {0,...,255} to {0,...,255}",
-        "source_snapshot": "Debian r-cran-qap 0.1-1-2, QAPLIB files"
+        "vertices": 120,
+        "polygon": "regular convex 120-gon, vertices in counterclockwise cyclic order",
+        "construction": "straight-line triangulation using polygon vertices only",
+        "objective": "minimize over triangulations the maximum, over distinct vertex pairs, of shortest-path length divided by Euclidean chord length",
+        "distance": "Euclidean chord length"
       },
       "direction": "minimize",
-      "human_reference": 44759294
+      "human_reference": 1.449476373154
     }
   ],
-  "search_metadata": {
-    "algorithm": "randomized first-improvement pair-swap local search",
-    "default_seed": 0,
-    "candidate_reads_reference_witness": false,
-    "baseline_default_checks": 10000,
-    "budget_note": "Default search uses a fixed check count and seed. An explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
-  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "数学模型": "固定QAPLIB tai256c的两份256阶整数矩阵。最小化65536项二次指派成本。",
-      "人类来源": "QAPLIB将44759294归于ANT，并在1997年历史中记载Stützle。复现归档排列，不声称重跑原搜索。",
-      "独立验算": "主代理取逆排列，按位置顺序独立累计全部65536项。五种程序均通过严格重放、破坏、分数篡改、冷导出及异常控制。",
-      "开放状态与限制": "arXiv:2401.09439v2正文报告下界44200000，上界44759294。版本为2024-09-30，PDF题页2024-10-01。摘要及两个网页仍有不同旧下界，已保留差异。最新搜索未发现闭合证明，搜索并不穷尽。"
+      "definition": "Exactregularconvex120gon, allstraightvertextriangulations, minovertriangulations maxoverdistinctvertexpairs shortestgraphpath/Euclideanchord. NoapproximatepointsetorSteinervertices.",
+      "primary_source": "Rootchecked2026JoCG17(2)Fekete-Keldenich-Perkdoi10.20382/jocg.v17i2a1, computationregularn4..100only. UBC6fanrulefornmultiple6rebuilds120case. SattariIzadi2019universalregularpolygonupperbound1.4482appliesto120butneithera120optimalityproofnorareproducedspecificwitness. Currentfixed120proofsearchfoundnoclosure.",
+      "human_method": "Hubs0,40,80,centraltriangle,nearesthubedgeswithalltiedhubsandallboundaryedges,237edges. Rootindependentupper/lowerinterval~1.4494763731539932. Hroundedup1.449476373154. Humanprogramnowdirectlyrebuildsformula; referenceJSONpinnedseparately.",
+      "independent_method": "Rootusesdegree16cyclotomiccosineminimalpolynomialof2cos(pi/60), exactlargestrealrootisolation1e-100, polynomialChebyshevrecurrenceandHornerintervals, integerisqrtchords1e60, andallpairsintegerFloydWarshall. FormalusesMachinpi/sineTaylor1e24andDijkstra. Allfiveindependentintervalslieinsideformalintervals; noncrossing237edgesandallboundaryproveatrangulation.",
+      "returned_corrections": "RootcaughtincorrectTaylorend-termdirections; fixedsinlowernegativek19,upperpositivek18,andexactdiameterchord2. Addedunrounded120digitDecimalcheckthatexposesoldbugwhichintegerroundingcouldhide. Rootalsoreturnednon-stricttypeconfigequalityandhuman6fanfunctioninsearch-importedmodule; nowtypedrecursivematchandhumanformulaonlyhuman.py. Oldinterruptedandsupersededadmissionrunsretained.",
+      "admission": "Freshisolatedlabelallfiveandfullcontrols pass. Coldfan~1.474,randomrecursivebaseline/evolution~1.484,human/reference~1.44948. Ownsavedbestselectsinitialasbetterthansearch; nofalseclaimofsearchimprovement. Damagedmissingedge,claiminvariance,replay,coldexport,error/nonfinite/timeoutpass.14tasktestspassaftercorrections."
     }
-  }
+  },
+  "category": "computational_geometry"
 }

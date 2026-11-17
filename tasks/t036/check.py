@@ -1,86 +1,99 @@
-"""Exact checker for rectilinear drawings of the complete graph K28."""
-from __future__ import annotations
+"""Exact checker for triangle minimization at n=50 and m=700."""
 
-from fractions import Fraction
-from itertools import combinations
-
-N = 28
 CONFIG_ID = "T036-C01"
+PARAMETERS = {
+    "vertices": 50,
+    "edges": 700,
+    "graph": "simple undirected graph",
+    "objective": "number of triangles",
+}
+HUMAN_REFERENCE = 1817
+N = 50
+M = 700
 
 
-def _coordinate(value):
-    if type(value) is int:
-        # Keep integer arithmetic on the hot path. Fractions are retained
-        # only for coordinates explicitly supplied as rational strings.
-        return value
-    if isinstance(value, str):
-        try:
-            result = Fraction(value)
-        except (ValueError, ZeroDivisionError) as exc:
-            raise ValueError("coordinate strings must be exact rational numbers") from exc
-        if str(result) != value:
-            raise ValueError("rational coordinate strings must be canonical")
-        return result
-    raise ValueError("coordinates must be integers or canonical rational strings; floats and bools are invalid")
+def _same_json_types(left, right):
+    if type(left) is not type(right):
+        return False
+    if isinstance(right, dict):
+        return left.keys() == right.keys() and all(
+            _same_json_types(left[key], right[key]) for key in right
+        )
+    if isinstance(right, list):
+        return len(left) == len(right) and all(
+            _same_json_types(a, b) for a, b in zip(left, right)
+        )
+    return left == right
 
 
-def _orientation(a, b, c):
-    return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+def _check_config(config):
+    if not isinstance(config, dict) or set(config) != {
+        "id", "parameters", "direction", "human_reference"
+    }:
+        raise ValueError("configuration must use the complete frozen task configuration")
+    if type(config["id"]) is not str or config["id"] != CONFIG_ID:
+        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
+    if not _same_json_types(config["parameters"], PARAMETERS):
+        raise ValueError("configuration must fix a simple graph with 50 vertices and 700 edges")
+    if type(config["direction"]) is not str or config["direction"] != "minimize":
+        raise ValueError("configuration direction must be minimize")
+    if type(config["human_reference"]) is not int or config["human_reference"] != HUMAN_REFERENCE:
+        raise ValueError("configuration human_reference must be the integer 1817")
 
 
-def _proper_cross(a, b, c, d):
-    return (_orientation(a, b, c) * _orientation(a, b, d) < 0
-            and _orientation(c, d, a) * _orientation(c, d, b) < 0)
+def _count_triangles(adjacency):
+    count = 0
+    for left in range(N):
+        left_mask = adjacency[left]
+        for middle in range(left + 1, N):
+            if left_mask & (1 << middle):
+                later = left_mask & adjacency[middle] & ~((1 << (middle + 1)) - 1)
+                count += later.bit_count()
+    return count
 
 
 def validate(solution, config, strict=False):
-    del strict  # Feasibility and objective are exact for every candidate.
-    if not isinstance(solution, dict) or not isinstance(config, dict):
-        raise ValueError("solution and config must be objects")
-    if config.get("id", CONFIG_ID) != CONFIG_ID:
-        raise ValueError("configuration id must be T036-C01")
-    params = config.get("parameters", config)
-    expected = {
-        "vertices": N,
-        "graph": "complete graph K28",
-        "general_position": "no three points collinear",
-        "crossing_definition": "unordered pairs of disjoint straight edges whose relative interiors intersect",
-    }
-    if not isinstance(params, dict) or any(params.get(k) != v for k, v in expected.items()):
-        raise ValueError("configuration must fix the complete graph K28")
-    raw = solution.get("points")
-    if not isinstance(raw, list) or len(raw) != N:
-        raise ValueError("points must contain exactly 28 coordinate pairs")
-    points = []
-    for point in raw:
-        if not isinstance(point, list) or len(point) != 2:
-            raise ValueError("each point must be a two-element list")
-        points.append((_coordinate(point[0]), _coordinate(point[1])))
-    if len(set(points)) != N:
-        raise ValueError("all 28 points must be distinct")
-    triple_checks = 0
-    for i, j, k in combinations(range(N), 3):
-        if _orientation(points[i], points[j], points[k]) == 0:
-            raise ValueError(f"points {i}, {j}, and {k} are collinear")
-        triple_checks += 1
-    crossings = 0
-    pair_checks = 0
-    # Each four-set has three pairings into disjoint edges.
-    for i, j, k, l in combinations(range(N), 4):
-        q = (points[i], points[j], points[k], points[l])
-        crossings += _proper_cross(q[0], q[1], q[2], q[3])
-        crossings += _proper_cross(q[0], q[2], q[1], q[3])
-        crossings += _proper_cross(q[0], q[3], q[1], q[2])
-        pair_checks += 3
+    """Check the complete graph constraints and count every triangle exactly."""
+    del strict
+    _check_config(config)
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be an object")
+    if type(solution.get("vertices")) is not int or solution["vertices"] != N:
+        raise ValueError("vertices must be the integer 50")
+    edges = solution.get("edges")
+    if not isinstance(edges, list):
+        raise ValueError("edges must be a list")
+    if len(edges) != M:
+        raise ValueError("edges must contain exactly 700 pairs")
+
+    adjacency = [0] * N
+    seen = set()
+    for index, edge in enumerate(edges):
+        if not isinstance(edge, list) or len(edge) != 2:
+            raise ValueError(f"edge {index} must be a two-element list")
+        left, right = edge
+        if type(left) is not int or type(right) is not int:
+            raise ValueError(f"edge {index} endpoints must be integers")
+        if not (0 <= left < N and 0 <= right < N):
+            raise ValueError(f"edge {index} endpoint is outside 0..49")
+        if left == right:
+            raise ValueError(f"edge {index} is a loop")
+        pair = (left, right) if left < right else (right, left)
+        if pair in seen:
+            raise ValueError(f"duplicate undirected edge {pair}")
+        seen.add(pair)
+        adjacency[left] |= 1 << right
+        adjacency[right] |= 1 << left
+
+    triangles = _count_triangles(adjacency)
     return {
-        "objective": crossings,
+        "objective": triangles,
         "verification_status": "exact",
         "details": {
             "vertices": N,
-            "general_position_triples_checked": triple_checks,
-            "disjoint_edge_pairings_checked": pair_checks,
-            "crossings_recomputed": crossings,
+            "edge_count": len(seen),
+            "triangle_count": triangles,
+            "simple_undirected": True,
             "claimed_objective_ignored": True,
-            "claimed_score_ignored": True
-        }
+        },
     }

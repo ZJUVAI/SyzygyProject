@@ -1,152 +1,56 @@
 {
   "task_id": "T033",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T033-C01": {
-      "id": "T033-C01",
-      "objective": {
-        "name": "total weight of edges whose endpoints have different labels",
-        "unit": "integer edge weight",
-        "direction": "maximize",
-        "constraints": [
-          "use the pinned Gset G70 graph with 10,000 vertices and 9,999 edges",
-          "assign each vertex exactly one side in {0,1}",
-          "all edge weights equal +1"
-        ]
+      "parameters": {
+        "vertices": 41,
+        "forbidden_cycle_length": 4
       },
-      "program": "reference.py",
-      "highest_reported": {
-        "value": 9595,
-        "source": {
-          "title": "Cosm: orchestrated collective dynamics give rise to rapid computational search at the solution frontier",
-          "url": "https://arxiv.org/abs/2605.30355v4",
-          "version": "v4, revised 2026-10-11",
-          "claim": "The abstract reports heuristic cuts 5,799 and 9,595 on G61 and G70 as best-known; it separately calls G81, G72, and G77 certified optima.",
-          "checked_at": "2026-11-06"
-        },
-        "corroborating_source": {
-          "title": "A Large Population Island Framework for the Unconstrained Binary Quadratic Problem",
-          "url": "https://doi.org/10.1016/j.cor.2024.106684",
-          "claim": "The paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
-          "checked_at": "2026-11-06"
-        },
-        "reproduction_status": "published heuristic report; no public assignment independently reproduced; AI-assistance disclosure unknown"
-      },
+      "direction": "maximize",
+      "objective": "edge count of a simple C4-free graph on 41 vertices",
       "best_human": {
-        "value": 9594,
-        "parameters": {
-          "instance": "Gset-G70",
-          "n": 10000,
-          "m": 9999
-        },
-        "authors": [
-          "Olivier Goudet",
-          "Adrien Goëffon",
-          "Jin-Kao Hao"
-        ],
-        "url": "https://doi.org/10.1016/j.cor.2024.106684",
-        "date_checked": "2026-11-06",
-        "provenance": "The LPI paper reports 9,594 on its G70 test instance. Its calibration value 9,595 is recorded separately and is not the test score.",
-        "evidence_state": "published score; paper-specific assignment not replayed",
-        "witness": null,
-        "origin_type": "traditional human-designed computational heuristic",
-        "optimality": "not proved"
+        "value": 132,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html"
       },
       "best_public": {
-        "value": 9595,
-        "parameters": {
-          "instance": "Gset-G70",
-          "n": 10000,
-          "m": 9999
-        },
-        "url": "https://arxiv.org/abs/2605.30355v4",
-        "corroborating_url": "https://doi.org/10.1016/j.cor.2024.106684",
-        "date_checked": "2026-11-06",
-        "provenance": "Cosm v4 reports that its heuristic reaches 9,595 on G70. The LPI paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
-        "evidence_state": "published heuristic score; assignment not replayed here",
-        "witness": null,
-        "origin_type": "author-developed computational heuristic; AI assistance disclosure unknown"
+        "value": 132,
+        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6",
+        "evidence_state": "reported lower bound; not a proof of optimality"
       },
       "best_reproduced": {
-        "value": 8616,
-        "parameters": {
-          "instance": "Gset-G70",
-          "n": 10000,
-          "m": 9999
-        },
-        "url": "https://doi.org/10.1016/j.engappai.2012.09.001",
-        "date_checked": "2026-11-06",
-        "evidence_state": "task-local FLIP reproduction, exact checker verification",
-        "provenance": "This task implements the published single-vertex FLIP neighborhood as seeded steepest local search. It does not reproduce the full BLS algorithm or its reported G70 value.",
-        "witness": "data/human_g70_1flip.json",
-        "actual_value": 8616,
+        "value": 132,
+        "witness": "data/human_witness.json",
         "verification_status": "exact",
-        "ai_provenance": "no public record witness used",
-        "review_status": "reviewed_by_sol"
+        "verification_method": "decoded first sparse6 record; checker tests every pair for at most one common neighbor and recounts edges"
       },
-      "optimality": {
-        "status": "open in reviewed sources; 9,595 is a reported feasible value and no matching proof was found",
-        "lower_bound": 9595,
-        "evidence": [
-          {
-            "url": "https://doi.org/10.1016/j.cor.2024.106684",
-            "claim": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value; the latter is not the reported test-instance score."
-          },
-          {
-            "url": "https://arxiv.org/abs/2605.30355v4",
-            "claim": "Cosm v4 reports the heuristic result 9,595 for G70 as best-known. The same abstract distinguishes certified optima for G81, G72, and G77 from heuristic results on G61 and G70."
-          },
-          {
-            "url": "https://arxiv.org/abs/2004.12345v5",
-            "claim": "Qian and Pan, v5 (revised 2021), report upper bounds and known best values for large UBPP instances; this is computational evidence, not a G70 optimality certificate."
-          },
-          {
-            "url": "https://doi.org/10.1364/OE.381850",
-            "claim": "The source reports numerical SDP value 9,683 for G70. This task has not independently certified it as an upper bound."
-          }
-        ],
-        "note": "Cosm v4 reports a heuristic G70 cut of 9,595. LPI reports 9,594 on G70 test data and 9,595 as a calibration value. A 2019 paper reports numerical SDP value 9,683, which this task has not certified. The 88-point difference between the Cosm score and SDP figure is not a certified optimality gap. No checked source proves the G70 result optimal.",
-        "reported_sdp_value": 9683
+      "program": "reference.py",
+      "reproduced_value": 132,
+      "public_value": 132,
+      "highest_reported": {
+        "value": 132,
+        "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+        "meaning": "reported C4-free construction; >= entry does not establish the extremal number"
       },
-      "input": {
-        "source_url": "https://web.stanford.edu/~yyye/yyye/Gset/G70",
-        "sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061",
-        "file": "data/source/G70.gz",
-        "normalized_graph_sha256": "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085",
-        "source_file": "data/source/G70.gz",
-        "compressed_sha256": "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b",
-        "encoding": "gzip; decompresses to the exact Stanford source bytes"
+      "same_parameter_bounds": [
+        {
+          "value": 133,
+          "meaning": "proved upper bound by deleting each of 41 vertices and using the exact order-40 value ex(40,C4)=127",
+          "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+          "derivation": "39m <= 41*127, hence m <= floor(5207/39)=133"
+        }
+      ],
+      "proved_interval": {
+        "lower": 132,
+        "upper": 133,
+        "statement": "132 <= ex(41,C4) <= 133"
       },
-      "program_record": {
-        "entrypoint": "run_code()",
-        "cold_start": "init_program.py",
-        "search": "seeded repeated steepest 1-flip local search; fixed restart and flip counts by default",
-        "seed_environment": "MATHBENCH_SEED",
-        "configuration_environment": "MATHBENCH_CONFIG_ID"
-      },
-      "reproduced_record": {
-        "value": 8616,
-        "witness": "data/human_g70_1flip.json",
-        "method": "Task-local reproduction of the published steepest single-vertex FLIP neighborhood; four seeded starts; max 10,000 flips per start; fixed seed 0.",
-        "source_url": "https://doi.org/10.1016/j.engappai.2012.09.001",
-        "evidence_state": "replayed from human.py and recomputed exactly by check.py",
-        "reproduction_status": "exactly replayed and independently scored by check.py; 8,616 is this local reproduction, not a score claimed by the source paper.",
-        "date_checked": "2026-11-06"
-      },
-      "reproduced_value": 8616,
-      "public_record": {
-        "value": 9595,
-        "source_url": "https://arxiv.org/abs/2605.30355v4",
-        "source": "Cosm v4 reports that its heuristic reaches 9,595 on G70.",
-        "witness": null,
-        "evidence_state": "reported heuristic score; assignment not independently replayed",
-        "ai_provenance": "unknown; paper does not disclose whether AI assistance was used",
-        "corroboration_url": "https://doi.org/10.1016/j.cor.2024.106684",
-        "corroboration": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
-        "reproduction_status": "reported, no assignment reproduced here",
-        "date_checked": "2026-11-06",
-        "version": "arXiv:2605.30355v4, revised 2026-10-11"
-      },
-      "public_value": 9595,
+      "checked_at": "2026-11-06",
+      "archive_sha256": "900da21cbbb59d10c30f26feb35ebab4f0e3ef65f21429939584bda497768989",
+      "decoded_witness_sha256": "da0752c7bbe5d432098d63d8d421e7441cbfd0291a09a08510fa91fb3a92dc80",
+      "open_status": "The source table marks ex(41,C4) >= 132; no proof of optimality was found in the checked sources.",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -156,18 +60,20 @@
           "config_id": "T033-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 8616,
+          "objective": 132,
           "verification_status": "exact",
-          "generation_time": 0.16458547115325928,
-          "verification_time": 0.16469041258096695,
-          "objective_value": 8616,
+          "generation_time": 0.5543667264282703,
+          "verification_time": 0.44326549768447876,
+          "objective_value": 132,
           "details": {
-            "n": 10000,
-            "m": 9999,
-            "cut_edges": 8616,
-            "graph_sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
+            "vertices": 41,
+            "edges": 132,
+            "common_neighbor_pair_count": 726,
+            "maximum_common_neighbors": 1,
+            "c4_check": "all unordered vertex pairs have at most one common neighbor",
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.33436764404177666,
+          "eval_time": 1.0058171190321445,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -184,25 +90,77 @@
           }
         },
         "independent_quantity": {
-          "cut_weight": 8616,
-          "ising_energy": -7233,
-          "original_edges_checked": 9999
+          "edges": 132,
+          "four_subsets_checked": 101270,
+          "four_cycles": 0
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "review_status": "pending_sol_review",
-      "configuration_id": "T033-C01",
-      "other_parameters": [],
-      "replay": {
-        "command": ".venv/bin/python -c 'from tasks.t033.human import run_code; from tasks.t033.check import validate; import json; from pathlib import Path; c=json.loads(Path(\"tasks/t033/task.json\").read_text())[\"configurations\"][0]; print(validate(run_code(),c))'",
-        "seed": 0,
-        "restarts": 4,
-        "max_flips_per_restart": 10000,
-        "budget": "fixed iteration count; shared runner hard limit applies"
-      }
+      "review_status": "accepted_by_sol"
     }
   },
-  "review_status": "pending_sol_review",
-  "snapshot_date": "2026-11-06"
+  "snapshot_date": "2026-11-06",
+  "best_human": {
+    "value": 132,
+    "parameters": {
+      "vertices": 41,
+      "forbidden_cycle_length": 4
+    },
+    "source": "Afzaly and McKay public extremal graph data; the first listed archive graph is a computationally found construction.",
+    "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+    "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6",
+    "date_checked": "2026-11-06",
+    "evidence_state": "The archive lists 41 vertices and at least 132 edges, and provides three witness graphs. The row has >=, so it does not establish optimality.",
+    "ai_provenance": "The first sparse6 graph was decoded and expanded; no individual discoverer is attributed."
+  },
+  "best_public": {
+    "value": 132,
+    "parameters": {
+      "vertices": 41,
+      "forbidden_cycle_length": 4
+    },
+    "url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+    "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6",
+    "evidence_state": "Public table reports at least 132 edges. Witness is reproduced; optimality is not proved by this entry.",
+    "date_checked": "2026-11-06"
+  },
+  "best_reproduced": {
+    "value": 132,
+    "parameters": {
+      "vertices": 41,
+      "forbidden_cycle_length": 4
+    },
+    "witness": "data/human_witness.json",
+    "verification_status": "exact",
+    "edge_count": 132,
+    "date_checked": "2026-11-06",
+    "archive_sha256": "900da21cbbb59d10c30f26feb35ebab4f0e3ef65f21429939584bda497768989"
+  },
+  "same_parameter_bounds": [
+    {
+      "value": 133,
+      "meaning": "upper bound on ex(41,C4), derived from the exact source value ex(40,C4)=127",
+      "parameters": {
+        "vertices": 41,
+        "forbidden_cycle_length": 4
+      },
+      "source_url": "https://users.cecs.anu.edu.au/~bdm/data/extremal.html",
+      "derivation": "For each of 41 vertex deletions, the remaining 40-vertex induced subgraph has at most 127 edges. Each original edge remains in 39 deletions, so 39m <= 41*127 and m <= floor(5207/39)=133.",
+      "evidence_state": "Exact finite double count from the table's unprefixed order-40 value. Combined with the reproduced 132-edge construction, the extremal number is either 132 or 133."
+    }
+  ],
+  "limitations": [
+    "The source marks the edge count with >= and does not prove that 132 is optimal.",
+    "The source page states that values without >= are exact; its 38-vertex value 117 is therefore solved and was excluded.",
+    "The literature check is limited to the source page and exact-parameter search described in IMPLEMENTATION.md."
+  ],
+  "admission_source_review": {
+    "human_source": "Afzaly–McKay source page and three original sparse6 records checked independently by Sol. All decode to 41 vertices and 132 edges.",
+    "lower_bound": 132,
+    "upper_bound": 133,
+    "upper_bound_proof": "The source gives ex(40,C4)=127 exactly. Summing the 41 vertex-deleted subgraphs gives 39m <= 41*127 = 5207, hence m <= 133.",
+    "open_status": "The primary table marks the 41-vertex edge count with >=; best located lower bound 132 and upper bound 133 differ.",
+    "exclusion": "The 38-vertex 117-edge row is exact; >= is only on the graph count. It was excluded."
+  }
 }

@@ -1,10 +1,19 @@
-"""Best reproduced fixed local-search witness; not a historical human record."""
+"""Fixed replay of the verified Pegg 27-square witness."""
+
 import json
 import os
 from pathlib import Path
 
+
+DATA = Path(__file__).resolve().parent / "data" / "reference" / "pegg_1000_27.json"
+
+
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T008-C01")
-    if config_id != "T008-C01":
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T008-C01") != "T008-C01":
         raise ValueError("unsupported configuration")
-    return json.loads((Path(__file__).parent / "data" / "search_reference.json").read_text())
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    return json.loads(DATA.read_text(encoding="utf-8"))
+
+
+if __name__ == "__main__":
+    print(json.dumps(run_code()))

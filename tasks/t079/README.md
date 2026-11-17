@@ -1,19 +1,74 @@
-# T079：有限域 Kakeya 集 / Finite-field Kakeya set
+# T079：480 步函数的自相关比值
 
-## 中文
+## 定义
 
-固定任务是在三维向量空间 `F_31^3` 中，为 993 个射影方向各选一条仿射直线，并使所有直线的点集并集尽量小。射影方向的标准表示取最后一个非零坐标为 1。每条直线包含 31 个点，所有坐标运算均模 31。
+固定 `N=480` 个等宽区间，步长 `d=13/4800`，总支撑长度 `W=13/10`。候选函数在第 `i` 个区间 `[id,(i+1)d)` 上取非负有理高度 `h_i`，其他位置取 0。高度总质量必须为正。
 
-评测器会检查方向集合是否完整且无重复，并重新生成全部直线点后精确计算并集大小。简单起点把所有方向的直线都放在原点上，覆盖全部 29,791 个点。传统对照采用二次剩余构造，精确复算为 8,641 点。公开的 Station AI 论文给出 8,289 点构造；本任务按论文公式重建直线见证并精确复核。该值是构造上界，不是最优性证明。
+最大化
 
-主要来源：Bukh 与 Chao，*Sharp density bounds on the finite field Kakeya problem* (2021)，第 4 节关于传统奇数阶构造；Chung、Du 与 Wesley，*Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment* (2026)，第 6.1 节及其形式化验证材料。
+`J(h) = min_{0≤t≤1} ∫ f(x)f(x+t) dx / (∫ f(x)dx)^2`。
 
-## English
+对 `t=(k+θ)d`，自相关在每个相邻网格点之间关于 `θ` 线性。因此精确最小值只需检查网格点 `k=0,…,369`，以及 `t=1`。由于 `1/d=369+3/13`，端点值是第 369 与第 370 个自相关值的精确线性插值。检查器使用有理数遍历全部这些位置，没有采样，也不使用浮点容差。
 
-For the fixed task, choose one affine line in each of the 993 projective directions of `F_31^3`. Minimize the size of their union. Use the unique direction representative whose last nonzero coordinate is 1. Each line has 31 points, and all coordinate arithmetic is modulo 31.
+## 来源与结果
 
-The checker requires a complete, duplicate-free direction list. It rebuilds every point on every line and computes the union size exactly. The simple seed puts all lines through the origin and covers all 29,791 points. The traditional quadratic-residue construction has 8,641 points after exact checking. A 2026 Station AI paper gives an 8,289-point construction. This task rebuilds its line witnesses from the published formula and verifies them exactly. The value is a construction bound, not an optimality proof.
+原问题是 Barnard 与 Steinerberger 2020 年论文中的连续常数，AlphaEvolve 将其列为问题 6.6。论文给出连续问题的下界 `>0.37`、上界 `≤0.411`，并描述经过小幅修改的反正弦函数。`human.py` 将该公式在本配置的 480 个格子中心取值，再四舍五入到 `1/100000`，得到一个独立的有理分段常数函数。它是方法重建，不是论文声称的 480 格见证。精确成绩为 `15833948850637600/43788391811747427`，约 `0.361601515732983`。
 
-Main sources: Bukh and Chao, *Sharp density bounds on the finite field Kakeya problem* (2021), Section 4 on the traditional odd-field construction; Chung, Du, and Wesley, *Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment* (2026), Section 6.1 and its formal verification material.
+`data/source/certificate_n480.json` 是 Kevin Russell / ProjectForty2 的 CHRONOS 辅助证书。其上游仓库固定在 commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`；证书原始字节 SHA-256 为 `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`。精确重算得 `J=2378625/5958277≈0.3992135645925827`。该构造是 AI 辅助结果，不能归入人类基线。
 
-The saved own, human, and Station line witnesses are losslessly stored as `.json.gz` files. Their recorded SHA-256 digests refer to the decompressed JSON bytes. The source verification notebook is also stored as `.ipynb.gz`; `data/source/source_manifest.json` records its decompressed and compressed digests.
+2026-10-08 的 Chen 与 Gu 论文给出了更强的连续问题下界 `C≥0.410377977432121…`。该结果来自不同的原子加多项式函数及去原子论证，不是本配置的 480 格高度向量，不能直接记作本配置的分数。它没有证明连续问题或本有限维配置的最优值。我们截至 2026-11-06 未找到更强的同参数 480 格精确见证或最优性证明。
+
+## 程序
+
+- `init_program.py` 返回全 1 高度。
+- `baseline.py` 从全 1 向量开始，以固定随机种子做 400 次分块变动。搜索使用 NumPy 浮点反馈，所有输出由精确检查器重新评分。
+- `evolution.py` 使用相同起点和固定种子做 1,400 次分块变动。
+- `human.py` 重建修改后的反正弦公式并量化为精确有理高度。
+- `reference.py` 读取固定 AI 证书。
+- `check.py` 用 Fraction 精确计算质量、全部相关节点和 `t=1` 插值。
+
+运行器预算为生成 300 秒、验证 60 秒、内存 4 GiB、单线程和 16 MiB 输出。测试覆盖初始、传统搜索、演化、人类公式、AI 证书、非法高度、端点插值、伪造分数以及运行器错误和超时。
+
+## 运行
+
+```sh
+.venv/bin/python -m pytest tasks/t079/test_task.py -q
+```
+
+本任务已通过 Sol 验收（2026-11-06）。
+
+---
+
+# T079: 480-step minimum autocorrelation ratio
+
+## Definition
+
+Fix `N=480` equal cells with width `d=13/4800` and support length `W=13/10`. The candidate is zero outside the support and has a nonnegative rational height `h_i` on cell `[i*d,(i+1)*d)`. Its total mass must be positive.
+
+Maximize
+
+`J(h) = min_{0≤t≤1} ∫ f(x)f(x+t) dx / (∫ f(x)dx)^2`.
+
+For `t=(k+θ)d`, autocorrelation is linear in `θ` between adjacent grid nodes. The exact minimum therefore occurs at a node `k=0,...,369` or at `t=1`. Since `1/d=369+3/13`, the endpoint is the exact interpolation of the values at nodes 369 and 370. The checker uses rational arithmetic over this full interval. It does not sample shifts or use floating-point tolerances.
+
+## Sources and results
+
+The continuous problem is the minimum-autocorrelation constant studied by Barnard and Steinerberger (2020), and listed as Problem 6.6 by AlphaEvolve. Their paper gives the continuous bounds `>0.37` and `≤0.411` and describes a modified arcsine function. `human.py` samples that formula at the 480 cell centers and rounds heights to multiples of `1/100000`. This is a local reconstruction of the method, not a 480-cell witness claimed by the paper. Its exact score is `15833948850637600/43788391811747427`, about `0.361601515732983`.
+
+`data/source/certificate_n480.json` is the certificate by Kevin Russell / ProjectForty2, assisted by CHRONOS. The upstream repository is pinned to commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`. The certificate's raw-byte SHA-256 is `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`. Exact recomputation gives `J=2378625/5958277≈0.3992135645925827`. This is an AI-assisted result, not a human baseline.
+
+A paper by Chen and Gu, submitted 2026-10-08, gives a stronger bound `C≥0.410377977432121...` for the continuous problem. It uses a different atomic-polynomial profile and an atom-removal argument. It is not a 480-cell height vector for this configuration, so it is not recorded as this configuration's score. It does not prove the continuous or finite-dimensional optimum. As of 2026-11-06, we found no stronger exact witness on the same 480-cell grid and no proof of its optimum.
+
+## Programs
+
+The initial program returns all heights equal to 1. The baseline starts from that vector and makes 400 fixed-seed block mutations with NumPy feedback. Evolution makes 1,400 such mutations. These programs do not read the human or reference witness. The checker independently recomputes the exact score. The human program reconstructs the modified-arcsine formula. The reference program loads the pinned AI certificate.
+
+The runner allows 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, one thread, and 16 MiB of candidate output. Tests cover all program entries, invalid heights, endpoint interpolation, forged scores, and runner failures and timeouts.
+
+Run tests with:
+
+```sh
+.venv/bin/python -m pytest tasks/t079/test_task.py -q
+```
+
+This task is accepted by Sol on 2026-11-06.

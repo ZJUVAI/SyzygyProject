@@ -1,12 +1,18 @@
-"""Self-contained odd-even transposition sorting network."""
+"""Standalone one-word valid seed for A(17,4,5)."""
+
 import os
-_CONFIGS={"T048-C01":17}
+
+
 def run_code():
-    cid=os.environ.get("MATHBENCH_CONFIG_ID","T048-C01")
-    try:inputs=_CONFIGS[cid]
-    except KeyError:raise ValueError(f"unsupported T048 configuration: {cid}") from None
-    int(os.environ.get("MATHBENCH_SEED","0"))
-    comparators=[]
-    for phase in range(inputs):
-        for left in range(phase%2,inputs-1,2):comparators.append([left,left+1])
-    return {"comparators":comparators}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T048-C01") != "T048-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    # EVOLVE-BLOCK-START
+    solution = {"codewords": ["00000000000011111"]}
+    # EVOLVE-BLOCK-END
+    return solution
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

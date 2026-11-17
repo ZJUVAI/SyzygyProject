@@ -1,37 +1,38 @@
-# T094 implementation record
+# T094 implementation notes
 
-Status: `accepted_by_sol`.
+Status: accepted by Sol on 2026-11-06.
 
-## Fixed configuration
+## Configuration and source data
 
-- `T094-C01`: regular convex 120-gon; all straight-line vertex triangulations are allowed; minimize the maximum vertex-pair shortest-path/chord ratio.
-- Objective direction: minimize.
-- Human reference: certified 6-fan score rounded upward to `1.449476373154` for compatibility scoring.
-- Public theorem bound: Sattari–Izadi prove a regular-polygon triangulation below `1.4482`; its specific 120-gon witness is not reconstructed here.
+- `T094-C01` fixes Taillard Ta051: 50 jobs, 20 machines, one common job permutation, and makespan minimization.
+- The official `tai50_20.txt` snapshot has Ta051 seed 1539989115 and original header bounds 3480–3875. The Ta051 processing-time matrix was extracted from that snapshot into `data/ta051.json`. The JSON contains only the matrix. Its SHA-256 is `57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de`. The full original source has SHA-256 `cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba`.
+- Taillard's live bounds page, read 2026-11-06, reports Ta051 bounds 3771–3846 and says that only permutation schedules are allowed. Its dated header is 03.06.2026. The table attributes the upper bound to RRMRP and the lower bound to Va.
+- The public upper-bound witness is the Ta051 permutation archived in Olivier Brunner's Zenodo v8 dataset and associated with Ravetti et al. (2012). Exact replay on the official input returns 3846. `data/source/` preserves the official data and bounds snapshots. The candidate input allowlist must contain only `data/ta051.json`.
+- Gmys et al. (2022) list Ta051 among instances that remained open. The later Zenodo v11 page (2026-07-31) cautions readers about its `Optimal` field. We do not rely on that field to assert open status.
 
-## Verification method
+## Programs and exact verification
 
-The checker validates integer endpoint labels, uniqueness, all boundary edges, the required `2n-3=237` edge count, and pairwise diagonal noncrossing. For a convex polygon these conditions establish a triangulation. It computes rational pi bounds with Machin's formula and alternating arctangent series. It bounds each chord with monotone sine and alternating Taylor bounds. Dijkstra runs on scaled integer lower and upper edge weights. For each pair, lower path / upper chord and upper path / lower chord form a certified interval for that pair's stretch. The maximum pair interval encloses the triangulation dilation. The reported objective is the conservative upper endpoint.
+- `init_program.py` is self-contained and returns jobs 1 through 50 in identity order. It does not import task modules or read comparison data.
+- `baseline.py` builds an NEH permutation, then runs a seeded swap/insertion local search with 2,000 fixed iterations by default. `MATHBENCH_SEARCH_SECONDS` enables the shared optional wall-clock cutoff. The result records the seed, iteration count, budget, algorithm, and that no reference data was read.
+- `evolution.py` starts from an NEH order and uses order crossover, swap mutation, and a fixed population/generation budget. It records the seed, population, generations, cutoff, and comparison-data access status.
+- `human.py` rebuilds the public reference from task-local witness data. `reference.py` is the fixed reference interface.
+- `check.py` validates exactly one copy of each job label 1–50. It reads its fixed input independently of candidate output and recomputes the makespan with integer arithmetic for every operation. No float arithmetic or heuristic penalty is used. Claimed scores are ignored.
 
-For the rebuilt 6-fan, the interval is
-`[2890016242467687188760789/1993834667466255952395547, 481669373744614531460135/332305777911042658732591]`.
+## Validation performed
 
-## Source review
+Command:
 
-- Fekete, Sándor P., Phillip Keldenich, and Michael Perk. “Exact Algorithms for Minimum Dilation Triangulation.” Journal of Computational Geometry 17(2), 2026. DOI: <https://doi.org/10.20382/jocg.v17i2a1>. The paper reports optimal regular n-gons for `4≤n≤100`; 120 is outside this range.
-- UBC Theory Problem Solving Group, “Triangulating Regular Polygons to Minimize Dilation,” <https://www.cs.ubc.ca/labs/algorithms/tpsg/dilation.html>. It defines dilation and gives the 6-fan construction when n is divisible by 6.
-- Sattari and Izadi, “An improved upper bound on dilation of regular polygons,” 2019, DOI: <https://doi.org/10.1016/j.comgeo.2019.01.009>. The theorem gives a bound below 1.4482 for regular polygons. The bound is recorded separately from the reproduced witness.
+```sh
+.venv/bin/python -m pytest tasks/t094/test_task.py -q
+```
 
-## Programs and isolation
+Result: 9 passed in 4.35 seconds under Python 3.13.12. Tests independently extract the matrix from the official Taillard source snapshot, check both SHA-256 values, replay the 50-job reference, validate the identity seed, reject incomplete, duplicate, out-of-range, bool, noninteger, NaN, infinite, and non-permutation payloads, ignore altered and nonfinite claimed scores, check seeded baseline and evolution reproducibility, and verify generation error and timeout handling.
 
-The simple initial program emits a vertex-0 fan. The baseline samples random recursive split triangulations and uses floating-point dilation only as search feedback. It does not read human or reference files. The human and fixed-reference entries load their own task-local witness files. The source and reference files contain the same 6-fan edge set.
+The reference permutation was independently recomputed as 3846. The fixed seed-0 NEH/local-search baseline returned 4078 in 2,000 iterations (about 1.40 seconds for generation in this run), then passed the exact checker. This run is saved under `data/results.json` with a replay command. Full `evaluate_candidate` integration awaits the main reviewer adding T094 to shared registries.
 
-Default baseline: six trials, seed 0, bounded by the task runner's 300-second generation limit. The saved run took 0.556 seconds to generate and 6.713 seconds to verify on Python 3.13.12/Linux, with seed 0. Its certified interval was
-`[2966313149770450274602155/1999314649951114560073522, 988771049923483424867388/666438216650371520024507]`.
-Verification uses the runner's 60-second limit. One CPU thread is used by the scripts. The saved witness and environment are in `data/search/seed-0.json` and `data/search/seed-0.metadata.json`.
+## Open review items
 
-Validation command: `.venv/bin/python -m pytest tasks/t094/test_task.py -q` — 14 passed in 23.16 seconds after the directed interval checks were added. Tests also compare unrounded Taylor bounds at angle 1 with an independent 120-digit Decimal sine calculation, and compare every scaled chord bound with an independently evaluated 120-digit value. JSON parsing and `git diff --check -- tasks/t094` passed. Tests call the shared runner's `_run` helper directly for program error and timeout behavior; no registry change is needed.
-
-## Limitations
-
-This task records one feasible 120-gon triangulation. It does not prove it is optimal. The published `<1.4482` theorem gives a stronger upper bound on the optimum, but this implementation does not reproduce that construction. The 2026 exact-computation paper covers regular n-gons through 100 only. This source review is not an exhaustive literature survey.
+- Sol must confirm the saved permutation matches the Ta051 row in the cited Zenodo v8 file and the RRMRP publication, then independently replay the human program.
+- Sol must independently verify a key matrix quantity and exercise one valid result, one damaged permutation, a changed claimed score, a program error, and a timeout.
+- Sol must review the open-status sources and confirm the candidate export contains only the matrix JSON, not the saved witness or source records.
+- The exact optimum is unknown within the currently recorded interval 3771–3846. This task does not prove optimality.

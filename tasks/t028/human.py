@@ -1,9 +1,11 @@
-"""Reproduce the published Ta051 upper-bound witness saved in task data."""
+"""Reconstructed traditional triangulation plus greedy convex merging."""
 
-import json
-from pathlib import Path
+import os
+
+from tasks.t028.construction import greedy_merge
 
 
 def run_code():
-    witness = json.loads((Path(__file__).parent / "data" / "human_witness.json").read_text())
-    return {"permutation": witness["permutation"], "claimed_objective": witness["published_makespan"]}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T028-C01") != "T028-C01":
+        raise ValueError("unknown T028 configuration")
+    return greedy_merge(seed=0, weights=(1.0, 0.0, 0.0), shuffle_ties=False)

@@ -2,36 +2,36 @@
 
 Status: `accepted_by_sol`.
 
-## Implemented
+## Fixed configuration
 
-- Fixed QAPLIB `tai256c`, `n=256`, with gzip-compressed matrices. The pinned SHA-256 is checked against the exact decompressed source bytes.
-- Exact permutation checker; it validates all indices and recomputes the integer objective over 65,536 terms.
-- Self-contained identity seed, bounded randomized first-improvement pair-swap baseline, evolution entry point, public-witness replay, and task interface wrapper.
-- Bilingual task README, model instruction, records, and configuration-level SOTA record.
+- `T027-C01`: regular convex 120-gon; all straight-line vertex triangulations are allowed; minimize the maximum vertex-pair shortest-path/chord ratio.
+- Objective direction: minimize.
+- Human reference: certified 6-fan score rounded upward to `1.449476373154` for compatibility scoring.
+- Public theorem bound: Sattari–Izadi prove a regular-polygon triangulation below `1.4482`; its specific 120-gon witness is not reconstructed here.
 
-## Source and witness checks
+## Verification method
 
-- Downloaded the versioned Debian `r-cran-qap` 0.1-1-2 matrix and solution files. Hashes are in `data/README.md` and `bestknown.json`.
-- Parsed dimensions and the archived one-based permutation. It is a bijection on 1..256.
-- Recomputed the objective exactly with integer arithmetic: 44,759,294; this matches the `.sln` score and QAPLIB table entry.
-- QAPLIB labels the feasible record ANT. QAPLIB history identifies T. Stützle as providing an improved tai256c solution in 1997. The archive witness is reproduced; the original search is not.
-- The authoritative arXiv version page identifies v2 as last revised 2024-09-30; the v2 PDF title page says 2024-10-01. The paper body reports LB 44,200,000 and a 1.25% gap. Its abstract retains the earlier 1.48% gap.
-- The checked QAPLIB pages disagree on the older LB: Lehigh lists 43,849,646 and the QAPLIB mirror lists 44,095,032. The paper treats 44,095,032 as the previous LB and reports 44,200,000. Searches on 2026-11-06 found no later primary result or proof that tai256c is solved. This search was not exhaustive.
+The checker validates integer endpoint labels, uniqueness, all boundary edges, the required `2n-3=237` edge count, and pairwise diagonal noncrossing. For a convex polygon these conditions establish a triangulation. It computes rational pi bounds with Machin's formula and alternating arctangent series. It bounds each chord with monotone sine and alternating Taylor bounds. Dijkstra runs on scaled integer lower and upper edge weights. For each pair, lower path / upper chord and upper path / lower chord form a certified interval for that pair's stretch. The maximum pair interval encloses the triangulation dilation. The reported objective is the conservative upper endpoint.
 
-## Validation
+For the rebuilt 6-fan, the interval is
+`[2890016242467687188760789/1993834667466255952395547, 481669373744614531460135/332305777911042658732591]`.
 
-- `.venv/bin/python -m pytest tasks/t027 -q`: 14 passed.
-- Cold-seed export test copies only `init_program.py` to a temporary directory, clears `PYTHONPATH`, and runs it without repository imports. It returns the identity permutation.
-- Evolution-entry test calls the task-local baseline with a short explicit budget and validates its output.
-- The default baseline uses 10,000 fixed pair checks. A test runs the same seed twice and confirms that the full output is identical.
-- Baseline smoke run with seed 0 and an explicit 0.05-second cutoff returned a feasible permutation after 74 improving swaps and 254 pair checks; the checker recomputed 51,043,722 exactly. This is a smoke check, not the saved human reference.
-- Checker tests confirm that the full result is unchanged when arbitrary claimed-score, objective, or metadata fields are added to the candidate.
-- Swap-delta tests compare ten seeded pair swaps against full exact objective recomputation.
-- Sol must still independently replay the human witness, review the candidate evaluator path, and decide whether the source evidence and reproduced human baseline satisfy admission.
+## Source review
+
+- Fekete, Sándor P., Phillip Keldenich, and Michael Perk. “Exact Algorithms for Minimum Dilation Triangulation.” Journal of Computational Geometry 17(2), 2026. DOI: <https://doi.org/10.20382/jocg.v17i2a1>. The paper reports optimal regular n-gons for `4≤n≤100`; 120 is outside this range.
+- UBC Theory Problem Solving Group, “Triangulating Regular Polygons to Minimize Dilation,” <https://www.cs.ubc.ca/labs/algorithms/tpsg/dilation.html>. It defines dilation and gives the 6-fan construction when n is divisible by 6.
+- Sattari and Izadi, “An improved upper bound on dilation of regular polygons,” 2019, DOI: <https://doi.org/10.1016/j.comgeo.2019.01.009>. The theorem gives a bound below 1.4482 for regular polygons. The bound is recorded separately from the reproduced witness.
+
+## Programs and isolation
+
+The simple initial program emits a vertex-0 fan. The baseline samples random recursive split triangulations and uses floating-point dilation only as search feedback. It does not read human or reference files. The human and fixed-reference entries load their own task-local witness files. The source and reference files contain the same 6-fan edge set.
+
+Default baseline: six trials, seed 0, bounded by the task runner's 300-second generation limit. The saved run took 0.556 seconds to generate and 6.713 seconds to verify on Python 3.13.12/Linux, with seed 0. Its certified interval was
+`[2966313149770450274602155/1999314649951114560073522, 988771049923483424867388/666438216650371520024507]`.
+Verification uses the runner's 60-second limit. One CPU thread is used by the scripts. The saved witness and environment are in `data/search/seed-0.json` and `data/search/seed-0.metadata.json`.
+
+Validation command: `.venv/bin/python -m pytest tasks/t027/test_task.py -q` — 14 passed in 23.16 seconds after the directed interval checks were added. Tests also compare unrounded Taylor bounds at angle 1 with an independent 120-digit Decimal sine calculation, and compare every scaled chord bound with an independently evaluated 120-digit value. JSON parsing and `git diff --check -- tasks/t027` passed. Tests call the shared runner's `_run` helper directly for program error and timeout behavior; no registry change is needed.
 
 ## Limitations
 
-- No global optimum proof is claimed. The checker validates candidate feasibility and exact objective only.
-- The original ANT search and run are not reconstructed.
-- The lower-bound report is a result reported by the cited paper; the task checker does not verify its proof.
-- Acceptance is accepted by Sol on 2026-11-06; this task is not in the shared registry.
+This task records one feasible 120-gon triangulation. It does not prove it is optimal. The published `<1.4482` theorem gives a stronger upper bound on the optimum, but this implementation does not reproduce that construction. The 2026 exact-computation paper covers regular n-gons through 100 only. This source review is not an exhaustive literature survey.

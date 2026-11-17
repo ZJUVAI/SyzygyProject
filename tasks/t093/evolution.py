@@ -1,7 +1,6 @@
-"""Task-qualified evolution entry point."""
-
-from tasks.t093.baseline import run_code as _run_search
+"""Task-limited search entry point used for evolution runs."""
+from tasks.t093.baseline import run_code as _baseline_run_code
 
 
 def run_code():
-    return _run_search()
+    return _baseline_run_code()

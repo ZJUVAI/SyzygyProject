@@ -1,18 +1,11 @@
-"""Reconstructed Giffler-Thompson active-schedule construction with LPT rule."""
+"""Replay the published five-square witness preserved from Sage's database."""
+import json
+from pathlib import Path
 
-import os
-from tasks.t056.dispatch import generate_active_schedule
+
+DATA = Path(__file__).parent / "data/source/mckay_mols12_5.json"
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T056-C01") != "T056-C01":
-        raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    return {
-        "machine_orders": generate_active_schedule(seed=seed, rule="lpt"),
-        "method_metadata": {
-            "algorithm": "Giffler-Thompson active schedule generation; longest processing time within the conflict set",
-            "seed": seed,
-            "iterations": 1,
-        },
-    }
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    return {"squares": data["squares"], "objective": 5}

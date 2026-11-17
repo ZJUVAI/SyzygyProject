@@ -1,20 +1,21 @@
-"""Reconstruct the s=6 triangular-lattice hexagon in Erdős--Fishburn."""
+"""Reconstruct the classical Varshamov-Tenengolts VT_0(16) code."""
 
-from fractions import Fraction
+import os
+
+from tasks.t049.check import N
+
+
+def build_vt0():
+    words = []
+    for word in range(1 << N):
+        checksum = sum((N - bit) * ((word >> bit) & 1) for bit in range(N))
+        if checksum % (N + 1) == 0:
+            words.append(word)
+    return {"codewords": words}
 
 
 def run_code():
-    points = []
-    # Axial coordinates for a radius-5 hexagon: max(|i|, |j|, |i+j|) <= 5.
-    for i in range(-5, 6):
-        for j in range(-5, 6):
-            if max(abs(i), abs(j), abs(i + j)) <= 5:
-                points.append({
-                    "x": [str(Fraction(2 * i + j, 2))],
-                    "y": ["0", str(Fraction(j, 2))],
-                })
-    return {
-        "minimal_polynomial": [-3, 0, 1],
-        "isolating_interval": ["1", "2"],
-        "points": points,
-    }
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T049-C01")
+    if chosen != "T049-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    return build_vt0()

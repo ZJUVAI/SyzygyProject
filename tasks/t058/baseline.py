@@ -1,90 +1,55 @@
-"""Fixed-work randomized greedy search for pair-disjoint parallel rounds."""
-
-import math
+from mathbench.search import search_deadline, search_steps
+"""Bounded seeded random construction with non-equivalent local moves."""
 import os
 import random
 import time
+import os
+from itertools import combinations
 
-from tasks.t058.check import CONFIG_ID
-
-
-def _try_add_random_round(used_pairs, rng):
-    players = list(range(35))
-    rng.shuffle(players)
-    groups = [players[i:i + 5] for i in range(0, 35, 5)]
-    new_pairs = set()
-    for group in groups:
-        for offset, left in enumerate(group):
-            for right in group[offset + 1:]:
-                pair = (left, right) if left < right else (right, left)
-                if pair in used_pairs:
-                    return None
-                new_pairs.add(pair)
-    return groups, new_pairs
+from .check import validate
 
 
-def _grow_once(rng, attempts_per_round, deadline):
-    rounds = []
-    used_pairs = set()
-    attempts = 0
-    for _ in range(8):
-        added = None
-        for _ in range(attempts_per_round):
-            if deadline is not None and time.monotonic() >= deadline:
-                return rounds, attempts, True
-            attempts += 1
-            added = _try_add_random_round(used_pairs, rng)
-            if added is not None:
-                break
-        if added is None:
-            break
-        groups, new_pairs = added
-        rounds.append(groups)
-        used_pairs.update(new_pairs)
-    return rounds, attempts, False
+def _valid(marks):
+    ds = [b-a for a, b in combinations(marks, 2)]
+    return len(ds) == len(set(ds))
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    restarts = int(os.environ.get("T058_SEARCH_RESTARTS", "8"))
-    attempts_per_round = int(os.environ.get("T058_ATTEMPTS_PER_ROUND", "5000"))
-    if restarts < 0 or attempts_per_round < 1:
-        raise ValueError("restarts must be nonnegative and attempts per round positive")
-    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    if seconds_text is None:
-        deadline = None
-    else:
-        seconds = float(seconds_text)
-        if not math.isfinite(seconds) or seconds <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + seconds
-
-    rng = random.Random(seed)
-    best = [[[5 * group + offset for offset in range(5)] for group in range(7)]]
-    completed_restarts = 0
-    total_attempts = 0
-    timed_out = False
-    for _ in range(restarts):
-        candidate, attempts, timed_out = _grow_once(rng, attempts_per_round, deadline)
-        total_attempts += attempts
-        completed_restarts += 1
-        if len(candidate) > len(best):
-            best = candidate
-        if timed_out:
-            break
-    return {
-        "rounds": best,
-        "search": {
-            "algorithm": "randomized greedy construction of pair-disjoint rounds",
-            "seed": seed,
-            "restart_limit": restarts,
-            "restarts_completed": completed_restarts,
-            "attempts_per_round": attempts_per_round,
-            "partition_attempts": total_attempts,
-            "time_cutoff_reached": timed_out,
-            "reference_data_read": False,
-        },
-    }
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T058-C01")
+    if config_id != "T058-C01":
+        raise ValueError(f"unknown T058 configuration: {config_id}")
+    count = 29
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    seconds = max(.01, min(30., float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
+    deadline = search_deadline()
+    # Construct a guaranteed-valid fallback without loading either witness.
+    best = [0]
+    best_differences = set()
+    while len(best) < count:
+        c = best[-1] + 1
+        while True:
+            new = [c - p for p in best]
+            if len(set(new)) == len(new) and not (set(new) & best_differences):
+                best.append(c)
+                best_differences.update(new)
+                break
+            c += 1
+    # Greedy random gap construction produces valid, varied starting rulers.
+    for restart in range(100):
+        marks = [0]
+        diffs = set()
+        while len(marks) < count and time.monotonic() < deadline:
+            start = marks[-1] + 1
+            candidates = list(range(start, start + 45))
+            rng.shuffle(candidates)
+            for c in candidates:
+                new = [c - p for p in marks]
+                if len(set(new)) == len(new) and not (set(new) & diffs):
+                    marks.append(c); diffs.update(new); break
+            else:
+                break
+        if len(marks) == count and marks[-1] < best[-1] and _valid(marks):
+            best = marks
+        if time.monotonic() >= deadline: break
+    validate({"marks": best}, {"parameters": {"marks": count}})
+    return {"marks": best}

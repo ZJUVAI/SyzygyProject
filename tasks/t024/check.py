@@ -1,41 +1,42 @@
-"""Exact checker for C4-free simple graphs on 41 vertices."""
+"""Exact checker for subsets of the 100 by 100 integer grid."""
+from collections.abc import Mapping
+from typing import Any
 
-def validate(solution, config, strict=False):
-    del strict
-    if not isinstance(solution, dict) or not isinstance(config, dict):
-        raise ValueError("solution and config must be objects")
-    p = config.get("parameters", config)
-    if not isinstance(p, dict) or p.get("vertices") != 41 or p.get("forbidden_cycle_length") != 4:
-        raise ValueError("configuration must be T024-C01 (41 vertices, C4-free)")
-    rows = solution.get("adjacency")
-    if not isinstance(rows, list) or len(rows) != 41:
-        raise ValueError("adjacency must contain exactly 41 rows")
-    normalized = []
-    for v, row in enumerate(rows):
-        if not isinstance(row, list):
-            raise ValueError("each adjacency row must be a list")
-        if any(type(w) is not int or not 0 <= w < 41 for w in row):
-            raise ValueError("neighbor indices must be integers in [0, 40]")
-        if v in row or len(set(row)) != len(row):
-            raise ValueError("loops and duplicate neighbors are forbidden")
-        normalized.append(set(row))
-    for v, ns in enumerate(normalized):
-        if any(v not in normalized[w] for w in ns):
-            raise ValueError("adjacency must be symmetric")
-    # A simple graph is C4-free iff each unordered pair has at most one common neighbor.
-    common_pair_count = {}
-    for neighbors in normalized:
-        ns = sorted(neighbors)
-        for i, u in enumerate(ns):
-            for w in ns[i + 1:]:
-                pair = (u, w)
-                common_pair_count[pair] = common_pair_count.get(pair, 0) + 1
-                if common_pair_count[pair] > 1:
-                    raise ValueError("graph contains a 4-cycle")
-    edges = sum(map(len, normalized)) // 2
-    return {"objective": edges, "verification_status": "exact",
-            "details": {"vertices": 41, "edges": edges,
-                        "common_neighbor_pair_count": len(common_pair_count),
-                        "maximum_common_neighbors": max(common_pair_count.values(), default=0),
-                        "c4_check": "all unordered vertex pairs have at most one common neighbor",
-                        "claimed_objective_ignored": True}}
+CONFIG_ID = "T024-C01"
+N = 100
+
+def _d2(a, b):
+    return (a[0]-b[0])**2 + (a[1]-b[1])**2
+
+def validate(solution: Any, config: Mapping[str, Any], strict: bool = False) -> dict[str, Any]:
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError("unsupported configuration")
+    if config.get("parameters") != {"grid_size": N}:
+        raise ValueError("configuration parameters do not match T024-C01")
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be an object")
+    points = solution.get("points")
+    if not isinstance(points, (list, tuple, set, frozenset)):
+        raise ValueError("points must be a list or set")
+    clean = []
+    for p in points:
+        if not isinstance(p, (list, tuple)) or len(p) != 2 or any(type(v) is not int for v in p):
+            raise ValueError("each point must be a pair of integers")
+        x, y = p
+        if not (0 <= x < N and 0 <= y < N):
+            raise ValueError("point outside the zero-based 100 by 100 grid")
+        clean.append((x, y))
+    if len(set(clean)) != len(clean):
+        raise ValueError("points must be distinct")
+    # An isosceles triangle exists exactly when some vertex has two other
+    # points at equal squared distance. This also rejects collinear midpoint triples.
+    checks = 0
+    for i, a in enumerate(clean):
+        seen = set()
+        for j, b in enumerate(clean):
+            if i == j: continue
+            d = _d2(a, b); checks += 1
+            if d in seen:
+                raise ValueError("two points have equal squared distance from one vertex")
+            seen.add(d)
+    return {"objective": len(clean), "verification_status": "exact", "details": {"point_count": len(clean), "apex_distance_checks": checks, "claimed_objective_ignored": True, "strict_full_domain_check": True}}

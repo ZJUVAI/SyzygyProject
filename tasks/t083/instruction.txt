@@ -1,7 +1,7 @@
-Pack four unit equilateral triangles in an axis-aligned square and minimize the square side. The square is [0,L] x [0,L], with lower-left corner (0,0). Each triangle may translate and rotate independently. Triangle interiors must not overlap; touching boundaries is allowed.
+Find a longer finite sequence of signs for the fixed T083-C01 task.
 
-Return JSON with a positive `side` and exactly four `triangles`. `side` is [a,b], meaning a+b*sqrt(3). Each triangle has `anchor:[[ax,bx],[ay,by]]` and `direction:[u,v]`. Each anchor coordinate is a pair of exact rational strings. The direction is a rational unit vector and defines the first unit edge from the anchor. The third vertex is the 60-degree counterclockwise rotation of this edge. Do not use decimal floats.
+Return a JSON object with a nonempty `sequence` list. Every entry must be the integer -1 or +1. The sequence is unrestricted: do not assume multiplicativity.
 
-All translations in Q(sqrt(3)) and rational unit directions are allowed. They form a dense pose set and preserve the unrestricted problem's infimum. There is no coordinate-size or denominator cap in the task definition.
+For every positive integer d and every prefix length k with k*d no greater than the sequence length, the homogeneous progression sum x_d + x_(2d) + ... + x_(kd) must have absolute value at most 3. The score is the sequence length, which is maximized.
 
-The score is recomputed from the returned triangles. Optional submitted score fields have no effect.
+Start from the supplied simple program. Do not read human, reference, or best witness files. You may use exact integer checks and deterministic local search. Return only construction data; declared scores are ignored.

@@ -1,25 +1,51 @@
-# T048 implementation and acceptance notes
+# T048 implementation and verification record
 
-## Configuration and objective
+## Configuration
 
-T048-C01 fixes 17 wires. The objective is to minimize comparator count. The checker uses Python integer bitsets to exhaustively verify all `2^17` binary inputs. The zero-one principle then certifies sorting for every totally ordered input domain. This verifies feasibility, not minimum size.
+- Configuration: `T048-C01`, binary constant-weight code (A(17,4,5)).
+- Objective: maximize the number of codewords.
+- Human and reproduced reference: 444 codewords.
+- Status: `accepted_by_sol`.
 
-## Public sources and bounds
+## Sources and record status
 
-The source is [Dobbelaere's sorting-network table](https://bertdobbelaere.github.io/sorting_networks.html). The pinned witness is `data/reference/sorterhunter_17_71_12.json`. The pinned table snapshot has SHA-256 `fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6`; the source revision is SorterHunter commit `8ba90df607cbdc339409e0b173b5a2ffd60fc911`.
+Milshtein's paper was published online on 2022-10-08 and in *Cryptography and Communications* 15 (2023), pages 443–453. The abstract says the author found a 444-word code by computer search for a maximum independent set. It describes a stochastic local-search algorithm based on Generic Scuba Search. The paper does not report generative-AI use or give a separate AI-provenance statement.
 
-The table lists a 71-comparator, 12-layer feasible network and size bounds 63 to 71. The 63 lower bound is an unpublished, unrefereed strengthening. The strongest lower bound derived from published work in the source review is 60. The source identifies the network as SorterHunter-generated but does not report AI use. Its origin is classified as automated search with AI status unknown.
+The saved raw file `data/source/milshtein_a17_4_5_444.txt` has SHA-256 `bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a`. The replay witness `data/reference/a17_4_5_444.json` has SHA-256 `e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d`.
 
-## Human baseline and programs
+The Brouwer table checked on 2026-11-06 lists 444 for (A(17,4,5)) without an optimum marker. Milshtein states an upper bound 474 and cites Östergård (2010). The correction is listed by Springer on 2023-03-01. No matching proof of optimality was found. The implementation records 444 as a reproduced construction and lower bound.
 
-The human baseline reconstructs Batcher's odd-even mergesort padded to 32 wires, then omits sentinel-wire comparisons. It yields 85 comparators and passes exact zero-one verification. The initial network uses odd-even transposition sorting on 17 wires and yields 136 comparators. The baseline and evolution programs start from that initial network and do not read `human.py`, `reference.py`, or `data/reference`. Only the designated reference program loads the pinned comparison witness.
+## Programs
 
-The task contract sets a 300-second generation limit, a separate 60-second verification limit, 4 GiB of memory, and one thread.
+- `check.py` checks all input words and all unordered word pairs using exact integer bit counts.
+- `init_program.py` returns one valid weight-five word. It is standalone.
+- `baseline.py` makes seeded random priority orders over all 6,188 weight-five words and greedily builds a feasible independent set. Defaults use eight restarts; `MATHBENCH_RESTARTS` can set a bounded count.
+- `evolution.py` uses seeded block-shuffle mutation and elitist selection over candidate orderings. Defaults use 60 generations and population size six. It imports only generic search code from this task's baseline and does not read comparison files.
+- `human.py` reads and replays the archived published construction.
+- `reference.py` replays the same fixed witness.
+- `evaluator.py` uses the shared evaluation interface.
 
-## Test coverage
+The search programs do not load `data/source/` or `data/reference/`. The reference programs load only the task-local reference witness. No comparison witness is saved under `data/results.json`.
 
-Tests verify the C01 public and human witnesses, all 131,072 binary inputs with an independent scalar replay, and the pinned table snapshot hash. They check malformed and invalid networks, forged score fields, configuration mismatch, unsupported removed configuration IDs, all five program entry points, and worker error and timeout handling.
+## Checks performed
 
-## Paper
+The test suite independently checks all 444*443/2 = 98,346 unordered pairs and verifies that the minimum distance is exactly 4. It tests a feasible pair at distance 4, an empty code, one-code initialization, malformed words, incorrect weight, duplicate words, a distance-2 pair, invalid configurations, malformed numeric values, forged score fields, and worker failure and timeout controls.
 
-- [Using Symmetry and Evolutionary Search to Minimize Sorting Networks](https://www.jmlr.org/papers/v14/valsalam13a.html)
+Run commands:
+
+```sh
+.venv/bin/python -m pytest tasks/t048 -q
+.venv/bin/python -m json.tool tasks/t048/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t048/data/bestknown.json > /dev/null
+```
+
+Results:
+
+- `.venv/bin/python -m pytest tasks/t048 -q`: 8 passed in 2.40 seconds.
+- JSON parsing for `task.json`, `bestknown.json`, and `data/source/source_notes.json`: passed.
+- Python environment: CPython 3.13.12, Linux x86_64. The runner limits generation to 300 seconds, verification to 60 seconds, memory to 4 GiB, and one thread.
+- Default traditional search replay with `MATHBENCH_CONFIG_ID=T048-C01`, seed 0, no time cutoff: 8/8 restarts, 0.476 seconds, exact checker score 308.
+- Default evolutionary search replay with `MATHBENCH_CONFIG_ID=T048-C01`, seed 0, no time cutoff: 60/60 generations, population 6, 3.895 seconds, exact checker score 312.
+- Replay commands: `.venv/bin/python -m tasks.t048.human` and `.venv/bin/python -m tasks.t048.reference`; each prints the 444-word witness.
+
+Search uses fixed counts and the seed from `MATHBENCH_SEED` unless `MATHBENCH_SEARCH_SECONDS` is explicitly set. The lower 308/312 search results are task-local baseline results; they do not replace the frozen 444 human/reference construction.

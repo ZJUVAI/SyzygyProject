@@ -1,19 +1,23 @@
-# T062 implementation record
+# T062 implementation and evidence
 
-Status: `accepted_by_sol`.
+## Status
 
-The fixed instance is `T062-C01`, maximizing the cardinality of a subset of `[42025]` with no positive square difference. The exact checker uses Python integers and checks all positive square translations within the interval. Its result is independent of candidate `objective`, `score`, and `claimed_score` fields.
+`T062-C01` remains accepted by Sol under its existing acceptance record. This file records its implementation evidence and does not change that record.
 
-The human construction was rebuilt from Mark Lewko's Theorem 3 residue set modulo 205. The frozen JSON witness is `data/reference/lewko205_n42025.json`, SHA-256 `c31651d54da1b1bdd2b8ce73d74096ad5bdc259e9dd99799f6d9f9509aab7730`. It has 2460 distinct elements, with minimum 8 and maximum 42020. A separate exact verification checked every positive-square shift `k^2` for `1<=k<=204`; none maps a selected element to another selected element.
+## Definition and checker
 
-The source theorem is asymptotic. The reproduced 2460 is a finite feasible construction, not an exact optimum claim. The checked literature audit and its limits are documented in `README.md` and `bestknown.json`. The cubic-difference residue set in the same paper is excluded.
+T062-C01 fixes `n=15`. A valid construction has exactly 15 distinct positive integers and exactly 32,768 distinct subset sums, including zero. The objective is the largest element, which is minimized. `check.py` binds the configuration ID to its full parameter object. It traverses subsets in Gray-code order with exact integer sums. Modular fingerprints are bucket keys only; the checker recomputes exact sums to resolve collisions. It ignores claimed score fields and has no magnitude cap.
 
-The initial program returns `{1}`. The search uses ascending greedy followed by a fixed-seed randomized-order greedy, with a fixed trial count unless `MATHBENCH_SEARCH_SECONDS` is explicitly set. Neither reads comparison assets. The human program reconstructs the residue formula; the reference program reads only the frozen file under `data/reference/`.
+## Human and public witnesses
 
-Validation command and result:
+The human witness is generated from the Conway-Guy recurrence and the set formula in Bohman (1998), §2 and Theorem 2.1. Its maximum is 8,807. The public witness is Sharp's 15-element construction transcribed from the OEIS A276661 A-file. Its maximum is 8,635. Both witnesses are checked by enumerating all 32,768 subset sums. The source does not disclose whether AI assistance was used for the public witness.
 
-```sh
-.venv/bin/python -m pytest tasks/t062/test_task.py -q
-```
+The reviewed bounds are `7060 <= a(15) <= 8635`; no exact minimum was located in the sources reviewed. The lower bound is the sum of central binomial coefficients recorded in `bestknown.json`. The cited bandwidth theorem was not re-proved locally.
 
-The stored witness SHA-256 and exact objective are also checked by the task tests. Generation uses the shared 300-second limit; verification uses the shared 60-second limit. No external Python package is required.
+## Search and cold start
+
+`init_program.py` returns the powers-of-two construction and reads no comparison witness. `baseline.py` runs a deterministic, seed-controlled sweep of descending greedy constructions. It reads no human or reference assets. `evolution.py` calls this search entry. `human.py` reconstructs the Conway-Guy witness from its recurrence. `reference.py` loads the fixed public witness.
+
+## Validation
+
+Run `python -m pytest tasks/t062 -q`. Tests cover the initial, search, human, and reference entries; exact subset-sum validation; rejection of invalid constructions; ignored claim fields; large decimal inputs; repeatable search; and runner failure and timeout handling. The preserved per-run results and review evidence are in `bestknown.json`, and `best/`.

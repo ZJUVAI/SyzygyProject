@@ -1,56 +1,72 @@
 {
   "task_id": "T029",
-  "snapshot_date": "2026-11-06",
   "configurations": {
     "T029-C01": {
-      "parameters": {
-        "matrix_order": 3,
-        "field": "Q",
-        "bilinear": true
+      "program": "reference.py",
+      "reproduced_value": 15,
+      "public_value": 15,
+      "highest_reported": {
+        "value": 15,
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "reproduction_status": "The Shadoks viewer reports 15 pieces; exact reconstructed witness verified. The complete all-team per-instance inventory is unavailable, so this is not claimed as a global record or optimum."
       },
-      "direction": "minimize",
-      "objective": "number of nonzero simple tensor terms (equivalently, scalar multiplications in a bilinear algorithm)",
       "best_human": {
-        "value": 23,
-        "source": "Laderman (1976), Bulletin of the AMS 82(1), 126-128.",
-        "url": "https://doi.org/10.1090/S0002-9904-1976-13988-2",
-        "witness": "data/laderman_rank23.json",
-        "evidence_state": "First-party Lille Maple tensor source normalized to lambda=1; exact local tensor replay.",
+        "value": 15,
+        "witness": "data/human/socg_fixed92_15.json",
+        "verification_status": "certified",
+        "ai_provenance": "Not disclosed in the reviewed sources.",
+        "date": "2026-11-06 (exact reconstruction and verification)",
         "parameters": {
-          "matrix_order": 3,
-          "field": "Q",
-          "bilinear": true
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
         },
-        "source_url": "https://doi.org/10.1090/S0002-9904-1976-13988-2",
-        "witness_url": "https://fmm.univ-lille.fr/3x3x3.html",
-        "ai_provenance": "The task author transcribed a published machine-readable representation; no claim about authorship of Laderman's construction."
+        "method": "A feasible integer 15-piece cover inferred from the rounded Shadoks CG:SHOP 2023 viewer SVG.",
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_method": "Exact real-algebraic vertical decomposition; the witness is rational/integer and all 276 open arrangement cells were checked.",
+        "evidence_state": "The published viewer reports 15. Nearby integer polygons reconstructed from its rounded display form a separately verified feasible 15-piece cover; the original coordinates are not recovered uniquely. This is not a global-optimality proof."
       },
       "best_public": {
-        "value": 23,
-        "source": "Laderman (1976), as represented in the Université de Lille Fast Matrix Multiplication database.",
-        "url": "https://fmm.univ-lille.fr/3x3x3.html",
-        "witness_url": "https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2",
-        "date_checked": "2026-11-06",
-        "evidence_state": "Exact replay of the locally archived first-party representation.",
+        "value": 15,
+        "witness": "data/human/socg_fixed92_15.json",
+        "evidence": "Public Shadoks viewer witness; all-team per-instance ranking not available.",
         "parameters": {
-          "matrix_order": 3,
-          "field": "Q",
-          "bilinear": true
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
         },
-        "origin_type": "Human-authored bilinear algorithm; not an optimality proof over Q."
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "verification_status": "certified",
+        "reported_piece_count": 15,
+        "evidence_state": "The Shadoks viewer reports this instance with 15 polygons. Nearby integer coordinates inferred from its rounded display give one exactly verified feasible witness of the same size; the original coordinates are not uniquely recovered. The official competition ranking gives aggregate team scores, not per-instance values. The checked all-team per-instance record inventory is incomplete; 15 is not claimed to be the best result of every team."
       },
-      "bounds": {
-        "lower_bound": 19,
-        "upper_bound": 23,
-        "status": "open",
-        "primary_source": "Tejasvi Singh Tomar, The rank of 3x3 matrix multiplication over F2 is 23, arXiv:2610.11823v3, Introduction, 19 October 2026.",
-        "primary_source_url": "https://arxiv.org/html/2610.11823v3",
-        "source_statement": "The paper states that over fields of characteristic zero rank remains unknown and lies between 19 and 23. Its rank-23 optimality theorem is over F2; the integer-coefficient corollary does not settle arbitrary rational coefficients.",
-        "scope_warning": "Do not transfer the F2 or integer-coefficient lower bound to Q.",
-        "best_known_upper_bound": 23,
-        "best_known_lower_bound": 19,
-        "source_url": "https://arxiv.org/html/2610.11823v3"
+      "best_reproduced": {
+        "value": 15,
+        "program": "reference.py",
+        "witness": "data/human/socg_fixed92_15.json",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_status": "certified",
+        "date": "2026-11-06",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "origin_type": "Same-count reconstruction from the published Shadoks viewer",
+        "evidence_state": "The viewer SVG is inverse-transformed and rounded to nearby integer coordinates. These inferred polygons pass exact full-region validation; the display does not uniquely identify the original submitted coordinates.",
+        "review_status": "reviewed_by_sol"
       },
+      "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -60,21 +76,21 @@
           "config_id": "T029-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 23,
-          "verification_status": "exact",
-          "generation_time": 0.16489629819989204,
-          "verification_time": 0.2151218168437481,
-          "objective_value": 23,
+          "objective": 15,
+          "verification_status": "certified",
+          "generation_time": 0.16453132778406143,
+          "verification_time": 1.4165723770856857,
+          "objective_value": 15,
           "details": {
-            "matrix_order": 3,
-            "field": "Q",
-            "tensor_coefficients_recomputed": 729,
-            "input_forms": "alpha(A) * beta(B), separate linear forms",
-            "output_convention": "gamma[i,k] contributes to C[i,k]",
-            "claimed_objective_ignored": true,
-            "max_terms_is_resource_cap_not_an_optimality_bound": true
+            "instance": "socg_fixed92",
+            "convex_polygon_count": 15,
+            "total_piece_vertices": 66,
+            "algebraic_field_degree": 1,
+            "verified_open_arrangement_cells": 276,
+            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+            "claimed_score_ignored": true
           },
-          "eval_time": 0.38410696014761925,
+          "eval_time": 1.5844123810529709,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -91,51 +107,27 @@
           }
         },
         "independent_quantity": {
-          "rank_terms": 23,
-          "basis_pairs": 81,
-          "output_coefficients_checked": 729
+          "polygon_count": 15,
+          "target_area": "206848",
+          "uncovered_area": "0",
+          "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "045cb07c26dc32a20e27396671fa14ff70c5c79b72948d0fdea9c57d3f6eaefe"
+        "claimed_score_ignored": true
       },
-      "review_status": "accepted_by_sol",
-      "program": "reference.py",
-      "reproduced_value": "23",
-      "public_value": "23",
-      "highest_reported": {
-        "value": "23",
-        "source": {
-          "value": 23,
-          "source": "Laderman (1976), as represented in the Université de Lille Fast Matrix Multiplication database.",
-          "url": "https://fmm.univ-lille.fr/3x3x3.html",
-          "witness_url": "https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2",
-          "date_checked": "2026-11-06",
-          "evidence_state": "Exact replay of the locally archived first-party representation."
-        },
-        "reproduction_status": "witness reproduced exactly"
+      "parameters": {
+        "instance": "socg_fixed92",
+        "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+        "boundary_vertices": 92,
+        "holes": 0,
+        "cover_domain": "all real convex polygons",
+        "overlap_allowed": true
       },
-      "best_reproduced": {
-        "value": 23,
-        "parameters": {
-          "matrix_order": 3,
-          "field": "Q",
-          "bilinear": true
-        },
-        "witness": "data/laderman_rank23.json",
-        "program": "reference.py",
-        "verification_status": "exact",
-        "verification_method": "Rebuild 23 factor triples from the first-party Maple tensor representation, set lambda=1, transpose the third factor as in the source evaluation expression, and compare all 729 rational tensor coefficients against matrix multiplication.",
-        "witness_sha256": "c1debbeebc30dd64034ae83e1cbe9f5f7f3f112cbe7fe8db54cb152313994977",
-        "claimed_score_ignored": true,
-        "date_reproduced": "2026-11-06",
-        "review_status": "reviewed_by_sol",
-        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see bestknown.json."
-      },
-      "unmatched_parameter_records": [],
-      "ai_assisted_records": [],
-      "source_unattributed_records": []
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "No global proof for this fixed instance was found in the reviewed sources.",
+        "notes": "The viewer reports 15. Its CPLEX Optimal status applies to the generated candidate collection. The official challenge ranking is aggregate, and DIKU (AMW) ranks above Shadoks overall; per-instance values for all teams are not available in the checked sources. The 2026 rotten-potato paper provides an approximation algorithm, not an instance closure. The challenge restricted submitted witness coordinates to rationals; this task keeps the complete all-real MCC objective and encodes algebraic witnesses."
+      }
     }
   },
   "review_status": "accepted_by_sol",
@@ -143,15 +135,7 @@
     "configurations": {
       "T029-C01": {
         "best_human": {
-          "source": "Julian D. Laderman (1976), A noncommutative algorithm for multiplying 3x3 matrices using 23 multiplications, Bulletin of the AMS 82(1), 126-128.",
-          "evidence_state": "The published Laderman23-product construction was reconstructed from the Lille tensor source and passed exact task and independent Sol checks."
-        },
-        "best_public": {
-          "source": "Laderman (1976); source data labeled ⟨3x3x3:23⟩ on the Fast Matrix Multiplication database at Université de Lille.",
-          "evidence_state": "Public tensor representation gives 23 triads. The source uses a nonzero parameter lambda; the saved rational witness sets lambda=1 and applies the documented output transpose. Exact local verification is recorded in IMPLEMENTATION.md."
-        },
-        "bounds": {
-          "status": "open over characteristic-zero fields; exact rank over Q is not known"
+          "ai_provenance": "Not disclosed in the reviewed paper or viewer. No claim of an unaided human process is made."
         }
       }
     }

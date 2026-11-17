@@ -1,17 +1,17 @@
-"""Published human witness reproduced from Orrick et al. (2003)."""
-import json
+"""Rebuild the archived Cantrell n=12 result via the site's decimal coordinates."""
+
 import os
-from pathlib import Path
 
-
-def _config_n():
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T018-C01")
-    if cid != "T018-C01":
-        raise ValueError(f"unknown T018 configuration: {cid}")
-    return 29
+from tasks.t018.construction import reconstruct_rational_points
 
 
 def run_code():
-    n = _config_n()
-    data = json.loads((Path(__file__).parent / "data" / f"human_order{n}.json").read_text())
-    return {"matrix": [[1 if c == "+" else -1 for c in row] for row in data["matrix"]]}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T018-C01") != "T018-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    return reconstruct_rational_points()
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

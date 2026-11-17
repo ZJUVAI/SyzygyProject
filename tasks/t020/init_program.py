@@ -1,21 +1,14 @@
-"""Deterministic binary-method seed; no reference witness is read."""
-import os
-
-TARGETS = {
-    "T020-C01": 2**192 - 2**64 - 3,
-}
+"""A simple 91-point collinear seed with exact rational coordinates."""
 
 
 def run_code():
-    target = TARGETS.get(os.environ.get("MATHBENCH_CONFIG_ID", "T020-C01"))
-    if target is None:
-        raise ValueError("unsupported T020 configuration")
     # EVOLVE-BLOCK-START
-    bits = bin(target)[2:]
-    chain = [1]
-    for bit in bits[1:]:
-        chain.append(2 * chain[-1])
-        if bit == "1":
-            chain.append(chain[-1] + 1)
+    return {
+        "minimal_polynomial": [0, 1],
+        "isolating_interval": ["-1", "1"],
+        "points": [
+            {"x": [str(i)], "y": ["0"]}
+            for i in range(91)
+        ],
+    }
     # EVOLVE-BLOCK-END
-    return {"chain": chain}

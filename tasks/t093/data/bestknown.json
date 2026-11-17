@@ -1,41 +1,51 @@
 {
   "task_id": "T093",
-  "source_checked": "2026-11-06",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T093-C01": {
       "program": "reference.py",
-      "reproduced_value": 2304,
-      "public_value": 2304,
-      "objective": "sum of selected item values in a feasible integer-translation packing",
-      "direction": "maximize",
-      "source_instance": {
-        "url": "https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2024/",
-        "source_location": "Challenge instances; random_cf2_74ae2d30_50",
-        "file": "data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json",
-        "sha256": "f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92"
-      },
+      "reproduced_value": "44759294",
+      "public_value": "44759294",
       "highest_reported": {
-        "value": 2304,
-        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
-        "source_location": "Shadoks solution, value 2304, 23 included items; solution file linked from result page",
-        "reproduction_status": "exact public witness recovered and independently checked",
-        "metric": "sum of values of selected feasible items",
-        "direction": "maximize",
-        "date_checked": "2026-11-06",
-        "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html"
+        "value": "44759294",
+        "source": {
+          "url": "https://qaplib.mgi.polymtl.ca/",
+          "instance_url": "https://coral.ise.lehigh.edu/data-sets/qaplib/qaplib-problem-instances-and-solutions/",
+          "witness_url": "https://sources.debian.org/src/r-cran-qap/0.1-1-2/inst/qaplib/tai256c.sln",
+          "title": "QAPLIB tai256c record and archived solution",
+          "classification": "best reported feasible objective on the checked QAPLIB pages; not an optimality proof",
+          "method_label": "ANT",
+          "method_provenance": "QAPLIB table labels 44,759,294 as ANT; QAPLIB history credits T. Stützle with an improved tai256c solution in June 1997. The archived permutation is replayed, but the original ANT run is not reproduced."
+        },
+        "reproduction_status": "archived witness reproduced exactly"
       },
-      "reproduced_witness": {
-        "value": 2304,
-        "file": "data/source/shadoks2304.json",
-        "sha256": "f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1",
-        "provenance": "Public Shadoks witness. Exact integer translations and source polygon coordinates were used.",
-        "evidence_state": "exact simple-polygon triangulation, exact rational clipping, and objective recomputation"
+      "checked_at": "2026-11-06",
+      "public_source": {
+        "url": "https://qaplib.mgi.polymtl.ca/",
+        "instance_url": "https://coral.ise.lehigh.edu/data-sets/qaplib/qaplib-problem-instances-and-solutions/",
+        "witness_url": "https://sources.debian.org/src/r-cran-qap/0.1-1-2/inst/qaplib/tai256c.sln",
+        "title": "QAPLIB tai256c record and archived solution",
+        "classification": "best reported feasible objective on the checked QAPLIB pages; not an optimality proof",
+        "method_label": "ANT",
+        "method_provenance": "QAPLIB table labels 44,759,294 as ANT; QAPLIB history credits T. Stützle with an improved tai256c solution in June 1997. The archived permutation is replayed, but the original ANT run is not reproduced."
       },
-      "open_status": {
-        "evidence": "The official CG:SHOP 2024 page describes a heuristic challenge and the current Shadoks results page lists team solutions, with Shadoks at 2304, SmartPlacer at 2268, and CGA Lab Salzburg at 2105. The source check on 2026-11-06 found no proof that 2304 is optimal for this instance.",
-        "claim_limit": "This records the checked contest and author sources; it does not claim an exhaustive literature survey."
+      "lower_bound_source": {
+        "url": "https://arxiv.org/abs/2401.09439v2",
+        "title": "An Exceptionally Difficult Binary Quadratic Optimization Problem with Symmetry: a Challenge for The Largest Unsolved QAP Instance Tai256c",
+        "version": "arXiv v2; submitted 2023-12-20, last revised 2024-09-30 in the arXiv version history. The v2 PDF title page says revised 2024-10-01.",
+        "reported_lower_bound": "44200000",
+        "reported_gap": "1.25%",
+        "evidence": "The v2 PDF states that target lower bound 44,200,000 was obtained with a 1.25% gap (PDF p. 3; Table 4 on p. 18). The v2 abstract still describes the earlier 1.48% gap.",
+        "checked_at": "2026-11-06"
       },
-      "review_status": "accepted_by_sol",
+      "matrix": "data/tai256c.dat.gz",
+      "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The original ANT search is not replayed; only the archived feasible permutation and exact score are reproduced.",
+        "The checked QAPLIB pages disagree on the older lower bound: the Lehigh table gives 43,849,646, while the QAPLIB mirror gives 44,095,032. The arXiv v2 paper discusses 44,095,032 as the previous bound and reports an improved 44,200,000. Searches on 2026-11-06 found no later primary result or proof of optimality; this search was not exhaustive.",
+        "The lower bound is a result reported by the cited paper; the task checker verifies feasible scores, not optimality or lower-bound certificates."
+      ],
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -45,67 +55,20 @@
           "config_id": "T093-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 2304,
+          "objective": 44759294,
           "verification_status": "exact",
-          "generation_time": 0.48475420102477074,
-          "verification_time": 0.5162832029163837,
-          "objective_value": 2304,
+          "generation_time": 0.26518185809254646,
+          "verification_time": 0.2657204009592533,
+          "objective_value": 44759294,
           "details": {
-            "instance": "random_cf2_74ae2d30_50",
-            "instance_sha256": "f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92",
-            "container_vertices": 15,
-            "item_types": 44,
-            "available_items_total": 50,
-            "selected_items": 23,
-            "selected_type_counts": [
-              2,
-              1,
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-              0,
-              1,
-              0,
-              0,
-              1,
-              0,
-              1,
-              1,
-              0,
-              0,
-              1,
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-              0,
-              0,
-              1,
-              1,
-              1,
-              0,
-              1,
-              1,
-              0,
-              1,
-              0,
-              1,
-              1,
-              0,
-              1,
-              1,
-              1,
-              0,
-              0
-            ],
-            "claimed_objective_ignored": true
+            "instance": "tai256c",
+            "n": 256,
+            "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+            "permutation_bijection_verified": true,
+            "objective_terms": 65536,
+            "claimed_score_ignored": true
           },
-          "eval_time": 1.0186917930841446,
+          "eval_time": 0.5353591740131378,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -122,90 +85,46 @@
           }
         },
         "independent_quantity": {
-          "packed_value": 2304,
-          "placed_items": 23,
-          "method": "Exact rational vertical sections in all arrangement slabs; convex-container halfplanes; no triangulation or triangle clipping."
+          "quadratic_cost": 44759294,
+          "terms": 65536,
+          "inverse_permutation_checked": true
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
         "witness": "data/reference/public_c01.json",
-        "witness_sha256": "0530a2a715a45afbd19d0f27941337eb054054bb51df2d18e7053fb8ae9b3ad7"
+        "witness_sha256": "ec3bd69f6ffc0dfab851bdf59ab886ac0450c84b333a17af8590db5b2d544864"
       },
-      "id": "T093-C01",
-      "parameters": {
-        "instance": "random_cf2_74ae2d30_50",
-        "container_vertices": 15,
-        "item_types": 44,
-        "available_items_total": 50
-      },
+      "review_status": "accepted_by_sol",
+      "witness": "data/tai256c.sln",
+      "witness_sha256": "066452382541a9139b2de34113105afbfaf14949a367fe5acef468d80556dcb0",
       "best_human": {
-        "value": 2304,
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "instance": "random_cf2_74ae2d30_50",
-          "container_vertices": 15,
-          "item_types": 44,
-          "available_items_total": 50
-        },
-        "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
-        "source_location": "Shadoks entry; value 2304; 23 items",
-        "provenance": "Published computational construction from the Shadoks CG:SHOP 2024 team. Their paper describes integer programming and heuristic search; the witness file metadata says it is from before digopt optimization.",
-        "ai_provenance": "The source does not disclose use or non-use of AI tools.",
-        "evidence_state": "published witness locally reproduced and exact geometry/value rechecked"
+        "value": "44759294",
+        "date": "1997-06",
+        "parameters": "QAPLIB tai256c, n=256",
+        "source": "https://qaplib.mgi.polymtl.ca/",
+        "witness": "data/tai256c.sln",
+        "algorithm": "ANT, QAPLIB table attribution; archived permutation replayed",
+        "ai_provenance": "not reported",
+        "evidence_state": "witness_and_value_reproduced; original search run is not replayed"
       },
       "best_public": {
-        "value": 2304,
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "instance": "random_cf2_74ae2d30_50",
-          "container_vertices": 15,
-          "item_types": 44,
-          "available_items_total": 50
-        },
-        "url": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop24view/HTML_SOLUTIONS/random_cf2_74ae2d30_50.html",
-        "source_location": "Interactive instance results page, Shadoks card, value 2304/2304; also lists SmartPlacer 2268 and CGA Lab Salzburg 2105",
-        "provenance": "Highest team solution shown on the checked public result page. This is a reported feasible value, not a proof of optimality.",
-        "ai_provenance": "not disclosed by the source",
-        "evidence_state": "public witness file recovered and independently validated"
+        "value": "44759294",
+        "date": "checked 2026-11-06",
+        "parameters": "QAPLIB tai256c, n=256",
+        "source": "https://qaplib.mgi.polymtl.ca/",
+        "ai_provenance": "not reported",
+        "evidence_state": "QAPLIB reports this feasible value; archived witness independently scored"
       },
       "best_reproduced": {
-        "value": 2304,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "instance": "random_cf2_74ae2d30_50",
-          "container_vertices": 15,
-          "item_types": 44,
-          "available_items_total": 50
-        },
-        "witness_file": "data/source/shadoks2304.json",
-        "provenance": "The public Shadoks solution file was replayed and checked from its integer translations. No geometry values were rounded.",
-        "ai_provenance": "not disclosed by the source",
-        "actual_value": 2304,
-        "evidence_state": "exact triangulation, rational clipping, containment, and pairwise interior-disjointness checks",
+        "value": "44759294",
+        "program": "human.py",
+        "witness": "data/tai256c.sln",
+        "parameters": "QAPLIB tai256c, n=256",
+        "verification": "Exact integer recomputation over 65,536 terms; independently reproduced during implementation intake.",
+        "checked_at": "2026-11-06",
         "review_status": "reviewed_by_sol"
       },
-      "frozen_human_baseline": {
-        "value": 2304,
-        "parameters": {
-          "instance": "random_cf2_74ae2d30_50",
-          "container_vertices": 15,
-          "item_types": 44,
-          "available_items_total": 50
-        },
-        "witness_file": "data/source/shadoks2304.json",
-        "provenance": "Replay of the published Shadoks computational witness; the code does not claim to reproduce their solver."
-      }
-    }
-  },
-  "review_status": "accepted_by_sol",
-  "additional_evidence": {
-    "configurations": {
-      "T093-C01": {
-        "highest_reported": {
-          "source_location": "Shadoks solution card and linked solution file",
-          "reproduction_status": "reported and locally reproduced exactly; no optimality proof identified in the sources checked"
-        }
-      }
+      "other_parameters": []
     }
   }
 }

@@ -1,18 +1,14 @@
-"""Rebuild the 32-element initial segment of the Odlyzko-Stanley S(1) sequence."""
+"""Reproduce a seeded traditional 1-flip local-search baseline on G70."""
+
+import os
+
+from tasks.t042._search import repeated_local_search_with_metadata
 
 
 def run_code():
-    elements = [
-        1 + sum(digit * (3**place) for place, digit in enumerate(bits))
-        for bits in _binary_digit_vectors(5)
-    ]
-    return {"elements": elements}
-
-
-def _binary_digit_vectors(width):
-    if width == 0:
-        yield ()
-        return
-    for prefix in _binary_digit_vectors(width - 1):
-        yield prefix + (0,)
-        yield prefix + (1,)
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T042-C01") != "T042-C01":
+        raise ValueError("unknown T042 configuration")
+    # This external baseline is frozen at seed 0, independent of candidate seeds.
+    labels, _, metadata = repeated_local_search_with_metadata(
+        seed=0, restarts=4, max_flips=10000)
+    return {"labels": labels, "search_metadata": metadata}

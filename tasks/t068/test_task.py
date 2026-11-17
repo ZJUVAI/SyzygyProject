@@ -1,3 +1,5 @@
+"""Tests for the exact T068 checker and construction entry points."""
+
 import hashlib
 import json
 import os
@@ -6,101 +8,131 @@ import sys
 
 import pytest
 
-from mathbench.evaluate import _run
 from tasks.t068.baseline import run_code as baseline_run
-from tasks.t068.check import CONFIG_ID, PARAMETERS, validate
+from tasks.t068.check import validate
 from tasks.t068.evolution import run_code as evolution_run
-from tasks.t068.human import build_human_code, run_code as human_run
-from tasks.t068.init_program import run_code as init_run
+from tasks.t068.human import run_code as human_run
+from tasks.t068.init_program import run_code as seed_run
 from tasks.t068.reference import run_code as reference_run
 
 
-TASK = Path(__file__).parent
-CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
+TASK_DIR = Path(__file__).parent
+CONFIG = {
+    "id": "T068-C01",
+    "parameters": {
+        "colors": 2,
+        "progression_length": 7,
+        "domain": "consecutive_prefix_of_positive_integers",
+        "common_difference": "positive_integer",
+    },
+    "direction": "maximize",
+    "human_reference": 3703,
+}
 
 
-def _validate(solution):
-    return validate(solution, CONFIG)
+def _independent_ap_count(colors):
+    """Independent direct loop over every valid (start, step) pair."""
+    n = len(colors)
+    checked = 0
+    for start in range(n):
+        for step in range(1, (n - 1 - start) // 6 + 1):
+            checked += 1
+            terms = [start + j * step for j in range(7)]
+            assert len({colors[position] for position in terms}) > 1
+    return checked
 
 
-def test_all_five_entries_and_reproduced_public_count(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("MATHBENCH_SEED", "0")
-    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
-    for solution in outputs:
-        checked = _validate(solution)
-        assert checked["verification_status"] == "exact"
-        assert checked["details"]["covered_word_count"] == 1024
-        assert checked["objective"] == len(solution["codewords"])
-    assert _validate(human_run())["objective"] == 128
-    assert _validate(reference_run())["objective"] == 120
+def test_human_formula_is_exact_3703_and_matches_independent_enumeration():
+    witness = human_run()
+    assert witness == reference_run()
+    result = validate(witness, CONFIG, strict=True)
+    assert result["objective"] == 3703
+    assert result["verification_status"] == "exact"
+    assert result["details"]["progressions_checked"] == _independent_ap_count(witness["colors"])
+    assert result["details"]["progressions_checked"] > 1_000_000
 
 
-def test_frozen_public_list_matches_n10_source_and_hash():
-    path = TASK / "data/reference/oeis_a000983_n10.json"
-    raw = path.read_bytes()
-    metadata = json.loads((TASK / "data/bestknown.json").read_text())
-    record = metadata["configurations"][CONFIG_ID]
-    assert hashlib.sha256(raw).hexdigest() == record["witness_sha256"]
-    source_path = TASK / "data/source/oeis_a000983.txt"
-    assert hashlib.sha256(source_path.read_bytes()).hexdigest() == record["source_file_sha256"]
-    words = json.loads(raw)["codewords"]
-    assert len(words) == 120
-    assert all(len(word) == 10 and set(word) <= {"0", "1"} for word in words)
-    assert _validate({"codewords": [int(word, 2) for word in words]})["objective"] == 120
-
-    source = source_path.read_text()
-    n10_section = source.split("a(10)<=120", 1)[1].split("a(11)<=192", 1)[0]
-    assert words == __import__("re").findall(r"\b[01]{10}\b", n10_section)
+def test_simple_seed_is_self_contained_and_valid():
+    seed = seed_run()
+    assert seed == {"n": 6, "colors": [0, 0, 0, 0, 0, 0]}
+    assert validate(seed, CONFIG)["objective"] == 6
 
 
-def test_hamming_product_has_128_words_and_full_cover():
-    solution = build_human_code()
-    words = solution["codewords"]
-    assert len(words) == len(set(words)) == 128
-    assert _validate(solution)["objective"] == 128
+def test_checker_rejects_bad_input_and_a_monochromatic_progression():
+    bad = [None, {}, {"n": 7, "colors": [0] * 6}, {"n": 7, "colors": [0] * 7},
+           {"n": 7, "colors": [0, 0, 0, 0, 0, 0, True]},
+           {"n": 7, "colors": [0, 0, 0, 0, 0, 0, 2]},
+           {"n": 7, "colors": [0, 0, 0, 0, 0, 0, 1.0]},
+           {"n": 7, "colors": [0, 0, 0, 0, 0, 0, float("nan")]},
+           {"n": 7, "colors": [0, 0, 0, 0, 0, 0, float("inf")]},
+           {"n": True, "colors": [0]}, {"n": 0, "colors": []}]
+    for solution in bad:
+        with pytest.raises(ValueError):
+            validate(solution, CONFIG)
+    with pytest.raises(ValueError, match="configuration id"):
+        validate(seed_run(), {**CONFIG, "id": "T068-C02"})
+    with pytest.raises(ValueError, match="parameters"):
+        validate(seed_run(), {**CONFIG, "parameters": {**CONFIG["parameters"], "colors": 3}})
 
 
-@pytest.mark.parametrize(
-    "solution",
-    [
-        {"codewords": [0, 0]},
-        {"codewords": [0]},
-        {"codewords": [-1]},
-        {"codewords": [1024]},
-        {"codewords": [True]},
-        {"codewords": [1.0]},
-        {"codewords": [float("nan")]},
-        {"codewords": ["0000000000"]},
-        {},
-    ],
-)
-def test_invalid_or_noncovering_candidate_rejected(solution):
-    with pytest.raises(ValueError):
-        _validate(solution)
+def test_checker_rejects_step_one_and_nonunit_step_violations():
+    with pytest.raises(ValueError, match="arithmetic progression"):
+        validate({"n": 7, "colors": [1] * 7}, CONFIG)
+    # Positions 1, 3, 5, 7, 9, 11, 13 (one-based) form a step-2 progression.
+    colors = [0, 1] * 7
+    for position in range(0, 13, 2):
+        colors[position] = 0
+    with pytest.raises(ValueError, match="arithmetic progression"):
+        validate({"n": len(colors), "colors": colors}, CONFIG)
 
 
-def test_claimed_scores_do_not_change_validation():
-    solution = reference_run()
-    expected = _validate(solution)
-    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "fake")):
-        assert validate({**solution, key: value}, CONFIG) == expected
-    assert expected["details"]["claimed_objective_ignored"] is True
+def test_repeated_color_labels_are_valid_and_claimed_score_is_ignored():
+    witness = reference_run()
+    original = validate(witness, CONFIG)
+    assert original["objective"] == 3703
+    for claim in (-1, 0, 10**100, "3703", float("nan"), float("inf")):
+        candidate = {**witness, "claimed_objective": claim, "score": claim}
+        assert validate(candidate, CONFIG)["objective"] == original["objective"]
+    assert validate({"n": 8, "colors": [0, 0, 0, 0, 0, 0, 1, 0]}, CONFIG)["objective"] == 8
 
 
-def test_search_is_seeded_and_does_not_read_reference(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("MATHBENCH_SEED", "37")
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    first, second = baseline_run(), baseline_run()
-    assert first == second
-    assert first["search_metadata"]["reference_data_read"] is False
-    _validate(first)
+def test_baseline_and_evolution_entry_are_reproducible(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEED", "19")
+    one = baseline_run()
+    two = baseline_run()
+    assert one == two
+    checked = validate(one, CONFIG)
+    assert checked["objective"] == one["claimed_objective"]
+    assert one["search_metadata"]["seed"] == 19
+    assert one["search_metadata"]["reference_data_read"] is False
+    assert validate(evolution_run(), CONFIG)["verification_status"] == "exact"
 
 
-def test_runner_error_and_timeout_without_registry():
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T068 failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T068 failure')"], env, 3)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)
+def test_search_deadline_zero_returns_a_valid_seed(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
+    result = baseline_run()
+    assert result["n"] == 6
+    assert validate(result, CONFIG)["objective"] == 6
+
+
+def test_source_note_integrity_and_endpoint_exception():
+    notes = TASK_DIR / "data" / "source" / "source_notes.md"
+    hashes = json.loads((TASK_DIR / "data" / "source_hashes.json").read_text())
+    assert hashlib.sha256(notes.read_bytes()).hexdigest() == hashes["source_notes"]["sha256"]
+    witness_file = TASK_DIR / "data" / "reconstructed_3703_coloring.json"
+    assert hashlib.sha256(witness_file.read_bytes()).hexdigest() == hashes["reconstructed_witness"]["sha256"]
+    assert json.loads(witness_file.read_text()) == reference_run()
+    colors = reference_run()["colors"]
+    assert colors[0] == 0
+    assert colors[-1] == 1
+    assert all(colors[i] == 0 for i in range(0, 6 * 617, 617))
+
+
+def test_generation_runner_reports_candidate_error_and_timeout():
+    from mathbench.evaluate import _run
+
+    environment = dict(os.environ)
+    with pytest.raises(RuntimeError, match="candidate failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

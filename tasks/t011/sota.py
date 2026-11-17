@@ -1,8 +1,19 @@
-"""Return the published 367-word C7^5 construction for exact replay."""
+"""Replay the strongest same-parameter public witnesses in the source table."""
+import os
+from pathlib import Path
 
-from .human import run_human
+
+_CONFIGS = {"T011-C01": "16"}
 
 
 def run_code():
-    """Load the task-local transcription of Polak and Schrijver's witness."""
-    return run_human()
+    """Return the archived spherical-codes.org coordinates for the active config."""
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
+    if config_id not in _CONFIGS:
+        raise ValueError(f"unsupported T011 configuration: {config_id}")
+    witness = Path(__file__).parent / "data" / f"spherical_code_3_{_CONFIGS[config_id]}.txt"
+    points = []
+    for line in witness.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            points.append([coordinate.strip() for coordinate in line.split(",")])
+    return {"points": points}

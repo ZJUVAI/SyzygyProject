@@ -1,111 +1,71 @@
-"""Exact checker for C6-free and C6-saturated simple graphs on 100 vertices."""
+"""Exact checker for finite integer B_3 sets."""
+
+from itertools import combinations_with_replacement
+import sys
+
+# Python 3.11+ limits decimal conversions by default. The public domain has no
+# integer-size cap, so the checker accepts decimal-string integer encodings too.
+if hasattr(sys, "set_int_max_str_digits"):
+    sys.set_int_max_str_digits(0)
 
 
-CONFIG_ID = "T061-C01"
-PARAMETERS = {
-    "vertices": 100,
-    "forbidden_subgraph": "simple cycle C6",
-    "saturation": "C6-free; adding any missing edge creates a simple C6",
-    "objective": "number of edges",
-}
-
-
-def _check_config(config):
-    if not isinstance(config, dict):
-        raise ValueError("configuration must be an object")
-    if config.get("id") not in (None, CONFIG_ID):
-        raise ValueError(f"unsupported configuration: expected {CONFIG_ID}")
-    if config.get("parameters") != PARAMETERS:
-        raise ValueError("configuration must fix 100 vertices and simple C6 saturation")
-
-
-def _iter_bits(mask):
-    while mask:
-        bit = mask & -mask
-        mask ^= bit
-        yield bit.bit_length() - 1
-
-
-def _path_endpoint_pairs(adjacency):
-    """Enumerate endpoint pairs of all simple 5-edge paths, stopping on C6."""
-    endpoints = set()
-    n = len(adjacency)
-
-    def visit(start, vertex, depth, seen):
-        if depth == 5:
-            if adjacency[vertex] & (1 << start):
-                raise ValueError("graph contains a simple cycle of length 6")
-            if start < vertex:
-                endpoints.add((start, vertex))
-            else:
-                endpoints.add((vertex, start))
-            return
-        for neighbor in _iter_bits(adjacency[vertex] & ~seen):
-            visit(start, neighbor, depth + 1, seen | (1 << neighbor))
-
-    for start in range(n):
-        visit(start, start, 0, 1 << start)
-    return endpoints
+def _integer(value):
+    if type(value) is int:
+        return value
+    if isinstance(value, str):
+        digits = value[1:] if value.startswith("-") else value
+        if not digits or not digits.isascii() or not digits.isdigit():
+            raise ValueError("decimal-string elements must use base-10 integer notation")
+        if value.startswith("-") and (len(value) == 1 or value[1] == "0"):
+            raise ValueError("decimal-string elements must use canonical integer notation")
+        if not value.startswith("-") and len(value) > 1 and value[0] == "0":
+            raise ValueError("decimal-string elements must use canonical integer notation")
+        return int(value)
+    raise ValueError("elements must be exact integers or canonical decimal strings")
 
 
 def validate(solution, config, strict=False):
-    """Independently prove C6-freeness and saturation by simple path enumeration."""
-    del strict
-    _check_config(config)
-    if not isinstance(solution, dict):
-        raise ValueError("solution must be an object")
-    vertices = solution.get("vertices")
-    if type(vertices) is not int or vertices != 100:
-        raise ValueError("vertices must be the integer 100")
-    edges = solution.get("edges")
-    if not isinstance(edges, list):
-        raise ValueError("edges must be a list")
+    if not isinstance(config, dict) or config.get("id") != "T061-C01":
+        raise ValueError("unknown T061 configuration")
+    parameters = config.get("parameters")
+    if (not isinstance(parameters, dict)
+            or set(parameters) != {"cardinality", "order", "integer_domain"}
+            or type(parameters.get("cardinality")) is not int
+            or parameters.get("cardinality") != 31
+            or type(parameters.get("order")) is not int
+            or parameters.get("order") != 3
+            or type(parameters.get("integer_domain")) is not bool
+            or parameters.get("integer_domain") is not True):
+        raise ValueError("T061-C01 parameters must match the frozen configuration exactly")
+    cardinality = 31
+    order = 3
+    elements = solution.get("elements") if isinstance(solution, dict) else solution
+    if not isinstance(elements, (list, tuple)) or len(elements) != cardinality:
+        raise ValueError("solution must contain exactly 31 integers")
+    elements = [_integer(value) for value in elements]
+    if len(set(elements)) != cardinality:
+        raise ValueError("elements must be distinct")
 
-    adjacency = [0] * 100
-    normalized_edges = set()
-    for index, edge in enumerate(edges):
-        if not isinstance(edge, list) or len(edge) != 2:
-            raise ValueError(f"edge {index} must be a pair of vertex IDs")
-        left, right = edge
-        if type(left) is not int or type(right) is not int:
-            raise ValueError(f"edge {index} endpoints must be integers")
-        if left < 0 or right < 0 or left >= 100 or right >= 100:
-            raise ValueError(f"edge {index} endpoint is outside 0..99")
-        if left == right:
-            raise ValueError(f"edge {index} is a loop")
-        pair = (left, right) if left < right else (right, left)
-        if pair in normalized_edges:
-            raise ValueError(f"duplicate edge {pair}")
-        normalized_edges.add(pair)
-        adjacency[left] |= 1 << right
-        adjacency[right] |= 1 << left
-
-    path_endpoints = _path_endpoint_pairs(adjacency)
-    missing_pair = None
-    for left in range(100):
-        for right in range(left + 1, 100):
-            if adjacency[left] & (1 << right):
-                continue
-            if (left, right) not in path_endpoints:
-                missing_pair = (left, right)
-                break
-        if missing_pair is not None:
-            break
-    if missing_pair is not None:
-        raise ValueError(
-            f"graph is not C6-saturated: nonedge {missing_pair} has no simple 5-edge path"
-        )
-
+    triples = combinations_with_replacement(elements, order)
+    seen = set()
+    checked = 0
+    for triple in triples:
+        total = sum(triple)
+        if total in seen:
+            raise ValueError("all unordered three-term sums, with repetition, must be distinct")
+        seen.add(total)
+        checked += 1
+    if checked != 5456:
+        raise ValueError("internal error: unexpected triple-sum count")
+    diameter = max(elements) - min(elements)
+    diameter_wire = diameter if len(str(diameter)) <= 4300 else str(diameter)
     return {
-        "objective": len(normalized_edges),
+        "objective": diameter_wire,
         "verification_status": "exact",
         "details": {
-            "vertices": 100,
-            "edge_count": len(normalized_edges),
-            "simple_c6_free": True,
-            "saturated": True,
-            "missing_pairs_checked": 4950 - len(normalized_edges),
-            "simple_5_path_endpoint_pairs": len(path_endpoints),
+            "cardinality": cardinality,
+            "order": order,
+            "triple_sums_checked": checked,
             "claimed_objective_ignored": True,
         },
     }

@@ -1,58 +1,37 @@
 {
   "task_id": "T091",
-  "name": "Minimum rows in a binary strength-4 orthogonal array with 63 columns",
+  "name": "Integer Chebyshev polynomial on [0,1]",
   "acceptance_status": "accepted_by_sol",
-  "category": "combinatorial_designs",
-  "definition": "Find the smallest number N of rows in a binary orthogonal array with 63 columns and strength 4. Rows may repeat. Every selection of four columns must contain each of the 16 binary patterns exactly N/16 times.",
-  "solution_format": "An object with rows: a list of integers. Each integer is a 63-bit row mask; bit j is the entry in column j.",
-  "objective": {
-    "name": "row_count",
-    "unit": "rows",
-    "direction": "minimize"
-  },
-  "constraints": [
-    "Every row has exactly 63 binary entries encoded by an integer mask in [0,2^63).",
-    "For every set of four columns, each of the 16 binary patterns occurs exactly N/16 times.",
-    "Repeated rows are allowed and must not be rejected solely for duplication.",
-    "N is a positive multiple of 16. Rao's bound gives N >= 2032 for this configuration."
-  ],
   "official_configuration": "T091-C01",
   "configurations": [
     {
       "id": "T091-C01",
       "parameters": {
-        "columns": 63,
-        "levels": 2,
-        "strength": 4,
-        "row_repetition": "allowed"
+        "degree_at_most": 146,
+        "interval": [
+          0,
+          1
+        ],
+        "coefficient_domain": "nonzero integer polynomials"
       },
       "direction": "minimize",
-      "human_reference": 4096
+      "human_reference": 1.1210387714598537e-44
     }
   ],
-  "sources": [
-    "https://doi.org/10.1007/s10623-022-01105-4",
-    "https://link.springer.com/article/10.1007/s10623-022-01105-4",
-    "https://neilsloane.com/oadir/index.html"
-  ],
-  "verification": "The checker packs each column as an N-bit integer. For every nonempty subset of at most four columns, it counts the rows with odd parity. Every count must equal N/2. These balanced parity characters are equivalent, by binary Fourier inversion, to uniform counts for all 16 patterns on every four-column subset.",
-  "resource_limits": {
-    "generation_seconds": 300,
-    "verification_seconds": 60,
-    "memory_gib": 4,
-    "threads": 1
-  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "Binary strength-four orthogonal arrays with 63 columns; minimize positive row count, repeated rows allowed. No linearity restriction in the checker.",
-      "primary_source": "Root read Carlet, Kiss and Nagy DOI10.1007/s10623-022-01105-4, Remark5 BCH-dual reconstruction, Proposition10 and Remark11 shortened Kerdock2048 with unknown optimality. Rao2017 and divisibility16 imply2032, leaving16-row gap. Closed15-column128-row case excluded. Current same-parameter proof search found no closure.",
-      "human_method": "GF64 primitive polynomial x6+x+1; all4096 linear forms on column labels(x,x3). The frozen human reference has 4096 rows. Local search also reproduced the published 2048-row Kerdock construction.",
-      "isolation": "Root returned initial BCH construction that exposed the comparison method. Revised initializer uses generic random greedy labels in F2^14,16384 rows; baseline/evolution independently use F2^13,8192 rows. Neither reads comparison witnesses or BCH formulas.",
-      "independent_method": "Root Gaussian-eliminates actual row space, proves full uniformly repeated binary linear space, and verifies rank4 of all595665 four-column projections by checking each fourth label outside the triple span. This differs from formal637392 balanced parity-character counts. Human rank12 yields256 of each pattern.",
-      "admission": "All five strict runner programs passed, initial16384, baseline/evolution8192, human/reference4096. Bit corruption rejected; complete checker result invariant under claimed-score tampering; saved witnesses replay, cold export and program-error/nonfinite/timeout controls passed. Task tests27 passed57.55s."
+      "definition": "固定非零整数系数多项式、次数≤146、区间[0,1]，最小化绝对值上确界范数。任意整数系数均可提交，未把可行域限制为搜索中的两个因子。",
+      "primary_finite_sources": "亲自核对Meichsner2009表1.2：146行只有逆146次根≥2.346298、无多项式，145与148有构造。Hare–Hodges1804.05985v2列后来16个已解决次数147,149,152,153,154,158,175,191,194,198,202,236,238,239,241,244，未含146；它未逐一点名全部20个缺口，记录没有冒称其点名146。",
+      "latest_status_check": "另查王聪/吴强2024主综述p1372（DOI10.1360/SSM-2023-0293），仍列相同有限次数进展；2026 Giraudin2610.00386v3只证明渐近常数界。针对146的后续证明检索未找到匹配最优性结论。本结论限于所查来源，不用渐近常数改进冒充固定146已解决。",
+      "records_and_baseline": "H为文献已发表因子x(1-x)的73次幂重建，精确norm2^-146；仅为弱人类方法对照，不称论文146原见证。文献逆根指标原样保存，公开栏换成(1/2.346298)^146的报告norm上界，明确打印精度、缺失见证及未本地认证。",
+      "independent_math": "主代理从五种保存系数反复精确除去根0、1、1/2，独立求其闭式全局范数。初始x^146范数1；人类/参考2^-146；自有搜索x^58(1-x)^58(2x-1)^30的精确范数为(29/146)^58*(15/73)^15。均落入正式Bernstein全域证书的有理区间，评分取其保守上端，宽度≤相对1e-10。",
+      "checker_review": "检查器以精确Bernstein控制系数的凸包界覆盖整个[0,1]，deCasteljau二分保留全域上界；采样只提供下端，不充当上界证书。无法在资源内收紧时失败，不放宽可行性或声称浮点验证。",
+      "controls": "初始复用人类公式及混用指标的问题均已返修。五种程序、零多项式破坏、完整声明成绩不变性、严格回放、冷导出、程序错误/非有限数/超时全部通过。",
+      "limits": "未复现文献146强记录对应多项式，未重做全局整数系数枚举或新的渐近证书；独立解析范数审计仅针对保存的因子族见证，正式检查器仍接受通用整数多项式。"
     }
-  }
+  },
+  "category": "algebra_number_theory"
 }

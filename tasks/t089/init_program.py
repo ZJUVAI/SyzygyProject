@@ -1,15 +1,18 @@
-"""Small exact polynomial-Gaussian starting point."""
-
+"""Self-contained binary Horner seed; no task or reference imports."""
 import os
+
+TARGET = 2**61 - 1
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T089-C01")
-    if config_id != "T089-C01":
-        raise ValueError(f"unknown T089 configuration: {config_id}")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T089-C01") != "T089-C01":
+        raise ValueError("unsupported T089 configuration")
     # EVOLVE-BLOCK-START
-    return {
-        "coefficients": ["-1/4", "-3/2", "1"],
-        "method": "self-Fourier fourth Hermite mode with a negative constant",
-    }
+    bits = bin(TARGET)[2:]
+    expression = "1"
+    for bit in bits[1:]:
+        expression = f"({expression}*(1+1))"
+        if bit == "1":
+            expression = f"({expression}+1)"
     # EVOLVE-BLOCK-END
+    return {"expression": expression}

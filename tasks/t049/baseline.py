@@ -1,57 +1,74 @@
-"""Seeded fixed-budget search over 10x10 square-grid 91-point subsets."""
+"""Fixed-seed random-order greedy independent-set search for T049."""
 
+import math
 import os
 import random
 import time
 
-
-N = 91
-SIDE = 10
-ITERATION_LIMIT = 128
-GRID = [(x, y) for x in range(SIDE) for y in range(SIDE)]
+from tasks.t049.check import ALPHABET_SIZE, CONFIG_ID, deletion_outputs
 
 
-def _score(points):
-    return len({(points[i][0] - points[j][0]) ** 2 + (points[i][1] - points[j][1]) ** 2
-                for i in range(N) for j in range(i)})
+TRIAL_LIMIT = 2
 
 
-def _solution(points):
-    return {
-        "minimal_polynomial": [0, 1],
-        "isolating_interval": ["-1", "1"],
-        "points": [{"x": [str(x)], "y": [str(y)]} for x, y in points],
-    }
+def _greedy(order, deadline=None):
+    selected = []
+    used_outputs = set()
+    attempted = 0
+    for word in order:
+        if attempted % 1024 == 0 and deadline is not None and time.monotonic() >= deadline:
+            break
+        attempted += 1
+        outputs = deletion_outputs(word)
+        if not outputs.isdisjoint(used_outputs):
+            continue
+        selected.append(word)
+        used_outputs.update(outputs)
+    return selected, attempted
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T049-C01")
-    if config_id != "T049-C01":
-        raise ValueError(f"unsupported configuration: {config_id}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
+    try:
+        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    except ValueError as exc:
+        raise ValueError("MATHBENCH_SEED must be an integer") from exc
+    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds_text is not None:
+        try:
+            seconds = float(seconds_text)
+        except ValueError as exc:
+            raise ValueError("search seconds must be numeric") from exc
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + seconds
     rng = random.Random(seed)
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None if seconds is None else time.monotonic() + max(0.0, float(seconds))
-    incumbent = [(i, 0) for i in range(N)]
-    incumbent_score = _score(incumbent)
-    iterations = 0
-    for _ in range(ITERATION_LIMIT):
+    order = list(range(ALPHABET_SIZE))
+    best = []
+    completed = attempted = 0
+    for _ in range(TRIAL_LIMIT):
         if deadline is not None and time.monotonic() >= deadline:
             break
-        candidate = rng.sample(GRID, N)
-        score = _score(candidate)
-        iterations += 1
-        if score < incumbent_score:
-            incumbent, incumbent_score = candidate, score
+        rng.shuffle(order)
+        candidate, count = _greedy(order, deadline)
+        attempted += count
+        completed += 1
+        if len(candidate) > len(best):
+            best = candidate
+        if deadline is not None and time.monotonic() >= deadline:
+            break
     return {
-        **_solution(incumbent),
+        "codewords": best,
         "search_metadata": {
-            "algorithm": "sample 91-point subsets of the integer 10x10 square grid; keep lowest exact integer squared-distance count",
+            "algorithm": "random-order greedy selection of an independent set in the deletion-conflict graph",
             "seed": seed,
-            "iteration_limit": ITERATION_LIMIT,
-            "iterations": iterations,
-            "budget": {"iteration_limit": ITERATION_LIMIT},
+            "trial_limit": TRIAL_LIMIT,
+            "trials_completed": completed,
+            "candidate_visits": attempted,
             "reference_data_read": False,
-            "search_seconds_cutoff": seconds,
+            "search_seconds_cutoff": seconds_text,
         },
     }

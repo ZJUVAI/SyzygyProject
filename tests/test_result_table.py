@@ -17,7 +17,7 @@ def test_pending_task_is_excluded_before_record_files_exist(tmp_path, monkeypatc
 
 
 def test_reported_unavailable_code_is_separate_from_reproduction():
-    row = next(row for row in collect() if row['config_id'] == 'T010-C01')
+    row = next(row for row in collect() if row['config_id'] == 'T047-C01')
     assert row['best_reproduced'] == 256
     assert str(row['best_reported']) == '258'
 
@@ -85,15 +85,15 @@ def test_small_norms_with_large_relative_gaps_are_distinct():
 
 def test_quadratic_triangle_side_keeps_raw_value_and_displays_same_units():
     assert display('[1,1/3]',quadratic_radicand=3)=='1.57735026918963'
-    text=markdown([dict(task_id='T083',config_id='T083-C01',direction='minimize',
+    text=markdown([dict(task_id='T005',config_id='T005-C01',direction='minimize',
         initial='[2,0]',search='[2,0]',best_reproduced='[1,1/3]',best_reported=1.577350269189626)])
-    assert '| T083-C01 ↓ | 2 | 2 | 1.577350269189626 | 1.577350269189626 |' in text
+    assert '| T005-C01 ↓ | 2 | 2 | 1.577350269189626 | 1.577350269189626 |' in text
 
 
 def test_spherical_fourth_root_is_displayed_in_ratio_units():
     raw='fourth_root(58188232951867590/10575651537777253)'
     assert display(raw)=='1.53155292496130'
-    text=markdown([dict(task_id='T092',config_id='T092-C01',direction='maximize',
+    text=markdown([dict(task_id='T082',config_id='T082-C01',direction='maximize',
         initial=1,search=raw,best_reproduced=raw,best_reported=1.5315529249613016)],highlight_best=True)
     assert 'fourth_root' not in text
     assert '1.531552924961301' in text
@@ -103,9 +103,9 @@ def test_eighth_root_is_displayed_as_the_raw_norm_ratio():
     assert display('(1/256)^(1/8)')=='0.5'
     assert display('eighth_root(1/256)')=='0.5'
     assert display('(345/3344)^(1/8)')=='0.752825122156389'
-    text=markdown([dict(task_id='T087',config_id='T087-C01',direction='maximize',
+    text=markdown([dict(task_id='T079',config_id='T079-C01',direction='maximize',
         initial='(1/256)^(1/8)',search=None,best_reproduced='(345/3344)^(1/8)',best_reported=None)])
-    assert '| T087-C01 ↑ | 0.5 | — | 0.7528251221563891 | — |' in text
+    assert '| T079-C01 ↑ | 0.5 | — | 0.7528251221563891 | — |' in text
 
 
 def test_exact_square_root_sum_display():

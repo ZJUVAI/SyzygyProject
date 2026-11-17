@@ -1,30 +1,53 @@
-"""Seeded greedy search over a bounded, generated rational direction pool."""
-
-import itertools
+"""Fixed-seed random greedy edge additions; reads no human/reference witness."""
 import os
 import random
 
+from mathbench.search import search_steps
 
-def _compatible(a, b):
-    dot = sum(x * y for x, y in zip(a, b))
-    return dot <= 0 or 4 * dot * dot <= sum(x*x for x in a) * sum(y*y for y in b)
+try:
+    from .greedy import all_triples, greedy_add
+except ImportError:
+    from greedy import all_triples, greedy_add
+
+ITERATIONS = 5
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T037-C01") != "T037-C01":
-        raise ValueError("unknown T037 configuration")
-    seed = 0
+        raise ValueError("unsupported T037 configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = random.Random(seed)
-    pool = [v for v in itertools.product((-1, 0, 1), repeat=5)
-            if any(v) and next((x for x in v if x), 1) > 0]
-    rng.shuffle(pool)
-    selected = []
-    for v in pool:
-        if all(_compatible(v, q) for q in selected):
-            selected.append(v)
-    return {"directions": [list(v) for v in selected],
-            "search_metadata": {"algorithm": "seeded greedy maximal subset",
-                                "candidate_pool": "nonzero ternary vectors, first nonzero coordinate positive",
-                                "seed": seed, "iterations": len(pool),
-                                "accepted": len(selected),
-                                "budget": "fixed finite candidate pool"}}
+    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    iterator = iter(search_steps(ITERATIONS))
+    triples = all_triples()
+    best = {"edges": []}
+    best_count = 0
+    trial_scores = []
+    actual = 0
+    for trial in range(ITERATIONS):
+        if next(iterator, None) is None:
+            break
+        order = list(triples)
+        rng.shuffle(order)
+        candidate = greedy_add(order)
+        count = len(candidate["edges"])
+        actual += 1
+        trial_scores.append(count)
+        if count > best_count:
+            best, best_count = candidate, count
+    best["search_metadata"] = {
+        "algorithm": "seeded random permutation greedy addition",
+        "seed": seed,
+        "iterations": actual,
+        "iteration_limit": ITERATIONS,
+        "trial_edge_counts": trial_scores,
+        "best_edge_count": best_count,
+        "comparison_data_read": False,
+        "budget": {
+            "mode": "fixed_iterations" if seconds is None else "wall_clock_cutoff",
+            "requested_iterations": ITERATIONS,
+            "actual_iterations": actual,
+            "requested_wall_clock_seconds": seconds,
+        },
+    }
+    return best

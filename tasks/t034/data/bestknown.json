@@ -3,92 +3,71 @@
   "review_status": "accepted_by_sol",
   "configurations": {
     "T034-C01": {
-      "objective": {
-        "name": "largest N with a two-coloring of [1,N] containing no monochromatic 7-term arithmetic progression",
-        "unit": "positive integers",
-        "direction": "maximize",
-        "constraints": [
-          "the domain is exactly the consecutive prefix [1,N]",
-          "each integer receives exactly one of two colors",
-          "a forbidden progression has seven distinct terms and a positive integer common difference"
+      "parameters": {
+        "rows": 14,
+        "columns": 19,
+        "forbidden_submatrix": [
+          3,
+          3
         ]
       },
+      "direction": "maximize",
+      "objective": "number of ones in a 14 by 19 binary matrix with no all-ones 3 by 3 submatrix",
       "program": "reference.py",
-      "reproduced_value": 3703,
-      "public_value": 3703,
+      "reproduced_value": 126,
+      "public_value": 126,
       "highest_reported": {
-        "value": 3703,
-        "source": "Herwig et al. (2007), Table 3, confirmed in Monroe (2025), Table 1",
-        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
-        "reproduction_status": "same-parameter construction reproduced from the power-residue formula and checked exactly"
+        "value": 128,
+        "source_url": "https://ideosphere.ai/papers/zarankiewicz-v1.pdf",
+        "meaning": "reported feasible lower bound for 14 rows and 19 columns",
+        "reproduction_status": "The preprint reports a Lean-checked witness. The local frozen public replay uses the earlier 126-one matrix.",
+        "source": {
+          "url": "https://ideosphere.ai/papers/zarankiewicz-v1.pdf",
+          "version": "v1, 2026-08-30 source snapshot, Table 1"
+        }
       },
       "best_human": {
-        "value": 3703,
+        "value": 126,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "source_url": "https://arxiv.org/html/2608.26603v1",
         "parameters": {
-          "colors": 2,
-          "progression_length": 7
+          "rows": 14,
+          "columns": 19,
+          "forbidden_submatrix": [
+            3,
+            3
+          ]
         },
-        "source": "Rabung power-residue construction, reported by Herwig et al. (2007), Table 3",
-        "url": "https://www.cs.utexas.edu/~marijn/publications/waerden.pdf",
-        "witness_program": "human.py",
-        "evidence_state": "Formula reconstructed and exact check completed; historical attribution is stated at the method level.",
-        "witness": "data/reconstructed_3703_coloring.json",
-        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
-        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6",
-        "date_checked": "2026-11-06"
+        "source": "Saurabh's explicit matrix, found by classical kicked-greedy search; no language model or learned component is reported.",
+        "evidence_state": "The explicit witness is independently reproduced and exactly checked. The discovery search itself is not claimed reproduced.",
+        "ai_provenance": "The paper states classical kicked-greedy search, with no language model and no learned component; NOVA autonomously selected the cell, ran the search, and packaged the results."
       },
       "best_public": {
-        "value": 3703,
+        "value": 128,
+        "witness_url": "https://ideosphere.ai/papers/zarankiewicz#stated-results",
+        "evidence_state": "Preprint reports a Lean-checked construction. Human review is open.",
         "parameters": {
-          "colors": 2,
-          "progression_length": 7
+          "rows": 14,
+          "columns": 19,
+          "forbidden_submatrix": [
+            3,
+            3
+          ]
         },
-        "source": "Herwig et al. (2007), Table 3; Monroe (2025), Table 1",
-        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
-        "evidence_state": "Published lower bound with a reconstructed and exactly validated witness.",
-        "witness": "data/reconstructed_3703_coloring.json",
-        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
-        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6",
-        "date_checked": "2026-11-06",
-        "origin_type": "published mathematical construction; not described as AI-assisted"
+        "source_url": "https://arxiv.org/html/2608.26603v1"
       },
       "best_reproduced": {
-        "value": 3703,
-        "parameters": {
-          "colors": 2,
-          "progression_length": 7
-        },
-        "program": "reference.py",
+        "value": 126,
+        "witness": "data/human_witness.json",
         "verification_status": "exact",
-        "verification_method": "Exhaustive enumeration of all 7-term progressions with positive step in [1,3703].",
-        "witness": "data/reconstructed_3703_coloring.json",
-        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
-        "date_reproduced": "2026-11-06",
-        "ai_provenance": "The historical construction source does not report AI use.",
+        "verification_method": "Recount all entries and check all 364 row triples for fewer than three common one-columns.",
+        "date_checked": "2026-11-06",
         "review_status": "reviewed_by_sol"
       },
-      "compatibility_score": {
-        "frozen_formula": "J/H",
-        "H": 3703,
-        "note": "H is the reproduced same-parameter published human construction."
-      },
-      "checked_at": "2026-11-06",
-      "unmatched_parameter_records": [],
-      "source_unattributed_records": [],
-      "ai_assisted_records": [],
-      "limitations": [
-        "The literature check is limited to the sources named in bestknown.json.",
-        "The task gives no impossibility proof at N=3704 and makes no exact value claim."
-      ],
-      "monroe_repository": {
-        "url": "https://github.com/hmonroe/vdw",
-        "commit": "f1223097f4adc0a41ccb92ace51ebafd2b996fb1",
-        "files_sha256": {
-          "data/source/monroe_README.md": "63a5af99ce0a1195acaa1e8fdabd4564f1b577d7296af4151a4d584d809c94c9",
-          "data/source/monroe_uc2.cpp": "1394039f3fd6cf8dfba601a960b7aa7d2558c7448e4bb915a1318a8317098391"
-        },
-        "scope": "Source snapshot linked by Monroe2025; not executed by human.py. Historical power-residue formula is independently rebuilt, not a replay of BOINC computation."
-      },
+      "search_provenance": "Classical kicked-greedy construction, original seed 7; kick count not recorded. This task replays the explicit matrix and does not claim to reproduce the search.",
+      "checked_at": "2026-11-09",
+      "open_status": "Reported lower bound 128. The earlier source gives upper bound 135.",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -98,20 +77,20 @@
           "config_id": "T034-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 3703,
+          "objective": 126,
           "verification_status": "exact",
-          "generation_time": 0.21468046307563782,
-          "verification_time": 1.0170887298882008,
-          "objective_value": 3703,
+          "generation_time": 0.2146657109260559,
+          "verification_time": 0.16464879363775253,
+          "objective_value": 126,
           "details": {
-            "n": 3703,
-            "colors": 2,
-            "progression_length": 7,
-            "positive_steps_checked": 617,
-            "progressions_checked": 1140833,
+            "rows": 14,
+            "columns": 19,
+            "ones": 126,
+            "row_triples_checked": 364,
+            "maximum_common_columns": 2,
             "claimed_objective_ignored": true
           },
-          "eval_time": 1.2409897781908512,
+          "eval_time": 0.3825139105319977,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -128,56 +107,39 @@
           }
         },
         "independent_quantity": {
-          "prefix_length": 3703,
-          "arithmetic_progressions_checked": 1140833
+          "ones": 126,
+          "column_triples_checked": 969,
+          "forbidden_submatrices": 0
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
       "review_status": "accepted_by_sol",
-      "optimality_status": {
-        "status": "open; this task certifies a lower bound only",
-        "relevant_exact_case_excluded": "W(2,6)=1132 is solved and outside this configuration",
-        "newer_result_check": {
-          "source": "Campos, Fox, and Schildkraut, arXiv:2608.20824 (2026)",
-          "url": "https://arxiv.org/abs/2608.20824",
-          "finding": "The paper proves a general asymptotic lower bound but gives no explicit k=7 construction above 3703."
-        }
-      },
-      "source_review": {
-        "status": "reviewed_by_sol",
-        "survey_note": "Checked Herwig et al. (2007), Monroe (2025), and the 2026 arXiv paper listed above. This is not a complete literature survey.",
-        "monroe_repository": {
-          "url": "https://github.com/hmonroe/vdw",
-          "commit": "f1223097f4adc0a41ccb92ace51ebafd2b996fb1",
-          "files_sha256": {
-            "data/source/monroe_README.md": "63a5af99ce0a1195acaa1e8fdabd4564f1b577d7296af4151a4d584d809c94c9",
-            "data/source/monroe_uc2.cpp": "1394039f3fd6cf8dfba601a960b7aa7d2558c7448e4bb915a1318a8317098391"
+      "other_reported_results": [
+        {
+          "value": 121,
+          "parameters": {
+            "rows": 14,
+            "columns": 19,
+            "forbidden_submatrix": [
+              3,
+              3
+            ]
           },
-          "scope": "Source snapshot linked by Monroe2025; not executed by human.py. Historical power-residue formula is independently rebuilt, not a replay of BOINC computation."
+          "source_url": "https://arxiv.org/abs/2605.01120",
+          "evidence_state": "Earlier AI-assisted report; superseded by the 126 explicit matrix."
         }
-      }
+      ]
     }
   },
   "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T034-C01": {
-        "best_human": {
-          "source": "Rabung power-residue method as reconstructed and reported by Herwig et al. (2007), Table 3; prime 617, no zipping.",
-          "evidence_state": "Formula reconstructed in human.py and checked exactly by the task checker and an independent enumeration. Attribution is to the cited reported construction, not an asserted original Rabung computation."
-        },
         "best_public": {
-          "source": "Herwig, Heule, van Lambalgen, and van Maaren (2007), Table 3; confirmed by Monroe (2025), Table 1.",
-          "source_url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
-          "evidence_state": "The same-parameter value is reproduced from the published power-residue formula and checked exactly."
-        },
-        "best_reproduced": {
-          "verification_method": "Enumerated every starting position and positive common difference for all 7-term progressions in [1,3703]."
-        },
-        "highest_reported": {
-          "source": "Herwig et al. (2007), Table 3; same entry in Monroe (2025), Table 1.",
-          "reproduction_status": "formula reconstructed and exact witness check completed; no stronger same-parameter report found in the sources checked on 2026-11-06"
+          "value": 126,
+          "witness_url": "https://arxiv.org/src/2608.26603",
+          "evidence_state": "Published lower bound with an explicit matrix. It does not prove optimality."
         }
       }
     }

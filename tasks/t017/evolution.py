@@ -1,10 +1,6 @@
-"""Multistart SLSQP search for the 51-bin minimum-overlap problem.
-
-The search starts from the supplied flat construction and random feasible
-profiles. It uses the exact checker only after rational serialization; no
-record or human witness files are read.
-"""
+"""Exact-checked, warm-started SLSQP search for Heilbronn configurations."""
 from fractions import Fraction
+from itertools import combinations
 import json
 import os
 import time
@@ -12,221 +8,184 @@ import time
 import numpy as np
 from scipy.optimize import minimize
 
-from tasks.t017.check import objective_fraction, validate
-from tasks.t017.init_program import run_code as initial_program
+from tasks.t017.check import validate
 
-
-N = 51
-MASS = 25.5
-GRID = 1_000_000_000_000
-
-
-def _lag_data():
-    """Return pair indices and the exact floating objective scale per lag."""
-    data = []
-    for lag in range(-(N - 1), N):
-        first = []
-        second = []
-        for i in range(N):
-            j = i + lag
-            if 0 <= j < N:
-                first.append(i)
-                second.append(j)
-        data.append((np.asarray(first), np.asarray(second)))
-    return data
-
-
-LAGS = _lag_data()
-SCALE = 2.0 / N
-
-
-_positions = np.arange(N)[None, :]
-_offsets = np.arange(-(N-1), N)[:, None]
-_forward = _positions + _offsets
-_backward = _positions - _offsets
-_forward_valid = (_forward >= 0) & (_forward < N)
-_backward_valid = (_backward >= 0) & (_backward < N)
-_forward = np.clip(_forward, 0, N-1)
-_backward = np.clip(_backward, 0, N-1)
-
-
-def _profile_and_jac(h):
-    # Every row is one exact lag polynomial; vectorization changes no constraint.
-    right = (1.0-h[_forward])*_forward_valid
-    values = SCALE*np.sum(h[None, :]*right, axis=1)
-    jac = SCALE*(right-h[_backward]*_backward_valid)
-    return values, jac
-
-
-def _project_mass(values):
-    """Euclidean projection onto [0,1]^51 with sum 25.5."""
-    lo, hi = float(np.min(values) - 1.0), float(np.max(values))
-    for _ in range(70):
-        mid = (lo + hi) / 2.0
-        total = float(np.clip(values - mid, 0.0, 1.0).sum())
-        if total > MASS:
-            lo = mid
-        else:
-            hi = mid
-    return np.clip(values - (lo + hi) / 2.0, 0.0, 1.0)
-
-
-def _rational_repair(h):
-    """Quantize to billionths and repair the sum to exactly 25.5."""
-    bounded = np.clip(np.asarray(h, dtype=float), 0.0, 1.0)
-    scaled = bounded * GRID
-    units = np.floor(scaled).astype(np.int64)
-    target = int(MASS * GRID)
-    residual = target - int(units.sum())
-    fractions = scaled - units
-    if residual > 0:
-        order = np.argsort(-fractions)
-        while residual:
-            progressed = False
-            for i in order:
-                add = min(residual, GRID - int(units[i]))
-                if add:
-                    units[i] += add
-                    residual -= add
-                    progressed = True
-                    if not residual:
-                        break
-            if not progressed:
-                raise ValueError("cannot repair mass within height bounds")
-    elif residual < 0:
-        order = np.argsort(fractions)
-        residual = -residual
-        while residual:
-            progressed = False
-            for i in order:
-                take = min(residual, int(units[i]))
-                if take:
-                    units[i] -= take
-                    residual -= take
-                    progressed = True
-                    if not residual:
-                        break
-            if not progressed:
-                raise ValueError("cannot repair mass within height bounds")
-    return [str(Fraction(int(v), GRID)) for v in units]
+_CONFIG_N = 11
 
 
 class _DeadlineReached(Exception):
     pass
 
 
+def _serialize(xy):
+    return [[format(float(x), ".16g"), format(float(y), ".16g")] for x, y in xy]
+
+
+def _exact_score(points):
+    return Fraction(validate({"points": points}, {"parameters": {"n": len(points)}})["objective"])
+
+
 def run_code():
+    n = _CONFIG_N
+    seconds = max(0.1, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = np.random.default_rng(seed)
-    try:
-        seconds = max(0.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
-    except ValueError:
-        seconds = 45.0
     deadline = time.monotonic() + seconds
+    triples = np.asarray(list(combinations(range(n), 3)), dtype=np.intp)
+    incumbent = None
+    incumbent_score = Fraction(-1)
+    exact_checks = 0
+    optimizer_iterations = 0
 
-    best_heights = _rational_repair(initial_program()["heights"])
-    best_value = objective_fraction([Fraction(x) for x in best_heights])[0]
-    best_float = float(best_value)
+    def consider(xy):
+        nonlocal incumbent, incumbent_score, exact_checks
+        array = np.asarray(xy, dtype=float).reshape((n, 2))
+        if incumbent is not None:
+            a, b, c = array[triples[:, 0]], array[triples[:, 1]], array[triples[:, 2]]
+            det = ((b[:, 0] - a[:, 0]) * (c[:, 1] - a[:, 1]) -
+                   (b[:, 1] - a[:, 1]) * (c[:, 0] - a[:, 0]))
+            # A cheap upper-level filter avoids costly rational checks for
+            # candidates that cannot beat the exact incumbent.
+            if float(np.min(np.abs(det))) <= float(incumbent_score) * 2.0 - 1e-14:
+                return
+        points = _serialize(array)
+        try:
+            score = _exact_score(points)
+        except (ValueError, TypeError, ZeroDivisionError):
+            return
+        exact_checks += 1
+        if score > incumbent_score:
+            incumbent, incumbent_score = points, score
 
-    # The runner may provide a copy of this task's own incumbent.  Validate it
-    # with the task checker before using it; no public or human witness is read.
-    warm = None
     warm_path = os.environ.get("MATHBENCH_WARM_START")
     if warm_path:
-        try:
-            with open(warm_path, encoding="utf-8") as source:
-                warm_solution = json.load(source)
-            validate({"heights": warm_solution["heights"]}, {"parameters": {
-                "steps": 51, "support": "[0,2]", "range": "0≤f≤1", "integral": 1
-            }})
-            warm = np.asarray([float(Fraction(x)) for x in warm_solution["heights"]])
-            # Preserve the exact saved incumbent as the baseline. Quantizing a
-            # floating representation must never replace it with a worse score.
-            warm_heights = [str(Fraction(x)) for x in warm_solution["heights"]]
-            warm_value = objective_fraction([Fraction(x) for x in warm_heights])[0]
-            if warm_value < best_value:
-                best_heights, best_value = warm_heights, warm_value
-                best_float = float(warm_value)
-        except (OSError, ValueError, KeyError, TypeError, ZeroDivisionError):
-            warm = None
+        # Runner snapshots the task's own best into this immutable run directory.
+        with open(os.path.abspath(warm_path), encoding="utf-8") as handle:
+            warm = json.load(handle)
+        warm_points = warm.get("points") if isinstance(warm, dict) else None
+        if not isinstance(warm_points, list) or len(warm_points) != n:
+            raise ValueError("warm start does not match the active configuration")
+        incumbent_score = _exact_score(warm_points)
+        incumbent = warm_points
+    if incumbent is None:
+        consider(rng.uniform(0.0, 1.0, size=(n, 2)))
 
-    def consider(h):
-        nonlocal best_heights, best_value, best_float
-        candidate = _rational_repair(h)
-        value = objective_fraction([Fraction(x) for x in candidate])[0]
-        if value < best_value:
-            best_heights, best_value = candidate, value
-            best_float = float(value)
-
-    def values(z):
+    def optimize(start):
+        nonlocal optimizer_iterations
         if time.monotonic() >= deadline:
             raise _DeadlineReached
-        return _profile_and_jac(z[:-1])
+        xy = np.asarray(start, dtype=float).reshape((n, 2))
+        a, b, c = xy[triples[:, 0]], xy[triples[:, 1]], xy[triples[:, 2]]
+        det = ((b[:, 0] - a[:, 0]) * (c[:, 1] - a[:, 1]) -
+               (b[:, 1] - a[:, 1]) * (c[:, 0] - a[:, 0]))
+        orient = np.sign(det)
+        orient[orient == 0] = 1.0
 
-    def inequalities(z):
-        prof, _ = values(z)
-        return z[-1] - prof
+        def margins(v):
+            if time.monotonic() >= deadline:
+                raise _DeadlineReached
+            p = v[:2 * n].reshape((n, 2))
+            aa, bb, cc = p[triples[:, 0]], p[triples[:, 1]], p[triples[:, 2]]
+            area2 = ((bb[:, 0] - aa[:, 0]) * (cc[:, 1] - aa[:, 1]) -
+                     (bb[:, 1] - aa[:, 1]) * (cc[:, 0] - aa[:, 0]))
+            return orient * area2 - v[-1]
 
-    def inequalities_jac(z):
-        _, grad = values(z)
-        out = np.empty((len(LAGS), N + 1), dtype=float)
-        out[:, :N] = -grad
-        out[:, N] = 1.0
-        return out
+        def margins_jac(v):
+            p=v[:2*n].reshape(n,2)
+            aa,bb,cc=p[triples[:,0]],p[triples[:,1]],p[triples[:,2]]
+            jac=np.zeros((len(triples),2*n+1)); row=np.arange(len(triples))
+            for index,dx,dy in ((0,bb[:,1]-cc[:,1],cc[:,0]-bb[:,0]),
+                                (1,cc[:,1]-aa[:,1],aa[:,0]-cc[:,0]),
+                                (2,aa[:,1]-bb[:,1],bb[:,0]-aa[:,0])):
+                jac[row,2*triples[:,index]]=orient*dx
+                jac[row,2*triples[:,index]+1]=orient*dy
+            jac[:,-1]=-1
+            return jac
 
-    equality = {"type": "eq", "fun": lambda z: np.sum(z[:N]) - MASS,
-                "jac": lambda z: np.r_[np.ones(N), 0.0]}
-    ineq = {"type": "ineq", "fun": inequalities, "jac": inequalities_jac}
-
-    # One flat start plus independently sampled feasible profiles. Each SLSQP
-    # run minimizes the epigraph variable t subject to t >= every lag value.
-    restart = 0
-    warm_scales = (0.0, 0.0005, 0.003, 0.015, 0.04, 0.09, 0.18, 0.35)
-    while time.monotonic() < deadline:
-        if warm is not None and restart % 5 != 4:
-            warm = np.asarray([float(Fraction(v)) for v in best_heights])
-            scale = warm_scales[restart % len(warm_scales)]
-            if scale == 0.0:
-                h0 = warm.copy()
-            else:
-                # Balanced noise preserves total mass before box projection.
-                noise = rng.normal(0.0, scale, size=N)
-                noise -= noise.mean()
-                h0 = _project_mass(warm + noise)
-        elif restart == 0:
-            h0 = np.full(N, 0.5)
-        else:
-            raw = rng.uniform(0.0, 1.0, size=N)
-            if restart % 3 == 0:
-                raw = 0.5 + rng.normal(0.0, 0.22, size=N)
-            h0 = _project_mass(raw)
-        restart += 1
-        consider(h0)
-        p0, _ = _profile_and_jac(h0)
-        z0 = np.r_[h0, float(np.max(p0)) + 1e-10]
-
-        def callback(z):
-            # Preserve useful progress even when the deadline interrupts this
-            # local solve. The exact checker is only called for likely gains.
-            profile, _ = _profile_and_jac(z[:N])
-            if float(np.max(profile)) < best_float - 1e-12:
-                consider(z[:N])
+        def callback(v):
+            nonlocal optimizer_iterations
+            optimizer_iterations += 1
+            # The incumbent is always the exact rational checker score.
+            consider(v[:2 * n])
             if time.monotonic() >= deadline:
                 raise _DeadlineReached
 
+        x0 = np.concatenate((xy.ravel(), [0.0]))
+        bounds = [(0.0, 1.0)] * (2 * n) + [(0.0, 1.0)]
+        result = minimize(lambda v: -v[-1], x0, method="SLSQP", bounds=bounds,
+                          jac=lambda v: np.r_[np.zeros(2*n),-1.],
+                          constraints=[{"type": "ineq", "fun": margins,"jac":margins_jac}],
+                          callback=callback,
+                          options={"maxiter": 350, "ftol": 1e-11, "disp": False})
+        consider(result.x[:2 * n])
+        return result.x[:2*n].reshape(n, 2).copy()
+
+    # Perturb the verified incumbent at several scales. Also use random starts
+    # to reach other orientation classes. Exact scores decide every incumbent.
+    scales = (0.025, 0.08, 0.18, 0.35)
+    restart = 0
+
+    def numeric_incumbent():
+        return np.asarray([[float(Fraction(value)) for value in point]
+                           for point in incumbent], dtype=float)
+
+    chain = numeric_incumbent()
+    chain_score = float(incumbent_score)
+    downhill_accepts = 0
+    def numeric_score(points):
+        a,b,c = points[triples[:,0]],points[triples[:,1]],points[triples[:,2]]
+        return float(np.min(np.abs((b[:,0]-a[:,0])*(c[:,1]-a[:,1])
+                                   -(b[:,1]-a[:,1])*(c[:,0]-a[:,0]))))/2
+    while time.monotonic() < deadline:
+        if restart % 8 < 7:
+            base = chain.copy() if restart % 8 else numeric_incumbent()
+            scale = scales[(restart // 4) % len(scales)]
+            if restart % 8 == 6:
+                # Replace one point with the best of sampled locations. The
+                # score only considers triangles that contain this point.
+                start = base.copy()
+                index = int(rng.integers(n))
+                other = np.delete(base,index,axis=0)
+                pairs = np.asarray(list(combinations(range(n-1),2)))
+                p,q = other[pairs[:,0]],other[pairs[:,1]]
+                probes = rng.uniform(0,1,size=(192,2))
+                area = np.abs((q[None,:,0]-p[None,:,0])*(probes[:,None,1]-p[None,:,1])
+                              -(q[None,:,1]-p[None,:,1])*(probes[:,None,0]-p[None,:,0]))
+                start[index] = probes[np.argmax(np.min(area,axis=1))]
+            elif restart % 8 < 4:
+                # Move one vertex across its tightest triangle line. This
+                # changes one orientation cell without disturbing all points.
+                start=base.copy()
+                a,b,c=base[triples[:,0]],base[triples[:,1]],base[triples[:,2]]
+                det=(b[:,0]-a[:,0])*(c[:,1]-a[:,1])-(b[:,1]-a[:,1])*(c[:,0]-a[:,0])
+                tri=triples[np.argsort(np.abs(det))[rng.integers(min(12,len(triples)))]]
+                i,j,k=rng.permutation(tri); edge=base[k]-base[j]
+                normal=np.array([-edge[1],edge[0]])
+                normal/=max(np.linalg.norm(normal),1e-12)
+                distance=np.dot(base[i]-base[j],normal)
+                start[i]-=(2*distance+rng.normal(0,.01))*normal
+                start=np.clip(start,0,1)
+            else:
+                start = np.clip(base + rng.normal(0.0, scale, size=(n, 2)), 0.0, 1.0)
+        else:
+            start = rng.uniform(0.0, 1.0, size=(n, 2))
         try:
-            result = minimize(lambda z: z[-1], z0,
-                              jac=lambda z: np.r_[np.zeros(N), 1.0],
-                              method="SLSQP", bounds=[(0.0, 1.0)] * N + [(0.0, 1.0)],
-                              constraints=[equality, ineq], callback=callback,
-                              options={"maxiter": 300, "ftol": 2e-13, "disp": False})
-            if np.all(np.isfinite(result.x[:N])):
-                consider(result.x[:N])
+            local = optimize(start)
+            score = numeric_score(local)
+            temperature = max(float(incumbent_score)*.025,
+                              float(incumbent_score)*.12*(.998**restart))
+            if score >= chain_score or rng.random() < np.exp((score-chain_score)/max(temperature,1e-12)):
+                downhill_accepts += int(score < chain_score)
+                chain, chain_score = local, score
         except _DeadlineReached:
             break
+        restart += 1
 
-    # Repeat the exact full-domain check immediately before returning.
-    validate({"heights": best_heights}, {"parameters": {
-        "steps": 51, "support": "[0,2]", "range": "0≤f≤1", "integral": 1
-    }})
-    return {"heights": best_heights, "search_metadata": {"restarts": restart, "budget_seconds": seconds, "method": "vectorized exact-lag epigraph SLSQP, multiscale own-best perturbations"}}
+    # Recheck the final serialized witness before returning it.
+    validate({"points": incumbent}, {"parameters": {"n": n}})
+    return {"points": incumbent,
+            "search_metadata": {"optimizer_iterations": optimizer_iterations,
+                                "exact_score_checks": exact_checks,
+                                "restarts": restart,
+                                "downhill_accepts": downhill_accepts,
+                                "method": "orientation_cell_annealing_and_vertex_relocation"}}

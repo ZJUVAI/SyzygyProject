@@ -1,6 +1,6 @@
-"""Local exact checks for T043, independent of the shared task registry."""
+"""Exact checks for the fixed gd96a minimum linear arrangement task."""
 
-import json
+import hashlib
 import os
 from pathlib import Path
 import sys
@@ -8,69 +8,76 @@ import sys
 import pytest
 
 from tasks.t043.check import PARAMETERS, validate
+from tasks.t043.graph import EDGE_COUNT, VERTICES, load_graph
 
 ROOT = Path(__file__).resolve().parent
 CONFIG = {"parameters": PARAMETERS}
 
 
-def _one_space():
-    return {"codewords": [[1, 2, 4]]}
+def test_graph_source_and_configuration_are_exact():
+    n, edges = load_graph()
+    assert (n, len(edges)) == (1096, 1676)
+    assert len(set(edges)) == EDGE_COUNT
+    graph_file = ROOT / "data/source/gd96a.rmf"
+    assert hashlib.sha256(graph_file.read_bytes()).hexdigest() == (
+        "a3f6f97b8c084f41b6312a02544d71b293bfb8e809f627e4c5e7a04495061f4c")
 
 
-def test_checker_valid_invalid_duplicate_and_claim_invariance():
-    valid = _one_space()
-    assert validate(valid, CONFIG)["objective"] == 1
-    with pytest.raises(ValueError, match="rank 3"):
-        validate({"codewords": [[1, 2, 3]]}, CONFIG)
-    with pytest.raises(ValueError, match="intersect"):
-        validate({"codewords": [[1, 2, 4], [1, 2, 8]]}, CONFIG)
-    # These bases differ, but they span the same 3-space.
-    with pytest.raises(ValueError, match="duplicate codeword"):
-        validate({"codewords": [[1, 2, 4], [3, 2, 4]]}, CONFIG)
-    with pytest.raises(ValueError, match="bool is rejected"):
-        validate({"codewords": [[[True, 0, 0, 0, 0, 0, 0], [0] * 7, [0] * 7]]}, CONFIG)
-    baseline = validate(valid, CONFIG)
-    assert validate({**valid, "objective": 999}, CONFIG) == baseline
-    assert validate({**valid, "score": float("nan")}, CONFIG) == baseline
-    assert validate({**valid, "claimed_score": {"bad": True}}, CONFIG) == baseline
-    assert validate({"codewords": []}, CONFIG)["objective"] == 0
+def test_checker_rejects_broken_permutations_and_ignores_claims():
+    from tasks.t043.reference import run_code
+
+    valid = run_code()
+    checked = validate(valid, CONFIG, strict=True)
+    assert checked["objective"] == 147653
+    ordering = valid["ordering"]
+    position = [0] * (VERTICES + 1)
+    for rank, vertex in enumerate(ordering, start=1):
+        position[vertex] = rank
+    _, edges = load_graph()
+    independently_recomputed = sum(abs(position[u + 1] - position[v + 1]) for u, v in edges)
+    assert independently_recomputed == 147653
+    with pytest.raises(ValueError, match="exactly once"):
+        validate({"ordering": ordering[:-1]}, CONFIG)
+    with pytest.raises(ValueError, match="exactly once"):
+        validate({"ordering": []}, CONFIG)
+    duplicate = ordering[:]
+    duplicate[0] = duplicate[1]
+    with pytest.raises(ValueError, match="permutation"):
+        validate({"ordering": duplicate}, CONFIG)
+    with pytest.raises(ValueError, match="bool"):
+        validate({"ordering": [True] + ordering[1:]}, CONFIG)
+    with pytest.raises(ValueError, match="integers"):
+        validate({"ordering": [float("nan")] + ordering[1:]}, CONFIG)
+    out_of_range = ordering[:]
+    out_of_range[0] = 0
+    with pytest.raises(ValueError, match="range"):
+        validate({"ordering": out_of_range}, CONFIG)
+    assert validate({**valid, "objective": -1}, CONFIG) == checked
+    assert validate({**valid, "score": float("nan")}, CONFIG) == checked
+    assert validate({**valid, "claimed_score": {"forged": True}}, CONFIG) == checked
 
 
-def test_published_representatives_reconstruct_and_verify_exactly():
-    from tasks.t043.human import run_code
-
-    witness = run_code()
-    checked = validate(witness, CONFIG, strict=True)
-    assert checked["objective"] == 333
-    assert checked["details"]["pairs_checked"] == 55278
-    data = json.loads((ROOT / "data/source/heinlein_2019_appendix_c.json").read_text())
-    assert data["source"]["source_sha256"] == (
-        "26622afb1178db82948f215c7befe73172f8c30338f0632d1ae0786d487f2eb7")
-
-
-def test_source_representatives_have_expected_orbit_counts():
-    data = json.loads((ROOT / "data/source/heinlein_2019_appendix_c.json").read_text())
-    assert [len(group) for group in data["representatives_by_orbit"]] == [9, 26, 68]
-    assert len(data["generators"]) == 2
-    assert 9 + 2 * 26 + 4 * 68 == 333
-
-
-def test_program_entries_return_valid_constructions(monkeypatch):
+def test_all_five_program_entries_are_valid_and_seeded(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T043-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "19")
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
+    monkeypatch.setenv("MATHBENCH_ADJACENT_SWEEPS", "2")
     from tasks.t043.init_program import run_code as init_run
     from tasks.t043.baseline import run_code as baseline_run
     from tasks.t043.human import run_code as human_run
     from tasks.t043.reference import run_code as reference_run
     from tasks.t043.evolution import run_code as evolution_run
 
-    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
-    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "1")
-    for run in (init_run, baseline_run, human_run, reference_run, evolution_run):
-        assert validate(run(), CONFIG)["verification_status"] == "exact"
+    results = {}
+    for name, run in (("init", init_run), ("baseline", baseline_run), ("human", human_run),
+                      ("reference", reference_run), ("evolution", evolution_run)):
+        result = run()
+        results[name] = result
+        assert validate(result, CONFIG)["verification_status"] == "exact"
+    assert results["human"]["ordering"] == results["reference"]["ordering"]
 
 
-def test_generation_worker_error_and_timeout_controls():
+def test_runner_error_and_timeout_controls():
     from mathbench.evaluate import _run
 
     env = dict(os.environ)

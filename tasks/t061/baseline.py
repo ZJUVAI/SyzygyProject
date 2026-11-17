@@ -1,48 +1,37 @@
-"""Fixed-seed randomized order greedy search for maximal C6-free graphs."""
+"""Deterministic left-to-right greedy construction of a B_3 set."""
 
-import math
-import os
-import random
-import time
+from itertools import combinations_with_replacement
 
-from tasks.t061.check import CONFIG_ID
-from tasks.t061.graph_alg import greedy_saturated, shuffled_edge_order
+
+def build_greedy():
+    elements = [0]
+    triple_sums = {0}
+    candidate_checks = 0
+    while len(elements) < 31:
+        value = elements[-1] + 1
+        while True:
+            if candidate_checks >= 100000:
+                # A known no-carry construction gives a valid bounded fallback.
+                return [0] + [4 ** exponent for exponent in range(30)], candidate_checks
+            candidate_checks += 1
+            new_sums = [value + a + b for a, b in combinations_with_replacement(elements, 2)]
+            new_sums.extend(2 * value + a for a in elements)
+            new_sums.append(3 * value)
+            new_set = set(new_sums)
+            if len(new_set) == len(new_sums) and not (new_set & triple_sums):
+                break
+            value += 1
+        triple_sums.update(new_set)
+        elements.append(value)
+    return elements, candidate_checks
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T061_SEARCH_TRIALS", "4"))
-    if trials < 0:
-        raise ValueError("trial count must be nonnegative")
-    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    if seconds_text is None:
-        deadline = None
-    else:
-        seconds = float(seconds_text)
-        if not math.isfinite(seconds) or seconds <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + seconds
-
-    rng = random.Random(seed)
-    incumbent = {"vertices": 100, "edges": []}
-    completed = 0
-    for _ in range(trials):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        graph = greedy_saturated(shuffled_edge_order(rng))
-        completed += 1
-        if len(graph["edges"]) < len(incumbent["edges"]) or not incumbent["edges"]:
-            incumbent = graph
+    elements, checks = build_greedy()
     return {
-        **incumbent,
-        "search": {
-            "algorithm": "randomized edge-order greedy; add an edge only when it creates no simple C6",
-            "seed": seed,
-            "trial_limit": trials,
-            "trials_completed": completed,
-            "reference_data_read": False,
-        },
+        "elements": elements,
+        "search_method": "deterministic increasing-candidate greedy B3 construction",
+        "candidate_checks": checks,
+        "search_iterations": checks,
+        "random_seed": 0,
     }

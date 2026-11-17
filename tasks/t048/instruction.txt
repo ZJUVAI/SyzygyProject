@@ -1,1 +1,9 @@
-Minimize the number of compare-exchange elements in a sorting network with 17 input wires for T048-C01. Each comparator is [left, right], uses zero-based wire IDs 0..inputs-1 with left < right, and executes in list order. Return JSON as {"comparators": [[left, right], ...]}. The evaluator checks all 2^inputs binary inputs using the zero-one principle and recomputes the comparator count. Do not use the public reference network or its saved witness. The self-contained initial program is an odd-even transposition network. The fixed-step search baseline starts only from the network produced by init_program.py and proposes random comparator deletions, retaining a candidate only after exact verification. evolution.py starts from the same seed and proposes deletions, replacements, or order swaps; it also retains only exactly verified candidates. Do not read human.py, reference.py, or data/reference. Your entry point must be run_code() with no arguments and return JSON-compatible data. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED. Generation has a 300-second limit; verification has a separate 60-second limit.
+Find a largest binary constant-weight code for the fixed configuration A(17,4,5).
+
+Return JSON with `codewords`, a list of distinct 17-character strings over `0` and `1`. Every word must contain exactly five `1` characters. Every two distinct words must have Hamming distance at least four.
+
+The score is the number of codewords. The checker reads all words and recomputes the score. It checks every unordered pair exactly using integer bit operations. It ignores any claimed score fields.
+
+Start from `init_program.py`. Do not read comparison constructions under `data/source` or `data/reference`. Improve the construction by your own search. The target is unrestricted over all binary words with the fixed length and weight.
+
+Read the configuration from `MATHBENCH_CONFIG_ID` and the random seed from `MATHBENCH_SEED`. Use deterministic defaults. Generation has a 300-second limit. Verification has a separate 60-second limit. Memory is limited to 4 GiB and one compute thread.

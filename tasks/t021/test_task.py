@@ -1,113 +1,137 @@
-from copy import deepcopy
-import math
+"""Exact tests for T021-C01."""
+
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
 
 import pytest
 
-from tasks.t021.check import validate
-from tasks.t021.baseline import run_code as run_baseline
-from tasks.t021.human import run_code
+from tasks.t021.check import PARAMETERS, validate
 
 
-CONFIG = {
-    "id": "T021-C01",
-    "parameters": {
-        "n": 32,
-        "space": "unit sphere S2",
-        "potential": "sum over unordered pairs 1 / Euclidean distance",
-        "objective_unit": "Coulomb energy in unit-charge, unit-radius units",
-    },
-}
+ROOT = Path(__file__).resolve().parent
+CONFIG = {"id": "T021-C01", "parameters": PARAMETERS}
+GRID_SHA256 = "5be485e67a475c9eb7a4127d9160fd7f928e9ecb241b9592151a31fa4e2e2a56"
 
 
-def test_human_witness_is_certified_and_covers_all_pairs():
-    result = validate(run_code(), CONFIG, strict=True)
-    lo, hi = map(lambda s: __import__("fractions").Fraction(s), result["details"]["objective_interval"])
-    assert result["verification_status"] == "certified"
-    assert lo < hi
-    assert result["objective"] == str(hi)
-    assert result["details"]["pairs_checked"] == 32 * 31 // 2
-    assert float(lo) > 412.2612
-    assert float(hi) < 412.2614
+def _grid_objective_independently():
+    # For difference directions (1,0), (0,1), and (1,-1), count each
+    # unordered adjacent pair once in the 10-by-10 index grid.
+    return 9 * 10 + 10 * 9 + 9 * 9
 
 
-def test_baseline_uses_reproducible_fixed_default_search(monkeypatch):
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    monkeypatch.delenv("MATHBENCH_SEED", raising=False)
-    first = run_baseline()
-    second = run_baseline()
-    assert first == second
-    assert first["search_metadata"] == {
-        "algorithm": "seeded coordinate perturbation with simulated-annealing acceptance and best-witness retention",
-        "seed": 0,
-        "actual_iterations": 600,
-        "iteration_budget": 600,
-        "requested_seconds": None,
+def test_human_and_reference_grid_is_exact():
+    from tasks.t021.human import run_code as human_run
+    from tasks.t021.reference import run_code as reference_run
+
+    path = ROOT / "data/reference/triangular_grid_10x10.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == GRID_SHA256
+    assert reference_run() == human_run()
+    witness = human_run()
+    checked = validate(witness, CONFIG, strict=True)
+    assert checked["objective"] == _grid_objective_independently() == 261
+    assert checked["details"]["point_count"] == 100
+    assert checked["details"]["unordered_pairs_checked"] == 4950
+    assert checked["details"]["coordinate_field_degree"] == 4
+
+
+def test_independent_audit_handles_both_moser_radicals():
+    from scripts.audits.independent_audit import independent_quantity
+
+    # omega_1*omega_3 has unit norm and uses both radicals in its y coordinate.
+    witness = {
+        "minimal_polynomial": [64, 0, -28, 0, 1],
+        "isolating_interval": ["5", "51/10"],
+        "points": [
+            {"x": ["0"], "y": ["0"]},
+            {"x": ["1", "0", "-1/24"], "y": ["0", "-1/3", "0", "1/48"]},
+            *({"x": [str(4*i)], "y": ["0"]} for i in range(1, 99)),
+        ],
     }
+    assert validate(witness, CONFIG, strict=True)["objective"] == 1
+    result = independent_quantity("T021", witness)
+    assert result["unit_pairs"] == 1
+    assert result["unordered_pairs_checked"] == 4950
 
 
-def test_claimed_score_is_ignored():
-    solution = run_code()
-    first = validate(solution, CONFIG, strict=True)
-    solution["objective"] = "this is not a number"
-    second = validate(solution, CONFIG, strict=True)
-    assert second["objective"] == first["objective"]
-    assert second["details"] == first["details"]
-    assert second["details"]["claimed_score_ignored"]
+def test_all_five_entries_return_valid_candidates(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T021-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "2")
+    monkeypatch.setenv("MATHBENCH_RESTARTS", "1")
+    from tasks.t021.init_program import run_code as initial
+    from tasks.t021.baseline import run_code as baseline
+    from tasks.t021.evolution import run_code as evolution
+    from tasks.t021.human import run_code as human
+    from tasks.t021.reference import run_code as reference
+
+    results = [initial(), baseline(), evolution(), human(), reference()]
+    objectives = [validate(result, CONFIG, strict=True)["objective"] for result in results]
+    assert objectives[0] == 0
+    assert objectives[1] == 261
+    assert objectives[2] >= 0
+    assert objectives[3:] == [261, 261]
+    assert results[1]["search_metadata"]["candidate_shapes_checked"] == 9
+    assert results[2]["search_metadata"]["iterations_run"] == 2
 
 
-def test_certifies_extremely_close_distinct_points():
-    solution = run_code()
-    solution["points"][1] = [
-        str(__import__("fractions").Fraction(solution["points"][0][0]) + __import__("fractions").Fraction(1, 10**30)),
-        solution["points"][0][1],
-    ]
-    result = validate(solution, CONFIG, strict=True)
-    assert result["verification_status"] == "certified"
-    assert result["details"]["pairs_checked"] == 496
+def test_checker_rejects_bad_point_counts_duplicates_and_fields():
+    from tasks.t021.init_program import run_code
+
+    valid = run_code()
+    with pytest.raises(ValueError, match="exactly 100"):
+        validate({**valid, "points": valid["points"][:-1]}, CONFIG)
+    with pytest.raises(ValueError, match="distinct"):
+        points = list(valid["points"])
+        points[1] = points[0]
+        validate({**valid, "points": points}, CONFIG)
+    with pytest.raises(ValueError, match="irreducible"):
+        validate({**valid, "minimal_polynomial": [0, -1, 0, 1]}, CONFIG)
+    with pytest.raises(ValueError, match="exactly one real root"):
+        validate({**valid, "isolating_interval": ["1", "2"]}, CONFIG)
+    with pytest.raises(ValueError, match="configuration must fix 100"):
+        validate(valid, {"id": "T021-C01", "parameters": {**PARAMETERS, "point_count": 99}})
 
 
-def test_rejects_duplicate_wrong_size_and_bad_pair():
-    solution = run_code()
-    solution["points"][1] = solution["points"][0]
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
-    solution = run_code()
-    solution["points"].pop()
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
-    solution = run_code()
-    solution["points"][0] = [1]
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
+def test_checker_rejects_bool_nonfinite_and_float_coordinates():
+    from tasks.t021.init_program import run_code
 
-
-def test_rejects_bool_and_nonfinite_parameter():
-    for bad in (True, math.nan, math.inf, -math.inf, "not-a-rational", "1/0"):
-        solution = run_code()
-        solution["points"][0] = [bad, "0"]
+    valid = run_code()
+    for bad_value in (True, float("nan"), float("inf"), float("-inf"), 1.0):
+        points = list(valid["points"])
+        points[0] = {"x": [bad_value], "y": ["0"]}
         with pytest.raises(ValueError):
-            validate(solution, CONFIG, strict=True)
+            validate({**valid, "points": points}, CONFIG)
 
 
-def test_rejects_wrong_configuration():
-    bad = deepcopy(CONFIG)
-    bad["parameters"]["n"] = 31
-    with pytest.raises(ValueError):
-        validate(run_code(), bad, strict=True)
-    removed = deepcopy(CONFIG)
-    removed["id"] = "T021-UNKNOWN"
-    removed["parameters"]["n"] = 32
-    with pytest.raises(ValueError):
-        validate(run_code(), removed, strict=True)
+def test_claimed_scores_do_not_change_recomputed_result():
+    from tasks.t021.init_program import run_code
 
-def test_init_program_is_cold_export(tmp_path):
-    import os, shutil, subprocess, sys
-    source=__import__("pathlib").Path(__file__).with_name("init_program.py")
-    exported=tmp_path/"init_program.py"; shutil.copy(source,exported)
-    code=("import importlib.util,json; "
-          f"s=importlib.util.spec_from_file_location('candidate',{str(exported)!r}); "
-          "m=importlib.util.module_from_spec(s); s.loader.exec_module(m); "
-          "print(json.dumps(m.run_code()))")
-    env={k:v for k,v in os.environ.items() if k!="PYTHONPATH"}; env["MATHBENCH_CONFIG_ID"]="T021-C01"
-    output=subprocess.run([sys.executable,"-I","-c",code],cwd=tmp_path,env=env,text=True,capture_output=True,check=True)
-    assert len(__import__("json").loads(output.stdout)["points"])==32
+    valid = run_code()
+    result = validate(valid, CONFIG)
+    for key, value in (("objective", 999999), ("score", float("nan")),
+                       ("claimed_score", {"forged": True})):
+        assert validate({**valid, key: value}, CONFIG) == result
+
+
+def test_public_record_is_separate_and_marked_unreproduced():
+    metadata = json.loads((ROOT / "data/bestknown.json").read_text())
+    item = metadata["configurations"]["T021-C01"]
+    assert item["public_value"] == 439
+    assert item["reproduced_value"] == 261
+    assert item["highest_reported"]["reproduction_status"].startswith("Reported in the paper but not reproduced")
+    assert item["best_public"]["witness"] is None
+    assert item["frozen_human_baseline"]["value"] == 261
+
+
+def test_runner_error_and_timeout_controls():
+    from mathbench.evaluate import _run
+
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T021 worker failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T021 worker failure')"], env, 5)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)

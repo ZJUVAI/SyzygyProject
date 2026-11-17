@@ -1,57 +1,94 @@
 {
   "task_id": "T068",
   "review_status": "accepted_by_sol",
-  "checked_at": "2026-11-06",
   "configurations": {
     "T068-C01": {
+      "objective": {
+        "name": "largest N with a two-coloring of [1,N] containing no monochromatic 7-term arithmetic progression",
+        "unit": "positive integers",
+        "direction": "maximize",
+        "constraints": [
+          "the domain is exactly the consecutive prefix [1,N]",
+          "each integer receives exactly one of two colors",
+          "a forbidden progression has seven distinct terms and a positive integer common difference"
+        ]
+      },
       "program": "reference.py",
-      "reproduced_value": 120,
-      "public_value": 120,
+      "reproduced_value": 3703,
+      "public_value": 3703,
       "highest_reported": {
-        "value": 120,
-        "source": "https://oeis.org/A000983/a000983.txt",
-        "source_location": "a(10)<=120, list of 120 ten-bit words; do not use the following a(11) entry",
-        "reproduction_status": "The 2020 OEIS file publishes an explicit length-10 list. The list is frozen and independently verified to cover all 1024 words within Hamming distance 1. This establishes an upper bound on the minimum, not optimality.",
-        "ai_provenance": "not stated by source",
-        "metric": "codewords in a binary length-10 covering code of radius 1",
-        "direction": "minimize",
+        "value": 3703,
+        "source": "Herwig et al. (2007), Table 3, confirmed in Monroe (2025), Table 1",
+        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+        "reproduction_status": "same-parameter construction reproduced from the power-residue formula and checked exactly"
+      },
+      "best_human": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "source": "Rabung power-residue construction, reported by Herwig et al. (2007), Table 3",
+        "url": "https://www.cs.utexas.edu/~marijn/publications/waerden.pdf",
+        "witness_program": "human.py",
+        "evidence_state": "Formula reconstructed and exact check completed; historical attribution is stated at the method level.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6",
+        "date_checked": "2026-11-06"
+      },
+      "best_public": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "source": "Herwig et al. (2007), Table 3; Monroe (2025), Table 1",
+        "url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+        "evidence_state": "Published lower bound with a reconstructed and exactly validated witness.",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "source_url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6",
         "date_checked": "2026-11-06",
-        "url": "https://oeis.org/A000983/a000983.txt"
+        "origin_type": "published mathematical construction; not described as AI-assisted"
       },
-      "parameters": {
-        "length": 10,
-        "alphabet": "{0,1}",
-        "covering_radius": 1,
-        "universe": "all 1024 binary words of length 10",
-        "objective": "number of codewords"
+      "best_reproduced": {
+        "value": 3703,
+        "parameters": {
+          "colors": 2,
+          "progression_length": 7
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Exhaustive enumeration of all 7-term progressions with positive step in [1,3703].",
+        "witness": "data/reconstructed_3703_coloring.json",
+        "witness_sha256": "27de9ff30270915bd50b2771fe544e47481bf5cc59996373a1c55506a2cc83eb",
+        "date_reproduced": "2026-11-06",
+        "ai_provenance": "The historical construction source does not report AI use.",
+        "review_status": "reviewed_by_sol"
       },
-      "source_file": "data/source/oeis_a000983.txt",
-      "source_file_sha256": "d221fc00d230773ad7a696ec57b6cc1317d4492f2c594ecb8357477aa8d28900",
-      "known_bounds": {
-        "lower_bound": 107,
-        "upper_bound": 120,
-        "lower_bound_source": "https://doi.org/10.1002/jcd.20008",
-        "lower_bound_location": "Bertolo, Östergård, and Weakley (2004); also recorded in the current Kéri table",
-        "upper_bound_source": "https://oeis.org/A000983/a000983.txt",
-        "upper_bound_location": "a(10)<=120 with explicit list",
-        "status": "OEIS A000983 still lists the next value a(10) in the range 107-120; the checked Kéri table also gives 107-120. The exact value was not closed in sources checked on 2026-11-06."
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 3703,
+        "note": "H is the reproduced same-parameter published human construction."
       },
-      "historical_construction": {
-        "source": "https://doi.org/10.1109/18.61135",
-        "source_location": "Östergård, A new binary code of length 10 and covering radius 1, IEEE Transactions on Information Theory 37 (1991), 179-180",
-        "reported_method": "A 60-word mixed F_4 x F_2^7 radius-one cover is transformed to a 120-word binary length-10 cover.",
-        "witness_identity": "No claim is made that the 2020 OEIS list is byte-for-byte or construction-equivalent to Östergård's code."
-      },
-      "checked_sources": [
-        "https://oeis.org/A000983",
-        "https://oeis.org/A000983/a000983.txt",
-        "https://old.sztaki.hu/~keri/codes/index.htm",
-        "https://old.sztaki.hu/~keri/codes/2_tables.pdf",
-        "https://doi.org/10.1002/jcd.20008",
-        "https://doi.org/10.1109/18.61135",
-        "https://users.aalto.fi/~pat/patric_pub.html"
+      "checked_at": "2026-11-06",
+      "unmatched_parameter_records": [],
+      "source_unattributed_records": [],
+      "ai_assisted_records": [],
+      "limitations": [
+        "The literature check is limited to the sources named in bestknown.json.",
+        "The task gives no impossibility proof at N=3704 and makes no exact value claim."
       ],
-      "review_status": "accepted_by_sol",
+      "monroe_repository": {
+        "url": "https://github.com/hmonroe/vdw",
+        "commit": "f1223097f4adc0a41ccb92ace51ebafd2b996fb1",
+        "files_sha256": {
+          "data/source/monroe_README.md": "63a5af99ce0a1195acaa1e8fdabd4564f1b577d7296af4151a4d584d809c94c9",
+          "data/source/monroe_uc2.cpp": "1394039f3fd6cf8dfba601a960b7aa7d2558c7448e4bb915a1318a8317098391"
+        },
+        "scope": "Source snapshot linked by Monroe2025; not executed by human.py. Historical power-residue formula is independently rebuilt, not a replay of BOINC computation."
+      },
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -60,21 +97,21 @@
           "task_id": "T068",
           "config_id": "T068-C01",
           "validity": 1.0,
-          "combined_score": 1.0666666666666667,
-          "objective": 120,
+          "combined_score": 1.0,
+          "objective": 3703,
           "verification_status": "exact",
-          "generation_time": 2.3968497179448605,
-          "verification_time": 0.5995572581887245,
-          "objective_value": 120,
+          "generation_time": 0.21468046307563782,
+          "verification_time": 1.0170887298882008,
+          "objective_value": 3703,
           "details": {
-            "length": 10,
-            "universe_size": 1024,
-            "codeword_count": 120,
-            "covered_word_count": 1024,
-            "radius": 1,
+            "n": 3703,
+            "colors": 2,
+            "progression_length": 7,
+            "positive_steps_checked": 617,
+            "progressions_checked": 1140833,
             "claimed_objective_ignored": true
           },
-          "eval_time": 3.002908121794462,
+          "eval_time": 1.2409897781908512,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -91,98 +128,56 @@
           }
         },
         "independent_quantity": {
-          "code_size": 120,
-          "words_checked": 1024,
-          "maximum_distance": 1,
-          "sphere_bound": 94
+          "prefix_length": 3703,
+          "arithmetic_progressions_checked": 1140833
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "e07521e6feffb3314ba311f6281141e98f139ef6fe56ab56a4b96babb3975612"
+        "claimed_score_ignored": true
       },
-      "witness": "data/reference/oeis_a000983_n10.json",
-      "witness_sha256": "65c8a7ec1574a64ef45e7334f8166966f70062cbf0ad09eb1499e5068842f8dd",
-      "best_human": {
-        "value": 120,
-        "url": "https://doi.org/10.1109/18.61135",
-        "source_location": "Östergård (1991), IEEE Transactions on Information Theory 37, 179–180",
-        "parameters": {
-          "length": 10,
-          "covering_radius": 1
-        },
-        "provenance": "Traditional mixed-code construction reported by the author. The frozen 128-word Hamming-product comparison is a separate, weaker construction.",
-        "reproduction_status": "Reported historical construction; identity with the independently verified 2020 OEIS list has not been established.",
-        "ai_provenance": "1991 human publication; no AI role reported"
-      },
-      "best_public": {
-        "value": 120,
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "length": 10,
-          "covering_radius": 1
-        },
-        "url": "https://oeis.org/A000983/a000983.txt",
-        "source_location": "a(10)<=120 and its following 120-word list",
-        "provenance": "Public list credited by OEIS to Dmitry Kamenetsky (2020), verified here as a feasible cover. The exact minimum remains in the interval 107-120.",
-        "ai_provenance": "not stated by source",
-        "evidence_state": "all 1024 binary words are covered within Hamming distance 1 by the frozen 120-word list"
-      },
-      "best_reproduced": {
-        "value": 120,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "length": 10,
-          "covering_radius": 1
-        },
-        "witness_file": "data/reference/oeis_a000983_n10.json",
-        "witness_sha256": "65c8a7ec1574a64ef45e7334f8166966f70062cbf0ad09eb1499e5068842f8dd",
-        "provenance": "Parsed only the a(10) list from the pinned OEIS A000983 text file; the subsequent a(11) code is excluded.",
-        "ai_provenance": "benchmark transcription and exact exhaustive verification",
-        "actual_value": 120,
-        "evidence_state": "exact bitset check covers all 1024 words",
-        "review_status": "reviewed_by_sol"
-      },
-      "frozen_human_baseline": {
-        "value": 128,
-        "parameters": {
-          "length": 10,
-          "covering_radius": 1
-        },
-        "witness_file": "data/human/hamming7_times_f2_3.json",
-        "witness_sha256": "e3aada0ead9ee0098d30776a53fbe932f7a7afcdfff4770ce80f6ba35b7b069f",
-        "provenance": "Length-7 perfect Hamming code times all 3-bit suffixes."
-      },
+      "review_status": "accepted_by_sol",
       "optimality_status": {
-        "lower_bound": 107,
-        "upper_bound": 120,
-        "evidence_state": "OEIS A000983 and the Kéri binary table checked on 2026-11-06 retain 107-120 for length 10, radius 1."
+        "status": "open; this task certifies a lower bound only",
+        "relevant_exact_case_excluded": "W(2,6)=1132 is solved and outside this configuration",
+        "newer_result_check": {
+          "source": "Campos, Fox, and Schildkraut, arXiv:2608.20824 (2026)",
+          "url": "https://arxiv.org/abs/2608.20824",
+          "finding": "The paper proves a general asymptotic lower bound but gives no explicit k=7 construction above 3703."
+        }
       },
-      "historical_record_note": "Östergård (1991) reports a 120-word binary code derived from a 60-word F_4 x F_2^7 mixed code. The public 2020 OEIS word list is treated as a separate frozen witness; no identity between the two is asserted.",
-      "reproduced_human_method": {
-        "value": 128,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "length": 10,
-          "covering_radius": 1
-        },
-        "witness_file": "data/human/hamming7_times_f2_3.json",
-        "witness_sha256": "e3aada0ead9ee0098d30776a53fbe932f7a7afcdfff4770ce80f6ba35b7b069f",
-        "url": "https://doi.org/10.1002/j.1538-7305.1950.tb00463.x",
-        "source_location": "R. W. Hamming, Error Detecting and Error Correcting Codes (1950); binary [7,4,3] Hamming code construction",
-        "provenance": "Reconstructed as the product of the length-7 perfect Hamming code with all 3-bit suffixes. The parity-check columns are the seven nonzero vectors in F_2^3.",
-        "ai_provenance": "classical human construction",
-        "actual_value": 128,
-        "evidence_state": "exact parity-check argument and independent full-universe checker confirm coverage"
+      "source_review": {
+        "status": "reviewed_by_sol",
+        "survey_note": "Checked Herwig et al. (2007), Monroe (2025), and the 2026 arXiv paper listed above. This is not a complete literature survey.",
+        "monroe_repository": {
+          "url": "https://github.com/hmonroe/vdw",
+          "commit": "f1223097f4adc0a41ccb92ace51ebafd2b996fb1",
+          "files_sha256": {
+            "data/source/monroe_README.md": "63a5af99ce0a1195acaa1e8fdabd4564f1b577d7296af4151a4d584d809c94c9",
+            "data/source/monroe_uc2.cpp": "1394039f3fd6cf8dfba601a960b7aa7d2558c7448e4bb915a1318a8317098391"
+          },
+          "scope": "Source snapshot linked by Monroe2025; not executed by human.py. Historical power-residue formula is independently rebuilt, not a replay of BOINC computation."
+        }
       }
     }
   },
+  "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T068-C01": {
+        "best_human": {
+          "source": "Rabung power-residue method as reconstructed and reported by Herwig et al. (2007), Table 3; prime 617, no zipping.",
+          "evidence_state": "Formula reconstructed in human.py and checked exactly by the task checker and an independent enumeration. Attribution is to the cited reported construction, not an asserted original Rabung computation."
+        },
+        "best_public": {
+          "source": "Herwig, Heule, van Lambalgen, and van Maaren (2007), Table 3; confirmed by Monroe (2025), Table 1.",
+          "source_url": "https://combinatorialpress.com/jcmcc-articles/volume-128/new-lower-bounds-for-van-der-waerden-numbers-using-distributed-computing/",
+          "evidence_state": "The same-parameter value is reproduced from the published power-residue formula and checked exactly."
+        },
+        "best_reproduced": {
+          "verification_method": "Enumerated every starting position and positive common difference for all 7-term progressions in [1,3703]."
+        },
         "highest_reported": {
-          "source_location": "a(10)<=120 list",
-          "reproduction_status": "The 120-word witness is independently verified. Kéri and OEIS record the remaining minimum-size interval as 107-120; no exact optimum claim is made."
+          "source": "Herwig et al. (2007), Table 3; same entry in Monroe (2025), Table 1.",
+          "reproduction_status": "formula reconstructed and exact witness check completed; no stronger same-parameter report found in the sources checked on 2026-11-06"
         }
       }
     }

@@ -1,69 +1,134 @@
-"""Exact tests for T070-C01."""
+"""Exact count and interval tests for T070-C01."""
 
 import hashlib
 import json
+import math
 import os
+from math import comb
 from pathlib import Path
 import sys
 
 import pytest
 
 from tasks.t070.check import PARAMETERS, validate
-from tasks.t070.construction import parse_published_sizes, skyline_decode
+from tasks.t070.construction import projected_simplex
 
 
 ROOT = Path(__file__).resolve().parent
 CONFIG = {"id": "T070-C01", "parameters": PARAMETERS}
-WITNESS_SHA256 = "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee"
-SOURCE_ROW_SHA256 = "011cbfe1a1933cf20ba51f78f4c721ca447636bc4e52d8ea1255b7cb92a5e880"
+WITNESS_SHA256 = "0a2b6d7e40a16688d66f6c5e4ad322edb5f7fa38b6015dc4c9a4ce475bc873c4"
+BEST_WITNESS_SHA256 = "916221446c05549172b608ad38361ee4008e9b4a5a9516cced3eace4ffbbfa8b"
+REVERSAL_SHA256 = "dc4891731928a15764b569eb9086df0e377dab087b300e9d6d4ee801fcb3299e"
 
 
-def _independent_pairwise_check(squares):
-    area = 0
-    side_gcd = 0
-    pairs = 0
-    for i, (x1, y1, s1) in enumerate(squares):
-        area += s1 * s1
-        side_gcd = __import__("math").gcd(side_gcd, s1)
-        for x2, y2, s2 in squares[:i]:
-            assert max(x1, x2) >= min(x1 + s1, x2 + s2) or max(y1, y2) >= min(y1 + s1, y2 + s2)
-            pairs += 1
-    return area, side_gcd, pairs
+def _counts(values):
+    sums = {a + b for a in values for b in values}
+    differences = {a - b for a in values for b in values}
+    return len(sums), len(differences)
 
 
-def test_source_row_decodes_exactly_to_saved_skyline_witness():
-    row_path = ROOT / "data/source/pegg_2017_row_1000.txt"
-    witness_path = ROOT / "data/reference/pegg_1000_27.json"
-    assert hashlib.sha256(row_path.read_bytes()).hexdigest() == SOURCE_ROW_SHA256
+def _interval_bounds(interval):
+    import mpmath as mp
+    def endpoint(text):
+        return mp.mpf(text)
+    return endpoint(interval[0]), endpoint(interval[1])
+
+
+def _iv_bounds(value):
+    def low(endpoint):
+        return str(endpoint).strip().strip("[]").split(",", 1)[0].strip()
+    def high(endpoint):
+        return str(endpoint).strip().strip("[]").split(",", 1)[-1].strip()
+    return low(value.a), high(value.b)
+
+
+def test_published_projection_formula_and_saved_witness_match():
+    witness_path = ROOT / "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json"
     assert hashlib.sha256(witness_path.read_bytes()).hexdigest() == WITNESS_SHA256
-    sizes = parse_published_sizes(row_path)
-    assert len(sizes) == 27
-    assert sizes == [352, 312, 336, 40, 248, 24, 360, 184, 208, 160, 24, 107, 181,
-                     192, 33, 74, 115, 41, 4, 56, 304, 37, 74, 4, 259, 248, 189]
-    reconstructed = skyline_decode(sizes)
     saved = json.loads(witness_path.read_text(encoding="utf-8"))
-    assert reconstructed == saved
+    projected, weights = projected_simplex(6, 5)
+    assert weights == [1, 11, 111, 1111, 11111, 111111]
+    assert projected == saved["set"]
+    assert len(projected) == comb(11, 6) == 462
+    assert max(projected) == 555555
+    sums, differences = _counts(projected)
+    formula_difference_size = sum(comb(6, k) ** 2 * comb(11-k, 6) for k in range(7))
+    assert sums == comb(16, 6) == 8008
+    assert differences == formula_difference_size == 39733
+
+    stronger_path = ROOT / "data/reference/gyarmati_hennecart_ruzsa_m7_l4_shifted.json"
+    assert hashlib.sha256(stronger_path.read_bytes()).hexdigest() == BEST_WITNESS_SHA256
+    stronger = json.loads(stronger_path.read_text(encoding="utf-8"))
+    raw_m7, weights_m7 = projected_simplex(7, 4)
+    assert weights_m7 == [1, 9, 73, 585, 4681, 37449, 299593]
+    assert stronger["set"] == [x - 599186 for x in raw_m7]
+    assert (len(raw_m7), min(stronger["set"]), max(stronger["set"])) == (330, -599186, 599186)
+    m7_sums, m7_differences = _counts(stronger["set"])
+    m7_formula_difference_size = sum(comb(7, k) ** 2 * comb(11-k, 7) for k in range(8))
+    assert m7_sums == comb(15, 7) == 6435
+    assert m7_differences == m7_formula_difference_size == 33111
 
 
-def test_published_human_and_reference_witness_exactly_replay():
+def test_human_reference_and_exact_set_counts_replay():
     from tasks.t070.human import run_code as human_run
     from tasks.t070.reference import run_code as reference_run
 
-    witness = human_run()
-    assert reference_run() == witness
-    checked = validate(witness, CONFIG, strict=True)
-    area, side_gcd, pairs = _independent_pairwise_check(witness["squares"])
-    assert checked["objective"] == len(witness["squares"]) == 27
-    assert checked["details"]["total_tile_area"] == area == 1_000_000
-    assert checked["details"]["tile_side_gcd"] == side_gcd == 1
-    assert checked["details"]["covered_area"] == 1_000_000
-    assert pairs == 27 * 26 // 2
+    human = human_run()
+    reference = reference_run()
+    assert human != reference
+    human_counts = _counts(human["set"])
+    assert (len(human["set"]), *human_counts) == (462, 8008, 39733)
+    human_checked = validate(human, CONFIG, strict=True)
+    assert human_checked["verification_status"] == "certified"
+    assert human_checked["details"]["sumset_size"] == 8008
+    assert human_checked["details"]["difference_set_size"] == 39733
+
+    sum_size, difference_size = _counts(reference["set"])
+    assert (len(reference["set"]), min(reference["set"]), max(reference["set"]), sum_size, difference_size) == (330, -599186, 599186, 6435, 33111)
+    checked = validate(reference, CONFIG, strict=True)
+    assert checked["verification_status"] == "certified"
+    assert checked["details"]["objective_interval"][0] == checked["objective"]
+    assert checked["details"]["sumset_size"] == 6435
+    assert checked["details"]["difference_set_size"] == 33111
+
+    import mpmath as mp
+    mp.mp.dps = 100
+    lower, upper = _interval_bounds(checked["details"]["objective_interval"])
+    point_value = mp.log(33111) / mp.log(6435)
+    assert lower <= point_value <= upper
 
 
-def test_all_five_entries_return_valid_candidates(monkeypatch):
+def test_t069_and_t070_are_not_order_equivalent():
+    source_path = ROOT / "data/source/t069_order_reversal_examples.json"
+    assert hashlib.sha256(source_path.read_bytes()).hexdigest() == REVERSAL_SHA256
+    examples = json.loads(source_path.read_text(encoding="utf-8"))
+    A = examples["A"]
+    B = examples["B"]
+    assert len(B) == 16 and set(B) == set(A) | {x + 1000 for x in A}
+    counts = [_counts(values) for values in (A, B)]
+    assert [len(A), len(B)] == [8, 16]
+    assert counts == [(26, 25), (78, 75)]
+    assert all(sum_size > difference_size > len(values)
+               for values, (sum_size, difference_size) in zip((A, B), counts))
+    assert all(len(values) <= 512 and min(values) >= -1_000_000 and max(values) <= 1_000_000
+               for values in (A, B))
+
+    from mpmath import iv
+    iv.dps = 70
+    t069_scores = [iv.ln(iv.mpf(s) / n) / iv.ln(iv.mpf(d) / n)
+                   for (n, (s, d)) in zip((len(A), len(B)), counts)]
+    t070_scores = [iv.ln(iv.mpf(d)) / iv.ln(iv.mpf(s)) for s, d in counts]
+    t069_a, t069_b = (tuple(map(__import__("mpmath").mpf, _iv_bounds(value))) for value in t069_scores)
+    t070_a, t070_b = (tuple(map(__import__("mpmath").mpf, _iv_bounds(value))) for value in t070_scores)
+    assert t069_a[0] > t069_b[1]
+    assert t070_a[1] < t070_b[0]
+
+
+def test_all_five_program_entries_return_valid_sets(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T070-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "4")
+    monkeypatch.setenv("MATHBENCH_SEED", "7")
     monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    monkeypatch.setenv("MATHBENCH_BASELINE_ITERATIONS", "6")
     monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "2")
     monkeypatch.setenv("MATHBENCH_POPULATION", "2")
     from tasks.t070.init_program import run_code as initial
@@ -72,82 +137,64 @@ def test_all_five_entries_return_valid_candidates(monkeypatch):
     from tasks.t070.human import run_code as human
     from tasks.t070.reference import run_code as reference
 
-    results = [initial(), baseline(), evolution(), human(), reference()]
-    values = [validate(result, CONFIG, strict=True)["objective"] for result in results]
-    assert values[0] == 2000
-    assert values[1] == 299
-    assert values[2] >= 1
-    assert values[3:] == [27, 27]
-    assert results[1]["search_metadata"]["candidates_checked"] == len(results[1]["search_metadata"]["candidate_block_counts"])
-    assert results[2]["search_metadata"]["generations_run"] == 2
+    outputs = [initial(), baseline(), evolution(), human(), reference()]
+    results = [validate(output, CONFIG, strict=True) for output in outputs]
+    assert results[0]["details"]["cardinality"] == 3
+    assert results[1]["details"]["cardinality"] in range(2, 513)
+    assert results[2]["details"]["cardinality"] in range(2, 513)
+    assert results[3]["details"]["sumset_size"] == 8008
+    assert results[3]["details"]["difference_set_size"] == 39733
+    assert results[4]["details"]["sumset_size"] == 6435
+    assert results[4]["details"]["difference_set_size"] == 33111
+    assert float(results[4]["objective"]) > float(results[3]["objective"])
+    assert outputs[1]["search_metadata"]["iterations_run"] == 6
+    assert outputs[2]["search_metadata"]["generations_run"] == 2
 
 
-def test_checker_accepts_small_tiles_and_repeated_sizes_from_witness():
-    witness = json.loads((ROOT / "data/reference/pegg_1000_27.json").read_text())
-    assert witness["squares"].count([640, 312, 24]) == 1
-    assert len([s for _, _, s in witness["squares"] if s == 24]) >= 2
-    assert validate(witness, CONFIG)["objective"] == 27
+def test_checker_accepts_config_boundaries_and_rejects_invalid_sets():
+    assert validate({"set": [-1_000_000, 1_000_000]}, CONFIG)["details"]["cardinality"] == 2
+    boundary512 = list(range(512))
+    check512 = validate({"set": boundary512}, CONFIG)
+    assert check512["details"]["cardinality"] == 512
+    assert check512["details"]["sumset_size"] == 1023
+    assert check512["details"]["difference_set_size"] == 1023
 
-
-def test_checker_rejects_overlap_gap_and_non_coprime_sides():
-    witness = json.loads((ROOT / "data/reference/pegg_1000_27.json").read_text())
-    duplicate = [list(square) for square in witness["squares"]]
-    duplicate.append(list(duplicate[0]))
-    with pytest.raises(ValueError, match="duplicate"):
-        validate({"squares": duplicate}, CONFIG)
-
-    overlap = [list(square) for square in witness["squares"]]
-    overlap[1] = [300, 0, overlap[1][2]]
-    with pytest.raises(ValueError, match="overlaps"):
-        validate({"squares": overlap}, CONFIG)
-
-    with pytest.raises(ValueError, match="sum exactly"):
-        validate({"squares": witness["squares"][:-1]}, CONFIG)
-
-    four_half_squares = {"squares": [[0, 0, 500], [500, 0, 500],
-                                     [0, 500, 500], [500, 500, 500]]}
-    with pytest.raises(ValueError, match="greatest common divisor 1"):
-        validate(four_half_squares, CONFIG)
-
-
-def test_checker_rejects_bad_shape_types_bounds_and_config():
-    for invalid in (True, 1.0, float("nan"), float("inf"), None):
+    for invalid in (True, 1.0, float("nan"), float("inf"), None, "2"):
         with pytest.raises(ValueError):
-            validate({"squares": [[0, 0, invalid]]}, CONFIG)
-    with pytest.raises(ValueError, match="triple"):
-        validate({"squares": [[0, 0]]}, CONFIG)
-    with pytest.raises(ValueError, match="integers"):
-        validate({"squares": [[False, 0, 1000]]}, CONFIG)
-    for bad_square in ([[-1, 0, 1]], [[0, -1, 1]], [[1000, 0, 1]], [[0, 1000, 1]]):
+            validate({"set": [0, 1, invalid]}, CONFIG)
+    with pytest.raises(ValueError, match="distinct"):
+        validate({"set": [1, 1]}, CONFIG)
+    with pytest.raises(ValueError, match="2..512"):
+        validate({"set": [1]}, CONFIG)
+    with pytest.raises(ValueError, match="2..512"):
+        validate({"set": list(range(513))}, CONFIG)
+    for out_of_range in (-1_000_001, 1_000_001):
         with pytest.raises(ValueError, match="outside"):
-            validate({"squares": bad_square}, CONFIG)
-    with pytest.raises(ValueError, match="side must"):
-        validate({"squares": [[0, 0, 1000]]}, CONFIG)
-    with pytest.raises(ValueError, match="at least one"):
-        validate({"squares": []}, CONFIG)
+            validate({"set": [0, out_of_range]}, CONFIG)
     with pytest.raises(ValueError, match="configuration must fix"):
-        validate({"squares": []}, {"id": "T070-C01", "parameters": {**PARAMETERS, "outer_side": 999}})
+        validate({"set": [0, 1, 3]}, {"id": "T070-C01", "parameters": {**PARAMETERS, "max_cardinality": 511}})
 
 
-def test_claimed_scores_do_not_change_recomputed_result():
+def test_claimed_scores_do_not_change_full_validation_result():
     from tasks.t070.init_program import run_code
 
-    valid = run_code()
-    result = validate(valid, CONFIG)
-    for key, value in (("objective", 1), ("score", float("nan")),
-                       ("claimed_score", {"forged": True})):
-        assert validate({**valid, key: value}, CONFIG) == result
+    candidate = run_code()
+    expected = validate(candidate, CONFIG)
+    for key, value in (("objective", -1000), ("score", float("nan")), ("claimed_score", {"fake": 1})):
+        assert validate({**candidate, key: value}, CONFIG) == expected
 
 
-def test_record_separates_reproduced_27_from_optimality():
+def test_record_schema_and_frozen_interval():
     sota = json.loads((ROOT / "data/bestknown.json").read_text())
-    item = sota["configurations"]["T070-C01"]
-    assert item["public_value"] == item["reproduced_value"] == 27
-    assert item["optimality_status"]["status"].startswith("open")
-    assert sota["configurations"]["T070-C01"]["frozen_human_baseline"]["value"] == 27
+    result = validate({"set": json.loads((ROOT / "data/reference/gyarmati_hennecart_ruzsa_m7_l4_shifted.json").read_text())["set"]}, CONFIG)
+    entry = sota["configurations"]["T070-C01"]
+    assert entry["reproduced_value"] == result["objective"]
+    assert entry["public_value"] == result["objective"]
+    assert entry["best_reproduced"]["objective_interval"] == result["details"]["objective_interval"]
+    assert "m=6,L=5" in sota["configurations"]["T070-C01"]["frozen_human_baseline"]["endpoint_policy"]
 
 
-def test_runner_error_and_timeout_controls():
+def test_runner_error_and_timeout_paths():
     from mathbench.evaluate import _run
 
     env = dict(os.environ)

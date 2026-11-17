@@ -1,11 +1,13 @@
-"""Frozen exact H6 blow-up witness from the published construction."""
+"""Fixed best-reproduced periodic sequence witness."""
+
 import json
 import os
 from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T075-C01") != "T075-C01":
-        raise ValueError("unsupported T075 configuration")
-    path = Path(__file__).parent / "data/human/h6_iterated_blowup_n36.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T075-C01")
+    if chosen != "T075-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    asset = Path(__file__).resolve().parent / "data" / "reference" / "tyler_loftsson_64.json"
+    return json.loads(asset.read_text(encoding="utf-8"))

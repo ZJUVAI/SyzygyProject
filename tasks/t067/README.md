@@ -1,81 +1,45 @@
-# T067: binary constant-weight code A(17,4,5)
+# T067：六色 Schur 下界染色
 
 ## 中文
 
-### 定义和配置
+### 定义与配置
 
-配置 `T067-C01` 固定二元码字长度为 17、每个码字的汉明重量为 5、任意两个不同码字的汉明距离至少为 4。目标是最大化码字数，记作 (A(17,4,5))。输入为 17 位二进制字符串列表。检查器逐个检查长度、重量和重复项，并精确检查全部无序码字对。
+给正整数的连续前缀 `[1,N]` 使用至多六种颜色。若不存在同色的 `x`、`y` 和 `x+y`，则染色有效。允许 `x=y`；因此也检查 `2x=z`。目标是最大化有效前缀长度 `N`。成绩只表示 `S(6) ≥ N`，不表示 Schur 数已经确定。
 
-这也可看作在所有 5 元子集中选取最大集合，使不同集合的交集大小至多为 3，即 packing (D(17,5,4))。本项目按原始 constant-weight-code 任务记录；等价表述不另计任务。
+配置 `T067-C01` 固定颜色数上限为 6。候选 JSON 可用颜色数组 `{"n": N, "colors": [c_1, ..., c_N]}`，位置 `i` 对应整数 `i`，颜色标签为 0 至 5；也可用互不重叠的颜色类 `{"n": N, "classes": [[...], ...]}`。第二种格式必须恰好覆盖 `[1,N]`。检查器拒绝空缺、越界、重复的类成员、布尔数、非整数颜色、NaN、无穷大和任何同色 Schur 三元组。检查器不读取候选声明的分数。
 
-### 来源和已知状态
+### 人类基线与公开结果
 
-Milshtein 于 2022-10-08 在线发表的论文报告了 444 个码字。论文将发现归于最大独立集的随机局部搜索，并说明所用方法基于 Generic Scuba Search。任务目录保存了原始码字文件及 SHA-256，也保存了解析后的复播数据。论文摘要没有提到生成式 AI；论文没有单独说明 AI 来源，因此记录只写“未报告”，不推断更强结论。
+Fredricksen 与 Sweet 在 2000 年论文中列出 `[1,536]` 的六色对称无和分区。`human.py` 按论文列出的半集及模 537 配对规则重建完整颜色数组。论文允许特殊元素 179 与 358 异色。本地检查器逐项复算分区覆盖，并精确检查所有 `x ≤ y`，包括 `x=y`。该人类对照为 536。
 
-截至 2026-11-06 检查的 Brouwer 表，(A(17,4,5)) 下界为 444，没有最优标记。Milshtein 论文称已知上界为 474，并引用 Östergård (2010)。本任务精确复现下界 444。没有找到证明 444 达到上界，故配置仍开放。论文的 2023 勘误保留该码及 444 记录。
+Chen、Zhu 与 Long 于 2026-10-22 发布 arXiv v1，给出 `[1,537]` 的六色分区。仓库主证书从公开仓库固定提交 `92a9d5f1336a5a064b2bfe6597d967f59191e365` 获取，且 SHA-256 与该提交中的 `SHA256SUMS` 相同。`reference.py` 重放证书；本任务自己的检查器重新计算成绩。论文说明这些分区由搜索找到，但没有披露是否使用 AI 或大语言模型，所以来源标为未披露。该预印本明确不声称 `S(6)` 精确值或 538 不可染色。查验日期为 2026-11-06。
 
-### 数据和程序
+兼容分数冻结为 `J/H`，其中 `J` 是重新计算的有效 `N`，`H=536` 是复现的人类对照。分数大于 1 只表示超过冻结对照。它不表示突破 537 的公开结果，更不表示证明了精确值。
 
-- `data/source/milshtein_a17_4_5_444.txt`：保存的原始 444 码字文件；其 SHA-256 为 `bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a`。
-- `data/reference/a17_4_5_444.json`：供 `human.py` 和 `reference.py` 复播的同一见证。
-- `check.py`：校验每个字的 17 位长度、重量 5、唯一性和全部点对的距离至少 4。目标完全从输入重算。
-- `init_program.py`：返回一个有效码字，目标为 1；该文件自包含。
-- `baseline.py`：在固定的 6,188 个重量 5 字中，对候选优先级做定种子随机重排，再贪心构造独立集。它不读取参考数据。
-- `evolution.py`：对候选优先级序列进行定种子块变异和精英选择，再用同一精确贪心过程构造码。它不读取参考数据。
-- `human.py`：复播论文中的传统计算搜索结果。
-- `reference.py`：固定复播已验证的 444 字见证。
-- `evaluator.py`：连接共享候选评测接口。
+### 程序与验证
 
-程序默认使用固定重启数或代数。设置 `MATHBENCH_SEARCH_SECONDS` 后可使用共享时间截断。程序从 `MATHBENCH_CONFIG_ID` 读取配置，从 `MATHBENCH_SEED` 读取随机种子。生成限时 300 秒，验证限时 60 秒，内存 4 GiB，单线程。
+`init_program.py` 返回一个简单的四项有效染色，不读取参考数据。`baseline.py` 用固定随机种子执行有界的随机贪心扩展，并记录步数、重启数和预算。`human.py` 重建人类基线。`reference.py` 只重放固定的 537 公开证书。
 
-### 验证
-
-运行以下命令：
-
-```sh
-.venv/bin/python -m pytest tasks/t067 -q
-.venv/bin/python -m json.tool tasks/t067/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/data/bestknown.json > /dev/null
-```
-
-测试涵盖已发表见证、初始构造、搜索程序、精确距离、重量和长度、重复字、破坏距离、配置错误、伪造分数、程序异常及超时。独立复算全部 (444*443/2 = 98,346) 个字对。状态为已通过 Sol 验收（2026-11-06）。
+**状态：已通过 Sol 验收（2026-11-06）。** 精确 Schur 数是否为 537 或更大仍未解决；本任务只验收下界构造。
 
 ## English
 
 ### Definition and configuration
 
-`T067-C01` fixes binary word length 17, weight 5, and minimum pairwise Hamming distance 4. Maximize the number of codewords, denoted (A(17,4,5)). A solution is a list of 17-bit binary strings. The checker validates each word, rejects duplicates, and checks every unordered pair.
+Color a consecutive prefix `[1,N]` of the positive integers with at most six colors. A coloring is valid when no same-color `x`, `y`, and `x+y` exist. The terms may be equal, so the checker also tests `2x=z`. The objective is to maximize the valid prefix length `N`. A result gives only the lower bound `S(6) ≥ N`; it does not determine the Schur number.
 
-This is also a packing problem: select 5-subsets of a 17-set so that any two selected subsets intersect in at most 3 points. This equivalent view does not create a separate benchmark task.
+Configuration `T067-C01` fixes an upper limit of six colors. A candidate may use the color-array form `{"n": N, "colors": [c_1, ..., c_N]}`, where position `i` gives the color of integer `i` and labels are 0 through 5. It may also use disjoint color classes: `{"n": N, "classes": [[...], ...]}`. The classes must cover `[1,N]` exactly. The checker rejects gaps, out-of-range values, duplicate class members, booleans, non-integer colors, NaN, infinity, and every monochromatic Schur triple. It ignores any score claimed by the candidate.
 
-### Sources and current status
+### Human baseline and public result
 
-Milshtein's paper, published online on 2022-10-08, reports 444 codewords. It attributes the discovery to a stochastic local search for maximum independent set based on Generic Scuba Search. The task stores the original word file and its SHA-256, as well as a replay file. The abstract does not report generative AI use. The paper gives no separate AI-provenance statement, so this record makes no stronger claim.
+Fredricksen and Sweet list a six-color symmetric sum-free partition of `[1,536]` in their 2000 paper. `human.py` rebuilds the full coloring from the listed half-sets and the paper's pairing rule modulo 537. The paper allows the exceptional elements 179 and 358 to have different colors. The local checker recomputes exact coverage and checks every pair `x ≤ y`, including `x=y`. This is the human baseline at 536.
 
-The Brouwer table checked on 2026-11-06 lists 444 as a lower bound for (A(17,4,5)), with no optimum marker. Milshtein's paper states a known upper bound of 474 and cites Östergård (2010). This task exactly reproduces the 444 lower bound. No proof that 444 is optimal was found, so the configuration remains open. The 2023 correction leaves the code and its 444 record unchanged.
+Chen, Zhu, and Long posted arXiv v1 on 2026-10-22 with a six-color partition of `[1,537]`. The public main certificate is pinned to repository commit `92a9d5f1336a5a064b2bfe6597d967f59191e365`; its SHA-256 matches that commit's `SHA256SUMS`. `reference.py` replays the certificate, and this task's checker independently recomputes its score. The paper says the partitions were found by search but does not disclose AI or LLM use, so their provenance is recorded as undisclosed. The preprint does not claim the exact value of `S(6)` or impossibility at 538. Checked on 2026-11-06.
 
-### Data and programs
+The frozen compatibility score is `J/H`, where `J` is the recomputed valid `N` and `H=536` is the reproduced human reference. A score above 1 means only that the construction exceeds the frozen comparator. It does not mean that it exceeds the public 537 result or proves the exact value.
 
-- `data/source/milshtein_a17_4_5_444.txt` is the saved original 444-word file. Its SHA-256 is `bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a`.
-- `data/reference/a17_4_5_444.json` is the replay witness used by `human.py` and `reference.py`.
-- `check.py` validates word length, weight, uniqueness, and all pair distances. It recomputes the objective from the input.
-- `init_program.py` returns one valid codeword and is standalone.
-- `baseline.py` shuffles the fixed set of 6,188 weight-five words with a seeded random order and builds a greedy independent set. It does not read comparison data.
-- `evolution.py` mutates candidate orderings with seeded block shuffles and elitist selection, then builds a code with the same exact greedy rule. It does not read comparison data.
-- `human.py` replays the traditional computational result in the paper.
-- `reference.py` replays the verified 444-word witness.
-- `evaluator.py` connects the shared candidate-evaluation interface.
+### Programs and validation
 
-Programs use fixed restart or generation counts by default. Set `MATHBENCH_SEARCH_SECONDS` for the shared time cutoff. Programs read `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED`. Generation is limited to 300 seconds, verification to 60 seconds, memory to 4 GiB, and one thread.
+`init_program.py` returns a simple valid coloring of length four and does not read reference data. `baseline.py` performs seeded, bounded randomized greedy extension and records its steps, restarts, and budget. `human.py` rebuilds the human baseline. `reference.py` replays only the pinned public 537 certificate.
 
-### Validation
-
-Run:
-
-```sh
-.venv/bin/python -m pytest tasks/t067 -q
-.venv/bin/python -m json.tool tasks/t067/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/data/bestknown.json > /dev/null
-```
-
-Tests cover the published witness, the initial construction, search programs, exact distance, weight and length, duplicates, a broken distance constraint, wrong configuration, forged scores, worker errors, and timeouts. An independent count checks all 444*443/2 = 98,346 word pairs. Status is accepted by Sol on 2026-11-06.
+**Status: accepted by Sol on 2026-11-06.** The exact value of `S(6)` remains unresolved; this task scores lower-bound constructions only.

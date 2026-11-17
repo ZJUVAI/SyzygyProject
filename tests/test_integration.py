@@ -10,8 +10,8 @@ from mathbench.saved_result import read_best_record, write_best_record
 
 
 @pytest.mark.parametrize('adapter,task,config', [
-    ('simpletes_evaluator','T013','T013-C01'),
-    ('dream_rsi_evaluator','T003','T003-C02')])
+    ('simpletes_evaluator','T073','T073-C01'),
+    ('dream_rsi_evaluator','T002','T002-C02')])
 def test_upstream_interface(adapter,task,config):
     import importlib
     evaluate=importlib.import_module('mathbench.'+adapter).evaluate
@@ -22,23 +22,23 @@ def test_upstream_interface(adapter,task,config):
 
 
 def test_saved_witness_replay(tmp_path):
-    from tasks.t013.human import run_code
+    from tasks.t073.human import run_code
     witness=tmp_path/'solution.json';witness.write_text(json.dumps(run_code()))
-    assert replay('T013',witness)['objective']==578
+    assert replay('T073',witness)['objective']==578
     packed = witness.with_suffix('.json.gz')
     packed.write_bytes(gzip.compress(witness.read_bytes(), mtime=0))
     witness.unlink()
-    assert replay('T013', packed)['objective'] == 578
-    assert replay('T013', witness)['objective'] == 578
+    assert replay('T073', packed)['objective'] == 578
+    assert replay('T073', witness)['objective'] == 578
 
 
 def test_best_record_replays_and_preserves_original_bytes(tmp_path):
-    from tasks.t013.human import run_code
-    directory = tmp_path / "t013" / "data"
+    from tasks.t073.human import run_code
+    directory = tmp_path / "t073" / "data"
     saved = directory / "results.json.gz"
     solution = run_code()
     raw = (json.dumps(solution, indent=2) + "\n").encode()
-    result = {"config_id": "T013-C01", "objective": 578}
+    result = {"config_id": "T073-C01", "objective": 578}
     provenance = {"seed": 0}
     initial = {"objective": 1000}
     write_best_record(saved, result, provenance, raw, initial_result=initial)
@@ -46,29 +46,29 @@ def test_best_record_replays_and_preserves_original_bytes(tmp_path):
         "result": result, "initial_result": initial, "provenance": provenance, "solution": solution,
     }
     assert read_witness_bytes(directory / "best" / "solution.json") == raw
-    previous = tmp_path / "t013" / "best" / "T013-C01" / "solution.json"
+    previous = tmp_path / "t073" / "best" / "T073-C01" / "solution.json"
     assert read_witness_bytes(previous) == raw
-    assert replay("T013", saved)["objective"] == 578
+    assert replay("T073", saved)["objective"] == 578
 
 
 def test_cold_seed_export(tmp_path):
-    folder=export_seed('T002',tmp_path/'cold')
+    folder=export_seed('T003',tmp_path/'cold')
     assert {p.name for p in folder.iterdir()}=={'instruction.txt','init_program.py','configuration.json'}
     assert 'human_reference' not in json.loads((folder/'configuration.json').read_text())
-    assert evaluate_candidate('T002',folder/'init_program.py',strict=True)['validity']==1
+    assert evaluate_candidate('T003',folder/'init_program.py',strict=True)['validity']==1
 
 
 @pytest.mark.parametrize('task,public_input,comparison', [
-    ('T069', 'data/source/mona-lisa100K.tsp.gz', 'data/human/monalisa_5757191.tour.gz'),
-    ('T064', 'data/source/ortho40.instance.json', 'data/reference/ortho40_19.solution.json'),
-    ('T027', 'data/tai256c.dat.gz', 'data/tai256c.sln'),
-    ('T033', 'data/source/G70.gz', 'data/human/human_g70_1flip.json'),
-    ('T045', 'data/source/gd96a.rmf', 'data/reference/spectral_adjacent_ordering.json'),
-    ('T030', 'data/DSJC1000.5.bits', 'data/human_witness.json'),
-    ('T059', 'data/source/C2000.9.bits', 'data/reference/grosso_locatelli_pullan_2005_clique80.json'),
-    ('T057', 'data/source/X-n1001-k43.vrp', 'data/reference/public_72332.sol'),
-    ('T055', 'data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz', 'data/reference/mse2026_boums_60_assignment.json'),
-    ('T056', 'data/source/ta41_instance.json', 'data/reference/ta41_2006_schedule.json')])
+    ('T096', 'data/source/mona-lisa100K.tsp.gz', 'data/human/monalisa_5757191.tour.gz'),
+    ('T026', 'data/source/ortho40.instance.json', 'data/reference/ortho40_19.solution.json'),
+    ('T093', 'data/tai256c.dat.gz', 'data/tai256c.sln'),
+    ('T042', 'data/source/G70.gz', 'data/human/human_g70_1flip.json'),
+    ('T043', 'data/source/gd96a.rmf', 'data/reference/spectral_adjacent_ordering.json'),
+    ('T038', 'data/DSJC1000.5.bits', 'data/human_witness.json'),
+    ('T039', 'data/source/C2000.9.bits', 'data/reference/grosso_locatelli_pullan_2005_clique80.json'),
+    ('T097', 'data/source/X-n1001-k43.vrp', 'data/reference/public_72332.sol'),
+    ('T098', 'data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz', 'data/reference/mse2026_boums_60_assignment.json'),
+    ('T095', 'data/source/ta41_instance.json', 'data/reference/ta41_2006_schedule.json')])
 def test_public_input_export_excludes_comparison_assets(tmp_path, monkeypatch, task, public_input, comparison):
     from mathbench import export
     source = tmp_path / 'source'
@@ -101,13 +101,13 @@ def test_public_input_export_excludes_comparison_assets(tmp_path, monkeypatch, t
     ('return {"sequence":[0]*100}','RuntimeError')])
 def test_candidate_failures(tmp_path,body,error):
     program=tmp_path/'bad.py';program.write_text('def run_code():\n    '+body+'\n')
-    result=evaluate_candidate('T013',program,strict=True)
+    result=evaluate_candidate('T073',program,strict=True)
     assert result['validity']==0 and result['combined_score']==0
     assert result['error_type']==error
 
 
 def test_fixed_search_reproducibility(monkeypatch):
-    from tasks.t015.baseline import run_code
+    from tasks.t078.baseline import run_code
     monkeypatch.delenv('MATHBENCH_SEARCH_SECONDS',raising=False)
     monkeypatch.setenv('MATHBENCH_SEED','7')
     assert run_code()==run_code()

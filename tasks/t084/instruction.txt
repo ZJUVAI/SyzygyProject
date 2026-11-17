@@ -1,5 +1,1 @@
-Construct a set of 31 distinct integers. Every sum of three elements, where repetition is allowed and order does not matter, must be different. Minimize the diameter `max(elements) - min(elements)`.
-
-Return JSON data with an `elements` list of 31 integers. The evaluator recomputes every three-term sum and the diameter. It ignores any score you report. Use exact integer values. You may translate the set without changing its score.
-
-Start from the simple construction in the provided initial program. Do not use human or reference witnesses. Improve the construction through your own search. Keep your default search bounded and deterministic for a fixed seed.
+Choose 15 pairs (u_i,v_i) of nonnegative rational numbers with u_i+v_i<=1. A route independently chooses z_i=v_i or z_i=-u_i. For every route and each split k=1,...,14, compute the absolute discrepancy |sum_{i<=k} z_i - sum_{i>k} z_i|. The route discrepancy is the maximum over these splits. Maximize the minimum route discrepancy over all 2^15 routes. Return JSON with key `pairs`, containing exactly 15 two-element arrays. Values may be integers or rational strings such as "3/7". The evaluator computes the score exactly.

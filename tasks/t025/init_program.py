@@ -1,9 +1,9 @@
-"""A simple cap in F_3^7: all binary vectors."""
-
-from itertools import product
-
+"""Simple exact seed: 28 points on the integer parabola."""
+import os
 
 # EVOLVE-BLOCK-START
 def run_code():
-    return {"points": [list(point) for point in product((0, 1), repeat=7)]}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T025-C01") != "T025-C01":
+        raise ValueError("unsupported configuration id")
+    return {"points": [[i, i * i] for i in range(28)]}
 # EVOLVE-BLOCK-END

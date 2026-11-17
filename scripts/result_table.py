@@ -62,7 +62,7 @@ def display(value, digits=15, quadratic_radicand=None):
             number = Decimal(exact.numerator) / Decimal(exact.denominator)
     except (ValueError, TypeError, ZeroDivisionError):
         if 'sqrt' in str(value):
-            from tasks.t002.check import Q
+            from tasks.t003.check import Q
             q = Q.parse(str(value).replace('sqrt(2)', 'sqrt2'))
             with localcontext() as ctx:
                 ctx.prec = max(60, digits+15)
@@ -115,7 +115,7 @@ def markdown(rows, underline_best=False, highlight_best=False):
     for row in rows:
         arrow = '↑' if row['direction'] == 'maximize' else '↓'
         raw = [row[key] for key in ('initial', 'search', 'best_reproduced', 'best_reported')]
-        radicand=3 if row.get('task_id')=='T083' else None
+        radicand=3 if row.get('task_id')=='T005' else None
         def comparable(value):
             if value is None:
                 return None

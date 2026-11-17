@@ -1,9 +1,13 @@
-"""Frozen same-parameter lattice reference, kept under data/reference/."""
+"""Load the frozen n=16 VT_0 public witness."""
 
 import json
+import os
 from pathlib import Path
 
 
 def run_code():
-    path = Path(__file__).with_name("data") / "reference" / "hexagon_n91.json"
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T049-C01")
+    if chosen != "T049-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    path = Path(__file__).parent / "data/human/vt16_3856.json"
     return json.loads(path.read_text(encoding="utf-8"))

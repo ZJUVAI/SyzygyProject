@@ -1,34 +1,44 @@
 from mathbench.search import search_deadline, search_steps
-"""Seeded mass-preserving pair-transfer search; reads no human data."""
-from fractions import Fraction
-import os
+"""Bounded random-restart coordinate search baseline."""
 import random
+import os
 import time
+from itertools import combinations
 
-from tasks.t017.check import objective_fraction
-from tasks.t017.init_program import run_code as initial
+from .check import triangle_area2, validate
+
+
+def _score(points):
+    return min(triangle_area2(*triple) for triple in combinations(points, 3)) / 2
 
 
 def run_code():
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    heights = [Fraction(str(x)) for x in initial()["heights"]]
-    current, _, _ = objective_fraction(heights)
-    best, best_value = heights[:], current
-    try:
-        seconds = max(0.0, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2")))
-    except ValueError:
-        seconds = 2.0
+    seed, restarts, steps = int(os.environ.get('MATHBENCH_SEED', '0')), 8, 1200
+    n = 11
     deadline = search_deadline()
-    quantum = Fraction(1, 1000)
-    for _attempt in search_steps(100):
-        i, j = rng.sample(range(51), 2)
-        delta = quantum * rng.randint(1, 100) * rng.choice((-1, 1))
-        candidate = best[:]
-        candidate[i] += delta
-        candidate[j] -= delta
-        if not (0 <= candidate[i] <= 1 and 0 <= candidate[j] <= 1):
-            continue
-        value, _, _ = objective_fraction(candidate)
-        if value < best_value:
-            best, best_value = candidate, value
-    return {"heights": [str(x) for x in best]}
+    rng = random.Random(seed)
+    best = None
+    for _ in range(restarts):
+        points = [(rng.random(), rng.random()) for _ in range(n)]
+        score = _score(points)
+        scale = 0.18
+        for step in range(steps):
+            if time.monotonic() >= deadline:
+                break
+            i = rng.randrange(n)
+            candidate = list(points)
+            x, y = candidate[i]
+            candidate[i] = (min(1., max(0., x + rng.gauss(0, scale))),
+                            min(1., max(0., y + rng.gauss(0, scale))))
+            new_score = _score(candidate)
+            if new_score >= score:
+                points, score = candidate, new_score
+            if (step + 1) % 200 == 0:
+                scale *= .65
+        if best is None or score > best[0]:
+            best = (score, points)
+        if time.monotonic() >= deadline:
+            break
+    solution = {"points": [[format(x, ".17g"), format(y, ".17g")] for x, y in best[1]]}
+    validate(solution, {"parameters": {"n": n}})
+    return solution

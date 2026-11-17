@@ -1,64 +1,113 @@
-from fractions import Fraction
-import math
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+
 import pytest
 
-from tasks.t016.check import validate
-from tasks.t016.human import run_code as human_program
-
-CONFIG = {
-    "id": "T016-C01",
-    "parameters": {
-        "steps": 208,
-        "support": ["-1/4", "1/4"],
-        "signed_values_allowed": True,
-        "integral": 1,
-    },
-}
+from mathbench.evaluate import _run
+from tasks.t016.baseline import run_code as baseline_run
+from tasks.t016.check import CONFIG_ID, PARAMETERS, validate
+from tasks.t016.evolution import run_code as evolution_run
+from tasks.t016.human import run_code as human_run
+from tasks.t016.init_program import run_code as init_run
+from tasks.t016.reference import run_code as reference_run
 
 
-def test_human_witness_exact_score_and_signed_admissibility():
-    result = validate(human_program(), CONFIG, strict=True)
-    assert result["verification_status"] == "exact"
-    assert result["objective"] == "6280435861361744576/4160000022692211721"
-    assert math.isclose(float(Fraction(result["objective"])), 1.5097201507458786, rel_tol=0, abs_tol=1e-15)
+TASK = Path(__file__).parent
+CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
 
 
-def test_signed_coefficients_and_negative_mass_are_valid():
-    coeff = [0] * 208
-    coeff[0], coeff[1] = 2, -1
-    result = validate({"coefficients": coeff}, CONFIG)
-    assert Fraction(result["objective"]) == 1664
-    assert result["details"]["max_abs_indices"]
-    # Scaling by a negative nonzero constant leaves the objective unchanged.
-    scaled = validate({"coefficients": [-2 * x for x in coeff]}, CONFIG)
-    assert scaled["objective"] == result["objective"]
+def _validate(solution):
+    return validate(solution, CONFIG)
 
 
-def test_single_nonzero_boundary_coefficient():
-    coeff = [0] * 208
-    coeff[-1] = "-3/7"
-    assert validate({"coefficients": coeff}, CONFIG)["objective"] == "416"
+def test_all_five_entries_and_exact_human_reference(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    solutions = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
+    for solution in solutions:
+        result = _validate(solution)
+        assert result["verification_status"] == "exact"
+        assert result["details"]["monomials_checked"] == 126
+        assert result["objective"] == len(solution["points"])
+    assert len(solutions[0]["points"]) == 96
+    assert len(solutions[1]["points"]) == 24
+    assert solutions[1] == solutions[2]
+    assert solutions[3] == solutions[4]
 
 
-@pytest.mark.parametrize("coeff", [None, [1] * 207, [1] * 209, [True] + [0] * 207,
-                                    [float("nan")] + [0] * 207, [float("inf")] + [0] * 207,
-                                    ["1/0"] + [0] * 207, ["oops"] + [0] * 207,
-                                    [0] * 208])
-def test_invalid_coefficients_rejected(coeff):
+def test_reference_is_pinned_and_independent_certificate_matches():
+    metadata = json.loads((TASK / "data/bestknown.json").read_text())
+    record = metadata["configurations"][CONFIG_ID]
+    witness = TASK / record["witness"]
+    assert hashlib.sha256(witness.read_bytes()).hexdigest() == record["witness_sha256"]
+    raw_certificate = TASK / "data/reference/d4_rational24_independent_certificate.json"
+    raw_record = record["independent_certificate"]
+    assert hashlib.sha256(raw_certificate.read_bytes()).hexdigest() == raw_record["sha256"]
+    frozen = json.loads(witness.read_text())
+    raw_points = json.loads(raw_certificate.read_text())["points"]
+    normalized = [[[coordinate] for coordinate in point] for point in raw_points]
+    assert frozen["points"] == normalized
+    assert len(frozen["points"]) == 24
+
+
+def test_generic_algebraic_coordinates_are_checked_exactly():
+    initial = init_run()
+    result = _validate(initial)
+    assert result["objective"] == 96
+    assert result["details"]["coordinate_field_degree"] == 2
+    assert result["details"]["minimal_polynomial_irreducible"] is True
+
+
+def test_duplicate_off_sphere_and_moment_perturbation_rejected():
+    source = reference_run()
+    duplicate = copy.deepcopy(source)
+    duplicate["points"][1] = copy.deepcopy(duplicate["points"][0])
+    with pytest.raises(ValueError, match="distinct"):
+        _validate(duplicate)
+
+    off_sphere = copy.deepcopy(source)
+    off_sphere["points"][0][0] = ["0"]
+    with pytest.raises(ValueError, match="unit sphere"):
+        _validate(off_sphere)
+
+    wrong_moment = copy.deepcopy(source)
+    wrong_moment["points"][-1] = [["3/5"], ["4/5"], ["0"], ["0"]]
+    with pytest.raises(ValueError, match="moment mismatch"):
+        _validate(wrong_moment)
+
+
+@pytest.mark.parametrize(
+    "mutate",
+    [
+        lambda x: x.update(minimal_polynomial=[0, 0, 1]),
+        lambda x: x.update(isolating_interval=["1", "2"]),
+        lambda x: x["points"][0].__setitem__(0, [True]),
+        lambda x: x["points"][0].__setitem__(0, [0.0]),
+        lambda x: x["points"][0].__setitem__(0, [float("nan")]),
+    ],
+)
+def test_invalid_field_or_coordinate_encoding_rejected(mutate):
+    solution = copy.deepcopy(reference_run())
+    mutate(solution)
     with pytest.raises(ValueError):
-        validate({"coefficients": coeff}, CONFIG)
+        _validate(solution)
 
 
-def test_configuration_mismatch_rejected():
-    bad = {"parameters": dict(CONFIG["parameters"], steps=150)}
-    with pytest.raises(ValueError):
-        validate({"coefficients": [1] * 208}, bad)
+def test_claimed_objective_does_not_change_validation():
+    solution = reference_run()
+    expected = _validate(solution)
+    for key, value in (("objective", -3), ("score", float("nan")), ("claimed_score", "not-used")):
+        assert validate({**solution, key: value}, CONFIG) == expected
+    assert expected["details"]["claimed_objective_ignored"] is True
 
 
-def test_claimed_score_is_ignored_and_score_is_independently_computed():
-    coeff = [0] * 208
-    coeff[0] = 1
-    coeff[1] = 1
-    result = validate({"coefficients": coeff, "objective": -999999}, CONFIG)
-    assert Fraction(result["objective"]) == Fraction(416 * 2, 4)
-    assert result["objective"] != -999999
+def test_runner_error_and_timeout_without_registry():
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T016 failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T016 failure')"], env, 3)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)

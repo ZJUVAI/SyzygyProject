@@ -1,52 +1,28 @@
 {
-  "task_id": "T028",
-  "snapshot_date": "2026-11-06",
   "configurations": {
     "T028-C01": {
+      "program": "reference.py",
+      "reproduced_value": 271,
+      "public_value": 271,
+      "highest_reported": {
+        "value": 271,
+        "source": "CG:SHOP 2020 best_solutions.zip, uniform-0000500-1.solution.json",
+        "reproduction_status": "Pinned archive witness with 770 edges passes the exact checker and gives 271 bounded faces. Archive metadata does not identify the producing solver or prove optimality."
+      },
+      "source": {
+        "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+        "input_url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip",
+        "checked_at": "2026-11-06"
+      },
       "parameters": {
-        "instance": "Ta051",
-        "jobs": 50,
-        "machines": 20,
-        "schedule_type": "permutation"
+        "instance": "uniform-0000500-1",
+        "point_count": 500,
+        "input_coordinates": "exact integer coordinates",
+        "partition": "straight-line planar graph; all input points are vertices; bounded faces are empty convex polygons",
+        "objective": "minimize number of internal convex faces"
       },
-      "direction": "minimize",
-      "objective": "makespan (integer time units)",
-      "best_human": {
-        "value": 3846,
-        "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Annals of Operations Research 199(1), 269-284.",
-        "url": "https://doi.org/10.1007/s10479-011-0965-2",
-        "witness": "data/human_witness.json",
-        "witness_archive": "Olivier Brunner, Zenodo record 18272308, v8, Taillard_UB_Schedules v8.csv, Ta051 row.",
-        "witness_archive_url": "https://zenodo.org/records/18272308",
-        "evidence_state": "Human published permutation; local exact replay on official processing times returned 3846.",
-        "parameters": {
-          "instance": "Ta051",
-          "jobs": 50,
-          "machines": 20,
-          "schedule_type": "permutation"
-        },
-        "source_url": "https://doi.org/10.1007/s10479-011-0965-2",
-        "date_checked": "2026-11-06",
-        "ai_provenance": "The task author retrieved and transcribed a published schedule. No claim is made about authorship of the original construction."
-      },
-      "bounds": {
-        "lower_bound": 3771,
-        "upper_bound": 3846,
-        "current_bounds_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
-        "source_snapshot_date": "2026-06-03",
-        "upper_bound_source": "RRMRP (2012)",
-        "lower_bound_source": "Va (as listed by Taillard)",
-        "schedule_scope": "Only permutation schedules are allowed.",
-        "status": "open",
-        "source_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
-        "source_snapshot": "data/source/best_lb_up_2026-06-03.txt",
-        "source_snapshot_sha256": "1222a422ca2eeb2898f3afbf6c1d5b06dc835cc113cac4851757248b8c6a53c3",
-        "checked_date": "2026-11-06",
-        "open_interval": [
-          3771,
-          3846
-        ]
-      },
+      "optimality_status": "Open: the pinned witness gives a feasible value of 271. No proof of optimality for this 500-point instance was found in checked sources through 2026-11-06.",
+      "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -55,22 +31,23 @@
           "task_id": "T028",
           "config_id": "T028-C01",
           "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 3846,
+          "combined_score": 1.4169741697416973,
+          "objective": 271,
           "verification_status": "exact",
-          "generation_time": 0.16518879681825638,
-          "verification_time": 0.16534177958965302,
-          "objective_value": 3846,
+          "generation_time": 0.1647304855287075,
+          "verification_time": 0.7664335668087006,
+          "objective_value": 271,
           "details": {
-            "instance": "Ta051",
-            "jobs": 50,
-            "machines": 20,
-            "schedule_type": "permutation",
-            "all_operations_recomputed": true,
-            "processing_times_source_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
-            "claimed_objective_ignored": true
+            "point_count": 500,
+            "edge_count": 770,
+            "face_count": 271,
+            "convex_hull_vertex_count_including_collinear": 19,
+            "hull_area_twice": 1736930960,
+            "bounded_face_area_twice_sum": 1736930960,
+            "euler_edge_face_check": 271,
+            "claimed_score_ignored": true
           },
-          "eval_time": 0.3347446173429489,
+          "eval_time": 0.9352919720113277,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -87,129 +64,67 @@
           }
         },
         "independent_quantity": {
-          "makespan": 3846,
-          "operations": 1000
+          "face_count": 271,
+          "point_count": 500,
+          "edge_count": 770,
+          "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
         "witness": "data/reference/public_c01.json",
-        "witness_sha256": "147f8a658081507499421b0d01310ddeda3f1726df4cddc185f6fbee4ca67bd1"
+        "witness_sha256": "f058b9152556ea7f25132fa464dce64389dfbb65a09f9b5c9af97fab6ca5b7f0"
       },
-      "optimality_status_review": {
-        "paper": "Gmys et al. (2022), Exactly Solving Hard Permutation Flowshop Scheduling Problems on Peta-Scale GPU-Accelerated Supercomputers.",
-        "url": "https://doi.org/10.1287/ijoc.2022.1193",
-        "finding": "Ta051 is listed among instances that remained open in the paper's experiments.",
-        "latest_archive_checked": "Zenodo record 21715941, v11, published 2026-07-31.",
-        "latest_archive_url": "https://zenodo.org/records/21715941",
-        "caveat": "The v11 page warns that the Optimal column needs extreme caution. This record relies on Taillard's live bounds and the Gmys paper instead."
-      },
-      "review_status": "accepted_by_sol",
-      "program": "reference.py",
-      "reproduced_value": "3846",
-      "public_value": "3846",
-      "highest_reported": {
-        "value": "3846",
-        "source": {
-          "value": 3846,
-          "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Annals of Operations Research 199(1), 269-284.",
-          "url": "https://doi.org/10.1007/s10479-011-0965-2",
-          "witness": "data/human_witness.json",
-          "witness_archive": "Olivier Brunner, Zenodo record 18272308, v8, Taillard_UB_Schedules v8.csv, Ta051 row.",
-          "witness_archive_url": "https://zenodo.org/records/18272308",
-          "evidence_state": "Human published permutation; local exact replay on official processing times returned 3846."
-        },
-        "reproduction_status": "witness reproduced exactly"
-      },
-      "best_public": {
-        "value": 3846,
-        "parameters": {
-          "instance": "Ta051",
-          "jobs": 50,
-          "machines": 20,
-          "schedule_type": "permutation"
-        },
-        "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
-        "witness_url": "https://zenodo.org/records/18272308",
-        "evidence_state": "Taillard's live bounds table lists upper bound 3846 and attributes it to RRMRP. Zenodo dataset v8 includes a Ta051 permutation. The local permutation is saved in data/human_witness.json and has been independently replayed.",
-        "date_checked": "2026-11-06",
-        "origin_type": "Human-authored published heuristic result; not an optimality proof."
-      },
-      "best_reproduced": {
-        "value": 3846,
-        "parameters": {
-          "instance": "Ta051",
-          "jobs": 50,
-          "machines": 20,
-          "schedule_type": "permutation"
-        },
-        "witness": "data/human_witness.json",
-        "program": "reference.py",
-        "verification_status": "exact",
-        "verification_method": "Recompute completion times for every job-machine operation with the standard integer recurrence on the frozen official Ta051 matrix.",
-        "processing_times_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
-        "official_source_file_sha256": "cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba",
-        "claimed_score_ignored": true,
-        "date_reproduced": "2026-11-06",
-        "review_status": "reviewed_by_sol",
-        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see bestknown.json."
-      },
-      "source_review": {
-        "primary_instance": {
-          "citation": "E. Taillard (1993), Benchmarks for basic scheduling problems, European Journal of Operational Research 64(2), 278-285.",
-          "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/tai50_20.txt",
-          "official_source_file": "data/source/tai50_20_official.txt",
-          "official_source_file_sha256": "cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba",
-          "input_file": "data/ta051.json",
-          "input_file_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
-          "official_header": {
-            "jobs": 50,
-            "machines": 20,
-            "seed": 1539989115,
-            "original_upper_bound": 3875,
-            "original_lower_bound": 3480
-          }
-        },
-        "official_bounds_table": {
-          "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
-          "header_date": "03.06.2026",
-          "instance_row": "ta051-055; Ta051 lower bound 3771 from Va, upper bound 3846 from RRMRP",
-          "schedule_scope": "The table states that only permutation schedules are allowed."
-        },
-        "upper_bound_reference": {
-          "citation": "M. G. Ravetti, C. Riveros, A. Mendes, M. G. Resende, and P. M. Pardalos (2012), Parallel hybrid heuristics for the permutation flow shop problem, Annals of Operations Research 199(1), 269-284.",
-          "url": "https://doi.org/10.1007/s10479-011-0965-2",
-          "witness_archive": "Olivier Brunner, Permutation Flow-shop: Taillard and VFR benchmarks, Zenodo v8, record 18272308, published 2026-01-16.",
-          "witness_archive_url": "https://zenodo.org/records/18272308",
-          "witness_archive_file": "Taillard_UB_Schedules v8.csv",
-          "replay": "The 50-job permutation was independently replayed on the official Ta051 matrix; makespan is 3846."
-        },
-        "optimality_status_review": {
-          "paper": "Jan Gmys et al. (2022), Exactly Solving Hard Permutation Flowshop Scheduling Problems on Peta-Scale GPU-Accelerated Supercomputers.",
-          "url": "https://doi.org/10.1287/ijoc.2022.1193",
-          "finding": "Ta051 is listed among the instances that remained open in the reported exact-solver experiments.",
-          "newest_schedule_archive_checked": "Olivier Brunner, Zenodo record 21715941, v11, published 2026-07-31.",
-          "newest_schedule_archive_url": "https://zenodo.org/records/21715941",
-          "warning": "The v11 record says its Optimal column must be interpreted with extreme caution. The task status is based on Taillard's live bound table and the Gmys paper, not that column."
-        }
-      },
-      "unmatched_parameter_records": [],
-      "ai_assisted_records": [],
-      "source_unattributed_records": []
+      "human_reference_value": 384
     }
   },
   "review_status": "accepted_by_sol",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "Fixed CG:SHOP 2020 uniform-0000500-1 instance. The objective is the minimum number of empty convex faces in a straight-line partition of the convex hull using the 500 input points.",
+  "best_human": {
+    "value": 384,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "quantity": "bounded convex face count"
+    },
+    "url": "https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html",
+    "ai_provenance": "Traditional method described by Eder, Held, de Lorenzo, and Palfrader (SoCG 2020, section 2.2, pages 85:2-3); the local deterministic reconstruction was implemented with AI assistance. It is not the authors' code or run.",
+    "evidence_state": "The local deterministic Delaunay-plus-convex-merge reconstruction is exactly checked and yields 384 faces. This is a reconstructed human-method baseline, not a published best result or a literal reproduction of the paper's randomized edge-removal method.",
+    "origin_type": "traditional computational baseline, locally reconstructed"
+  },
+  "best_public": {
+    "value": 271,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "quantity": "bounded convex face count"
+    },
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "ai_provenance": "The archive gives a solution and timestamp but does not identify the solver, algorithm, or AI contribution. Provenance is therefore marked undisclosed.",
+    "evidence_state": "The archived 770-edge construction is pinned locally and independently passes the exact checker with 271 bounded faces. It is a feasible result, not a proof of optimality.",
+    "origin_type": "competition archive result with undisclosed solver provenance"
+  },
+  "best_reproduced": {
+    "value": 271,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "edge_count": 770
+    },
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "witness": "data/reference/uniform-0000500-1.official_solution.json",
+    "ai_provenance": "The original archive does not state solver provenance. This task replays and verifies the supplied witness.",
+    "evidence_state": "Exact check confirms all 500 vertices are used, the straight-line graph is planar and connected, every bounded face is empty and convex, and face areas sum to the hull area. Euler's formula gives 770-500+1=271 faces.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "Delaunay triangulation followed by deterministic greedy convex-face merging",
   "additional_evidence": {
     "configurations": {
       "T028-C01": {
-        "best_human": {
-          "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Parallel hybrid heuristics for the permutation flow shop problem, Annals of Operations Research 199(1), 269-284.",
-          "evidence_state": "Published human permutation, independently replayed against Taillard's official Ta051 processing times."
-        },
-        "bounds": {
-          "lower_bound_source": "Vaessens branch-and-bound result, as listed by Taillard.",
-          "upper_bound_source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012).",
-          "status": "open; exact optimum not established"
-        }
+        "optimality_status": "Open in sources checked through 2026-11-06. Cambazard's project page describes optimality results up to 100 points and lower bounds up to 300 points; it does not prove optimality for this 500-point instance."
       }
     }
   }

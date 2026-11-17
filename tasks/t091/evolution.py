@@ -1,9 +1,3 @@
-"""Small seeded population of row-deletion proposals from the simple OA seed."""
-import os
-from tasks.t091.search_core import search
+"""Evolution entry point for the degree-146 integer Chebyshev task."""
 
-
-def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T091-C01") != "T091-C01":
-        raise ValueError("unsupported configuration")
-    return search(16)
+from tasks.t091.baseline import run_code

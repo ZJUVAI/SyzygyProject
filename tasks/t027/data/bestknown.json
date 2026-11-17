@@ -1,51 +1,41 @@
 {
   "task_id": "T027",
-  "review_status": "accepted_by_sol",
+  "source_checked": "2026-11-06",
   "configurations": {
     "T027-C01": {
       "program": "reference.py",
-      "reproduced_value": "44759294",
-      "public_value": "44759294",
+      "reproduced_value": "481669373744614531460135/332305777911042658732591",
+      "public_value": 1.4482,
+      "objective": "maximum vertex-pair shortest-path length divided by Euclidean chord length",
+      "direction": "minimize",
       "highest_reported": {
-        "value": "44759294",
-        "source": {
-          "url": "https://qaplib.mgi.polymtl.ca/",
-          "instance_url": "https://coral.ise.lehigh.edu/data-sets/qaplib/qaplib-problem-instances-and-solutions/",
-          "witness_url": "https://sources.debian.org/src/r-cran-qap/0.1-1-2/inst/qaplib/tai256c.sln",
-          "title": "QAPLIB tai256c record and archived solution",
-          "classification": "best reported feasible objective on the checked QAPLIB pages; not an optimality proof",
-          "method_label": "ANT",
-          "method_provenance": "QAPLIB table labels 44,759,294 as ANT; QAPLIB history credits T. Stützle with an improved tai256c solution in June 1997. The archived permutation is replayed, but the original ANT run is not reproduced."
-        },
-        "reproduction_status": "archived witness reproduced exactly"
+        "value": 1.4482,
+        "source": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Theorem: every regular polygon has a triangulation with dilation below 1.4482",
+        "reproduction_status": "published universal upper bound; the theorem's specific n=120 triangulation is not reconstructed",
+        "metric": "maximum shortest-path length divided by Euclidean chord length",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009"
       },
-      "checked_at": "2026-11-06",
-      "public_source": {
-        "url": "https://qaplib.mgi.polymtl.ca/",
-        "instance_url": "https://coral.ise.lehigh.edu/data-sets/qaplib/qaplib-problem-instances-and-solutions/",
-        "witness_url": "https://sources.debian.org/src/r-cran-qap/0.1-1-2/inst/qaplib/tai256c.sln",
-        "title": "QAPLIB tai256c record and archived solution",
-        "classification": "best reported feasible objective on the checked QAPLIB pages; not an optimality proof",
-        "method_label": "ANT",
-        "method_provenance": "QAPLIB table labels 44,759,294 as ANT; QAPLIB history credits T. Stützle with an improved tai256c solution in June 1997. The archived permutation is replayed, but the original ANT run is not reproduced."
+      "reproduced_witness": {
+        "value": "481669373744614531460135/332305777911042658732591",
+        "file": "data/source/ubc_6fan_120.json",
+        "sha256": "2db7e3a33a5a3b9c9e1b494b58e3a6cf2a2428a6d9f22a222d3a36c967ed7a2f",
+        "provenance": "Rebuilt UBC 6-fan; exact combinatorial check and rational interval distance evaluation.",
+        "evidence_state": "objective enclosed by details.objective_interval"
       },
-      "lower_bound_source": {
-        "url": "https://arxiv.org/abs/2401.09439v2",
-        "title": "An Exceptionally Difficult Binary Quadratic Optimization Problem with Symmetry: a Challenge for The Largest Unsolved QAP Instance Tai256c",
-        "version": "arXiv v2; submitted 2023-12-20, last revised 2024-09-30 in the arXiv version history. The v2 PDF title page says revised 2024-10-01.",
-        "reported_lower_bound": "44200000",
-        "reported_gap": "1.25%",
-        "evidence": "The v2 PDF states that target lower bound 44,200,000 was obtained with a 1.25% gap (PDF p. 3; Table 4 on p. 18). The v2 abstract still describes the earlier 1.48% gap.",
-        "checked_at": "2026-11-06"
-      },
-      "matrix": "data/tai256c.dat.gz",
-      "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
-      "comparison_tolerance": "0",
-      "limitations": [
-        "The original ANT search is not replayed; only the archived feasible permutation and exact score are reproduced.",
-        "The checked QAPLIB pages disagree on the older lower bound: the Lehigh table gives 43,849,646, while the QAPLIB mirror gives 44,095,032. The arXiv v2 paper discusses 44,095,032 as the previous bound and reports an improved 44,200,000. Searches on 2026-11-06 found no later primary result or proof of optimality; this search was not exhaustive.",
-        "The lower bound is a result reported by the cited paper; the task checker verifies feasible scores, not optimality or lower-bound certificates."
+      "certified_score_interval": [
+        "2890016242467687188760789/1993834667466255952395547",
+        "481669373744614531460135/332305777911042658732591"
       ],
+      "open_status": {
+        "evidence": "Fekete, Keldenich, and Perk (2026) report optimal solutions for regular n-gons up to n=100. Their range does not include n=120. The source review on 2026-11-06 found no same-parameter proof closing the 120-gon case.",
+        "primary_source": "https://doi.org/10.20382/jocg.v17i2a1",
+        "source_location": "Abstract; regular n-gon results and computations for n=4 through 100",
+        "claim_limit": "The checked sources do not establish optimality for n=120; this is not an exhaustive literature survey."
+      },
+      "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -54,21 +44,23 @@
           "task_id": "T027",
           "config_id": "T027-C01",
           "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 44759294,
-          "verification_status": "exact",
-          "generation_time": 0.26518185809254646,
-          "verification_time": 0.2657204009592533,
-          "objective_value": 44759294,
+          "combined_score": 1.0000000000000044,
+          "objective": "481669373744614531460135/332305777911042658732591",
+          "verification_status": "certified",
+          "generation_time": 0.5446564592421055,
+          "verification_time": 3.5000081211328506,
+          "objective_value": "481669373744614531460135/332305777911042658732591",
           "details": {
-            "instance": "tai256c",
-            "n": 256,
-            "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
-            "permutation_bijection_verified": true,
-            "objective_terms": 65536,
-            "claimed_score_ignored": true
+            "objective_interval": [
+              "2890016242467687188760789/1993834667466255952395547",
+              "481669373744614531460135/332305777911042658732591"
+            ],
+            "scale": "1000000000000000000000000",
+            "vertices": 120,
+            "edges": 237,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.5353591740131378,
+          "eval_time": 4.050555758178234,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -85,46 +77,82 @@
           }
         },
         "independent_quantity": {
-          "quadratic_cost": 44759294,
-          "terms": 65536,
-          "inverse_permutation_checked": true
+          "ratio_interval": [
+            "2890016242467687188760797308839830568975294941123693699438724/1993834667466255952395546817484088840317853763189687784388893",
+            "2890016242467687188760797308839830568975294941123693699438741/1993834667466255952395546817484088840317853763189687784388892"
+          ],
+          "edges": 237,
+          "method": "Cyclotomic cosine minimal polynomial, exact rational Horner and square-root chord bounds, all-pairs integer Floyd-Warshall."
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
         "witness": "data/reference/public_c01.json",
-        "witness_sha256": "ec3bd69f6ffc0dfab851bdf59ab886ac0450c84b333a17af8590db5b2d544864"
+        "witness_sha256": "7d65c3d99f7ffe9dc3241a1583783ac1f26d7ecdfe6e1a29e23c325efb0a89b3"
       },
-      "review_status": "accepted_by_sol",
-      "witness": "data/tai256c.sln",
-      "witness_sha256": "066452382541a9139b2de34113105afbfaf14949a367fe5acef468d80556dcb0",
+      "id": "T027-C01",
+      "parameters": {
+        "vertices": 120,
+        "polygon": "regular convex 120-gon, vertices in counterclockwise cyclic order",
+        "construction": "straight-line triangulation using polygon vertices only",
+        "objective": "minimize over triangulations the maximum, over distinct vertex pairs, of shortest-path length divided by Euclidean chord length",
+        "distance": "Euclidean chord length"
+      },
       "best_human": {
-        "value": "44759294",
-        "date": "1997-06",
-        "parameters": "QAPLIB tai256c, n=256",
-        "source": "https://qaplib.mgi.polymtl.ca/",
-        "witness": "data/tai256c.sln",
-        "algorithm": "ANT, QAPLIB table attribution; archived permutation replayed",
-        "ai_provenance": "not reported",
-        "evidence_state": "witness_and_value_reproduced; original search run is not replayed"
+        "value": 1.449476373154,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": 120
+        },
+        "url": "https://www.cs.ubc.ca/labs/algorithms/tpsg/dilation.html",
+        "source_location": "6-fan construction for n divisible by 6",
+        "provenance": "The published 6-fan rule was rebuilt for n=120. The full edge set was checked, and its dilation was recomputed with rational interval bounds.",
+        "ai_provenance": "Classical human construction; no AI provenance stated by the source.",
+        "evidence_state": "same-parameter witness and certified score reproduced; score is the interval upper endpoint rounded upward"
       },
       "best_public": {
-        "value": "44759294",
-        "date": "checked 2026-11-06",
-        "parameters": "QAPLIB tai256c, n=256",
-        "source": "https://qaplib.mgi.polymtl.ca/",
-        "ai_provenance": "not reported",
-        "evidence_state": "QAPLIB reports this feasible value; archived witness independently scored"
+        "value": 1.4482,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": "any regular polygon, including n=120"
+        },
+        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Theorem: dilation of vertices of any regular polygon is less than 1.4482",
+        "provenance": "Published universal upper bound on the optimum. The theorem's specific n=120 triangulation is not reconstructed here.",
+        "ai_provenance": "Human-authored 2019 paper.",
+        "evidence_state": "reported theorem bound; witness not locally reproduced"
       },
       "best_reproduced": {
-        "value": "44759294",
-        "program": "human.py",
-        "witness": "data/tai256c.sln",
-        "parameters": "QAPLIB tai256c, n=256",
-        "verification": "Exact integer recomputation over 65,536 terms; independently reproduced during implementation intake.",
-        "checked_at": "2026-11-06",
+        "value": "481669373744614531460135/332305777911042658732591",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "vertices": 120
+        },
+        "witness_file": "data/source/ubc_6fan_120.json",
+        "provenance": "Task-local rebuild of the UBC 6-fan rule; certified with rational chord and path intervals.",
+        "ai_provenance": "Benchmark reconstruction of a published human method.",
+        "actual_value": "481669373744614531460135/332305777911042658732591",
+        "evidence_state": "valid triangulation; objective enclosed by the interval in bestknown.json",
         "review_status": "reviewed_by_sol"
       },
-      "other_parameters": []
+      "frozen_human_baseline": {
+        "value": 1.449476373154,
+        "parameters": {
+          "vertices": 120
+        },
+        "witness_file": "data/source/ubc_6fan_120.json",
+        "provenance": "Rebuilt UBC 6-fan construction; upward-rounded certified upper endpoint."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "additional_evidence": {
+    "configurations": {
+      "T027-C01": {
+        "highest_reported": {
+          "source_location": "Universal regular-polygon upper-bound theorem",
+          "reproduction_status": "theorem bound reported; the specific 120-gon witness was not reconstructed"
+        }
+      }
     }
   }
 }

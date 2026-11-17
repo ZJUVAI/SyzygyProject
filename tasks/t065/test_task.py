@@ -1,137 +1,98 @@
-"""Exact tests for T065-C01."""
-
 import hashlib
 import json
-import os
 from pathlib import Path
-import sys
 
 import pytest
 
-from tasks.t065.check import PARAMETERS, validate
+from tasks.t065.baseline import run_code as search_run
+from tasks.t065.check import validate
+from tasks.t065.human import run_code as human_run
+from tasks.t065.init_program import run_code as seed_run
+from tasks.t065.reference import run_code as reference_run
 
 
-ROOT = Path(__file__).resolve().parent
-CONFIG = {"id": "T065-C01", "parameters": PARAMETERS}
-GRID_SHA256 = "5be485e67a475c9eb7a4127d9160fd7f928e9ecb241b9592151a31fa4e2e2a56"
+CONFIG = {
+    "id": "T065-C01",
+    "parameters": {"dimension": 7, "field_order": 3, "max_points": 288},
+    "direction": "maximize",
+    "human_reference": 236,
+}
 
 
-def _grid_objective_independently():
-    # For difference directions (1,0), (0,1), and (1,-1), count each
-    # unordered adjacent pair once in the 10-by-10 index grid.
-    return 9 * 10 + 10 * 9 + 9 * 9
+def test_human_cap_is_rebuilt_from_author_matrix_and_recomputed():
+    solution = human_run()
+    result = validate({**solution, "claimed_objective": -1}, CONFIG, strict=True)
+    assert solution == reference_run()
+    assert len(solution["points"]) == 236
+    assert result["objective"] == 236
+    assert result["verification_status"] == "exact"
+    assert result["details"]["all_distinct_pairs_checked"] is True
+    assert result["details"]["claimed_objective_ignored"] is True
+    matrix_path = Path(__file__).parent / "data" / "edel_bierbrauer_248_projective_matrix.txt"
+    assert hashlib.sha256(matrix_path.read_bytes()).hexdigest() == (
+        "0e3ad612ca8ee9259290f4748af505cf6184c2107e77859d3ae6117fe24545eb"
+    )
 
 
-def test_human_and_reference_grid_is_exact():
-    from tasks.t065.human import run_code as human_run
-    from tasks.t065.reference import run_code as reference_run
-
-    path = ROOT / "data/reference/triangular_grid_10x10.json"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == GRID_SHA256
-    assert reference_run() == human_run()
-    witness = human_run()
-    checked = validate(witness, CONFIG, strict=True)
-    assert checked["objective"] == _grid_objective_independently() == 261
-    assert checked["details"]["point_count"] == 100
-    assert checked["details"]["unordered_pairs_checked"] == 4950
-    assert checked["details"]["coordinate_field_degree"] == 4
+def test_binary_seed_is_a_valid_cap():
+    solution = seed_run()
+    assert len(solution["points"]) == 128
+    assert validate(solution, CONFIG)["objective"] == 128
 
 
-def test_independent_audit_handles_both_moser_radicals():
-    from scripts.audits.independent_audit import independent_quantity
-
-    # omega_1*omega_3 has unit norm and uses both radicals in its y coordinate.
-    witness = {
-        "minimal_polynomial": [64, 0, -28, 0, 1],
-        "isolating_interval": ["5", "51/10"],
-        "points": [
-            {"x": ["0"], "y": ["0"]},
-            {"x": ["1", "0", "-1/24"], "y": ["0", "-1/3", "0", "1/48"]},
-            *({"x": [str(4*i)], "y": ["0"]} for i in range(1, 99)),
-        ],
-    }
-    assert validate(witness, CONFIG, strict=True)["objective"] == 1
-    result = independent_quantity("T065", witness)
-    assert result["unit_pairs"] == 1
-    assert result["unordered_pairs_checked"] == 4950
+def test_three_collinear_points_are_rejected():
+    points = [[0] * 7, [1] + [0] * 6, [2] + [0] * 6]
+    with pytest.raises(ValueError, match="affine line"):
+        validate({"points": points}, CONFIG)
 
 
-def test_all_five_entries_return_valid_candidates(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T065-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "0")
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "2")
-    monkeypatch.setenv("MATHBENCH_RESTARTS", "1")
-    from tasks.t065.init_program import run_code as initial
-    from tasks.t065.baseline import run_code as baseline
-    from tasks.t065.evolution import run_code as evolution
-    from tasks.t065.human import run_code as human
-    from tasks.t065.reference import run_code as reference
-
-    results = [initial(), baseline(), evolution(), human(), reference()]
-    objectives = [validate(result, CONFIG, strict=True)["objective"] for result in results]
-    assert objectives[0] == 0
-    assert objectives[1] == 261
-    assert objectives[2] >= 0
-    assert objectives[3:] == [261, 261]
-    assert results[1]["search_metadata"]["candidate_shapes_checked"] == 9
-    assert results[2]["search_metadata"]["iterations_run"] == 2
+def test_duplicate_point_rejected():
+    point = [0] * 7
+    with pytest.raises(ValueError, match="duplicate"):
+        validate({"points": [point, point]}, CONFIG)
 
 
-def test_checker_rejects_bad_point_counts_duplicates_and_fields():
-    from tasks.t065.init_program import run_code
-
-    valid = run_code()
-    with pytest.raises(ValueError, match="exactly 100"):
-        validate({**valid, "points": valid["points"][:-1]}, CONFIG)
-    with pytest.raises(ValueError, match="distinct"):
-        points = list(valid["points"])
-        points[1] = points[0]
-        validate({**valid, "points": points}, CONFIG)
-    with pytest.raises(ValueError, match="irreducible"):
-        validate({**valid, "minimal_polynomial": [0, -1, 0, 1]}, CONFIG)
-    with pytest.raises(ValueError, match="exactly one real root"):
-        validate({**valid, "isolating_interval": ["1", "2"]}, CONFIG)
-    with pytest.raises(ValueError, match="configuration must fix 100"):
-        validate(valid, {"id": "T065-C01", "parameters": {**PARAMETERS, "point_count": 99}})
+@pytest.mark.parametrize("bad", [True, 1.0, "1", -1, 3, float("nan"), float("inf")])
+def test_bad_coordinates_rejected(bad):
+    point = [0] * 7
+    point[0] = bad
+    with pytest.raises(ValueError):
+        validate({"points": [point]}, CONFIG)
 
 
-def test_checker_rejects_bool_nonfinite_and_float_coordinates():
-    from tasks.t065.init_program import run_code
-
-    valid = run_code()
-    for bad_value in (True, float("nan"), float("inf"), float("-inf"), 1.0):
-        points = list(valid["points"])
-        points[0] = {"x": [bad_value], "y": ["0"]}
-        with pytest.raises(ValueError):
-            validate({**valid, "points": points}, CONFIG)
+def test_bad_shape_and_configuration_rejected():
+    with pytest.raises(ValueError, match="points"):
+        validate({"points": None}, CONFIG)
+    with pytest.raises(ValueError, match="seven coordinates"):
+        validate({"points": [[0] * 6]}, CONFIG)
+    with pytest.raises(ValueError, match="configuration"):
+        validate({"points": []}, {**CONFIG, "parameters": {"dimension": 6}})
 
 
-def test_claimed_scores_do_not_change_recomputed_result():
-    from tasks.t065.init_program import run_code
-
-    valid = run_code()
-    result = validate(valid, CONFIG)
-    for key, value in (("objective", 999999), ("score", float("nan")),
-                       ("claimed_score", {"forged": True})):
-        assert validate({**valid, key: value}, CONFIG) == result
+def test_empty_cap_boundary_and_safe_upper_bound():
+    assert validate({"points": []}, CONFIG)["objective"] == 0
+    too_large = [[(i >> bit) & 1 for bit in range(7)] for i in range(289)]
+    # Duplicates would also make this invalid, but the theorem cutoff applies first.
+    with pytest.raises(ValueError, match="upper bound"):
+        validate({"points": too_large}, CONFIG)
 
 
-def test_public_record_is_separate_and_marked_unreproduced():
-    metadata = json.loads((ROOT / "data/bestknown.json").read_text())
-    item = metadata["configurations"]["T065-C01"]
-    assert item["public_value"] == 439
-    assert item["reproduced_value"] == 261
-    assert item["highest_reported"]["reproduction_status"].startswith("Reported in the paper but not reproduced")
-    assert item["best_public"]["witness"] is None
-    assert item["frozen_human_baseline"]["value"] == 261
+def test_seeded_greedy_search_is_reproducible_and_does_not_read_reference(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEED", "17")
+    first = search_run()
+    second = search_run()
+    assert first == second
+    assert first["search_metadata"]["seed"] == 17
+    assert first["search_metadata"]["iteration_limit"] == 100_000
+    assert first["search_metadata"]["budget"]["iteration_limit"] == 100_000
+    assert first["search_metadata"]["reference_data_read"] is False
+    assert first["search_metadata"]["iterations"] <= 100_000
+    assert validate(first, CONFIG)["objective"] == len(first["points"])
 
 
-def test_runner_error_and_timeout_controls():
-    from mathbench.evaluate import _run
-
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T065 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T065 worker failure')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
+def test_zero_second_search_budget_returns_valid_seed(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
+    solution = search_run()
+    assert solution["search_metadata"]["iterations"] == 0
+    assert len(solution["points"]) == 128
+    assert validate(solution, CONFIG)["objective"] == 128

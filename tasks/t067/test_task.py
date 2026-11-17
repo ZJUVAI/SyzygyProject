@@ -1,139 +1,139 @@
-"""Exact tests for T067-C01."""
-
 import hashlib
 import json
-import os
 from pathlib import Path
-import sys
 
 import pytest
 
-from tasks.t067.check import PARAMETERS, validate
+from tasks.t067.baseline import run_code as run_baseline
+from tasks.t067.check import validate
+from tasks.t067.evolution import run_code as run_evolution
+from tasks.t067.human import run_code as run_human
+from tasks.t067.init_program import run_code as run_init
+from tasks.t067.reference import run_code as run_reference
 
 
-ROOT = Path(__file__).resolve().parent
-CONFIG = {"id": "T067-C01", "parameters": PARAMETERS}
-WITNESS_SHA256 = "e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d"
-SOURCE_SHA256 = "bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a"
+ROOT = Path(__file__).parent
+CONFIG = {"parameters": {"colors": 6}}
 
 
-def _word(positions):
-    return "".join("1" if i in positions else "0" for i in range(17))
+def _assert_invalid(solution):
+    with pytest.raises(ValueError):
+        validate(solution, CONFIG)
 
 
-def _independent_pair_check(words):
-    ints = [int(word, 2) for word in words]
-    count = 0
-    minimum = 17
-    for i, word in enumerate(ints):
-        for other in ints[:i]:
-            distance = (word ^ other).bit_count()
-            assert distance >= 4
-            minimum = min(minimum, distance)
-            count += 1
-    return count, minimum
+def test_simple_seed_human_witness_and_public_reference():
+    assert validate(run_init(), CONFIG)["objective"] == 4
+    human = run_human()
+    assert validate(human, CONFIG)["objective"] == 536
+    public = run_reference()
+    assert validate(public, CONFIG)["objective"] == 537
 
 
-def test_published_human_and_reference_witness_exactly_replay():
-    from tasks.t067.human import run_code as human_run
-    from tasks.t067.reference import run_code as reference_run
-
-    witness_path = ROOT / "data/reference/a17_4_5_444.json"
-    source_path = ROOT / "data/source/milshtein_a17_4_5_444.txt"
-    assert hashlib.sha256(witness_path.read_bytes()).hexdigest() == WITNESS_SHA256
-    assert hashlib.sha256(source_path.read_bytes()).hexdigest() == SOURCE_SHA256
-    human = human_run()
-    assert reference_run() == human
-    result = validate(human, CONFIG, strict=True)
-    pairs, minimum = _independent_pair_check(human["codewords"])
-    assert result["objective"] == len(human["codewords"]) == 444
-    assert result["details"]["unordered_pairs_checked"] == pairs == 98_346
-    assert result["details"]["minimum_pairwise_distance"] == minimum == 4
+def test_evolution_entry_point_directly_calls_the_task_baseline(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
+    result = run_evolution()
+    assert result["n"] == 4
+    assert validate(result, CONFIG)["objective"] == 4
 
 
-def test_all_five_entries_return_valid_candidates(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T067-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "7")
+def test_partition_schema_and_claimed_score_is_ignored():
+    classes = [[1, 4], [2, 3]]
+    assert validate({"n": 4, "classes": classes, "objective": 10**9}, CONFIG)["objective"] == 4
+    assert validate({"n": 4, "colors": [0, 1, 1, 0], "score": -100}, CONFIG)["objective"] == 4
+
+
+def test_rejects_monochromatic_schur_triples_including_equal_terms():
+    # 1+1=2 must be detected even though the two addends are equal.
+    _assert_invalid({"n": 2, "colors": [0, 0]})
+    _assert_invalid({"n": 3, "colors": [0, 0, 0]})  # 1+2=3
+
+
+@pytest.mark.parametrize("solution", [
+    {"n": True, "colors": [0]},
+    {"n": 2, "colors": [False, 1]},
+    {"n": 2, "colors": [0, 1.0]},
+    {"n": 2, "colors": [0, float("nan")]},
+    {"n": 2, "colors": [0, float("inf")]},
+    {"n": 3, "colors": [0, 1]},  # not a complete prefix
+    {"n": 2, "colors": [0, 6]},
+    {"n": 0, "colors": []},
+    {"n": 4, "classes": [[1, 4], [2, 3], [3]]},  # duplicate class member
+    {"n": 4, "classes": [[1, 4], [2]]},  # incomplete prefix
+    {"n": 2, "colors": [0, 1], "classes": [[1], [2]]},
+])
+def test_rejects_malformed_solutions(solution):
+    _assert_invalid(solution)
+
+
+def test_baseline_is_deterministic_and_reports_replay_metadata(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEED", "8128")
     monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    monkeypatch.setenv("MATHBENCH_RESTARTS", "2")
-    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "2")
-    monkeypatch.setenv("MATHBENCH_POPULATION", "2")
-    from tasks.t067.init_program import run_code as initial
-    from tasks.t067.baseline import run_code as baseline
-    from tasks.t067.evolution import run_code as evolution
-    from tasks.t067.human import run_code as human
-    from tasks.t067.reference import run_code as reference
-
-    results = [initial(), baseline(), evolution(), human(), reference()]
-    values = [validate(result, CONFIG, strict=True)["objective"] for result in results]
-    assert values[0] == 1
-    assert values[1] >= 1
-    assert values[2] >= 1
-    assert values[3:] == [444, 444]
-    assert results[1]["search_metadata"]["restarts_run"] == 2
-    assert results[2]["search_metadata"]["generations_run"] == 2
+    first = run_baseline()
+    second = run_baseline()
+    assert first == second
+    assert validate(first, CONFIG)["objective"] == first["n"]
+    metadata = first["search_metadata"]
+    assert metadata["seed"] == 8128
+    assert metadata["placement_budget"] > 0
+    assert metadata["reference_data_read"] is False
 
 
-def test_checker_accepts_pair_at_exact_minimum_distance_and_empty_boundary():
-    a = _word({0, 1, 2, 3, 4})
-    b = _word({0, 1, 2, 5, 6})
-    result = validate({"codewords": [a, b]}, CONFIG)
-    assert result["objective"] == 2
-    assert result["details"]["minimum_pairwise_distance"] == 4
-    assert validate({"codewords": []}, CONFIG)["objective"] == 0
+def test_zero_second_search_budget_returns_valid_simple_seed(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
+    result = run_baseline()
+    assert result["search_metadata"]["placements"] == 0
+    assert result["n"] == 4
+    assert validate(result, CONFIG)["objective"] == 4
 
 
-def test_checker_rejects_bad_word_constraints_and_duplicates():
-    with pytest.raises(ValueError, match="17-character"):
-        validate({"codewords": ["101"]}, CONFIG)
-    with pytest.raises(ValueError, match="weight 5"):
-        validate({"codewords": ["0" * 17]}, CONFIG)
-    duplicate = _word({0, 1, 2, 3, 4})
-    with pytest.raises(ValueError, match="distinct"):
-        validate({"codewords": [duplicate, duplicate]}, CONFIG)
-    near = _word({0, 1, 2, 3, 5})
-    far = _word({0, 1, 2, 3, 4})
-    with pytest.raises(ValueError, match="distance at least 4"):
-        validate({"codewords": [near, far]}, CONFIG)
-    with pytest.raises(ValueError, match="configuration must fix"):
-        validate({"codewords": []}, {"id": "T067-C01", "parameters": {**PARAMETERS, "length": 18}})
+def test_pinned_certificate_matches_upstream_checksum():
+    checksum_path = ROOT / "data" / "chen_zhu_long_SHA256SUMS"
+    checksum_lines = checksum_path.read_text().splitlines()
+    expected = next(line.split()[0] for line in checksum_lines if line.endswith(" certificate.col"))
+    certificate_path = ROOT / "data" / "chen_zhu_long_537_certificate.col"
+    actual = hashlib.sha256(certificate_path.read_bytes()).hexdigest()
+    assert actual == expected
+    manifest = json.loads((ROOT / "data/source_hashes.json").read_text())
+    public_source = manifest["arxiv_2610_31362_v1"]
+    assert public_source["repository_commit"] == "92a9d5f1336a5a064b2bfe6597d967f59191e365"
+    assert public_source["certificate_sha256"] == actual
+    checksum_digest = hashlib.sha256(checksum_path.read_bytes()).hexdigest()
+    assert public_source["checksum_file_sha256"] == checksum_digest
 
 
-def test_checker_rejects_non_string_numeric_and_malformed_inputs():
-    for invalid in (True, 3, 1.0, float("nan"), float("inf"), None, [0, 1]):
-        with pytest.raises(ValueError):
-            validate({"codewords": [invalid]}, CONFIG)
-    with pytest.raises(ValueError, match="solution must be an object"):
-        validate([_word({0, 1, 2, 3, 4})], CONFIG)
-    with pytest.raises(ValueError, match="codewords must be"):
-        validate({"codewords": "10101"}, CONFIG)
+def test_saved_human_transcription_hash():
+    manifest = json.loads((ROOT / "data/source_hashes.json").read_text())
+    human_source = manifest["fredricksen_sweet_2000"]
+    witness = ROOT / "data/fredricksen_sweet_536_halfsets.json"
+    actual = hashlib.sha256(witness.read_bytes()).hexdigest()
+    assert actual == human_source["transcribed_witness_sha256"]
 
 
-def test_claimed_scores_do_not_change_recomputed_result():
-    from tasks.t067.init_program import run_code
+def test_runner_reports_candidate_error_and_generation_timeout(monkeypatch, tmp_path):
+    import mathbench.evaluate as runner
 
-    valid = run_code()
-    result = validate(valid, CONFIG)
-    for key, value in (("objective", 999), ("score", float("nan")),
-                       ("claimed_score", {"forged": True})):
-        assert validate({**valid, key: value}, CONFIG) == result
+    monkeypatch.setattr(runner, "load_config", lambda task_id, config_id=None: {
+        "id": "T067-C01",
+        "direction": "maximize",
+        "human_reference": 536,
+        "parameters": {"colors": 6, "color_limit": "at most"},
+    })
+    monkeypatch.setattr(runner, "task_path", lambda task_id: ROOT)
 
+    error_program = tmp_path / "error_candidate.py"
+    error_program.write_text("def run_code():\n    raise RuntimeError('expected candidate failure')\n")
+    failed = runner.evaluate_candidate("T067", error_program, "T067-C01", strict=True)
+    assert failed["validity"] == 0
+    assert failed["failed_phase"] == "generation"
+    assert failed["error_category"] == "program_error"
 
-def test_sota_record_separates_verified_444_from_optimality_claim():
-    metadata = json.loads((ROOT / "data/bestknown.json").read_text())
-    item = metadata["configurations"]["T067-C01"]
-    assert item["public_value"] == item["reproduced_value"] == 444
-    assert item["best_human"]["value"] == 444
-    assert item["best_public"]["value"] == 444
-    assert item["optimality_status"]["status"].startswith("open")
-    assert metadata["configurations"]["T067-C01"]["frozen_human_baseline"]["value"] == 444
-
-
-def test_runner_error_and_timeout_controls():
-    from mathbench.evaluate import _run
-
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T067 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T067 worker failure')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
+    timeout_program = tmp_path / "timeout_candidate.py"
+    timeout_program.write_text(
+        "import time\ndef run_code():\n    time.sleep(5)\n    return {'n': 1, 'colors': [0]}\n"
+    )
+    timed_out = runner.evaluate_candidate(
+        "T067", timeout_program, "T067-C01", strict=True, generation_timeout=0.5
+    )
+    assert timed_out["validity"] == 0
+    assert timed_out["failed_phase"] == "generation"
+    assert timed_out["error_category"] == "generation_timeout"

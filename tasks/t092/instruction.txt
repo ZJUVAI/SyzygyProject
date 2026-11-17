@@ -1,1 +1,10 @@
-Task T092-C01: maximize J=(M4/M2^2)^(1/4) over nonzero real homogeneous harmonic polynomials P(x,y,z) of degree 20, restricted to the unit sphere S2. M2 and M4 are uniform probability-surface averages of |P|^2 and |P|^4. Return JSON {"coefficients":[231 exact rational values]} in the monomial order listed in README.md. Rational coefficients are the formal dense domain. Use integer or rational strings; no size cap applies. Do not submit zero or a non-harmonic polynomial. The evaluator checks the Laplacian and computes both moments exactly, then returns a conservative certified lower bound for J. Begin from the self-contained zonal Legendre seed in init_program.py. Search must not read human, reference, or best assets. Do not claim global optimality from a local result.
+Find an integer polynomial P(x) of exact degree 100 that minimizes its Mahler measure
+M(P) = |a_100| times the product over its complex roots z of max(1, |z|).
+
+The polynomial must be primitive, irreducible over Q, and non-cyclotomic. Coefficients need not be monic, reciprocal, or sparse. Return JSON with:
+- coefficients_ascending: 101 integers, from constant through leading coefficient;
+- root_disks: 100 disjoint disks with rational center_real, center_imag, and positive rational radius strings.
+
+The evaluator independently proves irreducibility, validates every disk with exact rational Rouché bounds, proves the disks are disjoint, and computes a conservative interval for the full Mahler measure. Floating-point roots may help propose disks but cannot establish validity or the score. The required relative interval width is at most 1e-10. Do not provide or rely on a claimed objective value.
+
+The configuration is fixed at degree 100. Begin with the simple standalone seed in init_program.py. Do not read the human or public reference files. The generation budget is 300 seconds; verification has a separate 60-second budget, 4 GiB memory, and one computational thread. Output only the construction data needed by the checker, plus optional search metadata.

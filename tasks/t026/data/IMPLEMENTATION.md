@@ -1,36 +1,47 @@
-# T026 implementation record
+# T026 implementation and source review
 
-Status: **accepted by Sol on 2026-11-06**.
+Status: **已通过 Sol 验收（2026-11-06）** (`accepted_by_sol`).
 
-## Reproduced constructions
+## Configuration and exact checks
 
-- `human.py` rebuilds Fredricksen and Sweet's same-parameter 536 coloring from the six representative lists in `data/fredricksen_sweet_536_halfsets.json`. The task checker confirms every number from 1 to 536 appears once and checks the ordinary Schur condition, including equal addends. Recomputed objective: 536.
-- `reference.py` decodes the 537-color certificate at the pinned GitHub commit in `source_hashes.json`. The downloaded certificate digest matches the upstream `SHA256SUMS`; the task checker recomputes objective 537.
-- The 537 paper says the partitions were found by search. It does not report whether AI or LLM tools were used. The record leaves this provenance undisclosed.
-- The source does not prove `S(6)=537` or that 538 cannot be colored. The task objective is a feasible lower bound only.
+- Configuration: `T026-C01`, official instance `ortho_40_56a6f463`, a simple orthogonal polygon with 40 boundary vertices and no added constraints.
+- Objective: minimize the number of added Steiner points in the rational-coordinate version of the instance. Coordinates are arbitrary-precision integers/rationals; finite JSON floats are converted to their exact binary rational values. There is no denominator-bit or coordinate-string-length limit beyond the shared runner's 16 MiB output, 4 GiB memory, and 60 second verification limits. The checker caps Steiner points at 2,000; because the public feasible upper bound is 19, any improvement uses at most 18 points and is not excluded by this cap. The original geometry problem permits real coordinates; this task profile does not claim to represent every real-coordinate construction.
+- The exact checker validates each point, edge, boundary interval and face. It checks non-crossing, containment, graph connectivity, coverage of all 40 boundary segments, one outer face, triangular bounded faces, nonnegative angle dot products, and exact equality of total triangle area and polygon area.
+- Public witness: 19 Steiner points, 59 vertices, 121 edges, 63 bounded triangles. Both exact doubled areas equal `2711189126024`.
+- Reconstructed traditional baseline: Cartesian grid from all distinct input x/y coordinates, with each interior rectangle split into two right triangles; 129 Steiner points. The code rebuilds it from the public input and does not read comparison witnesses.
+- Fixed-seed evolution run: `data/search/search_seed_0.json`, 129 Steiner points after 20 pattern trials. It ties the grid baseline and does not improve on it.
 
-## Programs and search record
+## Sources checked
 
-- `init_program.py` returns the simple valid coloring `[0,1,1,0]` of `[1,4]`. It does not read task data.
-- `baseline.py` uses sequential greedy placement, randomized choices, six labels, and random restarts. It reads no human or public witness. Seed 0 used 50,000 attempted placements across 820 restarts and returned a valid coloring of length 104. The replay metadata is in `data/baseline_replay.json`.
-- `human.py` and `reference.py` are fixed external comparisons. They are not used by either starting or search program.
+- Official instance `ortho_40_56a6f463`, saved at `data/source/ortho40.instance.json`, SHA-256 `f379e17cc7b4370d092ed37dcb6293dcb01c71d4f4c8e6cc4418c39ce178cad7`.
+- Abrahamsen, Brunck, Conradi, Kolbe, and Nusser, “Computing Non-Obtuse Triangulations with Few Steiner Points,” SoCG 2025, Figure 10. It shows this instance with 19 Steiner points. https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.79/LIPIcs.SoCG.2025.79.html
+- The corresponding software artifact is DOI `10.4230/artifacts.23288`, source repository commit `77920a0e578e5bff13c710f988ec1c52d61dcfd8`. The copied witness SHA-256 is `56bb1631924d9d254a399df25cb2ef0a1d9d18f228395dbefca98940b9151877`.
+- Ahn, Lee, Kang, and Kim, “Incremental Algorithm and Local Search for Minimum Non-Obtuse Triangulations,” SoCG 2025, describes grid-based constructions for orthogonal instances. https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.80/LIPIcs.SoCG.2025.80.html
+- The cited paper and artifact report a construction; they do not prove that 19 is optimal for this instance. No smaller same-instance witness or instance-specific lower-bound proof was found in the reviewed sources as of 2026-11-06. This is a bounded source review, not an exhaustive survey.
+- AI provenance for the winning construction is not stated in the paper or artifact.
 
-## Verification run
+## Programs and isolation
+
+- `init_program.py` is standalone apart from the whitelisted public input file. It imports no task modules and has paired EVOLVE markers.
+- `baseline.py` searches three grid-diagonal patterns with fixed iteration and seed rules. It uses the input file only.
+- `evolution.py` tests 20 seeded grid-diagonal patterns. It imports no human or reference program and reads no comparison witness.
+- `human.py` reconstructs the 129-point grid method from the fixed input. `reference.py` reads only the saved public 19-point construction.
+- `check.py` scales exact rational coordinates to integers by a common denominator, then uses exact orientation, dot-product, planar-face, coverage, and area checks. The checker does not trust candidate score fields.
+
+## Validation
 
 Command:
 
 ```sh
-.venv/bin/python -m pytest tasks/t026/test_task.py -q
+.venv/bin/python -m pytest tasks/t026 -q
 ```
 
-Result: 20 passed in 2.76 seconds. The test suite checks the initial coloring, human and public witnesses, exact score recomputation, ignored score claims, equal and unequal addends, malformed partitions, duplicate members, a missing prefix element, boolean and non-integer values, NaN, infinity, reproducible search metadata, zero-second search budget, the `evolution.py` entry point, pinned upstream and transcription hashes, candidate program errors, and generation timeout handling.
+The tests cover the public and reconstructed witnesses, all five `run_code()` entries, an exported seed with only the public input, deterministic budgets, zero-second cutoff, invalid and arbitrary-length rational coordinates, invalid indices, duplicate points and edges, a missing edge, a crossing edge, wrong instance/configuration, non-finite and forged scores, exact binary-float interpretation, an obtuse triangle, and runner failure and timeout handling through `mathbench.evaluate._run`.
 
-Independent recorded calculations used a separate nested loop over all pairs `x<=y` and checked `x+y<=N` before comparing colors. It found no violations for the human partition (N=536; 143,916 pairs), the pinned public certificate (N=537; 144,453 pairs), or the seeded traditional baseline (N=104; 5,460 pairs). The respective recomputed objectives are 536, 537, and 104. The task checker separately recomputes each value from its color array.
+Command: `.venv/bin/python -m pytest tasks/t026 -q` — **26 passed in 6.56 seconds**.
 
-## Remaining review work
+The key public witness values were independently recomputed with this task checker: 19 Steiner points, 63 triangles, and exact area equality. The human grid and fixed-seed search each return 129 points. The source and witness hashes are checked in the tests.
 
-Sol must independently compare the 536 transcription with the source paper, replay both external constructions, inspect the cold-start program and traditional search, and verify that claimed scores do not affect recomputation. No mathematical optimality claim is made.
+## Unresolved points
 
-## Papers
-
-- [Symmetric Sum-Free Partitions and Lower Bounds for Schur Numbers](https://doi.org/10.37236/1510)
+The exact minimum for this instance is not proved by the reviewed sources. The public 19-point construction is a feasible result only. The checker accepts arbitrary-precision rational coordinates within the shared runtime resources, but it does not certify constructions requiring non-rational coordinates. The reconstructed grid baseline is intentionally weak.

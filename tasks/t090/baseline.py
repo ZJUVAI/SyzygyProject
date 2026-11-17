@@ -1,51 +1,78 @@
-"""Fixed-restart simulated annealing with exact periodic energy updates."""
+"""Greedy prime transfers from the simple 1*2*...*N initial factorization."""
 
-import math
 import os
 import random
 import time
 
-from tasks.t090.check import CONFIG_ID
-from tasks.t090.heuristics import anneal, energy, correlations
+from tasks.t090.check import PARAMETERS, validate
+from tasks.t090.init_program import N, run_code as initial_run
+
+
+def _spf(limit):
+    result = [0] * (limit + 1)
+    primes = []
+    for value in range(2, limit + 1):
+        if result[value] == 0:
+            result[value] = value
+            primes.append(value)
+        for prime in primes:
+            multiple = value * prime
+            if multiple > limit or prime > result[value]:
+                break
+            result[multiple] = prime
+    return result
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T090-C01") != "T090-C01":
+        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T090_SEARCH_TRIALS", "4"))
-    steps = int(os.environ.get("T090_ANNEAL_STEPS", "5000"))
-    if trials < 0 or steps < 0:
-        raise ValueError("search counts must be nonnegative")
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds is not None:
-        duration = float(seconds)
-        if not math.isfinite(duration) or duration <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + duration
+    iterations = max(1, min(10000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "64"))))
+    from mathbench.search import search_steps
+
+    start = time.monotonic()
+    factors = list(initial_run()["factors"])
+    spf = _spf(N)
     rng = random.Random(seed)
-    best = [1] * 64
-    best_energy = energy(correlations(best))
-    completed = 0
-    for _ in range(trials):
-        if deadline is not None and time.monotonic() >= deadline:
+    accepted = 0
+    iterations_run = 0
+    for _ in search_steps(iterations):
+        floor_value = min(factors)
+        receiver = next(i for i, value in enumerate(factors) if value == floor_value)
+        for _attempt in range(256):
+            donor = rng.randrange(1, N)
+            if donor == receiver:
+                continue
+            value = factors[donor]
+            if value <= 1 or value > N:
+                continue
+            prime = spf[value]
+            remainder = value // prime
+            if remainder < floor_value:
+                continue
+            factors[receiver] *= prime
+            factors[donor] = remainder
+            accepted += 1
             break
-        start = [rng.choice((-1, 1)) for _ in range(64)]
-        candidate, candidate_energy = anneal(start, rng, steps=steps)
-        completed += 1
-        if candidate_energy < best_energy:
-            best, best_energy = candidate, candidate_energy
+        iterations_run += 1
+    checked = validate({"factors": factors}, {"parameters": PARAMETERS})
     return {
-        "sequence": best,
+        "factors": factors,
         "search_metadata": {
-            "algorithm": "seeded multistart single-spin simulated annealing with exact correlation deltas and one-bit descent",
+            "algorithm": "seeded greedy transfer of one prime from a donor factor to a smallest factor; exact product preserved by each transfer",
             "seed": seed,
-            "trial_limit": trials,
-            "steps_per_trial": steps,
-            "trials_completed": completed,
-            "reference_data_read": False,
-            "time_cutoff_enabled": deadline is not None,
+            "initial_objective": 1,
+            "iterations_requested": iterations,
+            "iterations_run": iterations_run,
+            "accepted_transfers": accepted,
+            "objective_recomputed": checked["objective"],
+            "generation_seconds": time.monotonic() - start,
+            "budget": {"mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
+                       "runner_generation_seconds": 300},
         },
     }
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

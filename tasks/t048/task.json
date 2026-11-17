@@ -1,53 +1,58 @@
 {
   "task_id": "T048",
-  "name": "Minimum size of an n-input sorting network",
+  "name": "Maximum binary constant-weight code A(17,4,5)",
   "acceptance_status": "accepted_by_sol",
-  "category": "sorting_networks",
-  "definition": "For a fixed number of input wires, minimize the number of compare-exchange elements in a network that sorts every input sequence. Layer count is secondary.",
-  "solution_format": "An object with comparators, an ordered list of two-element lists [left_wire, right_wire] using zero-based wire indices from 0 to inputs-1.",
+  "category": "coding_theory",
+  "definition": "Find the largest set of binary words of length 17, each of Hamming weight 5, with pairwise Hamming distance at least 4.",
+  "solution_format": "An object with codewords, a list of distinct 17-character binary strings.",
   "objective": {
-    "name": "comparator_count",
-    "unit": "compare-exchange elements",
-    "direction": "minimize"
+    "name": "codeword_count",
+    "unit": "codewords",
+    "direction": "maximize"
   },
   "constraints": [
-    "Each comparator uses two distinct wire indices from 0 through inputs-1, with left_wire less than right_wire.",
-    "Comparators execute in listed order. Comparators on disjoint wires can run in parallel.",
-    "The network sorts every input sequence in a totally ordered domain.",
-    "By the zero-one principle, the checker exhaustively tests all 2^inputs binary input sequences."
+    "Each codeword has length exactly 17.",
+    "Each codeword has Hamming weight exactly 5.",
+    "Codewords are distinct.",
+    "Every unordered pair of codewords has Hamming distance at least 4."
   ],
   "official_configuration": "T048-C01",
   "configurations": [
     {
       "id": "T048-C01",
       "parameters": {
-        "inputs": 17
+        "length": 17,
+        "minimum_hamming_distance": 4,
+        "constant_weight": 5,
+        "objective": "codeword_count"
       },
-      "direction": "minimize",
-      "human_reference": 85,
-      "acceptance_status": "accepted_by_sol"
+      "direction": "maximize",
+      "human_reference": 444
     }
   ],
   "sources": [
-    "https://doi.org/10.1145/1468075.1468121",
-    "https://www.jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf",
-    "https://bertdobbelaere.github.io/sorting_networks.html",
-    "https://github.com/bertdobbelaere/SorterHunter"
+    "https://link.springer.com/article/10.1007/s12095-022-00611-5",
+    "https://link.springer.com/article/10.1007/s12095-023-00638-2",
+    "https://aeb.win.tue.nl/codes/Andw.html"
   ],
-  "verification": "Exact bit-parallel replay of all 2^inputs binary inputs. The zero-one principle certifies the network on every totally ordered input domain.",
+  "verification": "The checker parses exact binary strings, checks length and weight, rejects duplicates, and verifies all unordered pairs with integer XOR bit counts.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "固定17输入比较排序网络，最小化compare-exchange个数；不限制深度，不将已证最优深度10当作本任务目标。",
-      "primary_sources": "亲自核对Dobbelaere当前表及固定SorterHunter提交8ba90df607cbdc339409e0b173b5a2ffd60fc911；重新下载固定原始HTML，与本地快照逐字节一致，SHAfb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6。逐一解析71个比较器，与保存参考一致；该大小匹配Valsalam–Miikkulainen2013传统进化搜索，但网络深度已由17变12，没有声称是2013同一网络。",
-      "human_baseline": "冻结H85来自Batcher1968 odd-even mergesort，补至32线并移除正无穷哨兵比较；实际对17线全输入复核。人类文献71报告与较弱冻结85分开。SorterHunter自动搜索与未知具体AI来源明确记录。",
-      "open_status": "当前表size63–71，其中63为2025未发表、未评审的加强；主审记录从已发表结论可推出的60，不将63当作已独立复核数学证书。无最少比较器数71的最优性证明。",
-      "independent_verification": "五个网络逐一独立以uint32字打包131072个二元输入，条件交换位并与按位数应得的排序词比较；与正式检查器逐线巨位向量AND/OR不同。由零一原则可覆盖任意全序输入。",
-      "isolation_repair": "初稿baseline导入human并从85对照开始，已退回；当前baseline与evolution均只从136简单程序开始，不读human/reference/data/reference，静态依赖检查通过。初始136、传统136、人类85、参考71、演化126。",
-      "controls": "五种程序、空网络破坏、完整声明成绩不变性、严格回放、冷导出及三类运行失败检查通过；任务及共享检查49项通过。",
-      "limits": "未重做2013完整传统搜索或最优性下界SAT证明；131072输入验证的是可行性，不证明比较器个数最少。"
+      "definition": "固定A(17,4,5)，长度17、权5、任意两码字Hamming距至少4，最大化码字数。等价packing D(17,5,4)，因此T092合并重复候选，不再增加任务数。",
+      "primary_source": "Sol亲读Milshtein Springer DOI10.1007/s12095-022-00611-5摘要，明确传统Generic Scuba Search的计算搜索由441改444，在线2022-10-08、卷15(2023)p443–453。Brouwer作者邮件原文件8070字节SHA bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a，Sol重新下载全部444行并逐行比对human输出。2023 correction仅改公式编号和引文，没有改444构造。",
+      "independent_math": "正式checker逐对XOR bit_count。Sol另将码字映成5元子集，核对每个4元子集只出现一次，累计2220个互异4子集，独立证明任意两块交≤3从而距离≥4。另原文件98346对实测最小距4。此对应也证明与组合packing任务等价。",
+      "open_status": "2026-11-06 Brouwer同参444未带最优点号，论文所述上界474与已复现444有缺口。474只记文献报告，未声称本地复现其分类证明或穷尽当前最强上界；Sol独立基本计数界476与其分开。",
+      "controls": "初始1、8重启传统308、60代6种群演化312、人类及参考444。五程序、同权距离2故意破坏、完整声明不变、严格回放、冷导出、程序异常/非有限/超时均通过，任务及共享检查13项通过。",
+      "provenance_and_limits": "来源明确传统随机搜索，未报告生成式AI角色；按历史人类方法记录，不据无披露推定现代AI全未参与。未重跑原scuba发现搜索，未证明444最优。"
     }
   }
 }

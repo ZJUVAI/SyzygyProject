@@ -1,11 +1,18 @@
-# T012 和差问题 I
+# T012: Thomson problem on the sphere
 
-目标是在整数区间 `[-1000000,1000000]` 中选取 2 至 512 个不同整数，最大化 `log(|A+A|/|A|)/log(|A-A|/|A|)`。验证器用整数精确计算和集与差集，并用向外舍入区间给出目标值下界。
+## 中文
 
-已复现的人类参考来自 Martin 与 O'Bryant 对 Pigarev-Freiman 构造的重列：17 元集合的和集大小为 59，差集大小为 55。来源：[arXiv:math/0608131](https://arxiv.org/abs/math/0608131)。同参数的当前最佳可复现公开构造来自 SimpleTES。其 506 元见证的和集大小为 3551，差集大小为 2775。本地精确复算得 1.144886859713313…，与论文四舍五入值 1.144887 一致。见 [bestknown.json](data/bestknown.json) 与 [sota_witness.json](data/sota_witness.json)。Dream-RSI 的论文和项目页另报告 1.145427。其公开代码仓库任务说明及抓取脚本确认它使用相同目标和约束，但没有发布该结果的见证，所以该值尚未复现。
+在单位球面上放置 32 个不同点，最小化所有无序点对的库仑能量 \(E=\sum_{i<j}1/\|x_i-x_j\|_2\)。正式配置 T012-C01 固定 n=32。输入用有理立体投影参数表示；检查器精确构造球面点，并用整数平方根得到每一项的有理能量区间。严格模式不依赖浮点容差。
 
-# T012 Sum-difference I
+人类基线采用 Cambridge Cluster Database 的 32 点 \(I_h\) 构造。数据库列出的能量为 412.2612746，并提供坐标档案。数据库称其为已找到的最低结构；此处不把它说成已证明全局最优。原始坐标以小数存储。`human.py` 将其作为有理数读取，旋转坐标轴后转换为有理立体投影参数，因此球面约束由定义精确满足。转换后复算能量与来源的舍入值会有微小差异。
 
-Choose 2 to 512 distinct integers in `[-1000000,1000000]` to maximize `log(|A+A|/|A|)/log(|A-A|/|A|)`. The verifier computes both sets exactly and uses outward-rounded intervals to report a conservative objective lower bound.
+## English
 
-The reproduced human reference is the 17-element Pigarev-Freiman construction reproduced by Martin and O'Bryant: sumset size 59 and difference-set size 55. Source: [arXiv:math/0608131](https://arxiv.org/abs/math/0608131). The best reproducible public construction found for these parameters is the 506-element SimpleTES witness. It has sumset size 3551 and difference-set size 2775. Exact local recomputation gives 1.144886859713313…, which rounds to the paper's 1.144887. See [bestknown.json](data/bestknown.json) and [sota_witness.json](data/sota_witness.json). Dream-RSI's paper and project page report a higher score, 1.145427. Its code repository's task README and fetch script confirm the same objective and constraints, but the public repositories do not release that witness, so this score is not reproduced.
+Place the configured number of distinct points on the unit sphere and minimize the Coulomb energy \(E=\sum_{i<j}1/\|x_i-x_j\|_2\). T012-C01 uses 32 points. Inputs use rational stereographic parameters. The checker constructs exact sphere points and uses integer square roots to give rational energy bounds for every pair. Strict validation does not use floating-point tolerances.
+
+The existing C01 human baseline uses the 32-point \(I_h\) construction in the Cambridge Cluster Database. The database reports energy 412.2612746 and provides a coordinate archive. It lists this as a lowest structure found; this task does not claim a proof of global optimality. The source coordinates are decimal values. `human.py` reads them as rational numbers, applies a coordinate-axis rotation, and converts them to rational stereographic parameters. The sphere constraint then holds exactly by construction. The reconstructed energy can differ slightly from the rounded source value.
+
+## Sources
+
+- Wales and Ulker, “Structure and Dynamics of Spherical Crystals Characterised for the Thomson Problem,” *Physical Review B* 74, 212101 (2006), linked from the [Cambridge Cluster Database table](https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html).
+- [N=32 coordinate file](https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz), archived as `data/ccd_32.xyz`.

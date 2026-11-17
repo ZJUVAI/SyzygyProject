@@ -33,10 +33,10 @@ def visual(task, w, params, template):
     v = dict(template)
     if task == 'T001':
         v['circles'] = [[*map(number, p), number(w['radius'])] for p in w['centers']]
-    elif task == 'T003':
-        v['circles'] = [[number(c[k]) for k in ('x', 'y', 'r')] for c in w['circles']]
     elif task == 'T002':
-        from tasks.t002.check import corners
+        v['circles'] = [[number(c[k]) for k in ('x', 'y', 'r')] for c in w['circles']]
+    elif task == 'T003':
+        from tasks.t003.check import corners
         def qfloat(q):
             return float(q.a) + float(q.b) * 2**.5
         polygons = [[[qfloat(x), qfloat(y)] for x, y in corners(s)] for s in w['squares']]
@@ -44,25 +44,25 @@ def visual(task, w, params, template):
         ys = [p[1] for s in polygons for p in s]
         side = max(max(xs)-min(xs), max(ys)-min(ys))
         v.update(polygons=polygons, bounds=[min(xs), min(ys), side, side])
-    elif task in ('T004', 'T005'):
+    elif task in ('T011', 'T017'):
         pts = [[number(x) for x in p] for p in w['points']]
         v['points'] = pts
-        if task == 'T004':
+        if task == 'T011':
             v['pair'] = list(min(combinations(range(len(pts)), 2), key=lambda ij: sum((a-b)**2 for a,b in zip(pts[ij[0]],pts[ij[1]]))))
         else:
             def area(ijk):
                 a,b,c = (pts[i] for i in ijk)
                 return abs((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]))
             v['triangle'] = list(min(combinations(range(len(pts)), 3), key=area))
-    elif task == 'T006':
+    elif task == 'T030':
         v.update(vertices=w['vertices'], edges=w['edges'])
-    elif task == 'T007':
+    elif task == 'T058':
         a = sorted(w['marks'])
         v.update(marks=a, matrix=[[abs(x-y) for y in a] for x in a])
-    elif task == 'T008':
+    elif task == 'T053':
         v.update(v=params['v'], t=params['t'], blocks=w['blocks'], matrix=[[int(i in b) for i in range(params['v'])] for b in w['blocks']])
-    elif task in ('T009', 'T010'):
-        if task == 'T009':
+    elif task in ('T046', 'T047'):
+        if task == 'T046':
             rows = w['generator_matrix']
             ints = [sum(x << i for i,x in enumerate(r)) for r in rows]
             words = [0]
@@ -75,31 +75,31 @@ def visual(task, w, params, template):
         for x in words:
             distribution[x.bit_count()] += 1
         v.update(matrix=rows, distribution=distribution)
-    elif task == 'T011':
+    elif task == 'T040':
         rows = w['words']
         v.update(matrix=rows, distribution=[[sum(r[i] == s for r in rows) for s in range(params['q'])] for i in range(len(rows[0]))])
-    elif task == 'T012':
+    elif task == 'T069':
         a = sorted(w['set'])
         v['sets'] = [a, sorted({x+y for x in a for y in a}), sorted({x-y for x in a for y in a})]
-    elif task == 'T013':
+    elif task == 'T073':
         a = w['sequence']
         v.update(sequence=a, correlation=[sum(a[i]*a[i+k] for i in range(len(a)-k)) for k in range(1,len(a))])
-    elif task in ('T014', 'T015', 'T016'):
+    elif task in ('T076', 'T078', 'T077'):
         a = [number(x) for x in w['coefficients']]
         n = len(a)
         a = [x*2*n/sum(a) for x in a]
         conv = [sum(a[i]*a[k-i] for i in range(max(0,k-n+1),min(n-1,k)+1))/(2*n) for k in range(2*n-1)]
         v.update(profile=a, curve=[0,*conv,0])
-    elif task == 'T017':
-        from tasks.t017.check import lag_integral
+    elif task == 'T080':
+        from tasks.t080.check import lag_integral
         a = [Fraction(x) for x in w['heights']]
         v.update(profile=[float(x) for x in a], curve=[0,*[float(lag_integral(a,k)) for k in range(1-len(a),len(a))],0])
-    elif task == 'T018':
+    elif task == 'T085':
         v['matrix'] = w['matrix']
-    elif task == 'T019':
+    elif task == 'T087':
         a = sorted(w['tuple'])
         v.update(exact=list(map(str,a)), positions=[(x-a[0])/(a[-1]-a[0]) for x in a], gap_bits=[(y-x).bit_length() for x,y in zip(a,a[1:])], residues={p:[sum(x%int(p)==r for x in a) for r in range(int(p))] for p in v['residues']})
-    elif task == 'T020':
+    elif task == 'T088':
         a = w['chain']
         deps = [[]]
         for i,x in enumerate(a[1:],1):
@@ -211,8 +211,8 @@ def update(checkout, initial_witnesses=None):
                 if witness_path is None or not resolve_witness_path(witness_path).is_file():
                     raise ValueError(f'{cid}: missing {program} witness')
                 source_assets = {
-                    'T051': folder / 'data/source/sequence_130000.txt.gz',
-                    'T069': folder / 'data/human/monalisa_5757191.tour.gz',
+                    'T083': folder / 'data/source/sequence_130000.txt.gz',
+                    'T096': folder / 'data/human/monalisa_5757191.tour.gz',
                 }
                 if program == 'sota' and witness_path == source_assets.get(tid):
                     reference = importlib.import_module(f'tasks.{tid.lower()}.reference')
@@ -222,7 +222,7 @@ def update(checkout, initial_witnesses=None):
                     raw = read_witness_bytes(witness_path)
                     solution = json.loads(raw)
                 witness = asset_bytes(raw, 'jsonraw')
-                if tid == 'T011' and len(solution['words'][0]) != 3:
+                if tid == 'T040' and len(solution['words'][0]) != 3:
                     projection = grid(solution['words'], 'Independent-set words', '独立集的元组', categorical=True)
                 elif template:
                     projection = visual(tid, solution, params, read(dist/template))

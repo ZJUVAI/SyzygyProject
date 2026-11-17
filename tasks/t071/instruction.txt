@@ -1,1 +1,7 @@
-Construct a large binary single-deletion-correcting code of length 16. Return a JSON object with `codewords`, a list of distinct integers from 0 through 65535. Two different codewords are incompatible if deleting one bit from each can produce the same 15-bit sequence. The evaluator checks all such outputs exactly and maximizes the number of codewords. Do not read the human or reference witness. The initial program is a simple valid one-word code. The public task has fixed length 16 and one deletion. Return only JSON-compatible values from `run_code()`.
+Choose a set U of 2 through 512 distinct nonnegative integers. U must contain 0, and max(U) must be at most 1000000. Define s=|U+U|, d=|U-U|, and q=2 max(U)+1, using all ordered pairs and counting distinct results. Enforce the strict condition d<q. Maximize
+
+    1 + ln(d/s) / ln(q).
+
+The strict inequality d<q is a hypothesis in the cited finite construction lemma. The evaluator recomputes s, d, and q exactly. It then evaluates the objective with outward-rounded interval arithmetic and uses the lower interval endpoint as the conservative maximization score. Candidate score fields are ignored.
+
+Return JSON with a `set` array. Start from the simple valid seed `{0,1,4}`. Do not read human, reference, source, or best-witness files. Use the `run_code()` interface and respect the configured time and memory limits.

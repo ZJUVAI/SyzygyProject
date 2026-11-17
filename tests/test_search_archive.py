@@ -37,4 +37,4 @@ def test_resume_order_covers_every_released_task_once():
     order = resume_order()
     assert len(order) == len(set(order))
     assert set(order) == set(INITIAL_TASKS)
-    assert order[:3] == ('T013', 'T015', 'T018')
+    assert order[:3] == ('T073', 'T078', 'T085')

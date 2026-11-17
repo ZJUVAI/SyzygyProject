@@ -1,102 +1,98 @@
-"""Fixed-budget simulated annealing for configured-length aperiodic PSL."""
-
-import math
+"""Seeded random construction, exact repair, then greedy row deletion."""
 import os
 import random
-import time
-
-from tasks.t054.check import CONFIG_ID, config_length, aperiodic_autocorrelations
-
-def _length():
-    return config_length()
-
-
-def _check_config_id():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != "T054-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-
-
-def _peak(correlations):
-    return max(abs(value) for value in correlations)
-
-
-def _flip(sequence, correlations, position):
-    old = sequence[position]
-    length = len(sequence)
-    deltas = [0] * length
-    for lag in range(1, length):
-        neighbor_sum = 0
-        if position >= lag:
-            neighbor_sum += sequence[position - lag]
-        if position + lag < length:
-            neighbor_sum += sequence[position + lag]
-        deltas[lag] = -2 * old * neighbor_sum
-        correlations[lag - 1] += deltas[lag]
-    sequence[position] = -old
-    return deltas
+from array import array
+from itertools import combinations
+from mathbench.search import search_steps
 
 
 def run_code():
-    _check_config_id()
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    restarts = int(os.environ.get("T054_SEARCH_RESTARTS", "12"))
-    iterations = int(os.environ.get("T054_SEARCH_ITERATIONS", "3000"))
-    if restarts < 0 or iterations < 1:
-        raise ValueError("restarts must be nonnegative and iterations positive")
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds is not None:
-        duration = float(seconds)
-        if not math.isfinite(duration) or duration <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + duration
+    k, t, v = 20, 4, 2
+    width = v ** t
+    cols = list(combinations(range(k), t))
+    projection_count = len(cols)
+    counts = [0] * (projection_count * width)
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    steps = iter(search_steps(100_000))
+    iterations = 0
 
-    rng = random.Random(seed)
-    length = _length()
-    best_sequence = [1] * length
-    best_psl = _peak(aperiodic_autocorrelations(best_sequence))
-    proposals = 0
-    completed_restarts = 0
-    for _ in range(restarts):
-        if deadline is not None and time.monotonic() >= deadline:
+    def charge_step():
+        nonlocal iterations
+        step = next(steps, None)
+        if step is None:
+            return False
+        iterations += 1
+        return True
+
+    def add_row(row):
+        ids = array("I")
+        for ci, c in enumerate(cols):
+            pattern = 0
+            for j in c:
+                pattern = (pattern << 1) | row[j]
+            idx = ci * width + pattern
+            ids.append(idx)
+            counts[idx] += 1
+        return ids
+
+    # A random starting sample. Repeated rows are removed deterministically.
+    rows = []
+    row_ids = []
+    present = set()
+    while len(rows) < 256 and charge_step():
+        row = tuple(rng.randrange(v) for _ in range(k))
+        if row in present:
+            continue
+        present.add(row)
+        rows.append(row)
+        row_ids.append(add_row(row))
+
+    # Repair every uncovered interaction by adding a row that realizes it.
+    missing = {i for i, count in enumerate(counts) if count == 0}
+    while missing and charge_step():
+        target = next(iter(missing))
+        ci, pattern = divmod(target, width)
+        row = [rng.randrange(v) for _ in range(k)]
+        value = pattern
+        for j in reversed(cols[ci]):
+            row[j] = value % v
+            value //= v
+        row = tuple(row)
+        if row in present:
+            # A missing interaction cannot be present in an existing row.
+            raise RuntimeError("repair selected an already present row")
+        present.add(row)
+        rows.append(row)
+        ids = add_row(row)
+        row_ids.append(ids)
+        for idx in ids:
+            if counts[idx] == 1:
+                missing.discard(idx)
+
+    # If an explicit wall-clock cutoff interrupted repair, use the guaranteed
+    # feasible simple construction instead of returning a partial array.
+    if missing:
+        from tasks.t054.init_program import run_code as simple_seed
+        return {**simple_seed(), "search_metadata": {
+            "seed": int(os.environ.get("MATHBENCH_SEED", "0")),
+            "algorithm": "random rows, exact uncovered-pattern repair, greedy deletion",
+            "iterations": iterations, "fallback": "Hamming weight <= 4 seed",
+            "search_limit_steps": 100_000}}
+
+    order = list(range(len(rows)))
+    rng.shuffle(order)
+    alive = bytearray([1]) * len(rows)
+    for ri in order:
+        if not charge_step():
             break
-        sequence = [rng.choice((-1, 1)) for _ in range(length)]
-        correlations = aperiodic_autocorrelations(sequence)
-        current_psl = _peak(correlations)
-        if current_psl < best_psl:
-            best_psl, best_sequence = current_psl, sequence.copy()
-        for step in range(iterations):
-            if deadline is not None and time.monotonic() >= deadline:
-                break
-            position = rng.randrange(length)
-            deltas = _flip(sequence, correlations, position)
-            proposed_psl = _peak(correlations)
-            proposals += 1
-            if proposed_psl <= current_psl:
-                accept = True
-            else:
-                temperature = 1.5 * (1.0 - step / iterations) + 0.05
-                accept = rng.random() < math.exp((current_psl - proposed_psl) / temperature)
-            if accept:
-                current_psl = proposed_psl
-                if current_psl < best_psl:
-                    best_psl, best_sequence = current_psl, sequence.copy()
-            else:
-                sequence[position] = -sequence[position]
-                for lag in range(1, length):
-                    correlations[lag - 1] -= deltas[lag]
-        completed_restarts += 1
-
-    return {
-        "sequence": best_sequence,
-        "search": {
-            "algorithm": "single-bit-flip simulated annealing using exact integer autocorrelations",
-            "seed": seed,
-            "restart_limit": restarts,
-            "restarts_completed": completed_restarts,
-            "iterations_per_restart": iterations,
-            "proposals": proposals,
-            "reference_data_read": False,
-        },
-    }
+        ids = row_ids[ri]
+        if all(counts[idx] > 1 for idx in ids):
+            alive[ri] = 0
+            for idx in ids:
+                counts[idx] -= 1
+    output_rows = [[int(x) for x in row] for i, row in enumerate(rows) if alive[i]]
+    return {"array": output_rows, "search_metadata": {
+        "seed": int(os.environ.get("MATHBENCH_SEED", "0")),
+        "algorithm": "256 random rows, exact uncovered-pattern repair, seeded greedy row deletion",
+        "iterations": iterations, "search_limit_steps": 100_000,
+        "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS")}}

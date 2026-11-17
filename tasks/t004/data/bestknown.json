@@ -1,57 +1,183 @@
 {
   "task_id": "T004",
-  "review_status": "passed_sol",
+  "survey_date": "2026-11-06",
+  "configuration_id": "T004-C01",
+  "parameter_match": {
+    "square_count": 17,
+    "container": "unit square",
+    "rotations": "unrestricted",
+    "side_lengths": "positive and variable",
+    "objective": "maximize the sum of side lengths"
+  },
+  "sources": [
+    {
+      "title": "Sprite143, erdos-106-counterexample",
+      "url": "https://github.com/Sprite143/erdos-106-counterexample",
+      "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+      "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+      "reported_closed_form_value": "2190452873/547596200",
+      "reported_search_certificate_value": "2000062156200269/500000000000000",
+      "ai_provenance": "ProbXiv record dated 2026-08-17 says Claude Opus 5 discovered the packing with human-led search infrastructure. The GitHub repository says it has not been checked by a human referee.",
+      "reproduction": "The pinned construct.py is archived. Its closed-form output was converted to exact rational square data and checked independently by tasks/t004/check.py.",
+      "status": "feasible lower-bound candidate, exact task-local reproduction, not an optimum proof"
+    },
+    {
+      "title": "ProbXiv, Erdős Problem #106",
+      "url": "https://probxiv.com/problems/erdos-106",
+      "version": "record checked 2026-11-06; added 2026-08-17",
+      "scope": "AI and machine-review provenance for the same n=17 construction",
+      "status": "record says no person has examined the submission. It reports a machine-checked Lean formalization and warns that this does not establish that the formalization matches the webpage claim."
+    },
+    {
+      "title": "DeepMind, Mathematical exploration and discovery at scale, Section 6.35",
+      "url": "https://arxiv.org/abs/2511.02864v1",
+      "version": "v1, 2025-11",
+      "result": "AlphaEvolve reports a search result of 4 for n=17. This is not an upper bound and does not match the later public construction.",
+      "status": "AI search result; no optimality claim"
+    },
+    {
+      "title": "Baek, Koizumi, and Ueoro, A note on the Erdős conjecture about square packing",
+      "url": "https://arxiv.org/abs/2411.07274",
+      "version": "arXiv v1, 2024-11-11",
+      "scope": "axis-parallel square packings only",
+      "status": "not an upper bound for unrestricted rotations"
+    },
+    {
+      "title": "Erdős and Graham, On packing squares with equal squares",
+      "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+      "version": "Journal of Combinatorial Theory A 19 (1975), 119–123",
+      "scope": "historical source for equal-square grid methods; the task's exact 17-square witness is reconstructed and not attributed to the paper"
+    }
+  ],
+  "bounds": {
+    "lower_bound": "2190452873/547596200",
+    "upper_bound": "sqrt(17)",
+    "upper_bound_derivation": "The squares have pairwise disjoint interiors in area 1, so the sum of squared side lengths is at most 1. Cauchy–Schwarz gives (sum side)^2 <= 17 * sum(side^2) <= 17.",
+    "status": "No matching upper bound located in the checked sources. The public witness is a feasible lower bound, not an optimum proof."
+  },
+  "frozen_comparison": {
+    "human_reference": "4",
+    "type": "same-parameter human-method reconstruction",
+    "compatibility_score": "raw objective / 4",
+    "limitation": "A score above 1 exceeds the frozen grid baseline only; it does not establish global optimality."
+  },
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T004-C01": {
-      "public_value": "0.9118367215995329533405163091901914357833",
-      "unit": "radians",
-      "public_metric": "minimum-angle cosine, as reported by the source",
-      "source_cosine": "0.612294616483",
-      "public_source": {
-        "url": "https://spherical-codes.org/",
-        "coordinates_url": "https://spherical-codes.org/data/3/16",
-        "title": "Table of spherical codes, dimension 3, 16 points",
-        "reported_metric": "cosine of minimum angle",
-        "reported_value": "0.612294616483",
-        "reported_decimal_places": 12,
-        "source_status": "unstarred numerical construction; no global optimality claim"
+      "program": "reference.py",
+      "reproduced_value": "2190452873/547596200",
+      "public_value": "2190452873/547596200",
+      "highest_reported": {
+        "value": "2190452873/547596200",
+        "source": {
+          "value": {
+            "T004-C01": "2190452873/547596200"
+          },
+          "date_checked": "2026-11-06",
+          "parameters": {
+            "square_count": 17,
+            "container": "closed unit square [0,1]^2",
+            "orientation": "arbitrary",
+            "objective": "sum of side lengths"
+          },
+          "url": "https://github.com/Sprite143/erdos-106-counterexample",
+          "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+          "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+          "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+          "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+          "witness_file": "data/public_witness.json",
+          "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+        },
+        "reproduction_status": "Exact rational witness reproduced; independent Sol admission pending."
       },
-      "reproduced_value": "0.9118367215999157",
-      "program": "sota.py",
-      "witness": "data/spherical_code_3_16.txt",
-      "matches_public_best": true,
-      "comparison_tolerance": "Source rounding mode is not stated. The archived coordinate witness is compatible with upward quantization of its cosine to 12 decimal places: the certified angle interval lies inside [0.91183672159953295334051630919019144, 0.91183672160079776797613397779950286], the arccos image of [0.612294616482, 0.612294616483].",
-      "limitations": [
-        "The public_value is the angle derived from the table's displayed cosine; reproduced_value is the checker interval lower bound. The source does not state its rounding rule.",
-        "The source coordinates match the archived witness. Their checker-certified interval is consistent with the displayed cosine being rounded upward to 12 decimal places.",
-        "The table lists a numerical construction and does not prove global optimality.",
-        "This comparison covers the cited source table, not every public source."
-      ],
-      "checked_at": "2026-11-05",
+      "human_reference": 4,
+      "best_human": {
+        "value": {
+          "T004-C01": "4"
+        },
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "square_count": 17,
+          "container": "closed unit square [0,1]^2",
+          "orientation": "arbitrary",
+          "objective": "sum of side lengths"
+        },
+        "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+        "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
+        "origin_type": "human mathematical construction, reconstructed for this task",
+        "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
+        "witness_file": "data/human_grid_witness.json",
+        "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
+      },
+      "best_public": {
+        "value": {
+          "T004-C01": "2190452873/547596200"
+        },
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "square_count": 17,
+          "container": "closed unit square [0,1]^2",
+          "orientation": "arbitrary",
+          "objective": "sum of side lengths"
+        },
+        "url": "https://github.com/Sprite143/erdos-106-counterexample",
+        "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+        "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+        "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+        "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+        "witness_file": "data/public_witness.json",
+        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+      },
+      "best_reproduced": {
+        "value": {
+          "T004-C01": "2190452873/547596200"
+        },
+        "date_reproduced": "2026-11-06",
+        "witness_file": "data/public_witness.json",
+        "source_files": [
+          "data/source/public_construct.py",
+          "data/source/CERTIFICATE_n17.json",
+          "data/source/repository.tar.gz"
+        ],
+        "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+        "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
+        "original_search_certificate_value": "2000062156200269/500000000000000",
+        "actual_value": {
+          "T004-C01": "2190452873/547596200"
+        },
+        "verification_status": "exact",
+        "pairs_checked": 136,
+        "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
+        "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
+        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe",
+        "review_status": "reviewed_by_sol"
+      },
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T004",
-        "status": "conservative_reproduction",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T004",
           "config_id": "T004-C01",
           "validity": 1.0,
-          "combined_score": 0.9999999999999991,
-          "objective": 0.9118367215999157,
-          "verification_status": "certified",
-          "generation_time": 0.2659095749258995,
-          "verification_time": 0.36613424494862556,
-          "objective_value": 0.9118367215999157,
+          "combined_score": 1.0000310781009802,
+          "objective": "2190452873/547596200",
+          "verification_status": "exact",
+          "generation_time": 0.790732491761446,
+          "verification_time": 0.6489687003195286,
+          "objective_value": "2190452873/547596200",
           "details": {
-            "n": 16,
-            "pairs_checked": 120,
-            "objective_name": "minimum_pairwise_angular_separation_radians",
-            "angle_interval": [
-              0.9118367215999157,
-              0.9118367215999172
-            ],
-            "directions_normalized_for_scoring": true
+            "square_count": 17,
+            "pairs_checked": 136,
+            "corners_checked": 68,
+            "objective_name": "sum_of_side_lengths",
+            "touching_allowed": true,
+            "arithmetic": "exact rational arithmetic",
+            "claimed_objective_ignored": true,
+            "strict": true
           },
-          "eval_time": 0.6392436847090721,
+          "eval_time": 1.4518382884562016,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -61,89 +187,155 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t004/data/spherical_code_3_16.txt",
         "independent_quantity": {
-          "minimum_angle_80_digits": "0.91183672159991657867556495135875727370020389094972398810269001155207616906690925"
+          "sum_sides": "2190452873/547596200",
+          "clipped_pairs": 136
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "source_review": "Sol checked the Henry Cohn table and same-parameter source coordinate provenance. All pairs were independently computed at 80 decimal digits. Show the certified interval lower endpoint; source cosines have limited printed precision, so derived public angles are separate and no new-record claim is made.",
-        "snapshot_date": "2026-11-05"
-      }
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "36de013556d4f81ed0d59b099be71a1dd3578702ee1cba8dd6c2301087a1e453"
+      },
+      "other_public_results": [
+        {
+          "value": {
+            "T004-C01": "4"
+          },
+          "source": "https://arxiv.org/abs/2511.02864",
+          "source_version": "v1, 2025-11, section 6.35",
+          "provenance": "AlphaEvolve search result. The paper says its run matched the known value 4 for n=17; this is a search result, not an upper-bound proof.",
+          "origin_type": "AI-assisted search",
+          "same_parameters": true,
+          "evidence_state": "reported in the paper; below the pinned exact rational construction"
+        }
+      ],
+      "survey_scope_note": "The best-public label is limited to the sources listed in tasks/t004/data/bestknown.json and checked on 2026-11-06; this is not a complete literature survey.",
+      "parameters": {
+        "square_count": 17,
+        "container": "closed unit square [0,1]^2",
+        "orientation": "arbitrary",
+        "interior_disjoint": true,
+        "objective": "sum of the 17 side lengths"
+      },
+      "acceptance_status": "pending_sol_review",
+      "public_lower_bound": "2190452873/547596200",
+      "optimality_status": "open; no matching upper bound located",
+      "generic_upper_bound": "sqrt(17)",
+      "limitations": [
+        "The public construction is AI-assisted and has not had human referee review, according to the checked public record.",
+        "The checker accepts exact rational inputs. Rational unit directions are dense, and strict shrinking followed by rational perturbation preserves the unrestricted supremum.",
+        "The public witness proves a lower bound only. It does not establish the optimum."
+      ]
     }
   },
-  "sol_review": {
-    "T004-C01": {
-      "status": "conservative_reproduction",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    }
-  },
+  "survey_cutoff": "2026-11-06",
   "best_human": {
     "value": {
-      "T004-C01": 0.9118367215999165
+      "T004-C01": "4"
     },
-    "date_checked": "2026-11-04",
+    "date_checked": "2026-11-06",
     "parameters": {
-      "n": 16,
-      "space": "S2",
-      "objective": "minimum pairwise angle in radians"
+      "square_count": 17,
+      "container": "closed unit square [0,1]^2",
+      "orientation": "arbitrary",
+      "objective": "sum of side lengths"
     },
-    "url": "https://spherical-codes.org/",
-    "provenance": "The human reference is the 16-point coordinate file linked by the spherical-codes.org table. The N=16 table row cites K. Schütte and B. L. van der Waerden (1951). Henry Cohn maintains the table and is not identified here as the construction's original author. The construction's maximum normalized pair cosine was independently recomputed from the downloaded coordinates.",
-    "evidence_state": "coordinate file archived and all 120 angles independently recomputed with interval-certified score"
+    "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
+    "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
+    "origin_type": "human mathematical construction, reconstructed for this task",
+    "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
+    "witness_file": "data/human_grid_witness.json",
+    "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
   },
   "best_public": {
     "value": {
-      "T004-C01": 0.9118367215999165
+      "T004-C01": "2190452873/547596200"
     },
-    "date_checked": "2026-11-04",
+    "date_checked": "2026-11-06",
     "parameters": {
-      "n": 16,
-      "space": "S2",
-      "reported_cosine": 0.612294616483
+      "square_count": 17,
+      "container": "closed unit square [0,1]^2",
+      "orientation": "arbitrary",
+      "objective": "sum of side lengths"
     },
-    "url": "https://spherical-codes.org/",
-    "provenance": "The public table reports a minimum-angle cosine of 0.612294616483 for N=16. Its coordinate witness was downloaded and independently recomputed. No global-optimality claim is made.",
-    "evidence_state": "public construction reported; coordinate witness independently reproduced",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
+    "url": "https://github.com/Sprite143/erdos-106-counterexample",
+    "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
+    "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
+    "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
+    "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
+    "witness_file": "data/public_witness.json",
+    "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
   },
   "best_reproduced": {
     "value": {
-      "T004-C01": 0.9118367215999165
+      "T004-C01": "2190452873/547596200"
     },
-    "date_reproduced": "2026-11-04",
-    "parameters": {
-      "n": 16,
-      "space": "S2",
-      "score": "minimum pairwise angular separation in radians"
-    },
-    "witness_file": "data/spherical_code_3_16.txt",
-    "provenance": "Recomputed from the public N=16 coordinates linked by spherical-codes.org. All 120 unordered pair comparisons were checked.",
-    "ai_provenance": "No AI-generated coordinates. The coordinate file was downloaded and its score recomputed for this task package.",
+    "date_reproduced": "2026-11-06",
+    "witness_file": "data/public_witness.json",
+    "source_files": [
+      "data/source/public_construct.py",
+      "data/source/CERTIFICATE_n17.json",
+      "data/source/repository.tar.gz"
+    ],
+    "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
+    "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
+    "original_search_certificate_value": "2000062156200269/500000000000000",
     "actual_value": {
-      "T004-C01": 0.9118367215999165
+      "T004-C01": "2190452873/547596200"
     },
-    "evidence_state": "all vectors nonzero and directions distinct; strict checker returns a conservative angle interval"
+    "verification_status": "exact",
+    "pairs_checked": 136,
+    "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
+    "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
+    "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
   },
-  "historical_configuration": {
-    "id": "T004-C01",
-    "parameters": {
-      "n": 15,
-      "space": "S2"
-    },
-    "status": "replaced",
-    "reason": "The research audit found a 2026 optimality proof for the 15-point case. The benchmark uses 16 points.",
-    "historical_reported_cosine": 0.592605902925,
-    "historical_witness_sha256": "1b77ee43d73613885d3fdcfb03dc8fad2e40302ff9c9ff639559cc9b326fb805"
+  "other_public_results": [
+    {
+      "value": {
+        "T004-C01": "4"
+      },
+      "source": "https://arxiv.org/abs/2511.02864",
+      "source_version": "v1, 2025-11, section 6.35",
+      "provenance": "AlphaEvolve search result. The paper says its run matched the known value 4 for n=17; this is a search result, not an upper-bound proof.",
+      "origin_type": "AI-assisted search",
+      "same_parameters": true,
+      "evidence_state": "reported in the paper; below the pinned exact rational construction"
+    }
+  ],
+  "configuration_records": {
+    "T004-C01": {
+      "parameters": {
+        "square_count": 17,
+        "container": "closed unit square [0,1]^2",
+        "orientation": "arbitrary",
+        "interior_disjoint": true,
+        "objective": "sum of the 17 side lengths"
+      },
+      "acceptance_status": "pending_sol_review",
+      "human_reference": "4",
+      "public_lower_bound": "2190452873/547596200",
+      "optimality_status": "open; no matching upper bound located",
+      "generic_upper_bound": "sqrt(17)",
+      "limitations": [
+        "The public construction is AI-assisted and has not had human referee review, according to the checked public record.",
+        "The checker accepts exact rational inputs. Rational unit directions are dense, and strict shrinking followed by rational perturbation preserves the unrestricted supremum.",
+        "The public witness proves a lower bound only. It does not establish the optimum."
+      ]
+    }
   },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula",
-  "configuration_records": {}
+  "survey_scope_note": "The best-public label is limited to the sources listed in tasks/t004/data/bestknown.json and checked on 2026-11-06; this is not a complete literature survey.",
+  "additional_evidence": {
+    "configurations": {
+      "T004-C01": {
+        "human_reference": "4",
+        "review_status": "pending_sol_review"
+      }
+    }
+  }
 }

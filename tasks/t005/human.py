@@ -1,6 +1,17 @@
-"""Replay the published exact-coordinate human witness for T005-C01."""
+"""Reconstruct Friedman's published n=4 pinwheel construction."""
+import os
 
-SOLUTION = {"points": [["1/3","0"],["2/3","0"],["0","2/9"],["1","2/9"],["1/3","4/9"],["2/3","4/9"],["0","2/3"],["1","2/3"],["1/2","7/9"],["1/6","1"],["5/6","1"]]}
 
 def run_code():
-    return SOLUTION
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T005-C01") != "T005-C01":
+        raise ValueError("unsupported configuration")
+    # A coordinate is [a,b] and denotes a+b*sqrt(3).
+    return {
+        "side": ["1", "1/3"],
+        "triangles": [
+            {"anchor": [["0", "0"], ["1", "0"]], "direction": ["0", "-1"]},
+            {"anchor": [["0", "1/3"], ["0", "0"]], "direction": ["1", "0"]},
+            {"anchor": [["1", "1/3"], ["0", "1/3"]], "direction": ["0", "1"]},
+            {"anchor": [["1", "0"], ["1", "1/3"]], "direction": ["-1", "0"]},
+        ],
+    }

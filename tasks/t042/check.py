@@ -1,59 +1,60 @@
-"""Exact checker for 3-AP-free subsets of the fixed universe [1, 212]."""
+"""Exact checks for the fixed Gset G70 maximum-cut instance."""
 
-from collections.abc import Mapping, Set
-from typing import Any
-
-
-CONFIG_ID = "T042-C01"
-N = 212
+import json
+import hashlib
+import gzip
+from pathlib import Path
 
 
-def _is_integer(value: Any) -> bool:
-    return isinstance(value, int) and not isinstance(value, bool)
+_SOURCE_PATH = Path(__file__).parent / "data" / "source" / "G70.gz"
+_SOURCE_BYTES = _SOURCE_PATH.read_bytes()
+_GRAPH_BYTES = gzip.decompress(_SOURCE_BYTES)
+_SOURCE_SHA256 = "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
+_COMPRESSED_SHA256 = "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b"
+_NORMALIZED_SHA256 = "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085"
+_SOURCE_LINES = _GRAPH_BYTES.decode("ascii").splitlines()
+_SOURCE_HEADER = [int(value) for value in _SOURCE_LINES[0].split()]
+_N, _M = _SOURCE_HEADER
+_EDGES = [[int(value) - 1 for value in line.split()[:2]] +
+          [int(line.split()[2])] for line in _SOURCE_LINES[1:]]
+_INSTANCE = {"instance_id": "Gset-G70", "n": _N, "m": _M,
+             "edges": _EDGES, "source_sha256": _SOURCE_SHA256}
+_NORMALIZED = json.dumps(
+    {key: _INSTANCE[key] for key in ("instance_id", "n", "m", "edges")},
+    separators=(",", ":"), ensure_ascii=True).encode()
+if (hashlib.sha256(_SOURCE_BYTES).hexdigest() != _COMPRESSED_SHA256
+        or hashlib.sha256(_GRAPH_BYTES).hexdigest() != _SOURCE_SHA256
+        or hashlib.sha256(_NORMALIZED).hexdigest() != _NORMALIZED_SHA256
+        or (_N, _M) != (10000, 9999)
+        or any(weight != 1 for _, _, weight in _EDGES)):
+    raise RuntimeError("pinned Gset graph input hash mismatch")
+_PARAMETERS = {
+    "instance": _INSTANCE["instance_id"],
+    "n": _N,
+    "m": _INSTANCE["m"],
+    "weights": "all +1",
+    "graph_sha256": _SOURCE_SHA256,
+    "normalized_graph_sha256": _NORMALIZED_SHA256,
+}
 
 
-def validate(solution: Any, config: Mapping[str, Any], strict: bool = False) -> dict[str, Any]:
-    """Check every possible midpoint pair in the submitted finite set."""
-    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
-        raise ValueError("unsupported configuration id")
-    expected_parameters = {
-        "N": N,
-        "universe": "integers_1_through_N",
-        "forbidden_pattern": "nontrivial_three_term_arithmetic_progression",
-    }
-    if config.get("parameters") != expected_parameters:
-        raise ValueError("configuration parameters do not match T042-C01")
-    if not isinstance(solution, Mapping):
-        raise ValueError("solution must be a JSON object")
-
-    elements = solution.get("elements")
-    if not isinstance(elements, (list, tuple, set, frozenset)):
-        raise ValueError("elements must be a list or set of integers")
-    if any(not _is_integer(value) for value in elements):
-        raise ValueError("each element must be an integer; bool and non-finite values are invalid")
-    if isinstance(elements, (list, tuple)) and len(set(elements)) != len(elements):
-        raise ValueError("elements must not contain duplicates")
-    ordered = sorted(elements)
-    if ordered and (ordered[0] < 1 or ordered[-1] > N):
-        raise ValueError("each element must lie in [1, 212]")
-
-    selected = set(ordered)
-    pair_checks = 0
-    for a_index, a in enumerate(ordered):
-        for b in ordered[a_index + 1 :]:
-            c = 2 * b - a
-            pair_checks += 1
-            if c in selected:
-                raise ValueError(f"nontrivial 3-term arithmetic progression ({a}, {b}, {c})")
-
+def validate(solution, config, strict=False):
+    """Check a partition and recompute its integer cut exactly."""
+    del strict
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    parameters = config.get("parameters", config)
+    if parameters != _PARAMETERS:
+        raise ValueError("configuration does not match the pinned Gset graph")
+    labels = solution.get("labels")
+    if not isinstance(labels, list) or len(labels) != _N:
+        raise ValueError(f"labels must contain exactly {_N} vertex sides")
+    if any(type(side) is not int or side not in (0, 1) for side in labels):
+        raise ValueError("each side must be integer 0 or 1; bool is not accepted")
+    cut = sum(weight for u, v, weight in _EDGES if labels[u] != labels[v])
     return {
-        "objective": len(ordered),
+        "objective": cut,
         "verification_status": "exact",
-        "details": {
-            "N": N,
-            "selected_size": len(ordered),
-            "midpoint_pairs_checked": pair_checks,
-            "claimed_score_ignored": True,
-            "strict_full_domain_check": True,
-        },
+        "details": {"n": _N, "m": len(_EDGES), "cut_edges": cut,
+                    "graph_sha256": _INSTANCE["source_sha256"]},
     }

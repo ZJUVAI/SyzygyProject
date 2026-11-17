@@ -4,25 +4,25 @@
     "config_id": "T029-C01",
     "validity": 1.0,
     "combined_score": 1.0,
-    "objective": 23,
-    "verification_status": "exact",
-    "generation_time": 4.672645017504692,
-    "verification_time": 0.21505263447761536,
-    "objective_value": 23,
+    "objective": 15,
+    "verification_status": "certified",
+    "generation_time": 1.2331972494721413,
+    "verification_time": 5.954773016273975,
+    "objective_value": 15,
     "details": {
-      "matrix_order": 3,
-      "field": "Q",
-      "tensor_coefficients_recomputed": 729,
-      "input_forms": "alpha(A) * beta(B), separate linear forms",
-      "output_convention": "gamma[i,k] contributes to C[i,k]",
-      "claimed_objective_ignored": true,
-      "max_terms_is_resource_cap_not_an_optimality_bound": true
+      "instance": "socg_fixed92",
+      "convex_polygon_count": 15,
+      "total_piece_vertices": 61,
+      "algebraic_field_degree": 1,
+      "verified_open_arrangement_cells": 124,
+      "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+      "claimed_score_ignored": true
     },
-    "eval_time": 4.891033072024584,
-    "seed": 75103,
+    "eval_time": 7.189637433737516,
+    "seed": 29101,
     "strict": true,
     "budget": {
-      "generation_seconds": 45,
+      "generation_seconds": 300,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -31,47 +31,113 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 67
+      "worker_cpu": 0
     }
+  },
+  "initial_result": {
+    "objective": 90,
+    "objective_value": 90,
+    "validity": 1.0,
+    "verification_status": "certified",
+    "combined_score": 0.16666666666666666
   },
   "provenance": {
     "reviewer": "Sol main agent",
     "status": "reviewed_by_sol",
     "date": "2026-11-09",
-    "source_summary": "tasks/t029/runs/search_gap15_20261109_gap15_linear/summary.json",
+    "source_summary": "tasks/t097/runs/search_sol1200_discrete_custom/summary.json",
     "source_hashes_verified": true,
     "independent_quantity": {
-      "rank_terms": 23,
-      "basis_pairs": 81,
-      "output_coefficients_checked": 729
+      "polygon_count": 15,
+      "target_area": "206848",
+      "uncovered_area": "0",
+      "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
     },
     "claimed_score_ignored": true,
     "damaged_construction_rejected": true,
     "initial_baseline_human_valid": true,
     "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-    "search_agent": "GPT-6.1 Sol",
+    "search_agent": {
+      "model": "gpt-6.1-sol",
+      "campaign": "sol1200",
+      "shard": "discrete"
+    },
     "generation_record": {
-      "scope": "AI-assisted construction search",
-      "limit": 45,
-      "seed": 75103,
-      "method": "Reconstruct 23-product Laderman scheme by exact linear recovery of output forms"
+      "selected_stage": "180-second exact visibility, randomized ear clipping and convex clique merge",
+      "selected_stage_seed": 29101,
+      "selected_stage_command": "PYTHONPATH=. T097_SOLUTION=tasks/t097/runs/sol1200_custom/solution.json .venv/bin/python tasks/t097/runs/sol1200_custom/visibility_merge.py",
+      "search_seconds_cap_per_task": 1200,
+      "planned_custom_stage_limits": {
+        "randomized_merge_seconds": 180,
+        "restricted_clique_cover_seconds": 240,
+        "incompatibility_lower_bound_seconds": 180
+      },
+      "generic_control_artifacts": "tasks/t097/runs/search_sol1200/T097-C01",
+      "generic_control_and_seed_generation_seconds": {
+        "initial": 0.22355207055807114,
+        "baseline": 4.876361947506666,
+        "human": 0.164667509496212,
+        "search_seed29101": 8.926118146628141,
+        "search_seed29102": 8.526000019162893,
+        "search_seed29103": 9.789949554949999,
+        "search_seed29104": 11.294944047927856,
+        "search_seed29105": 9.155445948243141
+      },
+      "search_metadata": {
+        "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+        "iterations": 6354,
+        "seed": 29101,
+        "planned_seconds": 180,
+        "comparison_data_read": false
+      },
+      "strict_result_is_replay": true,
+      "search_log": "tasks/t097/runs/sol1200_custom/search.log",
+      "elapsed_note": "The result stores replay time. Custom solver limits and actual algorithm counters are recorded separately from replay timing.",
+      "worker_cpu": 122
     },
     "classification": "ai_assisted_local_continuation",
-    "seed": 75103,
+    "seed": 29101,
     "controls": {
-      "trials": [
-        [
-          "warm",
-          42,
-          42,
-          "512",
-          75103
-        ]
-      ],
-      "prior_control_summary": "tasks/t029/runs/search_sol1200/summary.json"
+      "generic_controls": {
+        "MATHBENCH_SEARCH_SECONDS": "15.0",
+        "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+      },
+      "selected_search": {
+        "selected_stage": "180-second exact visibility, randomized ear clipping and convex clique merge",
+        "selected_stage_seed": 29101,
+        "selected_stage_command": "PYTHONPATH=. T097_SOLUTION=tasks/t097/runs/sol1200_custom/solution.json .venv/bin/python tasks/t097/runs/sol1200_custom/visibility_merge.py",
+        "search_seconds_cap_per_task": 1200,
+        "planned_custom_stage_limits": {
+          "randomized_merge_seconds": 180,
+          "restricted_clique_cover_seconds": 240,
+          "incompatibility_lower_bound_seconds": 180
+        },
+        "generic_control_artifacts": "tasks/t097/runs/search_sol1200/T097-C01",
+        "generic_control_and_seed_generation_seconds": {
+          "initial": 0.22355207055807114,
+          "baseline": 4.876361947506666,
+          "human": 0.164667509496212,
+          "search_seed29101": 8.926118146628141,
+          "search_seed29102": 8.526000019162893,
+          "search_seed29103": 9.789949554949999,
+          "search_seed29104": 11.294944047927856,
+          "search_seed29105": 9.155445948243141
+        },
+        "search_metadata": {
+          "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+          "iterations": 6354,
+          "seed": 29101,
+          "planned_seconds": 180,
+          "comparison_data_read": false
+        },
+        "strict_result_is_replay": true,
+        "search_log": "tasks/t097/runs/sol1200_custom/search.log",
+        "elapsed_note": "The result stores replay time. Custom solver limits and actual algorithm counters are recorded separately from replay timing.",
+        "worker_cpu": 122
+      }
     },
     "budget": {
-      "generation_seconds": 45,
+      "generation_seconds": 300,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -80,841 +146,704 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 67
+      "worker_cpu": 0
     },
     "source_sha256": {
-      "tasks/t029/baseline.py": "704040c3a49c0494dcc0991d1da0226a1958c72041f62453c5d77032b1bffe12",
-      "tasks/t029/check.py": "d106b9d961eab7a0ebf1d96c26616c08c1f9286f305b4bdbd63f7b7dde6ab539",
-      "tasks/t029/evaluator.py": "e46d32f1a9718ff567a5a26e646939580270ee9885caeea4443f5fb50fd9b82e",
-      "tasks/t029/evolution.py": "5ee0e11e0bcfcea75b4f8091f52fe38969b92fdefbc19d2da2a35fe582889875",
-      "tasks/t029/human.py": "7f43d8946ddeedbaa3900a7143ed7ddd4923d7212a6e8f75010f3790d3b3f38d",
-      "tasks/t029/init_program.py": "641c812f0e773c87df2c68508906ecf6490267aefa6cd8318a55ebd14ca5cd58",
-      "tasks/t029/reference.py": "3bb23f859569e1982669c4e30e04323560a08cb8b796c51c4dc79ac4dc90e4dd",
-      "tasks/t029/test_task.py": "713c9e7986cdd22a0fee60b3b62bba7dc07eb8f21521c83db99e3f1cbb31eab0",
-      "program.py": "f06e97e0a34a1de42e7ccf04631eafb9dd846a3cd12886fc79ee3fdea4f59021",
-      "plan.json": "36733c77fb7a324795bc15c3459c2881f58a6be4725d7a7e9d67eb412cc0d469"
+      "tasks/t097/algebraic.py": "073348f455fdfdb9c389a1b30b7035ee13a01c98708b1ef26ca35bc600ca19db",
+      "tasks/t097/baseline.py": "7c20fc59e99bdc0fd14518a7311c5e5e7f0a9b4874d3e05afc98864a56c3dfad",
+      "tasks/t097/check.py": "4d63a7fd375269eb9643f4bef0117d4230afe203aafef525eb02220a4f396a61",
+      "tasks/t097/evaluator.py": "c0cf8540074f2746f6485b9f6e1a271a6181be9a5ed386e97b527759ab5ed0e6",
+      "tasks/t097/evolution.py": "1f5c49e13633d436b846db8576710388bd549747e7347c04a5792bb1a0fd09c9",
+      "tasks/t097/geometry.py": "ac7b6deabf92a8fdd87e4f24a1d62b725449ecc14dceaef1524887f12278adad",
+      "tasks/t097/human.py": "dfc1d59582eddc10cf255afa2517f6dd5e3e4865b6cdbbbdea138d2aacbc3254",
+      "tasks/t097/init_program.py": "c57d508ce81fa23e7c2184b7f8463ab7b7ead6a208105dee4e7fb31ace4901f1",
+      "tasks/t097/reference.py": "d6d61522628cc50b2cd97ffe82ce873e36d73babed996149d7b1917985dae41e",
+      "tasks/t097/search_core.py": "473adf8f74497971f98f79db69b5df6c6ae92a145a9c80c0e2951bda8f983f9d",
+      "tasks/t097/test_task.py": "88e09140d7fda1fe693dbff26e08e8b155fbb2662f6445fda098aaa796193a41",
+      "tasks/t097/runs/sol1200_custom/visibility_merge.py": "4c92d7a5845602841505ec0940107cd932bc2957a6d22ef61c032d6d59725e6d",
+      "tasks/t097/runs/sol1200_custom/search.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
-    "warm_start_sha256": "03a3b9d3ed4d9975736c51b2ec0ff1eadd27b13c5ce1339bb854ed3b672c42a3",
-    "replay_command": ".venv/bin/python -m mathbench replay T029 tasks/t029/data/results.json --config T029-C01"
-  },
-  "initial_result": {
-    "objective": 27,
-    "objective_value": 27,
-    "validity": 1.0,
-    "verification_status": "exact",
-    "combined_score": 0.8518518518518519
+    "warm_start_sha256": "c7ccd0287b317a666a1b95f159b324ea6e4d8351814a9effce5fc34c7c2b8ce5",
+    "replay_command": ".venv/bin/python -m mathbench replay T029 tasks/t029/data/results.json --config T029-C01",
+    "prior_result_records": {
+      "bestknown": {
+        "T097-C01": {
+          "best_own_search": {
+            "value": 15,
+            "objective_value": 15,
+            "witness": "data/results.json",
+            "witness_sha256": "8c52b29fe3d3f31ec1c91d8b2d7e97e798bd1a053dbd1f0fc277d8c5b58c0a92",
+            "parameters": {
+              "instance": "socg_fixed92",
+              "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+              "boundary_vertices": 92,
+              "holes": 0,
+              "cover_domain": "all real convex polygons",
+              "overlap_allowed": true
+            },
+            "seed": 29101,
+            "verification_status": "certified",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+              "iterations": 6354,
+              "seed": 29101,
+              "planned_seconds": 180,
+              "comparison_data_read": false
+            },
+            "generation_record": {
+              "task_id": "T097",
+              "config_id": "T097-C01",
+              "validity": 1.0,
+              "combined_score": 1.0,
+              "objective": 15,
+              "verification_status": "certified",
+              "generation_time": 1.2331972494721413,
+              "verification_time": 5.954773016273975,
+              "objective_value": 15,
+              "details": {
+                "instance": "socg_fixed92",
+                "convex_polygon_count": 15,
+                "total_piece_vertices": 61,
+                "algebraic_field_degree": 1,
+                "verified_open_arrangement_cells": 124,
+                "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+                "claimed_score_ignored": true
+              },
+              "eval_time": 7.189637433737516,
+              "seed": 29101,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 300,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 0
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed."
+          }
+        }
+      },
+      "records": {
+        "T097-C01": {
+          "best_own_search": {
+            "value": 15,
+            "objective_value": 15,
+            "witness": "data/results.json",
+            "witness_sha256": "8c52b29fe3d3f31ec1c91d8b2d7e97e798bd1a053dbd1f0fc277d8c5b58c0a92",
+            "parameters": {
+              "instance": "socg_fixed92",
+              "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+              "boundary_vertices": 92,
+              "holes": 0,
+              "cover_domain": "all real convex polygons",
+              "overlap_allowed": true
+            },
+            "seed": 29101,
+            "verification_status": "certified",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+              "iterations": 6354,
+              "seed": 29101,
+              "planned_seconds": 180,
+              "comparison_data_read": false
+            },
+            "generation_record": {
+              "task_id": "T097",
+              "config_id": "T097-C01",
+              "validity": 1.0,
+              "combined_score": 1.0,
+              "objective": 15,
+              "verification_status": "certified",
+              "generation_time": 1.2331972494721413,
+              "verification_time": 5.954773016273975,
+              "objective_value": 15,
+              "details": {
+                "instance": "socg_fixed92",
+                "convex_polygon_count": 15,
+                "total_piece_vertices": 61,
+                "algebraic_field_degree": 1,
+                "verified_open_arrangement_cells": 124,
+                "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+                "claimed_score_ignored": true
+              },
+              "eval_time": 7.189637433737516,
+              "seed": 29101,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 300,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 0
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed."
+          }
+        }
+      }
+    },
+    "task_id_migration": {
+      "from": "T097",
+      "to": "T029",
+      "source_revision": "c9f93552f9ad54f779b1f9cca2e13f39e5ab8d30",
+      "date": "2026-11-17",
+      "note": "Reordered by research direction. Construction bytes and objective are unchanged. Historical source paths and hashes are preserved."
+    }
   },
   "solution": {
-  "terms": [
-    {
-      "alpha": [
-        1,
-        1,
-        1,
-        -1,
-        -1,
-        0,
-        0,
-        -1,
-        -1
+  "algebraic_field": {
+    "minimal_polynomial": [
+      "0",
+      "1"
+    ],
+    "isolating_interval": [
+      "-1",
+      "1"
+    ]
+  },
+  "polygons": [
+    [
+      [
+        [
+          "432"
+        ],
+        [
+          "224"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0
+      [
+        [
+          "480"
+        ],
+        [
+          "224"
+        ]
       ],
-      "gamma": [
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0"
+      [
+        [
+          "480"
+        ],
+        [
+          "448"
+        ]
+      ],
+      [
+        [
+          "432"
+        ],
+        [
+          "448"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        1,
-        0,
-        0,
-        -1,
-        0,
-        0,
-        0,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "96"
+        ],
+        [
+          "352"
+        ]
       ],
-      "beta": [
-        0,
-        -1,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0
+      [
+        [
+          "512"
+        ],
+        [
+          "352"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "1",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0"
+      [
+        [
+          "512"
+        ],
+        [
+          "416"
+        ]
+      ],
+      [
+        [
+          "96"
+        ],
+        [
+          "416"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "96"
+        ],
+        [
+          "640"
+        ]
       ],
-      "beta": [
-        -1,
-        1,
-        0,
-        1,
-        -1,
-        -1,
-        -1,
-        0,
-        1
+      [
+        [
+          "512"
+        ],
+        [
+          "640"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0"
+      [
+        [
+          "512"
+        ],
+        [
+          "704"
+        ]
+      ],
+      [
+        [
+          "96"
+        ],
+        [
+          "704"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        -1,
-        0,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "128"
+        ],
+        [
+          "224"
+        ]
       ],
-      "beta": [
-        1,
-        -1,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0
+      [
+        [
+          "176"
+        ],
+        [
+          "224"
+        ]
       ],
-      "gamma": [
-        "0",
-        "1",
-        "0",
-        "1",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0"
+      [
+        [
+          "176"
+        ],
+        [
+          "448"
+        ]
+      ],
+      [
+        [
+          "128"
+        ],
+        [
+          "448"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "96"
+        ],
+        [
+          "544"
+        ]
       ],
-      "beta": [
-        -1,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+      [
+        [
+          "512"
+        ],
+        [
+          "544"
+        ]
       ],
-      "gamma": [
-        "0",
-        "1",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0"
+      [
+        [
+          "512"
+        ],
+        [
+          "608"
+        ]
+      ],
+      [
+        [
+          "96"
+        ],
+        [
+          "608"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "432"
+        ],
+        [
+          "512"
+        ]
       ],
-      "beta": [
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+      [
+        [
+          "480"
+        ],
+        [
+          "512"
+        ]
       ],
-      "gamma": [
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "0",
-        "1",
-        "0",
-        "1"
+      [
+        [
+          "480"
+        ],
+        [
+          "736"
+        ]
+      ],
+      [
+        [
+          "432"
+        ],
+        [
+          "736"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        -1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        0
+    ],
+    [
+      [
+        [
+          "224"
+        ],
+        [
+          "128"
+        ]
       ],
-      "beta": [
-        1,
-        0,
-        -1,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0
+      [
+        [
+          "288"
+        ],
+        [
+          "128"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "1"
+      [
+        [
+          "288"
+        ],
+        [
+          "832"
+        ]
+      ],
+      [
+        [
+          "224"
+        ],
+        [
+          "832"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        -1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "128"
+        ],
+        [
+          "512"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        1,
-        0,
-        0,
-        -1,
-        0,
-        0,
-        0
+      [
+        [
+          "176"
+        ],
+        [
+          "512"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "1"
+      [
+        [
+          "176"
+        ],
+        [
+          "736"
+        ]
+      ],
+      [
+        [
+          "128"
+        ],
+        [
+          "736"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        0
+    ],
+    [
+      [
+        [
+          "320"
+        ],
+        [
+          "128"
+        ]
       ],
-      "beta": [
-        -1,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+      [
+        [
+          "384"
+        ],
+        [
+          "128"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1"
+      [
+        [
+          "384"
+        ],
+        [
+          "832"
+        ]
+      ],
+      [
+        [
+          "320"
+        ],
+        [
+          "832"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        1,
-        1,
-        1,
-        0,
-        -1,
-        -1,
-        -1,
-        -1,
-        0
+    ],
+    [
+      [
+        [
+          "96"
+        ],
+        [
+          "256"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0
+      [
+        [
+          "512"
+        ],
+        [
+          "256"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0"
+      [
+        [
+          "512"
+        ],
+        [
+          "320"
+        ]
+      ],
+      [
+        [
+          "96"
+        ],
+        [
+          "320"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0
+    ],
+    [
+      [
+        [
+          "192"
+        ],
+        [
+          "160"
+        ]
       ],
-      "beta": [
-        -1,
-        0,
-        1,
-        1,
-        -1,
-        -1,
-        -1,
-        1,
-        0
+      [
+        [
+          "416"
+        ],
+        [
+          "160"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0"
+      [
+        [
+          "416"
+        ],
+        [
+          "208"
+        ]
+      ],
+      [
+        [
+          "192"
+        ],
+        [
+          "208"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        -1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1
+    ],
+    [
+      [
+        [
+          "128"
+        ],
+        [
+          "256"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        1,
-        -1,
-        0
+      [
+        [
+          "512"
+        ],
+        [
+          "256"
+        ]
       ],
-      "gamma": [
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "1",
-        "0"
+      [
+        [
+          "432"
+        ],
+        [
+          "416"
+        ]
+      ],
+      [
+        [
+          "176"
+        ],
+        [
+          "416"
+        ]
+      ],
+      [
+        [
+          "128"
+        ],
+        [
+          "352"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        -1
+    ],
+    [
+      [
+        [
+          "192"
+        ],
+        [
+          "752"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        -1,
-        0
+      [
+        [
+          "416"
+        ],
+        [
+          "752"
+        ]
       ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "1",
-        "0"
+      [
+        [
+          "416"
+        ],
+        [
+          "800"
+        ]
+      ],
+      [
+        [
+          "192"
+        ],
+        [
+          "800"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+    ],
+    [
+      [
+        [
+          "224"
+        ],
+        [
+          "160"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0
+      [
+        [
+          "384"
+        ],
+        [
+          "160"
+        ]
       ],
-      "gamma": [
-        "1",
-        "1",
-        "1",
-        "1",
-        "0",
-        "1",
-        "1",
-        "1",
-        "0"
+      [
+        [
+          "384"
+        ],
+        [
+          "800"
+        ]
+      ],
+      [
+        [
+          "224"
+        ],
+        [
+          "800"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1
+    ],
+    [
+      [
+        [
+          "128"
+        ],
+        [
+          "544"
+        ]
       ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        -1,
-        1,
-        0
+      [
+        [
+          "480"
+        ],
+        [
+          "544"
+        ]
       ],
-      "gamma": [
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0"
+      [
+        [
+          "480"
+        ],
+        [
+          "704"
+        ]
+      ],
+      [
+        [
+          "128"
+        ],
+        [
+          "704"
+        ]
       ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        -1,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        0,
-        -1
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "1",
-        "1",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        1,
-        0,
-        0,
-        -1,
-        0,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        -1
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        -1,
-        0,
-        1
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "gamma": [
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0
-      ],
-      "beta": [
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0"
-      ]
-    },
-    {
-      "alpha": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1
-      ],
-      "beta": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1
-      ],
-      "gamma": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "1"
-      ]
-    }
+    ]
   ],
   "search_metadata": {
-    "method": "Published input forms and independently solved output linear systems",
-    "system_rank": 23
+    "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+    "iterations": 6354,
+    "seed": 29101,
+    "planned_seconds": 180,
+    "comparison_data_read": false
   }
 }
 

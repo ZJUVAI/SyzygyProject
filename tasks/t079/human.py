@@ -1,18 +1,26 @@
-"""Quadratic-residue Kakeya construction, rebuilt from its defining formula."""
+"""Discretize the modified-arcsine profile described by Barnard–Steinerberger."""
 
-from tasks.t079.check import CANONICAL_DIRECTIONS, P
+import math
+import os
 
 
 def run_code():
-    inv4 = pow(4, -1, P)
-    lines = []
-    for direction in CANONICAL_DIRECTIONS:
-        a, b, c = direction
-        if c == 1:
-            # For direction (a,b,1), x+t^2 and y+t^2 are squares on this line.
-            origin = (a * a * inv4 % P, b * b * inv4 % P, 0)
-        else:
-            # These directions are covered by the complete z=0 plane.
-            origin = (0, 0, 0)
-        lines.append({"direction": list(direction), "origin": list(origin)})
-    return {"lines": lines}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T079-C01")
+    if config_id != "T079-C01":
+        raise ValueError(f"unknown T079 configuration: {config_id}")
+    d = 13 / 4800
+    radius = 0.5 + 0.025
+    scale = 100000
+    heights = []
+    for i in range(480):
+        x = (i + 0.5) * d - 0.65
+        value = 0.0
+        if abs(x) < radius:
+            value = 1.0 / math.sqrt(1.0 - (x / radius) ** 2)
+        if abs(x) < 0.25:
+            value -= 0.25 / math.sqrt(1.0 - 4.0 * x * x)
+        numerator = int(round(value * scale))
+        if numerator < 0:
+            raise ArithmeticError("rounded modified-arcsine profile became negative")
+        heights.append(f"{numerator}/{scale}")
+    return {"heights": heights}

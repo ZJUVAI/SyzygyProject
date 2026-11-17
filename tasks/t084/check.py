@@ -1,71 +1,40 @@
-"""Exact checker for finite integer B_3 sets."""
+"""Exact checker for the ring loading problem."""
+from fractions import Fraction
+from itertools import product
+from math import lcm
 
-from itertools import combinations_with_replacement
-import sys
+CONFIG_ID="T084-C01"
+PARAMETERS={"m":15}
 
-# Python 3.11+ limits decimal conversions by default. The public domain has no
-# integer-size cap, so the checker accepts decimal-string integer encodings too.
-if hasattr(sys, "set_int_max_str_digits"):
-    sys.set_int_max_str_digits(0)
+def _frac(value):
+    if type(value) is int: return Fraction(value)
+    if type(value) is str:
+        try: return Fraction(value)
+        except (ValueError, ZeroDivisionError) as exc: raise ValueError("invalid rational string") from exc
+    raise ValueError("pair entries must be integers or rational strings")
 
-
-def _integer(value):
-    if type(value) is int:
-        return value
-    if isinstance(value, str):
-        digits = value[1:] if value.startswith("-") else value
-        if not digits or not digits.isascii() or not digits.isdigit():
-            raise ValueError("decimal-string elements must use base-10 integer notation")
-        if value.startswith("-") and (len(value) == 1 or value[1] == "0"):
-            raise ValueError("decimal-string elements must use canonical integer notation")
-        if not value.startswith("-") and len(value) > 1 and value[0] == "0":
-            raise ValueError("decimal-string elements must use canonical integer notation")
-        return int(value)
-    raise ValueError("elements must be exact integers or canonical decimal strings")
-
-
-def validate(solution, config, strict=False):
-    if not isinstance(config, dict) or config.get("id") != "T084-C01":
-        raise ValueError("unknown T084 configuration")
-    parameters = config.get("parameters")
-    if (not isinstance(parameters, dict)
-            or set(parameters) != {"cardinality", "order", "integer_domain"}
-            or type(parameters.get("cardinality")) is not int
-            or parameters.get("cardinality") != 31
-            or type(parameters.get("order")) is not int
-            or parameters.get("order") != 3
-            or type(parameters.get("integer_domain")) is not bool
-            or parameters.get("integer_domain") is not True):
-        raise ValueError("T084-C01 parameters must match the frozen configuration exactly")
-    cardinality = 31
-    order = 3
-    elements = solution.get("elements") if isinstance(solution, dict) else solution
-    if not isinstance(elements, (list, tuple)) or len(elements) != cardinality:
-        raise ValueError("solution must contain exactly 31 integers")
-    elements = [_integer(value) for value in elements]
-    if len(set(elements)) != cardinality:
-        raise ValueError("elements must be distinct")
-
-    triples = combinations_with_replacement(elements, order)
-    seen = set()
-    checked = 0
-    for triple in triples:
-        total = sum(triple)
-        if total in seen:
-            raise ValueError("all unordered three-term sums, with repetition, must be distinct")
-        seen.add(total)
-        checked += 1
-    if checked != 5456:
-        raise ValueError("internal error: unexpected triple-sum count")
-    diameter = max(elements) - min(elements)
-    diameter_wire = diameter if len(str(diameter)) <= 4300 else str(diameter)
-    return {
-        "objective": diameter_wire,
-        "verification_status": "exact",
-        "details": {
-            "cardinality": cardinality,
-            "order": order,
-            "triple_sums_checked": checked,
-            "claimed_objective_ignored": True,
-        },
-    }
+def validate(solution, config=None, strict=False):
+    del strict
+    if (type(config) is not dict or type(config.get("id")) is not str or config["id"] != CONFIG_ID
+        or type(config.get("parameters")) is not dict or config["parameters"] != PARAMETERS
+        or type(config.get("direction")) is not str or config["direction"] != "maximize"):
+        raise ValueError("configuration does not match frozen T084-C01")
+    if type(solution) is not dict or type(solution.get("pairs")) is not list or len(solution["pairs"]) != 15:
+        raise ValueError("solution must contain exactly 15 pairs")
+    pairs=[]; denominator=1
+    for pair in solution["pairs"]:
+        if type(pair) is not list or len(pair)!=2: raise ValueError("each pair must have two entries")
+        u,v=map(_frac,pair)
+        if u<0 or v<0 or u+v>1: raise ValueError("pairs must satisfy u,v >= 0 and u+v <= 1")
+        pairs.append((u,v)); denominator=lcm(denominator,u.denominator,v.denominator)
+    scaled=[(int(u*denominator),int(v*denominator)) for u,v in pairs]
+    best=None
+    for choices in product((0,1),repeat=15):
+        z=[scaled[i][1] if choices[i]==0 else -scaled[i][0] for i in range(15)]
+        total=sum(z); prefix=0; route=0
+        for k in range(1,16):
+            prefix+=z[k-1]
+            route=max(route,abs(prefix-(total-prefix)))
+        if best is None or route<best: best=route
+    score=Fraction(best,denominator)
+    return {"objective":str(score),"verification_status":"exact","details":{"routes":32768,"cuts_per_route":15}}

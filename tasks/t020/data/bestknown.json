@@ -1,46 +1,61 @@
 {
   "task_id": "T020",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T020-C01": {
-      "public_value": "202",
-      "public_source": {
-        "url": "https://additionchains.com/LargeChains.html",
-        "title": "Short Addition Chains for Cryptographic Exponents",
-        "updated": "2026-11-02",
-        "entry": "NIST P-192 field inversion, 2^192-2^64-3; downloadable chain P-192_field_inverse_202.txt",
-        "classification": "best known listed on the source page; not a proof of optimality"
+      "program": "reference.py",
+      "reproduced_value": 34,
+      "witness": "data/reference/hexagon_n91.json",
+      "public_value": 34,
+      "highest_reported": {
+        "value": 34,
+        "metric": "number of distinct positive Euclidean distances among 91 planar points",
+        "direction": "minimize",
+        "bound_type": "reported feasible construction; upper bound on the unknown minimum",
+        "source": "https://doi.org/10.1016/0012-365X(95)00153-N",
+        "source_location": "Erdos and Fishburn (1996), Table 1, L_delta, n=91, k=34, s=6",
+        "reproduction_status": "coordinates reconstructed from the regular hexagonal triangular-lattice formula; exact algebraic checker returns 34"
       },
-      "reproduced_value": "202",
-      "program": "sota.py",
-      "witness": "data/human_t020.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "limitations": [
-        "The source reports a best-known construction, not a proof of minimum length."
+      "coordinate_sha256": "0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac",
+      "known_lower_bound": 9,
+      "lower_bound_evidence": {
+        "source": "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf",
+        "source_location": "Erdos 1946, Theorem 1",
+        "derivation": "n-1 <= k(k+1); for n=91, 90 <= k(k+1), hence k>=9"
+      },
+      "optimality_status": "no exact n=91 optimum located in the checked sources as of 2026-11-06; 34 is not claimed optimal",
+      "checked_sources": [
+        "https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/Erdos2.pdf",
+        "https://oeis.org/A186704",
+        "https://erdosproblems.ai/problems/89",
+        "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf"
       ],
-      "checked_at": "2026-11-05",
+      "checked_at": "2026-11-06",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T020",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T020",
           "config_id": "T020-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 202,
+          "objective": 34,
           "verification_status": "exact",
-          "generation_time": 0.16457249969244003,
-          "verification_time": 0.16471166908740997,
-          "objective_value": 202,
+          "generation_time": 0.31601884588599205,
+          "verification_time": 3.8290962129831314,
+          "objective_value": 34,
           "details": {
-            "target": "6277101735386680763835789423207666416083908700390324961277",
-            "chain_entries": 203,
-            "configuration_id": "T020-C01",
-            "strictly_increasing": true,
-            "all_steps_verified": true
+            "point_count": 91,
+            "unordered_pair_count": 4095,
+            "distinct_positive_distances": 34,
+            "coordinate_field_degree": 2,
+            "minimal_polynomial_irreducible": true,
+            "real_root_isolated_by_sturm_count": 1,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.33225079253315926,
+          "eval_time": 4.150618556886911,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -50,76 +65,65 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t020/data/human_t020.json",
         "independent_quantity": {
-          "additions": 202,
-          "target": "6277101735386680763835789423207666416083908700390324961277"
+          "distance_count": 34,
+          "ordered_displacement_types": 330,
+          "audit_scope": "Saved rational and triangular-lattice witnesses; checker permits all real algebraic fields"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Reviewed additionchains.com/LargeChains.html updated 2026-11-02. Exact target and all chain additions independently verified; source describes best known to that page, not proven optimal.",
-        "snapshot_date": "2026-11-05"
+        "claimed_score_ignored": true
       },
-      "sol_light_report_recheck": {
-        "checked_at": "2026-11-06",
-        "source": "https://additionchains.com/LargeChains.html",
-        "same_parameters": true,
-        "reported_value": "202"
+      "parameters": {
+        "point_count": 91,
+        "ambient_space": "Euclidean plane R^2"
+      },
+      "best_human": {
+        "value": 34,
+        "source": "Erdos and Fishburn (1996), Table 1, triangular lattice, s=6, n=91",
+        "url": "https://doi.org/10.1016/0012-365X(95)00153-N",
+        "date": "1996",
+        "ai_provenance": "not stated by the source",
+        "evidence_state": "coordinate construction reconstructed and exact score independently verified"
+      },
+      "best_public": {
+        "value": 34,
+        "source": "Erdos and Fishburn (1996), Table 1; best same-parameter explicit result found in the sources checked",
+        "url": "https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/Erdos2.pdf",
+        "date": "1996",
+        "ai_provenance": "not stated by the source",
+        "evidence_state": "reported construction reproduced from its formula; not a proof of optimality"
+      },
+      "best_reproduced": {
+        "value": 34,
+        "program": "reference.py",
+        "witness": "data/reference/hexagon_n91.json",
+        "reproduced_coordinate_sha256": "0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac",
+        "evidence_state": "exact field arithmetic verifies 91 distinct points and 34 distinct squared distances",
+        "review_status": "reviewed_by_sol"
+      },
+      "limitations": [
+        "The 34-distance construction is an upper bound on the minimum, not an exact optimum result.",
+        "The literature check did not locate an exact value for n=91; this survey is not exhaustive.",
+        "The checker handles exact real algebraic coordinates. Candidate programs that output only floating-point coordinates are invalid."
+      ]
+    }
+  },
+  "checked_at": "2026-11-06",
+  "additional_evidence": {
+    "configurations": {
+      "T020-C01": {
+        "known_lower_bound": {
+          "value": 9,
+          "meaning": "Erdos 1946, Theorem 1: n-1 <= k(k+1) when k distinct distances are determined; for n=91, 90 <= k(k+1), so k >= 9",
+          "source": "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf"
+        }
       }
     }
-  },
-  "sol_review": {
-    "T020-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
-    }
-  },
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 202,
-    "parameters": {
-      "target": "2^192-2^64-3"
-    },
-    "authors": [
-      "Neill Clift"
-    ],
-    "year": 2026,
-    "url": "https://additionchains.com/LargeChains.html",
-    "evidence_state": "downloaded public one-integer-per-line witness; all 203 entries and 202 additions independently replayed with exact integers",
-    "optimality": "construction only; source states none of listed lengths is proved optimal",
-    "witness": "data/human_t020.json"
-  },
-  "best_public": {
-    "value": 202,
-    "parameters": {
-      "target": "2^192-2^64-3"
-    },
-    "url": "https://additionchains.com/LargeChains.html",
-    "evidence_state": "page updated 2026-11-02; exact P-192 row says previous 203, new length 202; linked witness downloaded and reproduced",
-    "optimality": "not proved; page says none of the listed lengths is proved optimal",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 202,
-    "parameters": {
-      "target": "2^192-2^64-3"
-    },
-    "provenance": "task-local exact copy of P-192_field_inverse_202.txt linked by Clift's page",
-    "evidence_state": "independently checked start, strict increase, each sum-of-two-earlier-terms relation, endpoint, and length with Python integers",
-    "witness": "data/human_t020.json"
-  },
-  "baseline_seed": {
-    "provenance": "binary expansion chain generated from the fixed integer target",
-    "evidence_state": "checker verifies all steps; no human/reference files read"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula",
-  "configuration_records": {}
+  }
 }

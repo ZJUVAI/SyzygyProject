@@ -1,4 +1,4 @@
-"""Self-contained identity ordering for gd96a."""
+"""Small valid peaceable-queens seed."""
 
 import os
 
@@ -8,10 +8,11 @@ def run_code():
         raise ValueError("unsupported configuration")
     int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    ordering = list(range(1, 1097))
+    solution = {"white": [[0, 0]], "black": [[1, 2]]}
     # EVOLVE-BLOCK-END
-    return {"ordering": ordering}
+    return solution
 
 
 if __name__ == "__main__":
-    print(run_code())
+    import json
+    print(json.dumps(run_code()))

@@ -38,7 +38,7 @@ def disjoint_interiors(p,q):
 
 
 def audit(solution):
-    path=ROOT/'tasks/t093/data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json'
+    path=ROOT/'tasks/t006/data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json'
     data=json.loads(path.read_text());container=list(zip(data['container']['x'],data['container']['y']))
     signs=[cross(container[i-1],container[i],container[(i+1)%len(container)]) for i in range(len(container))]
     assert all(s>=0 for s in signs) or all(s<=0 for s in signs)

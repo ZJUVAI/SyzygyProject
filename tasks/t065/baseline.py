@@ -1,44 +1,87 @@
-"""Exact finite search over rectangular patches of the triangular lattice."""
+"""Seeded greedy search from the simple binary cap; no reference data is read."""
 
 import os
-import time
+import random
 
 from mathbench.search import search_steps
-from tasks.t065.construction import grid_edge_count, rectangular_grid
+
+
+DIM = 7
+SPACE_SIZE = 3 ** DIM
+ITERATION_LIMIT = 100_000
+
+
+def _decode(index):
+    coordinates = [0] * DIM
+    for position in range(DIM - 1, -1, -1):
+        index, coordinates[position] = divmod(index, 3)
+    return tuple(coordinates)
+
+
+def _encode(point):
+    value = 0
+    for coordinate in point:
+        value = 3 * value + coordinate
+    return value
+
+
+def _target_sum(a, b):
+    return _encode(tuple((-x - y) % 3 for x, y in zip(a, b)))
+
+
+def _seed():
+    return {_encode(_decode(i)) for i in range(SPACE_SIZE)
+            if all(coordinate != 2 for coordinate in _decode(i))}
+
+
+def _add_point(points, forbidden, candidate):
+    if candidate in forbidden:
+        return False
+    point = _decode(candidate)
+    for old_index in points:
+        forbidden.add(_target_sum(point, _decode(old_index)))
+    points.add(candidate)
+    return True
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T065-C01") != "T065-C01":
-        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    start = time.monotonic()
-    factor_pairs = [(columns, 100 // columns)
-                    for columns in range(1, 101) if 100 % columns == 0]
-    best = (1, 100)
-    checked = 0
-    for step in search_steps(len(factor_pairs)):
-        columns, rows = factor_pairs[step]
-        if grid_edge_count(columns, rows) > grid_edge_count(*best):
-            best = (columns, rows)
-        checked += 1
-    construction = rectangular_grid(*best)
-    construction["search_metadata"] = {
-        "algorithm": "exhaustive factor-pair scan of 100-point rectangular triangular-lattice patches",
-        "seed": seed,
-        "iterations_requested": len(factor_pairs),
-        "iterations_run": checked,
-        "candidate_shapes_checked": checked,
-        "best_shape": {"columns": best[0], "rows": best[1]},
-        "family_edge_formula": "(columns-1)*rows + columns*(rows-1) + (columns-1)*(rows-1)",
-        "generation_seconds": time.monotonic() - start,
-        "budget": {
-            "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
-            "runner_generation_limit_seconds": 300,
-        },
-    }
-    return construction
+    rng = random.Random(seed)
+    base = _seed()
+    best = set(base)
+    iterations = 0
+    restarts = 0
+    steps = iter(search_steps(ITERATION_LIMIT))
 
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    while True:
+        points = set(base)
+        forbidden = set()
+        decoded = [_decode(index) for index in points]
+        for i, a in enumerate(decoded):
+            for b in decoded[i + 1:]:
+                forbidden.add(_target_sum(a, b))
+        order = [i for i in range(SPACE_SIZE) if i not in points]
+        rng.shuffle(order)
+        restarts += 1
+        for candidate in order:
+            if next(steps, None) is None:
+                return {
+                    "points": [list(_decode(i)) for i in sorted(best)],
+                    "search_metadata": {
+                        "algorithm": "seeded randomized greedy extension from the binary cap",
+                        "seed": seed,
+                        "iterations": iterations,
+                        "iteration_limit": ITERATION_LIMIT,
+                        "restarts": restarts,
+                        "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+                        "budget": {
+                            "iteration_limit": ITERATION_LIMIT,
+                            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+                        },
+                        "reference_data_read": False,
+                    },
+                }
+            iterations += 1
+            _add_point(points, forbidden, candidate)
+        if len(points) > len(best):
+            best = points

@@ -1,58 +1,19 @@
-"""Seeded cap-sweep greedy search for 15 sum-distinct integers."""
+from mathbench.search import search_deadline, search_steps
+"""Seeded local edits; this search does not read the human witness."""
+import os, random, time
+from tasks.t076.init_program import run_code as initial
+from fractions import Fraction
 
-import os
-import random
-
-
-CAP_START = 8_000
-CAP_STOP = 10_000
-CAP_STEP = 25
-ELEMENT_COUNT = 15
-
-
-def _greedy_descending(cap, element_count):
-    subset_sums = 1
-    selected = []
-    for value in range(cap, 0, -1):
-        shifted = subset_sums << value
-        if subset_sums & shifted:
-            continue
-        selected.append(value)
-        subset_sums |= shifted
-        if len(selected) == element_count:
-            return sorted(selected)
-    return None
-
+def _score(a):
+    mass=sum(a); return Fraction(416)*max(sum((a[i]*a[k-i] for i in range(max(0,k-207),min(207,k)+1)),Fraction(0)) for k in range(415))/(mass*mass)
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T076-C01")
-    if chosen != "T076-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    element_count = ELEMENT_COUNT
-    try:
-        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    except ValueError as exc:
-        raise ValueError("MATHBENCH_SEED must be an integer") from exc
-    caps = list(range(CAP_START, CAP_STOP + 1, CAP_STEP))
-    random.Random(seed).shuffle(caps)
-    best = None
-    completed = 0
-    for cap in caps:
-        candidate = _greedy_descending(cap, element_count)
-        completed += 1
-        if candidate is not None and (best is None or max(candidate) < max(best)):
-            best = candidate
-    if best is None:
-        best = [1 << bit for bit in range(element_count)]
-    return {
-        "elements": best,
-        "search_metadata": {
-            "algorithm": "greedy descending scan with exact subset-sum bitset, over a seeded fixed cap grid",
-            "seed": seed,
-            "cap_start": min(caps) if caps else None,
-            "cap_stop": max(caps) if caps else None,
-            "cap_step": (caps[1]-caps[0]) if len(caps)>1 else 0,
-            "cap_trials_completed": completed,
-            "reference_data_read": False,
-        },
-    }
+    rng=random.Random(int(os.environ.get("MATHBENCH_SEED","0")))
+    best=[Fraction(x) for x in initial()["coefficients"]]; score=_score(best)
+    deadline = search_deadline()
+    for _attempt in search_steps(20):
+        cand=best[:]; i=rng.randrange(208); cand[i]=max(Fraction(0),cand[i]+rng.randint(-100,100))
+        if not any(cand): continue
+        value=_score(cand)
+        if value<score: best,score=cand,value
+    return {"coefficients":[str(x) for x in best]}

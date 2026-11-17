@@ -69,7 +69,7 @@ def run():
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(contents)
         hashes[str(relative)] = hashlib.sha256(contents).hexdigest()
-    save(dest/'manifest.json',{'task_id':task,'started_utc':datetime.now(timezone.utc).isoformat(),'scope':'AI-assisted exploratory construction search from task seeds. This is not an isolated model benchmark. No record claim.','development_exposure':('Luna reported accidentally displaying human.py during development; no witness use reported. Exclude from isolated cold-start model comparisons.' if task=='T012' else 'Search programs must not read human, reference, or SOTA witnesses; filesystem access was not security-isolated.'),'controls':controls,'iteration_count':None,'iteration_note':'Where emitted, actual search counts are in solution metadata. Other programs use time cutoffs and do not expose iteration counts; exact replay uses the saved witness.','generation_seconds':300,'verification_seconds':60,'threads':1,'memory_bytes':4*1024**3,'memory_limit_enforced':sys.platform!='darwin','source_sha256':hashes,'python':sys.version,'platform':platform.platform(),'command':f'.venv/bin/python scripts/search.py run {task}','note':'Destination must be new for rerun. Time cutoffs depend on machine. Source snapshots include comparison programs; search does not load them. Local runner is not a security sandbox.'})
+    save(dest/'manifest.json',{'task_id':task,'started_utc':datetime.now(timezone.utc).isoformat(),'scope':'AI-assisted exploratory construction search from task seeds. This is not an isolated model benchmark. No record claim.','development_exposure':('Luna reported accidentally displaying human.py during development; no witness use reported. Exclude from isolated cold-start model comparisons.' if task=='T069' else 'Search programs must not read human, reference, or SOTA witnesses; filesystem access was not security-isolated.'),'controls':controls,'iteration_count':None,'iteration_note':'Where emitted, actual search counts are in solution metadata. Other programs use time cutoffs and do not expose iteration counts; exact replay uses the saved witness.','generation_seconds':300,'verification_seconds':60,'threads':1,'memory_bytes':4*1024**3,'memory_limit_enforced':sys.platform!='darwin','source_sha256':hashes,'python':sys.version,'platform':platform.platform(),'command':f'.venv/bin/python scripts/search.py run {task}','note':'Destination must be new for rerun. Time cutoffs depend on machine. Source snapshots include comparison programs; search does not load them. Local runner is not a security sandbox.'})
     manifest_path=dest/'manifest.json';manifest=json.loads(manifest_path.read_text())
     manifest.update(scope='AI-assisted local continuation search with optional own-best warm starts; not an isolated model comparison.',command=shlex.join(['.venv/bin/python','scripts/search.py','run',*sys.argv[1:]]),seeds=args.seeds,configuration_ids=[c['id'] for c in configurations],worker_cpu=min(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else None,warm_start_sha256={})
     save(manifest_path,manifest)
@@ -171,7 +171,7 @@ def audit():
     from fractions import Fraction as F
     from pathlib import Path
     ROOT=Path(__file__).resolve().parents[1];base=ROOT
-    keys={'T099':'tile_count','T100':'triangle_count','T098':'outer_side','T095':'face_count','T097':'polygon_count','T093':'packed_value','T091':'row_count','T090':'energy','T088':'cutwidth','T087':'minimum_autocorrelation_ratio','T085':'radius','T084':'diameter','T082':'army_size','T081':'distance_ratio','T079':'union_cardinality','T078':'determinant','T075':'edge_count','T076':'largest_element','T074':'area_ratio','T073':'point_count','T072':'max_size','T071':'code_size','T070':'square_count','T069':'tour_cost','T068':'code_size','T067':'code_size','T066':'three_point_lines','T065':'unit_pairs','T064':'steiner_count','T062':'cardinality','T061':'edge_count','T060':'one_count','T058':'round_count','T059':'clique_cardinality','T057':'route_cost','T055':'satisfied_soft_weight','T056':'makespan','T054':'peak_sidelobe','T053':'minimum_factor','T051':'sequence_length','T052':'code_size','T050':'induced_path_edges','T049':'distance_count','T048':'comparator_count','T047':'difference_basis_size','T045':'linear_arrangement_cost','T044':'order','T043':'code_size','T042':'cardinality','T041':'sum_sides','T040':'volume','T039':'scope','T038':'square_count','T035':'point_count','T036':'crossings','T037':'direction_count','T034':'prefix_length','T032':'ones','T033':'cut_weight','T031':'string_length','T030':'color_count','T028':'makespan','T029':'rank_terms','T027':'quadratic_cost','T026':'prefix_length','T025':'points','T024':'edges','T022':'vertices','T023':'rows','T001':'radius','T003':'sum_radii','T005':'minimum_triangle_area','T006':'order','T007':'span','T008':'blocks','T009':'minimum_distance','T010':'codewords','T011':'independent_words','T013':'energy','T014':'exact_objective','T015':'exact_objective','T016':'exact_objective','T017':'maximum_overlap','T018':'absolute_determinant','T019':'diameter','T020':'additions'}
+    keys={'T010':'tile_count','T036':'triangle_count','T009':'outer_side','T028':'face_count','T029':'polygon_count','T006':'packed_value','T055':'row_count','T075':'energy','T044':'cutwidth','T079':'minimum_autocorrelation_ratio','T007':'radius','T061':'diameter','T045':'army_size','T023':'distance_ratio','T066':'union_cardinality','T014':'determinant','T037':'edge_count','T062':'largest_element','T018':'area_ratio','T016':'point_count','T072':'max_size','T049':'code_size','T008':'square_count','T096':'tour_cost','T050':'code_size','T048':'code_size','T022':'three_point_lines','T021':'unit_pairs','T026':'steiner_count','T064':'cardinality','T035':'edge_count','T089':'one_count','T057':'round_count','T039':'clique_cardinality','T097':'route_cost','T098':'satisfied_soft_weight','T095':'makespan','T074':'peak_sidelobe','T090':'minimum_factor','T083':'sequence_length','T052':'code_size','T041':'induced_path_edges','T020':'distance_count','T099':'comparator_count','T060':'difference_basis_size','T043':'linear_arrangement_cost','T031':'order','T051':'code_size','T063':'cardinality','T004':'sum_sides','T015':'volume','T059':'scope','T056':'square_count','T019':'point_count','T025':'crossings','T013':'direction_count','T068':'prefix_length','T034':'ones','T042':'cut_weight','T100':'string_length','T038':'color_count','T094':'makespan','T086':'rank_terms','T093':'quadratic_cost','T067':'prefix_length','T065':'points','T033':'edges','T032':'vertices','T054':'rows','T001':'radius','T002':'sum_radii','T017':'minimum_triangle_area','T030':'order','T058':'span','T053':'blocks','T046':'minimum_distance','T047':'codewords','T040':'independent_words','T073':'energy','T076':'exact_objective','T078':'exact_objective','T077':'exact_objective','T080':'maximum_overlap','T085':'absolute_determinant','T087':'diameter','T088':'additions'}
     results=[]
     for p, d in search_summaries(base):
         task=d['task_id'];folder=p.parent
@@ -186,14 +186,14 @@ def audit():
                 q=row.get('independent_quantity',{})
                 try:
                     if task in keys:assert F(str(q[keys[task]]))==F(str(r['objective']))
-                    elif task=='T012':assert abs(float(q['ratio'])-float(r['objective']))<1e-12
-                    elif task=='T002':
+                    elif task=='T069':assert abs(float(q['ratio'])-float(r['objective']))<1e-12
+                    elif task=='T003':
                         import sympy as sp
                         assert sp.simplify(sp.sympify(q['bounding_side'])-sp.sympify(str(r['objective']).replace('sqrt2','sqrt(2)')))==0
-                    elif task in ('T094','T092','T089','T083','T021','T046','T063','T077','T080', 'T101', 'T102'):
+                    elif task in ('T027','T082','T081','T005','T012','T091','T092','T070','T071', 'T024', 'T084'):
                         from scripts.review_search import check_quantity
                         check_quantity(task,q,r)
-                    elif task=='T004':
+                    elif task=='T011':
                         import mpmath as mp
                         with mp.workdps(80):
                             angle=mp.mpf(q['minimum_angle_80_digits']);lo,hi=r['details']['angle_interval']
@@ -214,7 +214,7 @@ def audit():
         passed=checked['validity']==1 and checked['objective']==expected['objective']
         results.append({'attempt':str(path.relative_to(ROOT)), 'config_id':cid,
                         'passed':passed,'errors':[] if passed else ['Saved best failed exact replay']})
-    report={'checks':results,'passed':sum(r['passed'] for r in results),'failed':sum(not r['passed'] for r in results),'note':'Failed setup attempts are preserved. Main report selects corrected runs. Numeric independent checks for T004 and T012 support the exact or interval checker; they do not replace its certificate.'}
+    report={'checks':results,'passed':sum(r['passed'] for r in results),'failed':sum(not r['passed'] for r in results),'note':'Failed setup attempts are preserved. Main report selects corrected runs. Numeric independent checks for T011 and T069 support the exact or interval checker; they do not replace its certificate.'}
     # Checks are printed; task-local run artifacts contain the evidence.
     print('Audit',report['passed'],'passed;',report['failed'],'failed attempt/configuration checks')
     for r in results:
@@ -222,7 +222,7 @@ def audit():
 
 
 # Keep the original search priorities. The registry supplies the remaining tasks.
-_RESUME_PRIORITY = 'T013 T015 T018 T005 T014 T016 T017 T001 T004 T002 T003 T007 T008 T009 T010 T011 T012 T019 T020 T006'.split()
+_RESUME_PRIORITY = 'T073 T078 T085 T017 T076 T077 T080 T001 T011 T003 T002 T058 T053 T046 T047 T040 T069 T087 T088 T030'.split()
 
 
 def resume_order():

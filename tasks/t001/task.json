@@ -33,5 +33,6 @@
     "limitations": [
       "公开最好值限于已查来源。未声称已证明全局最优。"
     ]
-  }
+  },
+  "category": "geometric_packing_covering"
 }

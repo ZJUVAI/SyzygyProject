@@ -2,75 +2,20 @@
 
 Status: `accepted_by_sol`.
 
-## Fixed configuration
+The fixed configuration is a binary length-16 code correcting one deletion. A candidate is valid when no two distinct codewords share any length-15 string obtained by deleting one bit. The checker forms every distinct one-deletion output and checks pairwise disjointness exactly. It does not assume that each codeword has 16 distinct outputs.
 
-- Configuration: `T049-C01`, 91 distinct points in the Euclidean plane.
-- Objective: minimize the number of distinct positive pairwise Euclidean distances.
-- Direction: minimize. A lower objective is better.
-- Frozen human reference: `H=34`.
-- Published lower bound: `m(91)>=9`, from the inequality `n-1<=k(k+1)` in
-  Erdős (1946), Theorem 1.
-- Human source: Erdős and Fishburn (1996), Table 1, `L_delta`, `n=91`,
-  `k=34`, `s=6`. The coordinate reconstruction is in `human.py`.
-- Fixed reference: `data/reference/hexagon_n91.json`.
-- Reference SHA-256:
-  `0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac`.
-- Source evidence and the bounded open-status check:
-  `data/source/research_evidence.md`.
+The frozen VT_0(16) witness is stored at `data/human/vt16_3856.json`, SHA-256 `f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae`. The human asset is a separate copy at `data/human/vt16_3856.json` with the same hash. The formula program independently reconstructs all 3,856 words from the checksum modulo 17, and the checker confirms their deletion outputs are disjoint.
 
-## Verification method
+The 2026 paper, arXiv:2504.00613v2, §1 and §2.2 says VT codes are conjectured maximum for all finite lengths and that optimality is proved only for n≤11. Its §5.1 Table 1 records 3,856 at n=16 for VT_0 and an LP upper bound of 4,202. The same paper reports an AI-assisted priority-function rediscovery proved equivalent to VT_0; it reaches the same 3,856 and does not prove the n=16 maximum. Classical and AI-assisted provenance are recorded separately.
 
-The checker verifies an irreducible primitive integer minimal polynomial and
-uses an exact Sturm root count to confirm one real root in the supplied
-rational interval. It reduces rational coordinate polynomials modulo that
-minimal polynomial. It then computes every one of the 4095 squared distances
-in `Q(alpha)` and counts equal reduced coefficient tuples. This is exact; no
-floating-point coordinate or distance comparison is used. Any optional
-candidate score is ignored, and the complete validation result is invariant
-under changes to `objective`, `score`, or `claimed_score`.
+The initial program returns the valid one-word code `{0}`. The fixed-seed traditional baseline greedily scans two random permutations of all 65,536 words, adding a word only if all its deletion outputs are new. Seed 0 yielded 1,941 codewords after 131,072 candidate visits in 0.992 seconds. The verified witness is saved in `data/search/seed-0.json`; the replay command and environment are in `data/search/seed-0.metadata.json`. The baseline does not read either comparison witness.
 
-An independent direct enumeration of the lattice displacement form
-`a^2+ab+b^2` also returned 34 values from 91 points. The task checker returned
-34 for both the independently rebuilt human construction and the frozen
-reference.
-
-## Initial program and traditional search
-
-The initial program is 91 collinear integer points and has 90 distinct
-distances. The traditional baseline samples 91-point subsets of the 10 by 10
-integer square grid, keeps its best exact integer squared-distance count, and
-uses seed 0 by default. It has 128 fixed attempts. Its saved seed-0 result is
-in `data/search/baseline_seed_0.json`; it has objective 49. It does not read the
-human or reference witness.
-
-## Validation performed
-
-Commands run with the repository `.venv`:
+Validation command:
 
 ```sh
-.venv/bin/python -m pytest tasks/t049 -q
-.venv/bin/python -m json.tool tasks/t049/task.json >/dev/null
-.venv/bin/python -m json.tool tasks/t049/data/bestknown.json >/dev/null
+.venv/bin/python -m pytest tasks/t049/test_task.py -q
 ```
 
-Results:
+The tests cover all five entries, the exact VT checksum witness, repeated deletion outputs within a word, a deliberately colliding pair, duplicates, invalid types and ranges, ignored claimed scores, repeatable seeded search, and `_run` error/timeout behavior without changing the task registry. Default generation and verification budgets are 300 and 60 seconds, with 4 GiB and one thread.
 
-- Task tests after the coordinate-domain, open-problem source, and lower-bound
-  updates: 18 passed in 13.36 seconds.
-- Human reconstruction and frozen reference: exact objective 34.
-- Initial collinear seed: exact objective 90.
-- Traditional baseline, seed 0, 128 iterations: exact objective 49.
-- Independent triangular-lattice formula enumeration: 91 points and 34
-  squared-distance values.
-- Runner candidate-error and timeout cases use `mathbench.evaluate._run`;
-  both passed in the task tests. The task ID remains unregistered until Sol
-  admission, so no shared registry change was made.
-
-## Source and optimality limits
-
-Table 1 supports a 34-distance construction. OEIS A186704 currently lists
-the exact sequence only through 13, and the checked sources did not report an
-exact value for 91. This does not prove that no exact result exists. The
-configuration is an open candidate based on the checked survey; Sol should
-recheck this status before admission. The checker certifies feasible scores,
-not global optimality.
+Result: 15 passed in 24.29 seconds on Python 3.13.12, Linux x86_64. JSON syntax checks passed for the task definition, SOTA, records, and saved run metadata. `git diff --check -- tasks/t049` passed.

@@ -1,10 +1,13 @@
-"""Fixed archived BCH-dual construction."""
+"""Fixed, reproducible degree-146 comparison construction."""
+
 import json
 import os
 from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T091-C01") != "T091-C01":
-        raise ValueError("unsupported configuration")
-    return json.loads((Path(__file__).parent / "data/human/bch_dual_oa4096.json").read_text())
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T091-C01")
+    if config_id != "T091-C01":
+        raise ValueError(f"unsupported configuration: {config_id}")
+    path = Path(__file__).parent / "data" / "reference" / "h1_power_73.json"
+    return json.loads(path.read_text(encoding="utf-8"))

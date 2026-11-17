@@ -1,33 +1,29 @@
-# T100：固定规模图的最少三角形
-
-## English
-
-The graph has the fixed vertex set `0,...,49` and exactly 700 distinct undirected edges. It has no loops. The objective is to minimize its number of triangles. The checker considers every simple graph on these vertices. It does not restrict candidates to a multipartite family.
-
-Liu, Pikhurko, and Staden define a construction `H*` for each `(n,e)` in Definition 1.1 of their 2020 paper. At `(50,700)`, it has part sizes `(23,23,4)`. The complete tripartite graph has 713 edges and 2,116 triangles. Remove 13 edges from one vertex in the part of size 4 to distinct vertices in one part of size 23. This leaves 700 edges and `2,116 - 13*23 = 1,817` triangles. The published construction is a feasible upper bound. It is not a proof of the finite optimum.
-
-The 2020 theorem proves the conjectured answer for sufficiently large `n` in its stated density range, with an unspecified threshold. It does not certify this `n=50` instance. The authors state the all-finite claim as Conjecture 1.11. The current problem-pack snapshot also labels this row “no; conjectured.” The later Liu–Pikhurko note (arXiv v2 last revised 2024-10-07; journal version 2025) discusses the amended conjecture for clique sizes `r>=4`; it does not settle this triangle instance. Searches checked on 2026-11-07 found no fixed-parameter proof for `(50,700)`. This is a bounded source check, not proof that no result exists.
-
-The asymptotic density theorem and blow-up bound give `g_3(50,700) >= 49000/27`, so integrality gives a lower bound of 1,815. This leaves a gap of two below the 1,817 construction. Near-Mantel supersaturation does not close it: the excess above Mantel is 75, while its quoted range requires `q < n/2 = 25`.
-
-The frozen reference is an exact local reconstruction of the published `H*` formula. The input problem pack supplied the parameter row and its status; its API snapshot is stored under the ignored `runs/` directory with a SHA-256 hash. The witness itself is generated from the paper's formula and checked locally.
+# T100：七符号最短超排列
 
 ## 中文
 
-图的顶点固定为 `0,...,49`，并且恰有 700 条不同的无向边。图中没有自环。目标是最小化三角形数量。检查器接受这些顶点上的任意简单图，不限制为完全多部图。
+本任务固定字母表 `1` 至 `7`。候选须返回一个字符串，使每个七符号排列都至少出现一次，且必须作为长度为 7 的连续子串出现。目标是最小化字符串长度。校验器检查所有长度为 7 的窗口，并精确重算长度。重复出现的排列允许；声明分数不会用于评分。
 
-Liu、Pikhurko 和 Staden 在 2020 年论文定义 1.1 中为每个 `(n,e)` 给出构造 `H*`。在 `(50,700)` 时，三部大小为 `(23,23,4)`。对应的完全三部图有 713 条边和 2,116 个三角形。从大小为 4 的一部中取一个顶点，删除它与大小为 23 的一部中 13 个不同顶点相连的边。所得图有 700 条边和 `2,116 - 13*23 = 1,817` 个三角形。论文构造给出可行上界，不能证明该有限参数的最优值。
+唯一配置为 T100-C01，共有 5040 个目标排列。配置状态为“已通过 Sol 验收（2026-11-06）”。
 
-2020 年论文的定理只在其指定密度范围内、对充分大的 `n` 证明猜想答案，门槛没有给出。它不自动证明 `n=50`。作者把所有有限参数的结论列为猜想 1.11。当前问题包快照也将这一行标为“no; conjectured”。Liu 和 Pikhurko 后续论文的 arXiv v2 最后修订于 2024-10-07，期刊版发表于 2025 年；该文讨论 `r>=4` 的修订猜想，没有解决本三角形配置。截至 2026-11-07 的来源核查没有找到 `(50,700)` 的固定参数证明。这是有限来源范围的核查，不等于证明不存在其他结果。
+公开来源中，Andrei Teodorescu 于 2026-08-17 发布了长度 5905 的字符串及搜索代码线索。Andrew Balint 报告检查了全部 5040 个排列。我们下载其中一个附件，并独立重算出 5905 个字符和 5040 个排列。公开来源没有说明是否使用 AI，因此记录为来源未披露。
 
-渐近密度定理及其放大下界给出 `g_3(50,700) >= 49000/27`，由整数性得到下界 1,815。与 1,817 的构造相差 2。近 Mantel 超饱和定理不能闭合此差距：超过 Mantel 界的边数为 75，而引用定理要求 `q < n/2 = 25`。
+Ashlock 与 Tillotson 的递归构造可重建长度 5913 的同参数人类方法基线。`human.py` 从底层递归规则生成见证，保存于 `data/reference/human_ashlock_tillotson_5913.txt`，并由校验器逐窗口复核。公开的 5905 见证保存于 `data/reference/public_5905_attachment.txt`。这两个文件仅供对照，不进入简单初始程序或传统搜索。这个值不是公开纪录。
 
-冻结参考是按论文 `H*` 公式精确重建的构造。输入问题包提供了参数行及其状态。API 快照及 SHA-256 保存在忽略的 `runs/` 目录中。见证由论文公式生成，并由本地检查器复核。
+最优性尚未确定。当前 5901 下界包标明部分 Lean 方程尚未求值，且多项搜索计数依赖单一程序。本任务不把它作为完整复核的证明。另一份公开 Lean 工件给出下界 5898，但依赖本机原生求值与编译工具链。最佳公开上界 5905 与下界之间仍有缺口。
 
-## 运行
+初始程序独立拼接 5040 个排列，不读取比较见证。传统基线对所有排列做带种子的最大重叠贪心搜索，也不读取比较见证。
 
-```sh
-.venv/bin/python -m pytest tasks/t100/test_task.py -q
-.venv/bin/python -m json.tool tasks/t100/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t100/data/bestknown.json > /dev/null
-```
+## English
+
+This task fixes the alphabet `1` through `7`. A candidate returns a string that contains every permutation of the seven symbols at least once. Each permutation must occur as a contiguous substring of length 7. The objective is to minimize the string length. The checker reads every length-7 window and recomputes the length. A permutation may occur more than once. The checker ignores claimed scores.
+
+The only configuration is T100-C01. It requires all 5,040 permutations. Its status is accepted by Sol on 2026-11-06.
+
+Andrei Teodorescu posted a 5,905-symbol string and search-code details on 2026-08-17. Andrew Balint reported checking all 5,040 permutations. We downloaded one attachment and independently counted 5,905 symbols and all 5,040 permutations. The public source does not say whether AI contributed. The record marks its AI provenance as undisclosed.
+
+Ashlock and Tillotson's recursive construction can be rebuilt as a same-parameter human-method baseline of length 5,913. `human.py` generates the witness from the recursive rule. The saved witness is `data/reference/human_ashlock_tillotson_5913.txt`. The public 5,905 witness is saved in `data/reference/public_5905_attachment.txt`. These files are comparison assets. The initial program and traditional search do not read them. The checker verifies every window. This value is not the public record.
+
+Optimality is unknown. The current package for the 5,901 lower bound says that some Lean equations have not been evaluated. Many search counts rely on one program. This task does not treat that result as a fully replayed proof. A separate public Lean artifact gives a lower bound of 5,898, with a native evaluator and compiler toolchain in its trust base. A gap remains between the 5,905 public construction and the lower bound.
+
+The initial program concatenates all 5,040 permutations. It does not read comparison witnesses. The traditional baseline uses a seeded maximum-overlap greedy search over all permutations. It also does not read comparison witnesses.

@@ -1,127 +1,69 @@
-from copy import deepcopy
-from fractions import Fraction
-import math
+import json
 import os
-import sys
+import shutil
+import subprocess
+from pathlib import Path
 
 import pytest
-
-from tasks.t040.baseline import run_code as run_baseline
 from tasks.t040.check import validate
-from tasks.t040.evolution import run_code as run_evolution
-from tasks.t040.human import run_code as run_human
+from tasks.t040.init_program import run_code as run_seed
+from tasks.t040.baseline import run_code as run_baseline
+from tasks.t040.human import run_human
 from tasks.t040.reference import run_code as run_reference
-from mathbench.evaluate import _run
 
-
-CONFIG = {
-    "id": "T040-C01",
-    "parameters": {
-        "n": 11,
-        "space": "unit sphere S2 in R3",
-        "objective": "Euclidean volume of the convex hull",
-        "objective_unit": "unit-radius cubed",
-    },
+ROOT = Path(__file__).parent
+CONFIGS = {
+    "T040-C01": ({"q": 7, "power": 5}, 367, 367),
 }
 
+@pytest.mark.parametrize("cid", CONFIGS)
+def test_seed_and_exact_objective(monkeypatch, cid):
+    params, _, _ = CONFIGS[cid]
+    seed_count = 3 ** params["power"]
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", cid)
+    sol = run_seed()
+    config = {"id": cid, "parameters": params}
+    result = validate(sol, config)
+    for fake in (-1, 999999, {"fabricated": True}, ["not", "a", "score"], None):
+        forged = dict(sol, objective=fake, score=fake)
+        assert validate(forged, config) == result
+    assert result["objective"] == seed_count
+    assert result["details"]["claimed_objective_ignored"]
+    assert result["details"]["all_pairs_checked"]
 
-def test_reconstructed_human_and_reference_match_exactly():
-    human = validate(run_human(), CONFIG, strict=True)
-    reference = validate(run_reference(), CONFIG, strict=True)
-    assert human["verification_status"] == reference["verification_status"] == "exact"
-    assert human["objective"] == reference["objective"]
-    assert human["details"]["unique_supporting_planes"] == 18
-    assert human["details"]["triangles_after_face_triangulation"] == 18
-    assert Fraction(human["objective"]) > Fraction(23546, 10000)
-    assert Fraction(human["objective"]) < Fraction(23547, 10000)
+@pytest.mark.parametrize("cid", CONFIGS)
+def test_human_and_reference_replay(monkeypatch, cid):
+    params, human_count, record_count = CONFIGS[cid]
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", cid)
+    config = {"id": cid, "parameters": params}
+    assert validate(run_human(), config, strict=True)["objective"] == human_count
+    assert validate(run_reference(), config, strict=True)["objective"] == record_count
 
+@pytest.mark.parametrize("cid", CONFIGS)
+def test_baseline_valid(monkeypatch, cid):
+    params, _, _ = CONFIGS[cid]
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", cid)
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0.05")
+    assert validate(run_baseline(), {"id": cid, "parameters": params})["verification_status"] == "exact"
 
-def test_claimed_score_does_not_change_recomputed_objective():
-    solution = run_reference()
-    expected = validate(solution, CONFIG, strict=True)
-    assert expected["details"]["claimed_objective_ignored"] is True
-    for field, value in (("objective", "0"), ("score", -1), ("claimed_score", "not numeric")):
-        changed = dict(solution)
-        changed[field] = value
-        assert validate(changed, CONFIG, strict=True) == expected
+@pytest.mark.parametrize("cid", CONFIGS)
+def test_damaged_witness_rejected_and_claim_ignored(monkeypatch, cid):
+    params, _, _ = CONFIGS[cid]
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", cid)
+    sol = run_seed(); sol["objective"] = 999999
+    sol["words"].append(sol["words"][0])
+    with pytest.raises(ValueError): validate(sol, {"id": cid, "parameters": params})
 
+@pytest.mark.parametrize("cid", CONFIGS)
+def test_init_program_cold_export(tmp_path, cid):
+    # Copy only the candidate source: no package, task metadata, or witnesses.
+    shutil.copy(ROOT / "init_program.py", tmp_path / "candidate.py")
+    script = f"import runpy,json; m=runpy.run_path({str(tmp_path / 'candidate.py')!r}); print(json.dumps(m['run_code']()))"
+    env = dict(os.environ, MATHBENCH_CONFIG_ID=cid)
+    out = subprocess.check_output([os.sys.executable, "-I", "-c", script], cwd=tmp_path, env=env, text=True)
+    candidate = json.loads(out)
+    assert len(candidate["words"]) == 3 ** CONFIGS[cid][0]["power"]
+    assert validate(candidate, {"id": cid, "parameters": CONFIGS[cid][0]})["verification_status"] == "exact"
 
-def test_seed_and_evolution_are_self_contained_and_bounded(monkeypatch):
-    from tasks.t040 import init_program
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    monkeypatch.setenv("MATHBENCH_SEED", "0")
-    seed = validate(init_program.run_code(), CONFIG, strict=True)
-    assert Fraction(seed["objective"]) > 0
-    assert run_evolution is run_baseline
-    result = run_baseline()
-    replay = run_baseline()
-    assert result == replay
-    assert Fraction(validate(result, CONFIG, strict=True)["objective"]) > 0
-    assert result["search_metadata"]["seed"] == 0
-    assert result["search_metadata"]["actual_iterations"] == 400
-    assert result["search_metadata"]["iteration_budget"] == 400
-
-
-def test_rejects_duplicate_wrong_size_and_non_sphere_point():
-    solution = run_reference()
-    solution["points"][1] = solution["points"][0]
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
-    solution = run_reference()
-    solution["points"] = solution["points"][:-1]
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
-    solution = run_reference()
-    solution["points"][0] = ["0", "0", "0"]
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
-
-
-@pytest.mark.parametrize("bad", [True, math.nan, math.inf, -math.inf, "nope", "1/0"])
-def test_rejects_bad_coordinate_values(bad):
-    solution = run_reference()
-    solution["points"][0][0] = bad
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG, strict=True)
-
-
-def test_rejects_bad_config():
-    bad = deepcopy(CONFIG)
-    bad["parameters"]["n"] = 10
-    with pytest.raises(ValueError):
-        validate(run_reference(), bad, strict=True)
-
-
-def test_chart_omits_south_pole_and_can_represent_north_pole():
-    solution = run_human()
-    solution["stereographic"][0] = ["0", "0"]
-    result = validate(solution, CONFIG, strict=True)
-    assert result["verification_status"] == "exact"
-    assert result["details"]["input_representation"].endswith("south pole is omitted")
-
-
-def test_worker_reports_program_error_and_timeout_without_registry():
-    with pytest.raises(RuntimeError, match="Worker failed"):
-        _run([sys.executable, "-c", "raise SystemExit(17)"], dict(os.environ), 2)
-    with pytest.raises(TimeoutError, match="Wall time limit exceeded"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], dict(os.environ), 0.1)
-
-
-def test_coplanar_quadrilateral_is_one_face_not_two_duplicate_facets():
-    # Four rational points form a square in z=3/5. Seven other sphere points
-    # lie below its plane. Each triple on the square defines the same exact
-    # supporting plane, which must be counted once and triangulated twice.
-    solution = {
-        "points": [
-            ["4/5", "0", "3/5"], ["0", "4/5", "3/5"],
-            ["-4/5", "0", "3/5"], ["0", "-4/5", "3/5"],
-            ["0", "0", "-1"], ["3/5", "0", "-4/5"],
-            ["-3/5", "0", "-4/5"], ["0", "3/5", "-4/5"],
-            ["0", "-3/5", "-4/5"], ["4/5", "0", "-3/5"],
-            ["-4/5", "0", "-3/5"],
-        ]
-    }
-    result = validate(solution, CONFIG, strict=True)
-    assert result["verification_status"] == "exact"
-    assert result["details"]["unique_supporting_planes"] < result["details"]["supporting_triples_found"]
-    assert result["details"]["triangles_after_face_triangulation"] > result["details"]["unique_supporting_planes"]
+def test_wrong_configuration_parameters_rejected():
+    with pytest.raises(ValueError): validate({"words": []}, {"id": "T040-C02", "parameters": {"q": 7, "power": 5}})

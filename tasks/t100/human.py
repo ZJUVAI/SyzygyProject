@@ -1,28 +1,37 @@
-"""Rebuild the published LPS H* construction for (n,e)=(50,700)."""
+"""Rebuild the classic Ashlock–Tillotson recursive construction."""
 
-import os
+from math import factorial
 
 
-def build_human_graph():
-    # H* has parts A=(23), B=(23), C=(4), all cross-edges, except
-    # 13 edges from c_0 to distinct vertices of B are deleted.
-    part_a = range(0, 23)
-    part_b = range(23, 46)
-    part_c = range(46, 50)
-    edges = []
-    for left in part_a:
-        for right in part_b:
-            edges.append([left, right])
-        for right in part_c:
-            edges.append([left, right])
-    for left in part_b:
-        for right in part_c:
-            if not (right == 46 and left < 36):
-                edges.append([left, right])
-    return {"vertices": 50, "edges": edges}
+def _append_with_maximum_overlap(word, permutation):
+    overlap = min(len(word), len(permutation))
+    while overlap and word[-overlap:] != permutation[:overlap]:
+        overlap -= 1
+    return word + permutation[overlap:]
+
+
+def _recursive_word(n):
+    if n == 1:
+        return "1"
+    previous = _recursive_word(n - 1)
+    order = []
+    seen = set()
+    width = n - 1
+    for start in range(len(previous) - width + 1):
+        permutation = previous[start : start + width]
+        if len(set(permutation)) == width and permutation not in seen:
+            seen.add(permutation)
+            order.append(permutation)
+    if len(order) != factorial(width):
+        raise RuntimeError("recursive source word did not expose every smaller permutation")
+    word = ""
+    for smaller in order:
+        current = smaller + str(n)
+        for _ in range(n):
+            word = _append_with_maximum_overlap(word, current)
+            current = current[1:] + current[0]
+    return word
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T100-C01") != "T100-C01":
-        raise ValueError("unsupported T100 configuration")
-    return build_human_graph()
+    return {"word": _recursive_word(7)}

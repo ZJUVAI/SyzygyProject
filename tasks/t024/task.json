@@ -1,36 +1,56 @@
 {
   "task_id": "T024",
-  "name": "C4-free graph extremal number at order 41",
+  "candidate_id": "max-isosceles-free-grid-subset",
+  "name": "Largest isosceles-free subset of the 100 by 100 grid",
   "acceptance_status": "accepted_by_sol",
-  "official_configuration": "T024-C01",
   "configurations": [
     {
       "id": "T024-C01",
       "parameters": {
-        "vertices": 41,
-        "forbidden_cycle_length": 4
+        "grid_size": 100
       },
       "direction": "maximize",
-      "human_reference": 132
+      "human_reference": 16,
+      "acceptance_status": "accepted_by_sol"
     }
   ],
+  "official_configuration": "T024-C01",
+  "category": "discrete_geometry",
+  "definition": "Given a subset of the fixed zero-based integer grid {0,...,99}^2, maximize its cardinality subject to every three distinct selected points having three pairwise different squared side lengths. Collinear triples are included, so three equally spaced collinear points are forbidden.",
+  "objective": {
+    "name": "point_count",
+    "unit": "grid points",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "each point is an integer pair (x,y) with 0 <= x,y < 100",
+    "points are distinct",
+    "for every three distinct points, all three squared Euclidean side lengths are pairwise different, including degenerate collinear triples"
+  ],
+  "sources": [
+    "https://arxiv.org/abs/2511.02864",
+    "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/59.html",
+    "https://arxiv.org/abs/2411.00566"
+  ],
+  "verification": "Exact integer checks: for each selected apex, squared distances to every other selected point must be distinct. This rejects all isosceles triples, including collinear midpoint triples.",
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "solution_format": {
+    "points": "list of distinct [x,y] integer pairs using zero-based coordinates"
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-06",
+    "date": "2026-11-09",
     "decision": "实现完成并通过Sol验收",
-    "checks": [
-      "same-parameter primary source and open bounds",
-      "independent sparse6 decode",
-      "human and reference replay",
-      "cold seed export",
-      "traditional search",
-      "exhaustive four-vertex subset audit",
-      "claimed scores ignored",
-      "invalid constructions rejected",
-      "program errors and timeout rejected"
-    ],
-    "limitations": [
-      "The live source states that related papers are in preparation; no fixed publication version of this graph archive was located. Archive bytes are frozen by SHA-256."
-    ]
+    "source_review": {
+      "definition": "Problem 6.59 of AlphaEvolve v3, fixed 100 × 100 integer grid, with collinear midpoint triples included. The published 1-based problem is translation-equivalent to the notebook’s 0-based coordinates. Maximize cardinality.",
+      "sources": "The paper reports 164 for n=100 and explicitly states that the authors believe it is not optimal. The official notebook at 8f447457957deac61e28bf1676746f0753b3b2f8 supplies its 164 zero-based coordinates. PatternBoost reports 160 as an AI-assisted earlier lower bound.",
+      "human_baseline": "The four-digit ternary set with digits 0 and 1 has no three-term arithmetic progression. Embedding it in one grid row gives 16 points. This exact frozen comparison is a weak human-method baseline.",
+      "independent_check": "Sorted all squared distances in an independent integer matrix. Verified 2 initial points, 112 from seeded greedy search, 16 from the human method and 164 from the public witness. Strict replay, forged scores, duplicates and execution failures were checked."
+    }
   }
 }

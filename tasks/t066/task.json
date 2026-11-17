@@ -1,32 +1,61 @@
 {
   "task_id": "T066",
-  "name": "Maximum number of exactly-three-point lines among 17 planar points",
+  "name": "Minimum Kakeya set in F_31^3",
   "acceptance_status": "accepted_by_sol",
+  "category": "additive_combinatorics",
+  "definition": "Choose one affine line in every projective direction of F_31^3 and minimize the cardinality of the union of all chosen lines.",
+  "solution_format": "An object with lines, a list of 993 objects. Each object has direction and origin, three integer coordinates in [0,30]. Directions use the canonical representative whose last nonzero coordinate is 1.",
+  "objective": {
+    "name": "union_cardinality",
+    "unit": "points in F_31^3",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "The field is F_31, with arithmetic modulo 31, and the ambient dimension is 3.",
+    "There are 993 projective directions. Each direction must occur exactly once.",
+    "A direction is represented by its unique nonzero vector whose last nonzero coordinate is 1.",
+    "Each line is {origin + t*direction : t in F_31} for one origin in F_31^3.",
+    "All 31 points on every represented line belong to the candidate union. The objective is the exact number of distinct points in that union."
+  ],
   "official_configuration": "T066-C01",
   "configurations": [
     {
       "id": "T066-C01",
       "parameters": {
-        "point_count": 17,
-        "ambient_space": "Euclidean plane R^2",
-        "coordinate_domain": "real algebraic coordinates in a common real algebraic number field",
-        "objective": "number of distinct lines containing exactly 3 input points"
+        "field_order": 31,
+        "dimension": 3,
+        "direction_count": 993,
+        "construction": "one affine line in each projective direction",
+        "objective": "cardinality of the union of the represented lines"
       },
-      "direction": "maximize",
-      "human_reference": 40
+      "direction": "minimize",
+      "human_reference": 8641
     }
   ],
+  "sources": [
+    "https://arxiv.org/abs/2108.00074",
+    "https://arxiv.org/html/2608.23691v2",
+    "https://dualverse.ai/station/math/finite-field-kakeya/",
+    "https://arxiv.org/abs/2511.02864"
+  ],
+  "verification": "The checker requires exactly one canonical line for each of the 993 projective directions. It generates all 31 points per line using integer arithmetic modulo 31, forms the exact union, and returns its cardinality.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "固定17个互异平面点，最大化含恰好3个输入点的不同直线数；4点或更多共线不计。共同实代数域可覆盖有限实点incidence模式，不限制特定三次曲线。",
-      "primary_source": "Sol亲自读取Green–Tao1208.4714v3 §2 Theorem2.5后acnodal y²=x²(x−1)的cot参数化和Proposition2.6有限子群计数。取k/17，原齐次[sinθ,cosθ,sin³θ]交换后两坐标，odd17的cosθ非零，得(tanθ,tan³θ/(1+tan²θ))。Pegg2018只作同参数40线公开证据，不声称所保存坐标与其图片相同。",
-      "independent_math": "正式checker用自实现分式多项式域运算，规范化每条直线并统计完整incidence。Sol另用Sympy模多项式除法及逆元重建17阶tangent循环，逐点验证坐标及v(1+u²)=u³，t17=0；独立符号行列式分解为Vandermonde乘abc−a−b−c。三次曲线无直线分支，故至多3点共线；index和0mod17的无序三元组恰40。初始及搜索有理构造另用Fraction行列式incidence集合独立计数。",
-      "open_status": "当前OEIS A003035与Friedman原作者表仍给17点40–42；15点2026新增闭合31、16点37均排除。Green–Tao上界定理仅充分大n，其全局最优性证明不用于n17；有限子群构造公式则对n≥3适用。",
-      "controls": "初始0、传统及演化13、人类及参考40。五程序、重复点破坏、完整声明不变、严格回放、冷导出、异常/非有限/超时均通过，任务及共享检查21项通过。移除无证明的坐标多项式长度上限，整数任意精度受公共资源预算控制。",
-      "limits": "未证明40最优；没有从Pegg图片提取舍入点或声称运行完整原始研究搜索。独立群公式审计只针对保存的经典构造，正式checker支持一般实代数点。"
+      "definition": "Minimum Kakeya set in F31^3, specified by one arbitrary affine line in each of993 projective directions. Taking union does not restrict the minimum: every Kakeya set contains such a choice and its union is no larger. No quadratic-template restriction in formal candidate domain.",
+      "human_source": "Classical odd-field quadratic residue construction as recorded in Bukh-Chao2021 section4. Root independently generates its membership predicate on all29791 points and matches human line union exactly:8641 =30*16^2+31^2.",
+      "public_reference": "Station/Dualverse Chung-Du-Wesley2608.23691v2 section6.1 S1 equation1, AI-generated construction. Root independently builds the quadratic membership set plus the rational one-pole plane boundary; formula(2p^3+7p^2+3)/8 gives8289 at31 and matches saved reference line union exactly. First-party notebook and paper archived. Non-primary8288 claim excluded; AlphaEvolve8290 remains a separately scoped un-reproduced report.",
+      "open_status": "Bukh-Chao leading constant1/4 is asymptotically sharp, not an exact finite31 optimum. Finite reported lower bound ceil(31^5/61^2)=7694, arithmetic recomputed; underlying general theorem cited. Station section6.1 explicitly leaves lower-order corrections open. No same-parameter optimality proof located.",
+      "independent_method": "Root projectivizes all30790 nonzero vectors and obtains993 directions, then iterates modular additions into a dense29791-byte bitmap. Formal checker uses a prescribed chart and sets of t-times-direction triples. Additional independent full-space membership reconstruction verifies both external formulas.",
+      "initial_search_and_admission": "Standalone all-lines-through-origin seed29791. Own generic baseline17574 and evolution15534; external human8641/reference8289 never read by candidate searches. All five strict runs, claim-invariant complete checker returns, duplicate-direction damage, replay, cold export and error/nonfinite/timeout controls passed."
     }
   }
 }

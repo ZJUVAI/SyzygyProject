@@ -1,3 +1,6 @@
-"""Replay the shared witness for the public reference role."""
+"""Reference accessors for recorded constructions."""
+from human import run_code as human_program
 
-from tasks.t069.human import run_code as run_code
+
+def run_code():
+    return human_program()

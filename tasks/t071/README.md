@@ -1,89 +1,102 @@
-# T071: Maximum binary single-deletion-correcting code at length 16
+# T071: 有限和差集指数证书
 
-## Definition
+## 数学目标
 
-Choose a set `C` of distinct 16-bit binary words. If any one bit is deleted from a codeword, the remaining 15-bit string must identify that codeword uniquely. In exact terms, for any two different codewords, their sets of length-15 strings obtained by one deletion must be disjoint. Maximize `|C|`.
+选择非负整数集合 \(U\)，满足 `2≤|U|≤512`、`0∈U`、`max(U)≤1000000`。令
 
-The number of distinct outputs from one codeword can be less than 16 when it has repeated bits. Therefore, simply dividing all 16-bit words by a fixed ball size is not a valid exact bound. The checker verifies the full deletion-output sets directly, using integer bit strings.
+\[
+s=|U+U|,\qquad d=|U-U|,\qquad q=2\max(U)+1.
+\]
 
-## Same-parameter human construction
+所有有序对都参与和差运算。最大化
 
-The classical Varshamov–Tenengolts class `VT_0(16)` is defined by
+\[
+\theta(U)=1+\frac{\ln(d/s)}{\ln(q)}.
+\]
 
-```text
-sum(i * x_i for i = 1..16) == 0 (mod 17)
-```
+另须严格满足 `d<q`。这条严格不等式是 GHR 有限构造引理的明确前提。检查器用整数精确计算 `s`、`d` 和 `q`，再用向外舍入区间计算对数分数，并将区间下端作为最大化的保守成绩。
 
-where `x_i` is the bit at one-based position `i`. The checksum class is traced to Varshamov and Tenengolts' 1965 work on single asymmetric errors. Levenshtein established its single-deletion correction property. The exact formula is also stated in §2.2 of the 2026 paper. It has 3,856 words at length 16. The task generates this code from the formula and verifies every deletion output.
+## 来源与有限人类见证
 
-The frozen public list is stored separately from the formula-based human program. Both independently check to 3,856 words.
+Gyarmati、Hennecart、Ruzsa 的《Sums and Differences of Finite Sets》手稿日期为 2008-05-30。第 2 节在式 (11) 前的引理中，对含 0 的有限非负整数集定义 `s=|U+U|`、`d=|U-U|`、`q=2 max(U)+1` 和 `θ=1+ln(d/s)/ln(q)`。引理要求严格 `d<q`，然后用该指数构造具有任意大 `|B|` 的整数集对，并给出和集上界及差集指数下界。因此本任务优化的是一个有限见证所提供的指数参数；它不等于 T069 或 T070 的单集合目标，也不是该渐近定理本身的结论。
 
-## Open status and AI-assisted record
+同一论文第 2 节式 (13)–(15) 给出
 
-Weindel and Heckel's 2026 arXiv v2 states that VT codes are conjectured to be maximum for every finite length, while optimality has been proved only through length 11. Its §5.1, Table 1 gives the n=16 VT construction as 3,856 and an LP upper bound of 4,202. Thus the selected length-16 maximum remains open in the sources checked on 2026-11-06.
+\[
+V(m,L)=\{(x_1,\ldots,x_m)\in\mathbb{Z}_{\ge0}^m:\sum_i x_i\le L\}
+\]
 
-The same paper reports an LLM-guided evolutionary rediscovery of a priority function proved equivalent to `VT_0`, including size 3,856 at n=16. We record this AI-assisted result separately. It equals the classical code size and does not prove the n=16 maximum.
+的基数、和集与差集基数，以及整数投影权重递推 \(L_0=1,L_{j+1}=2L L_j+1\)。取 `m=6,L=5` 得权重 `[1,11,111,1111,11111,111111]`。完整投影有 462 个不同整数，最大值 555555；闭式和全对枚举都给出 `s=8008,d=39733`。因此 `q=1111111`，严格条件 `39733<1111111` 成立。分数区间为
 
-## Search entries
+\[
+1+\frac{\ln(39733/8008)}{\ln(1111111)}
+=1.1150604037411407350410450588386944094785376751\ldots
+\]
 
-The initial program returns the one-word code `{0}`. The traditional baseline scans random permutations of all 65,536 words and greedily adds a word when its deletion outputs do not conflict with earlier choices. It does not read human or reference witnesses. The fixed default uses two trials; the seed comes from `MATHBENCH_SEED`. `MATHBENCH_SEARCH_SECONDS` can set an exploratory wall-clock cutoff.
+论文还讨论了最多 11 个元素的小集合上的最佳指数，但本配置允许最多 512 个元素，不能据此断言本配置最优。文中其他渐近指数也不是这个有限见证的分数。本任务没有发现本配置的最优性证明。
 
-## Sources
+## 与 T069 和 T070 的区别
 
-- R. R. Varshamov and G. M. Tenengolts, [Codes which correct single asymmetric errors](https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper), *Avtomatika i Telemekhanika* 26 (1965), 288–292.
-- V. I. Levenshtein, [Binary codes capable of correcting deletions, insertions, and reversals](https://nymity.ch/sybilhunting/pdf/Levenshtein1966a.pdf), Russian original 1965; English translation in *Soviet Physics Doklady* 10 (1966), 707–710.
-- Franziska Weindel and Reinhard Heckel, [LLM-Guided Search for Deletion-Correcting Codes](https://arxiv.org/abs/2504.00613), arXiv:2504.00613v2, 2026-06-05; HTML revision checked 2026-11-06. See §1, §2.2 and §5.1 Table 1.
+T069 的目标是 `ln(|A+A|/|A|)/ln(|A-A|/|A|)`。令 `A={0,2,3,4,7,11,12,14}`，以及 `B=A∪(A+1000)`。两者都满足 T069 的 `s>d>n` 前置检查，也满足 T071 的 `d<q`。T069 的成绩分别为 `1.0344212156…` 和 `1.0253872280…`，将 A 排在 B 前；T071 的成绩分别为 `0.9883524599…` 和 `0.9948497470…`，将 B 排在 A 前。
 
-## Reproduction
+T070 的目标是 `ln(|U-U|)/ln(|U+U|)`。令 C 为 `V(2,3)` 投影，D 为 `V(18,1)` 投影。两者都满足 T071 配置和严格条件。T070 将 D 排在 C 前，分数约为 `1.1125793` 和 `1.0836423`；T071 将 C 排在 D 前，分数约为 `1.0741023` 和 `1.0448531`。四个集合和精确区间保存在 `data/source/objective_distinction_examples.json`。
 
-Set `MATHBENCH_CONFIG_ID=T071-C01` and run any of the five `run_code()` entries. Run tests with:
+## 运行
 
 ```sh
-.venv/bin/python -m pytest tasks/t071/test_task.py -q
+.venv/bin/python -m tasks.t071.init_program
+.venv/bin/python -m tasks.t071.baseline
+.venv/bin/python -m tasks.t071.evolution
+.venv/bin/python -m tasks.t071.human
+.venv/bin/python -m tasks.t071.reference
+.venv/bin/python -m pytest tasks/t071 -q
 ```
+
+初始程序是简单可行集合 `{0,1,4}`。传统搜索和演化搜索从该集合开始，只尝试自己的整数增删和替换，不读取对照数据。全部五个程序实现 `run_code()`。默认生成预算为 300 秒，验证预算为 60 秒，内存上限 4 GiB，单线程。状态：`accepted_by_sol`。
 
 ---
 
-# T071：长度 16 的最大二元单删除纠错码
+# T071: Finite sum-difference exponent certificate
 
-## 定义
+## Objective
 
-选择一组互异的 16 位二元串 `C`。删除任一码字中的任意一位后，剩余的 15 位串必须唯一确定原码字。精确定义是：任意两个不同码字在单次删除后得到的 15 位串集合互不相交。最大化 `|C|`。
+Choose a set \(U\) of nonnegative integers with `2≤|U|≤512`, `0∈U`, and `max(U)≤1000000`. Let
 
-若一个码字有连续相同位，删除不同位置可能得到相同输出，因此其不同删除输出数可能小于 16。不能用固定球大小直接除以总字数作精确上界。检查器直接构造并检验各码字的全部不同删除输出。
+\[
+s=|U+U|,\qquad d=|U-U|,\qquad q=2\max(U)+1.
+\]
 
-## 同参数人类构造
+Use all ordered pairs. Maximize
 
-经典 Varshamov–Tenengolts 类 `VT_0(16)` 定义为
+\[
+\theta(U)=1+\frac{\ln(d/s)}{\ln(q)}.
+\]
 
-```text
-sum(i * x_i for i = 1..16) == 0 (mod 17)
-```
+The set must also satisfy `d<q`. This strict inequality is an explicit hypothesis of the GHR finite construction lemma. The checker counts both integer sets exactly, checks the inequality, then computes an outward-rounded score interval. It reports the lower endpoint as a conservative maximization score.
 
-其中 `x_i` 是从 1 开始编号的第 `i` 位。该校验和类源自 Varshamov 与 Tenengolts 1965 年关于单次非对称错误的工作；Levenshtein 证明了它可纠正一次删除。2026 年论文第 2.2 节也给出同一公式。长度 16 时有 3,856 个码字。任务按公式生成构造，并精确检查每种删除输出。
+## Source and finite human witness
 
-公开码字列表和公式程序分别保存。两者都独立验得 3,856 个码字。
+The May 30, 2008 manuscript *Sums and Differences of Finite Sets* by Gyarmati, Hennecart, and Ruzsa defines `s`, `d`, `q`, and `theta` in a lemma in Section 2 before equation (11). It requires `d<q` before deriving finite integer-set pairs with arbitrarily large `|B|` and an exponent bound. T071 optimizes this finite witness parameter. It is not the T069 or T070 single-set score and is not the asymptotic theorem itself.
 
-## 开放状态与 AI 辅助记录
+Section 2 equations (13)–(15) give the simplex vectors `V(m,L)`, exact counts, and projection weights `L_0=1`, `L_(j+1)=2L L_j+1`. With `m=6,L=5`, the weights are `[1,11,111,1111,11111,111111]`. The projected set has 462 distinct elements, maximum 555555, `s=8008`, and `d=39733`. Thus `q=1111111` and `39733<1111111`. Its score interval contains `1.1150604037411407350410450588386944094785376751...`.
 
-Weindel 和 Heckel 的 2026 年 arXiv v2 说明，VT 码被猜想在所有有限长度都最大，但目前只证明到长度 11。该文第 5.1 节表 1 给出 n=16 时 VT 构造大小 3,856，线性规划上界为 4,202。因此，截至 2026-11-06 检查的来源，所选长度的最大值仍未解决。
+The paper also studies optimal exponents for small sets of at most 11 elements. This configuration allows up to 512 elements, so that small-set result does not settle it. No optimality proof for this bounded configuration was found.
 
-同文报告 LLM 引导的演化搜索重新发现了一个已证明等价于 `VT_0` 的优先函数，n=16 时也得到 3,856。此 AI 辅助结果单独记录。它与经典码大小相同，也没有证明 n=16 最优。
+## Difference from T069 and T070
 
-## 搜索入口
+T069 scores `ln(|A+A|/|A|)/ln(|A-A|/|A|)`. For `A={0,2,3,4,7,11,12,14}` and `B=A∪(A+1000)`, both satisfy T069's `s>d>n` precondition and T071's `d<q`. T069 scores them `1.0344212156...` and `1.0253872280...`, ranking A first. T071 scores them `0.9883524599...` and `0.9948497470...`, ranking B first.
 
-初始程序返回单字码 `{0}`。传统基线随机排列全部 65,536 个字，并在删除输出与已选字不冲突时贪心加入。它不读取人类或参考见证。默认固定运行两轮，种子来自 `MATHBENCH_SEED`。可用 `MATHBENCH_SEARCH_SECONDS` 设置探索时限。
+T070 scores `ln(|U-U|)/ln(|U+U|)`. Let C be the `V(2,3)` projection and D the `V(18,1)` projection. Both meet T071's limits and strict condition. T070 ranks D over C, with scores about `1.1125793` and `1.0836423`. T071 ranks C over D, with scores about `1.0741023` and `1.0448531`. All sets and certified intervals are saved in `data/source/objective_distinction_examples.json`.
 
-## 来源
-
-- R. R. Varshamov 与 G. M. Tenengolts，[Codes which correct single asymmetric errors](https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper)，*Avtomatika i Telemekhanika* 26 (1965), 288–292。
-- V. I. Levenshtein，[Binary codes capable of correcting deletions, insertions, and reversals](https://nymity.ch/sybilhunting/pdf/Levenshtein1966a.pdf)，俄文原文 1965；英文译文刊于 *Soviet Physics Doklady* 10 (1966), 707–710。
-- Franziska Weindel 和 Reinhard Heckel，[LLM-Guided Search for Deletion-Correcting Codes](https://arxiv.org/abs/2504.00613)，arXiv:2504.00613v2，2026-06-05；HTML 页面于 2026-11-06 检查。参见第 1、2.2、5.1 节表 1。
-
-## 复现
-
-设置 `MATHBENCH_CONFIG_ID=T071-C01` 并运行五个 `run_code()` 入口之一。测试命令：
+## Run
 
 ```sh
-.venv/bin/python -m pytest tasks/t071/test_task.py -q
+.venv/bin/python -m tasks.t071.init_program
+.venv/bin/python -m tasks.t071.baseline
+.venv/bin/python -m tasks.t071.evolution
+.venv/bin/python -m tasks.t071.human
+.venv/bin/python -m tasks.t071.reference
+.venv/bin/python -m pytest tasks/t071 -q
 ```
+
+The initial program is `{0,1,4}`. Traditional and evolutionary search start there and make their own integer-set changes. They do not read comparison data. All five programs expose `run_code()`. Default budgets are 300 seconds for generation, 60 seconds for verification, 4 GiB memory, and one thread. Status: `accepted_by_sol`.

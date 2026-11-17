@@ -1,8 +1,6 @@
-"""Fixed public reference witness, stored as task-local data."""
-
-import json
-from pathlib import Path
+"""Fixed best reproduced comparison program: the verified convex construction."""
+from tasks.t025.human import run_code as human_run_code
 
 
 def run_code():
-    return json.loads((Path(__file__).parent / "data" / "human_witness.json").read_text())
+    return human_run_code()

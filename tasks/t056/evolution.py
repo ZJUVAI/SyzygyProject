@@ -1,61 +1,54 @@
-"""Seeded multi-start and adjacent-swap search from the simple FIFO schedule."""
-
+"""Seeded isotopy search that retains its best valid MOLS family."""
 import os
 import random
+import time
 
-from tasks.t056.dispatch import generate_active_schedule
-from tasks.t056.init_program import run_code as initial_run
-from tasks.t056.check import PARAMETERS, validate
+
+def _cyclic():
+    return [[(r + c) % 12 for c in range(12)] for r in range(12)]
+
+
+def _is_orthogonal(a, b):
+    return len({(a[r][c], b[r][c]) for r in range(12) for c in range(12)}) == 144
+
+
+def _random_isotope(rng):
+    rows, cols, symbols = (list(range(12)) for _ in range(3))
+    rng.shuffle(rows)
+    rng.shuffle(cols)
+    rng.shuffle(symbols)
+    base = _cyclic()
+    return [[symbols[base[rows[r]][cols[c]]] for c in range(12)] for r in range(12)]
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T056-C01") != "T056-C01":
         raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = max(1, min(20000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "500"))))
+    iterations = max(1, min(10000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "64"))))
     rng = random.Random(seed)
-    initial = initial_run()["machine_orders"]
-    initial_value = validate({"machine_orders": initial}, {"parameters": PARAMETERS})["objective"]
-    best = [row[:] for row in initial]
-    best_value = initial_value
-    current = [row[:] for row in best]
-    current_value = best_value
-    feasible, improvements = 0, 0
-    restart_count = max(1, (iterations * 3) // 4)
-    for step in range(iterations):
-        if step < restart_count:
-            candidate = generate_active_schedule(
-                seed=rng.randrange(1 << 30), rule="random_priority", randomized=True
-            )
-        else:
-            machine = rng.randrange(len(current))
-            position = rng.randrange(len(current[machine]) - 1)
-            candidate = [row[:] for row in current]
-            candidate[machine][position], candidate[machine][position + 1] = (
-                candidate[machine][position + 1], candidate[machine][position]
-            )
-        try:
-            value = validate({"machine_orders": candidate}, {"parameters": PARAMETERS})["objective"]
-        except ValueError:
-            continue
-        feasible += 1
-        if value <= current_value or rng.random() < 0.02:
-            current, current_value = candidate, value
-        if value < best_value:
-            best, best_value = [row[:] for row in candidate], value
-            improvements += 1
+    from tasks.t056.baseline import run_code as baseline_run
+    incumbent = baseline_run()["squares"]
+    started = time.monotonic()
+    attempts = 0
+    for _ in range(iterations):
+        candidate = _random_isotope(rng)
+        attempts += 1
+        if all(_is_orthogonal(candidate, square) for square in incumbent):
+            incumbent.append(candidate)
     return {
-        "machine_orders": best,
+        "squares": incumbent,
+        "objective": len(incumbent),
         "search_metadata": {
-            "algorithm": "multi-start randomized Giffler-Thompson schedules followed by feasible adjacent machine-order swaps",
+            "algorithm": "seeded random isotopy augmentation of the MacNeish incumbent",
             "seed": seed,
-            "initial_objective": initial_value,
             "iterations_requested": iterations,
-            "iterations_run": iterations,
-            "randomized_restarts": restart_count,
-            "feasible_candidates": feasible,
-            "best_improvements": improvements,
-            "objective_recomputed": best_value,
-            "budget": {"mode": "fixed iterations; runner generation timeout 300 seconds", "runner_generation_seconds": 300},
+            "iterations_run": attempts,
+            "generation_seconds": time.monotonic() - started,
+            "budget": {
+                "mode": "fixed_iterations",
+                "iteration_limit": iterations,
+                "runner_generation_limit_seconds": 300,
+            },
         },
     }

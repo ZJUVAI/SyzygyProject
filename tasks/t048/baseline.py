@@ -1,55 +1,62 @@
-"""Fixed-step comparator deletion search from the simple initial network."""
+"""Seeded greedy packing search over all weight-five 17-bit words."""
 
+from itertools import combinations
 import os
 import random
 import time
 
-from tasks.t048.check import _CONFIGS, validate
-from tasks.t048.init_program import run_code as initial_network
+from mathbench.search import search_steps
+
+
+def _candidates():
+    words = []
+    for positions in combinations(range(17), 5):
+        word = 0
+        for position in positions:
+            word |= 1 << position
+        words.append(word)
+    return words
+
+
+def _greedy(order):
+    selected = []
+    for word in order:
+        if all((word ^ old).bit_count() >= 4 for old in selected):
+            selected.append(word)
+    return selected
 
 
 def run_code():
-    cid=os.environ.get("MATHBENCH_CONFIG_ID","T048-C01")
-    if cid not in _CONFIGS:raise ValueError(f"unsupported T048 configuration: {cid}")
-    params={"inputs":_CONFIGS[cid]}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T048-C01") != "T048-C01":
+        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = max(1, min(10000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "64"))))
-    from mathbench.search import search_steps
-
-    started = time.monotonic()
-    best = [tuple(pair) for pair in initial_network()["comparators"]]
-    initial_size = len(best)
-    rng = random.Random(seed)
-    accepted_removals = 0
-    iterations_run = 0
-    for _ in search_steps(iterations):
-        if not best:
-            break
-        index = rng.randrange(len(best))
-        candidate = best[:index] + best[index + 1:]
-        try:
-            validate({"comparators": candidate}, {"id":cid,"parameters":params})
-        except ValueError:
-            pass
-        else:
-            if len(candidate) < len(best):
-                best = candidate
-                accepted_removals += 1
-        iterations_run += 1
-    checked = validate({"comparators": best}, {"id":cid,"parameters":params})
+    restarts = max(1, min(20, int(os.environ.get("MATHBENCH_RESTARTS", "8"))))
+    candidates = _candidates()
+    rng = random.Random(seed ^ 0x068B)
+    best = [candidates[0]]
+    start = time.monotonic()
+    iterations = 0
+    for _ in search_steps(restarts):
+        order = list(candidates)
+        rng.shuffle(order)
+        candidate = _greedy(order)
+        if len(candidate) > len(best):
+            best = candidate
+        iterations += 1
     return {
-        "comparators": [list(pair) for pair in best],
+        "codewords": [format(word, "017b") for word in best],
         "search_metadata": {
-            "algorithm": "seeded greedy comparator deletion from the self-contained odd-even transposition seed",
+            "algorithm": "random-order greedy independent-set packing on the fixed weight-five conflict graph",
             "seed": seed,
-            "initial_size": initial_size,
-            "iterations_requested": iterations,
-            "iterations_run": iterations_run,
-            "accepted_removals": accepted_removals,
-            "objective_recomputed": checked["objective"],
-            "generation_seconds": time.monotonic() - started,
-            "budget": {"mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
-                       "runner_generation_seconds": 300},
+            "candidate_words": len(candidates),
+            "restarts_requested": restarts,
+            "restarts_run": iterations,
+            "best_size": len(best),
+            "generation_seconds": time.monotonic() - start,
+            "budget": {
+                "mode": "fixed restart count unless MATHBENCH_SEARCH_SECONDS is set",
+                "runner_generation_limit_seconds": 300,
+            },
         },
     }
 

@@ -1,20 +1,14 @@
-"""Rebuild the 17-square grid-derived human baseline from its formula."""
-import os
+"""Replay Wynn's published traditional 190-edge Q9 snake."""
+
+import json
+from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T041-C01") != "T041-C01":
-        raise ValueError("unsupported T041 configuration")
-    _seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    squares = []
-    for row in range(4):
-        for col in range(4):
-            if (row, col) == (0, 0):
-                continue
-            squares.append({"x": f"{2*col+1}/8", "y": f"{2*row+1}/8",
-                            "side": "1/4", "cos": "1", "sin": "0"})
-    squares.extend([
-        {"x": "1/16", "y": "1/16", "side": "1/8", "cos": "1", "sin": "0"},
-        {"x": "3/16", "y": "1/16", "side": "1/8", "cos": "1", "sin": "0"},
-    ])
-    return {"squares": squares, "objective": "4"}
+    path = Path(__file__).parent / "data" / "reference" / "wynn_q9_190.json"
+    witness = json.loads(path.read_text())
+    return {"vertices": witness["vertices"]}
+
+
+if __name__ == "__main__":
+    print(run_code())

@@ -1,18 +1,11 @@
-"""Standalone valid seed from 12 points on the parabola y=x^2."""
-
+"""Simple valid all-positive seed; self-contained for cold exports."""
 import os
+
+_LENGTH = 100
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T074-C01") != "T074-C01":
-        raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    # EVOLVE-BLOCK-START
-    solution = {"points": [[i, i * i] for i in range(12)]}
-    # EVOLVE-BLOCK-END
-    return solution
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T074-C01")
+    if config_id != "T074-C01":
+        raise ValueError(f"unsupported configuration: {config_id}")
+    return {"sequence": [1] * _LENGTH}

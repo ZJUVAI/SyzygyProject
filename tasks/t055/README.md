@@ -1,85 +1,41 @@
-# T055：部分 MaxSAT 实例
+# T055：63 列二元强度 4 正交阵最少行数
 
-## 定义与固定参数
+## 定义
 
-MaxSAT 输入是加权合取范式。硬子句必须全部满足；目标是最大化满足的软子句权重。
+求最小行数 \(N\)，使得二元正交阵有 63 列、强度 4。对每组 4 列，16 种二进制模式都必须恰好出现 \(N/16\) 次。允许重复行。固定配置 `T055-C01`。
 
-配置 `T055-C01` 固定 MSE 2026 实例 `b4794d123e18a908924d3d33cdeeae3b`，属于 `inconsistency-measurement`。它有 1630 个变量、6150 个硬子句和 649 个权重为 1 的软单位子句。输出是按变量 `1,...,1630` 排列的布尔数组。目标分数为满足软子句权重，最大值 649。官方以未满足软权重报告成本；成本 62 对应本任务分数 587。
+Rao 界为
+\[
+N\ge 1+\binom{63}{1}+\binom{63}{2}=2017.
+\]
+强度 4 要求 \(16\mid N\)，所以 \(N\ge2032\)。此界与已知 2048 行构造之间尚有差距。
 
-`check.py` 解压固定 `.wcnf.gz` 输入，并精确检查所有硬、软子句。它拒绝违反硬子句的赋值，并重新计算软权重；不使用候选自报分数。
+## 检查方法
 
-## 来源与记录
+每列编码为长度 \(N\) 的整数位集。对 1 至 4 列的每个非空子集，检查按位异或后的 1 数恰为 \(N/2\)。在每个 4 列集合上，这等价于其所有非平凡奇偶特征均平衡；二元 Fourier 反演给出 16 个模式的计数都为 \(N/16\)。检查器会检查 637,392 个奇偶条件。它接受重复行，不会把重复行误判为无效。
 
-规范化实例以 gzip 保存在 `data/source/`。gzip 的 mtime 为 0，且不含原始文件名。解压后的原始输入 SHA-256 为 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`。实例元数据来自 MSE 2026 完整基准集 Zenodo 记录 21283148。比赛结果和解算器日志来自 MSE 2026 Zenodo 记录 21358014（v1，2026-07-14）。
+## 初始程序、基线与来源
 
-输入采用 MSE `std_wcnf` 格式：硬子句行以 `h` 开头，软子句行以正权重开头，并以 `0` 结束。
+模型起点使用 F₂¹⁴ 上的通用随机贪心法选择 63 个标签，再枚举全部 16384 个线性形式，得到 16384 行且互异的有效阵列。它不读取 BCH 对照。传统搜索独立在 F₂¹³ 上运行相同的通用选择规则，得到 8192 行，并执行固定次数的 16 行删除尝试。
 
-官方 `ANYTIME-UW` 60 秒赛道的 BouMS 日志给出未满足软成本 62，完成文件标记 `VERIFIED`。日志索引位置和 CRC、完整 assignment 及其 SHA-256 均记录在 `data/bestknown.json`。我们从日志中提取 assignment，并独立检查全部 6150 个硬子句和 649 个软子句，得到分数 587。比赛元数据显示最优成本未知，因此该实例仍未证明最优。公开日志没有说明 BouMS 或这次运行是否使用 AI，AI 来源标记为未知。
 
-冻结人类基线为分数 360。`human.py` 对所有硬子句运行传统 DPLL 可满足性方法，再做精确的硬约束可行单变量软分数改进。DPLL 的方法来源为 Davis、Logemann 和 Loveland 1962 年论文；SymPy 1.14.0 提供本次可重放的实现。该 360 是本地复现的方法基线，不是比赛公开纪录。初始程序也从硬子句重新运行 DPLL，不读取人类或纪录见证。
+Carlet、Kiss、Nagy 的论文 Remark 5 给出双纠错 BCH 码对偶构造的正交阵。取 \(m=6\) 并删去一列，可重建 4096 行、63 列、强度 4 的正交阵。本任务以这个公式作为人类基线和固定参考，并对全部条件重新计算。论文 Proposition 10 与 Remark 11 给出 Kerdock 构造的 2048 行同参上界；作者明确说最优性尚未确定。本地续搜用模 4 迹码重建了 2048 行构造。独立复算检查了每组四列中 16 种模式的出现次数。
 
-## 程序与搜索
+- [Simplicity conditions for binary orthogonal arrays](https://doi.org/10.1007/s10623-022-01105-4)
+- Sloane 的 orthogonal array directory：[neilsloane.com/oadir](https://neilsloane.com/oadir/index.html)。
 
-- `init_program.py` 独立解析公开 `.wcnf.gz` 输入，只对硬子句运行 DPLL，产生有效起点。
-- `baseline.py` 从硬可行赋值开始，按固定种子做随机块翻转，只保留硬可行解并更新最好软分数。
-- `evolution.py` 从硬可行赋值建立小型种群，做有界块变异并精确过滤硬约束。
-- `human.py` 重建传统 DPLL 硬可行赋值并做单变量贪心改进。
-- `reference.py` 重放固定的 MSE 2026 BouMS 官方解。
-- 搜索默认以固定迭代数运行，种子来自 `MATHBENCH_SEED`。默认每次生成限时 300 秒，验证另限时 60 秒，内存 4 GiB，一个计算线程。`MATHBENCH_SEARCH_SECONDS` 可显式启用按时长截断。
-- 传统搜索和初始程序只读取公开公式，不读取比较 assignment。比较文件应放在模型上下文之外。
+2026-11-06 检索未发现 63 列同参最优性证明。公开 2048 构造与 2032 下界之间仍有 16 行缺口。
 
-## 检查
+## English
 
-从仓库根目录运行：
+The standalone start uses a generic random-greedy selection of 63 labels in F₂¹⁴ and enumerates all 16384 linear forms. It produces 16384 distinct rows and does not read the BCH comparator. The traditional search independently builds an F₂¹³ array with 8192 rows and tests fixed 16-row deletions.
 
-```sh
-.venv/bin/python -m pytest tasks/t055/test_task.py -q
-.venv/bin/python -m json.tool tasks/t055/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/data/bestknown.json > /dev/null
-```
+Find the smallest row count \(N\) for a binary orthogonal array with 63 columns and strength 4. Every 4-column projection must contain each of the 16 binary patterns exactly \(N/16\) times. Duplicate rows are allowed. Configuration `T055-C01` fixes these parameters.
 
-状态：已通过 Sol 验收（2026-11-06）。
+Rao's bound gives \(N\ge2017\). Since \(16\mid N\), the lower bound rounds up to 2032. A public Kerdock construction gives 2048 rows, so the finite optimum is open in the reviewed sources.
 
----
+The checker packs every column into an N-bit integer and checks all nonempty parity characters on subsets of 1 to 4 columns. Binary Fourier inversion makes these checks equivalent to uniform 4-column pattern counts. It performs 637,392 exact parity checks and allows repeated rows.
 
-# T055: Partial MaxSAT instance
+The standalone initializer uses a generic random-greedy set of 63 labels in F₂¹⁴ and enumerates all linear forms, producing 16384 distinct rows. The traditional search independently builds an F₂¹³ seed with 8192 rows and tries fixed 16-row deletions. Neither program reads the BCH witness.
 
-## Definition and fixed parameters
-
-A MaxSAT input is a weighted conjunctive normal form. Every hard clause must be true. The objective is to maximize the total weight of satisfied soft clauses.
-
-Configuration `T055-C01` fixes the MSE 2026 instance `b4794d123e18a908924d3d33cdeeae3b` from the `inconsistency-measurement` family. It has 1630 variables, 6150 hard clauses, and 649 soft unit clauses of weight 1. The output is a Boolean array ordered by variables `1,...,1630`. The score is the satisfied soft weight, with maximum 649. The official benchmark reports unsatisfied soft cost; cost 62 corresponds to our score 587.
-
-`check.py` reads the fixed `.wcnf.gz` input and checks every hard and soft clause exactly. It rejects assignments that violate a hard clause and recomputes the soft weight. It ignores any score claimed by the candidate.
-
-## Sources and results
-
-The normalized source instance is stored as gzip under `data/source/`, with mtime 0 and no embedded filename. The decompressed input SHA-256 is `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. Instance metadata comes from the MSE 2026 complete benchmark collection, Zenodo record 21283148. Competition results and solver logs come from MSE 2026 Zenodo record 21358014, v1, published 2026-07-14.
-
-The input uses the MSE `std_wcnf` format: hard-clause lines start with `h`; soft-clause lines start with a positive weight. Each line ends with `0`. The repository stores the input as gzip; its decompressed bytes must have SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`.
-
-The official BouMS log in the `ANYTIME-UW` 60-second track reports unsatisfied soft cost 62, and the completion file says `VERIFIED`. The log index offset and CRC, the complete assignment, and its SHA-256 are saved in `data/bestknown.json`. We extracted the assignment and independently checked all 6150 hard clauses and 649 soft clauses. The resulting score is 587. The competition metadata lists the optimum cost as unknown, so optimality is open. The official release does not state whether AI contributed to BouMS or this run; AI provenance is recorded as unknown.
-
-The frozen human baseline is 360. `human.py` runs the traditional DPLL satisfiability method on the hard clauses, then performs exact single-variable soft-score improvements that preserve every hard clause. The method source is the 1962 paper by Davis, Logemann, and Loveland; SymPy 1.14.0 supplies the replayable implementation. The value 360 is a locally reproduced method baseline, not a published competition record. The initial program also runs DPLL on the hard clauses and does not read any comparison witness.
-
-## Programs and search
-
-- `init_program.py` parses the public `.wcnf.gz` input on its own and runs DPLL on the hard clauses to make a valid starting assignment.
-- `baseline.py` starts from a hard-feasible assignment and applies fixed-seed random block flips. It keeps only hard-feasible assignments and retains the best soft score.
-- `evolution.py` builds a small population from a hard-feasible assignment, mutates bounded blocks, and filters each candidate against every hard clause.
-- `human.py` rebuilds a traditional DPLL assignment and applies greedy single-variable improvements.
-- `reference.py` replays the fixed MSE 2026 BouMS assignment.
-- Searches use a fixed iteration count by default and read the seed from `MATHBENCH_SEED`. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one compute thread. Set `MATHBENCH_SEARCH_SECONDS` to use a wall-clock cutoff.
-- The seed and search programs read only the public formula. They do not read comparison assignments. Keep those files outside the model context.
-
-## Checks
-
-Run from the repository root:
-
-```sh
-.venv/bin/python -m pytest tasks/t055/test_task.py -q
-.venv/bin/python -m json.tool tasks/t055/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/data/bestknown.json > /dev/null
-```
-
-Status: accepted by Sol on 2026-11-06.
+The human baseline rebuilds a 4096-row OA from the dual of a double-error-correcting BCH code, as described by Carlet, Kiss, and Nagy. Their paper also reports a 2048-row Kerdock construction and states that optimality is unknown. The local search rebuilt the 2048-row construction with a trace code over integers modulo 4. An independent check counted all 16 patterns in each four-column projection.

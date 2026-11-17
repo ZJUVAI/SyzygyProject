@@ -1,21 +1,17 @@
-# T032: Zarankiewicz number z(14,19;3,3)
+# T032：Ramsey 数下界图
 
 ## 中文
 
-给定一个 14 行、19 列的 0/1 矩阵。目标是最大化 1 的数量。任取 3 行和 3 列，所得 3×3 子矩阵不得全为 1。配置为 T032-C01。评测器会重新计算 1 的数量，并检查全部 364 组三行。
+固定参数为禁止 5 阶团和 5 阶独立集。程序提交一个简单无向图。目标是最大化顶点数。检查器会精确检查图及其补图中是否含 5 阶团，并按顶点数计分。Exoo 的 1989 年论文建立了 42 点构造对应的下界；档案中用于复现的具体图行未单独注明发现者。由此得到 $R(5,5)\ge43$。目前的公开界为 $43\le R(5,5)\le46$，所以该参数仍未解决。Angeltveit 和 McKay 证明 $R(5,5)\le46$，所以检查器采用 45 个顶点上限。该上限由已发表上界推出，不会排除可行改进。
 
-主来源为 Saurabh 的论文 [Five improved lower bounds for Zarankiewicz numbers](https://arxiv.org/html/2608.26603v1)，版本 v1，2026-08-27。表 1 给出该格下界 126、上界 135。附录 A 提供 126 个 1 的矩阵。作者将构造归于传统 kicked-greedy 搜索；论文说明搜索不使用语言模型或学习组件。NOVA 自主选择参数、运行搜索并整理结果。因此这里把它记录为传统计算构造及自主编排，不称为作者手工发现。
+McKay 的公开数据档案 `r55_42some.g6` 提供人类见证。任务数据保存第一条 graph6 编码及其展开的邻接表。它有 42 个顶点、425 条边，检查器重算了全部禁形条件。传统基线从一个 5 环开始，以固定随机种子逐点尝试扩展；它不读取人类或参考见证。
 
-本任务重放公开矩阵，不声称复现原搜索。原始随机种子为 7，但 kick 次数未记录。较早的 AI 辅助结果 121 单独保留，不替代 126。当前验收状态：已通过 Sol 验收（2026-11-06）。
-
-Korea Superintelligence Labs 的预印本表 1 报告同参数下界 128，并称其构造已通过 Lean 检查。仓库的冻结公开复现值仍为 126。 [预印本](https://ideosphere.ai/papers/zarankiewicz-v1.pdf)
+实现状态：已通过 Sol 验收（2026-11-06）。
 
 ## English
 
-Given a 14 by 19 binary matrix, maximize its number of ones. Every choice of three rows and three columns must contain at least one zero. The fixed configuration is T032-C01. The checker recounts all ones and checks all 364 row triples.
+The fixed parameters forbid a clique of order 5 and an independent set of order 5. A candidate is a simple undirected graph. The objective is to maximize its number of vertices. The checker verifies the graph and its complement exactly, then scores the vertex count. Exoo’s 1989 paper establishes the lower bound from a 42-vertex construction. The specific archive row used here is not individually attributed. The published construction establishes $R(5,5)\ge43$. The current public bounds are $43\le R(5,5)\le46$, so this instance remains open. Angeltveit and McKay prove $R(5,5)\le46$, so the checker has a 45-vertex limit derived from this published bound. It does not exclude a feasible improvement.
 
-The primary source is Saurabh, [Five improved lower bounds for Zarankiewicz numbers](https://arxiv.org/html/2608.26603v1), version 1, dated 2026-08-27. Table 1 gives a lower bound of 126 and an upper bound of 135 for this cell. Appendix A gives a matrix with 126 ones. The paper attributes the construction to classical kicked-greedy search and states that it used no language model or learned component. NOVA autonomously selected the cell, ran the search, and packaged the results. We record this as a traditional computational construction with autonomous orchestration, not as a manually discovered construction.
+The public McKay archive `r55_42some.g6` supplies the human witness. Task data stores its first graph6 line and expanded adjacency list. It has 42 vertices and 425 edges. The checker recomputes both forbidden-subgraph conditions. The classical baseline starts from a 5-cycle and tries seeded vertex extensions. It does not read the human or reference witness.
 
-This task replays the published matrix. It does not claim to reproduce the search. The original random seed was 7, but the kick count was not recorded. An earlier AI-assisted result of 121 is listed separately. Status: accepted by Sol on 2026-11-06.
-
-Table 1 of the Korea Superintelligence Labs preprint reports a lower bound of 128 for the same parameters. The preprint reports a Lean check of its construction. The frozen local public replay gives 126. [Preprint](https://ideosphere.ai/papers/zarankiewicz-v1.pdf)
+Implementation status: accepted by Sol on 2026-11-06.

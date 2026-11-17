@@ -1,14 +1,22 @@
-"""Small deterministic seed; the optimizer can mutate it."""
+"""Simple valid Fibonacci-sphere seed; self-contained for cold export."""
+import math
 import os
+import random
 
+_LENGTHS = {"T012-C01": 32}
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T012-C01") != "T012-C01":
-        raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    # EVOLVE-BLOCK-START
-    values = [0, 2, 3, 4, 7, 11, 12, 14]
-    if seed % 2:
-        values = [14, 12, 11, 7, 4, 3, 2, 0]
-    # EVOLVE-BLOCK-END
-    return {"set": values}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T012-C01")
+    try:
+        n = _LENGTHS[config_id]
+    except KeyError as exc:
+        raise ValueError(f"unsupported configuration: {config_id}") from exc
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    golden = math.pi * (3.0 - math.sqrt(5.0))
+    points=[]
+    for k in range(n):
+        z=1.0-2.0*(k+0.5)/n
+        theta=(k+rng.random()*0.0001)*golden
+        radius=math.sqrt(max(0.0,1.0-z*z))
+        points.append([radius*math.cos(theta)/(1.0+z),radius*math.sin(theta)/(1.0+z)])
+    return {"points":points}

@@ -1,61 +1,60 @@
-"""Bounded GRASP-style local search, independent of comparison witnesses."""
-
-import math
+"""Bounded sliding-window addition-chain search; no human data is read."""
 import os
-import time
+from mathbench.search import search_steps
 
-from tasks.t088.check import CONFIG_ID
-from tasks.t088.heuristics import randomized_method
-from tasks.t088.instance import load_graph
+TARGETS = {
+    "T088-C01": 2**192 - 2**64 - 3,
+}
+
+
+def _window_chain(width, target):
+    bits = bin(target)[2:]
+    if width == 1:
+        chain = [1]
+        for bit in bits[1:]:
+            chain.append(chain[-1] * 2)
+            if bit == "1":
+                chain.append(chain[-1] + 1)
+        return chain
+    # The target starts with at least width one-bits. Build all odd window
+    # addends, ending at 2**width-1; this also gives the accumulator prefix.
+    chain = [1, 2]
+    odd = {1: 0}
+    chain.append(3)
+    odd[3] = 2
+    for value in range(5, (1 << width), 2):
+        chain.append(chain[odd[value-2]] + 2)
+        odd[value] = len(chain)-1
+    current = (1 << width) - 1
+    i = width
+    while i < len(bits):
+        if bits[i] == "0":
+            current *= 2
+            chain.append(current)
+            i += 1
+            continue
+        end = min(i + width, len(bits))
+        while bits[end-1] == "0":
+            end -= 1
+        digit = int(bits[i:end], 2)
+        for _ in range(end-i):
+            current *= 2
+            chain.append(current)
+        current += chain[odd[digit]]
+        chain.append(current)
+        i = end
+    return chain
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T088_SEARCH_TRIALS", "6"))
-    vertex_trials = int(os.environ.get("T088_INSERTION_VERTEX_TRIALS", "12"))
-    if trials < 0 or vertex_trials < 0 or vertex_trials > 130:
-        raise ValueError("search counts are outside their valid ranges")
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds is not None:
-        duration = float(seconds)
-        if not math.isfinite(duration) or duration <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + duration
-    edges = load_graph()
-    order = list(range(1, 131))
-    metadata = {
-        "algorithm": "reconstructed GRASP-style construction with bounded insertion local search",
-        "seed": seed,
-        "trial_limit": trials,
-        "trials_completed": 0,
-        "insertion_moves_scored": 0,
-        "insertion_moves_accepted": 0,
-        "reference_data_read": False,
-    }
-    best_value = None
-    import random
-
-    rng = random.Random(seed)
-    for _ in range(trials):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        from tasks.t088.heuristics import grasp_order, insertion_descent
-
-        order_candidate = grasp_order(edges, rng)
-        order_candidate, local_meta = insertion_descent(
-            order_candidate, edges, rng, vertex_trials=vertex_trials
-        )
-        from tasks.t088.instance import cutwidth
-
-        value = cutwidth(order_candidate, edges)
-        metadata["trials_completed"] += 1
-        metadata["insertion_moves_scored"] += local_meta["insertion_moves_scored"]
-        metadata["insertion_moves_accepted"] += local_meta["insertion_moves_accepted"]
-        if best_value is None or value < best_value:
-            order, best_value = order_candidate, value
-    metadata["time_cutoff_enabled"] = deadline is not None
-    return {"ordering": order, "search_metadata": metadata}
+    target = TARGETS.get(os.environ.get("MATHBENCH_CONFIG_ID", "T088-C01"))
+    if target is None:
+        raise ValueError("unsupported T088 configuration")
+    # Fixed work count is reproducible; MATHBENCH_SEARCH_SECONDS can cut it short.
+    best = _window_chain(1, target)
+    widths = (2, 3, 4, 5, 6)
+    for step in search_steps(len(widths)):
+        candidate = _window_chain(widths[step], target)
+        if len(candidate) < len(best):
+            best = candidate
+    return {"chain": best}

@@ -1,43 +1,67 @@
-"""Exact bit-parallel zero-one verifier for sorting networks."""
-from functools import lru_cache
+"""Exact feasibility checker for binary constant-weight codes."""
 
-_CONFIGS={"T048-C01":17}
-@lru_cache(maxsize=3)
-def _input_bitsets(inputs):
-    lanes=1<<inputs;patterns=[]
-    for wire in range(inputs):
-        period=1<<(wire+1);half=1<<wire;block=(1<<half)-1;pattern=0
-        for start in range(half,lanes,period):pattern|=block<<start
-        patterns.append(pattern)
-    return tuple(patterns)
-def _comparators(solution,inputs):
-    if not isinstance(solution,dict) or "comparators" not in solution:raise ValueError("solution must contain comparators")
-    comps=solution["comparators"]
-    if not isinstance(comps,(list,tuple)):raise ValueError("comparators must be an ordered list")
-    out=[]
-    for item in comps:
-        if not isinstance(item,(list,tuple)) or len(item)!=2:raise ValueError("each comparator must contain exactly two wire indices")
-        left,right=item
-        if type(left) is not int or type(right) is not int:raise ValueError("wire indices must be strict integers")
-        if not (0<=left<right<inputs):raise ValueError(f"comparator indices must satisfy 0 <= left < right < {inputs}")
-        out.append((left,right))
-    return out
-def _zero_one_check(comps,inputs):
-    lanes=1<<inputs;all_lanes=(1<<lanes)-1;wires=list(_input_bitsets(inputs))
-    for a,b in comps:wires[a],wires[b]=wires[a]&wires[b],wires[a]|wires[b]
-    for i in range(inputs-1):
-        if wires[i]&(~wires[i+1]&all_lanes):raise ValueError("network fails exact zero-one sorting check")
-def _asap_depth(comps,inputs):
-    last=[0]*inputs
-    for a,b in comps:
-        layer=max(last[a],last[b])+1;last[a]=last[b]=layer
-    return max(last,default=0)
-def validate(solution,config,strict=False):
-    del strict
-    if not isinstance(config,dict):raise ValueError("configuration must be an object")
-    cid=config.get('id');inputs=_CONFIGS.get(cid)
-    if inputs is None:raise ValueError("unsupported configuration")
-    params=config.get('parameters',{})
-    if params and params.get('inputs')!=inputs:raise ValueError("configuration parameters do not match id")
-    comps=_comparators(solution,inputs);_zero_one_check(comps,inputs)
-    return {'objective':len(comps),'verification_status':'exact','details':{'inputs':inputs,'comparators_checked':len(comps),'binary_inputs_checked':1<<inputs,'asap_depth':_asap_depth(comps,inputs),'zero_one_principle':True,'claimed_objective_ignored':True}}
+from collections.abc import Mapping
+import re
+
+
+CONFIG_ID = "T048-C01"
+PARAMETERS = {
+    "length": 17,
+    "minimum_hamming_distance": 4,
+    "constant_weight": 5,
+    "objective": "codeword_count",
+}
+_WORD_RE = re.compile(r"[01]{17}\Z")
+
+
+def _check_config(config):
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration must fix A(17,4,5)")
+
+
+def _parse_words(solution):
+    raw_words = solution.get("codewords")
+    if not isinstance(raw_words, (list, tuple)):
+        raise ValueError("codewords must be a list of 17-character binary strings")
+    words = []
+    for index, value in enumerate(raw_words):
+        if not isinstance(value, str) or not _WORD_RE.fullmatch(value):
+            raise ValueError(f"codeword {index} must be a 17-character binary string")
+        if value.count("1") != 5:
+            raise ValueError(f"codeword {index} must have weight 5")
+        words.append(int(value, 2))
+    if len(set(words)) != len(words):
+        raise ValueError("codewords must be distinct")
+    return words
+
+
+def validate(solution, config, strict=False):
+    """Recompute size and every pairwise Hamming distance exactly."""
+    _check_config(config)
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be an object")
+    words = _parse_words(solution)
+    pair_count = 0
+    minimum_distance = 17
+    for i, word in enumerate(words):
+        for other in words[:i]:
+            distance = (word ^ other).bit_count()
+            if distance < 4:
+                raise ValueError("every pair of codewords must have Hamming distance at least 4")
+            minimum_distance = min(minimum_distance, distance)
+            pair_count += 1
+    return {
+        "objective": len(words),
+        "verification_status": "exact",
+        "details": {
+            "codeword_count": len(words),
+            "unordered_pairs_checked": pair_count,
+            "minimum_pairwise_distance": minimum_distance if pair_count else None,
+            "word_length": 17,
+            "constant_weight": 5,
+            "claimed_objective_ignored": True,
+            "strict": bool(strict),
+        },
+    }

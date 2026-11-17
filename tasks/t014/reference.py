@@ -1,6 +1,13 @@
-"""Pinned witness and evaluator wrapper for T014."""
-from tasks.t014.human import run_code
-from mathbench.evaluate import evaluate_candidate
+"""Load the frozen, independently transcribed Lambda_10 Gram witness."""
 
-def evaluate(program_path, config_id=None, **kwargs):
-    return evaluate_candidate("T014", program_path, config_id, **kwargs)
+import json
+import os
+from pathlib import Path
+
+
+def run_code():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T014-C01")
+    if chosen != "T014-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    path = Path(__file__).parent / "data/human/lambda10_gram.json"
+    return {"gram": json.loads(path.read_text(encoding="utf-8"))["gram"]}

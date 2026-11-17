@@ -1,34 +1,79 @@
-# T050: Longest induced path in the 9-cube
+# T050: Binary length-10 radius-one covering code
 
-## English
+## Definition
 
-For this task, the graph is the 9-dimensional hypercube `Q9`. Its vertices are the 512 binary strings of length 9. We encode a string as an integer from 0 to 511. Two vertices are adjacent when their Hamming distance is exactly 1.
+Choose a set `C` of 10-bit binary words. Every 10-bit word must differ in at most one position from at least one member of `C`. Minimize `|C|`. This is the covering-code number `K(10,1)`. The fixed configuration is `T050-C01`.
 
-A snake is an induced path: every consecutive pair is adjacent, and every nonconsecutive pair is nonadjacent. The objective is to maximize the number of path edges, `len(vertices) - 1`. A cycle is not allowed.
+The input is a list of distinct integers in `0..1023`, each written as its 10-bit binary expansion. The checker forms every radius-one Hamming ball as an exact 1024-bit integer mask and verifies that their union is the full universe. It does not rely on a reported score.
 
-The maximum is open. Wynn reported a traditional 190-edge construction in 2012. Orland et al. report a 191-edge construction in 2026. Their current paper states that whether a 192-edge snake exists in `Q9` remains open. The paper attributes the 191-edge result to cube-surgery simulated annealing. It also discloses project-level LLM help with the manuscript and search code, but does not attribute that help to this specific witness or run. We therefore record it as a source-reported computational result with project-level LLM assistance disclosed.
+## Reproduced public code
 
-The human reference and frozen baseline are Wynn's 190-edge path, replayed from the full published transition sequence. The public reference is the complete 191-transition sequence printed in Orland et al., Appendix E. Both are saved and checked exactly. The author's record dataset is pinned to commit `46c765399353a588ea50444a5d6610f53102b1c2`. See [IMPLEMENTATION.md](data/IMPLEMENTATION.md) for source hashes, evidence and checks.
+OEIS A000983's source file credits Dmitry Kamenetsky and lists `a(10)<=120`, followed by 120 ten-bit words. The next section is `a(11)<=192`; the task parser and frozen witness stop before that entry. The exact list is saved under `data/reference/` and separately checked against all 1024 words.
 
-## 中文
+The 120-word witness is a feasible upper bound on `K(10,1)`. It does not establish the minimum. The current OEIS page gives `107-120` for `a(10)`. The Kéri binary table independently lists `107-120`. The lower bound 107 is also cited to Bertolo, Östergård, and Weakley (2004). The exact value remains open in the sources checked on 2026-11-06.
 
-本任务使用9维超立方体 `Q9`。它有512个顶点，每个顶点是一个9位二进制串。我们用0到511之间的整数编码顶点。两个顶点的汉明距离为1时相邻。
+Östergård's 1991 paper reports a 120-word binary code derived from a 60-word mixed `F_4 x F_2^7` cover. The OEIS list is frozen as a separate public witness. We do not claim that it is the same code or construction as the 1991 one.
 
-蛇是诱导路径：相邻的路径顶点必须相邻，任何非相邻的路径顶点都不能相邻。目标是最大化路径边数，即 `len(vertices) - 1`。本任务不接受环。
+## Human-method baseline
 
-最大值仍未解决。Wynn于2012年报告了190条边的传统构造。Orland等人在2026年报告了191条边的构造。他们当前论文明确指出，`Q9` 中是否存在192条边的蛇仍是开放问题。论文说明191边结果由立方手术模拟退火得到。作者同时披露，他们在论文写作和搜索代码编写、优化中使用了大语言模型帮助；论文没有说明这项帮助是否用于这条具体见证或该次运行。因此记录为来源报告的计算结果，并注明项目披露了大语言模型协作。
+Use the binary `[7,4,3]` Hamming code, then append each of the eight possible 3-bit suffixes. The resulting product code has `16*8=128` words. Its first seven coordinates cover the 7-cube perfectly: the parity-check matrix has the seven distinct nonzero 3-bit columns, so each syndrome is either zero or identifies the unique bit to flip. Matching the suffix leaves total Hamming distance at most one. This is a same-parameter human construction, reconstructed from Hamming's classical code.
 
-人类基线和冻结对照使用Wynn完整发表序列重放的190边路径。公开参考使用Orland等人附录E中完整发表的191次坐标翻转。两条路径都已保存并精确检查。作者的纪录仓库固定在提交 `46c765399353a588ea50444a5d6610f53102b1c2`。来源哈希和验证记录见 [IMPLEMENTATION.md](data/IMPLEMENTATION.md)。
+## Sources
 
-## Programs and evaluation
+- [OEIS A000983](https://oeis.org/A000983), current definition and range `a(10)=107..120`.
+- Dmitry Kamenetsky, [Best known solutions for n<=11](https://oeis.org/A000983/a000983.txt), 2020-07-27; `a(10)<=120` and its 120-word list.
+- Gerzson Kéri, [Tables for bounds on covering codes](https://old.sztaki.hu/~keri/codes/index.htm), [binary table PDF](https://old.sztaki.hu/~keri/codes/2_tables.pdf), length 10, radius 1, bounds 107-120.
+- R. Bertolo, P. R. J. Östergård, and W. D. Weakley, [An updated table of binary/ternary mixed covering codes](https://doi.org/10.1002/jcd.20008), *Journal of Combinatorial Designs* 12 (2004), 157–176; OEIS cites it for the lower bound 107.
+- P. R. J. Östergård, [A new binary code of length 10 and covering radius 1](https://doi.org/10.1109/18.61135), *IEEE Transactions on Information Theory* 37 (1991), 179–180.
+- R. W. Hamming, [Error Detecting and Error Correcting Codes](https://doi.org/10.1002/j.1538-7305.1950.tb00463.x), *Bell System Technical Journal* 29 (1950), 147–160.
 
-The five program entries are `init_program.py`, `baseline.py`, `human.py`, `reference.py`, and `evolution.py`. They all expose `run_code()` and read `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED`. The initial program flips each coordinate once, giving a valid 9-edge path. The traditional search uses bounded, seeded greedy endpoint extension. The evolution entry applies seeded endpoint truncation and regrowth. The human and reference programs replay their fixed external witnesses; neither witness is loaded by the initial or search programs.
+## Reproduction
 
-The checker tests all vertices and all pairs with exact integer bit counts. It ignores any declared score. The default search limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory and one thread. Search iteration counts are fixed by default. `MATHBENCH_SEARCH_SECONDS` can set an exploratory wall-clock limit. `evaluator.py` calls the shared evaluator.
+Run the five entries with `MATHBENCH_CONFIG_ID=T050-C01`. Run tests with:
 
-### Links
+```sh
+.venv/bin/python -m pytest tasks/t050/test_task.py -q
+```
 
-- [Orland et al., current arXiv paper v3](https://arxiv.org/html/2607.15270v3), especially §6 and Appendix E.
-- [Authors' record dataset](https://github.com/Math-AI-Caltech/Snake-in-the-Box), pinned in the task records.
-- [Wynn, 2012](https://arxiv.org/html/1201.1647), §VI and Appendix.
-- [Current Q9 status entry](https://leapsinbounds.org/constants/snake-in-the-box-9/), checked 2026-11-06. It lists a verified lower bound of 191 and no upper bound.
+The initial program returns all 1024 words. The traditional baseline uses a greedy set-cover method and redundant-word deletion. Neither reads comparison files.
+
+---
+
+# T050：二元长度 10、覆盖半径 1 的覆盖码
+
+## 定义
+
+选择一组 10 位二元串 `C`。每个 10 位二元串都必须与 `C` 中至少一个码字相差至多一位。最小化 `|C|`。该数记为覆盖码数 `K(10,1)`。固定配置为 `T050-C01`。
+
+输入是 `0..1023` 中互异整数，每个整数表示对应的 10 位二进制串。检查器用精确的 1024 位整数掩码构造各半径一 Hamming 球，并验证并集等于全空间。检查器不采信程序声明的分数。
+
+## 已复现公开码
+
+OEIS A000983 源文件署名 Dmitry Kamenetsky，并列出 `a(10)<=120` 及 120 个 10 位码字。下一节是 `a(11)<=192`；任务解析器和冻结见证在 n=10 结束。文件中的 120 字码已保存，并对 1024 个输入逐个复核。
+
+这给 `K(10,1)` 提供可行上界，不证明最小值。当前 OEIS 页面给出 `107-120`；Kéri 的二元码表也列出 `107-120`。107 下界还引用 Bertolo、Östergård 和 Weakley 2004 年论文。截至 2026-11-06 检查的来源没有给出精确值。
+
+Östergård 1991 年论文报告了一个由 60 字混合 `F_4 x F_2^7` 覆盖码变换得到的 120 字二元码。本任务把 OEIS 列表作为单独的公开见证，不声称它与 1991 年的码相同。
+
+## 人类方法基线
+
+取二元 `[7,4,3]` Hamming 码，并附加所有 8 种 3 位后缀，得到 `16*8=128` 个码字。前七位的 Hamming 码完美覆盖 7 维二元空间：校验矩阵的列是七个互异非零 3 位向量，因此每个 syndrome 为零，或唯一标出应翻转的位。后缀保持不变，所以总距离不超过一。这是由经典 Hamming 码重建的同参数人类构造。
+
+## 来源
+
+- [OEIS A000983](https://oeis.org/A000983)，当前定义与 `a(10)=107..120` 范围。
+- Dmitry Kamenetsky，[Best known solutions for n<=11](https://oeis.org/A000983/a000983.txt)，2020-07-27；`a(10)<=120` 及 120 字列表。
+- Gerzson Kéri，[覆盖码界表](https://old.sztaki.hu/~keri/codes/index.htm)，[二元表 PDF](https://old.sztaki.hu/~keri/codes/2_tables.pdf)，长度 10、半径 1 的界为 107-120。
+- R. Bertolo、P. R. J. Östergård、W. D. Weakley，[An updated table of binary/ternary mixed covering codes](https://doi.org/10.1002/jcd.20008)，*Journal of Combinatorial Designs* 12 (2004), 157–176；OEIS 将其列作下界 107 的来源。
+- P. R. J. Östergård，[A new binary code of length 10 and covering radius 1](https://doi.org/10.1109/18.61135)，*IEEE Transactions on Information Theory* 37 (1991), 179–180。
+- R. W. Hamming，[Error Detecting and Error Correcting Codes](https://doi.org/10.1002/j.1538-7305.1950.tb00463.x)，*Bell System Technical Journal* 29 (1950), 147–160。
+
+## 复现
+
+五个程序均使用 `MATHBENCH_CONFIG_ID=T050-C01`。测试命令：
+
+```sh
+.venv/bin/python -m pytest tasks/t050/test_task.py -q
+```
+
+初始程序返回全体 1024 个字。传统搜索使用贪心集合覆盖和冗余删除。两者均不读取对照文件。

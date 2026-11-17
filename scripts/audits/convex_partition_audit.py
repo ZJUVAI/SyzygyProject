@@ -5,7 +5,7 @@ from scripts.audits.convex_cover_audit import meets, on
 
 
 def audit(s):
-    raw=json.loads((ROOT/'tasks/t095/data/source/uniform-0000500-1.instance.json').read_text())
+    raw=json.loads((ROOT/'tasks/t028/data/source/uniform-0000500-1.instance.json').read_text())
     points=[]
     for i,p in enumerate(raw['points']):
         assert p['i']==i and int(p['x'])==p['x'] and int(p['y'])==p['y']

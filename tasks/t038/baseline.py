@@ -1,41 +1,81 @@
-"""MacNeish product construction from GF(3) and GF(4), yielding two MOLS."""
+"""Seeded multi-start DSATUR greedy coloring; reads only the fixed graph."""
+
+import heapq
 import os
+import random
+
+from mathbench.search import search_steps
+from tasks.t038.check import load_graph
 
 
-def _gf4_mul(a, b):
-    """Multiply two GF(4) bit encodings modulo x^2+x+1."""
-    out = 0
-    while b:
-        if b & 1:
-            out ^= a
-        b >>= 1
-        a <<= 1
-        if a & 4:
-            a ^= 7
-    return out
+ITERATION_LIMIT = 8
 
 
-def _square(slope3, slope4):
-    out = []
-    for r in range(12):
-        row = []
-        r3, r4 = divmod(r, 4)
-        for c in range(12):
-            c3, c4 = divmod(c, 4)
-            value3 = (r3 + slope3 * c3) % 3
-            value4 = r4 ^ _gf4_mul(slope4, c4)
-            row.append(4 * value3 + value4)
-        out.append(row)
-    return out
+def dsatur_coloring(adjacency, rng):
+    """Build one proper coloring using saturation-degree vertex selection."""
+    n = len(adjacency)
+    degrees = [len(neighbors) for neighbors in adjacency]
+    saturation = [0] * n  # Bitset of colors already used by colored neighbors.
+    colors = [-1] * n
+    tie_break = [rng.random() for _ in range(n)]
+    queue = [(0, -degrees[v], tie_break[v], v) for v in range(n)]
+    heapq.heapify(queue)
+
+    for color_step in range(n):
+        while True:
+            neg_sat_degree, neg_degree, tie, vertex = heapq.heappop(queue)
+            if colors[vertex] != -1:
+                continue
+            if neg_sat_degree != -saturation[vertex].bit_count():
+                continue
+            if neg_degree != -degrees[vertex] or tie != tie_break[vertex]:
+                continue
+            break
+
+        used = saturation[vertex]
+        available = ~used
+        color = (available & -available).bit_length() - 1
+        colors[vertex] = color
+        color_bit = 1 << color
+        for neighbor in adjacency[vertex]:
+            if colors[neighbor] == -1 and not (saturation[neighbor] & color_bit):
+                saturation[neighbor] |= color_bit
+                heapq.heappush(queue, (-saturation[neighbor].bit_count(),
+                                       -degrees[neighbor], tie_break[neighbor], neighbor))
+    return colors
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T038-C01") != "T038-C01":
-        raise ValueError("unsupported configuration")
-    # MacNeish product: one common slope choice in GF(3) and GF(4) gives
-    # two coordinatewise distinct slopes and therefore two orthogonal squares.
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T038-C01")
+    if config_id != "T038-C01":
+        raise ValueError("unsupported configuration id")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    rng = random.Random(seed)
+    adjacency, _ = load_graph()
+    best = None
+    best_count = len(adjacency) + 1
+    iterations = 0
+    steps = iter(search_steps(ITERATION_LIMIT))
+    for _ in range(ITERATION_LIMIT):
+        if next(steps, None) is None:
+            break
+        candidate = dsatur_coloring(adjacency, rng)
+        count = len(set(candidate))
+        iterations += 1
+        if count < best_count:
+            best, best_count = candidate, count
     return {
-        "squares": [_square(1, 1), _square(2, 2)],
-        "construction": "MacNeish product GF(3) x GF(4)",
-        "objective": 2,
+        "colors": best,
+        "claimed_objective": best_count,
+        "search_metadata": {
+            "algorithm": "multi-start DSATUR greedy coloring with seeded random tie breaks",
+            "configuration_id": config_id,
+            "seed": seed,
+            "iterations": iterations,
+            "iteration_limit": ITERATION_LIMIT,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            "reference_data_read": False,
+            "budget": {"iteration_limit": ITERATION_LIMIT,
+                       "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS")},
+        },
     }

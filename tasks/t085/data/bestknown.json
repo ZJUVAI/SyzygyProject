@@ -1,93 +1,45 @@
 {
   "task_id": "T085",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T085-C01": {
+      "public_value": "1188957517256767569920",
+      "public_source": {
+        "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+        "title": "Order 29, Hadamard maximal determinant problem",
+        "evidence": "Lists a conjectured D-optimal Gram matrix due to Bruce Solomon and gives its determinant as (320*7^12*2^28)^2; the corresponding sign-matrix determinant magnitude is 320*7^12*2^28.",
+        "supporting_witness_source": "https://arxiv.org/abs/math/0304410",
+        "supporting_witness_title": "New lower bounds for the maximal determinant problem"
+      },
+      "reproduced_value": "1188957517256767569920",
       "program": "reference.py",
-      "reproduced_value": "7/2",
-      "public_value": "1000000000/262845073",
-      "highest_reported": {
-        "value": "1000000000/262845073",
-        "source": "https://minmaxarena.com/en/problems/circles-cover-disc/p87-n21-v1",
-        "reproduction_status": "The public starter answer gives 21 decimal centers and a covering disk radius of 0.262845073 in the unit-target scale. Translate the target center to the origin and divide by the covering disk radius. Strict replay and an independent exact dyadic subdivision verify the converted witness. The solver provenance of this starter answer is not stated. The frozen radius-3.5 lattice reference remains the scoring control."
-      },
-      "best_human": {
-        "value": 3.5,
-        "parameters": {
-          "circle_count": 21,
-          "covering_circle_radius": 1
-        },
-        "source": "Kershner, The Number of Circles Covering a Set, American Journal of Mathematics 61(3), 1939, pp. 665–671, DOI 10.2307/2371320; https://doi.org/10.2307/2371320",
-        "provenance": "Traditional triangular-lattice circle-covering method. A finite radius-two lattice patch is reconstructed locally with a small inward spacing adjustment and two repeated origin centers.",
-        "witness": "data/human/kershner_triangular_patch21.json",
-        "evidence_state": "Exact continuous coverage checked by the restricted-Voronoi certificate. This local finite patch is not attributed as a published n=21 record.",
-        "ai_provenance": "The method is classical; the specific finite patch was reconstructed locally for this benchmark and is not presented as a historical human result.",
-        "date": "2026-11-06 (local reconstruction)",
-        "method": "Finite patch of the classical triangular-lattice covering by unit circles.",
-        "url": "https://doi.org/10.2307/2371320"
-      },
-      "best_public": {
-        "value": "1000000000/262845073",
-        "parameters": {
-          "circle_count": 21,
-          "covering_circle_radius": 1
-        },
-        "source": "https://minmaxarena.com/en/problems/circles-cover-disc/p87-n21-v1",
-        "date_checked": "2026-11-09",
-        "provenance": "Public starter answer. Friedman separately credits Jeremy Tan for the literature value 3.804+.",
-        "witness": "data/source/minmaxarena_n21.json",
-        "witness_sha256": "631898fdc9efa4ee4338ef939eb1c8e28970f739ca197e73e3418341d702bf5c",
-        "evidence_state": "Strict exact checker accepted the original decimal data after rational conversion. Independent exact dyadic subdivision verified 6757 boxes with depth limit 42.",
-        "optimality": "No n=21 optimality proof appears in the reviewed sources.",
-        "date": "2018 (source attribution); checked 2026-11-06",
-        "source_artifact": "data/source/friedman_tan21.png",
-        "source_artifact_sha256": "014887ec99d39ae3337799a074424e42d694f38d39b63ef1d96c53970e678088"
-      },
-      "best_reproduced": {
-        "value": "7/2",
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "circle_count": 21,
-          "covering_circle_radius": 1
-        },
-        "program": "reference.py",
-        "verification_status": "exact",
-        "verification_method": "Exact enumeration of all restricted Voronoi vertices, pair-bisector boundary intersections, smooth boundary extrema, and fixed boundary points; 1,463 critical points checked.",
-        "objective_value": 3.5,
-        "witness": "data/human/kershner_triangular_patch21.json",
-        "origin_type": "task-local exact reconstruction of a classical triangular-lattice covering method",
-        "date": "2026-11-06",
-        "evidence_state": "Exact checker verifies continuous coverage at radius 7/2 using 1,463 critical points.",
-        "review_status": "reviewed_by_sol"
-      },
-      "source_review": {
-        "snapshot_date": "2026-11-06",
-        "optimality_status": "The primary public table still labels n=21 as found. Its 2026 proofs for n=11 through n=20 do not include n=21.",
-        "scope": "Twenty-one unit disks covering a centered disk. Results for other circle counts are excluded from the same-parameter comparison.",
-        "notes": "The reported public value is retained as unverified. The frozen human comparison H is the weaker independently reproduced construction at radius 3.5."
-      },
-      "review_status": "accepted_by_sol",
+      "witness": "data/human_order29.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "This is the published best-known feasible value in the cited sources, not a proof of global optimality.",
+        "The source documents a conjectured Gram matrix and a lower-bound construction; the maximal determinant at order 29 remains uncertified."
+      ],
+      "checked_at": "2026-11-05",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
-        "date": "2026-11-06",
+        "date": "2026-11-07",
         "run": {
           "task_id": "T085",
           "config_id": "T085-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": "7/2",
+          "objective": 1188957517256767569920,
           "verification_status": "exact",
-          "generation_time": 0.3157821446657181,
-          "verification_time": 0.9173773899674416,
-          "objective_value": "7/2",
+          "generation_time": 0.26474758610129356,
+          "verification_time": 0.26491037011146545,
+          "objective_value": 1188957517256767569920,
           "details": {
-            "circle_count": 21,
-            "target_radius": "7/2",
-            "critical_points_checked": 1463,
-            "coverage_certificate": "All restricted Voronoi vertices, pair-bisector boundary crossings, boundary distance extrema, and fixed boundary representatives were checked exactly.",
-            "claimed_score_ignored": true
+            "signed_determinant": -1188957517256767569920,
+            "n": 29
           },
-          "eval_time": 1.2393424548208714,
+          "eval_time": 0.5330900512635708,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -104,59 +56,106 @@
           }
         },
         "independent_quantity": {
-          "radius": "7/2",
-          "circle_count": 21,
-          "distinct_centers": 19,
-          "method": "Analytic triangular tessellation radius; omitted-site norm lower bound and exact rational perturbation slack. Independent of formal restricted Voronoi enumeration."
+          "absolute_determinant": "1188957517256767569920"
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "literature_report": {
-        "value": 3.804,
+      "review_status": "accepted_by_sol",
+      "best_human": {
+        "value": 1188957517256767569920,
         "parameters": {
-          "circle_count": 21,
-          "covering_circle_radius": 1
+          "n": 29,
+          "entries": "±1"
         },
-        "source": "https://erich-friedman.github.io/packing/circovcir/",
-        "date_checked": "2026-11-06",
-        "source_artifact": "data/source/friedman_tan21.png",
-        "source_artifact_sha256": "014887ec99d39ae3337799a074424e42d694f38d39b63ef1d96c53970e678088",
-        "provenance": "Friedman's table credits Jeremy Tan in 2018 and labels n=21 as found.",
-        "witness": null,
-        "evidence_state": "Reported same-parameter construction value; exact witness not recovered or reproduced.",
-        "optimality": "No n=21 optimality proof appears in the reviewed source."
+        "authors": [
+          "William P. Orrick",
+          "Bruce Solomon",
+          "Roland Dowdeswell",
+          "Warren D. Smith"
+        ],
+        "year": 2003,
+        "url": "https://arxiv.org/abs/math/0304410",
+        "evidence_state": "published witness transcribed and exactly reproduced",
+        "optimality": "best-known construction; no proof of global optimality is claimed",
+        "witness": "data/human_order29.json"
       },
-      "checked_at": "2026-11-09",
-      "parameters": {
-        "circle_count": 21,
-        "covering_circle_radius": 1
+      "best_public": {
+        "value": 1188957517256767569920,
+        "parameters": {
+          "n": 29,
+          "entries": "±1"
+        },
+        "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+        "evidence_state": "source reports Solomon/Orrick construction and hosts Gram/decomposition data; task uses the printed sign matrix in Orrick et al.",
+        "optimality": "conjectural, not certified",
+        "origin_type": "unknown unless attribution is stated in source/provenance"
+      },
+      "best_reproduced": {
+        "value": 1188957517256767569920,
+        "parameters": {
+          "n": 29,
+          "entries": "±1"
+        },
+        "provenance": "human published witness",
+        "evidence_state": "independently recomputed by integer Bareiss elimination",
+        "review_status": "reviewed_by_sol"
       }
     }
   },
-  "review_status": "accepted_by_sol",
-  "additional_evidence": {
-    "configurations": {
-      "T085-C01": {
-        "best_human": {
-          "source": "Richard Kershner, The Number of Circles Covering a Set, American Journal of Mathematics 61 (1939), 665–671, DOI 10.2307/2371320",
-          "evidence_state": "Nineteen lattice sites at slightly reduced triangular spacing plus two repeated origin centers. The exact checker proves full coverage of radius 7/2.",
-          "ai_provenance": "Classical method, with this finite patch selected and reconstructed locally; no historical attribution is claimed."
-        },
-        "best_public": {
-          "value": 3.804,
-          "source": "https://erich-friedman.github.io/packing/circovcir/",
-          "witness": null,
-          "evidence_state": "Friedman's table reports 3.804+ and credits Jeremy Tan. The underlying exact n=21 witness has not been recovered here.",
-          "optimality": "Not proved in the reviewed source."
-        },
-        "best_reproduced": {
-          "origin_type": "traditional triangular-lattice method reconstructed locally"
-        },
-        "source_review": {
-          "optimality_status": "Friedman's table lists n=21 as found, not proved. The site's 2026 proof entries stop at n=20."
-        }
-      }
+  "sol_review": {
+    "T085-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
     }
-  }
+  },
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 1188957517256767569920,
+    "parameters": {
+      "n": 29,
+      "entries": "±1"
+    },
+    "authors": [
+      "William P. Orrick",
+      "Bruce Solomon",
+      "Roland Dowdeswell",
+      "Warren D. Smith"
+    ],
+    "year": 2003,
+    "url": "https://arxiv.org/abs/math/0304410",
+    "evidence_state": "published witness transcribed and exactly reproduced",
+    "optimality": "best-known construction; no proof of global optimality is claimed",
+    "witness": "data/human_order29.json"
+  },
+  "best_public": {
+    "value": 1188957517256767569920,
+    "parameters": {
+      "n": 29,
+      "entries": "±1"
+    },
+    "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
+    "evidence_state": "source reports Solomon/Orrick construction and hosts Gram/decomposition data; task uses the printed sign matrix in Orrick et al.",
+    "optimality": "conjectural, not certified",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 1188957517256767569920,
+    "parameters": {
+      "n": 29,
+      "entries": "±1"
+    },
+    "provenance": "human published witness",
+    "evidence_state": "independently recomputed by integer Bareiss elimination"
+  },
+  "baseline_seed": {
+    "value": 7247757312,
+    "formula": "27*2^28",
+    "provenance": "deterministic seed 2I-J, constructed in init_program.py",
+    "evidence_state": "exact determinant; not attributed as a published record"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
 }

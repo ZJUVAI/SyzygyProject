@@ -1,53 +1,51 @@
-"""Fixed-seed random greedy edge additions; reads no human/reference witness."""
+"""Fixed-restart simulated annealing with exact periodic energy updates."""
+
+import math
 import os
 import random
+import time
 
-from mathbench.search import search_steps
-
-try:
-    from .greedy import all_triples, greedy_add
-except ImportError:
-    from greedy import all_triples, greedy_add
-
-ITERATIONS = 5
+from tasks.t075.check import CONFIG_ID
+from tasks.t075.heuristics import anneal, energy, correlations
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T075-C01") != "T075-C01":
-        raise ValueError("unsupported T075 configuration")
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    rng = random.Random(seed)
+    trials = int(os.environ.get("T075_SEARCH_TRIALS", "4"))
+    steps = int(os.environ.get("T075_ANNEAL_STEPS", "5000"))
+    if trials < 0 or steps < 0:
+        raise ValueError("search counts must be nonnegative")
     seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    iterator = iter(search_steps(ITERATIONS))
-    triples = all_triples()
-    best = {"edges": []}
-    best_count = 0
-    trial_scores = []
-    actual = 0
-    for trial in range(ITERATIONS):
-        if next(iterator, None) is None:
+    deadline = None
+    if seconds is not None:
+        duration = float(seconds)
+        if not math.isfinite(duration) or duration <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + duration
+    rng = random.Random(seed)
+    best = [1] * 64
+    best_energy = energy(correlations(best))
+    completed = 0
+    for _ in range(trials):
+        if deadline is not None and time.monotonic() >= deadline:
             break
-        order = list(triples)
-        rng.shuffle(order)
-        candidate = greedy_add(order)
-        count = len(candidate["edges"])
-        actual += 1
-        trial_scores.append(count)
-        if count > best_count:
-            best, best_count = candidate, count
-    best["search_metadata"] = {
-        "algorithm": "seeded random permutation greedy addition",
-        "seed": seed,
-        "iterations": actual,
-        "iteration_limit": ITERATIONS,
-        "trial_edge_counts": trial_scores,
-        "best_edge_count": best_count,
-        "comparison_data_read": False,
-        "budget": {
-            "mode": "fixed_iterations" if seconds is None else "wall_clock_cutoff",
-            "requested_iterations": ITERATIONS,
-            "actual_iterations": actual,
-            "requested_wall_clock_seconds": seconds,
+        start = [rng.choice((-1, 1)) for _ in range(64)]
+        candidate, candidate_energy = anneal(start, rng, steps=steps)
+        completed += 1
+        if candidate_energy < best_energy:
+            best, best_energy = candidate, candidate_energy
+    return {
+        "sequence": best,
+        "search_metadata": {
+            "algorithm": "seeded multistart single-spin simulated annealing with exact correlation deltas and one-bit descent",
+            "seed": seed,
+            "trial_limit": trials,
+            "steps_per_trial": steps,
+            "trials_completed": completed,
+            "reference_data_read": False,
+            "time_cutoff_enabled": deadline is not None,
         },
     }
-    return best

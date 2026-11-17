@@ -1,13 +1,13 @@
-"""Load the fixed rational reconstruction of the published n=12 diagram."""
+"""Frozen reproduced human reference for T081-C01."""
 
-import json
 import os
-from pathlib import Path
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C01")
-    if chosen != "T081-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    path = Path(__file__).parent / "data/human/rechenberg12_rational.json"
-    return {"points": json.loads(path.read_text(encoding="utf-8"))["points"]}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C01")
+    if config_id != "T081-C01":
+        raise ValueError(f"unknown T081 configuration: {config_id}")
+    return {
+        "coefficients": ["-1/1000", "-3/2", "1"],
+        "reference": "H4 Gaussian plus a rational negative H0 term",
+    }

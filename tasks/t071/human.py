@@ -1,21 +1,18 @@
-"""Reconstruct the classical Varshamov-Tenengolts VT_0(16) code."""
+"""Generate the finite m=6,L=5 human formula baseline."""
 
 import os
 
-from tasks.t071.check import N
-
-
-def build_vt0():
-    words = []
-    for word in range(1 << N):
-        checksum = sum((N - bit) * ((word >> bit) & 1) for bit in range(N))
-        if checksum % (N + 1) == 0:
-            words.append(word)
-    return {"codewords": words}
+from tasks.t071.construction import projected_simplex
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T071-C01")
-    if chosen != "T071-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    return build_vt0()
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T071-C01") != "T071-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    values, _weights = projected_simplex(6, 5)
+    return {"set": values}
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

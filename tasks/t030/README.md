@@ -1,29 +1,17 @@
-# T030：DIMACS DSJC1000.5 图着色
+# T030: cage order
 
 ## 中文
 
-本任务固定 DIMACS 图 DSJC1000.5，包含 1000 个顶点和 249,826 条无向边。顶点编号为 0 至 999。候选须给每个顶点一个整数颜色，并确保每条边的端点颜色不同。目标是最小化使用的不同颜色数。评测器逐边检查构造，并从颜色列表重算不同颜色数；候选声明的分数不参与验收。
+构造连通简单正则图，并减少顶点数。正式配置 T030-C01 固定度数 4、围长至少 10。可行图只给出上界，不证明最优。
 
-候选输入为 `data/DSJC1000.5.bits`，采用无头部上三角位集，SHA-256 为 `ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779`。位对 `(u,v)` 的索引为 `v*(v-1)//2+u`，每字节从最低有效位开始，最后一个字节的 4 个未用高位为零。`data/graph_source.json` 保存原 DIMACS 来源、旧文件摘要及独立逐边比对记录。DIMACS 文本、Rutgers 二进制图和展开边表已删除。
+程序返回 `{"vertices": n, "edges": [[u, v], ...]}`。顶点编号从 0 到 n−1。不得有自环或重复无向边。可信校验器会检查度数、连通性和围长。初始 seed 用 LPS 的 `X^(5,37)` 图构造，再删去两个生成元对应的完美匹配。它给出一个 50,616 顶点的可行图。它不读取320顶点人类见证。
 
-Olawale Titiloye 与 Alan Crispin 的 2012 年论文报告找到了 DSJC1000.5 的 82 色着色。Titiloye 作者页提供该证书；本任务下载证书后检查了全部 1000 个顶点和 249,826 条边，复算为 82 色且无冲突。证书保存在 `data/source/DSJC1000.5_K82_col.txt`，复算摘要在 `data/DSJC1000.5_K82_verification.json`。这是当前核对到的最佳公开结果。作者页还留有旧的 83 色 QA-col 证书，保存在 `data/source/DSJC1000.5_K83.txt`。
-
-Samir Loudni 的 ID-VNS 页面提供 86 色着色。下载的见证覆盖 1000 个顶点，独立复算为 86 个不同颜色，且所有边都合法。人类基线取该见证，保存在 `data/human_witness.json`；`human.py` 会重放该构造。冻结的人类参考分数为 86。
-
-最优值仍未确定。Cazenave、Negrevergne 与 Sikora 的 2025 arXiv 论文在第 6.2 节表 4 的说明中明确称这些困难实例的色数未知，并列出下界 73。Held、Cook 与 Sewell 的论文也报告下界 73。本任务未独立重算这个下界。当前报告区间为 73 至 82。Hertz、Plumettaz 与 Zufferey 的 VSS-Col 论文将该图的 `χ` 标为未知、`k*` 标为 83。开放状态依据论文的明确陈述。来源检查日期为 2026-11-06。
-
-传统基线使用随机并列打破的多起点 DSATUR 贪心着色。它只读取固定图，不读取比较见证。seed 0 的 113 色输出、复算结果和运行记录保存在 `data/search/seed0_dsatur_*`。初始程序完全自包含，为每个顶点分配独立颜色。状态：已通过 Sol 验收（2026-11-06）。
+人类复现基线是 Exoo、Goedgebeur、Jooken、Stubbe 和 Van den Eede 报告的 320 顶点图。论文称其为上界；对 n(4,10) 的最优值仍未知。仓库中的边表来自作者公开数据仓库 `genLifts/data/graphs/cage/n320_k4_g10.g6`，已转换为任务本地 JSON。来源：[论文 v2](https://arxiv.org/abs/2511.07247v2)、[作者数据仓库](https://github.com/AGT-Kulak/smallRegGirthGraphs)。
 
 ## English
 
-This task fixes the DIMACS DSJC1000.5 graph. It has 1,000 vertices and 249,826 undirected edges. Vertex labels are 0 through 999. A candidate assigns an integer color to every vertex. The endpoints of every edge must have different colors. The objective is to minimize the number of distinct colors. The evaluator checks every edge and counts the colors again. It ignores any score claimed by the candidate.
+Construct a connected simple regular graph and minimize its order. The official configuration T030-C01 has degree 4 and girth at least 10. A feasible graph gives an upper bound. It does not prove optimality.
 
-Candidate input `data/DSJC1000.5.bits` is a headerless packed upper-triangle bitset. Its SHA-256 is `ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779`. Pair `(u,v)` uses index `v*(v-1)//2+u`; bits are least-significant-bit first within each byte. The four unused high bits in the last byte are zero. `data/graph_source.json` records the original DIMACS source, its old file hashes, and an independent edge-by-edge comparison. The DIMACS text, Rutgers binary graph, and expanded edge list have been removed.
+Return `{"vertices": n, "edges": [[u, v], ...]}`. Label vertices from 0 to n−1. Do not use loops or duplicate undirected edges. The trusted checker verifies the configured degree, connectedness, and girth.
 
-Titiloye and Crispin's 2012 paper reports an 82-coloring of DSJC1000.5. Titiloye's author page provides the certificate. This task checked all 1,000 vertices and 249,826 edges; the certificate has 82 distinct colors and no conflict. The certificate is saved in `data/source/DSJC1000.5_K82_col.txt`, with a replay summary in `data/DSJC1000.5_K82_verification.json`. This is the best public result found in the reviewed sources. The author page also retains an older 83-color QA-col certificate in `data/source/DSJC1000.5_K83.txt`.
-
-Samir Loudni's ID-VNS page provides an 86-coloring. The downloaded witness assigns all 1,000 vertices. An independent replay counts 86 distinct colors and checks every edge. The human baseline is this witness, saved in `data/human_witness.json`. `human.py` replays it. The frozen human reference score is 86.
-
-The optimum remains unknown. In their 2025 arXiv paper, Cazenave, Negrevergne, and Sikora state in the note for Section 6.2, Table 4, that the chromatic numbers of these difficult instances seem unknown. Their DSJC1000.5 row reports a lower bound of 73. Held, Cook, and Sewell also report 73. This task has not independently recomputed that lower bound. The reported interval is 73 to 82. The VSS-Col paper by Alain Hertz, Matthieu Plumettaz, and Nicolas Zufferey marks `χ` unknown and gives `k* = 83`. The open status relies on the papers' explicit statements. Sources were checked on 2026-11-06.
-
-The traditional baseline uses multi-start DSATUR greedy coloring with seeded random tie breaks. It reads the fixed graph and does not read comparison witnesses. The seed 0 result with 113 colors, exact verification, and run record are saved under `data/search/seed0_dsatur_*`. The initial program is self-contained and assigns a separate color to each vertex. Status: accepted by Sol on 2026-11-06.
+The reproduced human baseline is the 320-vertex graph reported by Exoo, Goedgebeur, Jooken, Stubbe, and Van den Eede. Their paper gives an upper bound; the minimum order n(4,10) remains unknown. The task-local JSON edge list was converted from `genLifts/data/graphs/cage/n320_k4_g10.g6` in the authors' public data repository. For C01, the starter uses the LPS graph `X^(5,37)` and deletes two generator matchings. It gives a feasible graph on 50,616 vertices and does not read the 320-vertex human witness. Sources: [paper v2](https://arxiv.org/abs/2511.07247v2), [authors' data repository](https://github.com/AGT-Kulak/smallRegGirthGraphs), [LPS paper](https://doi.org/10.1007/BF02126799).

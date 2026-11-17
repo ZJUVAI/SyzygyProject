@@ -1,7 +1,3 @@
-"""Task-qualified evolution entry point for T068."""
+"""Runner entry point for the task's traditional search baseline."""
 
-from tasks.t068.baseline import run_code as _run_search
-
-
-def run_code():
-    return _run_search()
+from tasks.t068.baseline import run_code

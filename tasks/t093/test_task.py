@@ -1,146 +1,130 @@
-"""Exact geometry, task entries, and failure controls for T093."""
-
-import copy
-import hashlib
+"""Task-local tests for exact QAPLIB tai256c evaluation."""
+import math
 import json
+import random
 import os
-from fractions import Fraction
-from pathlib import Path
+import shutil
+import subprocess
 import sys
-import time
-
+from pathlib import Path
 import pytest
 
-from tasks.t093 import baseline, check, evolution, human, init_program, reference
-from tasks.t093.instance import INSTANCE_SHA256, SOURCE_PATH, load_instance
+from tasks.t093.check import CONFIG_ID, N, objective, validate
+from tasks.t093.baseline import _load_matrices, _swap_delta, run_code as baseline_run
+from tasks.t093.human import run_code as human_run
+from tasks.t093.init_program import run_code as seed_run
+from tasks.t093.reference import run_code as reference_run
+from tasks.t093.evolution import run_code as evolution_run
+
+CONFIG = {"id": CONFIG_ID, "parameters": {"instance": "QAPLIB tai256c", "n": N}}
 
 
-TASK = Path(__file__).resolve().parent
-CONFIG = json.loads((TASK / "task.json").read_text(encoding="utf-8"))["configurations"][0]
+def test_identity_seed_is_valid_and_scored_exactly():
+    result = validate(seed_run(), CONFIG)
+    assert result["verification_status"] == "exact"
+    assert isinstance(result["objective"], int)
+    assert result["details"]["objective_terms"] == N * N
 
 
-def _independent_value(solution):
-    raw = json.loads(SOURCE_PATH.read_text(encoding="utf-8"))
-    return sum(raw["items"][item_id]["value"] for item_id in solution["item_indices"])
-
-
-def test_frozen_instance_and_all_program_entries(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T093-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "7")
-    monkeypatch.setenv("T093_TRIALS", "1")
-    monkeypatch.setenv("T093_PLACEMENT_TRIES", "2")
-    assert hashlib.sha256(SOURCE_PATH.read_bytes()).hexdigest() == INSTANCE_SHA256
-    raw = json.loads(SOURCE_PATH.read_text(encoding="utf-8"))
-    assert raw["instance_name"] == "random_cf2_74ae2d30_50"
-    assert raw["num_items"] == 44
-    assert sum(item["quantity"] for item in raw["items"]) == 50
-    assert len(load_instance()["container"]) == 15
-    outputs = [
-        init_program.run_code(),
-        baseline.run_code(),
-        human.run_code(),
-        reference.run_code(),
-        evolution.run_code(),
-    ]
-    values = [check.validate(output, CONFIG)["objective"] for output in outputs]
-    assert values[0] == 0
-    assert values[2] == values[3] == 2304
-    assert values[-1] == values[1]
-    assert values[1] > 0
-    assert baseline.run_code()["search_metadata"]["reference_data_read"] is False
-
-
-def test_human_public_witness_exact_score_and_claim_invariance():
-    solution = human.run_code()
-    checked = check.validate(solution, CONFIG, strict=True)
-    assert checked["verification_status"] == "exact"
-    assert checked["objective"] == 2304 == _independent_value(solution)
-    assert checked["details"]["selected_items"] == 23
-    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "fake")):
-        changed = copy.deepcopy(solution)
-        changed[key] = value
-        assert check.validate(changed, CONFIG, strict=True) == checked
-    assert checked["details"]["claimed_objective_ignored"] is True
-
-
-def test_exact_triangle_intersection_distinguishes_touching_and_overlap():
-    a = ((0, 0), (2, 0), (0, 2))
-    touching = ((2, 0), (2, 2), (0, 2))
-    overlapping = ((1, 0), (3, 0), (1, 2))
-    bbox_a = (0, 0, 2, 2)
-    bbox_touch = (0, 0, 2, 2)
-    bbox_overlap = (1, 0, 3, 2)
-    assert check._triangle_intersection_area(a, bbox_a, touching, bbox_touch) == 0
-    assert check._triangle_intersection_area(a, bbox_a, overlapping, bbox_overlap) == Fraction(1, 2)
-
-
-def test_invalid_solution_variants_are_rejected():
-    witness = human.run_code()
-    first_id = witness["item_indices"][0]
-    first_position = witness["item_indices"].index(first_id)
-    another_position = witness["item_indices"].index(first_id, first_position + 1)
-    overlapping = copy.deepcopy(witness)
-    overlapping["x_translations"][another_position] = overlapping["x_translations"][first_position]
-    overlapping["y_translations"][another_position] = overlapping["y_translations"][first_position]
-    outside = copy.deepcopy(witness)
-    outside["x_translations"][0] += 100_000_000
-    too_many = {
-        "item_indices": [first_id, first_id, first_id],
-        "x_translations": [witness["x_translations"][first_position],
-                           witness["x_translations"][another_position],
-                           witness["x_translations"][first_position]],
-        "y_translations": [witness["y_translations"][first_position],
-                           witness["y_translations"][another_position],
-                           witness["y_translations"][first_position]],
+def test_cold_seed_copy_runs_without_repository_imports(tmp_path):
+    seed_copy = tmp_path / "init_program.py"
+    shutil.copy(Path(__file__).with_name("init_program.py"), seed_copy)
+    isolated_env = {
+        "PATH": os.environ.get("PATH", ""),
+        "MATHBENCH_CONFIG_ID": CONFIG_ID,
+        "MATHBENCH_SEED": "0",
     }
-    broken = [
-        overlapping,
-        outside,
-        too_many,
-        {"item_indices": [0], "x_translations": [], "y_translations": [0]},
-        {"item_indices": [True], "x_translations": [0], "y_translations": [0]},
-        {"item_indices": [0], "x_translations": [False], "y_translations": [0]},
-        {"item_indices": [0], "x_translations": [0.0], "y_translations": [0]},
-        {"item_indices": [44], "x_translations": [0], "y_translations": [0]},
-        {"item_indices": [-1], "x_translations": [0], "y_translations": [0]},
-        {"item_indices": [0], "x_translations": [float("nan")], "y_translations": [0]},
-    ]
-    for solution in broken:
-        with pytest.raises(ValueError):
-            check.validate(solution, CONFIG)
+    code = (
+        "import json, runpy; "
+        "module = runpy.run_path('init_program.py'); "
+        "print(json.dumps(module['run_code']()))"
+    )
+    completed = subprocess.run(
+        [sys.executable, "-c", code], cwd=tmp_path, env=isolated_env,
+        check=True, capture_output=True, text=True, timeout=10,
+    )
+    exported = json.loads(completed.stdout)
+    assert exported == {"permutation": list(range(N))}
+    assert validate(exported, CONFIG)["verification_status"] == "exact"
 
 
-def test_configuration_identity_and_parameters_are_frozen():
-    bad_configs = [
-        {**CONFIG, "id": "T093-C02"},
-        {**CONFIG, "parameters": {**CONFIG["parameters"], "available_items_total": 44}},
-        {**CONFIG, "parameters": {**CONFIG["parameters"], "container_vertices": True}},
-        {**CONFIG, "parameters": {**CONFIG["parameters"], "new_rule": "rotate"}},
-        {**CONFIG, "direction": "minimize"},
-    ]
-    for config in bad_configs:
-        with pytest.raises(ValueError):
-            check.validate(init_program.run_code(), config)
+def test_evolution_entry_uses_task_local_baseline(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "7")
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0.02")
+    result = evolution_run()
+    assert validate(result, CONFIG)["verification_status"] == "exact"
+    assert result["search_metadata"]["seed"] == 7
 
 
-def test_seeded_baseline_and_evolution_are_repeatable(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T093-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "29")
-    monkeypatch.setenv("T093_TRIALS", "1")
-    monkeypatch.setenv("T093_PLACEMENT_TRIES", "2")
-    first = baseline.run_code()
-    assert baseline.run_code() == first
-    assert evolution.run_code() == first
-    assert check.validate(first, CONFIG)["objective"] > 0
+def test_default_baseline_is_reproducible_with_fixed_check_budget(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "13")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    first = baseline_run()
+    second = baseline_run()
+    assert first == second
+    assert first["search_metadata"]["seed"] == 13
+    assert first["search_metadata"]["pair_checks"] == 10000
+    assert first["search_metadata"]["budget"] == {
+        "mode": "fixed_iteration_count",
+        "requested_checks": 10000,
+        "actual_checks": 10000,
+        "requested_wall_clock_seconds": None,
+        "effective_wall_clock_seconds": None,
+    }
+    assert validate(first, CONFIG)["verification_status"] == "exact"
 
 
-def test_runner_program_errors_and_timeouts_without_registry_changes():
-    from mathbench.evaluate import _run
+def test_archived_human_witness_replays_exact_value():
+    witness = human_run()
+    result = validate(witness, CONFIG)
+    assert result["objective"] == witness["claimed_score"]
+    assert validate(reference_run(), CONFIG)["objective"] == witness["claimed_score"]
 
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional failure')"], env, 5)
-    started = time.monotonic()
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.1)
-    assert time.monotonic() - started < 3
+
+def test_claimed_score_is_ignored():
+    witness = human_run()
+    candidate = {"permutation": witness["permutation"]}
+    expected = validate(candidate, CONFIG)
+    tampered = {
+        **candidate,
+        "claimed_score": -1,
+        "reported_score": math.inf,
+        "objective": float("nan"),
+        "arbitrary_metadata": {"value": [True, None, "ignored"]},
+    }
+    result = validate(tampered, CONFIG)
+    assert result == expected
+    assert result["details"]["claimed_score_ignored"] is True
+
+
+@pytest.mark.parametrize("bad", [
+    [0] * N,
+    list(range(N - 1)),
+    list(range(N - 1)) + [N],
+    list(range(N - 1)) + [True],
+    list(range(N - 1)) + [float("nan")],
+    list(range(N - 1)) + [float("inf")],
+])
+def test_invalid_permutations_are_rejected(bad):
+    with pytest.raises(ValueError):
+        validate({"permutation": bad}, CONFIG)
+
+
+def test_wrong_configuration_is_rejected():
+    with pytest.raises(ValueError):
+        validate({"permutation": list(range(N))}, {"id": "T093-C02", "parameters": {"n": N}})
+
+
+def test_swap_delta_matches_full_exact_recomputation():
+    rng = random.Random(42)
+    p = list(range(N))
+    rng.shuffle(p)
+    a, b = _load_matrices()
+    for _ in range(10):
+        r, s = rng.sample(range(N), 2)
+        old_score = objective(p)
+        delta = _swap_delta(a, b, p, r, s)
+        p[r], p[s] = p[s], p[r]
+        assert objective(p) == old_score + delta

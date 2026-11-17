@@ -1,111 +1,56 @@
-"""Exact rational checker for 17 squares in the closed unit square.
+"""Exact validator for induced paths in the configured cube."""
+from tasks.t041.init_program import CONFIG_DIMENSIONS
 
-Each square is encoded by its centre, side, and rational unit edge direction
-(`cos`, `sin`). This gives exact rational corners and exact separating-axis
-tests. Decimal floats are interpreted as their exact binary rational values.
-"""
-from fractions import Fraction
-import math
-
-_CONFIG = {
-    "id": "T041-C01",
-    "parameters": {
-        "square_count": 17,
-        "container": "closed unit square [0,1]^2",
-        "orientation": "arbitrary",
-        "interior_disjoint": True,
-        "objective": "sum of the 17 side lengths",
-    },
+DIMENSION = 9
+VERTEX_COUNT = 1 << DIMENSION
+PARAMETERS = {
+    "dimension": DIMENSION,
+    "graph": "Q9",
+    "object": "induced_path",
+    "length_unit": "edges",
 }
 
 
-def _q(value, label):
-    if type(value) is int:
-        return Fraction(value)
-    if isinstance(value, str):
-        try:
-            return Fraction(value)
-        except (ValueError, ZeroDivisionError) as exc:
-            raise ValueError(f"{label} must be a rational number") from exc
-    if type(value) is float:
-        if not math.isfinite(value):
-            raise ValueError(f"{label} must be finite")
-        return Fraction.from_float(value)
-    raise ValueError(f"{label} must be an integer, finite float, or rational string")
-
-
-def _square(raw):
-    if not isinstance(raw, dict):
-        raise ValueError("each square must be an object")
-    required = {"x", "y", "side", "cos", "sin"}
-    if set(raw) != required:
-        raise ValueError(f"each square must have exactly {sorted(required)}")
-    x, y, side, c, s = (_q(raw[k], k) for k in ("x", "y", "side", "cos", "sin"))
-    if side <= 0:
-        raise ValueError("square side lengths must be positive")
-    if c*c + s*s != 1:
-        raise ValueError("orientation must be an exact rational unit vector")
-    return x, y, side, c, s
-
-
-def _corners(square):
-    x, y, side, c, s = square
-    hx, hy = side*c/2, side*s/2
-    vx, vy = -side*s/2, side*c/2
-    return tuple((x + a*hx + b*vx, y + a*hy + b*vy)
-                 for a, b in ((-1,-1),(-1,1),(1,-1),(1,1)))
-
-
-def _separated(a, b):
-    """Return true iff some exact square-edge axis separates interiors."""
-    ax, ay, _, ac, ass = a
-    bx, by, _, bc, bs = b
-    dx, dy = bx-ax, by-ay
-    for ux, uy in ((ac, ass), (-ass, ac), (bc, bs), (-bs, bc)):
-        # These are unit edge directions; the corresponding normal axis is
-        # obtained by a quarter turn. A quarter turn preserves dot magnitudes.
-        distance = abs(dx*ux + dy*uy)
-        ra = a[2] * (abs(ux*ac + uy*ass) + abs(ux*(-ass) + uy*ac)) / 2
-        rb = b[2] * (abs(ux*bc + uy*bs) + abs(ux*(-bs) + uy*bc)) / 2
-        if distance >= ra + rb:
-            return True
-    return False
-
-
 def validate(solution, config, strict=False):
-    if (not isinstance(config, dict) or config.get("id") != _CONFIG["id"]
-            or config.get("parameters") != _CONFIG["parameters"]):
-        raise ValueError("unsupported T041 configuration")
-    if not isinstance(solution, dict) or not isinstance(solution.get("squares"), (list, tuple)):
-        raise ValueError("solution must contain a squares list")
-    items = solution["squares"]
-    if len(items) != 17:
-        raise ValueError("expected exactly 17 squares")
-    squares = [_square(raw) for raw in items]
-    for index, square in enumerate(squares):
-        for x, y in _corners(square):
-            if not (0 <= x <= 1 and 0 <= y <= 1):
-                raise ValueError(f"square {index} is not contained in the unit square")
-    pair_count = 0
-    for i, a in enumerate(squares):
-        for j in range(i):
-            pair_count += 1
-            if not _separated(a, squares[j]):
-                raise ValueError(f"squares {j} and {i} have intersecting interiors")
-    total = sum((sq[2] for sq in squares), Fraction())
-    value = str(total.numerator) if total.denominator == 1 else f"{total.numerator}/{total.denominator}"
+    params = config.get("parameters")
+    if not isinstance(params, dict):
+        raise ValueError("unsupported configuration")
+    dimension = params.get("dimension")
+    if type(dimension) is not int or dimension not in CONFIG_DIMENSIONS.values():
+        raise ValueError("unsupported dimension")
+    if params != dict(PARAMETERS, dimension=dimension, graph=f"Q{dimension}"):
+        raise ValueError("unsupported configuration")
+    if "id" in config and CONFIG_DIMENSIONS.get(config["id"]) != dimension:
+        raise ValueError("configuration ID does not match dimension")
+    vertex_count = 1 << dimension
+    if not isinstance(solution, dict) or "vertices" not in solution:
+        raise ValueError("solution must contain vertices")
+    vertices = solution["vertices"]
+    if not isinstance(vertices, (list, tuple)):
+        raise ValueError("vertices must be a list or tuple")
+    if len(vertices) < 2:
+        raise ValueError("an induced path must contain at least one edge")
+    if any(type(vertex) is not int for vertex in vertices):
+        raise ValueError("vertex labels must be integers; bool and non-integer values are rejected")
+    if any(vertex < 0 or vertex >= vertex_count for vertex in vertices):
+        raise ValueError(f"vertex labels must be in the range [0, {vertex_count})")
+    if len(set(vertices)) != len(vertices):
+        raise ValueError("path vertices must be distinct")
+    for index, (left, right) in enumerate(zip(vertices, vertices[1:])):
+        if (left ^ right).bit_count() != 1:
+            raise ValueError(f"consecutive vertices {index} and {index + 1} are not adjacent")
+    for i, left in enumerate(vertices):
+        for j in range(i + 2, len(vertices)):
+            if (left ^ vertices[j]).bit_count() == 1:
+                raise ValueError(f"nonconsecutive vertices {i} and {j} are adjacent")
+    objective = len(vertices) - 1
     return {
-        "objective": value,
-        "objective_value": value,
+        "objective": objective,
         "verification_status": "exact",
         "details": {
-            "square_count": len(squares),
-            "pairs_checked": pair_count,
-            "corners_checked": 68,
-            "objective_name": "sum_of_side_lengths",
-            "touching_allowed": True,
-            "arithmetic": "exact rational arithmetic",
+            "dimension": dimension,
+            "vertices_checked": len(vertices),
+            "nonconsecutive_pairs_checked": (len(vertices) - 1) * (len(vertices) - 2) // 2,
             "claimed_objective_ignored": True,
-            "strict": bool(strict),
         },
     }

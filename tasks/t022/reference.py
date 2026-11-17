@@ -1,3 +1,13 @@
-"""Fixed public reference witness, stored as task-local data."""
+"""Load the frozen exact 17-point human construction."""
 
-from tasks.t022.human import run_code as run_code
+import json
+import os
+from pathlib import Path
+
+
+def run_code():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T022-C01")
+    if chosen != "T022-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    path = Path(__file__).parent / "data" / "reference" / "cubic_tangent_17.json"
+    return json.loads(path.read_text(encoding="utf-8"))

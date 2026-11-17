@@ -1,159 +1,57 @@
-"""Exact unit-distance counter over one real algebraic number field."""
-
-from __future__ import annotations
-
-from collections.abc import Mapping
-from fractions import Fraction
-from functools import reduce
-from math import gcd
-import re
-import sys
-
-import sympy as sp
-
-from mathbench.exact_math import (
-    rational as _rational,
-    reduce_polynomial as _reduce_polynomial,
-    multiply_mod as _multiply_mod,
-)
+"""Exact checker for affine cap sets in F_3^7."""
 
 
-POINT_COUNT = 100
-CONFIG_ID = "T065-C01"
-PARAMETERS = {
-    "point_count": 100,
-    "ambient_space": "Euclidean plane R^2",
-    "objective": "unit_distance_pairs",
-    "coordinate_domain": "real algebraic coordinates in one common number field",
-}
-_INTEGER_RE = re.compile(r"-?(?:0|[1-9][0-9]*)\Z")
-
-if hasattr(sys, "set_int_max_str_digits"):
-    # Exact polynomial and rational inputs are bounded by the shared runner's
-    # 16 MiB output limit and 4 GiB checker process limit.
-    sys.set_int_max_str_digits(0)
-
-
-def _integer(value, label):
-    if type(value) is int:
-        return value
-    if isinstance(value, str) and _INTEGER_RE.fullmatch(value):
-        return int(value)
-    raise ValueError(f"{label} must be an integer or an integer string")
-
-
-def _check_config(config):
-    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
-        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
-    if config.get("parameters") != PARAMETERS:
-        raise ValueError("configuration must fix 100 distinct points in R^2")
-
-
-def _read_field(solution):
-    raw = solution.get("minimal_polynomial")
-    if not isinstance(raw, (list, tuple)) or len(raw) < 2:
-        raise ValueError("minimal_polynomial must be a nonconstant coefficient array")
-    coefficients = [_integer(c, "minimal_polynomial coefficient") for c in raw]
-    if coefficients[-1] <= 0 or reduce(gcd, (abs(c) for c in coefficients), 0) != 1:
-        raise ValueError("minimal_polynomial must be primitive with positive leading coefficient")
-
-    x = sp.Symbol("x")
-    polynomial = sp.Poly.from_list(list(reversed(coefficients)), gens=x, domain=sp.QQ)
-    try:
-        irreducible = polynomial.is_irreducible
-    except Exception as exc:
-        raise ValueError("could not certify minimal_polynomial irreducibility") from exc
-    if not irreducible:
-        raise ValueError("minimal_polynomial must be irreducible over Q")
-
-    interval = solution.get("isolating_interval")
-    if not isinstance(interval, (list, tuple)) or len(interval) != 2:
-        raise ValueError("isolating_interval must contain two rational endpoints")
-    left = _rational(interval[0], "left isolating endpoint")
-    right = _rational(interval[1], "right isolating endpoint")
-    if left >= right:
-        raise ValueError("isolating_interval endpoints must be increasing")
-    left_sym = sp.Rational(left.numerator, left.denominator)
-    right_sym = sp.Rational(right.numerator, right.denominator)
-    if polynomial.eval(left_sym) == 0 or polynomial.eval(right_sym) == 0:
-        raise ValueError("isolating interval endpoints cannot be roots")
-    try:
-        root_count = polynomial.count_roots(left_sym, right_sym)
-    except Exception as exc:
-        raise ValueError("could not certify the real-root isolating interval") from exc
-    if root_count != 1:
-        raise ValueError("isolating_interval must contain exactly one real root")
-
-    modulus = tuple(Fraction(c) for c in coefficients)
-    return modulus, len(coefficients) - 1
-
-
-def _parse_coordinates(solution, modulus, degree):
-    raw_points = solution.get("points")
-    if not isinstance(raw_points, (list, tuple)) or len(raw_points) != POINT_COUNT:
-        raise ValueError(f"points must contain exactly {POINT_COUNT} entries")
-    points = []
-    for index, raw_point in enumerate(raw_points):
-        if not isinstance(raw_point, Mapping) or set(raw_point) != {"x", "y"}:
-            raise ValueError(f"point {index} must contain exactly x and y coordinates")
-        parsed = []
-        for axis in ("x", "y"):
-            raw_coefficients = raw_point[axis]
-            if not isinstance(raw_coefficients, (list, tuple)) or not raw_coefficients:
-                raise ValueError(f"point {index} {axis} must be a nonempty rational coefficient array")
-            coefficients = [
-                _rational(value, f"point {index} {axis} coefficient")
-                for value in raw_coefficients
-            ]
-            parsed.append(_reduce_polynomial(coefficients, modulus))
-        points.append((parsed[0], parsed[1]))
-    if len(set(points)) != POINT_COUNT:
-        raise ValueError("all 100 points must be distinct in the selected real embedding")
-    return points
-
-
-def _add(left, right):
-    return tuple(a + b for a, b in zip(left, right))
-
-
-def _subtract(left, right):
-    return tuple(a - b for a, b in zip(left, right))
+DIMENSION = 7
+FIELD_ORDER = 3
+THEOREM_UPPER_BOUND = 288
 
 
 def validate(solution, config, strict=False):
-    """Count all exact unit-distance pairs; candidate score fields are ignored."""
-    _check_config(config)
-    if not isinstance(solution, Mapping):
-        raise ValueError("solution must be an object")
-    modulus, degree = _read_field(solution)
-    points = _parse_coordinates(solution, modulus, degree)
+    """Check every pair and return the recomputed cap cardinality."""
+    del strict  # The finite-domain check below is exact in both modes.
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    params = config.get("parameters", config)
+    if (not isinstance(params, dict)
+            or params.get("dimension") != DIMENSION
+            or params.get("field_order") != FIELD_ORDER
+            or params.get("max_points") != THEOREM_UPPER_BOUND):
+        raise ValueError("configuration must be T065-C01 (F_3^7, at most 288 points)")
+    points = solution.get("points")
+    if not isinstance(points, list):
+        raise ValueError("points must be a list")
+    if len(points) > THEOREM_UPPER_BOUND:
+        raise ValueError("point count exceeds the proved upper bound of 288")
 
-    one = (Fraction(1),) + (Fraction(0),) * (degree - 1)
-    unit_pairs = 0
-    pair_count = 0
-    for i, (xi, yi) in enumerate(points):
-        for xj, yj in points[:i]:
-            dx = _subtract(xi, xj)
-            dy = _subtract(yi, yj)
-            squared_distance = _add(
-                _multiply_mod(dx, dx, modulus),
-                _multiply_mod(dy, dy, modulus),
-            )
-            if squared_distance == one:
-                unit_pairs += 1
-            pair_count += 1
+    normalized = []
+    for point in points:
+        if not isinstance(point, list) or len(point) != DIMENSION:
+            raise ValueError("each point must be a list of seven coordinates")
+        if any(type(coordinate) is not int for coordinate in point):
+            raise ValueError("coordinates must be integers, not bool or numeric values")
+        if any(coordinate < 0 or coordinate >= FIELD_ORDER for coordinate in point):
+            raise ValueError("coordinates must be in {0, 1, 2}")
+        normalized.append(tuple(point))
 
+    point_set = set(normalized)
+    if len(point_set) != len(normalized):
+        raise ValueError("duplicate points are not allowed")
+    # In characteristic three, three distinct collinear points a,b,c satisfy
+    # a+b+c=0. For every distinct pair, test its uniquely determined third point.
+    for i, a in enumerate(normalized):
+        for b in normalized[i + 1:]:
+            third = tuple((-x - y) % FIELD_ORDER for x, y in zip(a, b))
+            if third in point_set:
+                raise ValueError("points contain three distinct points on an affine line")
     return {
-        "objective": unit_pairs,
+        "objective": len(normalized),
         "verification_status": "exact",
         "details": {
-            "point_count": POINT_COUNT,
-            "unordered_pairs_checked": pair_count,
-            "unit_distance_pairs": unit_pairs,
-            "coordinate_field_degree": degree,
-            "minimal_polynomial_irreducible": True,
-            "selected_real_root_count": 1,
+            "dimension": DIMENSION,
+            "field_order": FIELD_ORDER,
+            "point_count": len(normalized),
+            "distinct_points": True,
+            "all_distinct_pairs_checked": True,
             "claimed_objective_ignored": True,
-            "strict": bool(strict),
         },
     }

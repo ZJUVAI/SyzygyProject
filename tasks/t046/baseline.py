@@ -1,76 +1,79 @@
-"""Small traditional factor-exponent search, evaluated on a fixed dyadic grid."""
-
+from mathbench.search import search_deadline, search_steps
+"""Bounded simulated annealing on systematic binary generator matrices."""
 import math
 import os
 import random
 import time
 
-
-DEGREE = 146
-ITERATION_LIMIT = 74
+N, K = 68, 15
 
 
-def _coefficients(a, b):
-    """Return x^a(1-x)^a(2x-1)^b in low-to-high power order."""
-    result = [0] * (2 * a + b + 1)
-    for j in range(a + 1):
-        for k in range(b + 1):
-            result[a + j + k] += (
-                (-1) ** (j + b - k)
-                * math.comb(a, j)
-                * math.comb(b, k)
-                * 2**k
-            )
-    return result
+def _make_systematic(seed, n=N, k=K):
+    rng = random.Random(seed)
+    rows=[]
+    for i in range(k):
+        row=1 << i
+        for j in range(k, n):
+            if rng.getrandbits(1):
+                row |= 1 << j
+        rows.append(row)
+    return rows
 
 
-def _sample_norm(a, b):
-    best = 0.0
-    denominator = 512
-    for i in range(denominator + 1):
-        x = i / denominator
-        value = (x * (1.0 - x)) ** a * abs(2.0 * x - 1.0) ** b
-        if value > best:
-            best = value
+def _distance(rows, n=N, k=None):
+    """Exact minimum weight over all nonzero linear combinations."""
+    k = len(rows) if k is None else k
+    words=[0] * (1 << k)
+    best=n+1
+    for mask in range(1, 1 << k):
+        bit=mask & -mask
+        index=bit.bit_length()-1
+        words[mask]=words[mask ^ bit] ^ rows[index]
+        weight=bin(words[mask]).count('1')
+        if weight < best:
+            best=weight
     return best
 
 
+def _mutate_parity(rows, rng, max_flips=4, n=N, k=K):
+    """Flip 1..max_flips entries in P of [I|P], preserving rank."""
+    candidate=rows[:]
+    count=rng.randint(1, max_flips)
+    for _ in range(count):
+        row=rng.randrange(k)
+        col=rng.randrange(k, n)
+        candidate[row] ^= 1 << col
+    return candidate
+
+
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T046-C01")
-    if config_id != "T046-C01":
-        raise ValueError(f"unsupported configuration: {config_id}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    rng = random.Random(seed)
-    start = time.monotonic()
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None if seconds is None else start + max(0.0, float(seconds))
-    candidates = [(a, DEGREE - 2 * a) for a in range(DEGREE // 2, -1, -1)]
-    rng.shuffle(candidates)
-    incumbent = (0, DEGREE)
-    incumbent_value = 1.0  # x^146 is the simple search seed, not comparison data.
-    iterations = 0
-    for a, b in candidates:
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        value = _sample_norm(a, b)
-        iterations += 1
-        if value < incumbent_value:
-            incumbent, incumbent_value = (a, b), value
-    a, b = incumbent
-    chosen = _coefficients(a, b) if iterations else [0] * DEGREE + [1]
-    return {
-        "coefficients": chosen,
-        "search_metadata": {
-            "algorithm": "enumerate h1^a h2^b with 2a+b=146; rank by 513-point dyadic sample",
-            "seed": seed,
-            "iteration_limit": ITERATION_LIMIT,
-            "iterations": iterations,
-            "budget": {"iteration_limit": ITERATION_LIMIT},
-            "reference_data_read": False,
-            "selected_exponents": (
-                {"h1_x_1_minus_x": a, "h2_2x_minus_1": b}
-                if iterations > 0 else None
-            ),
-            "search_seconds_cutoff": seconds,
-        },
-    }
+    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T046-C01')
+    if config_id != 'T046-C01': raise ValueError('unsupported configuration')
+    n,k=N,K
+    seed=int(os.environ.get('MATHBENCH_SEED','0'))
+    rng=random.Random(seed)
+    current=_make_systematic(seed,n,k)
+    current_d=_distance(current,n,k)
+    best=current[:]
+    best_d=current_d
+    budget=max(0.0, min(float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2')), 30.0))
+    deadline = search_deadline()
+    steps=0
+    attempts = 60
+    steps=0
+    for _attempt in search_steps(attempts):
+        candidate=_mutate_parity(current, rng, n=n, k=k)
+        candidate_d=_distance(candidate,n,k)
+        steps += 1
+        steps += 1
+        if candidate_d > best_d:
+            best,best_d=candidate[:],candidate_d
+        # A cooling schedule permits occasional downhill moves to escape plateaus.
+        temperature=max(0.15, 2.0 * (1.0 - min(steps, 200) / 200.0))
+        delta=candidate_d-current_d
+        if delta >= 0 or rng.random() < math.exp(delta/temperature):
+            current,current_d=candidate,candidate_d
+    matrix=[[((row >> j) & 1) for j in range(n)] for row in best]
+    return {'generator_matrix':matrix, 'search_metadata': {
+        'algorithm':'simulated annealing over systematic parity matrices',
+        'iterations':steps, 'seed':seed}}

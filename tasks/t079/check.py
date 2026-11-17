@@ -1,104 +1,85 @@
-"""Exact checker for Kakeya sets in F_31^3 represented by one line per direction."""
+"""Exact checker for rational step-function autocorrelation."""
 
-from itertools import product
+from fractions import Fraction
+import math
+import re
 
-P = 31
-CONFIG_ID = "T079-C01"
-PARAMETERS = {
-    "field_order": 31,
-    "dimension": 3,
-    "direction_count": 993,
-    "construction": "one affine line in each projective direction",
-    "objective": "cardinality of the union of the represented lines",
-}
-
-
-def directions():
-    """Canonical representatives with the last nonzero coordinate equal to 1."""
-    out = []
-    for a, b in product(range(P), repeat=2):
-        out.append((a, b, 1))
-    for a in range(P):
-        out.append((a, 1, 0))
-    out.append((1, 0, 0))
-    return tuple(out)
+N = 480
+D = Fraction(13, 4800)
+W = Fraction(13, 10)
+END_K = 369
+END_PART = Fraction(3, 13)
+_RATIONAL = re.compile(r"-?(?:0|[1-9][0-9]*)(?:/[1-9][0-9]*)?\Z")
 
 
-CANONICAL_DIRECTIONS = directions()
-_DIRECTION_SET = set(CANONICAL_DIRECTIONS)
+def _height(value):
+    if isinstance(value, bool):
+        raise ValueError("heights must be nonnegative rational numbers")
+    if isinstance(value, int):
+        out = Fraction(value)
+    elif isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError("heights must be finite")
+        out = Fraction.from_float(value)
+    elif isinstance(value, str) and _RATIONAL.fullmatch(value):
+        out = Fraction(value)
+    else:
+        raise ValueError("each height must be an integer, finite float, or rational string")
+    if out < 0:
+        raise ValueError("heights must be nonnegative")
+    return out
 
 
-def _is_int(value):
-    return isinstance(value, int) and not isinstance(value, bool)
+def validate(solution, config, strict=False):
+    if not isinstance(config, dict) or config.get("id") != "T079-C01":
+        raise ValueError("unknown T079 configuration")
+    parameters = config.get("parameters")
+    if (not isinstance(parameters, dict)
+            or set(parameters) != {"steps", "step_size", "support", "height_domain"}
+            or type(parameters.get("steps")) is not int
+            or parameters.get("steps") != N
+            or parameters.get("step_size") != "13/4800"
+            or parameters.get("support") != "13/10"
+            or parameters.get("height_domain") != "nonnegative_rational"):
+        raise ValueError("T079-C01 parameters must match the frozen configuration exactly")
+    raw = solution.get("heights") if isinstance(solution, dict) else solution
+    if not isinstance(raw, (list, tuple)) or len(raw) != N:
+        raise ValueError("solution must contain exactly 480 step heights")
+    heights = [_height(value) for value in raw]
+    mass_sum = sum(heights, Fraction())
+    if mass_sum <= 0:
+        raise ValueError("the function must have positive L1 mass")
 
-
-def _validate_config(config):
-    if not isinstance(config, dict) or config.get("id") != CONFIG_ID:
-        raise ValueError("unsupported T079 configuration")
-    params = config.get("parameters")
-    if not isinstance(params, dict) or params.keys() != PARAMETERS.keys():
-        raise ValueError("unsupported T079 parameters")
-    if any(type(params[k]) is not type(v) or params[k] != v for k, v in PARAMETERS.items()):
-        raise ValueError("unsupported T079 parameters")
-
-
-def line_points(origin, direction):
-    ox, oy, oz = origin
-    dx, dy, dz = direction
+    # For t=(k+theta)d, the autocorrelation is linear in theta.
+    # Thus its minimum on [0,1] is at a node k*d, k=0..369, or at t=1.
+    correlations = []
+    for lag in range(N):
+        value = sum((heights[i] * heights[i + lag]
+                     for i in range(N - lag)), Fraction())
+        correlations.append(value)
+    candidates = [(correlations[k], {"type": "grid_node", "k": k})
+                  for k in range(END_K + 1)]
+    endpoint_g = ((1 - END_PART) * correlations[END_K]
+                  + END_PART * correlations[END_K + 1])
+    candidates.append((endpoint_g, {"type": "endpoint", "t": "1"}))
+    min_g, minimum_at = min(candidates, key=lambda item: item[0])
+    min_autocorrelation = D * min_g
+    l1_norm = D * mass_sum
+    objective = min_autocorrelation / (l1_norm * l1_norm)
+    objective_text = f"{objective.numerator}/{objective.denominator}"
     return {
-        ((ox + t * dx) % P, (oy + t * dy) % P, (oz + t * dz) % P)
-        for t in range(P)
-    }
-
-
-def validate(solution, config=None, strict=False):
-    """Check all 993 directions and compute the union exactly over F_31^3."""
-    _validate_config(config)
-    if not isinstance(solution, dict):
-        raise ValueError("solution must be a JSON object")
-    raw_lines = solution.get("lines")
-    if not isinstance(raw_lines, list):
-        raise ValueError("lines must be a list")
-    if len(raw_lines) != len(CANONICAL_DIRECTIONS):
-        raise ValueError("exactly 993 direction-line records are required")
-
-    seen = set()
-    union = set()
-    for record in raw_lines:
-        if not isinstance(record, dict) or record.keys() != {"direction", "origin"}:
-            raise ValueError("each line record must contain direction and origin")
-        raw_direction = record["direction"]
-        raw_origin = record["origin"]
-        if (not isinstance(raw_direction, (list, tuple)) or len(raw_direction) != 3
-                or not all(_is_int(x) for x in raw_direction)):
-            raise ValueError("direction must contain three integer coordinates")
-        if (not isinstance(raw_origin, (list, tuple)) or len(raw_origin) != 3
-                or not all(_is_int(x) for x in raw_origin)):
-            raise ValueError("origin must contain three integer coordinates")
-        direction = tuple(raw_direction)
-        origin = tuple(raw_origin)
-        if direction not in _DIRECTION_SET:
-            raise ValueError("direction is not a canonical projective representative")
-        if direction in seen:
-            raise ValueError("duplicate projective direction")
-        if any(x < 0 or x >= P for x in origin):
-            raise ValueError("origin coordinate is outside 0..30")
-        seen.add(direction)
-        union.update(line_points(origin, direction))
-
-    if seen != _DIRECTION_SET:
-        raise ValueError("every projective direction must occur exactly once")
-    objective = len(union)
-    return {
-        "objective": objective,
+        "objective": objective_text,
+        "objective_value": objective_text,
         "verification_status": "exact",
         "details": {
-            "field_order": P,
-            "dimension": 3,
-            "projective_directions_checked": len(seen),
-            "line_points_generated": P * len(seen),
-            "union_cardinality": objective,
-            "full_space_cardinality": P ** 3,
+            "steps": N,
+            "step_size": str(D),
+            "support_length": str(W),
+            "l1_norm": f"{l1_norm.numerator}/{l1_norm.denominator}",
+            "minimum_autocorrelation": (
+                f"{min_autocorrelation.numerator}/{min_autocorrelation.denominator}"),
+            "minimum_location": minimum_at,
+            "continuous_interval_check": "all 370 grid nodes and t=1 exact interpolation",
             "claimed_objective_ignored": True,
         },
     }

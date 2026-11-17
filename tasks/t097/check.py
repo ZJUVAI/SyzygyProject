@@ -1,95 +1,70 @@
-"""Exact checker for a minimum convex cover of the fixed socg_fixed92 region."""
-import hashlib
-import json
-from pathlib import Path
+"""Exact checker for the CVRPLIB X-n1001-k43 capacitated routing instance."""
 
-from tasks.t097.algebraic import RealAlgebraicField
-from tasks.t097.geometry import certify_cover, cross, signed_double_area, validate_simple_boundary
+from tasks.t097.instance import load_instance, total_route_cost
 
-TASK_DIR = Path(__file__).parent
-INSTANCE_PATH = TASK_DIR / "data/source/socg_fixed92.instance.json"
-INSTANCE_SHA256 = "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38"
+
+CONFIG_ID = "T097-C01"
 PARAMETERS = {
-    "instance": "socg_fixed92",
-    "instance_sha256": INSTANCE_SHA256,
-    "boundary_vertices": 92,
-    "holes": 0,
-    "cover_domain": "all real convex polygons",
-    "overlap_allowed": True,
+    "instance": "X-n1001-k43",
+    "customers": 1000,
+    "depot_node_id": 1,
+    "vehicle_capacity": 131,
+    "distance": "TSPLIB EUC_2D nearest-integer rounding",
+    "route_count": "unrestricted; k43 is part of the instance name, not a fleet-size constraint",
 }
 
 
-def _fixed_domain(field):
-    raw = INSTANCE_PATH.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != INSTANCE_SHA256:
-        raise ValueError("fixed public input checksum mismatch")
-    source = json.loads(raw)
-    if (source.get("name") != PARAMETERS["instance"] or source.get("n") != 92
-            or source.get("holes") != [] or len(source.get("outer_boundary", [])) != 92):
-        raise ValueError("fixed public input metadata mismatch")
-    polygon = []
-    for point in source["outer_boundary"]:
-        if (not isinstance(point, dict) or type(point.get("x")) is not int
-                or type(point.get("y")) is not int):
-            raise ValueError("fixed input coordinates must be integers")
-        polygon.append((field.const(point["x"]), field.const(point["y"])))
-    validate_simple_boundary(field, polygon)
-    return polygon
-
-
-def _parse_pieces(field, raw_pieces):
-    if not isinstance(raw_pieces, list) or not raw_pieces:
-        raise ValueError("solution must contain at least one convex polygon")
-    pieces = []
-    for raw in raw_pieces:
-        if not isinstance(raw, list) or len(raw) < 3:
-            raise ValueError("each convex polygon needs at least three vertices")
-        polygon = []
-        for point in raw:
-            if not isinstance(point, list) or len(point) != 2:
-                raise ValueError("each polygon vertex must be an [x,y] pair")
-            polygon.append((field.element(point[0]), field.element(point[1])))
-        if len(set(polygon)) != len(polygon):
-            raise ValueError("a convex polygon cannot repeat a vertex")
-        area = field.sign(signed_double_area(field, polygon))
-        if area == 0:
-            raise ValueError("convex polygons must have positive area")
-        if area < 0:
-            polygon.reverse()
-        for a, b in zip(polygon, polygon[1:] + polygon[:1]):
-            if a == b:
-                raise ValueError("convex polygons cannot contain zero-length edges")
-            if any(field.sign(cross(field, a, b, p)) < 0 for p in polygon):
-                raise ValueError("a submitted polygon is not convex")
-        pieces.append(polygon)
-    return pieces
+def _check_config(config):
+    if not isinstance(config, dict):
+        raise ValueError("configuration must be an object")
+    if config.get("id") not in (None, CONFIG_ID):
+        raise ValueError(f"unsupported configuration: expected {CONFIG_ID}")
+    parameters = config.get("parameters")
+    if not isinstance(parameters, dict) or parameters != PARAMETERS:
+        raise ValueError("configuration must fix X-n1001-k43, capacity 131, and unrestricted route count")
 
 
 def validate(solution, config, strict=False):
-    if (not isinstance(config, dict) or config.get("id") != "T097-C01"
-            or config.get("direction") != "minimize"
-            or not isinstance(config.get("parameters"), dict)
-            or config["parameters"] != PARAMETERS
-            or any(type(config["parameters"].get(k)) is not type(v) for k, v in PARAMETERS.items())):
-        raise ValueError("unsupported configuration, objective direction, or parameters")
+    """Check every route and recompute its full integer travel cost."""
+    del strict
+    _check_config(config)
     if not isinstance(solution, dict):
         raise ValueError("solution must be an object")
-    field = RealAlgebraicField(solution.get("algebraic_field"))
-    domain = _fixed_domain(field)
-    pieces = _parse_pieces(field, solution.get("polygons"))
-    checked_cells = certify_cover(field, domain, pieces)
-    count = len(pieces)
+    routes = solution.get("routes")
+    if not isinstance(routes, list) or not routes:
+        raise ValueError("routes must be a nonempty list")
+    instance = load_instance()
+    expected = set(instance["customer_ids"])
+    seen = set()
+    loads = []
+    for route_index, route in enumerate(routes, start=1):
+        if not isinstance(route, list) or not route:
+            raise ValueError(f"route {route_index} must be a nonempty list")
+        load = 0
+        for node in route:
+            if type(node) is not int or node not in expected:
+                raise ValueError(f"route {route_index} has invalid customer node id {node!r}")
+            if node in seen:
+                raise ValueError(f"customer {node} appears more than once")
+            seen.add(node)
+            load += instance["demands"][node]
+        if load > instance["capacity"]:
+            raise ValueError(f"route {route_index} load {load} exceeds capacity 131")
+        loads.append(load)
+    missing = sorted(expected - seen)
+    if missing:
+        raise ValueError(f"missing {len(missing)} customers; first missing ids: {missing[:10]}")
+    objective = total_route_cost(routes, instance)
     return {
-        "objective": count,
-        "objective_value": count,
-        "verification_status": "certified",
+        "objective": objective,
+        "verification_status": "exact",
         "details": {
-            "instance": PARAMETERS["instance"],
-            "convex_polygon_count": count,
-            "total_piece_vertices": sum(map(len, pieces)),
-            "algebraic_field_degree": field.degree,
-            "verified_open_arrangement_cells": checked_cells,
-            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
-            "claimed_score_ignored": True,
+            "instance": instance["name"],
+            "customer_count": len(expected),
+            "route_count": len(routes),
+            "route_count_unrestricted": True,
+            "capacity": instance["capacity"],
+            "route_loads": loads,
+            "claimed_objective_ignored": True,
         },
     }

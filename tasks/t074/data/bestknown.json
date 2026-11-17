@@ -1,126 +1,217 @@
 {
   "task_id": "T074",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T074-C01": {
       "program": "reference.py",
-      "reproduced_value": "2/51",
-      "public_value": "2/51",
+      "reproduced_value": 5,
+      "public_value": 5,
       "highest_reported": {
-        "value": "2/51",
-        "source": "Heilbronn archive, Convex n=12 record page; entry credits David Cantrell, June 2007.",
-        "url": "https://math.tejstead.com/heilbronn/convex/12/",
-        "reproduction_status": "The archive reports 2/51 and its coordinate record was re-verified later. This task separately reconstructs rational coordinates by affine normalization and denominator-100 rational reconstruction; the exact ratio is independently checked. No optimality proof for n=12 was found."
+        "value": 5,
+        "source": "Nunn and Coxson (2008), Table 2, N=100; the current v2 survey by Brest et al. (posted 2026-07-28) directs readers to this source for lengths 71 through 105.",
+        "reproduction_status": "The published 100-bit hexadecimal code was decoded and its 99 aperiodic autocorrelations were recomputed with exact integers. PSL=5 is a feasible public record, not a proof of the global minimum."
       },
       "best_human": {
-        "value": "2/51",
+        "value": 5,
         "parameters": {
-          "point_count": 12,
-          "coordinate_domain": "unbounded rational coordinates in the plane",
-          "container": "convex hull of the selected points"
+          "length": 100,
+          "alphabet": [
+            -1,
+            1
+          ],
+          "correlation": "aperiodic",
+          "objective": "maximum absolute nonzero autocorrelation"
         },
-        "source": "Historical result credited to David Cantrell, June 2007, as listed by the current Heilbronn archive.",
-        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "source": "Nunn and Coxson, Best-Known Autocorrelation Peak Sidelobe Levels for Binary Codes of Length 71 to 105, IEEE Transactions on Aerospace and Electronic Systems 44(1), 2008, Table 2.",
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
         "date_checked": "2026-11-06",
-        "provenance": "The record is credited to Cantrell in 2007. The current archive says coordinate material was supplied by an external contributor and re-verified later, citing a Cantrell 2007 Mathematica notebook received in September 2026. The contributor identity and AI provenance of that later coordinate recovery are not specified. The rational coordinates in this task are our documented reconstruction, not claimed as Cantrell's original coordinates.",
-        "evidence_state": "The archived decimal source is saved. Affine normalization and exact rational reconstruction yield a separate 12-point witness. Exact checking gives minimum triangle area 1/4, hull area 51/8, and ratio 2/51.",
-        "witness": "data/reference/cantrell_n12_rationalized.json",
-        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
-        "source_url": "https://math.tejstead.com/heilbronn/convex/12/",
-        "origin_type": "historical reported record with later coordinate reconstruction"
+        "provenance": "Traditional computational search by Nunn and Coxson. Their table supplies the complete length-100 code in hexadecimal. No AI contribution is reported in the source.",
+        "evidence_state": "The hexadecimal code expands to exactly 100 bits. The reconstructed signs pass exact checking and have PSL=5.",
+        "witness": "data/source/nunn_coxson_length100.json",
+        "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
       },
       "best_public": {
-        "value": "2/51",
+        "value": 5,
         "parameters": {
-          "point_count": 12,
-          "coordinate_domain": "unbounded rational coordinates in the plane",
-          "container": "convex hull of the selected points"
+          "length": 100,
+          "alphabet": [
+            -1,
+            1
+          ],
+          "correlation": "aperiodic",
+          "objective": "maximum absolute nonzero autocorrelation"
         },
-        "source": "Current Heilbronn archive's Convex n=12 record page, checked 2026-11-06.",
-        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "source": "Nunn and Coxson (2008), Table 2, N=100; current 2026 survey still points to that table for lengths 71 to 105.",
+        "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
         "date_checked": "2026-11-06",
-        "provenance": "The site credits the 2007 result to Cantrell and documents later coordinate recovery by an external contributor. The attribution and coordinate history are kept separate.",
-        "evidence_state": "The archive reports 2/51. Its source decimals and this task's separately rationalized witness are saved and independently exact-checked. No n=12 optimality proof was found.",
-        "witness": "data/reference/cantrell_n12_rationalized.json",
-        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
-        "source_url": "https://math.tejstead.com/heilbronn/convex/12/"
+        "provenance": "Published traditional computer search. Their Table 2 says the N=100 code has PSL=5 and compares it with an earlier same-length PSL=7 code.",
+        "evidence_state": "The full N=100 code is printed as hexadecimal and has been independently decoded and verified. The source does not prove global optimality.",
+        "witness": "data/source/nunn_coxson_length100.json",
+        "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384"
       },
       "best_reproduced": {
-        "value": "2/51",
+        "value": 5,
         "date_reproduced": "2026-11-06",
         "parameters": {
-          "point_count": 12,
-          "coordinate_domain": "unbounded rational coordinates in the plane",
-          "container": "convex hull of the selected points"
+          "length": 100,
+          "alphabet": [
+            -1,
+            1
+          ],
+          "correlation": "aperiodic",
+          "objective": "maximum absolute nonzero autocorrelation"
         },
         "program": "reference.py",
         "verification_status": "exact",
-        "verification_method": "Parse all coordinates as exact rationals, reject every zero triangle determinant, enumerate all 220 triples, and compute the convex hull area by exact shoelace arithmetic after an exact monotone-chain hull.",
-        "witness": "data/reference/cantrell_n12_rationalized.json",
-        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
-        "origin_type": "local affine and rational reconstruction of a later archived coordinate record",
+        "verification_method": "Decode the printed 100-bit hexadecimal code; compute each C[k]=sum(s[i]*s[i+k]) for k=1,...,99 and take max(abs(C[k])).",
+        "witness": "data/source/nunn_coxson_length100.json",
+        "origin_type": "published traditional search witness, exactly reproduced",
+        "witness_sha256": "1284da5a8985b4750a5468ceb530cfbea2acc4a2275541cb55001e30d259c384",
         "review_status": "reviewed_by_sol"
       },
-      "frozen_human_baseline": {
-        "value": "2/51",
-        "witness_program": "human.py",
-        "witness": "data/reference/cantrell_n12_rationalized.json",
-        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
-        "evidence_state": "human.py rebuilds the witness from the archived decimal source by a documented affine normalization and rational reconstruction; the result passes the exact checker."
-      },
-      "compatibility_score": {
-        "frozen_formula": "H/J",
-        "H": "2/51",
-        "note": "H is the exact rational score of the reproduced historical construction."
-      },
       "optimality_status": {
-        "status": "open in the checked sources; 2/51 is a record construction, not a proof of the maximum",
+        "status": "open; best-known feasible PSL=5, exact minimum not established",
         "source_survey_date": "2026-11-06",
-        "evidence": "The current archive lists 2/51 as the n=12 free-convex record. Its proof list includes 2026 formal results for n=3 through n=8, not n=12.",
-        "limitations": "No matching upper bound for n=12 was found. The rational-domain task has the same supremum as the real-coordinate domain by density and continuity, but this fact does not certify optimality."
+        "evidence": "The latest checked survey version 2, posted 2026-07-28, says exact minima are known for n<=61 and n=64, while larger lengths have reported best-known values. It specifically directs readers to Nunn and Coxson for 71<=n<=105. The N=100 value is therefore treated as a record construction, not a proof of optimality.",
+        "limitations": "This survey supports the open status but does not supply a nontrivial certified lower bound for the N=100 optimum.",
+        "survey_date": "2026-11-06",
+        "source": "Brest et al., 2026 v2, §1, says exact minima are known through n=61 and n=64 and cites Nunn-Coxson for lengths 71-105."
       },
       "source_pins": {
-        "record_page": {
-          "url": "https://math.tejstead.com/heilbronn/convex/12/",
-          "date_checked": "2026-11-06",
-          "record_value": "2/51",
-          "credit": "David Cantrell, June 2007"
+        "record_paper": {
+          "version": "Nunn and Coxson, 2008, IEEE TAES 44(1), pp. 392-395",
+          "url": "https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf",
+          "record_location": "Table 2, row N=100"
         },
-        "archived_source_coordinates": {
-          "url": "https://math.tejstead.com/heilbronn/convex/12/points.json",
-          "sha256": "c5eaf80a1b3f270b949fe891eb9777541f0330c6d33a33e7b3d1eaa267c03b27",
-          "description": "Current archive source JSON includes decimal coordinates and later coordinate provenance."
+        "current_survey": {
+          "version": "Brest et al., Binary Sequences with Low Aperiodic Autocorrelations: Small Peak Sidelobe Levels, v2, posted 2026-07-28",
+          "url": "https://www.preprints.org/manuscript/202605.0907",
+          "record_location": "§1, status of exact minima and ranges of reported values"
         },
-        "site_methods": {
-          "url": "https://math.tejstead.com/heilbronn/methods/",
-          "date_checked": "2026-11-06",
-          "scope": "Coordinate provenance, reconstruction policy, exact verification, and n=3 through n=8 free-convex proofs."
-        }
+        "doi": "10.1109/TAES.2008.4517015"
       },
       "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
-        "date": "2026-11-06",
+        "date": "2026-11-07",
         "run": {
           "task_id": "T074",
           "config_id": "T074-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": "2/51",
+          "objective": 5,
           "verification_status": "exact",
-          "generation_time": 2.893059618771076,
-          "verification_time": 5.750130265951157,
-          "objective_value": "2/51",
+          "generation_time": 0.2649032920598984,
+          "verification_time": 0.2648691162467003,
+          "objective_value": 5,
           "details": {
-            "point_count": 12,
-            "triangles_checked": 220,
-            "minimum_triangle_area": "1/4",
-            "convex_hull_area": "51/8",
-            "hull_vertex_count": 9,
-            "claimed_objective_ignored": true,
-            "strict": true
+            "length": 100,
+            "aperiodic_autocorrelations": [
+              5,
+              4,
+              -3,
+              -4,
+              -3,
+              -4,
+              5,
+              -4,
+              -1,
+              -2,
+              1,
+              2,
+              -3,
+              -4,
+              -1,
+              2,
+              -5,
+              2,
+              -1,
+              0,
+              1,
+              2,
+              5,
+              -4,
+              -1,
+              -2,
+              -1,
+              -4,
+              -3,
+              -2,
+              1,
+              -4,
+              3,
+              -2,
+              -1,
+              4,
+              -1,
+              -4,
+              3,
+              0,
+              5,
+              -2,
+              -3,
+              2,
+              -3,
+              4,
+              -3,
+              -2,
+              1,
+              4,
+              -5,
+              -2,
+              3,
+              0,
+              -5,
+              2,
+              3,
+              -2,
+              -1,
+              4,
+              1,
+              4,
+              -3,
+              -4,
+              1,
+              -2,
+              -3,
+              4,
+              3,
+              2,
+              3,
+              4,
+              -3,
+              2,
+              5,
+              4,
+              3,
+              -2,
+              -5,
+              0,
+              1,
+              -2,
+              5,
+              -2,
+              1,
+              -4,
+              3,
+              -2,
+              3,
+              -2,
+              5,
+              0,
+              3,
+              0,
+              -1,
+              0,
+              3,
+              0,
+              -1
+            ],
+            "peak_sidelobe_lag": 1,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 8.65799344331026,
+          "eval_time": 0.5353506170213223,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -137,53 +228,171 @@
           }
         },
         "independent_quantity": {
-          "area_ratio": "2/51",
-          "minimum_triangle_area": "1/4",
-          "hull_area": "51/8",
-          "support_edges": 9,
-          "triangles_checked": 220
+          "peak_sidelobe": 5,
+          "energy": 874,
+          "correlations": [
+            5,
+            4,
+            -3,
+            -4,
+            -3,
+            -4,
+            5,
+            -4,
+            -1,
+            -2,
+            1,
+            2,
+            -3,
+            -4,
+            -1,
+            2,
+            -5,
+            2,
+            -1,
+            0,
+            1,
+            2,
+            5,
+            -4,
+            -1,
+            -2,
+            -1,
+            -4,
+            -3,
+            -2,
+            1,
+            -4,
+            3,
+            -2,
+            -1,
+            4,
+            -1,
+            -4,
+            3,
+            0,
+            5,
+            -2,
+            -3,
+            2,
+            -3,
+            4,
+            -3,
+            -2,
+            1,
+            4,
+            -5,
+            -2,
+            3,
+            0,
+            -5,
+            2,
+            3,
+            -2,
+            -1,
+            4,
+            1,
+            4,
+            -3,
+            -4,
+            1,
+            -2,
+            -3,
+            4,
+            3,
+            2,
+            3,
+            4,
+            -3,
+            2,
+            5,
+            4,
+            3,
+            -2,
+            -5,
+            0,
+            1,
+            -2,
+            5,
+            -2,
+            1,
+            -4,
+            3,
+            -2,
+            3,
+            -2,
+            5,
+            0,
+            3,
+            0,
+            -1,
+            0,
+            3,
+            0,
+            -1
+          ]
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "1dc9115f1ad56ca1f3d8632dc04ebff1786247d8a26757b63cdb7025a3360e6f"
       },
       "parameters": {
-        "point_count": 12,
-        "coordinate_domain": "unbounded rational coordinates in the plane",
-        "container": "convex hull of the selected points",
-        "objective": "maximize minimum_triangle_area / convex_hull_area"
+        "length": 100,
+        "alphabet": [
+          -1,
+          1
+        ],
+        "correlation": "aperiodic"
+      },
+      "objective": {
+        "name": "peak sidelobe level",
+        "definition": "max(abs(C[k])) for k=1,...,99",
+        "direction": "minimize",
+        "unit": "integer correlation amplitude"
+      },
+      "frozen_human_baseline": {
+        "value": 5,
+        "witness_program": "human.py",
+        "witness": "data/source/nunn_coxson_length100.json",
+        "note": "Published Nunn-Coxson hexadecimal construction for the same length and objective."
+      },
+      "distinct_from_T073": {
+        "same_length_examples": [
+          {
+            "source": "T073-C01 Dantus L=100 witness",
+            "energy": 578,
+            "psl": 8
+          },
+          {
+            "source": "Nunn-Coxson T074-C01 witness",
+            "energy": 874,
+            "psl": 5
+          }
+        ],
+        "note": "Exact recalculation gives opposite rankings: the first has lower energy but worse PSL. The sum-of-squares energy and maximum absolute sidelobe are not monotone transforms of each other."
       }
     }
   },
-  "review_status": "accepted_by_sol",
   "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T074-C01": {
         "best_human": {
-          "source": "Result credited to David Cantrell, June 2007, by the current Heilbronn archive.",
-          "provenance": "The archive says later coordinate material was supplied by an external contributor and re-verified; it refers to a 2007 notebook received September 2026. The identity and AI provenance of that later coordinate contributor are not specified. Our rational points are a separate documented reconstruction.",
-          "evidence_state": "The archive's decimal JSON is saved. The local affine and rational reconstruction is exact-checked at 2/51."
+          "source": "Nunn and Coxson (2008), Table 2, row N=100.",
+          "provenance": "Traditional computational search; the complete code is printed in hexadecimal. The 2008 source reports no AI contribution.",
+          "evidence_state": "Hex code decoded to 100 signs and exactly verified with PSL 5."
         },
         "best_public": {
-          "source": "Current Heilbronn archive, Convex n=12 record.",
-          "provenance": "The value is credited to Cantrell in 2007. Later coordinate recovery is credited separately by the archive to an external contributor.",
-          "evidence_state": "The exact ratio is reproduced from the locally rationalized witness. No n=12 optimality proof was found in the checked sources."
+          "source": "Nunn and Coxson (2008), Table 2; 2026 v2 survey still cites this table for lengths 71-105.",
+          "provenance": "Published traditional computer search. The 2008 source reports no AI contribution.",
+          "evidence_state": "Full construction reproduced and exact PSL rechecked; no global optimality claim."
         },
         "best_reproduced": {
-          "verification_method": "All 220 exact rational determinants are nonzero; minimum area is 1/4; exact hull shoelace area is 51/8; ratio is 2/51.",
-          "origin_type": "local rationalization of archived record coordinates"
-        },
-        "frozen_human_baseline": {
-          "evidence_state": "Human replay reconstructs from the archived source JSON and passes exact validation."
-        },
-        "highest_reported": {
-          "source": "Current Heilbronn archive's Convex n=12 record page.",
-          "reproduction_status": "The archive reports 2/51 and current record status. The construction is exactly reproduced locally; no optimality proof for n=12 was found."
+          "verification_method": "All 99 nonzero-shift aperiodic autocorrelations checked with exact integer sums."
         },
         "optimality_status": {
-          "status": "open in the sources checked",
-          "evidence": "The current archive lists 2/51 as the n=12 record. Its cited machine-checked free-convex optimality results cover n=3 through n=8.",
-          "limitations": "No proof that 2/51 is globally maximal for n=12 was found. Rational configurations have the same supremum as real configurations by density, but this does not give an optimality proof."
+          "status": "not established; PSL 5 is a best-known feasible value in the checked sources"
         }
       }
     }

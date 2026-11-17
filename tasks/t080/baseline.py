@@ -1,53 +1,34 @@
-"""Seeded local search from the small valid set {0,1,4}."""
-
+from mathbench.search import search_deadline, search_steps
+"""Seeded mass-preserving pair-transfer search; reads no human data."""
+from fractions import Fraction
 import os
 import random
 import time
 
-from mathbench.search import search_steps
-from tasks.t080.search_utils import heuristic_score, mutate
+from tasks.t080.check import objective_fraction
+from tasks.t080.init_program import run_code as initial
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T080-C01") != "T080-C01":
-        raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = max(1, min(5000, int(os.environ.get("MATHBENCH_BASELINE_ITERATIONS", "500"))))
-    rng = random.Random(seed ^ 0x059BA5E)
-    current = [0, 1, 4]
-    current_score = heuristic_score(current)
-    best, best_score = current[:], current_score
-    completed = accepted = invalid = 0
-    start = time.monotonic()
-    for _ in search_steps(iterations):
-        candidate = mutate(current, rng)
-        candidate_score = heuristic_score(candidate)
-        if candidate_score is None:
-            invalid += 1
-            completed += 1
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    heights = [Fraction(str(x)) for x in initial()["heights"]]
+    current, _, _ = objective_fraction(heights)
+    best, best_value = heights[:], current
+    try:
+        seconds = max(0.0, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2")))
+    except ValueError:
+        seconds = 2.0
+    deadline = search_deadline()
+    quantum = Fraction(1, 1000)
+    for _attempt in search_steps(100):
+        i, j = rng.sample(range(51), 2)
+        delta = quantum * rng.randint(1, 100) * rng.choice((-1, 1))
+        candidate = best[:]
+        candidate[i] += delta
+        candidate[j] -= delta
+        if not (0 <= candidate[i] <= 1 and 0 <= candidate[j] <= 1):
             continue
-        if candidate_score > current_score or (candidate_score == current_score and rng.random() < 0.05):
-            current, current_score = candidate, candidate_score
-            accepted += 1
-        if candidate_score > best_score:
-            best, best_score = candidate, candidate_score
-        completed += 1
-    return {
-        "set": best,
-        "search_metadata": {
-            "algorithm": "seeded integer-set replacement/add/remove hill climb with occasional plateau moves",
-            "seed": seed,
-            "iterations_requested": iterations,
-            "iterations_run": completed,
-            "accepted_moves": accepted,
-            "invalid_strict_bound_trials": invalid,
-            "heuristic_score": best_score,
-            "generation_seconds": time.monotonic() - start,
-            "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds",
-        },
-    }
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+        value, _, _ = objective_fraction(candidate)
+        if value < best_value:
+            best, best_value = candidate, value
+    return {"heights": [str(x) for x in best]}

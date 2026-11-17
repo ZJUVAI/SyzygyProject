@@ -1,83 +1,200 @@
 {
   "task_id": "T078",
-  "review_status": "accepted_by_sol",
-  "checked_at": "2026-11-06",
+  "review_status": "passed_sol",
   "configurations": {
     "T078-C01": {
-      "program": "reference.py",
-      "reproduced_value": 768,
-      "public_value": 768,
-      "highest_reported": {
-        "value": 768,
-        "source": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
-        "source_location": "Dimension 10, DET, MINIMAL_NORM, KISSING_NUMBER, and GRAM entries",
-        "reproduction_status": "The integer Gram matrix was transcribed from the author's catalogue page and independently checked with exact rational arithmetic. Its determinant is 768, it has no nonzero integer vector of squared norm below 4, and exact ellipsoid enumeration finds 336 vectors of squared norm 4. This is a feasible published lattice, not a proof that determinant 768 is the minimum.",
-        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
-        "metric": "determinant of a 10-dimensional Gram matrix with minimum squared norm at least 4",
-        "direction": "minimize",
-        "date_checked": "2026-11-06",
-        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html"
-      },
-      "parameters": {
-        "dimension": 10,
-        "gram_entries": "exact rational numbers",
-        "gram_matrix": "symmetric positive definite 10x10 matrix",
-        "minimum_squared_norm": "at least 4 on nonzero integer vectors",
-        "objective": "determinant of the Gram matrix",
-        "direction": "minimize"
-      },
-      "witness": "data/human/lambda10_gram.json",
-      "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
-      "source_snapshot": {
-        "file": "data/source/lambda10.html",
-        "sha256": "10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a",
-        "page_last_modified": "2014-07-18",
-        "downloaded_at": "2026-11-06"
-      },
-      "verified_short_vectors": {
-        "count": 336,
-        "witness": "data/human/lambda10_minimal_vectors.json",
-        "witness_sha256": "5499f6ee57683d10f366ce1f50a787b44e4baec94ff7169a4852ef5017144ea9",
-        "reproduction_status": "Enumerated independently with exact LDL ellipsoid bounds. Every vector has squared norm 4."
-      },
-      "optimality_status": {
-        "state": "open in sources checked on 2026-11-06; det 768 is a feasible upper bound",
-        "status_sources": [
-          "https://arxiv.org/html/2508.20719v2",
-          "https://epubs.siam.org/doi/10.1137/22M1532779"
+      "public_value": "0.88922",
+      "public_source": {
+        "url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+        "title": "Improved bounds on the supremum of autoconvolutions",
+        "authors": [
+          "Mate Matolcsi",
+          "Carlos Vinuesa"
         ],
-        "status_note": "The 2026 Voronoi enumeration proves the dimension-9 case. The SIAM paper reports exact Hermite constants only through dimensions 1–8 and 24. Searches checked no proof closing dimension 10; the dimension-10 catalog entry gives a lattice construction, not an optimality theorem.",
-        "feasible_upper_bound": 768
+        "year": 2009,
+        "reported_same_parameter_best": "0.88922... at n=20",
+        "notes": "The paper explicitly calls this the best step-function example then known for the second autoconvolution inequality at n=20 and prints all 20 nonnegative coefficients in the online appendix. The support is [-1/4, 1/4]. Boyer and Li (2025, arXiv:2506.16750, Sections 2-3) independently transcribe the same 20 coefficients, state n=20, and recompute the score as 0.889226. The local checker recomputes the exact rational score from the printed finite decimals. The 2009 paper says the example was not extensively optimized; it does not claim a global optimum over 20-step functions."
       },
-      "checked_sources": [
-        "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
-        "https://arxiv.org/html/2508.20719v2",
-        "https://epubs.siam.org/doi/10.1137/22M1532779",
-        "https://annals.math.princeton.edu/wp-content/uploads/annals-v170-n3-p01-p.pdf"
+      "reproduced_value": "108065664771600646574507764702/121527759800529249872686490775",
+      "display_value": "0.8892261730897966",
+      "reproduced_exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+      "program": "sota.py",
+      "witness": "data/human_t078.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "Witness-level identity: coefficients match the 20-entry Matolcsi-Vinuesa appendix witness as independently transcribed by Boyer-Li. The source prints only 0.88922...; the exact local score is recomputed from those printed finite decimal coefficients.",
+      "limitations": [
+        "Best located same-parameter public construction, not a proof of optimality among all 20-step functions. Matolcsi-Vinuesa state they did not make extensive efforts to optimize this example.",
+        "This is a finite source comparison of the original Matolcsi-Vinuesa appendix and later directly relevant AlphaEvolve, Boyer-Li, Jaech-Joseph, SimpleTES, and DREAM-RSI reports. It does not establish that every public source has been surveyed.",
+        "The Matolcsi-Vinuesa appendix gives decimal coefficients rather than exact rational coefficients. Exactness here means exact arithmetic on those printed finite decimals, not recovery of hidden higher-precision values.",
+        "The inspected DREAM-RSI paper reports its first autocorrelation inequality result, not a separate result for the second autocorrelation inequality (T078).",
+        "The 2009 source does not describe the numerical search algorithm, random seed, or compute budget that produced its 20-step coefficients. This reproduction uses the printed witness directly and does not invent those missing details."
       ],
-      "review_status": "accepted_by_sol",
+      "reproduction_method": {
+        "method": "Read the 20 printed decimal heights from the Matolcsi-Vinuesa appendix witness file and rescore them with the T078 exact rational checker.",
+        "random_seed": null,
+        "search_budget": null,
+        "source_search_details": "The paper reports a numerical search and states it did not make extensive efforts to optimize this example; it gives no algorithm, seed, or budget. No new search result is claimed here."
+      },
+      "best_located_same_parameter": {
+        "value": "108065664771600646574507764702/121527759800529249872686490775",
+        "display_value": "0.8892261730897966",
+        "steps": 20,
+        "source_reported_value": "0.88922...",
+        "source": "Matolcsi-Vinuesa 2009 online appendix; 20 printed coefficients; coefficient list and score independently confirmed by Boyer-Li 2025, arXiv:2506.16750"
+      },
+      "highest_located_report_any_step_count": {
+        "value": "0.962694",
+        "system": "SimpleTES",
+        "url": "https://arxiv.org/abs/2604.19341",
+        "parameter_note": "The paper reports the AC2 result and describes the AC2 search as FFT plus L-BFGS-B over sparse witnesses. It does not specify a 20-step witness; this is a different-resolution result, not T078-C01."
+      },
+      "comparison_scope": [
+        {
+          "source": "Matolcsi-Vinuesa 2009, online appendix",
+          "value": "0.88922...",
+          "steps": 20,
+          "parameter_match": true,
+          "witness_available": true,
+          "url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
+          "evidence": "Authors call this the best 20-step example then known and print 20 coefficients."
+        },
+        {
+          "source": "AlphaEvolve, Mathematical exploration and discovery at scale",
+          "value": "0.8962",
+          "steps": 50,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2511.02864",
+          "evidence": "Boyer-Li directly identify the AlphaEvolve witness as 50 equal intervals."
+        },
+        {
+          "source": "Boyer-Li, An improved example for an autoconvolution inequality",
+          "value": "0.901562",
+          "steps": 575,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2506.16750",
+          "evidence": "Theorem 1 and Appendix A give 575 coefficients; Section 3 compares the n=20 Matolcsi-Vinuesa witness and reports its recomputed score 0.889226."
+        },
+        {
+          "source": "Jaech-Joseph, Further Improvements to the Lower Bound for an Autoconvolution Inequality",
+          "value": "0.94136",
+          "steps": 2236,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2508.02803",
+          "evidence": "Abstract states 2,399 intervals for one construction and obtains 0.94136 by 4x upsampling a 559-interval optimizer (2,236 intervals)."
+        },
+        {
+          "source": "AlphaEvolve V2, reported in SimpleTES Appendix O.1",
+          "value": "0.961000",
+          "steps": 50000,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2604.19341",
+          "evidence": "SimpleTES Appendix O.1 table reports the value; TTT-Discover's related-work summary identifies the AlphaEvolve V2 construction as 50,000 pieces."
+        },
+        {
+          "source": "SimpleTES, Structured Scaling of AI Discovery Across Diverse Scientific Domains",
+          "value": "0.962694",
+          "steps": null,
+          "parameter_match": false,
+          "witness_available": true,
+          "url": "https://arxiv.org/abs/2604.19341",
+          "evidence": "Appendix O.1 reports AC2 score and says its best program uses FFT evaluation and L-BFGS-B refinement on sparse witnesses; the paper does not report a 20-step witness."
+        },
+        {
+          "source": "DREAM-RSI, Recursive Self-Improvement through Evolving Worlds",
+          "value": null,
+          "steps": null,
+          "parameter_match": false,
+          "witness_available": false,
+          "url": "https://arxiv.org/abs/2609.14858",
+          "evidence": "Its paper reports the first autocorrelation inequality, with lower-is-better scores around 1.45; it does not report a T078 second-autocorrelation score."
+        }
+      ],
+      "related_public_reports": [
+        {
+          "system": "AlphaEvolve V2",
+          "value": "0.9610",
+          "url": "https://arxiv.org/abs/2511.02864",
+          "parameter_note": "Reported using a 50,000-piece step function; not 20 steps. Earlier AlphaEvolve result was 0.8962 with 50 steps."
+        },
+        {
+          "system": "SimpleTES",
+          "value": "0.962694",
+          "url": "https://arxiv.org/abs/2604.19341",
+          "parameter_note": "Reported for AC2 without a matching 20-step specification; its published search description is FFT and L-BFGS-B over sparse witnesses."
+        },
+        {
+          "system": "DREAM-RSI",
+          "value": null,
+          "url": "https://arxiv.org/abs/2609.14858",
+          "parameter_note": "Its comparison table reports first autocorrelation, not the T078 second-autocorrelation task."
+        }
+      ],
+      "checked_at": "2026-11-05",
       "verification": {
-        "status": "reviewed_by_sol",
-        "reviewer": "Sol main agent",
-        "date": "2026-11-06",
+        "task_id": "T078",
+        "status": "reproduced",
         "run": {
           "task_id": "T078",
           "config_id": "T078-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 768,
+          "objective": "108065664771600646574507764702/121527759800529249872686490775",
           "verification_status": "exact",
-          "generation_time": 0.6496677994728088,
-          "verification_time": 2.0500949695706367,
-          "objective_value": 768,
+          "generation_time": 0.36552152782678604,
+          "verification_time": 0.3212709166109562,
+          "objective_value": "108065664771600646574507764702/121527759800529249872686490775",
           "details": {
-            "dimension": 10,
-            "minimum_squared_norm_at_least": 4,
-            "nonzero_vectors_below_threshold": 0,
-            "ellipsoid_nodes_visited": 371,
-            "claimed_objective_ignored": true
+            "objective_fraction": "108065664771600646574507764702/121527759800529249872686490775",
+            "objective_float": 0.8892261730897966,
+            "mass": "31622759/5000000",
+            "convolution": [
+              "16200962089/10000000000",
+              "6924067917/5000000000",
+              "2959251201/10000000000",
+              "0",
+              "0",
+              "0",
+              "0",
+              "67379419861/50000000000",
+              "40503942809/25000000000",
+              "16201132387/10000000000",
+              "40502981753/25000000000",
+              "81009009473/50000000000",
+              "40505047071/25000000000",
+              "16202011507/10000000000",
+              "1620227558389/1000000000000",
+              "32401128753/20000000000",
+              "324041345529/200000000000",
+              "405060144637/250000000000",
+              "162018415863/100000000000",
+              "202520914753/125000000000",
+              "30813452021/20000000000",
+              "762947736667/500000000000",
+              "1620371934517/1000000000000",
+              "810111703623/500000000000",
+              "2563492713/1600000000",
+              "151585626957/100000000000",
+              "3481058777873/2500000000000",
+              "29509494457/25000000000",
+              "999341930229/1000000000000",
+              "2033028209133/2500000000000",
+              "648635922753/1000000000000",
+              "616618372023/1250000000000",
+              "1801632696609/5000000000000",
+              "19222784457/78125000000",
+              "823227288187/5000000000000",
+              "246552776689/2500000000000",
+              "10994514677/200000000000",
+              "3064313241/125000000000",
+              "12272429961/1562500000000"
+            ],
+            "steps": 20
           },
-          "eval_time": 2.7077180482447147,
+          "eval_time": 0.6930502951145172,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -87,81 +204,109 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.12",
+            "python": "3.13.2",
             "platform": "linux",
-            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
+        "witness": "tasks/t078/data/human_t078.json",
         "independent_quantity": {
-          "determinant": "768",
-          "vectors_with_squared_norm_at_most4": 336,
-          "nodes": 1385,
-          "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+          "exact_objective": "108065664771600646574507764702/121527759800529249872686490775",
+          "convolution_entries": 39
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true
-      },
-      "best_human": {
-        "value": 768,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "dimension": 10
-        },
-        "witness_file": "data/human/lambda10_gram.json",
-        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
-        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
-        "source_location": "LAMBDA10 catalog entry: dimension 10, determinant 768, minimum norm 4, kissing number 336, and exact integer Gram matrix",
-        "provenance": "Classical laminated lattice construction reproduced from the public catalogue page.",
-        "ai_provenance": "Historical mathematical construction; no AI attribution is reported or inferred.",
-        "actual_value": 768,
-        "evidence_state": "Exact arithmetic verifies positive definiteness, determinant 768, and no nonzero integer vector below squared norm 4. Exact enumeration finds 336 shortest vectors."
-      },
-      "best_public": {
-        "value": 768,
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "dimension": 10
-        },
-        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
-        "source_location": "Dimension 10 LAMBDA10 entry; determinant 768 and minimum norm 4",
-        "provenance": "The catalogue publishes the integer Gram matrix. Its exact determinant and minimum-norm constraint were independently recomputed.",
-        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
-        "evidence_state": "Public feasible witness, reproduced exactly. Optimality is open in sources checked on 2026-11-06."
-      },
-      "best_reproduced": {
-        "value": 768,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "dimension": 10
-        },
-        "witness_file": "data/human/lambda10_gram.json",
-        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
-        "provenance": "Transcribed from the author-hosted catalogue HTML, whose raw bytes are frozen under data/source; exact Gram checks were recomputed locally.",
-        "ai_provenance": "Not disclosed by the catalogue; no AI use is inferred.",
-        "actual_value": 768,
-        "evidence_state": "Exact rational LDL decomposition and complete ellipsoid enumeration certify feasibility and determinant.",
-        "review_status": "reviewed_by_sol"
-      },
-      "frozen_human_baseline": {
-        "value": 768,
-        "witness_file": "data/human/lambda10_gram.json",
-        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
-        "provenance": "Rebuilt from the frozen official catalogue page."
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed original Matolcsi-Vinuesa appendix and Boyer-Li2025 primary paper. The latter explicitly identifies the MV20, AE50 and BL575 grids. The strongest located same-20-step public witness is the archived MV coefficient list; its exact ratio is independently recomputed. This is a finite source comparison, not an optimality proof.",
+        "snapshot_date": "2026-11-05"
       }
     }
   },
-  "additional_evidence": {
-    "configurations": {
-      "T078-C01": {
-        "highest_reported": {
-          "source_location": "LAMBDA10 entry; exact published Gram matrix gives determinant 768",
-          "reproduction_status": "Published feasible construction reproduced and exactly checked. No exact dimension-10 optimum proof was found in the sources checked."
-        },
-        "optimality_status": {
-          "state": "open; dimension 10 has no exact Hermite-constant result in sources checked on 2026-11-06"
-        }
-      }
+  "sol_review": {
+    "T078-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05",
+      "public_sources_only": true,
+      "highest_reported_reproduced": true
     }
-  }
+  },
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 0.8892261730897966,
+    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+    "parameters": {
+      "steps": 20,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "authors": [
+      "Mate Matolcsi",
+      "Carlos Vinuesa"
+    ],
+    "year": 2009,
+    "url": "https://arxiv.org/pdf/0907.1379",
+    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
+    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
+    "witness": "data/human_t078.json"
+  },
+  "best_public": {
+    "value": 0.8892261730897966,
+    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+    "parameters": {
+      "steps": 20,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "authors": [
+      "Mate Matolcsi",
+      "Carlos Vinuesa"
+    ],
+    "year": 2009,
+    "url": "https://arxiv.org/pdf/0907.1379",
+    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
+    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
+    "witness": "data/human_t078.json",
+    "survey_scope": "Fixed20step witness checked. Later0.962694report has unmatched step count and is archived separately.",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 0.8892261730897966,
+    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
+    "parameters": {
+      "steps": 20,
+      "support": [
+        "-1/4",
+        "1/4"
+      ],
+      "nonnegative": true
+    },
+    "provenance": "task-local copy of the printed Matolcsi-Vinuesa appendix coefficients",
+    "evidence_state": "exact rational convolution and objective recomputation"
+  },
+  "baseline_seed": {
+    "provenance": "seeded positive integer coefficients generated in init_program.py",
+    "evidence_state": "valid initial point; not a published result"
+  },
+  "other_configurations": [
+    {
+      "value": 0.962694,
+      "parameters": {
+        "steps": null,
+        "support": "not matched to this fixed 20-step configuration"
+      },
+      "url": "https://arxiv.org/abs/2604.19341",
+      "evidence_state": "later report listed in research coverage; exact witness and matching step count not independently reproduced",
+      "optimality": "reported public result; not comparable to T078-C01 until configuration and witness are matched",
+      "origin_type": "AI-assisted SimpleTES report; parameter mismatch"
+    }
+  ],
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula"
 }

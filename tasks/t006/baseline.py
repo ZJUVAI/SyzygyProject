@@ -1,78 +1,103 @@
-from mathbench.search import search_deadline, search_steps
-"""Greedily reduce a valid LPS graph by deleting a vertex and pairing its neighbours."""
-from collections import deque
-import os, random, time
-from lps import build_graph
+"""Bounded random greedy placement search; it reads only the public instance."""
+
+import math
+import os
+import random
+import time
+
+from tasks.t006.check import CONFIG_ID, PARAMETERS, placement_geometry
+from tasks.t006.instance import load_instance, polygon_bbox
 
 
-def _distance(adj,source,target,blocked,max_depth=8):
-    dist={source:0}; q=deque([source])
-    while q:
-        u=q.popleft(); du=dist[u]
-        if du>=max_depth: continue
-        for v in adj[u]:
-            if v==blocked or v in dist: continue
-            dist[v]=du+1
-            if v==target: return du+1
-            q.append(v)
-    return max_depth+1
+CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS, "direction": "maximize"}
 
 
-def _connected(adj):
-    seen={0}; q=[0]
-    for u in q:
-        for v in adj[u]:
-            if v not in seen: seen.add(v); q.append(v)
-    return len(seen)==len(adj)
-
-
-def _try_delete(adj,v):
-    neighbors=list(adj[v])
-    if len(neighbors)!=4: return None
-    a,b,c,d=neighbors
-    pairings=(((a,b),(c,d)),((a,c),(b,d)),((a,d),(b,c)))
-    # A new edge is safe when its endpoints have no old path of length <=8
-    # after deleting v. This prevents every new cycle shorter than 10.
-    for (x,y),(z,w) in pairings:
-        if _distance(adj,x,y,v)<9: continue
-        mapping={u:(u if u<v else u-1) for u in range(len(adj)) if u!=v}
-        reduced=[]
-        for u,row in enumerate(adj):
-            if u==v: continue
-            reduced.append({mapping[q] for q in row if q!=v})
-        x2,y2,z2,w2=(mapping[x],mapping[y],mapping[z],mapping[w])
-        reduced[x2].add(y2); reduced[y2].add(x2)
-        if _distance(reduced,z2,w2,-1)<9:
+def _greedy_trial(data, rng, attempts_per_copy, deadline):
+    copies = []
+    for item_id, item in enumerate(data["items"]):
+        area2 = abs(sum(a[0] * b[1] - b[0] * a[1]
+                        for a, b in zip(item["polygon"], item["polygon"][1:] + item["polygon"][:1])))
+        density = item["value"] / area2
+        copies.extend((density, rng.random(), item_id) for _ in range(item["quantity"]))
+    copies.sort(reverse=True)
+    solution = {"item_indices": [], "x_translations": [], "y_translations": []}
+    placed_geometries = []
+    value = 0
+    attempted = 0
+    placed = 0
+    container_x0, container_y0, container_x1, container_y1 = polygon_bbox(data["container"])
+    for _, _, item_id in copies:
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        item = data["items"][item_id]
+        item_x0, item_y0, item_x1, item_y1 = polygon_bbox(item["polygon"])
+        lo_x = container_x0 - item_x0
+        hi_x = container_x1 - item_x1
+        lo_y = container_y0 - item_y0
+        hi_y = container_y1 - item_y1
+        if lo_x > hi_x or lo_y > hi_y:
             continue
-        reduced[z2].add(w2); reduced[w2].add(z2)
-        if not _connected(reduced):
-            continue
-        edges=[(u,t) for u,row in enumerate(reduced) for t in row if u<t]
-        return {'vertices':len(reduced),'edges':[list(e) for e in edges]}
-    return None
+        for _ in range(attempts_per_copy):
+            if deadline is not None and time.monotonic() >= deadline:
+                break
+            dx = rng.randint(lo_x, hi_x)
+            dy = rng.randint(lo_y, hi_y)
+            attempted += 1
+            geometry = placement_geometry(item_id, dx, dy, placed_geometries, data)
+            if geometry is not None:
+                solution["item_indices"].append(item_id)
+                solution["x_translations"].append(dx)
+                solution["y_translations"].append(dy)
+                placed_geometries.append(geometry)
+                value += item["value"]
+                placed += 1
+                break
+    return solution, value, attempted, placed
 
 
 def run_code():
-    if os.environ.get('MATHBENCH_CONFIG_ID','T006-C01') != 'T006-C01':
-        raise ValueError('unsupported configuration')
-    rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
-    try: budget=max(0.01,min(2.0,float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2'))))
-    except ValueError: budget=2.0
-    deadline = search_deadline()
-    # The LPS graph is a known feasible fallback. Search for a one-vertex
-    # reduction by pairing the four neighbours of a deleted vertex.
-    solution=build_graph((0,2))
-    n=solution['vertices']; adj=[set() for _ in range(n)]
-    for u,v in solution['edges']:
-        adj[u].add(v); adj[v].add(u)
-    vertices=list(range(1,n)); rng.shuffle(vertices); vertices.insert(0,0)
-    for v in vertices[:100]:
-        if time.monotonic()>=deadline: break
-        candidate=_try_delete(adj,v)
-        if candidate is not None:
-            # Exact girth and the 10-cycle are confirmed by the separate trusted checker.
-            from check import validate
-            try: validate(candidate, {'parameters': {'degree':4,'girth':10}})
-            except ValueError: continue
-            return candidate
-    return solution
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    trials = int(os.environ.get("T006_TRIALS", "3"))
+    attempts = int(os.environ.get("T006_PLACEMENT_TRIES", "30"))
+    if trials < 0 or attempts < 0:
+        raise ValueError("search counts must be nonnegative")
+    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds is not None:
+        duration = float(seconds)
+        if not math.isfinite(duration) or duration <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + duration
+    data = load_instance()
+    rng = random.Random(seed)
+    best = {"item_indices": [], "x_translations": [], "y_translations": []}
+    best_value = 0
+    completed = 0
+    candidate_attempts = 0
+    placements_found = 0
+    for _ in range(trials):
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        candidate, value, attempted, placed = _greedy_trial(data, rng, attempts, deadline)
+        completed += 1
+        candidate_attempts += attempted
+        placements_found += placed
+        if value > best_value:
+            best, best_value = candidate, value
+    return {
+        **best,
+        "search_metadata": {
+            "algorithm": "value-density ordered random first-fit translations; exact geometric feasibility kernel checks each proposal",
+            "seed": seed,
+            "trial_limit": trials,
+            "trials_completed": completed,
+            "placement_attempt_limit_per_copy": attempts,
+            "placement_attempts": candidate_attempts,
+            "placements_found_across_trials": placements_found,
+            "reference_data_read": False,
+            "time_cutoff_enabled": deadline is not None,
+        },
+    }

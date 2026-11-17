@@ -1,10 +1,12 @@
-"""Read the fixed public 43-element witness; not used by search programs."""
+"""Return the saved local FLIP witness for external comparison only."""
 
 import json
+import os
 from pathlib import Path
 
 
 def run_code():
-    path = Path(__file__).parent / "data" / "reference" / "ergezer_n212_k43_witness.json"
-    record = json.loads(path.read_text(encoding="utf-8"))
-    return {"elements": record["A"]}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T042-C01") != "T042-C01":
+        raise ValueError("unknown T042 configuration")
+    return json.loads((Path(__file__).parent / "data" /
+                       "human_g70_1flip.json").read_text())

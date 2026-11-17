@@ -1,45 +1,97 @@
-# T092：S² 上 20 次实球谐的 L4/L2 集中度最大化
+# T092: degree-100 Mahler measure
 
-## 定义
+## 中文
 
-令 \(P(x,y,z)\) 为非零、实、齐次 20 次调和多项式。限制在单位球面 \(S^2\) 上，令 \(M_p\) 表示相对于归一化均匀面积测度的 \(|P|^p\) 平均值。本任务最大化
+### 数学目标与配置
+
+给定整数多项式
+
 \[
-J=\frac{\|P\|_{L^4(S^2)}}{\|P\|_{L^2(S^2)}}=\left(\frac{M_4}{M_2^2}\right)^{1/4}.
+P(x)=a_0+a_1x+\cdots+a_{100}x^{100},
 \]
-固定参数为次数 20 和实球谐空间。系数可整体缩放，目标不变。
 
-输入用 231 个有理系数，按 \(x^a y^b z^{20-a-b}\) 的顺序排列：先让 \(a\) 从 20 降到 0，再让 \(b\) 从 \(20-a\) 降到 0。系数可以是整数或精确有理数字符串。不设分子、分母或系数大小限制。调和性用精确 Laplacian=0 验证。
+求一个**恰为 100 次**、本原、在 \(\mathbb Q[x]\) 上不可约且非分圆的多项式，使 Mahler 测度
 
-正式模型将系数限于 \(\mathbb Q\)。度 20 调和条件是有理系数线性方程组的核。有理解在其实系数核中稠密；目标在非零多项式上连续且尺度不变。因此此表示范围与实系数模型有相同上确界。每个实球谐不必能用单个有理系数向量精确表示。
-
-## 精确检查
-
-球面单项式矩满足：若任一指数为奇数，平均值为零；若指数为 \((2a,2b,2c)\)，则
 \[
-\mathbb E[x^{2a}y^{2b}z^{2c}]=\frac{(2a-1)!!(2b-1)!!(2c-1)!!}{(2(a+b+c)+1)!!}.
+M(P)=|a_{100}|\prod_{P(z)=0}\max(1,|z|)
 \]
-检查器精确卷积得到 \(P^2\) 和 \(P^4\)，计算有理数 \(M_2,M_4\)，并输出 \(J\) 的精确四次根表达式和有理夹逼。它不使用球面采样作为证明。
 
-## 人类构造和未解状态
+尽量小。系数不预先限制为互反、稀疏或单首项。此配置不声称已证明最优。
 
-Stanton 和 Weinstein 证明每个次数的最高权函数是 L4 范数的局部极大值。他们没有证明固定次数的全局最优。人类对照采用最高权实球谐
-\[
-P(x,y,z)=\operatorname{Re}(x+iy)^{20}.
-\]
-其整数系数为 \((-1)^j\binom{20}{2j}x^{20-2j}y^{2j}\)。独立矩计算还复核了文献公式 \(M_2=B_{20}/2\)、\(M_4=3B_{40}/8\)，其中 \(B_k=4^k(k!)^2/(2k+1)!\)。该构造是已发表的局部极大值，不宣称为全局最优。
+唯一配置 `T092-C01` 固定次数 100。候选须提交从常数项到最高次项的 101 个整数系数，以及 100 个复平面有理圆盘。检查器精确核对系数本原性和不可约性。每个圆盘用 Rouché 定理认证恰含一个根，所有圆盘两两分离，故覆盖全部根。计算各根模长的有理上下界并相乘，返回 Mahler 测度区间的上端作为最小化目标。区间相对宽度不得超过 `1e-10`；浮点根只可用于生成候选圆心，不能作为正式分数。圆盘有理数不设精度上限，统一运行器对候选输出实施 16 MiB、4 GiB 和 60 秒验证限制。
 
-- Stanton–Weinstein, *On the L4 norm of spherical harmonics*, 1981，[DOI 10.1017/S0305004100058229](https://doi.org/10.1017/S0305004100058229)。摘要明确说的是局部最大值。全文第 6 节给出 \(O(\ell\log\ell)\) 上界，不给固定次数 20 的全局最佳常数。
-- Sogge 1986 的结果确定渐近阶，不确定本配置的最优常数。
-- 2026 年 Rudin 有界正交基论文研究复球面上的齐次全纯多项式基，与本题的固定次数实球谐最大化不同。
+### 来源和公开纪录
 
-截至 2026-11-06，未找到次数 20 全局最优证明。
+本题用系数的最大公约数定义本原。Mossinghoff 等人的文献把可写成 \(f(x^k)\)、\(k>1\) 的多项式排除在本原类之外。在本题规则下，Lehmer 多项式的 \(x\mapsto x^{10}\) 代换通过精确验证，测度约为 `1.176280818`。下列数值用于历史对照。[术语定义见论文第 1720 页](https://citeseerx.ist.psu.edu/document?doi=e1b6e654954366e5155f40237433cd11c60e039f&repid=rep1&type=pdf)
+
+Mossinghoff 的固定仓库提交 `7e3798516710370a758e16eb5de6bccbee98bb6a` 中，`BestByDegree_200.txt` 的恰 100 次一行给出报告值 `1.247365098370`、`v=8` 和 51 个互反系数。`data/source/mossinghoff_degree_100_row.json` 保存该原始行及仓库固定版本。`data/reference/mossinghoff_degree_100_certificate.json` 保存展开的多项式和 100 个有理根圆盘。当前精确复核的保守测度上界约为 `1.2473650983705`。
+
+Chervonyi、Gukov、Luong 的 arXiv:2610.30277v1（2026-10-21）报告：对 91 个已有文献数据匹配 85 个，仅在次数 178、188、190、202、242、250 报告严格改进；次数 100 不在改进列表中。论文介绍整体人机协作流程，但未把 100 次这一旧记录归因于该流程。来源没有证明次数 100 的最优性；论文也指出逐次数最优性证明仅覆盖到次数 54。此处把 Mossinghoff 项作为已复现的历史人类方法/公开对照，并披露其逐项搜索过程未详述。
+
+### 程序和运行
+
+- `check.py`：精确验证数据、不可约性、100 个根圆盘、根覆盖及 Mahler 测度区间。
+- `init_program.py`：独立简单起点 \(x^{100}-2\)。它用显式单位根近似建议圆心；有理圆盘仍须通过精确检查。
+- `baseline.py`：固定迭代枚举 Eisenstein 多项式 \(x^{100}-p\)，其中 \(p\) 为素数。该族中 Mahler 测度恰为 \(p\)，作为传统有限搜索基线。它不读取比较数据。
+- `evolution.py`：在同一族上作确定种子的常数项变异与精英选择。默认 60 代、4 次重启；可用 `MATHBENCH_EVOLUTION_ITERATIONS`、`MATHBENCH_RESTARTS` 调整，硬上限分别为 300、20。该简化搜索是任务内传统搜索演示，不是对称/稀疏系数空间的全域搜索。
+- `human.py`：从已固定的 Mossinghoff 见证数据复现同次数公开人类记录。
+- `reference.py`：固定复播相同公开记录，用于 SOTA 档案。
+
+五个入口均定义 `run_code()`，读取 `MATHBENCH_CONFIG_ID` 与 `MATHBENCH_SEED`。默认传统搜索使用固定迭代数；设 `MATHBENCH_SEARCH_SECONDS` 时由共享 `search_steps` 提供探索用时截断。评测器另按公共接口限制生成 300 秒、验证 60 秒、内存 4 GiB、一个线程。初始程序与搜索程序不加载 `data/reference/` 或 `data/source/`。
+
+### 复核方式
+
+运行：
+
+```sh
+.venv/bin/python -m pytest tasks/t092 -q
+.venv/bin/python -m json.tool tasks/t092/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t092/data/bestknown.json > /dev/null
+```
+
+测试验证起点和公开根证书，破坏系数、破坏根盘、重复根盘、bool/浮点/NaN 系数、边界次数、伪造分数不变性，以及工作进程异常和超时。独立关键量包括 100 个根圆盘、两两分离检查数 `4950`、精确不可约性、区间相对宽度与源文件哈希。基准仍需 Sol 独立复核。
 
 ## English
 
-Maximize the normalized ratio \(J=\|P\|_{L^4(S^2)}/\|P\|_{L^2(S^2)}=(M_4/M_2^2)^{1/4}\) over nonzero real homogeneous harmonic polynomials of degree 20 in three variables. Moments use uniform probability measure on the unit sphere.
+### Definition and fixed configuration
 
-The input is 231 exact rational coefficients in the order \(x^a y^b z^{20-a-b}\), with \(a\) descending from 20 to 0, and then \(b\) descending from \(20-a\) to 0. There is no coefficient or denominator cap. Rational harmonic polynomials are dense in the real harmonic subspace because the Laplacian constraints are a rational linear system. This dense domain has the same supremum for the continuous, scale-invariant objective.
+For an integer polynomial \(P(x)=\sum_{k=0}^{100}a_kx^k\), minimize
 
-The checker verifies the exact Laplacian and integrates \(P^2\) and \(P^4\) by rational monomial moments. It returns an exact fourth-root expression and a certified rational interval. No sample estimate is used as a certificate.
+\[
+M(P)=|a_{100}|\prod_{P(z)=0}\max(1,|z|)
+\]
 
-Stanton and Weinstein prove that the highest-weight harmonic is a local L4 maximizer for each degree. They do not establish the global optimum at degree 20. The human witness is \(\operatorname{Re}(x+iy)^{20}\), independently verified by exact sphere moments. The 2026 Rudin orthonormal-basis result concerns a different complex holomorphic problem. No degree-20 global proof was found in sources checked on 2026-11-06.
+over primitive, irreducible, non-cyclotomic polynomials of **exact degree 100**. Coefficients are not restricted to reciprocal or sparse forms, and need not be monic. This task does not claim an optimality proof.
+
+The only configuration is `T092-C01`, degree 100. A candidate contains 101 integer coefficients in ascending order and 100 rational complex disks. The checker proves primitiveness and irreducibility exactly. It certifies one root in each disk with Rouché's theorem, checks that all disks are pairwise disjoint, and bounds the complete root product with rational arithmetic. It returns the upper endpoint as the minimization objective. The relative width of the certified interval must be at most `1e-10`. Floating-point roots may propose disk centers, but they never determine the score. Rational disk precision has no fixed ceiling; the common runner applies the 16-MiB output, 4-GiB memory, and 60-second verification limits.
+
+### Sources and public result
+
+This task defines primitiveness by the greatest common divisor of the coefficients. Mossinghoff and coauthors exclude polynomials of the form \(f(x^k)\) for \(k>1\) from their primitive class. Substitution of \(x^{10}\) into Lehmer's polynomial passes the task's exact checks and gives a measure of about `1.176280818`. The values below are historical comparisons. [Definition on page 1720](https://citeseerx.ist.psu.edu/document?doi=e1b6e654954366e5155f40237433cd11c60e039f&repid=rep1&type=pdf)
+
+The degree-100 row in `BestByDegree_200.txt` at Mossinghoff's pinned repository commit `7e3798516710370a758e16eb5de6bccbee98bb6a` reports `1.247365098370`, `v=8`, and 51 reciprocal coefficients. The source row and pin are recorded in `data/source/mossinghoff_degree_100_row.json`. The expanded polynomial and its 100 rational root disks are in `data/reference/mossinghoff_degree_100_certificate.json`. The current exact certificate gives a conservative upper bound near `1.2473650983705`.
+
+Chervonyi, Gukov, and Luong, arXiv:2610.30277v1 (2026-10-21), report matching 85 of 91 published literature values and strict improvements at degrees 178, 188, 190, 202, 242, and 250. Degree 100 is not among the listed improvements. Their paper describes project-level human-AI work but does not attribute this older degree-100 entry to that workflow. The degree-100 minimum remains open; the paper says degree-wise optimality has only been proved through degree 54. This task records the Mossinghoff entry as a reproduced historical human/public result and states that the source does not give a detailed per-entry search method.
+
+### Programs and budget
+
+- `check.py` validates integer data, irreducibility, all root disks, root coverage, and a rational Mahler interval.
+- `init_program.py` starts from \(x^{100}-2\). Explicit root approximations only propose centers; exact disk checks decide validity.
+- `baseline.py` scans a fixed number of Eisenstein polynomials \(x^{100}-p\), with prime \(p\). In this family the Mahler measure is exactly \(p\). It does not read comparison data.
+- `evolution.py` uses seeded coefficient mutation and elitist selection in the same family. Defaults are 60 generations and 4 restarts. `MATHBENCH_EVOLUTION_ITERATIONS` and `MATHBENCH_RESTARTS` set bounded alternatives (maximum 300 and 20). This is a simple traditional-search baseline, not a global search over all degree-100 polynomials.
+- `human.py` rebuilds the pinned Mossinghoff witness.
+- `reference.py` replays the same public witness for the SOTA record.
+
+All five entries define `run_code()` and read `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED`. Search defaults use fixed iteration counts. `MATHBENCH_SEARCH_SECONDS` enables the shared exploration cutoff. The evaluator uses the common 300-second generation, 60-second verification, 4-GiB memory, and one-thread limits. The seed and search programs do not load comparison assets from `data/`.
+
+### Validation
+
+Run:
+
+```sh
+.venv/bin/python -m pytest tasks/t092 -q
+.venv/bin/python -m json.tool tasks/t092/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t092/data/bestknown.json > /dev/null
+```
+
+Tests cover valid and damaged polynomials, damaged and duplicate disks, bool/float/NaN coefficients, degree boundaries, ignored claimed scores, and worker errors and timeouts. Independent quantities include all 100 certified disks, 4,950 pairwise separation checks, exact irreducibility, interval width, and the pinned source hash. Sol review is pending.

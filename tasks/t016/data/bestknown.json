@@ -1,123 +1,100 @@
 {
   "task_id": "T016",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T016-C01": {
-      "public_value": "1.5097201507458786",
-      "public_source": {
-        "url": "https://arxiv.org/abs/0907.1379",
-        "pdf_url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
-        "title": "Improved bounds on the supremum of autoconvolutions",
-        "authors": [
-          "Mate Matolcsi",
-          "Carlos Vinuesa"
-        ],
-        "year": 2010,
-        "evidence": "The paper states that the best nonnegative step-function example known to its authors has n=208 and reaches ||f*f||_infinity=1.50972..., and prints its associate-polynomial coefficients. The 208 published decimal coefficients are preserved locally and exactly recomputed.",
-        "scope": "Located strongest public witness for the fixed 208-step configuration in the checked source set. The witness is nonnegative and therefore admissible in the signed class; its reported ||f*f||_infinity is the same maximum-absolute objective for this witness. This is a located-public-witness claim, not a proof that no other 208-step witness exists.",
-        "preprint_date": "2009-09-14",
-        "publication": "Journal of Mathematical Analysis and Applications 372 (2010), no. 2, 439–447"
+      "program": "reference.py",
+      "reproduced_value": 24,
+      "public_value": 24,
+      "highest_reported": {
+        "value": 24,
+        "source": "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf",
+        "source_location": "Bondarenko, Radchenko, and Viazovska (2013), p. 444: 24 minimal vectors of D4 form a spherical 5-design in S^3",
+        "reproduction_status": "The 24-cell vertices are frozen as exact rational coordinates and the checker verifies unit norms and all 126 equal-weight polynomial moments through degree five. This is a feasible upper bound; it does not prove minimality.",
+        "ai_provenance": "Classical D4 root-system construction; no AI provenance stated.",
+        "metric": "points in an equal-weight spherical 5-design on S^3",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf"
       },
-      "reproduced_value": "6280435861361744576/4160000022692211721",
-      "program": "sota.py",
-      "witness": "data/human_matolcsi_vinuesa.json",
-      "provenance": "public_human_construction",
-      "matches_public_best": true,
-      "comparison_tolerance": "The paper prints 1.50972 to five decimal places; the exact local rational value rounds to 1.5097201507458786, within 0.000005 of the printed value. Exact Fraction checker used for the reproduced_value.",
-      "source_check_scope": {
-        "reviewed": "Public primary paper, the pinned official AlphaEvolve results notebook and repository record, the GGSWT2025 paper, and the signed-constant ledger entries for 300, 600, and 800 equal cells.",
-        "conclusion": "The other located stronger signed absolute-peak constructions use 150, 300, 600, or 800 cells. They do not match this fixed 208-step configuration. Within the checked finite source set, the 208-step Matolcsi–Vinuesa construction is the located public 208-step witness.",
-        "not_claimed": "Exhaustive literature search, mathematical optimality, or a universal claim that no unlocated 208-step witness exists."
+      "parameters": {
+        "sphere": "S^3 subset R^4 unit sphere",
+        "design_strength": 5,
+        "weights": "equal positive weights",
+        "objective": "number of distinct points",
+        "coordinate_domain": "real algebraic coordinates in one common real algebraic number field"
       },
-      "related_public_reports": [
+      "witness": "data/human/d4_24cell.json",
+      "witness_sha256": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
+      "independent_certificate": {
+        "file": "data/reference/d4_rational24_independent_certificate.json",
+        "sha256": "f7332f8bf9ffe3cec5d59f5140570de63645d5ec2863240d2cd4d16a55e94a85",
+        "provenance": "A separate exact rational 24-point certificate independently prepared during task research; it is not presented as a verbatim published file."
+      },
+      "known_bounds": {
+        "lower_bound": 22,
+        "upper_bound": 24,
+        "lower_bound_source": "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf",
+        "lower_bound_location": "p. 444: explicitly states 22 <= N(3,5) <= 24",
+        "upper_bound_source": "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf",
+        "upper_bound_location": "p. 444: the 24 D4 minimal vectors form a spherical 5-design",
+        "status": "The exact value is open in sources checked on 2026-11-06. The 2025 paper calls the 24-point design putatively optimal but gives no proof of the finite minimum."
+      },
+      "2025_status_source": {
+        "source": "https://link.springer.com/article/10.1007/s00454-025-00805-7",
+        "source_location": "§3 near Table 1: the 24-point 5-design on S^3 is described as putatively optimally small; the paper states only t=1,2,3 are known optimal in S^3 among those constructions",
+        "interpretation": "Supports continued conjectural status; it is not a proof that 24 is minimum."
+      },
+      "adjacent_2026_sources": [
         {
-          "steps": 150,
-          "value": "1.4687620697410217",
-          "objective": "maximum absolute autoconvolution peak",
-          "source": "https://github.com/google-deepmind/alphaevolve_results/blob/4226acbf237ff9ad10ba7673a2af127a2d8a5977/mathematical_results.ipynb",
-          "note": "Official AlphaEvolve notebook cell 65, height_sequence_4. Same signed absolute-peak objective, different grid size."
+          "source": "https://arxiv.org/abs/2609.31689",
+          "scope": "Proves minimum 12 for equal-weight spherical 4-designs on S^2; not the selected S^3 strength-5 problem."
         },
         {
-          "steps": 150,
-          "value": "1.4621879468",
-          "objective": "maximum absolute autoconvolution peak",
-          "source": "https://github.com/unclegareth-create/alphaevolve_repository_of_problems/blob/4b3bbd2a44db92442e4ebb4e64e0bb90f229aad1/experiments/autocorrelation_problems/problem_4_signed_autoconvolution_bounds.py",
-          "note": "AlphaEvolve repository PR 13 record, N=150; different grid size."
-        },
-        {
-          "steps": 300,
-          "value": "1.4630715826075593",
-          "objective": "maximum absolute autoconvolution peak",
-          "source": "https://teorth.github.io/optimizationproblems/constants/1d.html",
-          "note": "CERT2026 exact-rational certificate; different grid size."
-        },
-        {
-          "steps": 600,
-          "value": "1.4602172840228739",
-          "objective": "maximum absolute autoconvolution peak",
-          "source": "https://github.com/steps-re/c1d-certificate/tree/9a091494facc801eaf6b92b175b63c58b7c3b30b",
-          "note": "STEPS2026 exact-rational certificate; different grid size."
-        },
-        {
-          "steps": 600,
-          "value": "1.4599890469053831",
-          "objective": "maximum absolute autoconvolution peak",
-          "source": "https://github.com/unclegareth-create/alphaevolve_repository_of_problems/blob/4b3bbd2a44db92442e4ebb4e64e0bb90f229aad1/experiments/autocorrelation_problems/problem_4_signed_autoconvolution_bounds.py",
-          "note": "AlphaEvolve repository PR 13 record C4-prime; different grid size."
-        },
-        {
-          "steps": 800,
-          "value": "1.4578548849219886",
-          "objective": "maximum absolute autoconvolution peak",
-          "source": "https://doi.org/10.5281/zenodo.23541324",
-          "note": "SCiEL2026 exact-rational certificate; different grid size."
-        },
-        {
-          "steps": 800,
-          "value": "1.4554649475",
-          "objective": "absolute value of the maximum signed autoconvolution peak (one-sided variant)",
-          "source": "https://github.com/unclegareth-create/alphaevolve_repository_of_problems/blob/4b3bbd2a44db92442e4ebb4e64e0bb90f229aad1/experiments/autocorrelation_problems/problem_4_signed_autoconvolution_bounds.py",
-          "note": "Different objective variant; excluded from the absolute-peak comparison."
-        },
-        {
-          "steps": 400,
-          "value": "1.4557",
-          "objective": "absolute value of the positive maximum autoconvolution peak (one-sided variant)",
-          "source": "https://arxiv.org/abs/2506.13131",
-          "note": "AlphaEvolve paper Appendix B.3; the reported 400-step score does not use the benchmark maximum-absolute objective and also has a different grid size."
+          "source": "https://arxiv.org/abs/2610.12767",
+          "scope": "Constructs spherical designs in odd dimensions including S^3; it does not give a matching lower bound for N(3,5)."
         }
       ],
-      "limitations": [
-        "The cited 208-step witness is a nonnegative construction admitted by the signed class. The paper does not claim it is optimal among all signed 208-step constructions.",
-        "The public-best statement is limited to the cited and checked finite source set. Stronger absolute-peak public reports at 150, 300, 600, and 800 cells do not match the frozen 208-step configuration.",
-        "AlphaEvolve 400-cell score 1.4557 uses the absolute value of the positive maximum, a distinct objective variant; it is excluded. The separate 800-cell one-sided result is also excluded."
+      "coordinate_model": {
+        "scope": "The task accepts points over any common real algebraic number field, with a primitive irreducible polynomial and rational isolating interval.",
+        "completeness_note": "This representation does not change the minimum over real coordinates: for each fixed finite point count, the unit-sphere and moment equations plus pairwise-distinct inequalities form a semialgebraic set over Q. Any nonempty such set has a real algebraic point, which can be represented in a common primitive number field.",
+        "input_caps": "No arbitrary degree or coefficient-size cap; shared runner output, time, and memory budgets apply."
+      },
+      "checked_sources": [
+        "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf",
+        "https://link.springer.com/article/10.1007/s00454-025-00805-7",
+        "https://arxiv.org/abs/2609.31689",
+        "https://arxiv.org/abs/2610.12767"
       ],
-      "checked_at": "2026-11-05",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T016",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T016",
           "config_id": "T016-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": "6280435861361744576/4160000022692211721",
+          "objective": 24,
           "verification_status": "exact",
-          "generation_time": 0.26574528217315674,
-          "verification_time": 0.41733839362859726,
-          "objective_value": "6280435861361744576/4160000022692211721",
+          "generation_time": 2.7460587099194527,
+          "verification_time": 1.8497695922851562,
+          "objective_value": 24,
           "details": {
-            "steps": 208,
-            "coefficient_count": 208,
-            "mass": "2039607811/100000000",
-            "max_abs_convolution": "7548600794905943/5000000000000000",
-            "max_abs_indices": [
-              321
-            ],
-            "normalization": "integral-one normalization; objective is invariant under nonzero scaling",
-            "objective_definition": "416 * max_k(abs(sum_i a_i*a_(k-i))) / (sum_i a_i)^2"
+            "dimension": 3,
+            "ambient_dimension": 4,
+            "design_strength": 5,
+            "point_count": 24,
+            "unit_norms_verified": 24,
+            "monomials_checked": 126,
+            "coordinate_field_degree": 1,
+            "minimal_polynomial_irreducible": true,
+            "selected_real_root_count": 1,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.7013038918375969,
+          "eval_time": 4.602399595081806,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -127,97 +104,79 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t016/data/human_matolcsi_vinuesa.json",
         "independent_quantity": {
-          "exact_objective": "6280435861361744576/4160000022692211721",
-          "convolution_entries": 415
+          "point_count": 24,
+          "monomials_checked": 126,
+          "method": "symbolic real-root coordinates and Dirichlet rising-factorial sphere moments"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Reviewed the public208-step MV witness, corrected official AlphaEvolve signed150 construction, and primary bounds ledger listing300/600/800-step certificates. No stronger same208 public witness was located. The original nonnegative208 witness is admissible in the signed class. Local optimization is excluded; status is limited to the checked public-source comparison.",
-        "snapshot_date": "2026-11-05"
+        "claimed_score_ignored": true
       },
-      "sol_light_other_parameter_recheck": {
-        "checked_at": "2026-11-06",
-        "source": "https://raw.githubusercontent.com/teorth/optimizationproblems/main/constants/1d.md",
-        "reported_value": "1.457854884921989",
-        "steps": 800,
-        "metric": "maximum absolute autoconvolution with integral-one normalization",
-        "same_parameters": false,
-        "evidence_status": "reported self-archived certificate; not downloaded or independently reproduced in this batch",
-        "note": "Do not use this value in the fixed 208-step comparison columns."
+      "best_human": {
+        "value": 24,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "sphere": "S^3",
+          "design_strength": 5
+        },
+        "witness_file": "data/human/d4_24cell.json",
+        "witness_sha256": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
+        "url": "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf",
+        "source_location": "Bondarenko, Radchenko, and Viazovska (2013), p. 444, D4 minimal vectors and N(3,5) bounds",
+        "provenance": "Classical D4 root-system 24-cell: eight signed coordinate axes and sixteen half-cube vertices.",
+        "ai_provenance": "Traditional human mathematical construction.",
+        "actual_value": 24,
+        "evidence_state": "All 24 rational points pass the exact field checker for unit norm and 126 moments."
+      },
+      "best_public": {
+        "value": 24,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "sphere": "S^3",
+          "design_strength": 5
+        },
+        "url": "https://annals.math.princeton.edu/wp-content/uploads/annals-v178-n2-p02-p.pdf",
+        "source_location": "p. 444, D4 24-point spherical 5-design",
+        "provenance": "Published classical 24-point D4 construction. The paper records 22 <= N(3,5) <= 24 and does not claim 24 is proven minimum.",
+        "ai_provenance": "Classical construction.",
+        "evidence_state": "The task's exact rational witness reproduces the reported 24-point design."
+      },
+      "best_reproduced": {
+        "value": 24,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "sphere": "S^3",
+          "design_strength": 5
+        },
+        "witness_file": "data/human/d4_24cell.json",
+        "witness_sha256": "d33b99a4eab8ae059a0ced13a5265e1090ff111cf638ece1cb12c7c1005cc381",
+        "provenance": "Rebuilt from signed coordinate axes and the sign cube with coordinates ±1/2.",
+        "ai_provenance": "Traditional construction, reconstructed in this task.",
+        "actual_value": 24,
+        "evidence_state": "The exact algebraic checker verifies all constraints and all 126 moments.",
+        "review_status": "reviewed_by_sol"
+      },
+      "optimality_status": {
+        "lower_bound": 22,
+        "upper_bound": 24,
+        "state": "open; 2025 source still calls the 24-point design putatively optimal"
       }
     }
   },
-  "sol_review": {
-    "T016-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05",
-      "public_sources_only": true,
-      "highest_reported_reproduced": true
+  "additional_evidence": {
+    "configurations": {
+      "T016-C01": {
+        "highest_reported": {
+          "source_location": "p. 444",
+          "reproduction_status": "The 24-point design is exactly reproduced. The known lower bound is 22; 24 is not an established optimum."
+        }
+      }
     }
-  },
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 1.5097201507458786,
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "signed_values_allowed": true,
-      "integral": 1
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published nonnegative 208-step coefficients transferred to the signed class and exactly recomputed",
-    "optimality": "No optimality or current-record claim",
-    "witness": "data/human_matolcsi_vinuesa.json"
-  },
-  "best_public": {
-    "value": 1.5097201507458786,
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "signed_values_allowed": true,
-      "integral": 1
-    },
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published nonnegative construction is admissible; local witness exactly recomputed",
-    "optimality": "not asserted; no latest signed record claimed",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 1.5097201507458786,
-    "exact_value": "6280435861361744576/4160000022692211721",
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "signed_values_allowed": true,
-      "integral": 1
-    },
-    "provenance": "published nonnegative human witness transferred to the signed class",
-    "evidence_state": "exact rational recomputation"
-  },
-  "scope_note": "The signed 150-step appendix construction is a distinct configuration. Its positive-only maximum 1.458105685768 is not an absolute score; its maximum-absolute score is about 2.426895802097. It is not used as this task's baseline.",
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class"
+  }
 }

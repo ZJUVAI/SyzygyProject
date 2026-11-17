@@ -1,35 +1,69 @@
-# T035: Erdős–Szekeres 点集，不含凸七边形
+# T035: minimum-edge C6-saturated graph on 100 vertices
 
-## 中文
+## Definition
 
-给定平面上的互异点。任意三点不得共线。目标是最大化点数，并要求任取七点都不处于凸位置。禁用的凸七边形无需为空；其它提交点可以在其凸包内。配置 T035-C01 固定禁止的凸多边形顶点数为 7。得分是点数。
+The fixed graph has 100 labeled vertices `0,...,99`. It must be a simple undirected graph with no simple cycle of length 6. For each nonedge `uv`, there must be a simple path of exactly 5 edges from `u` to `v`. Adding `uv` then completes a simple C6. The objective is to minimize the number of edges.
 
-本任务优化可行点集的大小，不直接输出未知数 `ES(7)`。Erdős–Szekeres 与 Szekeres 的经典构造给出 32 点下界。Duque、Fabila-Monroy 与 Hidalgo-Toscano 解释了该构造的整数坐标实现；本文按论文中的递归构造重新生成坐标，没有从图像估读坐标。公开实现入口为 [PyDCG](https://github.com/rfabila/PyDCG)。来源版本和文件摘要见 `data/source_hashes.json`。
+The checker enumerates simple 5-edge paths, using a visited-vertex bit mask. If a path's endpoints are already joined by an edge, it detects a C6. For every nonedge, it requires the endpoints in the path set. This checks paths with six distinct vertices; repeated-vertex walks cannot pass.
 
-递归构造产生 32 个整点。评测器使用整数行列式检查一般位置，并精确搜索任意七点凸集。坐标接受整数或有理数字符串（如 `"3/5"`）；浮点数会被拒绝。已报告的区间为 `33 ≤ ES(7) ≤ 81`；`ES(7)=33` 仍是猜想。上界来自 Schroeder 于 2026-09-19 发布的预印本，本任务未重做其上界证明。Dumitru 的 2025 年笔记称 ES(7) 是首个未解决的平面情形。没有把点集大小限制为 32；更大的可行见证可以提交。
+## Published construction and current bounds
 
-初始程序给出抛物线上的 6 点。传统基线使用固定种子 0，对当前集合尝试加入整数点；它不读取公开见证。默认生成预算 300 秒，正式检查预算 60 秒。当前状态：已通过 Sol 验收（2026-11-06）。
+Lan, Shi, Wang, and Zhang prove for `n >= 9` that
 
-主来源：
+`4n/3 - 2 <= sat(n,C6) <= 4n/3 + epsilon^2/2 - 5epsilon/6`,
 
-- Erdős and Szekeres, “On some extremum problems in elementary geometry” (1961), [paper](https://sziami.cs.bme.hu/~geza/erdosszekeres61.pdf).
-- Duque, Fabila-Monroy, and Hidalgo-Toscano, “Point Sets with Small Integer Coordinates and with Small Convex Polygons,” arXiv:1602.03075v2 (2017-07-12), [paper](https://arxiv.org/abs/1602.03075v2), [source code cited by the paper](https://github.com/rfabila/PyDCG).
-- Dumitru, “Notes on the 33-point Erdős–Szekeres problem,” arXiv:2512.24061v1 (2025), [paper](https://arxiv.org/abs/2512.24061).
-- Schroeder, “Upper Bounds for Convex Heptagons and Octagons,” version 1 (2026-09-19), [paper and proof materials](https://michaelschroeder.ai/research/ErdosSzekeres/companion).
+where `epsilon` is the residue of `n` modulo 3. For `n=100`, `epsilon=1`, so the integer edge count lies between 132 and 133. The theorem gives a 133-edge construction. The exact value is not determined by these bounds.
 
-## English
+The paper's construction at `n=3t+1` starts with the nine-vertex, twelve-edge graph `H` in Figure 1(a), adds `t-3` paths `a_i-b_i-c_i` with edges `x_1a_i` and `x_2c_i`, and attaches one leaf to `y_4`. For this task, `t=33`, so it adds 30 paths and one leaf. The total is `12 + 30*4 + 1 = 133` edges.
 
-Given distinct points in the plane, require that no three are collinear. Maximize the number of points while forbidding every seven-point subset from being in convex position. A forbidden convex seven-gon need not be empty; other submitted points may lie inside its hull. Configuration T035-C01 fixes the forbidden polygon size at 7. The score is the number of points.
+The nine-vertex core was decoded from the vector drawing in the arXiv v3 PDF and cross-checked against the proof paths in Section 2. Its vertices are `x1,x2,y1,y2,y3,y4,a0,b0,c0`; its 12 edges are:
 
-This task maximizes the size of a feasible point set. It does not return the unknown threshold `ES(7)`. The classical Erdős–Szekeres construction gives a 32-point lower bound. Duque, Fabila-Monroy, and Hidalgo-Toscano describe an integer-coordinate realization. This task rebuilds the recursive construction and does not estimate coordinates from a figure. The public implementation entry point is [PyDCG](https://github.com/rfabila/PyDCG). Source versions and hashes are in `data/source_hashes.json`.
+- `x1-x2`, `x1-y1`, `x1-y2`, `x1-a0`;
+- `x2-y3`, `x2-y4`, `x2-c0`;
+- `y2-y1`, `y2-y3`, `y2-y4`;
+- `a0-b0`, `b0-c0`.
 
-The recursive construction produces 32 integer points. The checker uses integer determinants for general position and an exact search for any convex seven-point subset. Coordinates may be integers or rational strings such as `"3/5"`; floats are rejected. The reported interval is `33 ≤ ES(7) ≤ 81`; `ES(7)=33` remains a conjecture. The upper bound is from Schroeder's preprint dated 2026-09-19. This task has not reproduced that upper-bound proof. Dumitru's 2025 notes identify ES(7) as the first open planar case. The input is not capped at 32; larger feasible witnesses are allowed.
+`human.py` rebuilds the theorem construction. `reference.py` reads the frozen JSON copy from `data/reference/`. Exact local validation confirms 133 edges, no simple C6, and a simple five-edge path for each of the 4817 nonedges.
 
-The initial program returns six points on a parabola. The traditional baseline uses fixed seed 0 and tries to add integer points to the current set. It does not read the public witness. The default generation budget is 300 seconds. The formal check budget is 60 seconds. Status: accepted by Sol on 2026-11-06.
+Sources checked 2026-11-06:
 
-Primary sources:
+- Lan, Shi, Wang, and Zhang, [The saturation number of C6](https://doi.org/10.1016/j.disc.2025.114504), Theorem 1.5 and Figure 1. The version used for decoding was [arXiv:2108.03910v3](https://arxiv.org/html/2108.03910v3), dated 2023-11-07. The downloaded PDF SHA-256 is recorded in `IMPLEMENTATION.md`.
+- The 2026 paper [Minimizing the number of edges in C[4,6]-saturated graphs](https://arxiv.org/abs/2608.18551) studies graphs saturated with respect to the family of cycle lengths 4 through 6. That is a different constraint from saturation for C6 alone and does not close this parameter.
 
-- Erdős and Szekeres, “On some extremum problems in elementary geometry” (1961), [paper](https://sziami.cs.bme.hu/~geza/erdosszekeres61.pdf).
-- Duque, Fabila-Monroy, and Hidalgo-Toscano, “Point Sets with Small Integer Coordinates and with Small Convex Polygons,” arXiv:1602.03075v2 (2017-07-12), [paper](https://arxiv.org/abs/1602.03075v2), [source code cited by the paper](https://github.com/rfabila/PyDCG).
-- Dumitru, “Notes on the 33-point Erdős–Szekeres problem,” arXiv:2512.24061v1 (2025), [paper](https://arxiv.org/abs/2512.24061).
-- Schroeder, “Upper Bounds for Convex Heptagons and Octagons,” version 1 (2026-09-19), [paper and proof materials](https://michaelschroeder.ai/research/ErdosSzekeres/companion).
+The checked C6 sources leave a one-edge interval, 132–133, at `n=100`. The literature check is not exhaustive.
+
+## Programs and limits
+
+- `init_program.py` scans all possible edges in a fixed order. It adds an edge only if no simple five-edge path already joins its endpoints. The final graph is C6-free and saturated by monotonicity. It does not read comparison data.
+- `baseline.py` runs four fixed-seed randomized edge orders through the same greedy rule and keeps the smallest graph. It reads no human or reference witness.
+- `human.py` rebuilds the published 133-edge construction.
+- `reference.py` replays the frozen 133-edge construction.
+- `evaluator.py` uses the shared runner. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread.
+
+Run from the repository root:
+
+```sh
+.venv/bin/python -m pytest tasks/t035/test_task.py -q
+.venv/bin/python -m json.tool tasks/t035/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t035/data/bestknown.json > /dev/null
+```
+
+## 定义
+
+固定图有 100 个标记顶点 `0,...,99`。图是简单无向图，不含长度为 6 的简单环。对每个非边 `uv`，图中必须存在从 `u` 到 `v`、恰有 5 条边的简单路径。加入 `uv` 后会形成简单 C6。目标是最小化边数。
+
+检查器用访问顶点位掩码枚举简单 5 边路径。如果路径端点已有边，就发现一个 C6。每个非边的两个端点都必须出现在路径端点集合中。这样检查的路径有 6 个不同顶点；重复顶点的游走不能通过。
+
+## 已发表构造和当前界限
+
+Lan、Shi、Wang 和 Zhang 对 `n>=9` 证明
+
+`4n/3 - 2 <= sat(n,C6) <= 4n/3 + epsilon^2/2 - 5epsilon/6`，
+
+其中 `epsilon` 是 `n` 模 3 的余数。`n=100` 时 `epsilon=1`，所以整数边数在 132 和 133 之间。论文给出 133 边构造。该界限尚未确定精确值。
+
+论文在 `n=3t+1` 时的构造以 Figure 1(a) 的九点、12 边图 `H` 开始，再加 `t-3` 条 `a_i-b_i-c_i` 路径，并添加 `x_1a_i` 和 `x_2c_i`。最后在 `y_4` 接一个叶子。本配置 `t=33`，因此加 30 条路径和一个叶子。总边数为 `12 + 30*4 + 1 = 133`。
+
+九点核心图从 arXiv v3 PDF 的矢量图解码，并与第 2 节证明中的路径核对。顶点为 `x1,x2,y1,y2,y3,y4,a0,b0,c0`，12 条边在上方英文列出。`human.py` 按定理重建构造。`reference.py` 读取 `data/reference/` 中冻结的 JSON。精确验证确认 133 条边、无简单 C6，且 4817 条非边均有简单五边路径。
+
+上方英文列出了核查日期和来源。检查到的 C6 界限在 `n=100` 时仍相差一条边。任务状态为已通过 Sol 验收（2026-11-06）。

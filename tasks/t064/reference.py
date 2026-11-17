@@ -1,12 +1,13 @@
-"""Load the fixed 19-Steiner-point comparison witness."""
+"""Load the frozen reconstructed Lewko construction for T064."""
+
 import json
 import os
 from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T064-C01") != "T064-C01":
-        raise ValueError("unsupported T064 configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    path = Path(__file__).with_name("data") / "reference" / "ortho40_solution.json"
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T064-C01")
+    if chosen != "T064-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    path = Path(__file__).parent / "data" / "reference" / "lewko205_n42025.json"
     return json.loads(path.read_text(encoding="utf-8"))

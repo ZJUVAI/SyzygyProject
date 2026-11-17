@@ -1,97 +1,45 @@
-# T063: degree-100 Mahler measure
+# T063: 最大 3 项等差数列自由子集
 
 ## 中文
 
-### 数学目标与配置
+配置 T063-C01 固定全集为 `[1,212]`。构造子集 `A`，使 `|A|` 最大，并禁止存在 `a<b<c` 且 `a+c=2b` 的三项等差数列。目标为集合大小，单位为整数个数，方向为最大化。检查器用整数运算精确检查所有入选元素对可能形成的中项关系；候选程序声明的分数不参与验收。
 
-给定整数多项式
+此有限实例仍未完全解决。Ergezer 的论文及其后续公开代码记录给出同参数的 43 元素构造。论文指出 44 元素可行性仍未解决。当前代码记录显示历史 T1c 两个分块已有独立 DRAT 证明，T2 有 6,045/6,071 个分块得到无证明日志的求解器闭合；完整 T3 分块空间仍未获得完整认证。因此这些局部进展不能证明 `r_3(212)≤43`，当前已认证范围仍为 `43≤r_3(212)≤44`。论文 v1、当前仓库与 Zenodo v2 的状态分别记录在 `data/bestknown.json`。
 
-\[
-P(x)=a_0+a_1x+\cdots+a_{100}x^{100},
-\]
+当前维护版论文明确披露 Claude Sonnet 4.5、Claude Opus 4.6 与 Codex GPT-5 参与写作修改、代码生成与审查、实验规划、仓库脚手架和计算编排。但来源没有说明这些工具是否参与提出或搜索出这一个 43 元素集合。该具体构造的发现流程记为未披露，不作为冻结人类基线。人类基线按 Odlyzko–Stanley 1978 年的贪心序列 `S(1)` 重建。其元素是三进制展开只含 0 和 1 的非负整数。我们取五位数字并整体加一，得到：
 
-求一个**恰为 100 次**、本原、在 \(\mathbb Q[x]\) 上不可约且非分圆的多项式，使 Mahler 测度
+`A={1+Σ(i=0..4) ε_i 3^i : ε_i∈{0,1}}`。
 
-\[
-M(P)=|a_{100}|\prod_{P(z)=0}\max(1,|z|)
-\]
+该集合有 32 个不同元素，最大值为 122。逐位检查可得：相加不发生三进制进位；若 `x+z=2y`，每一位满足 `x_i+z_i=2y_i`，故 `x_i=y_i=z_i`，只可能是平凡等式。人类程序重建该公式；其输出也保存在 `data/reference/odlyzko_stanley_n212_32.json`，检查器另行精确核验其有限实例成绩 32。
 
-尽量小。系数不预先限制为互反、稀疏或单首项。此配置不声称已证明最优。
+初始程序返回 `{1}`。传统搜索从这个简单种子开始，固定随机种子打乱其余 211 个整数，并用预先生成的等差数列三元组增量检查，反复贪心加入可行元素。默认 48 次重启；可设置 `MATHBENCH_SEARCH_SECONDS` 做按时间截断的探索。该搜索不读取人类构造、公开见证或 `data/results.json`。
 
-唯一配置 `T063-C01` 固定次数 100。候选须提交从常数项到最高次项的 101 个整数系数，以及 100 个复平面有理圆盘。检查器精确核对系数本原性和不可约性。每个圆盘用 Rouché 定理认证恰含一个根，所有圆盘两两分离，故覆盖全部根。计算各根模长的有理上下界并相乘，返回 Mahler 测度区间的上端作为最小化目标。区间相对宽度不得超过 `1e-10`；浮点根只可用于生成候选圆心，不能作为正式分数。圆盘有理数不设精度上限，统一运行器对候选输出实施 16 MiB、4 GiB 和 60 秒验证限制。
+共享运行器默认给每次生成 300 秒、给验证 60 秒、4 GiB 内存和一个 CPU 线程。
 
-### 来源和公开纪录
-
-本题用系数的最大公约数定义本原。Mossinghoff 等人的文献把可写成 \(f(x^k)\)、\(k>1\) 的多项式排除在本原类之外。在本题规则下，Lehmer 多项式的 \(x\mapsto x^{10}\) 代换通过精确验证，测度约为 `1.176280818`。下列数值用于历史对照。[术语定义见论文第 1720 页](https://citeseerx.ist.psu.edu/document?doi=e1b6e654954366e5155f40237433cd11c60e039f&repid=rep1&type=pdf)
-
-Mossinghoff 的固定仓库提交 `7e3798516710370a758e16eb5de6bccbee98bb6a` 中，`BestByDegree_200.txt` 的恰 100 次一行给出报告值 `1.247365098370`、`v=8` 和 51 个互反系数。`data/source/mossinghoff_degree_100_row.json` 保存该原始行及仓库固定版本。`data/reference/mossinghoff_degree_100_certificate.json` 保存展开的多项式和 100 个有理根圆盘。当前精确复核的保守测度上界约为 `1.2473650983705`。
-
-Chervonyi、Gukov、Luong 的 arXiv:2610.30277v1（2026-10-21）报告：对 91 个已有文献数据匹配 85 个，仅在次数 178、188、190、202、242、250 报告严格改进；次数 100 不在改进列表中。论文介绍整体人机协作流程，但未把 100 次这一旧记录归因于该流程。来源没有证明次数 100 的最优性；论文也指出逐次数最优性证明仅覆盖到次数 54。此处把 Mossinghoff 项作为已复现的历史人类方法/公开对照，并披露其逐项搜索过程未详述。
-
-### 程序和运行
-
-- `check.py`：精确验证数据、不可约性、100 个根圆盘、根覆盖及 Mahler 测度区间。
-- `init_program.py`：独立简单起点 \(x^{100}-2\)。它用显式单位根近似建议圆心；有理圆盘仍须通过精确检查。
-- `baseline.py`：固定迭代枚举 Eisenstein 多项式 \(x^{100}-p\)，其中 \(p\) 为素数。该族中 Mahler 测度恰为 \(p\)，作为传统有限搜索基线。它不读取比较数据。
-- `evolution.py`：在同一族上作确定种子的常数项变异与精英选择。默认 60 代、4 次重启；可用 `MATHBENCH_EVOLUTION_ITERATIONS`、`MATHBENCH_RESTARTS` 调整，硬上限分别为 300、20。该简化搜索是任务内传统搜索演示，不是对称/稀疏系数空间的全域搜索。
-- `human.py`：从已固定的 Mossinghoff 见证数据复现同次数公开人类记录。
-- `reference.py`：固定复播相同公开记录，用于 SOTA 档案。
-
-五个入口均定义 `run_code()`，读取 `MATHBENCH_CONFIG_ID` 与 `MATHBENCH_SEED`。默认传统搜索使用固定迭代数；设 `MATHBENCH_SEARCH_SECONDS` 时由共享 `search_steps` 提供探索用时截断。评测器另按公共接口限制生成 300 秒、验证 60 秒、内存 4 GiB、一个线程。初始程序与搜索程序不加载 `data/reference/` 或 `data/source/`。
-
-### 复核方式
-
-运行：
-
-```sh
-.venv/bin/python -m pytest tasks/t063 -q
-.venv/bin/python -m json.tool tasks/t063/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/bestknown.json > /dev/null
-```
-
-测试验证起点和公开根证书，破坏系数、破坏根盘、重复根盘、bool/浮点/NaN 系数、边界次数、伪造分数不变性，以及工作进程异常和超时。独立关键量包括 100 个根圆盘、两两分离检查数 `4950`、精确不可约性、区间相对宽度与源文件哈希。基准仍需 Sol 独立复核。
+公开 43 构造保存在 `data/reference/`，只由 `reference.py` 读取。`data/results.json` 只保存本任务搜索输出。配置仍为“已通过 Sol 验收（2026-11-06）”。
 
 ## English
 
-### Definition and fixed configuration
+Configuration T063-C01 fixes the universe `[1, 212]`. Construct a subset `A` of maximum size with no triple `a < b < c` satisfying `a + c = 2b`. The scalar objective is `|A|`, measured in integers and maximized. The checker uses exact integer arithmetic and checks every possible midpoint pair among the selected elements. It ignores candidate score claims.
 
-For an integer polynomial \(P(x)=\sum_{k=0}^{100}a_kx^k\), minimize
+This finite instance remains open. Ergezer's paper and its later public code record a 43-element construction at this parameter. The paper leaves the feasibility of a 44-element set unresolved. The current code record says that independent DRAT proofs now close both historical T1c chunks. A solver portfolio closed 6,045 of 6,071 T2 chunks without proof logs. The full T3 cube space still lacks complete certification. These local results do not prove `r_3(212) <= 43`; the certified range remains `43 <= r_3(212) <= 44`. The paper v1, current repository, and Zenodo v2 snapshots are recorded separately in `data/bestknown.json`.
 
-\[
-M(P)=|a_{100}|\prod_{P(z)=0}\max(1,|z|)
-\]
+The current maintained paper discloses the use of Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 for writing and revision, code generation and review, experiment planning, repository scaffolding, and computational orchestration. It does not state whether these tools proposed or searched for this specific 43-element set. The witness-specific discovery path is recorded as undisclosed. The public construction is not the frozen human baseline. The human baseline rebuilds the Odlyzko–Stanley 1978 greedy sequence `S(1)`, whose terms are the nonnegative integers with ternary digits 0 and 1. We take five digits and shift by one:
 
-over primitive, irreducible, non-cyclotomic polynomials of **exact degree 100**. Coefficients are not restricted to reciprocal or sparse forms, and need not be monic. This task does not claim an optimality proof.
+`A={1+Σ(i=0..4) ε_i 3^i : ε_i∈{0,1}}`.
 
-The only configuration is `T063-C01`, degree 100. A candidate contains 101 integer coefficients in ascending order and 100 rational complex disks. The checker proves primitiveness and irreducibility exactly. It certifies one root in each disk with Rouché's theorem, checks that all disks are pairwise disjoint, and bounds the complete root product with rational arithmetic. It returns the upper endpoint as the minimization objective. The relative width of the certified interval must be at most `1e-10`. Floating-point roots may propose disk centers, but they never determine the score. Rational disk precision has no fixed ceiling; the common runner applies the 16-MiB output, 4-GiB memory, and 60-second verification limits.
+This set has 32 distinct elements and maximum 122. No ternary carries occur in a sum of two such numbers. If `x + z = 2y`, each digit satisfies `x_i + z_i = 2y_i`, so `x_i = y_i = z_i`; only a trivial progression is possible. `human.py` rebuilds the formula. Its output is also saved in `data/reference/odlyzko_stanley_n212_32.json`, and the checker exactly verifies the finite score of 32.
 
-### Sources and public result
+The initial program returns `{1}`. The traditional search starts from this simple seed, shuffles the other 211 integers with a fixed seed, and greedily inserts points after an incremental check against precomputed AP triples. Its default budget is 48 restarts. `MATHBENCH_SEARCH_SECONDS` enables a wall-clock cutoff. The search does not read the human construction, public witness, or `data/results.json`.
 
-This task defines primitiveness by the greatest common divisor of the coefficients. Mossinghoff and coauthors exclude polynomials of the form \(f(x^k)\) for \(k>1\) from their primitive class. Substitution of \(x^{10}\) into Lehmer's polynomial passes the task's exact checks and gives a measure of about `1.176280818`. The values below are historical comparisons. [Definition on page 1720](https://citeseerx.ist.psu.edu/document?doi=e1b6e654954366e5155f40237433cd11c60e039f&repid=rep1&type=pdf)
+The shared runner allows 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread by default.
 
-The degree-100 row in `BestByDegree_200.txt` at Mossinghoff's pinned repository commit `7e3798516710370a758e16eb5de6bccbee98bb6a` reports `1.247365098370`, `v=8`, and 51 reciprocal coefficients. The source row and pin are recorded in `data/source/mossinghoff_degree_100_row.json`. The expanded polynomial and its 100 rational root disks are in `data/reference/mossinghoff_degree_100_certificate.json`. The current exact certificate gives a conservative upper bound near `1.2473650983705`.
+The public 43-set is stored under `data/reference/` and is read only by `reference.py`. The `data/results.json` directory stores this task's own search output. The configuration is accepted by Sol on 2026-11-06.
 
-Chervonyi, Gukov, and Luong, arXiv:2610.30277v1 (2026-10-21), report matching 85 of 91 published literature values and strict improvements at degrees 178, 188, 190, 202, 242, and 250. Degree 100 is not among the listed improvements. Their paper describes project-level human-AI work but does not attribute this older degree-100 entry to that workflow. The degree-100 minimum remains open; the paper says degree-wise optimality has only been proved through degree 54. This task records the Mossinghoff entry as a reproduced historical human/public result and states that the source does not give a detailed per-entry search method.
+## Sources
 
-### Programs and budget
-
-- `check.py` validates integer data, irreducibility, all root disks, root coverage, and a rational Mahler interval.
-- `init_program.py` starts from \(x^{100}-2\). Explicit root approximations only propose centers; exact disk checks decide validity.
-- `baseline.py` scans a fixed number of Eisenstein polynomials \(x^{100}-p\), with prime \(p\). In this family the Mahler measure is exactly \(p\). It does not read comparison data.
-- `evolution.py` uses seeded coefficient mutation and elitist selection in the same family. Defaults are 60 generations and 4 restarts. `MATHBENCH_EVOLUTION_ITERATIONS` and `MATHBENCH_RESTARTS` set bounded alternatives (maximum 300 and 20). This is a simple traditional-search baseline, not a global search over all degree-100 polynomials.
-- `human.py` rebuilds the pinned Mossinghoff witness.
-- `reference.py` replays the same public witness for the SOTA record.
-
-All five entries define `run_code()` and read `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED`. Search defaults use fixed iteration counts. `MATHBENCH_SEARCH_SECONDS` enables the shared exploration cutoff. The evaluator uses the common 300-second generation, 60-second verification, 4-GiB memory, and one-thread limits. The seed and search programs do not load comparison assets from `data/`.
-
-### Validation
-
-Run:
-
-```sh
-.venv/bin/python -m pytest tasks/t063 -q
-.venv/bin/python -m json.tool tasks/t063/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/bestknown.json > /dev/null
-```
-
-Tests cover valid and damaged polynomials, damaged and duplicate disks, bool/float/NaN coefficients, degree boundaries, ignored claimed scores, and worker errors and timeouts. Independent quantities include all 100 certified disks, 4,950 pairwise separation checks, exact irreducibility, interval width, and the pinned source hash. Sol review is pending.
+- Odlyzko and Stanley, “Some Curious Sequences Constructed with the Greedy Algorithm” (January 1978), [author-hosted note](https://www-users.cse.umn.edu/~odlyzko/unpublished/greedy.sequence.pdf). Remark 1 identifies the seed-1 sequence with numbers whose ternary expansions contain no 2; this gives the 0/1 digit formula used here.
+- Mehmet Ergezer, “Witness-split + window-cardinality refinement for `r_3(N)`” (arXiv:2606.04016v1, 2026-05-31 submission; HTML body date 2026-08-24), [paper](https://arxiv.org/abs/2606.04016), [source snapshot](https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3). The exact arXiv source archive and witness file hashes are recorded in `data/bestknown.json`.
+- Maintained code snapshot, [repository README at main](https://github.com/memoatwit/erdos_1194/blob/main/erdos_r3/README.md), current commit `cfd76934bff8cb5d5016e9f599063d698a09d47e`, tag `mpc-submission-v1.4` at `4c5811007a286c0b10c9b8bf4a91f79653847b55`.
+- The current paper's [generative AI declaration](https://github.com/memoatwit/erdos_1194/blob/cfd76934bff8cb5d5016e9f599063d698a09d47e/erdos_r3/paper/paper.tex#L211-L220) describes broad assistance but does not specify the discovery path for this witness.
+- Ergezer, [Zenodo v2 artifact record](https://doi.org/10.5281/zenodo.21413746), modified 2026-07-18. The record says the upper bound remains open and the full cube cover is not certificate-checked.

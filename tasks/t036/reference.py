@@ -1,6 +1,12 @@
-"""Fixed best reproduced comparison program: the verified convex construction."""
-from tasks.t036.human import run_code as human_run_code
+"""Return the frozen LPS H* reconstruction stored in task-local comparison data."""
+
+import json
+import os
+from pathlib import Path
 
 
 def run_code():
-    return human_run_code()
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T036-C01") != "T036-C01":
+        raise ValueError("unsupported T036 configuration")
+    path = Path(__file__).resolve().parent / "data" / "reference" / "hstar_50_700.json"
+    return json.loads(path.read_text(encoding="utf-8"))

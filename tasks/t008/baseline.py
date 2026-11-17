@@ -1,38 +1,57 @@
-from mathbench.search import search_deadline, search_steps
-"""Greedy set cover on sampled blocks, with a guaranteed seed fallback."""
+"""Finite scan of uniform guillotine grids with one coprime refinement."""
+
 import os
-import random
 import time
-from itertools import combinations
-from tasks.t008.init_program import run_code as seed_cover
+
+from mathbench.search import search_steps
+from tasks.t008.construction import OUTER_SIDE
+
+
+def _candidate(blocks_per_side):
+    side = OUTER_SIDE // blocks_per_side
+    squares = [
+        [x * side, y * side, side]
+        for y in range(blocks_per_side)
+        for x in range(blocks_per_side)
+    ]
+    # Replace one block by a (side-1) square and two unit-width strips.
+    squares.pop(0)
+    squares.append([0, 0, side - 1])
+    squares.extend([[x, side - 1, 1] for x in range(side)])
+    squares.extend([[side - 1, y, 1] for y in range(side - 1)])
+    return {"squares": squares}
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T008-C01")
-    if config_id != "T008-C01":
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T008-C01") != "T008-C01":
         raise ValueError("unsupported configuration")
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    try:
-        budget = min(2.0, max(0.01, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    except ValueError:
-        budget = 2.0
-    deadline = search_deadline()
-    blocks = [tuple(b) for b in seed_cover()["blocks"]]
-    index = {q: i for i, q in enumerate(combinations(range(24), 4))}
-    pool = set()
-    for _ in search_steps(500):
-        pool.add(tuple(sorted(rng.sample(range(24), 14))))
-    # Add the seed blocks to ensure the candidate pool covers every four-set.
-    pool = sorted(pool | set(blocks))
-    masks = [sum(1 << index[q] for q in combinations(b, 4)) for b in pool]
-    remaining = (1 << 10626) - 1
-    chosen = []
-    while remaining and time.monotonic() < deadline:
-        i = max(range(len(pool)), key=lambda j: (masks[j] & remaining).bit_count())
-        if not (masks[i] & remaining):
-            break
-        chosen.append(pool[i])
-        remaining &= ~masks[i]
-    if not remaining and len(chosen) < len(blocks):
-        blocks = chosen
-    return {"blocks": [list(b) for b in blocks]}
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    del seed  # This exhaustive finite scan has no random choices.
+    divisors = [q for q in range(1, OUTER_SIDE) if OUTER_SIDE % q == 0 and OUTER_SIDE // q >= 2]
+    start = time.monotonic()
+    best = _candidate(divisors[0])
+    checked = 0
+    for index in search_steps(len(divisors)):
+        q = divisors[index]
+        candidate = _candidate(q)
+        if len(candidate["squares"]) < len(best["squares"]):
+            best = candidate
+        checked += 1
+    best["search_metadata"] = {
+        "algorithm": "exhaustive scan of equal-block guillotine grids; replace one block by a coprime Euclidean strip dissection",
+        "seed": 0,
+        "candidate_block_counts": divisors,
+        "candidates_checked": checked,
+        "best_size": len(best["squares"]),
+        "generation_seconds": time.monotonic() - start,
+        "budget": {
+            "mode": "fixed exhaustive candidate count unless MATHBENCH_SEARCH_SECONDS is set",
+            "runner_generation_limit_seconds": 300,
+        },
+    }
+    return best
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

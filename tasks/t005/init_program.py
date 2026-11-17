@@ -1,4 +1,17 @@
-"""Deterministic valid rational starting program for the selected configuration."""
+"""Self-contained, deliberately simple 2-by-2 unit-triangle packing."""
+import os
+
+
+# EVOLVE-BLOCK-START
 def run_code():
-    n = 11
-    return {"points": [[f"{i}/{n-1}", f"{i*i}/{(n-1)**2}"] for i in range(n)]}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T005-C01")
+    if config_id != "T005-C01":
+        raise ValueError(f"unsupported configuration: {config_id}")
+    return {
+        "side": ["2", "0"],
+        "triangles": [
+            {"anchor": [[str(x), "0"], [str(y), "0"]], "direction": ["1", "0"]}
+            for x, y in ((0, 0), (1, 0), (0, 1), (1, 1))
+        ],
+    }
+# EVOLVE-BLOCK-END

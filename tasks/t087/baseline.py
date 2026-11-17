@@ -1,56 +1,74 @@
-"""Fixed-step random-restart-free local search using fast numeric feedback."""
-
+from mathbench.search import search_deadline, search_steps
+"""Seeded greedy construction and bounded interval-shrinking search."""
 import os
 import random
-
-import numpy as np
-
-N = 480
-D = 13.0 / 4800.0
-END_K = 369
-END_PART = 3.0 / 13.0
+import time
 
 
-def _score(heights):
-    array = np.asarray(heights, dtype=np.float64)
-    sums = np.correlate(array, array, mode="full")[N - 1:]
-    value_at_one = (1.0 - END_PART) * sums[END_K] + END_PART * sums[END_K + 1]
-    return min(float(np.min(sums[:END_K + 1])), float(value_at_one)) / (D * float(np.sum(array)) ** 2)
+def _primes(n):
+    sieve = bytearray(b"\x01") * (n + 1)
+    sieve[:2] = b"\x00\x00"
+    for i in range(2, int(n**0.5) + 1):
+        if sieve[i]:
+            sieve[i * i : n + 1 : i] = b"\x00" * (((n - i * i) // i) + 1)
+    return [p for p, flag in enumerate(sieve) if flag]
 
 
-def run_search(seed, steps=400, start=None):
-    rng = random.Random(seed)
-    current = list(start) if start is not None else [1] * N
-    current_score = _score(current)
-    best, best_score = current[:], current_score
-    accepted = 0
-    for iteration in range(steps):
-        trial = current[:]
-        left = rng.randrange(N)
-        width = rng.randint(1, 14)
-        for j in range(left, min(N, left + width)):
-            if rng.random() < 0.7:
-                trial[j] = max(0, min(120, trial[j] + rng.choice((-3, -2, -1, 1, 2, 3))))
-            else:
-                trial[j] = rng.randrange(0, 13)
-        if not any(trial):
-            continue
-        score = _score(trial)
-        if score > best_score:
-            best, best_score = trial[:], score
-        temperature = 0.0015 * (1.0 - iteration / max(1, steps))
-        if score >= current_score or rng.random() < temperature:
-            current, current_score = trial, score
-            accepted += 1
-    return best, {"search_iterations": steps, "accepted_moves": accepted,
-                  "numeric_search_score": best_score}
+def _admissible(values, primes):
+    for p in primes:
+        if len({x % p for x in values}) == p:
+            return False
+    return True
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T087-C01")
-    if config_id != "T087-C01":
-        raise ValueError(f"unknown T087 configuration: {config_id}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    heights, info = run_search(seed)
-    return {"heights": heights, "search_method": "seeded block mutation with exact final checking",
-            "random_seed": seed, **info}
+    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T087-C01")
+    if cid != "T087-C01":
+        raise ValueError(f"unsupported T087 configuration: {cid}")
+    k = 343
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    primes = _primes(k)
+    values = []
+    occupied = {p: set() for p in primes}
+    # Preserve the original accepted C01 greedy start.
+    for x in range(200000):
+        if all(len(occupied[p]) < p - 1 or x % p in occupied[p] for p in primes):
+            values.append(x)
+            for p in primes: occupied[p].add(x % p)
+            if len(values) == k: break
+    if len(values) != k: raise RuntimeError("greedy construction did not find k entries")
+    # Restarted random interval search gives actual objective improvements when
+    # it finds a feasible replacement. All checks cover the full prime domain.
+    budget = max(0.0, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2")))
+    deadline = search_deadline()
+    best = values[:]
+    best_diameter = max(best) - min(best)
+    for _attempt in search_steps(20):
+        lo, hi = min(best), max(best)
+        width = best_diameter
+        # Local coordinate descent can change the objective in one accepted
+        # step: propose a new integer near either current endpoint, then keep
+        # it only when the entire finite prime set remains admissible.
+        candidate = best[:]
+        index = rng.randrange(k)
+        candidate[index] = rng.randrange(lo, hi + 1)
+        if len(set(candidate)) == k and _admissible(candidate, primes):
+            score = max(candidate) - min(candidate)
+            if score < best_diameter:
+                best, best_diameter = candidate, score
+                continue
+        left = rng.randrange(lo, hi + 1)
+        right = min(hi, left + rng.randrange(max(1, width // 2), width + 1))
+        pool = [x for x in best if left <= x <= right]
+        pool.extend(rng.randrange(left, right + 1) for _ in range(k))
+        candidate = []
+        for x in sorted(set(pool)):
+            if _admissible(candidate + [x], primes):
+                candidate.append(x)
+                if len(candidate) == k:
+                    break
+        if len(candidate) == k:
+            score = max(candidate) - min(candidate)
+            if score < best_diameter:
+                best, best_diameter = candidate, score
+    return {"tuple": best}

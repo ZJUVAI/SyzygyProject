@@ -1,27 +1,14 @@
-"""Rebuild the Station's published p=31 line witnesses from its formula."""
+"""Replay the pinned public exact-rational 480-step AI certificate."""
 
-from tasks.t079.check import CANONICAL_DIRECTIONS, P
+import json
+import os
+from pathlib import Path
 
 
 def run_code():
-    inv = lambda x: pow(x % P, -1, P)
-    lines = []
-    for direction in CANONICAL_DIRECTIONS:
-        a, b, c = direction
-        if a:
-            # Rescale (a,b,c) to the source chart (1,A,B). The line
-            # (t, A*t+A^2, B*t+B^2) lies in the published quadratic set.
-            A, B = b * inv(a) % P, c * inv(a) % P
-            origin = (0, A * A % P, B * B % P)
-        elif b:
-            # Match the remaining directions to the published boundary lines
-            # (0,t,C*t+C/(C-1)), the diagonal, and the vertical line.
-            C = c * inv(b) % P
-            if C == 1:
-                origin = (0, 0, 0)
-            else:
-                origin = (0, 0, C * inv(C - 1) % P)
-        else:
-            origin = (0, 0, 0)
-        lines.append({"direction": list(direction), "origin": list(origin)})
-    return {"lines": lines}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T079-C01")
+    if config_id != "T079-C01":
+        raise ValueError(f"unknown T079 configuration: {config_id}")
+    path = Path(__file__).parent / "data" / "source" / "certificate_n480.json"
+    certificate = json.loads(path.read_text(encoding="utf-8"))
+    return {"heights": certificate["heights_over_denom"]}

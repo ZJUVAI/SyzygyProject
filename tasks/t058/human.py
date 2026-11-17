@@ -1,21 +1,8 @@
-"""Rebuild the seven-round resolvable transversal design RTD(5, 7)."""
-
-import os
-
-
-def build_schedule():
-    # Player (a,b) is encoded as 7*a+b, with a in F_7 and b in F_7.
-    rounds = []
-    for t in range(7):
-        groups = []
-        for c in range(7):
-            groups.append([7 * a + ((t * a + c) % 7) for a in range(5)])
-        rounds.append(groups)
-    return rounds
+"""Cube20 Golomb rulers, reconstructed from its public ruler archive."""
+_C01 = {"marks": [0, 7, 11, 31, 43, 53, 100, 121, 144, 150, 202, 220,
+                   229, 268, 284, 285, 356, 371, 390, 416, 430, 465,
+                   467, 528, 582, 590, 595, 620, 623]}
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T058-C01")
-    if chosen != "T058-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    return {"rounds": build_schedule(), "construction": {"method": "RTD(5,7) over F_7"}}
+    return {"marks": list(_C01["marks"])}

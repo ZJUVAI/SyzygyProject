@@ -4,7 +4,7 @@ import json
 
 
 def audit(solution):
-    raw=json.loads((ROOT/'tasks/t099/data/source/11P1.json').read_text())
+    raw=json.loads((ROOT/'tasks/t010/data/source/11P1.json').read_text())
     shape=[tuple(v) for v in raw['cells']]
     expected={(x,0) for x in range(5)}|{(x,y) for x in range(3) for y in (1,2)}
     assert len(shape)==11 and set(shape)==expected

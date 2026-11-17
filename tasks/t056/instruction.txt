@@ -1,9 +1,13 @@
-# Task: improve the ta41 job-shop schedule
+Build as many pairwise orthogonal Latin squares of order 12 as you can.
 
-Minimize the makespan for Taillard's fixed `ta41` instance (30 jobs, 20 machines). This is a general job-shop problem. Each job follows its own machine route; machines do not share one global job permutation.
+Return a JSON object with a `squares` list. Each square must be a 12 by 12 list
+of integers from 0 through 11. Every row and column must contain each symbol
+once. For every two different squares, the 144 ordered symbol pairs must each
+occur once. The evaluator reads and checks the squares. It ignores any score
+that your program reports.
 
-The exact public input is in `data/source/ta41_instance.json`. It contains `operations[job][operation] = [zero_based_machine, positive_integer_duration]`. The original official source snapshot is `data/source/tai30_20.txt`.
-
-Return JSON with `machine_orders`: a list of 20 rows. Each row must be a permutation of job indices `0` through `29`, giving the processing order on that machine. The checker enforces the job routes, detects cycles in the combined precedence graph, and recomputes makespan exactly.
-
-Start from the simple construction in `init_program.py`. Do not read `human.py`, `reference.py`, `data/reference/`, or public record schedules. Preserve every job operation and machine capacity constraint. Report a construction; the evaluator ignores any claimed score.
+Implement `run_code()` with no arguments. Read the selected configuration from
+`MATHBENCH_CONFIG_ID` and the random seed from `MATHBENCH_SEED`. Use CPU only,
+one thread, at most 4 GiB of memory, and no more than 300 seconds to generate
+the result. The separate exact verification step has a 60 second limit. Do not
+read human or reference witness files.

@@ -1,44 +1,31 @@
-# T042 implementation evidence
+# T042 implementation notes
 
 Status: accepted by Sol on 2026-11-06.
 
-## Definition and source status
+## Source and configuration review
 
-- T042-C01 fixes `[1,212]`, maximizes the number of selected integers, and forbids distinct `a < b < c` with `a + c = 2b`.
-- The reproduced human-method baseline has 32 elements and uses the ternary-digit formula for Odlyzko and Stanley's 1978 greedy sequence S(1). This is a feasible construction, not an optimum claim.
-- The public 43-element set is kept under `data/reference/`, separate from `data/results.json`. Its source says it was found for `[1,211]`; the saved set lies in `[1,211]` and is therefore also a valid witness at `[1,212]`. The raw source witness file hash is recorded and tested.
-- The paper v1 leaves the 44-set upper-bound question open. The current linked repository reports DRAT closure of its two historical T1c chunks and partial solver closure of T2. It also says the full T3 cube space remains uncertified. The verified range is still `43 <= r_3(212) <= 44`.
-- The current maintained paper discloses Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 use for writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration. It does not state whether AI proposed or searched for the 43-set. The witness-specific discovery path is recorded as undisclosed. It is not called a human construction.
+- The selected configuration is Gset G70: 10,000 vertices, 9,999 undirected edges, all with weight +1.
+- The Stanford source is retained once as deterministic gzip at `data/source/G70.gz` (compressed SHA-256 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`). Decompression reproduces the byte-exact 117,744-byte original (SHA-256 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`). The duplicate normalized `data/instance.json` was removed; checker and search readers parse the compressed source.
+- The normalized zero-based edge-list SHA-256 is `76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085`. The checker verifies this pinned hash when it loads the graph.
+- Goudet, Goëffon, and Hao report 9,594 on the G70 test instance and 9,595 as a calibration value in their 2024 LPI paper. The paper-specific assignment was not obtained.
+- Cosm v4 (revised 2026-10-11) reports a heuristic G70 score of 9,595. Its abstract distinguishes this as best-known from the certified optima it reports for G81, G72, and G77. AI-assistance disclosure is unknown.
+- The LPI paper reports 9,594 on its G70 test instance and 9,595 as a calibration value. A 2019 coherent-Ising-machine paper reports numerical SDP value 9,683 for G70. This task did not independently certify it as an upper bound; the 88-point difference is not a certified gap.
+- Qian and Pan's arXiv v5 (revised 2021) relaxation paper reports upper bounds and known best values on large UBPP instances. The 2026 result table does not provide a G70 upper bound or proof. No checked source proves G70 optimal.
+- The reproduced traditional baseline uses a single-vertex FLIP neighborhood from published Max-Cut local search. It is a task-local implementation, not a reproduction of the full BLS algorithm or its reported G70 result.
 
-## Programs and data
+## Reproduction and validation
 
-- `check.py` validates the fixed configuration, integer types, range, duplicates, and every selected pair that could define an AP midpoint. It recomputes `|A|` and ignores declared scores.
-- `init_program.py` is self-contained and returns `{1}`.
-- `baseline.py` runs seeded randomized greedy insertion with exact precomputed AP incidence. It uses 48 fixed restarts by default and reads no comparison witness. `MATHBENCH_SEARCH_SECONDS` enables a machine-dependent exploration cutoff.
-- `human.py` reconstructs the 32-element Odlyzko-Stanley digit construction.
-- `reference.py` reads the pinned public 43-element witness from `data/reference/`.
-- `evolution.py` exposes `run_code()` through the task's traditional search baseline. `evaluator.py` provides the shared evaluation adapter.
-- `data/results.json` stores the seed-0 baseline output, exact checker result, replay command, environment, budget, and output hash. The run returned 35 elements. No public or human comparison witness is stored there.
+- Human-method baseline: fixed seed 0, four starts, at most 10,000 steepest improving flips per start; actual flips were 2,163, 2,226, 2,227, and 2,158 (8,774 total); checker result 8,616. The saved witness records these counts.
+- Cold start: 10,000 labels on side 0; checker result 0.
+- Checker reads the pinned 9,999 edges and sums integer weights exactly. It ignores candidate score fields and supplied graph edges.
+- Test command: `.venv/bin/python -m pytest tasks/t042/test_task.py -q`.
+- Test result: 14 passed.
+- Direct entry-point smoke run with `MATHBENCH_SEARCH_STEPS=1`: init 0, baseline 8,888, evolution 8,595, human 8,616, reference 8,616. The human default seed result matches frozen H=8,616.
+- Standalone cold-start export was run with Python isolated mode; it returned 10,000 valid labels without importing task modules.
+- The shared evaluator cannot load T042 until the main reviewer temporarily registers the task. The task-local checker and all four `run_code()` entries can be exercised directly.
 
-## Verification commands and results
+## Limitations
 
-Run from the repository root:
-
-```sh
-.venv/bin/python -m pytest tasks/t042/test_task.py -q
-.venv/bin/python -m json.tool tasks/t042/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t042/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t042/data/results.json > /dev/null
-```
-
-The task tests passed: 7 tests. They cover the public 43-set and source-file hash, an independent AP scan, the 32-element Odlyzko-Stanley formula and its archived hash, the simple seed, an empty set and endpoint case, forbidden progressions, duplicate input, bool/float/NaN/infinity, range errors, fixed parameters, forged scores, all five `run_code()` entries, seeded search metadata, and shared-runner candidate errors and timeout reporting.
-
-The saved seed-0 result was also replayed through `evaluate_candidate` with strict checking. It returned objective 35, exact status, 2.13 seconds generation, 0.80 seconds verification, Python 3.13.12 on Linux, and the default 300-second/60-second/4-GiB/one-thread policy. The task ID was added only to the local in-process registry tuple for this check; no shared registry file was changed.
-
-The 43-set checker uses integer arithmetic only. For each selected pair `a < b`, it checks whether `2b-a` is selected. This covers every possible nontrivial three-term progression exactly. A separate test scans candidate triples by an independent loop order.
-
-## Limits and review points
-
-- This implementation independently verifies a lower-bound witness. It does not verify the large solver certificate collection or prove the upper bound at N=212.
-- The current maintained paper discloses broad AI collaboration, but not whether AI proposed or searched for the 43-set.
-- Sol must independently replay all five program entries, check at least one valid and one deliberately broken witness, recompute a key quantity, and confirm a forged score does not change the result before acceptance.
+- The reported 9,595 value has no witness replayed here. The external comparison witness is in `data/human_g70_1flip.json`; `data/results.json` is reserved for own-search results. The saved local FLIP witness scores 8,616 and is the frozen human baseline.
+- The G1 configuration was removed after a 2026 paper reported a Gurobi value matching its listed known optimum. G70 is selected because the checked literature reports 9,595 as a heuristic lower bound and no certificate was found.
+- The reviewed-source search does not prove that no G70 certificate exists elsewhere.

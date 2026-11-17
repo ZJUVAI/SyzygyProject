@@ -1,97 +1,171 @@
-"""Exact peaceable-queens feasibility checker for T082."""
+"""Exact sphere-moment checker for degree-20 real spherical harmonics."""
+from fractions import Fraction
+from itertools import product
 
-from collections.abc import Mapping
-
-
-CONFIG_ID = "T082-C01"
-BOARD_SIZE = 30
-MAX_ARMY = BOARD_SIZE * BOARD_SIZE // 4
-PARAMETERS = {
-    "board_size": 30,
-    "queen_movement": "standard row, column, and diagonal",
-    "equal_armies": True,
-    "same_color_attacks_allowed": True,
-}
+DEGREE = 20
+PARAMETERS = {"degree": 20, "domain": "real spherical harmonics on S^2", "coefficient_domain": "rational dense subspace", "objective": "normalized L4/L2 ratio"}
+EXPONENTS = [(a, b, DEGREE - a - b) for a in range(DEGREE, -1, -1) for b in range(DEGREE - a, -1, -1)]
+EXPONENT_INDEX = {exponent: i for i, exponent in enumerate(EXPONENTS)}
 
 
-def _check_config(config):
-    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
-        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
-    if config.get("parameters") != PARAMETERS:
-        raise ValueError("configuration must fix the 30x30 peaceable-queens model")
+def _integer_text(text):
+    if not isinstance(text, str) or not text:
+        raise ValueError("invalid integer text")
+    sign = 1
+    if text[0] in "+-":
+        if text[0] == "-":
+            sign = -1
+        text = text[1:]
+    if not text or not text.isascii() or not text.isdigit():
+        raise ValueError("invalid integer text")
+    first = len(text) % 9 or 9
+    value = int(text[:first])
+    for start in range(first, len(text), 9):
+        value = value * 10**9 + int(text[start:start + 9])
+    return sign * value
 
 
-def _read_army(solution, name):
-    raw = solution.get(name)
-    if not isinstance(raw, (list, tuple)):
-        raise ValueError(f"{name} must be a list of [row,column] pairs")
-    army = []
-    seen = set()
-    for index, square in enumerate(raw):
-        if not isinstance(square, (list, tuple)) or len(square) != 2:
-            raise ValueError(f"{name}[{index}] must contain exactly two coordinates")
-        row, column = square
-        if type(row) is not int or type(column) is not int:
-            raise ValueError(f"{name}[{index}] coordinates must be integers; bool is invalid")
-        if not (0 <= row < BOARD_SIZE and 0 <= column < BOARD_SIZE):
-            raise ValueError(f"{name}[{index}] lies outside the 30x30 board")
-        if (row, column) in seen:
-            raise ValueError(f"{name} contains a duplicate square")
-        seen.add((row, column))
-        army.append((row, column))
-    return army
+def _rational(value):
+    if type(value) is int:
+        return Fraction(value)
+    if isinstance(value, bool) or not isinstance(value, str) or value.count("/") > 1:
+        raise ValueError("coefficients must be rational integer strings or integers")
+    if "/" not in value:
+        return Fraction(_integer_text(value))
+    numerator, denominator = value.split("/")
+    den = _integer_text(denominator)
+    if den == 0:
+        raise ValueError("rational denominator cannot be zero")
+    return Fraction(_integer_text(numerator), den)
+
+
+def _monomial_exponents(total_degree):
+    return [(a, b, total_degree - a - b)
+            for a in range(total_degree, -1, -1)
+            for b in range(total_degree - a, -1, -1)]
+
+
+def _harmonic_laplacian(coefficients):
+    laplacian = {}
+    for (a, b, c), value in zip(EXPONENTS, coefficients):
+        if a >= 2:
+            key = (a - 2, b, c)
+            laplacian[key] = laplacian.get(key, Fraction(0)) + value * a * (a - 1)
+        if b >= 2:
+            key = (a, b - 2, c)
+            laplacian[key] = laplacian.get(key, Fraction(0)) + value * b * (b - 1)
+        if c >= 2:
+            key = (a, b, c - 2)
+            laplacian[key] = laplacian.get(key, Fraction(0)) + value * c * (c - 1)
+    return {key: value for key, value in laplacian.items() if value}
+
+
+def _multiply(left, right):
+    out = {}
+    for (a, b, c), x in left.items():
+        for (d, e, f), y in right.items():
+            key = (a + d, b + e, c + f)
+            out[key] = out.get(key, Fraction(0)) + x * y
+    return {key: value for key, value in out.items() if value}
+
+
+def _double_factorial(n):
+    result = 1
+    while n > 1:
+        result *= n
+        n -= 2
+    return result
+
+
+def _sphere_moment(exponent):
+    a, b, c = exponent
+    if (a | b | c) & 1:
+        return Fraction(0)
+    p, q, r = a // 2, b // 2, c // 2
+    numerator = _double_factorial(2 * p - 1) * _double_factorial(2 * q - 1) * _double_factorial(2 * r - 1)
+    denominator = _double_factorial(a + b + c + 1)
+    return Fraction(numerator, denominator)
+
+
+def _integrate_unit_sphere(poly):
+    return sum((coefficient * _sphere_moment(exponent)
+                for exponent, coefficient in poly.items()), Fraction(0))
+
+
+def _integer_output(value):
+    if value == 0:
+        return "0"
+    sign = "-" if value < 0 else ""
+    value = abs(value)
+    chunks = []
+    while value:
+        value, part = divmod(value, 10**9)
+        chunks.append(part)
+    return sign + str(chunks[-1]) + "".join(f"{part:09d}" for part in reversed(chunks[:-1]))
+
+
+def _fraction_text(value):
+    numerator = _integer_output(value.numerator)
+    return numerator if value.denominator == 1 else f"{numerator}/{_integer_output(value.denominator)}"
+
+
+def _fourth_root_bounds(value, scale=10**18):
+    if value < 0:
+        raise ValueError("fourth-root argument must be nonnegative")
+    numerator = value.numerator * scale**4
+    denominator = value.denominator
+    q = __import__("math").isqrt(__import__("math").isqrt(numerator // denominator))
+    while (q + 1) ** 4 * denominator <= numerator:
+        q += 1
+    while q**4 * denominator > numerator:
+        q -= 1
+    lower = Fraction(q, scale)
+    upper = lower if q**4 * denominator == numerator else Fraction(q + 1, scale)
+    return lower, upper
 
 
 def validate(solution, config, strict=False):
-    _check_config(config)
-    if not isinstance(solution, Mapping):
-        raise ValueError("solution must be an object")
-    white = _read_army(solution, "white")
-    black = _read_army(solution, "black")
-    if len(white) != len(black):
-        raise ValueError("white and black armies must have equal sizes")
-    army_size = len(white)
-    if army_size > MAX_ARMY:
-        raise ValueError("army size exceeds the proven 225 upper bound")
-    white_squares = set(white)
-    black_squares = set(black)
-    if white_squares & black_squares:
-        raise ValueError("opposite colors cannot occupy the same square")
-
-    attacks = 0
-    for wr, wc in white:
-        for br, bc in black:
-            if wr == br or wc == bc or abs(wr - br) == abs(wc - bc):
-                attacks += 1
-    if attacks:
-        raise ValueError("white and black queens must not attack each other")
-
-    occupied_white_rows = len({row for row, _ in white})
-    occupied_black_rows = len({row for row, _ in black})
-    occupied_white_columns = len({column for _, column in white})
-    occupied_black_columns = len({column for _, column in black})
+    if (not isinstance(config, dict) or config.get("id") != "T082-C01"
+            or config.get("direction") != "maximize"
+            or not isinstance(config.get("parameters"), dict)
+            or config["parameters"] != PARAMETERS
+            or any(type(config["parameters"].get(k)) is not type(v) for k, v in PARAMETERS.items())):
+        raise ValueError("unsupported configuration or parameters")
+    if not isinstance(solution, dict) or not isinstance(solution.get("coefficients"), list):
+        raise ValueError("solution must contain a coefficient list")
+    raw = solution["coefficients"]
+    if len(raw) != len(EXPONENTS):
+        raise ValueError("a degree-20 homogeneous polynomial requires 231 coefficients")
+    coefficients = [_rational(value) for value in raw]
+    if not any(coefficients):
+        raise ValueError("the polynomial must be nonzero")
+    residual = _harmonic_laplacian(coefficients)
+    if residual:
+        raise ValueError("the homogeneous polynomial is not harmonic")
+    polynomial = {exp: value for exp, value in zip(EXPONENTS, coefficients) if value}
+    square = _multiply(polynomial, polynomial)
+    fourth_power = _multiply(square, square)
+    m2 = _integrate_unit_sphere(square)
+    m4 = _integrate_unit_sphere(fourth_power)
+    if m2 <= 0 or m4 <= 0:
+        raise ValueError("nonzero harmonic polynomial must have positive second and fourth moments")
+    ratio = m4 / (m2 * m2)
+    lower, upper = _fourth_root_bounds(ratio)
+    ratio_text = _fraction_text(ratio)
+    exact_objective = f"fourth_root({ratio_text})"
     return {
-        "objective": army_size,
-        "verification_status": "exact",
+        "objective": exact_objective,
+        "objective_value": _fraction_text(lower),
+        "verification_status": "certified",
         "details": {
-            "board_size": BOARD_SIZE,
-            "army_size_each_color": army_size,
-            "total_queens": 2 * army_size,
-            "cross_color_pairs_checked": army_size * army_size,
-            "cross_color_attacking_pairs": 0,
-            "cross_color_square_overlap": False,
-            "occupied_rows": {
-                "white": occupied_white_rows,
-                "black": occupied_black_rows,
-                "disjoint": occupied_white_rows + occupied_black_rows <= BOARD_SIZE,
-            },
-            "occupied_columns": {
-                "white": occupied_white_columns,
-                "black": occupied_black_columns,
-                "disjoint": occupied_white_columns + occupied_black_columns <= BOARD_SIZE,
-            },
-            "proven_upper_bound": MAX_ARMY,
-            "claimed_objective_ignored": True,
-            "strict": bool(strict),
-        },
+            "degree": DEGREE,
+            "monomial_count": len(EXPONENTS),
+            "harmonic_laplacian_residual_terms": 0,
+            "sphere_average_M2": _fraction_text(m2),
+            "sphere_average_M4": _fraction_text(m4),
+            "fourth_power_ratio": ratio_text,
+            "objective_interval": [_fraction_text(lower), _fraction_text(upper)],
+            "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+            "claimed_score_ignored": True
+        }
     }

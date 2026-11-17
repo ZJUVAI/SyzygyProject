@@ -4,9 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TASKS = ROOT / "tasks"
-INITIAL_TASKS = tuple(
-    f"T{number:03d}" for number in range(1, 103) if number not in (86, 96)
-)
+INITIAL_TASKS = tuple(f"T{number:03d}" for number in range(1, 101))
 
 
 def resolve_task_id(value):

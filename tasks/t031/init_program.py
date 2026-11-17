@@ -1,6 +1,5 @@
-"""Self-contained, deliberately simple valid construction."""
+"""Self-contained, deliberately simple connected graph seed."""
 
-from itertools import permutations
 import os
 
 
@@ -8,6 +7,5 @@ import os
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T031-C01") != "T031-C01":
         raise ValueError("unsupported configuration id")
-    word = "".join("".join(p) for p in permutations("1234567"))
-    return {"word": word}
+    return {"n": 1, "edges": []}
 # EVOLVE-BLOCK-END

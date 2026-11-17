@@ -1,4 +1,4 @@
-"""Evolvable entry point for the seven-symbol superpermutation task."""
+"""Evolvable entry point for T031."""
 
 from tasks.t031.baseline import run_code as baseline_run_code
 

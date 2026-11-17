@@ -1,61 +1,45 @@
-# T082: 和平共存的皇后军队
+# T082：S² 上 20 次实球谐的 L4/L2 集中度最大化
 
-## 数学定义
+## 定义
 
-在标准 `30×30` 棋盘上放置相同数量的白皇后和黑皇后。坐标是从 0 开始的 `[行,列]`，范围为 `0..29`。同色皇后可以互相攻击。任意白皇后都不能沿同行、同列或对角线攻击黑皇后。最大化每种颜色的皇后数 `m`。
+令 \(P(x,y,z)\) 为非零、实、齐次 20 次调和多项式。限制在单位球面 \(S^2\) 上，令 \(M_p\) 表示相对于归一化均匀面积测度的 \(|P|^p\) 平均值。本任务最大化
+\[
+J=\frac{\|P\|_{L^4(S^2)}}{\|P\|_{L^2(S^2)}}=\left(\frac{M_4}{M_2^2}\right)^{1/4}.
+\]
+固定参数为次数 20 和实球谐空间。系数可整体缩放，目标不变。
 
-人类记录见证有每种颜色 131 个皇后。当前已查来源没有给出 `n=30` 的最优性证明。一个有限上界是 225：设白黑分别占用 `rW,rB` 行、`cW,cB` 列。异色不能共行或共列，所以行数与列数各自的和都至多 30。每方的皇后数至多是其占用行列矩形面积。由 Cauchy–Schwarz，`2√m≤√(rW cW)+√(rB cB)≤30`，因此 `m≤225`。
+输入用 231 个有理系数，按 \(x^a y^b z^{20-a-b}\) 的顺序排列：先让 \(a\) 从 20 降到 0，再让 \(b\) 从 \(20-a\) 降到 0。系数可以是整数或精确有理数字符串。不设分子、分母或系数大小限制。调和性用精确 Laplacian=0 验证。
 
-## 来源和记录
+正式模型将系数限于 \(\mathbb Q\)。度 20 调和条件是有理系数线性方程组的核。有理解在其实系数核中稠密；目标在非零多项式上连续且尺度不变。因此此表示范围与实系数模型有相同上确界。每个实球谐不必能用单个有理系数向量精确表示。
 
-OEIS A250000 将 `n≤30` 的这组构造归于 Stephen Ainley 的 1977 年作品，并列出 `a(30)≥131`。Kamenetsky 2019 年公开文件含完整 30 行布局。本任务将其解析为零起始坐标，并保存原布局和校验后的坐标。校验器检查全部 `131×131=17161` 个异色皇后对。
+## 精确检查
 
-Clinch、Drescher、Huynh、Saffidine 的 ALENEX 2025 论文讨论构造、上界和局部搜索；论文称其搜索很快找到 Ainley 构造，并给出仅对充分大的 `n` 成立的渐近上界。本任务不把该渐近界套用到 `n=30`。DiMichele、Forbes 的 INFORMS 论文报告 `n=16` 的已确认最优值为 37；这比旧 OEIS 文本中“只知道前 15 项”的说法更新，但未解决 `n=30`。
+球面单项式矩满足：若任一指数为奇数，平均值为零；若指数为 \((2a,2b,2c)\)，则
+\[
+\mathbb E[x^{2a}y^{2b}z^{2c}]=\frac{(2a-1)!!(2b-1)!!(2c-1)!!}{(2(a+b+c)+1)!!}.
+\]
+检查器精确卷积得到 \(P^2\) 和 \(P^4\)，计算有理数 \(M_2,M_4\)，并输出 \(J\) 的精确四次根表达式和有理夹逼。它不使用球面采样作为证明。
 
-## 程序与运行
+## 人类构造和未解状态
 
-简单起点为白 `(0,0)`、黑 `(1,2)`。传统搜索重复运行随机贪心的成对加点；演化搜索保留有效布局，并尝试移除一对后再加入一对。搜索只从简单构造开始，不读取人类或参考布局。人类入口从本地保存的 OEIS 原始文本解析棋盘；参考入口重放保存的 JSON 坐标。
+Stanton 和 Weinstein 证明每个次数的最高权函数是 L4 范数的局部极大值。他们没有证明固定次数的全局最优。人类对照采用最高权实球谐
+\[
+P(x,y,z)=\operatorname{Re}(x+iy)^{20}.
+\]
+其整数系数为 \((-1)^j\binom{20}{2j}x^{20-2j}y^{2j}\)。独立矩计算还复核了文献公式 \(M_2=B_{20}/2\)、\(M_4=3B_{40}/8\)，其中 \(B_k=4^k(k!)^2/(2k+1)!\)。该构造是已发表的局部极大值，不宣称为全局最优。
 
-```sh
-.venv/bin/python -m tasks.t082.init_program
-.venv/bin/python -m tasks.t082.baseline
-.venv/bin/python -m tasks.t082.evolution
-.venv/bin/python -m tasks.t082.human
-.venv/bin/python -m tasks.t082.reference
-.venv/bin/python -m pytest tasks/t082 -q
-```
+- Stanton–Weinstein, *On the L4 norm of spherical harmonics*, 1981，[DOI 10.1017/S0305004100058229](https://doi.org/10.1017/S0305004100058229)。摘要明确说的是局部最大值。全文第 6 节给出 \(O(\ell\log\ell)\) 上界，不给固定次数 20 的全局最佳常数。
+- Sogge 1986 的结果确定渐近阶，不确定本配置的最优常数。
+- 2026 年 Rudin 有界正交基论文研究复球面上的齐次全纯多项式基，与本题的固定次数实球谐最大化不同。
 
-默认搜索使用固定种子 0、12 次传统重启、30 代演化和 4 个体。生成上限 300 秒，验证上限 60 秒，内存 4 GiB，单线程。状态：`accepted_by_sol`。
+截至 2026-11-06，未找到次数 20 全局最优证明。
 
----
+## English
 
-# T082: Peaceable queens
+Maximize the normalized ratio \(J=\|P\|_{L^4(S^2)}/\|P\|_{L^2(S^2)}=(M_4/M_2^2)^{1/4}\) over nonzero real homogeneous harmonic polynomials of degree 20 in three variables. Moments use uniform probability measure on the unit sphere.
 
-## Mathematical definition
+The input is 231 exact rational coefficients in the order \(x^a y^b z^{20-a-b}\), with \(a\) descending from 20 to 0, and then \(b\) descending from \(20-a\) to 0. There is no coefficient or denominator cap. Rational harmonic polynomials are dense in the real harmonic subspace because the Laplacian constraints are a rational linear system. This dense domain has the same supremum for the continuous, scale-invariant objective.
 
-Place equal-sized white and black armies on a standard `30×30` chessboard. Coordinates are zero-based `[row,column]` pairs in `0..29`. Queens of the same color may attack each other. No white queen may attack a black queen along a row, column, or diagonal. Maximize the army size `m`.
+The checker verifies the exact Laplacian and integrates \(P^2\) and \(P^4\) by rational monomial moments. It returns an exact fourth-root expression and a certified rational interval. No sample estimate is used as a certificate.
 
-The reproduced human construction has 131 queens of each color. No optimality proof for `n=30` was found in the checked sources. A finite upper bound is 225. Let `rW,rB` be the numbers of rows used by each color and `cW,cB` the corresponding column counts. Opposite colors cannot share a row or column, so each pair of sums is at most 30. Each army lies in its occupied-row by occupied-column rectangle. Cauchy–Schwarz gives `2√m≤√(rW cW)+√(rB cB)≤30`, hence `m≤225`.
-
-## Sources and record status
-
-OEIS A250000 attributes its constructions for `n≤30` to Stephen Ainley (1977) and lists `a(30)≥131`. Kamenetsky's 2019 public file contains the full 30-row layout. The task parses that chart into zero-based coordinates and saves both the source text and verified coordinate witness. The checker examines all `131×131=17161` cross-color pairs.
-
-The ALENEX 2025 paper by Clinch, Drescher, Huynh, and Saffidine studies constructions, bounds, and local search. It says its search quickly finds the Ainley construction and states an asymptotic upper bound only for sufficiently large `n`; this task does not apply that bound to `n=30`. The INFORMS paper by DiMichele and Forbes reports a confirmed optimum of 37 for `n=16`. This corrects older OEIS text that says only the first 15 terms are known, but does not settle `n=30`.
-
-## Programs and commands
-
-The simple starting layout is white `(0,0)` and black `(1,2)`. The traditional search repeats randomized greedy pair additions. The evolutionary search keeps feasible layouts and tries pair removal and re-addition. Both start from the simple construction and do not read human or reference layouts. The human entry parses the saved OEIS source text; the reference entry replays the saved JSON coordinates.
-
-Run all five entry points and the task tests with:
-
-```sh
-.venv/bin/python -m tasks.t082.init_program
-.venv/bin/python -m tasks.t082.baseline
-.venv/bin/python -m tasks.t082.evolution
-.venv/bin/python -m tasks.t082.human
-.venv/bin/python -m tasks.t082.reference
-.venv/bin/python -m pytest tasks/t082 -q
-```
-
-Defaults use seed 0, 12 traditional restarts, 30 evolutionary generations, and population 4. Runner limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one thread. Status: `accepted_by_sol`.
+Stanton and Weinstein prove that the highest-weight harmonic is a local L4 maximizer for each degree. They do not establish the global optimum at degree 20. The human witness is \(\operatorname{Re}(x+iy)^{20}\), independently verified by exact sphere moments. The 2026 Rudin orthonormal-basis result concerns a different complex holomorphic problem. No degree-20 global proof was found in sources checked on 2026-11-06.

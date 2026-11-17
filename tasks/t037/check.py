@@ -1,56 +1,75 @@
-"""Exact verifier for rational directions in the five-dimensional kissing problem."""
+"""Exact checker for the ordinary finite K4^- Turan problem on 36 vertices."""
+from itertools import combinations
 
-from fractions import Fraction
-
-_CONFIG_ID = "T037-C01"
-_PARAMETERS = {
-    "dimension": 5,
-    "minimum_angle_degrees": 60,
-    "representation": "nonzero rational direction vectors in Q^5; exact angle check after normalization",
-    "objective": "maximum cardinality",
+N = 36
+CONFIG_ID = "T037-C01"
+PARAMETERS = {
+    "n": 36,
+    "uniformity": 3,
+    "forbidden_hypergraph": "K4^-: three triples on four vertices",
+    "forbidden_semantics": "ordinary non-induced subhypergraph",
+    "constraint": "every 4-vertex set spans at most 2 selected triples",
 }
 
 
-def _rational(value):
-    if type(value) is int:
-        return Fraction(value)
-    if isinstance(value, str):
-        try:
-            return Fraction(value)
-        except (ValueError, ZeroDivisionError) as exc:
-            raise ValueError("coordinates must be finite rational strings") from exc
-    raise ValueError("coordinates must be integers or rational strings; bool/float rejected")
+def _is_int(x):
+    return isinstance(x, int) and not isinstance(x, bool)
 
 
-def validate(solution, config, strict=False):
-    del strict
-    if not isinstance(solution, dict) or not isinstance(config, dict):
-        raise ValueError("solution and config must be objects")
-    if config.get("id") != _CONFIG_ID or config.get("parameters") != _PARAMETERS:
-        raise ValueError("configuration does not match T037-C01")
-    vectors = solution.get("directions")
-    if not isinstance(vectors, list):
-        raise ValueError("directions must be a list")
-    parsed = []
-    for vector in vectors:
-        if not isinstance(vector, list) or len(vector) != 5:
-            raise ValueError("each direction must have five rational coordinates")
-        q = tuple(_rational(x) for x in vector)
-        norm2 = sum(x * x for x in q)
-        if norm2 == 0:
-            raise ValueError("zero direction is not allowed")
-        parsed.append((q, norm2))
-    for i, (u, un) in enumerate(parsed):
-        for j, (v, vn) in enumerate(parsed[:i]):
-            dot = sum(a * b for a, b in zip(u, v))
-            # cos(theta) <= 1/2. For dot <= 0 this is immediate;
-            # otherwise square only nonnegative exact rational quantities.
-            if dot > 0 and 4 * dot * dot > un * vn:
-                raise ValueError(f"directions {j} and {i} are less than 60 degrees apart")
+def _validate_config(config):
+    if not isinstance(config, dict) or config.get("id") != CONFIG_ID:
+        raise ValueError("unsupported T037 configuration")
+    supplied = config.get("parameters")
+    if not isinstance(supplied, dict) or supplied.keys() != PARAMETERS.keys():
+        raise ValueError("unsupported T037 configuration parameters")
+    if any(type(supplied[k]) is not type(v) or supplied[k] != v for k, v in PARAMETERS.items()):
+        raise ValueError("unsupported T037 configuration parameters")
+
+
+def validate(solution, config=None, strict=False):
+    """Recompute edge count and check every 4-set exactly."""
+    _validate_config(config)
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be a JSON object")
+    raw_edges = solution.get("edges")
+    if not isinstance(raw_edges, list):
+        raise ValueError("edges must be a list of triples")
+    edges = set()
+    for raw in raw_edges:
+        if not isinstance(raw, (list, tuple)) or len(raw) != 3 or not all(_is_int(v) for v in raw):
+            raise ValueError("each edge must contain exactly three integer vertex labels")
+        if any(v < 0 or v >= N for v in raw):
+            raise ValueError("vertex label is outside 0..35")
+        if len(set(raw)) != 3:
+            raise ValueError("an edge must contain three distinct vertices")
+        e = tuple(sorted(raw))
+        if e in edges:
+            raise ValueError("duplicate hyperedge")
+        edges.add(e)
+
+    max_load = 0
+    four_sets = 0
+    for quad in combinations(range(N), 4):
+        four_sets += 1
+        load = 0
+        for triple in combinations(quad, 3):
+            load += triple in edges
+        if load > 2:
+            raise ValueError("a four-vertex set contains a copy of K4^-")
+        max_load = max(max_load, load)
+
+    objective = len(edges)
+    upper_bound = (N * (N - 1) * (N - 2) // 6) // 2
     return {
-        "objective": len(parsed),
+        "objective": objective,
         "verification_status": "exact",
-        "details": {"dimension": 5, "minimum_angle_degrees": 60,
-                    "pair_checks": len(parsed) * (len(parsed) - 1) // 2,
-                    "representation": "exact rational directions"},
+        "details": {
+            "vertex_count": N,
+            "uniformity": 3,
+            "edge_count": objective,
+            "four_vertex_sets_checked": four_sets,
+            "maximum_triples_on_any_four_set": max_load,
+            "double_counting_upper_bound": upper_bound,
+            "claimed_objective_ignored": True,
+        },
     }

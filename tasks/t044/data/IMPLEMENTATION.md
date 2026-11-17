@@ -1,43 +1,31 @@
-# T044 implementation evidence
+# T044 implementation record
 
-Status: accepted by Sol on 2026-11-06.
+Status: `accepted_by_sol`.
 
-## Definition and source status
+## Fixed instance
 
-- T044-C01 asks for the maximum order of a simple undirected connected graph with maximum degree at most 3 and diameter at most 5.
-- The current Comellas table lists order 70 for `(3,5)`. It does not bold the entry. The Moore bound is 94, so the exact maximum remains open.
-- The human baseline replays the historical Alegre-Fiol-Yebra adjacency list, attributed by the detail page to von Conta (1983) and Alegre, Fiol, and Yebra (1986). The second fixed reference replays Comellas's 2024 Coxeter construction output. Both source files have pinned SHA-256 values and pass this task's exact checker.
-- The source site states that its material is AI-free except for some SageMath scripts. It does not identify the 2024 Coxeter script as one of those. The human baseline is the historical 1983/1986 graph. The fixed reference uses the saved 2024 adjacency output and does not execute its SageMath construction script.
+- Configuration: `T044-C01`, graph `arc130.mtx.rnd`, 130 vertices and 715 edges.
+- Input: `data/source/arc130.mtx.rnd`, copied from the Optsicom instance archive. SHA-256: `be272e3c2b11280c2c8335ae966c3d14ecef94fb4cb8fc2b049ecd7d676734a8`.
+- The input parser independently checks the header, edge count, endpoint range, loops, and duplicate undirected edges. Observed maximum degree is 124.
+- Current source review checked the Optsicom page and Martí et al. (2013), Appendix Table 9, on 2026-11-06. The report gives lower bound 62 and upper bound 202. The reported 202 ordering was not recovered. No proof closing the instance was found in the checked sources; this is not an exhaustive literature survey.
 
-## Programs and data
+## Programs and results
 
-- `check.py` validates a fixed vertex set `0..n-1`, unique simple undirected edges, maximum degree, connectivity, and diameter. It runs BFS from every vertex and recomputes `n`; it ignores score claims. The Moore bound 94 also caps declared order.
-- `init_program.py` is self-contained and returns a one-vertex graph.
-- `baseline.py` samples random cubic graphs with the configuration model and checks each candidate with BFS. It rejects loops, duplicate edges, disconnected graphs, and diameter above 5. It searches only this subclass of the task's graph space and reads no human/reference data.
-- `human.py` replays the AFY historical adjacency list. `reference.py` replays the Comellas 2024 Coxeter adjacency list.
-- `evolution.py` exposes the required `run_code()` entry point. `evaluator.py` wraps the shared evaluator.
-- `data/results.json` stores the seed-0 search output, exact result, replay command, environment, budget, and output hash. The search returned 26 vertices after 384 attempts, with 2 accepted cubic candidates. It does not store either comparison graph.
+- `init_program.py` returns natural vertex order.
+- `baseline.py` and `evolution.py` run bounded seeded GRASP-style construction with insertion moves. They only read the public graph. The default is six trials and twelve shuffled vertices per local pass. The optional time cutoff is explicit.
+- `human.py` reconstructs the cited GRASP method family with three trials and eight shuffled vertices per local pass. It produces a fixed exact score of 229; it does not claim to reproduce the reported 202 ordering.
+- `reference.py` loads the frozen local reconstruction from `data/reference/`; it does not load a file from `data/results.json`.
+- The run saved at `data/search/seed-0.json` scored 221 after six trials. Its metadata records seed, runtime, settings, and exact checker output.
+- `check.py` validates the full permutation and computes all 129 prefix cut sizes with exact integer difference-array arithmetic. It ignores optional candidate score fields.
 
-## Verification commands and results
+## Validation
 
-Run from the repository root:
+- Command: `.venv/bin/python -m pytest tasks/t044/test_task.py -q`
+- Result: `11 passed in 8.16s`.
+- Tests cover all five entries, exact independent cut counts, graph file hash and edge count, invalid permutations and labels, complete configuration matching, score-claim invariance, repeatable seeded search, and runner error/timeout behavior through `mathbench.evaluate._run`.
+- JSON files were checked with `python -m json.tool`; whitespace was checked with `git diff --check`.
+- Resource defaults remain 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread. The saved six-trial baseline took 7.327 seconds in the local Python 3.13 environment.
 
-```sh
-.venv/bin/python -m pytest tasks/t044/test_task.py -q
-.venv/bin/python -m json.tool tasks/t044/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t044/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t044/data/results.json > /dev/null
-```
+## Limits
 
-The task tests passed: 7 tests. They cover both order-70 source files and hashes, an independent all-source distance audit, the one-vertex seed, small boundary graphs, loops, duplicate undirected edges, endpoint and type errors, degree overflow, disconnected graphs, diameter overflow, Moore-bound input range, altered configuration, forged scores, all five `run_code()` functions, deterministic search metadata, and shared-runner candidate errors and timeout reporting.
-
-The saved seed-0 search result was replayed through `evaluate_candidate` with strict checking. It returned objective 26, exact status, 0.61 seconds generation, 0.70 seconds verification, Python 3.13.12 on Linux, and the default 300-second/60-second/4-GiB/one-thread policy. The task ID was added only to the local in-process registry tuple; no shared registry file was changed.
-
-The 70-vertex witnesses were checked by BFS from all 70 vertices and independently audited by a second test routine. Each has 105 edges, maximum degree 3, and diameter 5.
-
-## Limits and review points
-
-- This implementation verifies feasible graphs only. It does not prove that order 71 or larger is impossible.
-- The baseline samples only simple cubic graphs. A failed random run gives no upper-bound evidence for all graphs with maximum degree at most 3.
-- The 2024 Coxeter graph construction script is not run; only its published adjacency output is replayed and validated.
-- Sol must independently run the human, reference, and baseline programs, recompute degree and diameter, reject a broken graph, and confirm that a forged score does not change the result before acceptance.
+The source's 62–202 gap is retained as reported evidence. The current local search scores are feasible upper bounds only. Neither the literature result nor the local runs prove optimality.

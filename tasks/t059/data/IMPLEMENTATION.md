@@ -1,63 +1,33 @@
 # T059 implementation record
 
-## Configuration and objective
+## Delivered
 
-`T059-C01` fixes the simple undirected DIMACS graph C2000.9 with 2,000 vertices indexed from 0 and 1,799,532 edges. The task maximizes the cardinality of a set of distinct vertices that are pairwise adjacent.
+Configuration `T059-C01` implements an `(n,k)=(7,5)` difference triangle set: seven rows, six distinct nonnegative integer marks per row. The exact checker evaluates the 105 positive within-row differences and minimizes the largest row span. Shared marks in separate rows are allowed.
 
-The candidate is a list of vertex indices. The exact checker rejects a non-list, non-integer indices (including Boolean and floating-point values), out-of-range vertices, and duplicates. It loads the pinned source graph, builds one integer bitset per vertex, and checks every pair in the candidate. The score is the candidate list length. Optional claimed score fields do not affect validation.
+The published 112 construction and its pinned repository archive are stored in `data/` with SHA-256 values. `human.py` and `reference.py` replay the published witness. `init_program.py` provides a self-contained powers-of-three seed. `baseline.py` starts from that seed and runs 100 seeded greedy attempts without reading comparison data. `evolution.py` exports the shared search entry point.
 
-The empty clique is accepted with objective zero. A one-vertex clique is accepted with objective one. The initial program returns vertex zero and does not import task modules.
+## Evidence and source limits
 
-## Instance and source pins
+The primary article defines `(n,k)` with `k+1` marks per row and reports 112 as an upper bound for `(7,5)`, with 113 as the previous value. The authors attribute the method to FPGA search. The article does not disclose AI provenance.
 
-The input source was provided from the CMU COLOR04/DIMACS C2000.9 benchmark snapshot. It contains the DIMACS header `p col 2000 1799532`. The original file is 19,602,828 bytes. The local input is stored at `data/source/C2000.9.bits` as one headerless packed upper-triangle bitset (249,875 bytes). Pair `(u,v)`, where `0 <= u < v < 2000`, uses index `v*(v-1)//2+u`; bits use least-significant-bit-first order within each byte. The loader verifies SHA-256 `687ce2b39ee17bad81ae8ba2253b40441e270dc61c72e5e39fe58f9d404dca4d`, canonical zero padding, and exactly 1,799,532 edges. The original DIMACS uncompressed SHA-256 `aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16` and original compressed SHA-256 `936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639` are kept as provenance.
+The GitHub main branch was checked on 2026-11-06. Its HEAD was `2ccff8e767c3fe6390fd3af056dfda11847011fc`, matching the pinned commit. Its FPGA search archive has one `(7,5)` row, `7-5-112-755.txt`. This is a check of that archive only; it does not prove that no better construction exists elsewhere.
 
-The human witness is `data/reference/human_2005_clique80.json`, SHA-256 `02eecb1280588703bd1a57b55e10c4ce46e0f5672e87c8962182dca7f472ce1c`.
+Shearer's lower bound is `(91I+6)/6`. At `I=7`, `643/6 = 107 + 1/6`, so the integer lower bound is 108. The 108–112 interval contains five possible integer values. The selected record is not established as optimal.
 
-## Public lower and upper results
-
-Grosso, Locatelli, and Pullan's 2005 short communication reports a 79-vertex clique and then says a longer run found an 80-vertex clique. The paper supplies the complete 80-vertex list, with zero-based labels. The list is saved locally. The checker verified all 3,160 pairs. This gives a public feasible lower bound of 80.
-
-Krpan and Povh's 2026 paper, arXiv:2607.11726v1 (submitted 2026-07-13), reports an integer upper bound of 168 for C2000.9. It improves an earlier 177. The method tests `k=169` with core reduction and the Lovász theta upper-bound function. The authors state that the reduction certifies `omega(G)<169`. The run took 17 days, 18 hours, and 8 minutes on a node with 192 logical threads and 751 GiB of RAM. The paper and code state that C2000.9's exact value is unknown.
-
-This task records 168 as an author-reported upper-bound result. It has not independently run MOSEK or replayed the authors' long computation. The saved local checker certifies feasible cliques only; it does not claim to validate the 168 upper bound. The paper's code repository was checked on 2026-11-06 and pinned to commit `79d3fe7dcfb09237042ad5059a4f1352838e3ba2`. No newer same-instance exact closure was found in the sources checked by that date.
-
-The public human source does not state whether AI tools were used. No AI-free claim is made. The 2026 upper-bound source also does not state whether AI tools were used.
-
-## Programs and fixed seed results
-
-| Entry | Method | Seed 0 clique size | Work |
-| --- | --- | ---: | ---: |
-| `init_program.py` | Single vertex `[0]` | 1 | direct construction |
-| `baseline.py` | Static-degree greedy starts and one-for-two improvement | 62 | 16 candidates |
-| `human.py` | Replay the paper's 80-vertex human witness | 80 | direct replay |
-| `reference.py` | Replay the saved public witness | 80 | direct replay |
-| `evolution.py` | Dynamic-degree greedy restarts and repeated one-for-two improvement | 71 | 256 candidates; 4 best improvements |
-
-The baseline and evolution programs use the public graph only. They do not read `human.py`, `reference.py`, or `data/reference/`. The saved own-search construction is `data/search/seed_0.json`; it includes its seed, candidate count, exact verification result, environment, budget and replay command.
-
-Replay the saved search witness with:
-
-```sh
-MATHBENCH_CONFIG_ID=T059-C01 MATHBENCH_SEED=0 .venv/bin/python -c 'from tasks.t059.evolution import run_code; import json; print(json.dumps(run_code()))'
-```
-
-Search defaults are fixed at 16 candidate cliques for `baseline.py` and 256 for `evolution.py`. The runner limits generation to 300 seconds, verification to 60 seconds, memory to 4 GiB, and numerical threads to one.
+The 112 witness SHA-256 is `9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f`. The checker independently recomputed all 105 differences and the value 112. The local traditional search ran 100 iterations with seed 0 and returned a valid value of 243. Runtime and replay details are in `runs/validation_20261106.json`; the local search witness is in `data/search/traditional_search_seed0.json`.
 
 ## Validation
 
-Command:
+Command: `.venv/bin/python -m pytest tasks/t059 -q`
 
-```sh
-.venv/bin/python -m pytest tasks/t059/test_task.py -q
-```
+Result: 18 passed. Tests cover the published witness, simple seed, search entries, exact objective recomputation, repeated differences, legal repeated marks across rows, malformed row sizes, bool and float marks, non-finite marks, negative marks, claimed-score tampering, deterministic seed behavior, program errors, and generation timeouts.
 
-Result on 2026-11-06: `22 passed in 22.63s`.
+JSON validation: `python3 -m json.tool` was run on `task.json`, `bestknown.json`.
 
-The tests check the complete human witness, the packed input hash and graph dimensions, empty and singleton boundaries, invalid indices/types/duplicates, a deliberately selected nonedge, claimed-score invariance, all five `run_code()` entries, search isolation, and worker error and timeout behavior.
+## Status
 
-On 2026-11-17, Sol read the original DIMACS edge list independently and compared every adjacency mask with the packed input. All 1,799,532 edges matched. The initial program scored 1. The traditional search scored 62 with seed 0 and 16 iterations. The human and reference programs each scored 80. The saved search construction replayed at 77. The checker rejected duplicate vertices and ignored a changed score claim. The public export contained the packed graph and ran the initial program.
+**Pending Sol review.** Sol should independently recheck the primary article's table and appendix, replay the human/reference witness, inspect the simple seed and traditional search, and run an independent legal and deliberately invalid case before admission.
 
 ## Papers
 
-- [Short Communication: Larger Cliques for a DIMACS Test](https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf)
+- [Improved LP Lower Bounds for Difference Triangle Sets](https://doi.org/10.37236/1463)

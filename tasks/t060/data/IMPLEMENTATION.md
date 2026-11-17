@@ -1,50 +1,51 @@
-# T060 implementation and source review
+# T060 implementation evidence
 
-Status: **已通过 Sol 验收（2026-11-06）** (`accepted_by_sol`).
+Status: accepted by Sol on 2026-11-06.
 
-## Configuration and mathematics
+## Definition and source status
 
-- Configuration: `T060-C01`, target `M61 = 2^61 - 1 = 2305843009213693951`.
-- Objective: minimize the number of `1` leaves in a binary expression tree using only addition and multiplication. Shared subtrees, subtraction, and exponentiation are excluded.
-- Exact lower bound: Selfridge's extremal formula gives `E(115) = 1801135623563989452 < M61` and `E(116) = 2701703435345984178 > M61`. The checker computes these with integer powers, without logarithms or floating-point arithmetic. Therefore at least 116 leaves are required.
-- Human comparison: base-3 Horner reconstruction, 39 digits, 153 leaves. The saved expression was generated independently and exactly checked. This is a traditional method reconstruction, not a literature record.
-- Public comparison: 127 leaves, exact expression in `data/reference/public_127_expression.json`. SHA-256: `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`.
-- Own search result: `data/search/search_seed_0.json`, 166 leaves from 1,000 seeded mixed-radix candidates. This file contains only a result produced by this task's search.
+- T060-C01 minimizes the size of a finite set of unrestricted integers whose pairwise differences include every `d` from 1 through 6166. Marks may be negative or greater than 6166. This is not the sparse-ruler problem with marks constrained to `[0,6166]`.
+- Leech and Golay's reported 128-point construction gives an upper bound. Banakh and Gavrylkiv (2017), Theorem 4.1 and Table 3, and Georgiev et al. (2025), arXiv:2511.02864v1 §6.3, report this construction. Neither source claims `Delta(6166)=128`.
+- The strongest source-reported human construction is 128 points. The historical point list was not recovered. The separately reproduced Wichmann construction has 158 marks and is the frozen human reference.
+- The checked analytic lower bound is 123. Banakh and Gavrylkiv show `inf_n Delta(n)^2/n >= 2 + max 2 sin(phi)/(phi+pi)`. At `phi=pi/2`, using `pi<22/7` gives the strict bound `>80/33`. Hence `33*Delta(6166)^2 > 80*6166 = 493280`. Since `122^2*33=491172` and `123^2*33=499257`, `Delta(6166)>=123`. The simple pair-counting bound 112 is also valid but weaker.
+- The source survey found no checked exact solution for this finite parameter by 2026-11-06; the checked gap is 123–128. It is a bounded survey, not a proof that no later result exists.
+- The AlphaEvolve paper separately reports a later AI-assisted improvement to the asymptotic upper bound using `N=49109` and 360 points. The human-given Singer-set code and this different parameter are recorded separately; the result is not used as T060-C01's record.
 
-## Sources checked
+## Human and public witnesses
 
-- Altman, “Integer complexity: the integer defect,” *Confluentes Mathematici* 8(3), 2019. It states Selfridge's exact extremal formula and recalls Horner construction. https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf
-- EventCompute, “Integer complexity of 2^61−1: 127 ones.” Its expression is a feasible construction, not an exact complexity proof. The page describes generative AI assistants in its research process. https://eventcompute.com/en/challenges/integer-complexity-m61/
-- Board repository snapshot `math-market/integer-complexity-m61`, commit `394bec0d2c976a967414d95388ca2e024ce19dd1`.
-- Board PR #4, head `6b79a6324891b4b196731f78fcd7a9b978524b25`, checked 2026-11-06; open, not merged. https://github.com/math-market/integer-complexity-m61/pull/4
-- The board's 150-one expression is a challenge baseline, not a record; AI provenance is unstated.
-- The cited page and board state were checked on 2026-11-06. The sources support `116 <= complexity(M61) <= 127`; no exact value proof or shorter same-target witness was found in that bounded review. This is not a claim of an exhaustive web survey.
+- `human.py` rebuilds Wichmann `W(38,3)` from the published gap formula. It has 158 marks and length 6548. The construction is a restricted ruler, so it is also a valid witness for the unrestricted integer-difference model at N=6166. Saarela and Vanhatalo (2026), EJC #P1.40, Definitions 8 and 16 and Theorem 18, provide the formula and a completeness proof. The saved witness is `data/reference/wichmann_w38_s3_n6166_158.json`, SHA-256 `39bb5d5aaecf6a5ed3c38e088d18cc0759d28b40d2908d68a9ded3a3e7b9c6e4`.
+- `reference.py` replays a separate 128-mark Singer/Leech-family witness. The cyclic factor comes from the 32 trace-zero exponents in `GF(31^3)` with defining polynomial `x^3 - 2*x^2 - 3`; multiplying its exponents by 172 modulo 993 gives a 32-element cyclic difference set whose ordinary positive differences include 1 through 208. The product with `{0,1,4,6}` gives 128 distinct marks and covers every required distance through 6166. The witness is saved at `data/reference/singer_q31_leech_product_n6166_128.json`, SHA-256 `e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c`.
+- The 128-point witness is an independent computational reconstruction of the classical method. The multiplier was selected by a finite search. It is not claimed to be the exact witness used by Leech or Golay. This distinction is recorded in `bestknown.json`.
+- The pinned AlphaEvolve notebook is 68,217 bytes at repository commit `8f447457957deac61e28bf1676746f0753b3b2f8`; blob SHA-1 `0cdb812ada3b6053f749e05301a743fd191e8700`; raw SHA-256 `e5bd224563055caf53c0fef9b9c67620c7124a14aa77094cce456d9927b65489`. It provides the separate 49109-parameter evolved construction, not the 6166/128 witness.
 
-## Programs and isolation
+## Programs
 
-- `init_program.py`: standalone binary Horner seed, 181 leaves. It has paired EVOLVE markers and no task imports.
-- `baseline.py`: evaluates 15 fixed-radix Horner expressions (radices 2 through 16), returning a valid 153-leaf expression for the default run.
-- `evolution.py`: fixed-seed mixed-radix Horner enumeration, 1,000 candidates by default. The recorded seed-0 run returns 166 leaves.
-- `human.py`: reconstructs the 153-leaf base-3 expression from the integer's digits; it reads no saved expression.
-- `reference.py`: loads the fixed public 127-leaf comparison expression.
-- The initial and search programs do not import `human.py` or `reference.py` and do not read comparison data. The test suite checks those import boundaries.
-- `check.py` accepts only the declared expression grammar, evaluates with exact Python integers, counts all `1` leaves, and ignores candidate score fields. It limits expression length and uses explicit stacks, so deeply nested valid input does not rely on Python recursion.
-- The 100,000-character limit is an input resource bound, not a mathematical constraint or a guarantee for arbitrary redundant text. Any binary tree with `k` leaves can be written fully parenthesized in at most `4k-3` characters; that is 609 characters at the 153-leaf human baseline. The saved compact base-3 witness is 505 characters.
+- `check.py` checks exact integer types, rejects bools and duplicates, and recomputes the entire required interval using exact differences. It ignores claimed objective fields. Differences greater than 6166 are allowed.
+- `init_program.py` returns `{0,1,...,6166}`, a simple valid seed that reads no comparison data.
+- `baseline.py` runs a seeded randomized greedy set-cover search. Each insertion includes a guaranteed progress candidate built from the smallest missing distance. It reads no human or reference witness.
+- `human.py` reconstructs the Wichmann human baseline.
+- `reference.py` reads the pinned 128-point comparison witness.
+- `evolution.py` exposes `run_code()` through the traditional search baseline.
+- `evaluator.py` adapts T060 to the shared evaluator.
 
-## Validation
+## Verification commands and results
 
-Command:
+Run from the repository root:
 
 ```sh
-.venv/bin/python -m pytest tasks/t060 -q
+.venv/bin/python -m pytest tasks/t060/test_task.py -q
+.venv/bin/python -m json.tool tasks/t060/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t060/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t060/data/reference/singer_q31_leech_product_n6166_128.json > /dev/null
+.venv/bin/python -m json.tool tasks/t060/data/reference/wichmann_w38_s3_n6166_158.json > /dev/null
 ```
 
-Result: **38 passed**.
+The task tests pass: 19 tests. They cover the exact 128-point witness, an independent all-distances scan, the 158-mark Wichmann formula and length, the initial seed, empty and incomplete bases, duplicate marks, bool/float/NaN/infinity, claimed-score invariance, a mismatched configuration, all five program entries and their configuration checks, seeded search metadata, runner error and timeout handling, and strict JSON witness replay.
 
-Coverage includes all five `run_code()` entries, public and human witness replay, exact lower-bound arithmetic, cold exported seed, malformed and wrong-value expressions, repeated subexpression leaf counting, large nesting, target/configuration rejection, non-finite or forged claimed scores, fixed iteration reproducibility, explicit zero-second cutoff, and runner program-error/timeout behavior via `mathbench.evaluate._run`.
+The baseline was also run through `evaluate_candidate` in strict mode with the local task config temporarily patched in process. It returned objective 234, exact status, generation time 1.99 s, verification time 0.40 s, seed 0, Python 3.13.12 on Linux, and the default 300 s / 60 s / 4 GiB / one-thread limits. The result is saved under `data/results.json`. No shared registry file was edited.
 
-JSON files were parsed with `python3 -m json.tool`. The public expression file hash matches the cited fingerprint. The five program results were recomputed by the task checker: seed 181, baseline 153, human 153, reference 127, and evolution 166.
+## Limits and Sol review points
 
-## Unresolved points
-
-The exact integer complexity of M61 remains unknown in the sources checked. The public 127 expression is AI-assisted and is a feasible construction only. The human 153 baseline is a transparent reconstruction of a standard positional method, not a claim that a publication reports 153 as a record. The evolution search did not beat the 127 public construction.
+- The checked bounds are `123 <= Delta(6166) <= 128`; the implementation does not prove the exact value of `Delta(6166)`.
+- The saved 128-point witness is not claimed to be the identical historical Leech/Golay witness.
+- The main reviewer should independently replay the Wichmann human baseline and the 128-point reference, check a deliberately broken basis, recompute at least one coverage quantity, and confirm that forged score fields do not change validation.

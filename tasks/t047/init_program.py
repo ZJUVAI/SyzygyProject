@@ -1,13 +1,13 @@
-"""Self-contained valid seed for the fixed interval difference-basis task."""
+import os, random
 
-import os
-
-
-# EVOLVE-BLOCK-START
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T047-C01") != "T047-C01":
-        raise ValueError("unsupported configuration id")
-    # Any two integers at distance d represent d. This deliberately simple
-    # seed covers the full fixed interval and does not load comparison data.
-    return {"basis": list(range(6167)), "claimed_objective": 6167}
-# EVOLVE-BLOCK-END
+    config_id=os.environ.get('MATHBENCH_CONFIG_ID', 'T047-C01')
+    if config_id != 'T047-C01': raise ValueError('unsupported configuration')
+    rng = random.Random(int(os.environ.get('MATHBENCH_SEED', '0')))
+    # EVOLVE-BLOCK-START
+    codewords = [0]
+    candidates = list(range(1 << 17)); rng.shuffle(candidates)
+    for candidate in candidates:
+        if all(bin(candidate ^ word).count('1') >= 6 for word in codewords): codewords.append(candidate)
+    # EVOLVE-BLOCK-END
+    return {'codewords': codewords}

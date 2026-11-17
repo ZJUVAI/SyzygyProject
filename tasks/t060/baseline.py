@@ -1,65 +1,82 @@
-"""Deterministic radix-Horner search from the target; reads no comparison data."""
+"""Seeded randomized greedy search for unrestricted integer difference bases."""
+
 import os
+import random
 
 from mathbench.search import search_steps
 
-TARGET = 2**61 - 1
-RADICES = tuple(range(2, 17))
-ITERATION_LIMIT = len(RADICES)
+
+CONFIG_ID = "T060-C01"
+N = 6166
+RESTARTS = 6
+RANDOM_CANDIDATES_PER_STEP = 32
+MAX_ADDITIONS_PER_RESTART = 320
 
 
-def _ones(count):
-    return "+".join(["1"] * count)
+def _new_differences(point, basis):
+    return {abs(point - old) for old in basis if point != old and abs(point - old) <= N}
 
 
-def _radix_expression(target, radix):
-    digits = []
-    while target:
-        target, digit = divmod(target, radix)
-        digits.append(digit)
-    digits.reverse()
-    expression = f"({_ones(digits[0])})"
-    for digit in digits[1:]:
-        expression = f"(({expression})*({_ones(radix)}))"
-        if digit:
-            expression = f"({expression}+({_ones(digit)}))"
-    return expression
+def _greedy_restart(rng):
+    basis = {0}
+    covered = set()
+    additions = 0
+    while len(covered) < N and additions < MAX_ADDITIONS_PER_RESTART:
+        missing = next(distance for distance in range(1, N + 1) if distance not in covered)
+        anchor = max(basis)
+        candidates = {anchor + missing}
+        upper = max(N + anchor + 1, 2 * N)
+        while len(candidates) < RANDOM_CANDIDATES_PER_STEP + 1:
+            value = rng.randrange(0, upper + 1)
+            if value not in basis:
+                candidates.add(value)
+        best_point = None
+        best_gain = -1
+        best_differences = None
+        for point in candidates:
+            differences = _new_differences(point, basis) - covered
+            gain = len(differences)
+            if gain > best_gain or (gain == best_gain and rng.random() < 0.5):
+                best_point, best_gain, best_differences = point, gain, differences
+        basis.add(best_point)
+        covered.update(best_differences)
+        additions += 1
+    if len(covered) == N:
+        return sorted(basis), additions
+    return None, additions
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T060-C01") != "T060-C01":
-        raise ValueError("unsupported T060 configuration")
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if config_id != CONFIG_ID:
+        raise ValueError("unsupported configuration id")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    iterator = iter(search_steps(ITERATION_LIMIT))
-    best = None
-    best_count = None
-    actual = 0
-    for radix in RADICES:
-        if next(iterator, None) is None:
-            break
-        expression = _radix_expression(TARGET, radix)
-        count = expression.count("1")
-        actual += 1
-        if best_count is None or count < best_count:
-            best, best_count = expression, count
-    if best is None:
-        best = _radix_expression(TARGET, 2)
-        best_count = best.count("1")
+    rng = random.Random(seed)
+    best = list(range(N + 1))
+    best_size = len(best)
+    complete_restarts = 0
+    total_additions = 0
+    for _ in search_steps(RESTARTS):
+        candidate, additions = _greedy_restart(rng)
+        total_additions += additions
+        if candidate is not None:
+            complete_restarts += 1
+            if len(candidate) < best_size:
+                best, best_size = candidate, len(candidate)
     return {
-        "expression": best,
+        "basis": best,
+        "claimed_objective": best_size,
         "search_metadata": {
-            "algorithm": "exhaustive uniform-radix Horner candidates",
-            "tested_radices": list(RADICES[:actual]),
+            "algorithm": "seeded randomized greedy set cover over integer differences; each step samples candidate marks and includes an anchor-plus-smallest-missing-distance point to guarantee progress",
+            "configuration_id": config_id,
             "seed": seed,
-            "iterations": actual,
-            "iteration_limit": ITERATION_LIMIT,
-            "reference_data_read": False,
-            "budget": {
-                "mode": "wall_clock_cutoff" if seconds is not None else "fixed_iteration_count",
-                "requested_iterations": ITERATION_LIMIT,
-                "actual_iterations": actual,
-                "requested_wall_clock_seconds": seconds,
-            },
+            "restart_limit": RESTARTS,
+            "random_candidates_per_step": RANDOM_CANDIDATES_PER_STEP,
+            "max_additions_per_restart": MAX_ADDITIONS_PER_RESTART,
+            "completed_restarts": complete_restarts,
+            "total_additions": total_additions,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            "comparison_data_read": False,
+            "fallback": "all marks 0..6166 if no restart completed",
         },
     }

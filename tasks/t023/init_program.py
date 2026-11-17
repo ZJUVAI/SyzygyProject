@@ -1,15 +1,12 @@
-# EVOLVE-BLOCK-START
-from itertools import combinations
+"""Simple valid starting set: a 4 by 3 integer grid."""
+
+import os
 
 
 def run_code():
-    # Every 20-bit vector with Hamming weight at most four.
-    # For any four chosen columns and any pattern, its support gives one row.
-    k = 20
-    rows = []
-    for weight in range(5):
-        for support in combinations(range(k), weight):
-            ones = set(support)
-            rows.append([int(j in ones) for j in range(k)])
-    return {"array": rows}
-# EVOLVE-BLOCK-END
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T023-C01")
+    if chosen != "T023-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    # EVOLVE-BLOCK-START
+    return {"points": [[x, y] for y in range(3) for x in range(4)]}
+    # EVOLVE-BLOCK-END

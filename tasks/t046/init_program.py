@@ -1,16 +1,18 @@
-"""Cold start: the monomial x^146."""
+"""Starter program for T046."""
+import os, random
 
-
-# EVOLVE-BLOCK-START
 def run_code():
-    import math
-    import os
-
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T046-C01")
-    if config_id != "T046-C01":
-        raise ValueError(f"unsupported configuration: {config_id}")
-
-    coefficients = [0] * 147
-    coefficients[146] = 1
-    return {"coefficients": coefficients}
-# EVOLVE-BLOCK-END
+    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T046-C01')
+    rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
+    if config_id != 'T046-C01': raise ValueError('unsupported configuration')
+    n,k=68,15
+    # EVOLVE-BLOCK-START
+    rows=[]
+    for i in range(k):
+        row=[0]*n
+        row[i]=1
+        if config_id == 'T046-C01':
+            for j in range(k,n): row[j]=rng.randrange(2)
+        rows.append(row)
+    # EVOLVE-BLOCK-END
+    return {'generator_matrix':rows}

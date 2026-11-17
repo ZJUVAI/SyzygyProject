@@ -1,91 +1,156 @@
+"""Task-local tests for exact M61 integer-complexity checking."""
+import hashlib
+import ast
 import json
 import os
+import shutil
+import subprocess
 import sys
-from fractions import Fraction
 from pathlib import Path
 
 import pytest
-import sympy as sp
 
-from mathbench.evaluate import _run
-from tasks.t089.baseline import run_code as baseline_run_code
-from tasks.t089.check import _fourier_polynomial, _last_negative_root, positive_root_intervals, validate
-from tasks.t089.evolution import run_code as evolution_run_code
-from tasks.t089.human import run_code as human_run_code
-from tasks.t089.init_program import run_code as init_run_code
-from tasks.t089.reference import run_code as reference_run_code
+from tasks.t089.baseline import run_code as baseline_run
+from tasks.t089.check import TARGET, _selfridge_max, validate
+from tasks.t089.evolution import run_code as evolution_run
+from tasks.t089.human import run_code as human_run
+from tasks.t089.init_program import run_code as seed_run
+from tasks.t089.reference import run_code as reference_run
 
-
-CONFIG = json.loads((Path(__file__).parent / "task.json").read_text())["configurations"][0]
-
-
-def test_fourier_transform_is_exact_on_monomials_and_human_witness():
-    assert _fourier_polynomial([Fraction(0), Fraction(1)]) == [Fraction(1, 2), Fraction(-1)]
-    result = validate(human_run_code(), CONFIG)
-    assert result["verification_status"] == "certified"
-    assert result["details"]["fourier_coefficients_ascending"] == ["-1/1000", "-3/2", "1"]
-    assert result["details"]["last_negative_to_positive_root_p"] == result["details"]["last_negative_to_positive_root_q"]
-    assert abs(float(Fraction(result["objective_value"])) - 0.47767694163617652) < 1e-15
-    assert result["details"]["claimed_score_ignored"] is True
+TASK_DIR = Path(__file__).parent
+CONFIG = {
+    "id": "T089-C01",
+    "parameters": {"target": "2^61-1", "target_value": str(TARGET)},
+    "direction": "minimize",
+    "human_reference": 153,
+}
 
 
-def test_even_contact_is_not_mistaken_for_the_last_sign_change():
-    # -(t-1)^2(t-3) stays negative on both sides of t=1, then crosses at 3.
-    assert _last_negative_root([Fraction(-3), Fraction(7), Fraction(-5), Fraction(1)]) == (
-        Fraction(3), Fraction(3)
+def test_exact_selfridge_bound_uses_integer_arithmetic():
+    assert _selfridge_max(115) == 1801135623563989452
+    assert _selfridge_max(115) < TARGET < _selfridge_max(116)
+
+
+def test_human_base3_expression_rebuilds_saved_witness():
+    generated = human_run()
+    saved = json.loads((TASK_DIR / "data/human/human_base3_expression.json").read_text())
+    result = validate(generated, CONFIG, strict=True)
+    assert generated == saved
+    assert result["objective"] == 153
+    assert result["verification_status"] == "exact"
+
+
+def test_public_127_witness_exactly_replays_and_hash_matches():
+    witness = reference_run()
+    path = TASK_DIR / "data/reference/public_127_expression.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
+        "946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449"
     )
+    result = validate(witness, CONFIG, strict=True)
+    assert result["objective"] == 127
+    assert result["details"]["expression_value"] == str(TARGET)
 
 
-def test_modular_degree_drop_does_not_hide_a_repeated_root():
-    t = sp.Symbol("t")
-    polynomial = sp.Poly((101*t - 1)**2 * (t - 3), t)
-    intervals = positive_root_intervals(polynomial, sp.Rational(1, 10**30))
-    assert intervals == [((sp.Rational(1, 101), sp.Rational(1, 101)), 2), ((3, 3), 1)]
+def test_all_five_program_entries_return_valid_expressions(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T089-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "17")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    for run in (seed_run, baseline_run, human_run, reference_run, evolution_run):
+        assert validate(run(), CONFIG)["verification_status"] == "exact"
 
 
-def test_simple_start_baseline_and_evolution_are_valid():
-    for program in (init_run_code(), baseline_run_code(), evolution_run_code(), reference_run_code()):
-        result = validate(program, CONFIG)
-        assert result["verification_status"] == "certified"
-        assert Fraction(result["objective_value"]) > 0
+def test_binary_seed_is_self_contained_when_exported(tmp_path):
+    seed_copy = tmp_path / "init_program.py"
+    shutil.copy(TASK_DIR / "init_program.py", seed_copy)
+    environment = {
+        "PATH": os.environ.get("PATH", ""),
+        "MATHBENCH_CONFIG_ID": "T089-C01",
+        "MATHBENCH_SEED": "0",
+    }
+    code = "import json, runpy; print(json.dumps(runpy.run_path('init_program.py')['run_code']()))"
+    completed = subprocess.run(
+        [sys.executable, "-c", code], cwd=tmp_path, env=environment,
+        check=True, capture_output=True, text=True, timeout=10,
+    )
+    assert validate(json.loads(completed.stdout), CONFIG)["objective"] == 181
 
 
-@pytest.mark.parametrize("coefficients", [
-    ["1", "0", "1"],              # f(0) is not strictly negative
-    ["-1", "4"],                  # Fourier transform is positive at zero
-    ["-1", "0", "-1"],            # not eventually nonnegative
-    [True, "-3/2", "1"],           # bool is not a rational coefficient
-    [float("nan"), "-3/2", "1"],   # non-finite input
-    [float("inf"), "-3/2", "1"],
-    ["-1/0", "-3/2", "1"],        # malformed rational
-    ["-1"],                         # constant negative polynomial
+def test_baseline_and_evolution_are_seeded_and_report_actual_iterations(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEED", "5")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    first = baseline_run()
+    assert first == baseline_run()
+    assert first["search_metadata"]["iterations"] == 15
+    assert first["search_metadata"]["reference_data_read"] is False
+    evolved = evolution_run()
+    assert evolved == evolution_run()
+    assert evolved["search_metadata"]["seed"] == 5
+    assert evolved["search_metadata"]["iterations"] == 1000
+    assert evolved["search_metadata"]["reference_data_read"] is False
+    assert evolved["search_metadata"]["budget"]["mode"] == "fixed_iteration_count"
+
+
+def test_zero_second_budget_returns_valid_seed(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
+    result = evolution_run()
+    assert result["search_metadata"]["iterations"] == 0
+    assert validate(result, CONFIG)["verification_status"] == "exact"
+    assert result["search_metadata"]["budget"]["mode"] == "wall_clock_cutoff"
+
+
+def test_claimed_scores_are_ignored_even_when_nonfinite():
+    candidate = reference_run()
+    expected = validate(candidate, CONFIG)
+    changed = {
+        **candidate,
+        "objective": float("nan"),
+        "score": float("inf"),
+        "claimed_score": -1,
+        "claimed_objective": True,
+        "metadata": [None, False],
+    }
+    assert validate(changed, CONFIG) == expected
+
+
+@pytest.mark.parametrize("bad", [
+    None, True, 1, 1.0, float("nan"), float("inf"), [], {},
+    "", "2", "1-1", "1/1", "1^1", "x", "1+", "+1", "()",
+    "1 1", "1\t+1", "1\n+1", "1(1)", "(1+1", "1+1)", "(1+)1", "1**1",
 ])
-def test_invalid_coefficients_are_rejected(coefficients):
+def test_invalid_expressions_are_rejected(bad):
     with pytest.raises(ValueError):
-        validate({"coefficients": coefficients, "claimed_score": -100}, CONFIG)
+        validate({"expression": bad}, CONFIG)
 
 
-def test_claimed_objective_and_scores_do_not_change_recomputation():
-    solution = reference_run_code()
-    original = validate(solution, CONFIG)
-    forged = dict(solution, objective=-1, score=float("nan"), claimed_score="0")
-    assert validate(forged, CONFIG) == original
+def test_wrong_value_and_wrong_configuration_are_rejected():
+    with pytest.raises(ValueError, match="does not evaluate"):
+        validate({"expression": "1+1"}, CONFIG)
+    with pytest.raises(ValueError, match="configuration"):
+        validate(reference_run(), {**CONFIG, "parameters": {"target": "2^61-2"}})
 
 
-@pytest.mark.parametrize("config", [
-    {**CONFIG, "id": "T089-C02"},
-    {**CONFIG, "parameters": {**CONFIG["parameters"], "dimension": 2}},
-    {**CONFIG, "parameters": {**CONFIG["parameters"], "dimension": True}},
-    {**CONFIG, "direction": "maximize"},
-])
-def test_wrong_configuration_is_rejected(config):
-    with pytest.raises(ValueError):
-        validate(init_run_code(), config)
+def test_expression_tree_repetition_is_counted_as_separate_leaves():
+    # The same text is repeated, but the expression is a tree and evaluates to 4.
+    from tasks.t089.check import _parse
+
+    assert _parse("(1+1)*(1+1)") == (4, 4)
 
 
-def test_runner_error_and_timeout_controls():
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError):
-        _run([sys.executable, "-c", "raise SystemExit(9)"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.1)
+def test_search_program_imports_do_not_reach_comparison_programs():
+    for filename in ("baseline.py", "evolution.py", "init_program.py"):
+        tree = ast.parse((TASK_DIR / filename).read_text(encoding="utf-8"))
+        imported = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ImportFrom):
+                imported.append(node.module or "")
+            elif isinstance(node, ast.Import):
+                imported.extend(alias.name for alias in node.names)
+        assert not any("t089.human" in name or "t089.reference" in name for name in imported)
+
+
+def test_expression_length_limit_and_deep_parentheses_are_safe():
+    from tasks.t089.check import MAX_EXPRESSION_LENGTH, _parse
+
+    with pytest.raises(ValueError, match="too long"):
+        _parse("1" + " " * MAX_EXPRESSION_LENGTH)
+    assert _parse("(" * 3000 + "1" + ")" * 3000) == (1, 1)

@@ -1,125 +1,102 @@
-"""Tests for the T042 checker, witnesses, and callable programs."""
-
-import hashlib
 import json
-import math
-import os
-import sys
+import gzip
+import hashlib
 from pathlib import Path
 
 import pytest
 
-from tasks.t042.baseline import run_code as baseline_run
-from tasks.t042.check import validate
-from tasks.t042.evolution import run_code as evolution_run
+from tasks.t042.check import validate, _EDGES as GRAPH_EDGES
 from tasks.t042.human import run_code as human_run
-from tasks.t042.init_program import run_code as seed_run
 from tasks.t042.reference import run_code as reference_run
 
 
-CONFIG = {
-    "id": "T042-C01",
-    "parameters": {
-        "N": 212,
-        "universe": "integers_1_through_N",
-        "forbidden_pattern": "nontrivial_three_term_arithmetic_progression",
-    },
-    "direction": "maximize",
-    "human_reference": 32,
-}
+TASK = json.loads((Path(__file__).parent / "task.json").read_text())
+CONFIG = TASK["configurations"][0]
+N = 10000
 
 
-def _independent_ap_audit(elements):
-    values = set(elements)
-    for a in values:
-        for b in values:
-            c = 2 * b - a
-            if a < b < c and c in values:
-                return False
-    return True
-
-
-def test_public_43_witness_is_exact_and_matches_source_record():
-    source_file = Path(__file__).parent / "data" / "reference" / "ergezer_n212_k43_witness.json"
-    assert hashlib.sha256(source_file.read_bytes()).hexdigest() == (
-        "41377c0db2e50f2d7753434ac472e82d831d093013562a477fffb068f117eb28"
-    )
-    candidate = reference_run()
-    result = validate(candidate, CONFIG, strict=True)
-    assert len(candidate["elements"]) == 43
-    assert result["objective"] == 43
+def test_all_same_side_is_valid_and_exact():
+    result = validate({"labels": [0] * N}, CONFIG)
+    assert result["objective"] == 0
     assert result["verification_status"] == "exact"
-    assert _independent_ap_audit(candidate["elements"])
 
 
-def test_classical_human_formula_has_32_elements_and_is_valid():
-    candidate = human_run()
-    source_file = Path(__file__).parent / "data" / "reference" / "odlyzko_stanley_n212_32.json"
-    assert hashlib.sha256(source_file.read_bytes()).hexdigest() == (
-        "9c4230152b0e0f1e8a98a35d78944fd190b9d94b0c14ba4a458b640c8fdaf24b"
-    )
-    assert candidate == json.loads(source_file.read_text(encoding="utf-8"))
-    assert len(candidate["elements"]) == 32
-    assert min(candidate["elements"]) == 1
-    assert max(candidate["elements"]) == 122
-    assert validate(candidate, CONFIG, strict=True)["objective"] == 32
-    assert _independent_ap_audit(candidate["elements"])
+def test_one_vertex_cut_equals_its_degree():
+    labels = [0] * N
+    labels[0] = 1
+    result = validate({"labels": labels}, CONFIG)
+    degree = sum(weight for u, v, weight in GRAPH_EDGES if u == 0 or v == 0)
+    assert result["objective"] == degree
 
 
-def test_simple_seed_and_edge_sets_are_valid():
-    assert validate(seed_run(), CONFIG)["objective"] == 1
-    assert validate({"elements": [212]}, CONFIG)["objective"] == 1
-    assert validate({"elements": []}, CONFIG)["objective"] == 0
+def test_pinned_graph_has_expected_edges_without_duplicates():
+    edges = GRAPH_EDGES
+    pairs = [(min(u, v), max(u, v)) for u, v, _ in edges]
+    assert (N, len(edges)) == (10000, 9999)
+    assert all(u != v and w == 1 for u, v, w in edges)
+    assert len(set(pairs)) == len(edges)
 
 
-def test_checker_rejects_progressions_bad_types_duplicates_and_bad_range():
-    invalid = [
-        {"elements": [1, 2, 3]},
-        {"elements": [1, 1]},
-        {"elements": [0]},
-        {"elements": [213]},
-        {"elements": [True]},
-        {"elements": [1.0]},
-        {"elements": [math.nan]},
-        {"elements": [math.inf]},
-        {"elements": "1,2,3"},
-        None,
-    ]
-    for candidate in invalid:
-        with pytest.raises(ValueError):
-            validate(candidate, CONFIG)
+def test_compressed_source_decompresses_to_pinned_original():
+    source = Path(__file__).parent / "data" / "source" / "G70.gz"
+    compressed = source.read_bytes()
+    original = gzip.decompress(compressed)
+    assert hashlib.sha256(compressed).hexdigest() == (
+        "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b")
+    assert hashlib.sha256(original).hexdigest() == (
+        "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061")
+    assert len(original) == 117744
 
 
-def test_claimed_score_is_ignored_and_configuration_is_fixed():
-    witness = reference_run()
-    for forged in (-1, 0, 10**100, "43", math.nan, math.inf, True):
-        result = validate({**witness, "claimed_objective": forged, "score": forged}, CONFIG)
-        assert result["objective"] == 43
-        assert result["details"]["claimed_score_ignored"] is True
-    with pytest.raises(ValueError, match="configuration id"):
-        validate(witness, {**CONFIG, "id": "T042-C02"})
-    with pytest.raises(ValueError, match="parameters"):
-        validate(witness, {**CONFIG, "parameters": {**CONFIG["parameters"], "N": 211}})
+def test_human_baseline_witness_replays(monkeypatch):
+    monkeypatch.delenv("MATHBENCH_SEED", raising=False)
+    solution = human_run()
+    assert validate(solution, CONFIG)["objective"] == 8616
+    metadata = solution["search_metadata"]
+    assert metadata == {
+        "algorithm": "steepest_improving_single_vertex_flip",
+        "seed": 0,
+        "restarts": 4,
+        "max_flips_per_restart": 10000,
+        "flips_per_restart": [2163, 2226, 2227, 2158],
+        "total_flips": 8774,
+        "budget": "fixed iteration cap; stop early at 1-flip local optimum",
+    }
 
 
-def test_all_five_program_entries_return_valid_constructions(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T042-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "212")
-    programs = (seed_run, baseline_run, evolution_run, human_run, reference_run)
-    for program in programs:
-        output = program()
-        assert validate(output, CONFIG)["verification_status"] == "exact"
-    search = baseline_run()
-    assert search["search_metadata"]["seed"] == 212
-    assert search["search_metadata"]["comparison_data_read"] is False
-    assert search["search_metadata"]["restarts"] <= 48
+def test_fixed_reference_replays_and_claim_is_ignored():
+    solution = reference_run()
+    result = validate(solution, CONFIG)
+    assert result["objective"] == 8616
+    solution["claimed_score"] = 10**9
+    assert validate(solution, CONFIG)["objective"] == 8616
 
 
-def test_shared_runner_surfaces_candidate_error_and_timeout():
-    from mathbench.evaluate import _run
+@pytest.mark.parametrize("labels", [
+    [0] * (N - 1),
+    [0] * (N - 1) + [True],
+    [0] * (N - 1) + [2],
+    [0] * (N - 1) + [0.0],
+    [0] * (N - 1) + [float("nan")],
+    [0] * (N - 1) + [float("inf")],
+    [0] * (N - 1) + ["1"],
+])
+def test_invalid_label_vectors_are_rejected(labels):
+    with pytest.raises(ValueError):
+        validate({"labels": labels}, CONFIG)
 
-    environment = dict(os.environ)
-    with pytest.raises(RuntimeError, match="candidate failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
-    with pytest.raises(TimeoutError, match="Wall time limit"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)
+
+def test_candidate_duplicate_edges_are_ignored():
+    labels = [0] * N
+    labels[0] = 1
+    candidate = {"labels": labels, "edges": [[0, 1, 1], [0, 1, 1]],
+                 "claimed_score": 999}
+    expected = validate({"labels": labels}, CONFIG)["objective"]
+    assert validate(candidate, CONFIG)["objective"] == expected
+
+
+def test_configuration_must_match_pinned_graph():
+    changed = dict(CONFIG)
+    changed["parameters"] = dict(CONFIG["parameters"], n=N + 1)
+    with pytest.raises(ValueError):
+        validate({"labels": [0] * N}, changed)

@@ -1,3 +1,22 @@
-"""Replay the shared witness for the public reference role."""
+"""Replay the official 60-second BouMS assignment for the selected instance."""
 
-from tasks.t098.human import run_code as run_code
+import json
+import os
+from pathlib import Path
+
+from tasks.t098.check import PARAMETERS, validate
+
+
+def run_code():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T098-C01") != "T098-C01":
+        raise ValueError("unsupported configuration")
+    path = Path(__file__).parent / "data" / "reference" / "mse2026_boums_60_assignment.json"
+    saved = json.loads(path.read_text())
+    result = {"assignment": [bool(value) for value in saved["assignment"]]}
+    validate(result, {"parameters": PARAMETERS}, strict=True)
+    return result
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

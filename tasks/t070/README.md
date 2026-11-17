@@ -1,75 +1,139 @@
-# T070: minimum coprime dissection of a 1000 square
+# T070: 和差集原始对数比
 
-## 中文
+## 数学目标
 
-### 定义和配置
+选取整数集合 \(A\)，满足 \(2\le |A|\le512\)，且所有元素都在 `[-1000000,1000000]`。最大化
 
-配置 `T070-C01` 固定一个边长为 1000 的正方形。用轴对齐的整数边长小正方形完整覆盖它，要求所有小正方形边长的最大公因数为 1。目标是最小化小正方形数量。允许复合结构和子拼图。这里的最大公因数条件来自 Mrs Perkins's quilt 定义；它不附加“primitive”限制。来源把 primitive 用于描述没有子拼图或不是由较小拼图实质导出的结构。
+\[
+\frac{\ln |A-A|}{\ln |A+A|},\qquad
+A+A=\{a+b:a,b\in A\},\quad A-A=\{a-b:a,b\in A\}.
+\]
 
-Pegg 于 2017 年 7 月发布的资料给出边长 1000 的 27 块拼法。[问题页面](https://www.squaring.net/quilts/mrs-perkins-quilts.html)说明定义和历史状态；[下载文件](https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip)包含 40,000 行。资料行列出 27 个边长，本任务按最低位置、再最左位置的 skyline 规则恢复坐标，并独立验证。该拼法给出上界 27，不证明最小值为 27。
+所有有序对和对角项都参与运算；相同结果只计一次。检查器精确计算两个整数集合，再用向外舍入区间计算自然对数比。报告区间下端作为最大化时的保守成绩。
 
-来源页面指出，阶数超过 18 的多数结果尚未证明最优。Wynn 的[穷举工作](https://arxiv.org/abs/1308.5420)只覆盖不超过 18 块。页面列出的 OEIS A005670 精确值覆盖外边长 1 到 120，不包括 1000。当前配置仍开放。不得把 27 说成已证最优。
+固定配置为 `T070-C01`。冷起点是 `{0,1,3}`。公开界限限制在 512 个整数和指定区间内。
 
-### 数据和验证
+## 与 T069 的区别
 
-- `data/source/pegg_2017_row_1000.txt`：保存原文件第 1000 行，含块数、外边长和 27 个小正方形边长。
-- `data/source/source_notes.json`：记录源 ZIP 和 TXT 的 SHA-256、原行号、下载地址和来源范围。任务目录只保留这一个数据行。
-- `data/reference/pegg_1000_27.json`：skyline 恢复的 27 个 `[x,y,side]`，作为固定对照。
-- `check.py`：检查整数坐标、范围、正边长、最大公因数、总面积、重叠和全覆盖。它为每个整数 x 列保存 1000 位覆盖掩码。重复覆盖位表示小正方形重叠；所有列都填满才接受。
+T069 的目标为
 
-初始程序把 999×999 正方形放在左下角，再用 999 个顶边单位正方形和 1000 个右边单位正方形填满余下条带，共 2000 块，边长最大公因数为 1。
+\[
+C(A)=\frac{\ln(|A+A|/|A|)}{\ln(|A-A|/|A|)}.
+\]
 
-- `baseline.py`：穷举所有整除 1000 的均匀块数，把一个方块换成边长 `s-1` 的方块和单位条带，比较生成的 15 个有效构造。
-- `evolution.py`：用定种子变异 guillotine 切割计划。每个矩形叶由欧几里得切割法铺成方块；若边长最大公因数大于 1，就把一个方块细分以加入单位边长。
-- `human.py`：从 Pegg 数据行按 skyline 规则重建人类/传统计算见证。
-- `reference.py`：复播固定的 27 块见证。
-- `evaluator.py`：连接共享候选评测接口。
+T070 的目标为 \(\ln|A-A|/\ln|A+A|\)。二者没有保持排序的单调变换关系。下面两组集合都满足 T069 的基数、数值区间和检查器前置条件：
 
-传统搜索和演化搜索不读取 `data/source/` 或 `data/reference/`。初始程序自包含。程序从 `MATHBENCH_CONFIG_ID` 读取配置，从 `MATHBENCH_SEED` 读取种子。默认使用固定迭代数；设置 `MATHBENCH_SEARCH_SECONDS` 后可启用共享时间截断。预算为生成 300 秒、验证 60 秒、4 GiB、单线程。
+| 集合 | \(|A|\) | \(|A+A|\) | \(|A-A|\) | T069 | T070 |
+|---|---:|---:|---:|---:|---:|
+| `{0,2,3,4,7,11,12,14}` | 8 | 26 | 25 | 1.0344212156 | 0.9879620776 |
+| 上一集合与其平移 1000 的并集 | 16 | 78 | 75 | 1.0253872280 | 0.9909976281 |
 
-### 测试
+T069 把第一组排在第二组之前，T070 则把第二组排在第一组之前。精确集合及复算值保存在 `data/source/t069_order_reversal_examples.json`。因此不能用 T069 的最优见证或分数直接替代 T070 的目标。
 
-```sh
-.venv/bin/python -m pytest tasks/t070 -q
-.venv/bin/python -m json.tool tasks/t070/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/data/bestknown.json > /dev/null
-```
+## 人类方法、冻结对照与更强复现
 
-测试涵盖原数据行解码、27 块人类见证、初始方案、传统和演化搜索、重叠、缺失面积、非互素边长、重复块记录、错误类型、越界、伪造分数、程序异常和超时。状态为已通过 Sol 验收（2026-11-06）。
+Gyarmati、Hennecart、Ruzsa 的《Sums and Differences of Finite Sets》手稿日期为 2008-05-30。第 2 节公式 (13)–(15) 定义
 
-## English
+\[
+V(m,L)=\{(x_1,\ldots,x_m)\in\mathbb{Z}_{\ge0}^m:\sum_i x_i\le L\}
+\]
 
-### Definition and configuration
+及其和集、差集基数，并给出整数投影权重递推 \(L_0=1, L_{j+1}=2L L_j+1\)。论文明确给出 \(m=6,L=5\) 实例。本任务保留它作为冻结人类对照。其权重为 `[1,11,111,1111,11111,111111]`，投影集合有 462 个不同元素，最大元素 555555。闭式和逐项枚举都得到 `|A+A|=8008`、`|A-A|=39733`。
 
-`T070-C01` fixes a square of side 1000. Tile it with axis-aligned squares of positive integer side lengths. The gcd of all tile sides must be 1. Minimize the number of tiles. Compound arrangements and sub-quilts are allowed. The gcd condition is part of the Mrs Perkins's quilt definition. This task does not add the separate source term “primitive,” which describes a quilt with no sub-quilts or no substantial derivation from a smaller quilt.
+该有限对照的成绩为
 
-Pegg's July 2017 data gives a 27-square tiling for outer side 1000. The [problem page](https://www.squaring.net/quilts/mrs-perkins-quilts.html) describes the definition and record status. The [download file](https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip) contains the row for size 1000. The row lists 27 tile sides. This task restores the positions by lowest y and then lowest x skyline placement, and checks the result. The tiling proves an upper bound of 27 on the minimum number. It does not prove that 27 is optimal.
+\[
+\frac{\ln(39733)}{\ln(8008)}
+=1.1782049454028793644760968453682013895930448936\ldots
+\]
 
-The source page says that most results past order 18 are not proved optimal. Wynn's [exhaustive generation](https://arxiv.org/abs/1308.5420) covers dissections with at most 18 squares. The page lists OEIS A005670 exact values for outer sides 1 through 120, not 1000. This configuration remains open. Do not present 27 as a proved optimum.
+再按论文同一通用公式取 \(m=7,L=4\)，权重为 `[1,9,73,585,4681,37449,299593]`。原投影有 330 个元素，范围为 0 到 1198372。整体平移 `-599186` 后，元素范围为 `[-599186,599186]`，和差集基数不变。闭式和逐项枚举得到 `|A+A|=6435`、`|A-A|=33111`，成绩为
 
-### Data and verification
+\[
+1+\frac{\ln(33111/6435)}{\ln(1198373)}
+=\frac{\ln(33111)}{\ln(6435)}
+=1.1867965542406812481762523985613661574193739510\ldots
+\]
 
-- `data/source/pegg_2017_row_1000.txt` stores line 1000 of the source data: the tile count, outer side, and 27 tile sides.
-- `data/source/source_notes.json` records the source ZIP and TXT SHA-256 values, row number, URL, and provenance. The task stores only the one source row.
-- `data/reference/pegg_1000_27.json` stores the 27 skyline placements `[x,y,side]` for fixed replay.
-- `check.py` checks integer coordinates, bounds, positive sides, gcd, total area, overlap, and full coverage. It stores a 1000-bit occupancy mask for each integer x-column. A repeated bit means overlap. Every column must be full.
+`human.py` 输出冻结的 m=6、L=5 对照；`reference.py` 输出更强的 m=7、L=4 本地公式实例化。论文给出通用公式，但没有把此 m=7、L=4 分数列为单独纪录。本任务不声称该构造全局最优。论文其他段落的渐近指数也不是此有限目标分数。
 
-The initial program puts a 999 by 999 square at the lower left. It fills the top strip with 999 unit squares and the right strip with 1000 unit squares. The result has 2000 tiles and side gcd 1.
-
-- `baseline.py` scans every divisor of 1000 as a uniform block count, then replaces one block by a square of side `s-1` and unit strips. It compares all 15 generated constructions.
-- `evolution.py` mutates seeded guillotine split plans. It fills each rectangular leaf by Euclidean square dissection. If the side gcd is above 1, it refines one tile to add unit sides.
-- `human.py` rebuilds the traditional computational witness from Pegg's size row with the skyline rule.
-- `reference.py` replays the fixed 27-tile witness.
-- `evaluator.py` connects the shared candidate-evaluation interface.
-
-The initial and search programs do not read `data/source/` or `data/reference/`. The initial program is standalone. Programs read `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED`. They use fixed iteration counts by default. Set `MATHBENCH_SEARCH_SECONDS` for the shared time cutoff. The limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one thread.
-
-### Tests
+## 运行
 
 ```sh
+.venv/bin/python -m tasks.t070.init_program
+.venv/bin/python -m tasks.t070.baseline
+.venv/bin/python -m tasks.t070.evolution
+.venv/bin/python -m tasks.t070.human
+.venv/bin/python -m tasks.t070.reference
 .venv/bin/python -m pytest tasks/t070 -q
-.venv/bin/python -m json.tool tasks/t070/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/data/bestknown.json > /dev/null
 ```
 
-Tests cover source-row decoding, the 27-square human witness, the initial construction, baseline and evolution output, overlap, missing area, non-coprime sides, duplicate tile records, repeated sizes, invalid types, out-of-bounds tiles, forged scores, worker errors, and timeouts. Status is accepted by Sol on 2026-11-06.
+初始程序、传统搜索和演化搜索均从简单起点开始，不读取人类、参考或来源数据。搜索分数使用浮点数作启发式排序；正式评测重新精确枚举整数和差集，并给出保守区间。`human.py` 重放冻结的 m=6、L=5 对照，`reference.py` 重放更强的 m=7、L=4 见证。全部五个程序实现 `run_code()`。默认预算为生成 300 秒、验证 60 秒、4 GiB 内存、单线程。状态：`accepted_by_sol`。
+
+---
+
+# T070: Raw logarithmic sum-difference ratio
+
+## Objective
+
+Choose a set \(A\) of 2 to 512 distinct integers in `[-1000000,1000000]`. Maximize
+
+\[
+\frac{\ln |A-A|}{\ln |A+A|},\qquad
+A+A=\{a+b:a,b\in A\},\quad A-A=\{a-b:a,b\in A\}.
+\]
+
+Use all ordered pairs and diagonal pairs. Count each result once. The checker recomputes both integer sets exactly and evaluates the natural-log ratio with outward-rounded interval arithmetic. It reports the lower endpoint as a conservative maximization score.
+
+The fixed configuration is `T070-C01`. The cold seed is `{0,1,3}`. The public limits are 512 elements and the stated integer interval.
+
+## Difference from T069
+
+T069 scores \(C(A)=\ln(|A+A|/|A|)/\ln(|A-A|/|A|)\). T070 scores \(\ln|A-A|/\ln|A+A|\). These objectives do not preserve candidate rankings. The two sets below both meet T069's cardinality, interval, and checker preconditions:
+
+| Set | \(|A|\) | \(|A+A|\) | \(|A-A|\) | T069 | T070 |
+|---|---:|---:|---:|---:|---:|
+| `{0,2,3,4,7,11,12,14}` | 8 | 26 | 25 | 1.0344212156 | 0.9879620776 |
+| The first set union its translate by 1000 | 16 | 78 | 75 | 1.0253872280 | 0.9909976281 |
+
+T069 ranks the first set higher. T070 ranks the second set higher. Exact sets and recomputed scores are saved in `data/source/t069_order_reversal_examples.json`. A T069 score or witness cannot stand in for this objective.
+
+## Human method, frozen baseline, and stronger reproduction
+
+The May 30, 2008 manuscript *Sums and Differences of Finite Sets* by Gyarmati, Hennecart, and Ruzsa gives, in Section 2 equations (13)–(15), the set
+
+\[
+V(m,L)=\{(x_1,\ldots,x_m)\in\mathbb{Z}_{\ge0}^m:\sum_i x_i\le L\}
+\]
+
+and formulas for its sumset and difference-set sizes. It projects the vectors to integers with weights \(L_0=1, L_{j+1}=2L L_j+1\). The paper explicitly gives the \(m=6,L=5\) instance. This task keeps it as the frozen human baseline. Its weights are `[1,11,111,1111,11111,111111]`; the projection has 462 distinct elements and maximum 555555. The formulas and full enumeration give `|A+A|=8008` and `|A-A|=39733`.
+
+Its score for this finite objective is
+
+\[
+\frac{\ln(39733)}{\ln(8008)}
+=1.1782049454028793644760968453682013895930448936\ldots
+\]
+
+Next, instantiate the same published general formula with \(m=7,L=4\). The weights are `[1,9,73,585,4681,37449,299593]`. Its 330-element projection ranges from 0 to 1198372. Translate it by `-599186` to fit the configured interval; translation preserves both set cardinalities. The closed forms and full enumeration give `|A+A|=6435` and `|A-A|=33111`. Its score is
+
+\[
+1+\frac{\ln(33111/6435)}{\ln(1198373)}
+=\frac{\ln(33111)}{\ln(6435)}
+=1.1867965542406812481762523985613661574193739510\ldots
+\]
+
+`human.py` emits the m=6,L=5 frozen baseline. `reference.py` emits the stronger local m=7,L=4 formula instance. The paper gives the general formula but does not list this score as a separate record. This task does not claim global optimality. The paper's asymptotic exponents are not this finite score.
+
+## Run
+
+```sh
+.venv/bin/python -m tasks.t070.init_program
+.venv/bin/python -m tasks.t070.baseline
+.venv/bin/python -m tasks.t070.evolution
+.venv/bin/python -m tasks.t070.human
+.venv/bin/python -m tasks.t070.reference
+.venv/bin/python -m pytest tasks/t070 -q
+```
+
+The initial, traditional-search, and evolutionary programs start from the simple seed and do not read human, reference, or source data. Search uses floating point only to rank proposals. Formal evaluation recomputes exact integer sets and a certified score interval. `human.py` replays the frozen m=6,L=5 baseline; `reference.py` replays the stronger m=7,L=4 witness. All five programs expose `run_code()`. Default budgets are 300 seconds for generation, 60 seconds for verification, 4 GiB memory, and one thread. Status: `accepted_by_sol`.

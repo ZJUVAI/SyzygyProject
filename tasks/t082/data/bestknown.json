@@ -3,111 +3,70 @@
   "configurations": {
     "T082-C01": {
       "program": "reference.py",
-      "reproduced_value": 131,
-      "public_value": 131,
+      "reproduced_value": "fourth_root(58188232951867590/10575651537777253)",
+      "public_value": 1.5315529249613016,
       "highest_reported": {
-        "value": 131,
-        "source": "OEIS A250000, Kamenetsky's n=30 layout, with the sequence entry attributing the n<=30 constructions to Stephen Ainley (1977).",
-        "url": "https://oeis.org/A250000/a250000_3.txt",
-        "reproduction_status": "The supplied 30x30 layout is independently parsed and checked: 131 queens per color and no cross-color attacking pair. This is a lower bound, not a proof of optimality for n=30.",
-        "source_url": "https://oeis.org/A250000/a250000_3.txt"
+        "value": 1.5315529249613016,
+        "exact_value": "fourth_root(58188232951867590/10575651537777253)",
+        "source": "Stanton and Weinstein, 1981, https://doi.org/10.1017/S0305004100058229",
+        "reproduction_status": "The published highest-weight function is reconstructed and exact moments are recomputed. The paper proves local maximality only; this is not a global-optimum claim."
       },
       "best_human": {
-        "value": 131,
+        "value": 1.5315529249613,
+        "witness": "data/human/highest_weight_degree20.json",
+        "verification_status": "certified",
+        "objective_interval": [
+          "382888231240325373/250000000000000000",
+          "1531552924961301493/1000000000000000000"
+        ],
+        "date": "2026-11-06 (local exact reconstruction)",
         "parameters": {
-          "board_size": 30,
-          "equal_armies": true
+          "degree": 20,
+          "sphere": "S^2"
         },
-        "source": "Stephen Ainley, Mathematical Puzzles (1977), as attributed in OEIS A250000; the n=30 layout is preserved by Dmitry Kamenetsky's 2019 file.",
-        "url": "https://oeis.org/A250000/a250000_3.txt",
-        "date_checked": "2026-11-06",
-        "provenance": "Traditional human mathematical construction predating modern generative AI. The local witness is a later transcription of the published layout, not a claim to possess Ainley's original working notes.",
-        "evidence_state": "Exact 30x30 layout saved and independently verified with 131 queens of each color and zero cross-color attacks.",
-        "witness": "data/reference/peaceable_queens_n30_131.json",
-        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
-        "source_url": "https://oeis.org/A250000/a250000_3.txt"
+        "method": "Highest-weight real spherical harmonic Re((x+i y)^20).",
+        "source": "Stanton and Weinstein, 1981, https://doi.org/10.1017/S0305004100058229",
+        "moments": {
+          "M2": "137438953472/1412926920405",
+          "M4": "37778931862957161709568/725673658950019191115935"
+        },
+        "evidence_state": "Exact rational sphere moments. The cited theorem states local maximality, not global maximality.",
+        "ai_provenance": "The witness is a direct reconstruction of the published highest-weight formula; the 1981 source predates current AI records and makes no AI-use statement."
       },
       "best_public": {
-        "value": 131,
+        "value": 1.5315529249613016,
+        "witness": "data/human/highest_weight_degree20.json",
+        "evidence": "Published local highest-weight maximum; no degree-20 global proof.",
+        "objective_interval": [
+          "382888231240325373/250000000000000000",
+          "1531552924961301493/1000000000000000000"
+        ],
         "parameters": {
-          "board_size": 30,
-          "equal_armies": true
+          "degree": 20,
+          "sphere": "S^2"
         },
-        "source": "OEIS A250000, Kamenetsky, Best known solutions for 12<=n<=30, entry a(30)>=131.",
-        "url": "https://oeis.org/A250000/a250000_3.txt",
-        "date_checked": "2026-11-06",
-        "provenance": "The public witness is a 2019 text layout. OEIS attributes the n<=30 construction family to Ainley (1977). No AI contribution is indicated for this historical construction.",
-        "evidence_state": "The n=30 lower-bound witness is reproduced exactly. No n=30 optimality proof was found in the checked sources.",
-        "witness": "data/reference/peaceable_queens_n30_131.json",
-        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
-        "source_url": "https://oeis.org/A250000/a250000_3.txt"
+        "source": "https://doi.org/10.1017/S0305004100058229",
+        "evidence_state": "This is the published highest-weight local maximizer. The source does not assert it is the global degree-20 maximizer.",
+        "optimality": "No global degree-20 proof found."
       },
       "best_reproduced": {
-        "value": 131,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "board_size": 30,
-          "equal_armies": true
-        },
+        "value": "fourth_root(58188232951867590/10575651537777253)",
         "program": "reference.py",
-        "verification_status": "exact",
-        "verification_method": "Validate coordinate types and bounds; recount each army; inspect every white-black pair for row, column, and diagonal attacks.",
-        "witness": "data/reference/peaceable_queens_n30_131.json",
-        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
-        "origin_type": "published historical construction, parsed from the public Kamenetsky layout",
+        "witness": "data/human/highest_weight_degree20.json",
+        "verification_status": "certified",
+        "objective_interval": [
+          "382888231240325373/250000000000000000",
+          "1531552924961301493/1000000000000000000"
+        ],
+        "date": "2026-11-06",
+        "parameters": {
+          "degree": 20,
+          "sphere": "S^2"
+        },
+        "witness_sha256": "9b0df1bac229ada5412a85446fef29f09f03dceed2b69d963c2faa5e24191d0b",
+        "evidence_state": "Exact harmonic Laplacian and exact rational M2/M4 sphere moments; fourth root enclosed by rational interval.",
+        "origin_type": "Reconstructed traditional highest-weight harmonic formula.",
         "review_status": "reviewed_by_sol"
-      },
-      "frozen_human_baseline": {
-        "value": 131,
-        "witness_program": "human.py",
-        "witness": "data/reference/peaceable_queens_n30_131.json",
-        "witness_sha256": "97350f71d71e4537ec694259c8b9c5805560bdfdb0198702887c2c4f158cd5a4",
-        "endpoint_policy": "The exact integer army size is frozen as H for compatibility score J/H.",
-        "evidence_state": "The 2019 board transcription and the locally parsed chart agree and pass the exact checker."
-      },
-      "compatibility_score": {
-        "frozen_formula": "J/H",
-        "H": 131,
-        "note": "H is the reproduced traditional human construction for n=30. A score above 1 exceeds this witness only; it does not prove optimality."
-      },
-      "optimality_status": {
-        "status": "open in sources checked",
-        "source_survey_date": "2026-11-06",
-        "evidence": "The 131 layout is reported as a lower bound. The 2025 Clinch-Drescher-Huynh-Saffidine paper gives an asymptotic upper bound only for sufficiently large n and does not certify n=30. The separate INFORMS study proves n=16 has value 37; that does not resolve n=30.",
-        "finite_upper_bound": 225,
-        "limitations": "The row/column packing bound 225 leaves a finite gap 131..225. The asymptotic bound is not applied to n=30 without a stated threshold.",
-        "lower_bound": 131,
-        "upper_bound": 225
-      },
-      "source_pins": {
-        "oeis_layout": {
-          "title": "Best known solutions for 12 <= n <= 30",
-          "author": "Dmitry Kamenetsky",
-          "date": "2019-10-15",
-          "url": "https://oeis.org/A250000/a250000_3.txt",
-          "sha256": "a5da2c9d852ecc24f8abcfcdc1b219d998e58d27ca6758cc4757041714fb4cfc"
-        },
-        "research_paper": {
-          "title": "Constructions, bounds, and algorithms for peaceable queens",
-          "authors": [
-            "Katie Clinch",
-            "Matthew Drescher",
-            "Tony Huynh",
-            "Abdallah Saffidine"
-          ],
-          "url": "https://arxiv.org/abs/2406.06974",
-          "version": "v3, published in ALENEX 2025",
-          "relevant_result": "The paper presents a local search that quickly finds the Ainley construction and gives an upper bound for all sufficiently large n; it does not assert a proof of optimality at n=30."
-        },
-        "exact_small_instance": {
-          "title": "Puzzle—Queen Puzzles: An Educational Approach to Integer Programming Techniques",
-          "authors": [
-            "Natalie DiMichele",
-            "Michael Forbes"
-          ],
-          "url": "https://pubsonline.informs.org/doi/full/10.1287/ited.2024.0122",
-          "relevant_result": "The paper reports a confirmed optimum of 37 for n=16. Earlier OEIS statements that only n<=15 are known are stale; this does not settle n=30."
-        }
       },
       "review_status": "accepted_by_sol",
       "verification": {
@@ -118,34 +77,27 @@
           "task_id": "T082",
           "config_id": "T082-C01",
           "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 131,
-          "verification_status": "exact",
-          "generation_time": 0.4438643828034401,
-          "verification_time": 0.43398309499025345,
-          "objective_value": 131,
+          "combined_score": 1.000000000000001,
+          "objective": "fourth_root(58188232951867590/10575651537777253)",
+          "verification_status": "certified",
+          "generation_time": 2.3960646614432335,
+          "verification_time": 3.100992616266012,
+          "objective_value": "382888231240325373/250000000000000000",
           "details": {
-            "board_size": 30,
-            "army_size_each_color": 131,
-            "total_queens": 262,
-            "cross_color_pairs_checked": 17161,
-            "cross_color_attacking_pairs": 0,
-            "cross_color_square_overlap": false,
-            "occupied_rows": {
-              "white": 15,
-              "black": 15,
-              "disjoint": true
-            },
-            "occupied_columns": {
-              "white": 14,
-              "black": 16,
-              "disjoint": true
-            },
-            "proven_upper_bound": 225,
-            "claimed_objective_ignored": true,
-            "strict": true
+            "degree": 20,
+            "monomial_count": 231,
+            "harmonic_laplacian_residual_terms": 0,
+            "sphere_average_M2": "137438953472/1412926920405",
+            "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+            "fourth_power_ratio": "58188232951867590/10575651537777253",
+            "objective_interval": [
+              "382888231240325373/250000000000000000",
+              "1531552924961301493/1000000000000000000"
+            ],
+            "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+            "claimed_score_ignored": true
           },
-          "eval_time": 0.88566043227911,
+          "eval_time": 5.503613777458668,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -162,47 +114,39 @@
           }
         },
         "independent_quantity": {
-          "army_size": 131,
-          "finite_upper_bound": 225,
-          "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+          "ratio_interval": [
+            "76577646248065074643930091879523927990731951116442781741251/50000000000000000000000000000000000000000000000000000000000",
+            "1531552924961301492878601837590478559814639022328855634825021/1000000000000000000000000000000000000000000000000000000000000"
+          ],
+          "M2": "137438953472/1412926920405",
+          "M4": "37778931862957161709568/725673658950019191115935",
+          "fourth_power_ratio": "58188232951867590/10575651537777253",
+          "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
       "parameters": {
-        "board_size": 30,
-        "equal_armies": true
+        "degree": 20,
+        "sphere": "S^2",
+        "field": "real"
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "Open at fixed degree 20 in reviewed sources.",
+        "notes": "Stanton-Weinstein prove only local maximality of the highest-weight function. Sogge gives a sharp asymptotic order, not the finite degree-20 constant. The October 2026 Rudin-basis result treats complex homogeneous orthonormal bases, not this real fixed-degree global maximum."
       }
     }
   },
   "review_status": "accepted_by_sol",
-  "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T082-C01": {
         "best_human": {
-          "source": "Stephen Ainley, Mathematical Puzzles (1977), attributed in OEIS A250000; the layout is transcribed in Kamenetsky's 2019 file.",
-          "provenance": "Traditional human construction. It predates modern generative AI; the saved witness is a later public transcription.",
-          "evidence_state": "The complete board is reproduced and passes exact pairwise checking."
+          "value": "fourth_root(58188232951867590/10575651537777253)"
         },
         "best_public": {
-          "source": "OEIS A250000, Kamenetsky's best-known-solution file, line headed a(30)>=131.",
-          "provenance": "Public construction attributed to Ainley (1977), with a later 2019 layout transcription. No AI authorship claim is made for the historical construction.",
-          "evidence_state": "Verified as a feasible lower bound; no n=30 optimum claim."
-        },
-        "best_reproduced": {
-          "verification_method": "Recount each army and check every white-black pair for row, column, and diagonal attacks.",
-          "origin_type": "historical construction parsed from an OEIS public layout"
-        },
-        "frozen_human_baseline": {
-          "endpoint_policy": "Freeze the exact integer arm size as H for J/H."
-        },
-        "highest_reported": {
-          "source": "OEIS A250000, Kamenetsky, Best known solutions for 12<=n<=30.",
-          "reproduction_status": "The layout is reproduced. It establishes a lower bound only; optimality at n=30 is open in the sources checked."
-        },
-        "optimality_status": {
-          "evidence": "The finite 225 row/column bound follows from disjoint occupied rows and columns for opposite colors. The 2025 asymptotic upper bound is stated only for sufficiently large n and is not applied to n=30. A separate INFORMS paper establishes n=16=37, not n=30."
+          "value": "fourth_root(58188232951867590/10575651537777253)"
         }
       }
     }

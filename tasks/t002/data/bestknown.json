@@ -1,47 +1,56 @@
 {
   "task_id": "T002",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
-    "T002-C01": {
-      "public_value": "7/2+3/2*sqrt2",
+    "T002-C02": {
+      "public_value": "2.939572771205",
       "public_source": {
-        "url": "https://squaremath.org/cases/26.html",
-        "record": "Friedman 1997 construction; current best-known upper bound, checked 2026-11-05",
-        "reference": "https://erich-friedman.github.io/papers/squares/squares.html"
+        "url": "https://www.packomania.com/csqv/csqv.html",
+        "coordinates_url": "https://www.packomania.com/csqv/txt/csqv32.txt",
+        "checked_date": "2026-11-05",
+        "table_update": "2026-10-31",
+        "attribution": "Packomania lists reference [7], Sebastian Pokutta, for N=32; the page notes this value appeared on 25-Jul-2026. Attribution is based on the table reference, not independently established authorship of the coordinates.",
+        "coordinate_provenance": "Official Packomania ASCII coordinate file; 32 circles in the unit square, centered-coordinate convention."
       },
-      "reproduced_value": "7/2+3/2*sqrt(2)",
-      "program": "sota.py",
-      "witness": "data/human_friedman_1997.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
+      "reproduced_value": "91861649099589859/31250000000000000",
+      "program": "reference.py",
+      "witness": "data/sota32.json",
+      "matches_public_best": false,
+      "comparison_tolerance": "public table displays 12 decimals (rounding half-unit 0.0000000000005); certified witness is lower by 566391/31250000000000000 (1.8124512e-11)",
       "limitations": [
-        "This is a feasible upper bound. The optimum remains open."
+        "Restored the public radii and reduced each one by the minimum feasible common amount on the 1e-18 grid: 566391/1000000000000000000. The witness is exactly feasible by Fraction arithmetic; the immediately smaller grid value fails at least one constraint.",
+        "The Packomania coordinate decimals are rounded source data. This conservative replay is not an exact reproduction of the displayed objective.",
+        "The public table value is a best-known record, not a proof of optimality."
       ],
       "checked_at": "2026-11-05",
+      "reproduction_method": {
+        "script": "reduce_sota.py",
+        "source_snapshot": "data/packomania32_source.txt",
+        "algorithm": "Exact Fraction monotone binary search for the smallest common radius decrement on the 1e-18 grid; feasibility checks all four walls and all n(n-1)/2 pair distances.",
+        "minimal_grid_decrement": "566391/1000000000000000000",
+        "feasible_at_decrement": true,
+        "infeasible_at_previous_grid_decrement": true
+      },
       "verification": {
-        "task_id": "T002",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
         "run": {
           "task_id": "T002",
-          "config_id": "T002-C01",
+          "config_id": "T002-C02",
           "validity": 1.0,
-          "combined_score": 0.9999999999999999,
-          "objective": "7/2+3/2*sqrt2",
+          "combined_score": 1.0455676876211686,
+          "objective": "91861649099589859/31250000000000000",
           "verification_status": "certified",
-          "generation_time": 0.26899781823158264,
-          "verification_time": 0.31631333008408546,
-          "objective_value": "281066017177982128660126654315727355892725390653271105488251/50000000000000000000000000000000000000000000000000000000000",
+          "generation_time": 0.11430643126368523,
+          "verification_time": 0.1644301451742649,
+          "objective_value": "91861649099589859/31250000000000000",
           "details": {
-            "objective_interval": [
-              "11242640687119285146405066172629094235709015626130844219530037/2000000000000000000000000000000000000000000000000000000000000",
-              "281066017177982128660126654315727355892725390653271105488251/50000000000000000000000000000000000000000000000000000000000"
-            ],
-            "n": 26,
-            "bounding_width": "7/2+3/2*sqrt2",
-            "bounding_height": "7/2+3/2*sqrt2",
-            "pair_checks": 325
+            "n": 32,
+            "pair_checks": 496,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.5903859548270702,
+          "eval_time": 0.2810966186225414,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -51,66 +60,89 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t002/data/human_friedman_1997.json",
         "independent_quantity": {
-          "bounding_side": "3*sqrt(2)/2 + 7/2"
+          "sum_radii": "91861649099589859/31250000000000000"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked the current squaremath.org exact-parameter record, replayed the saved certificate, independently computed the enclosing side, rejected a damaged construction, and confirmed that a forged objective cannot change the result.",
-        "snapshot_date": "2026-11-05"
-      }
+        "claimed_score_ignored": true
+      },
+      "report_recheck": {
+        "checked_at": "2026-11-06",
+        "table_url": "https://www.packomania.com/csqv/csqv.html",
+        "table_last_update": "2026-10-31",
+        "reported_value": "2.939572771205",
+        "decimal_places": 12,
+        "note": "The table still displays the archived value. A tiny difference from a certified construction must account for source rounding and numeric error before any public-record claim."
+      },
+      "review_status": "accepted_by_sol"
     }
   },
   "sol_review": {
-    "T002-C01": {
-      "status": "reproduced",
+    "T002-C02": {
+      "status": "conservative_reproduction",
       "reviewer": "Sol main agent",
       "date": "2026-11-05"
     }
   },
   "best_human": {
-    "value": 5.621320343559642,
+    "value": {
+      "T002-C02": 2.811460994816
+    },
     "date_checked": "2026-11-03",
     "parameters": {
-      "n": 26,
-      "unit_square_side": 1
+      "container": "unit square",
+      "radii": "equal in source construction; variable in task"
     },
-    "url": "https://erich-friedman.github.io/papers/squares/squares.html",
-    "provenance": "Erich Friedman, 1997, Section 3, Figure 9. The published construction family formula gives side (7+3√2)/2. The saved witness was reconstructed from that formula and the stated off-center construction.",
-    "evidence_state": "published construction reconstructed from its explicit formula and independently certified exactly"
+    "url": "https://www.packomania.com/csq/csq.html",
+    "provenance": "The 32-circle source gives equal-radius coordinates with radius 0.087858157088. The source review attributes the construction to Boll, Donovan, Graham, and Lubachevsky (2000). The benchmark translates each center into the unit square and reduces each radius by 1/10^9 for exact feasibility.",
+    "evidence_state": "source coordinate files saved; conservative witnesses independently pass exact Fraction wall and pair-distance checks"
   },
   "best_public": {
-    "value": 5.621320343559642,
-    "date_checked": "2026-11-03",
-    "parameters": {
-      "n": 26,
-      "unit_square_side": 1
+    "value": {
+      "T002-C02": 2.939572771205
     },
-    "url": "https://squaremath.org/cases/26.html",
-    "evidence_state": "publicly reported and marked verified upper bound; open interval 5.545 ≤ s(26) ≤ 5.62132034355964",
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "container": "unit square",
+      "radii": "variable",
+      "n": {
+        "T002-C02": 32
+      }
+    },
+    "url": "https://www.packomania.com/csqv/csqv.html",
+    "provenance": "The Packomania variable-radius table reports 2.939572771205 for 32 circles. The conservative replay of the rounded coordinates and its exact score are recorded in data/bestknown.json.",
+    "evidence_state": "Primary table and coordinates checked. The conservative replay differs from the displayed value.",
     "origin_type": "unknown unless attribution is stated in source/provenance"
   },
   "best_reproduced": {
-    "value": 5.621320343559642,
+    "value": {
+      "T002-C02": 2.811460994816
+    },
     "date_reproduced": "2026-11-03",
     "parameters": {
-      "n": 26,
-      "unit_square_side": 1
+      "container": "unit square",
+      "radii": "variable",
+      "n": {
+        "T002-C02": 32
+      }
     },
-    "witness_file": "data/human_friedman_1997.json",
-    "provenance": "Reconstructed from Friedman's 1997 Section 3 formula for (a,b)=(2,3): a 3×3 block of 45-degree squares, axis-aligned frame squares selected by exact separation checks, and the added column of five squares.",
-    "ai_provenance": "Reconstructed for this benchmark from the published formula; not represented as a verbatim transcription of the diagram.",
-    "actual_value": "(7+3*sqrt(2))/2",
-    "evidence_state": "all 26 squares, exact Q(sqrt(2)) corners, all 325 pair checks, and bounding square independently certified"
+    "witness_file": {
+      "T002-C02": "data/human32.json"
+    },
+    "provenance": "This record documents the human comparison. The exact checker verifies the translated coordinates and the radius reduction of 1/10^9.",
+    "ai_provenance": "No AI-generated coordinates. The radius safety reduction and exact rational verification were performed for this benchmark.",
+    "actual_value": {
+      "T002-C02": 2.811460994816
+    },
+    "evidence_state": "saved witnesses pass exact rational wall, pairwise non-overlap, and objective checks"
   },
   "implementation_review_date": "2026-11-04",
   "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula",
-  "configuration_records": {}
+  "frozen_human_baseline_type": "published human construction transferred to a broader feasible class"
 }

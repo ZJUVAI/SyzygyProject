@@ -1,17 +1,11 @@
-"""Rebuild the archived Cantrell n=12 result via the site's decimal coordinates."""
-
-import os
-
-from tasks.t074.construction import reconstruct_rational_points
-
+"""Replay Nunn-Coxson's published witness for the selected T074 config."""
+import json
+from pathlib import Path
+from tasks.t074.check import config_id, config_length
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T074-C01") != "T074-C01":
-        raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    return reconstruct_rational_points()
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    cid=config_id(); length=config_length(cid)
+    path=Path(__file__).with_name("data") / "source" / f"nunn_coxson_length{length}.json"
+    record=json.loads(path.read_text(encoding="utf-8")); bits=bin(int(record["hex_code"],16))[2:].zfill(length)
+    if len(bits)!=length: raise ValueError("source code length mismatch")
+    return {"sequence":[1 if bit=="1" else -1 for bit in bits]}

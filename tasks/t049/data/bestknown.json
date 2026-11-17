@@ -1,36 +1,67 @@
 {
   "task_id": "T049",
   "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T049-C01": {
       "program": "reference.py",
-      "reproduced_value": 34,
-      "witness": "data/reference/hexagon_n91.json",
-      "public_value": 34,
+      "reproduced_value": 3856,
+      "public_value": 3856,
       "highest_reported": {
-        "value": 34,
-        "metric": "number of distinct positive Euclidean distances among 91 planar points",
-        "direction": "minimize",
-        "bound_type": "reported feasible construction; upper bound on the unknown minimum",
-        "source": "https://doi.org/10.1016/0012-365X(95)00153-N",
-        "source_location": "Erdos and Fishburn (1996), Table 1, L_delta, n=91, k=34, s=6",
-        "reproduction_status": "coordinates reconstructed from the regular hexagonal triangular-lattice formula; exact algebraic checker returns 34"
+        "value": 3856,
+        "source": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1, Table 1, row VT_0(n) code, column n=16; also row Ours (search over s=1)",
+        "reproduction_status": "The n=16 VT_0 witness is frozen locally and exactly verified. The paper's LLM-guided search rediscovers a priority function proved equivalent to VT_0; it does not establish maximum cardinality at n=16.",
+        "ai_provenance": "The paper reports an LLM-guided evolutionary rediscovery of the classical VT_0 construction, with a proof of equivalence. It reports the same 3856 size, not a larger code or a finite-n optimality proof.",
+        "metric": "codewords in a binary length-16 one-deletion-correcting code",
+        "direction": "maximize",
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/html/2504.00613v2"
       },
-      "coordinate_sha256": "0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac",
-      "known_lower_bound": 9,
-      "lower_bound_evidence": {
-        "source": "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf",
-        "source_location": "Erdos 1946, Theorem 1",
-        "derivation": "n-1 <= k(k+1); for n=91, 90 <= k(k+1), hence k>=9"
+      "parameters": {
+        "length": 16,
+        "alphabet": "{0,1}",
+        "correctable_errors": "one deletion",
+        "decoding_condition": "distinct codewords have disjoint sets of length-15 deletion outputs",
+        "objective": "number of codewords"
       },
-      "optimality_status": "no exact n=91 optimum located in the checked sources as of 2026-11-06; 34 is not claimed optimal",
+      "witness": "data/human/vt16_3856.json",
+      "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
+      "known_bounds": {
+        "lower_bound": 3856,
+        "upper_bound": 4202,
+        "lower_bound_source": "https://arxiv.org/html/2504.00613v2",
+        "lower_bound_location": "§5.1, Table 1, VT_0(n) code row, n=16 column",
+        "upper_bound_source": "https://arxiv.org/html/2504.00613v2",
+        "upper_bound_location": "§5.1, Table 1, LP upper bound row, n=16 column",
+        "status": "A feasible 3856-word code is known. The paper states that VT_0 is conjectured largest for all finite lengths; optimality is proved only through n=11. Its n=16 LP upper bound is 4202. The exact maximum at n=16 remains open in the sources checked on 2026-11-06."
+      },
+      "human_construction": {
+        "source": "https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper",
+        "deletion_correctness_source": "https://nymity.ch/sybilhunting/pdf/Levenshtein1966a.pdf",
+        "additional_source": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "Varshamov and Tenengolts (1965) introduce the checksum class for single asymmetric-error correction. Levenshtein (1965 original/1966 English translation) establishes its single-deletion-correcting property; the current paper §2.2 states the VT checksum definition.",
+        "rule": "VT_0(16) = {x in {0,1}^16 : sum(i*x_i, i=1..16) = 0 mod 17}",
+        "size": 3856,
+        "reproduction_status": "Generated from the modular checksum formula and checked by the exact pairwise deletion-output checker."
+      },
+      "ai_assisted_record": {
+        "source": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1 and Figure 3; Table 1, n=16",
+        "reported_value": 3856,
+        "status": "The LLM-guided search rediscovers a function proved equivalent to VT_0. This is recorded separately from the classical human construction and does not improve its cardinality or prove the n=16 maximum.",
+        "value": 3856,
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/html/2504.00613v2",
+        "provenance": "LLM-guided evolutionary search rediscovered a priority function proved to generate VT_0; same cardinality as the classical code.",
+        "evidence_state": "Reported by source; separately identified as AI-assisted and not a larger code or an optimality proof."
+      },
       "checked_sources": [
-        "https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/Erdos2.pdf",
-        "https://oeis.org/A186704",
-        "https://erdosproblems.ai/problems/89",
-        "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf"
+        "https://arxiv.org/html/2504.00613v2",
+        "https://arxiv.org/abs/2504.00613",
+        "https://nymity.ch/sybilhunting/pdf/Levenshtein1966a.pdf",
+        "https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper"
       ],
-      "checked_at": "2026-11-06",
       "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
@@ -41,21 +72,21 @@
           "config_id": "T049-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 34,
+          "objective": 3856,
           "verification_status": "exact",
-          "generation_time": 0.31601884588599205,
-          "verification_time": 3.8290962129831314,
-          "objective_value": 34,
+          "generation_time": 0.527297168970108,
+          "verification_time": 0.6500364691019058,
+          "objective_value": 3856,
           "details": {
-            "point_count": 91,
-            "unordered_pair_count": 4095,
-            "distinct_positive_distances": 34,
-            "coordinate_field_degree": 2,
-            "minimal_polynomial_irreducible": true,
-            "real_root_isolated_by_sturm_count": 1,
+            "length": 16,
+            "alphabet_size": 65536,
+            "codeword_count": 3856,
+            "distinct_deletion_outputs": 32768,
+            "possible_deletion_outputs": 32768,
+            "pairwise_disjoint_deletion_outputs": true,
             "claimed_objective_ignored": true
           },
-          "eval_time": 4.150618556886911,
+          "eval_time": 1.1860318928956985,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -72,56 +103,73 @@
           }
         },
         "independent_quantity": {
-          "distance_count": 34,
-          "ordered_displacement_types": 330,
-          "audit_scope": "Saved rational and triangular-lattice witnesses; checker permits all real algebraic fields"
+          "code_size": 3856,
+          "distinct_outputs": 32768,
+          "method": "independent string slicing at each deletion index, with per-word duplicates removed"
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "parameters": {
-        "point_count": 91,
-        "ambient_space": "Euclidean plane R^2"
-      },
       "best_human": {
-        "value": 34,
-        "source": "Erdos and Fishburn (1996), Table 1, triangular lattice, s=6, n=91",
-        "url": "https://doi.org/10.1016/0012-365X(95)00153-N",
-        "date": "1996",
-        "ai_provenance": "not stated by the source",
-        "evidence_state": "coordinate construction reconstructed and exact score independently verified"
+        "value": 3856,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 16,
+          "correctable_errors": "one deletion"
+        },
+        "witness_file": "data/human/vt16_3856.json",
+        "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
+        "url": "https://m.mathnet.ru/php/archive.phtml?jrnid=at&option_lang=eng&paperid=11293&wshow=paper",
+        "source_location": "Varshamov and Tenengolts (1965) introduce the checksum class; Levenshtein establishes single-deletion correction; 2026 paper §2.2 states the code definition.",
+        "provenance": "Reconstructed directly from VT_0(16): sum(i*x_i) is 0 modulo 17.",
+        "ai_provenance": "Classical human construction; no generative-AI provenance.",
+        "actual_value": 3856,
+        "evidence_state": "The exact checker confirms no two codewords share any one-deletion output."
       },
       "best_public": {
-        "value": 34,
-        "source": "Erdos and Fishburn (1996), Table 1; best same-parameter explicit result found in the sources checked",
-        "url": "https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/Erdos2.pdf",
-        "date": "1996",
-        "ai_provenance": "not stated by the source",
-        "evidence_state": "reported construction reproduced from its formula; not a proof of optimality"
+        "value": 3856,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 16,
+          "correctable_errors": "one deletion"
+        },
+        "url": "https://arxiv.org/html/2504.00613v2",
+        "source_location": "§5.1, Table 1, VT_0(n) row, n=16",
+        "provenance": "Table records the classical VT_0(16) code size as 3856. This is a feasible-code record, not a claim that 3856 is the maximum.",
+        "ai_provenance": "Classical construction; source separately reports an AI-assisted rediscovery with the same size.",
+        "evidence_state": "The locally frozen code and exact deletion-output check reproduce the size."
       },
       "best_reproduced": {
-        "value": 34,
-        "program": "reference.py",
-        "witness": "data/reference/hexagon_n91.json",
-        "reproduced_coordinate_sha256": "0ad19d47fe6dbfb77f7456119cd1a09e80c05b20d900eb4e59f1dc2583b167ac",
-        "evidence_state": "exact field arithmetic verifies 91 distinct points and 34 distinct squared distances",
+        "value": 3856,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 16,
+          "correctable_errors": "one deletion"
+        },
+        "witness_file": "data/human/vt16_3856.json",
+        "witness_sha256": "f28bab01ad058ae1c17cd311d102f72fea1dad9cdc77815fd99a5f373eebf2ae",
+        "provenance": "Frozen VT_0(16) list independently compared with the checksum formula and fully verified.",
+        "ai_provenance": "The 2026 paper reports an AI-assisted priority-function rediscovery equivalent to VT_0; this task's witness is generated from the classical formula.",
+        "actual_value": 3856,
+        "evidence_state": "Exact pairwise check over all distinct deletion outputs.",
         "review_status": "reviewed_by_sol"
       },
-      "limitations": [
-        "The 34-distance construction is an upper bound on the minimum, not an exact optimum result.",
-        "The literature check did not locate an exact value for n=91; this survey is not exhaustive.",
-        "The checker handles exact real algebraic coordinates. Candidate programs that output only floating-point coordinates are invalid."
-      ]
+      "optimality_status": {
+        "lower_bound": 3856,
+        "upper_bound": 4202,
+        "state": "open; the paper says the VT maximum-size conjecture is proved only for lengths up to 11"
+      }
     }
   },
-  "checked_at": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T049-C01": {
-        "known_lower_bound": {
-          "value": 9,
-          "meaning": "Erdos 1946, Theorem 1: n-1 <= k(k+1) when k distinct distances are determined; for n=91, 90 <= k(k+1), so k >= 9",
-          "source": "https://www.cs.umd.edu/~gasarch/TOPICS/erdos_dist/erdos.pdf"
+        "ai_assisted_record": {
+          "source_location": "§5.1, Figure 3 and Table 1"
+        },
+        "highest_reported": {
+          "source_location": "§5.1, Table 1, VT_0(n) row, n=16",
+          "reproduction_status": "The reported feasible construction is reproduced exactly. The source gives an LP upper bound of 4202, so the finite maximum is not settled."
         }
       }
     }

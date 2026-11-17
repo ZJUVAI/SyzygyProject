@@ -1,64 +1,79 @@
-"""Seeded greedy vertex-extension search; it does not read reference assets."""
+"""Fixed-seed random search over integer-grid point sets."""
+
+import math
 import os
 import random
-
-from mathbench.search import search_steps
-
-
-def _has_k_clique(neighbors, size=5):
-    def visit(candidates, depth):
-        if depth == size:
-            return True
-        if candidates.bit_count() < size - depth:
-            return False
-        while candidates:
-            bit = candidates & -candidates
-            candidates ^= bit
-            v = bit.bit_length() - 1
-            if visit(candidates & neighbors[v], depth + 1):
-                return True
-        return False
-    return visit((1 << len(neighbors)) - 1, 0)
+import time
+from math import gcd
 
 
-def _valid(neighbors):
-    n = len(neighbors)
-    if _has_k_clique(neighbors):
-        return False
-    comp = [(((1 << n) - 1) ^ (1 << v) ^ neighbors[v]) for v in range(n)]
-    return not _has_k_clique(comp)
+CONFIG_ID = "T022-C01"
+POINT_COUNT = 17
+GRID = [(x, y) for x in range(-6, 7) for y in range(-6, 7)]
+ITERATION_LIMIT = 96
+
+
+def _line_key(p, q):
+    x1, y1 = p
+    x2, y2 = q
+    a, b, c = y1 - y2, x2 - x1, x1 * y2 - x2 * y1
+    divisor = gcd(gcd(abs(a), abs(b)), abs(c))
+    a, b, c = a // divisor, b // divisor, c // divisor
+    if next(value for value in (a, b, c) if value) < 0:
+        a, b, c = -a, -b, -c
+    return a, b, c
+
+
+def _score(points):
+    lines = {_line_key(points[i], points[j]) for i in range(len(points)) for j in range(i)}
+    exactly_three = 0
+    for a, b, c in lines:
+        incidence = sum(a * x + b * y + c == 0 for x, y in points)
+        exactly_three += incidence == 3
+    return exactly_three
+
+
+def _encode(points):
+    return {
+        "minimal_polynomial": [0, 1],
+        "isolating_interval": ["-1", "1"],
+        "points": [{"x": [x], "y": [y]} for x, y in points],
+    }
 
 
 def run_code():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = random.Random(seed)
-    best = [(1 << ((v - 1) % 5)) | (1 << ((v + 1) % 5)) for v in range(5)]
-    # Fixed iteration default; the shared runner still applies hard time limits.
-    attempts = search_steps(40)
-    attempted = 0
-    for _ in attempts:
-        n = len(best)
-        if n >= 45:
+    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds_text is not None:
+        seconds = float(seconds_text)
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + seconds
+
+    incumbent = [(i, i * i) for i in range(POINT_COUNT)]
+    incumbent_score = _score(incumbent)
+    iterations = 0
+    for _ in range(ITERATION_LIMIT):
+        if deadline is not None and time.monotonic() >= deadline:
             break
-        attempted += 1
-        row = 0
-        for v in range(n):
-            if rng.getrandbits(1):
-                row |= 1 << v
-        candidate = [x | ((row >> i & 1) << n) for i, x in enumerate(best)]
-        candidate.append(row)
-        if _valid(candidate):
-            best = candidate
-    time_budget = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+        candidate = rng.sample(GRID, POINT_COUNT)
+        score = _score(candidate)
+        iterations += 1
+        if score > incumbent_score:
+            incumbent, incumbent_score = candidate, score
     return {
-        "adjacency": [[w for w in range(len(best)) if row >> w & 1]
-                      for row in best],
+        **_encode(incumbent),
         "search_metadata": {
-            "algorithm": "seeded random one-vertex extension with exact K5 exclusion checks",
+            "algorithm": "fixed-seed random sampling of 17-point subsets of the integer 13x13 grid",
             "seed": seed,
-            "iterations_attempted": attempted,
-            "iteration_budget": 40,
-            "time_budget_seconds": float(time_budget) if time_budget is not None else None,
-            "vertex_cap": 45,
+            "iteration_limit": ITERATION_LIMIT,
+            "iterations": iterations,
+            "reference_data_read": False,
+            "search_seconds_cutoff": seconds_text,
         },
     }

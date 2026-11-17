@@ -1,37 +1,48 @@
-# T075：K4⁻-free 三元超图的最大边数
+# T075：长度 64 的周期二元序列能量
 
-## 目标
+## 定义与配置
 
-在固定顶点集 `{0,…,35}` 上选择尽可能多的三元边。每个四点子集最多含两条所选三元边。这等价于不含由四个顶点及其中任意三条三元边组成的 `K4⁻` 子超图。约束按普通子图定义，不要求诱导子图完全相同。
+序列为 `s_0,…,s_63 ∈ {−1,+1}`。对每个非零循环位移 `k=1,…,63`，定义
 
-配置 `T075-C01` 固定 `n=36`、边大小为 3，目标是最大化边数。校验器枚举全部 58,905 个四点子集，并重新计算边数。
+`C_k = Σ_{i=0}^{63} s_i s_{(i+k) mod 64}`。
 
-## 已知构造与界
+目标是最小化周期旁瓣能量 `E = Σ_{k=1}^{63} C_k²`。所有相关和与能量均为整数。此处使用周期边界，不采用非周期相关公式。
 
-Frankl–Füredi 的 `H6` 有 6 个顶点和 10 条边。将顶点分成六个大小为 6 的部分：先按每条 `H6` 边加入跨三部分的全部 `6³` 条边，再在每个部分中放入一个 `H6`。所得构造有 `10×6³+6×10=2,220` 条边。精确见证保存在 `data/human/h6_iterated_blowup_n36.json`；`human.py` 从公开模板独立重建。
+配置 T075-C01 固定 `N=64`。初始程序返回全 `+1` 序列，能量为 258048。
 
-Falgas-Ravry、Pikhurko、Vaughan 与 Volec 在 2023 年论文第 6.3 节给出 `H6` 的边集，并说明它的 blow-up 和迭代 blow-up 都是 `K4⁻`-free。该论文还指出普通 `K4⁻` Turán 密度未知，`2/7` 是猜想值。这里的固定 `n=36` 目标是普通有限边数问题。论文中的 codegree 结果及 2026 年关于 `K4^(3)` 完全四面体的 uniform Turán 结果都不等同于本配置。
+## 人类构造与公开结果
 
-无需文献即可验证的上界为 3,570：每条三元边属于 33 个四点集，每个四点集至多容纳两条边，所以 `33|E|≤2×C(36,4)`。因此本配置的已核实界为 `2,220≤ex(36,K4⁻)≤3,570`。截至 2026-11-06 的来源检索没有发现将此有限规模上界降至 2,220 的证明；这是一项有范围的来源检索结论。
+Tyler 和 Loftsson 的 NASA 报告表 2 给出长度 64 的十六进制序列 `B24FEAE7E4529CF0`。按最高有效位优先读取，`1` 映射为 `+1`，`0` 映射为 `−1`。本任务逐项复算得到周期能量 240，峰值旁瓣 4。该结果是冻结的人类方法对照。报告表中 `M=(240)`，括号表示作者认为可能存在更低值。表下注释 ZZ 引用 J. Watkins 1985 年 6 月的个人通信；本任务只记录该表中的序列，不对其最初发现者作超出原表的归属。
 
-## 人类基线与搜索
+Mertens 和 Bessenrodt 的 §4.2 表 4 对 `N=64` 报告 `ΔE=14`，即本任务能量 `E=16ΔE=224`。该行来自数值搜索，ground state 栏标为 `?`，所以没有最优性证明，也没有恢复其序列见证。该值单独列作公开报告结果；冻结参考仍用可复现的能量 240。
 
-`human.py` 重建上述公开的迭代 `H6` 构造，边数 2,220。原论文没有说明是否使用 AI 工具。
+来源：
 
-`init_program.py` 返回空超图作为简单冷启动。`baseline.py` 和 `evolution.py` 都从空边集开始，以不同种子随机排列全部三元候选边；若加入该边后没有四点集超过两条边，就接受它们。两者只使用任务规则和顶点标签，不读取人类或参考见证。
+- [Tyler and Loftsson, *Periodic Binary Sequences With Very Good Autocorrelation Properties*](https://ipnpr.jpl.nasa.gov/progress_report/42-82/82O.PDF)，TDA Progress Report 42-82，1985 年 4–6 月，第 143–158 页，表 2；[NASA NTRS 记录](https://ntrs.nasa.gov/citations/19860000930)。报告副本 SHA-256：`edc332b8a9410cb0d8f14d6db65225469f592c5096c88fa3e8051315282d63cf`。
+- [Mertens and Bessenrodt, *On the ground states of the Bernasconi model*](https://arxiv.org/abs/cond-mat/9707104)，§4.2，表 4。期刊版本：1998，DOI [10.1088/0305-4470/31/16/004](https://doi.org/10.1088/0305-4470/31/16/004)。
 
-`reference.py` 返回冻结的 2,220 边 `H6` 见证。没有发现更强的公开有限 `n=36` 构造或精确最优性证明。
+截至 2026-11-06 检查的来源，长度 64 的 224 仍只是数值结果，没有找到同一周期目标的闭合证明。Mertens 和 Bessenrodt 指出此类长度 `N=4t` 的穷举只做到 `N≤40`。此开放状态结论限于所查来源。后来的长度 64 非周期低能研究不改变本任务的周期定义。
 
-## English summary
+## 搜索与精确评分
 
-Choose as many 3-element edges as possible on the fixed vertex set `{0,…,35}`. Every 4-vertex set may contain at most two selected triples. This forbids `K4^-`, the 3-uniform hypergraph with three triples on four vertices, as an ordinary non-induced subhypergraph.
+检查器校验恰有 64 个整数 `−1` 或 `+1`，然后直接计算全部 63 个非零循环相关和、能量和峰值旁瓣。候选附带的成绩字段不会影响结果。
 
-Configuration `T075-C01` maximizes the edge count for `n=36`. The checker enumerates all 58,905 four-vertex sets and recomputes the edge count.
+传统搜索使用固定种子的多起点单比特模拟退火。每次翻转只用整数差量更新相关和；输出仍由独立检查器从头重算。默认四次重启，每次 5000 步。搜索只使用自身随机初值，不读取 NASA 或其他对照序列。初始构造、搜索、人类重建和固定参考分别由独立入口提供。
 
-Frankl and Füredi's `H6` has six vertices and ten edges. Partition the 36 vertices into six sets of size six. For every `H6` edge, add all `6³` cross-part triples; then place one `H6` inside each part. This iterated blow-up has `10×6³+6×10=2,220` edges. The exact witness is saved in `data/reference/`; `human.py` rebuilds it from the public template.
+默认生成限时 300 秒，验证限时 60 秒，内存 4 GiB，一个线程。当前配置已通过 Sol 验收（2026-11-06）。
 
-Section 6.3 of the 2023 paper by Falgas-Ravry, Pikhurko, Vaughan, and Volec gives the `H6` edge list and states that its blow-ups and iterated blow-ups are `K4^-`-free. The paper also states that the ordinary `K4^-` Turán density is unknown and conjectured to be `2/7`. The finite `n=36` task is the ordinary edge-count problem. Its result is distinct from codegree results and from the 2026 uniform Turán result for the complete tetrahedron `K4^(3)`.
+## English
 
-A direct double count gives the verified upper bound 3,570: each triple lies in 33 four-sets, and each four-set contains at most two selected triples, so `33|E|≤2×C(36,4)`. The verified range is `2,220≤ex(36,K4^-)≤3,570`. The source review through 2026-11-06 found no proof closing this finite gap. This is a bounded literature review, not an exhaustive claim.
+### Definition
 
-`human.py` rebuilds the published iterated `H6` construction and obtains 2,220 edges. The paper does not state whether AI tools were used. `init_program.py` returns the empty hypergraph. The baseline and evolution programs start from the empty set and use seeded random greedy additions. They read no human or reference witness. `reference.py` returns the frozen 2,220-edge witness.
+The sequence is `s_0,…,s_63 ∈ {−1,+1}`. For each nonzero cyclic shift `k=1,…,63`, define `C_k = Σ_i s_i s_(i+k mod 64)`. The objective is to minimize the periodic sidelobe energy `E = Σ_{k=1}^{63} C_k²`. All correlations and energies are exact integers. The boundary is periodic; the aperiodic formula is not used.
+
+The simple initial program returns the all-`+1` sequence, with energy 258048.
+
+### Human and public results
+
+Table 2 of the NASA report by Tyler and Loftsson gives the length-64 hex sequence `B24FEAE7E4529CF0`. Read most-significant bit first and map `1` to `+1` and `0` to `−1`. Exact recomputation gives periodic energy 240 and peak sidelobe 4. This is the frozen reproduced human baseline. The table prints `M=(240)`; parentheses indicate that the authors thought a lower value might exist. Footnote ZZ cites J. Watkins, personal communication, June 1985. This task records the sequence as printed and does not make a stronger claim about its original discoverer.
+
+Section 4.2, Table 4 of Mertens and Bessenrodt reports `ΔE=14` at `N=64`, which gives this task's energy `E=16ΔE=224`. It is a numerical-search result. The ground-state column is `?`; no optimality proof or sequence witness was recovered. We record 224 as a reported public value and keep 240 as the reproducible reference.
+
+The checker validates all 64 entries and recomputes every off-peak periodic correlation, energy, and peak sidelobe with integer arithmetic. Search uses seeded multistart single-bit simulated annealing and reads no comparison sequence. The task is accepted by Sol on 2026-11-06.

@@ -1,126 +1,111 @@
-import json
-from fractions import Fraction
+"""Exact checks for the fixed Q9 induced-path task."""
+
+import hashlib
+import os
 from pathlib import Path
+import sys
 
 import pytest
 
-from tasks.t041.baseline import run_code as baseline
-from tasks.t041.check import validate
-from tasks.t041.evolution import run_code as evolution
-from tasks.t041.human import run_code as human
-from tasks.t041.init_program import run_code as initial
-from tasks.t041.reference import run_code as reference
+from tasks.t041.check import PARAMETERS, validate
 
-ROOT = Path(__file__).parent
-CONFIG = {
-    "id": "T041-C01",
-    "parameters": {
-        "square_count": 17,
-        "container": "closed unit square [0,1]^2",
-        "orientation": "arbitrary",
-        "interior_disjoint": True,
-        "objective": "sum of the 17 side lengths",
-    },
-}
+ROOT = Path(__file__).resolve().parent
+CONFIG = {"parameters": PARAMETERS}
 
 
-def test_initial_human_and_search_are_valid():
-    assert validate(initial(), CONFIG, strict=True)["objective"] == "1"
-    assert validate(human(), CONFIG, strict=True)["objective"] == "4"
-    search = baseline()
-    checked = validate(search, CONFIG, strict=True)
-    assert checked["objective"] == "4"
-    assert search["search_metadata"]["iterations_attempted"] == 32
-    assert search["search_metadata"]["seed"] == 6
+def _replay(transitions):
+    vertices = [0]
+    for coordinate in transitions:
+        vertices.append(vertices[-1] ^ (1 << coordinate))
+    return vertices
 
 
-def test_evolution_runner_entry_and_fixed_reference():
-    assert validate(evolution(), CONFIG, strict=True)["objective"] == "4"
-    expected = json.loads((ROOT / "data" / "public_witness.json").read_text())
-    assert reference() == expected
-    result = validate(reference(), CONFIG, strict=True)
-    assert result["objective"] == "2190452873/547596200"
-    assert result["details"]["pairs_checked"] == 136
+def test_fixed_reference_and_human_witnesses_are_exact():
+    from tasks.t041.human import run_code as human_run
+    from tasks.t041.reference import run_code as reference_run
+
+    human = human_run()
+    reference = reference_run()
+    assert validate(human, CONFIG, strict=True)["objective"] == 190
+    assert validate(reference, CONFIG, strict=True)["objective"] == 191
+    for name, expected in (("wynn_q9_190.json", "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882"),
+                           ("orland_v3_q9_191.json", "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4")):
+        path = ROOT / "data/reference" / name
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
+        import json
+        witness = json.loads(path.read_text())
+        assert witness["vertices"] == _replay(witness["transitions"])
+        assert witness["length_edges"] == len(witness["transitions"])
 
 
-def test_human_archive_is_exact_and_fully_checked():
-    witness = json.loads((ROOT / "data" / "human_grid_witness.json").read_text())
-    assert human()["squares"] == witness["squares"]
-    result = validate(witness, CONFIG, strict=True)
-    assert Fraction(result["objective"]) == 15*Fraction(1, 4) + 2*Fraction(1, 8) == 4
-    assert result["details"]["corners_checked"] == 68
+def test_exact_score_independent_recalculation_and_claimed_score_ignored():
+    from tasks.t041.reference import run_code
+
+    solution = run_code()
+    vertices = solution["vertices"]
+    independently_counted_edges = sum((u ^ v).bit_count() == 1 for u, v in zip(vertices, vertices[1:]))
+    assert independently_counted_edges == 191
+    for i, u in enumerate(vertices):
+        for j in range(i + 2, len(vertices)):
+            assert (u ^ vertices[j]).bit_count() != 1
+    checked = validate(solution, CONFIG, strict=True)
+    assert checked["objective"] == independently_counted_edges
+    assert validate({**solution, "objective": -1}, CONFIG) == checked
+    assert validate({**solution, "score": float("nan")}, CONFIG) == checked
+    assert validate({**solution, "claimed_score": {"forged": True}}, CONFIG) == checked
 
 
-def test_claimed_score_is_ignored():
-    item = reference()
-    item["claimed_score"] = "999999999999999999"
-    item["objective"] = "999999999999999999"
-    checked = validate(item, CONFIG, strict=True)
-    assert checked["objective"] == "2190452873/547596200"
-    assert checked["details"]["claimed_objective_ignored"] is True
+def test_checker_rejects_bad_vertices_and_chords():
+    from tasks.t041.init_program import run_code
+
+    valid = run_code()
+    assert validate(valid, CONFIG)["objective"] == 9
+    with pytest.raises(ValueError, match="at least one edge"):
+        validate({"vertices": [0]}, CONFIG)
+    with pytest.raises(ValueError, match="range"):
+        validate({"vertices": [-1, 0]}, CONFIG)
+    with pytest.raises(ValueError, match="range"):
+        validate({"vertices": [0, 512]}, CONFIG)
+    with pytest.raises(ValueError, match="bool"):
+        validate({"vertices": [False, 1]}, CONFIG)
+    with pytest.raises(ValueError, match="integers"):
+        validate({"vertices": [0, 1.0]}, CONFIG)
+    with pytest.raises(ValueError, match="integers"):
+        validate({"vertices": [0, float("nan")]}, CONFIG)
+    with pytest.raises(ValueError, match="distinct"):
+        validate({"vertices": [0, 1, 0]}, CONFIG)
+    with pytest.raises(ValueError, match="not adjacent"):
+        validate({"vertices": [0, 3]}, CONFIG)
+    with pytest.raises(ValueError, match="nonconsecutive"):
+        validate({"vertices": [0, 1, 3, 2]}, CONFIG)
+    with pytest.raises(ValueError, match="unsupported"):
+        validate(valid, {"parameters": {**PARAMETERS, "dimension": 8}})
 
 
-def test_touching_is_valid_and_exact_orientation_is_checked():
-    witness = human()
-    assert validate(witness, CONFIG, strict=True)["objective"] == "4"
-    tilted = reference()
-    assert tilted["squares"][-1]["cos"] == "255/257"
-    assert tilted["squares"][-1]["sin"] == "32/257"
-    assert validate(tilted, CONFIG, strict=True)["verification_status"] == "exact"
+def test_all_five_program_entries_return_valid_paths(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T041-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "2")
+    from tasks.t041.init_program import run_code as init_run
+    from tasks.t041.baseline import run_code as baseline_run
+    from tasks.t041.human import run_code as human_run
+    from tasks.t041.reference import run_code as reference_run
+    from tasks.t041.evolution import run_code as evolution_run
+
+    results = []
+    for run in (init_run, baseline_run, human_run, reference_run, evolution_run):
+        result = run()
+        assert validate(result, CONFIG, strict=True)["verification_status"] == "exact"
+        results.append(result)
+    assert len(results[3]["vertices"]) == 192
+    assert len(results[2]["vertices"]) == 191
 
 
-@pytest.mark.parametrize("mutate", [
-    lambda s: s["squares"].pop(),
-    lambda s: s["squares"][0].update(x="-1/10"),
-    lambda s: s["squares"][1].update(side="0"),
-    lambda s: s["squares"][1].update(x=s["squares"][0]["x"], y=s["squares"][0]["y"], side=s["squares"][0]["side"]),
-    lambda s: s["squares"][0].update(side=True),
-    lambda s: s["squares"][0].update(x=float("nan")),
-    lambda s: s["squares"][0].update(y=float("inf")),
-    lambda s: s["squares"][0].update(y=float("-inf")),
-    lambda s: s["squares"][0].update(cos="1/2", sin="1/2"),
-])
-def test_invalid_witnesses_are_rejected(mutate):
-    item = human()
-    mutate(item)
-    with pytest.raises(ValueError):
-        validate(item, CONFIG, strict=True)
+def test_runner_error_and_timeout_controls():
+    from mathbench.evaluate import _run
 
-
-def test_candidate_runtime_error_and_timeout_are_reported(tmp_path, monkeypatch):
-    import mathbench.registry as registry
-    from tasks.t041.evaluator import evaluate
-
-    # The main reviewer registers new IDs only after admission. Make this
-    # task-local test exercise the worker without changing the shared registry.
-    monkeypatch.setattr(registry, "INITIAL_TASKS", registry.INITIAL_TASKS + ("T041",))
-
-    valid_solution = initial()
-    valid_solution["objective"] = "999999999999"
-    valid_program = tmp_path / "valid_program.py"
-    valid_program.write_text(
-        "import json\n"
-        f"SOLUTION = {json.dumps(valid_solution)!r}\n"
-        "def run_code():\n    return json.loads(SOLUTION)\n"
-    )
-    valid = evaluate(valid_program, "T041-C01", strict=True,
-                     generation_timeout=300, verification_timeout=60)
-    assert valid["validity"] == 1.0
-    assert valid["objective"] == "1"
-    assert valid["combined_score"] == 0.25
-    assert valid["details"]["claimed_objective_ignored"] is True
-
-    error_program = tmp_path / "error_program.py"
-    error_program.write_text("def run_code():\n    raise RuntimeError('deliberate')\n")
-    error = evaluate(error_program, "T041-C01",
-                     generation_timeout=300, verification_timeout=60)
-    assert error["validity"] == 0.0
-    assert error["objective"] is None
-    assert error["error_category"] == "program_error"
-
-    timeout_program = tmp_path / "timeout_program.py"
-    timeout_program.write_text("import time\ndef run_code():\n    time.sleep(3)\n    return {}\n")
-    timeout = evaluate(timeout_program, "T041-C01", generation_timeout=0.25)
-    assert timeout["validity"] == 0.0
-    assert timeout["objective"] is None
-    assert timeout["error_category"] == "generation_timeout"
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T041 worker failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T041 worker failure')"], env, 5)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)

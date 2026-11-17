@@ -1,47 +1,69 @@
-# T029：有理数域上的 3×3 矩阵乘法秩
-
-## 中文
-
-### 数学定义与配置
-
-配置 `T029-C01` 固定两个 3×3 矩阵，系数域为有理数域 \(\mathbb Q\)。候选给出若干项
-
-\[
-\alpha_s(A)\,\beta_s(B)\,\gamma_s,
-\]
-
-其中 \(\alpha_s\) 只依赖输入矩阵 \(A\)，\(\beta_s\) 只依赖输入矩阵 \(B\)，\(\gamma_s\) 是输出矩阵的系数向量。每个因子按行优先排列成 9 个有理数。全部项相加后必须精确等于 \(AB\)。目标是最小化项数，也就是双线性算法中的标量乘法数。每项系数可为任意有理数，不设置分母或系数大小限制。
-
-评测器用精确 `Fraction` 算术重算 729 个张量系数。输出采用 \(C_{ik}=\sum_j A_{ij}B_{jk}\) 的顺序。整数和形如 `"-3/2"` 的字符串是 JSON 表示；本地接口也接受 `Fraction`。布尔值、浮点数、零因子和错误张量都会拒绝。27 项是基于学校算法种子的资源上限，不是最优性下界。
-
-### 基线和见证
-
-`init_program.py` 是标准 27 次乘法程序。`baseline.py` 对左上角 2×2 子问题使用 Strassen 七项公式，其余标量乘积直接计算，共 26 项。两者均不读取对照数据。`human.py` 解析 Lille 公布的 Laderman Maple 张量数据，令非零参数 \(\lambda=1\)，并按源文件表达式对第三因子转置。`reference.py` 读取归一化后的 23 项见证。
-
-### 来源与未解状态
-
-Laderman 于 1976 年给出 23 次乘法的非交换双线性算法。Université de Lille 的[算法页](https://fmm.univ-lille.fr/3x3x3.html)列出该算法及 [Maple 张量表示](https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2)。原始压缩文件保存在 `data/source/`，重建的有理系数保存在 `data/laderman_rank23.json`。
-
-Tomar 的[2026 年论文第 1 节](https://arxiv.org/html/2610.11823v3)明确说，特征零域上的秩仍未知，范围为 19 至 23。该文证明的是 \(\mathbb F_2\) 上秩为 23，并推出整数系数算法至少需要 23 次乘法。这些结论不能推出任意有理系数算法的秩为 23。故本配置在 \(\mathbb Q\) 上仍开放，23 只是已复现上界。
-
-**状态：已通过 Sol 验收（2026-11-06）。**
+# T029 — Minimum convex cover of `socg_fixed92`
 
 ## English
 
-### Definition and configuration
+### Problem
 
-`T029-C01` asks for the bilinear rank of multiplying two 3×3 matrices over the rational field \(\mathbb Q\). A term is \(\alpha_s(A)\beta_s(B)\gamma_s\). The first linear form depends only on input `A`; the second depends only on input `B`; the third gives coefficients for the output matrix. Each factor is a row-major vector of nine rational values. The sum of all terms must equal `AB` exactly. The objective is to minimize the number of terms, which is the scalar multiplication count of the bilinear algorithm. Coefficients may be any rational numbers. There is no denominator or magnitude limit.
+Cover the fixed `socg_fixed92` region with the fewest convex polygons. Each cover polygon must stay inside the region. The cover pieces may overlap. The score is the number of pieces, and lower is better.
 
-The checker uses exact `Fraction` arithmetic and checks all 729 tensor coefficients. Its output convention is `C[i,k] = sum_j A[i,j] * B[j,k]`. JSON inputs may use integers or rational strings such as `"-3/2"`; the local API also accepts `Fraction` values. Booleans, floats, zero factors, and an incorrect tensor are rejected. The 27-term limit is a resource cap from the schoolbook seed, not a lower bound on the optimum.
+The official input is a simple polygon with 92 boundary vertices and no holes. Its exact bytes are stored in `data/source/socg_fixed92.instance.json` and checked by SHA256. The full mathematical problem allows arbitrary real coordinates. A solution encodes its finite coordinate tuple in one real algebraic number field `Q(alpha)`: an irreducible integer polynomial for `alpha`, a rational isolating interval, and rational polynomials in `alpha` for each x and y coordinate. This representation does not cap algebraic degree or coefficient size. It covers the full optimization domain because the finite-piece feasibility statement is a first-order formula over the reals with rational input; if a real-coordinate cover exists, real-closed-field transfer gives an algebraic-coordinate cover of the same size.
 
-### Baselines and witness
+The exact checker validates the field, convexity, and equality of regions. It builds the arrangement of every input and cover edge, decomposes the plane into vertical cells, and checks each open cell with exact algebraic arithmetic. The sets are closed, so equality of the interiors gives equality of the regions. It does not rely on sampling or floating-point tolerances.
 
-`init_program.py` gives the elementary 27-product algorithm. `baseline.py` applies Strassen's seven-product formula to the upper-left 2×2 subproblem and computes the other scalar products directly, for 26 terms. Neither reads comparison data. `human.py` parses Laderman's public Maple tensor data from Lille, sets its nonzero parameter to `lambda=1`, and transposes the third factor as required by the source expression. `reference.py` reads the normalized 23-term witness.
+### Fixed evidence
 
-### Sources and open status
+The Shadoks CG:SHOP 2023 viewer reports 15 pieces for `socg_fixed92`. Its archived SVG rounds the displayed coordinates. We inverse-transform them and infer nearby integer coordinates, each within 0.000356 of the displayed value. The rounded SVG does not identify the original submitted coordinates uniquely. The inferred integer polygons form a feasible 15-piece cover and pass exact vertical-decomposition validation. A separate audit by the main reviewer also triangulated the region and checked containment and uncovered area with exact fractions.
 
-Laderman published a noncommutative 23-multiplication algorithm in 1976. The Université de Lille [algorithm page](https://fmm.univ-lille.fr/3x3x3.html) links to the [Maple tensor representation](https://fmm.univ-lille.fr/3x3x3_tensor.mpl.bz2). The compressed source is archived under `data/source/`; the reconstructed rational factors are in `data/laderman_rank23.json`.
+The viewer's `Optimal` CPLEX status refers to a set-cover model over its generated candidate collection. It is not a proof that 15 pieces is optimal over all convex polygons. The official CG:SHOP ranking is an aggregate team ranking; it does not publish each team's value for this instance. The viewer is therefore recorded as a public 15-piece result, but the checked public-record inventory for this instance is incomplete. No global optimum proof for this instance was found in the sources checked on 2026-11-06. In particular, the 2026 rotten-potato paper gives an approximation algorithm; it does not close this fixed instance.
 
-Section 1 of Tomar's [2026 paper](https://arxiv.org/html/2610.11823v3) states that the rank over characteristic-zero fields remains unknown, between 19 and 23. The paper proves rank 23 over \(\mathbb F_2\) and derives the same lower bound for integer-coefficient algorithms. Those results do not settle arbitrary rational coefficients. The rank over \(\mathbb Q\) remains open; 23 is a reproduced upper bound.
+The Shadoks and official challenge sources do not state whether AI tools were used to produce this witness. Its provenance is recorded as undisclosed. The contest itself only accepted rational solution coordinates. This task extends the mathematical domain to all real-coordinate covers; the rational 15-piece witness remains valid in that domain.
 
-**Status: accepted by Sol on 2026-11-06.**
+### Programs and evidence
+
+- `init_program.py` starts from an exact ear-clipping triangulation. It uses only the public input file.
+- `baseline.py` applies seeded greedy convex-hull merges to that triangulation.
+- `evolution.py` runs two seeded greedy-merge restarts. Neither search reads the human or reference witness.
+- `human.py` rebuilds the feasible integer cover inferred from the rounded Shadoks viewer.
+- `reference.py` decodes the same published polygons from the archived viewer HTML.
+- `check.py` recomputes the piece count after exact full-region validation.
+
+Use `.venv/bin/python -m pytest tasks/t029 -q` to run the task tests. The task is `accepted_by_sol`.
+
+### Sources
+
+- [CG:SHOP 2023 official competition and ranking](https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2023/)
+- [Shadoks 2023 solution viewer](https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/)
+- [Shadoks Approach to Convex Covering, SoCG 2023](https://doi.org/10.4230/LIPIcs.SoCG.2023.67)
+- [CG:SHOP Challenge 2023 overview, 2026](https://doi.org/10.57717/cgt.v5i4.115)
+- [Covering Polygons is Even Harder](https://arxiv.org/abs/2106.02335)
+- [Peeling Rotten Potatoes for a Faster Approximation of Convex Cover](https://arxiv.org/abs/2604.17983)
+- [An Overview of Minimum Convex Cover and Maximum Hidden Set, v2](https://arxiv.org/abs/2403.01354v2)
+
+## 中文
+
+### 问题
+
+用尽量少的凸多边形覆盖固定区域 `socg_fixed92`。每个覆盖片必须位于输入区域内。覆盖片之间允许重叠。目标是多边形数量，越少越好。
+
+官方输入是一个有 92 个边界顶点、没有洞的简单多边形。精确输入保存在 `data/source/socg_fixed92.instance.json`，检查器会核对 SHA256。数学目标允许任意实坐标。解用一个实代数数域 `Q(alpha)` 编码全部坐标：给出 `alpha` 的不可约整数多项式、有理隔离区间，以及每个坐标关于 `alpha` 的有理系数多项式。表示没有代数次数或系数大小上限。这个表示覆盖完整优化域：有限个凸片的可行性可写为有理输入上的实数一阶公式。若实坐标解存在，实闭域转移给出同数量的代数坐标解。
+
+精确检查器验证数域、凸性和区域相等。它为输入边和覆盖边建立完整排列，用竖直分解形成所有开单元，再用精确代数运算检查每个单元。区域和覆盖片都是闭集，因此内部相等可推出区域相等。检查器不使用采样或浮点容差。
+
+### 固定证据
+
+Shadoks 的 CG:SHOP 2023 查看器报告 `socg_fixed92` 可用 15 个凸片覆盖。存档 SVG 会舍入显示坐标。我们逆变换坐标并推断附近的整数坐标，误差小于 0.000356。舍入后的 SVG 不能唯一确定原始提交坐标。推断得到的整数多边形构成可行的 15 片覆盖，并通过精确竖直分解验证。主审还用另一种精确分数方法对区域三角化，并核对包含关系和未覆盖面积。
+
+查看器里的 CPLEX `Optimal` 只表示在它生成的候选集合上，集合覆盖模型达到最优。它不能证明所有凸多边形组成的区域覆盖全局最优。官方 CG:SHOP 排名是各队总分，不公开每队在这个实例上的数量。因此我们把查看器中的 15 记录为公开结果，但注明该实例的公开纪录清单不完整。截至 2026-11-06 所检查来源，没有找到此实例的全局最优证明。2026 年的 rotten-potato 论文给出近似算法，没有解决这个固定实例。
+
+Shadoks 与竞赛来源没有说明该见证是否使用 AI 工具，故 AI 来源记为未披露。竞赛只接受有理坐标；本任务采用完整实坐标目标。有理坐标的 15 片见证在完整目标中仍然可行。
+
+### 程序和记录
+
+- `init_program.py` 从精确耳切三角化开始，只读取公开输入。
+- `baseline.py` 对三角化结果进行带种子的贪心凸包合并。
+- `evolution.py` 从三角化运行两次带种子的贪心搜索。搜索不读取人类见证或参考见证。
+- `human.py` 重建从 Shadoks 舍入图中推断出的可行整数坐标覆盖。
+- `reference.py` 从存档网页解析并重建同一公开构造。
+- `check.py` 在完整精确验证后重算凸片数量。
+
+运行 `.venv/bin/python -m pytest tasks/t029 -q` 可执行任务测试。当前状态为 `accepted_by_sol`。

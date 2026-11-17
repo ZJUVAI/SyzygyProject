@@ -1,14 +1,12 @@
-"""Decode the pinned public 537 certificate by Chen, Zhu, and Long."""
-
+"""Load the fixed 19-Steiner-point comparison witness."""
+import json
+import os
 from pathlib import Path
 
 
 def run_code():
-    lines = (Path(__file__).parent / "data" / "chen_zhu_long_537_certificate.col").read_text().split()
-    if len(lines) != 539:
-        raise ValueError("certificate must contain a header and 537 color assignments")
-    n, color_count = map(int, lines[:2])
-    colors = [int(value) for value in lines[2:]]
-    if n != 537 or color_count != 6 or len(colors) != n:
-        raise ValueError("certificate header or assignment length does not match the pinned 537 witness")
-    return {"n": n, "colors": colors}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T026-C01") != "T026-C01":
+        raise ValueError("unsupported T026 configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    path = Path(__file__).with_name("data") / "reference" / "ortho40_solution.json"
+    return json.loads(path.read_text(encoding="utf-8"))

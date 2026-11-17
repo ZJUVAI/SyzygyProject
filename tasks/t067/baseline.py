@@ -1,66 +1,56 @@
-"""Seeded greedy packing search over all weight-five 17-bit words."""
+"""Seeded randomized greedy construction; it never reads reference data."""
 
-from itertools import combinations
 import os
 import random
-import time
 
 from mathbench.search import search_steps
 
 
-def _candidates():
-    words = []
-    for positions in combinations(range(17), 5):
-        word = 0
-        for position in positions:
-            word |= 1 << position
-        words.append(word)
-    return words
+COLOR_LIMIT = 6
+PLACEMENT_BUDGET = 50_000
 
 
-def _greedy(order):
-    selected = []
-    for word in order:
-        if all((word ^ old).bit_count() >= 4 for old in selected):
-            selected.append(word)
-    return selected
+def _can_extend(colors, number, color):
+    # For x+y=number, x<=y enumerates each unordered pair once, including x=y.
+    for x in range(1, number // 2 + 1):
+        y = number - x
+        if colors[x - 1] == color and colors[y - 1] == color:
+            return False
+    return True
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T067-C01") != "T067-C01":
-        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    restarts = max(1, min(20, int(os.environ.get("MATHBENCH_RESTARTS", "8"))))
-    candidates = _candidates()
-    rng = random.Random(seed ^ 0x068B)
-    best = [candidates[0]]
-    start = time.monotonic()
-    iterations = 0
-    for _ in search_steps(restarts):
-        order = list(candidates)
-        rng.shuffle(order)
-        candidate = _greedy(order)
-        if len(candidate) > len(best):
-            best = candidate
-        iterations += 1
+    rng = random.Random(seed)
+    requested_seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    best = [0, 1, 1, 0]
+    placements = 0
+    restarts = 1
+    colors = []
+    for _ in search_steps(PLACEMENT_BUDGET):
+        number = len(colors) + 1
+        available = [color for color in range(COLOR_LIMIT) if _can_extend(colors, number, color)]
+        if not available:
+            if len(colors) > len(best):
+                best = colors
+            colors = []
+            restarts += 1
+            number = 1
+            available = list(range(COLOR_LIMIT))
+        colors.append(rng.choice(available))
+        placements += 1
+    if len(colors) > len(best):
+        best = colors
     return {
-        "codewords": [format(word, "017b") for word in best],
+        "n": len(best),
+        "colors": best,
         "search_metadata": {
-            "algorithm": "random-order greedy independent-set packing on the fixed weight-five conflict graph",
+            "algorithm": "seeded randomized sequential greedy coloring with restarts",
             "seed": seed,
-            "candidate_words": len(candidates),
-            "restarts_requested": restarts,
-            "restarts_run": iterations,
-            "best_size": len(best),
-            "generation_seconds": time.monotonic() - start,
-            "budget": {
-                "mode": "fixed restart count unless MATHBENCH_SEARCH_SECONDS is set",
-                "runner_generation_limit_seconds": 300,
-            },
+            "placements": placements,
+            "placement_budget": PLACEMENT_BUDGET,
+            "restarts": restarts,
+            "wall_clock_cutoff_seconds": requested_seconds,
+            "reference_data_read": False,
         },
     }
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))

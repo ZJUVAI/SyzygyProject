@@ -1,79 +1,104 @@
-from mathbench.search import search_deadline, search_steps
-"""Bounded simulated annealing on systematic binary generator matrices."""
-import math
+"""Deterministic area-preserving-size mutation and B-code skyline search."""
 import os
 import random
-import time
+import re
+from math import isqrt
 
-N, K = 68, 15
+from tasks.t009.builder import tile_bouwkamp_line
+from tasks.t009.check import CONFIG_ID, FROZEN_CONFIG, validate
 
-
-def _make_systematic(seed, n=N, k=K):
-    rng = random.Random(seed)
-    rows=[]
-    for i in range(k):
-        row=1 << i
-        for j in range(k, n):
-            if rng.getrandbits(1):
-                row |= 1 << j
-        rows.append(row)
-    return rows
-
-
-def _distance(rows, n=N, k=None):
-    """Exact minimum weight over all nonzero linear combinations."""
-    k = len(rows) if k is None else k
-    words=[0] * (1 << k)
-    best=n+1
-    for mask in range(1, 1 << k):
-        bit=mask & -mask
-        index=bit.bit_length()-1
-        words[mask]=words[mask ^ bit] ^ rows[index]
-        weight=bin(words[mask]).count('1')
-        if weight < best:
-            best=weight
-    return best
+# This weak seed came from an independent run of the general network method.
+# No human construction, comparison B-code, or reference witness is read here.
+_OWN_BCODE = "38 4755 4755 (2429,2326)(103,657,1566)(1092,502,384,554)(118,96,170)(22,74)(590,52)(538,969)(1234,555,431)(60,226,417,863)(124,803,367,166)(679)(201,191)(10,152,446)(436,142)(294)"
+_OWN_GROUPS = tuple(
+    tuple(map(int, group.split(",")))
+    for group in re.findall(r"\(([^)]*)\)", _OWN_BCODE)
+)
+LAST_SEARCH_STATS = {}
 
 
-def _mutate_parity(rows, rng, max_flips=4, n=N, k=K):
-    """Flip 1..max_flips entries in P of [I|P], preserving rank."""
-    candidate=rows[:]
-    count=rng.randint(1, max_flips)
-    for _ in range(count):
-        row=rng.randrange(k)
-        col=rng.randrange(k, n)
-        candidate[row] ^= 1 << col
-    return candidate
+def _size_mutations():
+    """All one-side replacements changing outer area to a nearby square."""
+    sizes = [size for group in _OWN_GROUPS for size in group]
+    side = 4755
+    result = []
+    # This finite neighborhood is a search range, not a candidate-domain cap.
+    for delta in range(-1000, 1001):
+        target = side + delta
+        if delta == 0 or target <= 0:
+            continue
+        target_area_delta = target * target - side * side
+        for index, old in enumerate(sizes):
+            new_square = old * old + target_area_delta
+            if new_square <= 0:
+                continue
+            new = isqrt(new_square)
+            if new * new != new_square or new <= 0 or new > target:
+                continue
+            if new in sizes[:index] or new in sizes[index + 1 :]:
+                continue
+            result.append((delta, index, old, new))
+    return tuple(result)
+
+
+_MUTATIONS = _size_mutations()
 
 
 def run_code():
-    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T009-C01')
-    if config_id != 'T009-C01': raise ValueError('unsupported configuration')
-    n,k=N,K
-    seed=int(os.environ.get('MATHBENCH_SEED','0'))
-    rng=random.Random(seed)
-    current=_make_systematic(seed,n,k)
-    current_d=_distance(current,n,k)
-    best=current[:]
-    best_d=current_d
-    budget=max(0.0, min(float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2')), 30.0))
-    deadline = search_deadline()
-    steps=0
-    attempts = 60
-    steps=0
-    for _attempt in search_steps(attempts):
-        candidate=_mutate_parity(current, rng, n=n, k=k)
-        candidate_d=_distance(candidate,n,k)
-        steps += 1
-        steps += 1
-        if candidate_d > best_d:
-            best,best_d=candidate[:],candidate_d
-        # A cooling schedule permits occasional downhill moves to escape plateaus.
-        temperature=max(0.15, 2.0 * (1.0 - min(steps, 200) / 200.0))
-        delta=candidate_d-current_d
-        if delta >= 0 or rng.random() < math.exp(delta/temperature):
-            current,current_d=candidate,candidate_d
-    matrix=[[((row >> j) & 1) for j in range(n)] for row in best]
-    return {'generator_matrix':matrix, 'search_metadata': {
-        'algorithm':'simulated annealing over systematic parity matrices',
-        'iterations':steps, 'seed':seed}}
+    global LAST_SEARCH_STATS
+    if os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID) != CONFIG_ID:
+        raise ValueError("unsupported T009 configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    rounds = int(os.environ.get("T009_SEARCH_ITERS", "40"))
+    if not 0 <= rounds <= 1000:
+        raise ValueError("T009_SEARCH_ITERS must be in 0..1000")
+    randomizer = random.Random(seed)
+    best = tile_bouwkamp_line(_OWN_BCODE)
+    best_value = validate(best, FROZEN_CONFIG)["objective"]
+    proposed_sides = set()
+    build_successes = 0
+    valid_candidates = 0
+    for _ in range(rounds):
+        if not _MUTATIONS:
+            break
+        delta, index, old, new = randomizer.choice(_MUTATIONS)
+        target = 4755 + delta
+        proposed_sides.add(target)
+        groups = [list(group) for group in _OWN_GROUPS]
+        flat_index = 0
+        replaced = False
+        for group in groups:
+            if flat_index <= index < flat_index + len(group):
+                group[index - flat_index] = new
+                replaced = True
+                break
+            flat_index += len(group)
+        if not replaced:
+            continue
+        randomizer.shuffle(groups)
+        for group in groups:
+            randomizer.shuffle(group)
+        code = f"38 {target} {target} " + "".join(
+            "(" + ",".join(map(str, group)) + ")" for group in groups
+        )
+        try:
+            candidate = tile_bouwkamp_line(code)
+            build_successes += 1
+            value = validate(candidate, FROZEN_CONFIG)["objective"]
+            valid_candidates += 1
+        except (ValueError, IndexError):
+            continue
+        if value < best_value:
+            best, best_value = candidate, value
+    LAST_SEARCH_STATS = {
+        "iterations_requested": rounds,
+        "size_set_and_outer_side_proposals": rounds,
+        "distinct_proposed_outer_sides": sorted(proposed_sides),
+        "skyline_build_successes": build_successes,
+        "valid_candidates": valid_candidates,
+        "best_objective": best_value,
+        "baseline_fallback_used": best_value == 4755,
+        "mutation_pool_size": len(_MUTATIONS),
+        "seed": seed,
+    }
+    return best

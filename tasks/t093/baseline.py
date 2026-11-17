@@ -1,103 +1,88 @@
-"""Bounded random greedy placement search; it reads only the public instance."""
-
-import math
+"""Bounded randomized first-improvement pair-swap search; no witness reads."""
 import os
 import random
-import time
+import math
+import gzip
+from pathlib import Path
+from mathbench.search import search_steps
 
-from tasks.t093.check import CONFIG_ID, PARAMETERS, placement_geometry
-from tasks.t093.instance import load_instance, polygon_bbox
+N = 256
+ITERATION_LIMIT = 10_000
 
 
-CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS, "direction": "maximize"}
+def initial_permutation():
+    """Return the deterministic identity seed without opening any task data."""
+    return list(range(N))
 
 
-def _greedy_trial(data, rng, attempts_per_copy, deadline):
-    copies = []
-    for item_id, item in enumerate(data["items"]):
-        area2 = abs(sum(a[0] * b[1] - b[0] * a[1]
-                        for a, b in zip(item["polygon"], item["polygon"][1:] + item["polygon"][:1])))
-        density = item["value"] / area2
-        copies.extend((density, rng.random(), item_id) for _ in range(item["quantity"]))
-    copies.sort(reverse=True)
-    solution = {"item_indices": [], "x_translations": [], "y_translations": []}
-    placed_geometries = []
-    value = 0
-    attempted = 0
-    placed = 0
-    container_x0, container_y0, container_x1, container_y1 = polygon_bbox(data["container"])
-    for _, _, item_id in copies:
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        item = data["items"][item_id]
-        item_x0, item_y0, item_x1, item_y1 = polygon_bbox(item["polygon"])
-        lo_x = container_x0 - item_x0
-        hi_x = container_x1 - item_x1
-        lo_y = container_y0 - item_y0
-        hi_y = container_y1 - item_y1
-        if lo_x > hi_x or lo_y > hi_y:
+def _load_matrices():
+    with gzip.open(Path(__file__).parent / "data" / "tai256c.dat.gz", "rt", encoding="ascii") as stream:
+        raw = stream.read().split()
+    values = [int(x) for x in raw]
+    if len(values) != 1 + 2 * N * N or values[0] != N:
+        raise ValueError("bad tai256c matrix data")
+    cut = 1 + N * N
+    a = [values[1 + i * N:1 + (i + 1) * N] for i in range(N)]
+    b = [values[cut + i * N:cut + (i + 1) * N] for i in range(N)]
+    return a, b
+
+
+def _score(a, b, p):
+    return sum(a[i][j] * b[p[i]][p[j]] for i in range(N) for j in range(N))
+
+
+def _swap_delta(a, b, p, r, s):
+    """Exact objective change from swapping assignments at r and s, in O(n)."""
+    pr, ps = p[r], p[s]
+    delta = 0
+    for k in range(N):
+        if k == r or k == s:
             continue
-        for _ in range(attempts_per_copy):
-            if deadline is not None and time.monotonic() >= deadline:
-                break
-            dx = rng.randint(lo_x, hi_x)
-            dy = rng.randint(lo_y, hi_y)
-            attempted += 1
-            geometry = placement_geometry(item_id, dx, dy, placed_geometries, data)
-            if geometry is not None:
-                solution["item_indices"].append(item_id)
-                solution["x_translations"].append(dx)
-                solution["y_translations"].append(dy)
-                placed_geometries.append(geometry)
-                value += item["value"]
-                placed += 1
-                break
-    return solution, value, attempted, placed
+        pk = p[k]
+        delta += a[r][k] * (b[ps][pk] - b[pr][pk])
+        delta += a[s][k] * (b[pr][pk] - b[ps][pk])
+        delta += a[k][r] * (b[pk][ps] - b[pk][pr])
+        delta += a[k][s] * (b[pk][pr] - b[pk][ps])
+    delta += a[r][r] * (b[ps][ps] - b[pr][pr])
+    delta += a[s][s] * (b[pr][pr] - b[ps][ps])
+    delta += a[r][s] * (b[ps][pr] - b[pr][ps])
+    delta += a[s][r] * (b[pr][ps] - b[ps][pr])
+    return delta
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T093-C01") != "T093-C01":
+        raise ValueError("unsupported T093 configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T093_TRIALS", "3"))
-    attempts = int(os.environ.get("T093_PLACEMENT_TRIES", "30"))
-    if trials < 0 or attempts < 0:
-        raise ValueError("search counts must be nonnegative")
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds is not None:
-        duration = float(seconds)
-        if not math.isfinite(duration) or duration <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + duration
-    data = load_instance()
+    seconds_env = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    seconds = None if seconds_env is None else float(seconds_env)
+    if seconds is not None and (not math.isfinite(seconds) or seconds <= 0):
+        raise ValueError("MATHBENCH_SEARCH_SECONDS must be finite and positive")
     rng = random.Random(seed)
-    best = {"item_indices": [], "x_translations": [], "y_translations": []}
-    best_value = 0
-    completed = 0
-    candidate_attempts = 0
-    placements_found = 0
-    for _ in range(trials):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        candidate, value, attempted, placed = _greedy_trial(data, rng, attempts, deadline)
-        completed += 1
-        candidate_attempts += attempted
-        placements_found += placed
-        if value > best_value:
-            best, best_value = candidate, value
-    return {
-        **best,
-        "search_metadata": {
-            "algorithm": "value-density ordered random first-fit translations; exact geometric feasibility kernel checks each proposal",
-            "seed": seed,
-            "trial_limit": trials,
-            "trials_completed": completed,
-            "placement_attempt_limit_per_copy": attempts,
-            "placement_attempts": candidate_attempts,
-            "placements_found_across_trials": placements_found,
-            "reference_data_read": False,
-            "time_cutoff_enabled": deadline is not None,
-        },
+    a, b = _load_matrices()
+    p = initial_permutation()
+    best_score = _score(a, b, p)
+    checks = 0
+    iterations = 0
+    for _attempt in search_steps(ITERATION_LIMIT):
+        r = rng.randrange(N)
+        s = rng.randrange(N - 1)
+        if s >= r:
+            s += 1
+        delta = _swap_delta(a, b, p, r, s)
+        checks += 1
+        if delta >= 0:
+            continue
+        p[r], p[s] = p[s], p[r]
+        best_score += delta
+        iterations += 1
+    budget = {
+        "mode": "wall_clock_cutoff" if seconds is not None else "fixed_iteration_count",
+        "requested_checks": ITERATION_LIMIT,
+        "actual_checks": checks,
+        "requested_wall_clock_seconds": seconds,
+        "effective_wall_clock_seconds": None if seconds is None else min(240.0, seconds),
     }
+    return {"permutation": p, "search_metadata": {"seed": seed, "pair_checks": checks,
+            "iterations": iterations, "budget": budget,
+            "algorithm": "randomized first-improvement pair-swap local search", "reported_score": best_score}}

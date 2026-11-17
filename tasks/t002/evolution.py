@@ -1,240 +1,298 @@
-"""Multi-start continuous search with exact rational feasibility repair.
+"""Deterministic evolutionary search for unequal circle packings.
 
-The optimizer is only a proposal generator.  Every archived construction is
-reparsed and checked by the exact task checker before it can replace the grid
-fallback.  Coordinates and tan(theta/2) are rational strings.
+The search evolves center coordinates on a fixed rational grid. A conservative
+integer-square-root repair produces a feasible rational construction before
+any candidate can become the incumbent.
 """
 import os
 import random
-import time
 import json
-import math
+import time
 from fractions import Fraction
+from math import isqrt
 
-from tasks.t002.check import Q, validate
-
-
-CONFIG_ID = "T002-C01"
-N = 26
+_D = 1_000_000_000_000_000
+_RESTART_AFTER = 100
 
 
-def _seed(n):
-    cols = 5
-    return {"squares": [
-        {"x": str(Fraction(2 * (i % cols) + 1, 2)),
-         "y": str(Fraction(2 * (i // cols) + 1, 2)), "t": "0"}
-        for i in range(n)
-    ]}
+def _accept(current, proposed, temperature, rng):
+    """Metropolis acceptance for a chain; the global incumbent is separate."""
+    if proposed >= current:
+        return True
+    if temperature <= 0:
+        return False
+    return rng.random() < __import__("math").exp((proposed - current) / temperature)
 
 
-def _score(layout, n):
-    return Q.parse(validate(layout, {"parameters": {"n": n}})["objective"])
+def _count():
+    config = os.environ.get("MATHBENCH_CONFIG_ID", "T002-C02")
+    if config == "T002-C02":
+        return 32
+    raise ValueError("unsupported MATHBENCH_CONFIG_ID")
 
 
-def _numeric(q):
-    return float(q.a) + float(q.b) * 2 ** .5
-
-
-def _to_exact(z, n, np):
-    centers = z[:2*n].reshape((n, 2))
-    angles = z[2*n:3*n]
-    return [{"x": str(Fraction(format(float(x), '.12g'))),
-             "y": str(Fraction(format(float(y), '.12g'))),
-             "t": str(Fraction(format(float(np.tan(a / 2)), '.12g')))}
-            for (x, y), a in zip(centers, angles)]
-
-
-def _repair(squares, n):
-    """Compute the least uniform center dilation using exact separating axes."""
-    cx = sum((Fraction(s["x"]) for s in squares), Fraction(0)) / n
-    cy = sum((Fraction(s["y"]) for s in squares), Fraction(0)) / n
-    xy = [(Fraction(s['x']), Fraction(s['y'])) for s in squares]
-    axes = []
-    for s in squares:
-        t = Fraction(s['t']); den = 1 + t*t
-        axes.append(((1-t*t)/den, 2*t/den))
+def _repair(points, proposed_radii=None):
+    """Return exact feasible radii for integer-grid centers, or None."""
+    n = len(points)
+    # Keep centers away from the walls so every radius remains positive.
+    margin = 10
+    radii = ([max(1, int(r)) for r in proposed_radii] if proposed_radii is not None else
+             [min(_D // 12, x - margin, y - margin, _D - margin - x, _D - margin - y)
+              for x, y in points])
+    if min(radii) <= 0:
+        return None
+    # One uniform rational scale preserves proposed proportions. Integer
+    # square roots round pair distances down, so repaired constraints are safe.
+    from fractions import Fraction
     scale = Fraction(1)
     for i in range(n):
-        ci, si = axes[i]
+        xi, yi = points[i]
+        wall = min(xi - margin, yi - margin, _D - margin - xi, _D - margin - yi)
+        if radii[i] > 0:
+            scale = min(scale, Fraction(wall, radii[i]))
         for j in range(i):
-            cj, sj = axes[j]
-            dx, dy = xy[i][0]-xy[j][0], xy[i][1]-xy[j][1]
-            projection = max(abs(dx*ci+dy*si), abs(-dx*si+dy*ci),
-                             abs(dx*cj+dy*sj), abs(-dx*sj+dy*cj))
-            if not projection:
-                return None, None
-            extent = (1 + abs(ci*cj+si*sj) + abs(si*cj-ci*sj))/2
-            scale = max(scale, extent/projection)
-    # Round the dilation upward to keep denominator size bounded. All pair
-    # separations stay valid because their center projections increase.
-    den = 10**13
-    scale = Fraction((scale.numerator*den + scale.denominator-1)//scale.denominator, den)
-    layout = {'squares': [{'x': str(cx+scale*(x-cx)), 'y': str(cy+scale*(y-cy)),
-                            't': s['t']} for (x,y),s in zip(xy,squares)]}
-    half = [(abs(c)+abs(s))/2 for c,s in axes]
-    bounds = [[cx+scale*(x-cx)-h, cx+scale*(x-cx)+h,
-               cy+scale*(y-cy)-h, cy+scale*(y-cy)+h] for (x,y),h in zip(xy,half)]
-    side = max(max(b[1] for b in bounds)-min(b[0] for b in bounds),
-               max(b[3] for b in bounds)-min(b[2] for b in bounds))
-    return layout, Q(side)
+            xj, yj = points[j]
+            distance = isqrt((xi - xj) ** 2 + (yi - yj) ** 2)
+            total = radii[i] + radii[j]
+            if total > 0:
+                scale = min(scale, Fraction(distance, total))
+    radii = [(r * scale.numerator) // scale.denominator for r in radii]
+    if min(radii) <= 0:
+        return None
+    circles = [{"x": f"{x}/{_D}", "y": f"{y}/{_D}", "r": f"{r}/{_D}"}
+               for (x, y), r in zip(points, radii)]
+    return circles, Fraction(sum(radii), _D)
 
 
-def _optimize(n, seconds, rng, incumbent, warm_start=None):
-    """Run fixed-box feasibility searches and return the exact best layout."""
-    deadline = time.monotonic() + seconds
+def _initial(n, rng):
+    # Alternate 5- and 6-column grids to vary contact topology without witnesses.
+    columns = rng.choice((5, 6))
+    rows = (n + columns - 1) // columns
+    sites = [((2 * c + 1) * _D // (2 * columns),
+              (2 * r + 1) * _D // (2 * rows))
+             for r in range(rows) for c in range(columns)]
+    rng.shuffle(sites)
+    return sites[:n]
+
+
+def _polish(points, radii, deadline=None):
+    """One bounded SLSQP solve with analytic wall and pair derivatives."""
+    import numpy as np
+    from scipy.optimize import minimize
+    n = len(points)
+    z0 = np.array([v / _D for pair in points for v in pair] +
+                  [r / _D for r in radii], dtype=float)
+    pairs = [(i, j) for i in range(n) for j in range(i)]
+    ii = np.array([i for i,j in pairs]); jj = np.array([j for i,j in pairs])
+
+    def constraints(z):
+        xy = z[:2*n].reshape(n, 2)
+        rr = z[2*n:]
+        walls = np.concatenate((xy[:, 0] - rr, 1 - xy[:, 0] - rr,
+                                xy[:, 1] - rr, 1 - xy[:, 1] - rr))
+        delta = xy[ii] - xy[jj]
+        return np.concatenate((walls, np.einsum("ij,ij->i", delta, delta) -
+                               (rr[ii] + rr[jj])**2))
+
+    def jacobian(z):
+        xy = z[:2*n].reshape(n, 2)
+        rr = z[2*n:]
+        jac = np.zeros((4*n + len(pairs), 3*n))
+        for i in range(n):
+            jac[i, 2*i] = 1; jac[i, 2*n+i] = -1
+            jac[n+i, 2*i] = -1; jac[n+i, 2*n+i] = -1
+            jac[2*n+i, 2*i+1] = 1; jac[2*n+i, 2*n+i] = -1
+            jac[3*n+i, 2*i+1] = -1; jac[3*n+i, 2*n+i] = -1
+        row = np.arange(4*n,4*n+len(pairs)); delta = xy[ii]-xy[jj]
+        jac[row,2*ii] = 2*delta[:,0]; jac[row,2*ii+1] = 2*delta[:,1]
+        jac[row,2*jj] = -2*delta[:,0]; jac[row,2*jj+1] = -2*delta[:,1]
+        jac[row,2*n+ii] = -2*(rr[ii]+rr[jj])
+        jac[row,2*n+jj] = -2*(rr[ii]+rr[jj])
+        return jac
+
+    def objective(z):
+        return -float(np.sum(z[2*n:]))
+
+    def objective_jac(z):
+        out = np.zeros(3*n)
+        out[2*n:] = -1
+        return out
+
+    latest=[z0]
+    def callback(z):
+        latest[0]=z.copy()
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError
     try:
-        import numpy as np
-        from scipy.optimize import minimize
-    except ImportError:
-        return incumbent, 0, "grid_fallback_scipy_unavailable"
-
-    cols = 5
-    rows = (n + cols - 1) // cols
-    best = incumbent
-    best_value = _numeric(_score(incumbent, n))
-    chain = warm_start
-    chain_value = best_value
-    downhill_accepts = 0
-    iterations = 0
-
-    class DeadlineReached(Exception):
-        pass
-
-    ii, jj = np.triu_indices(n, 1)
-    def loss_factory(weight, target):
-        def loss(z):
-            if time.monotonic() >= deadline:
-                raise DeadlineReached
-            xy=z[:2*n].reshape(n,2); ang=z[2*n:3*n]
-            ca,sa=np.cos(ang),np.sin(ang)
-            half=.5*(np.abs(ca)+np.abs(sa))
-            hp=.5*(-np.sign(ca)*sa+np.sign(sa)*ca)
-            gxy=np.zeros_like(xy); ga=np.zeros(n); value=0.
-            for dim in range(2):
-                for sign in (-1,1):
-                    v=np.maximum(0.,sign*xy[:,dim]+half-target/2)
-                    value+=v@v; gxy[:,dim]+=2*sign*v; ga+=2*v*hp
-            d=xy[ii]-xy[jj]; delta=ang[ii]-ang[jj]
-            ext=.5*(np.abs(np.cos(delta))+np.abs(np.sin(delta)))
-            ep=.5*(-np.sign(np.cos(delta))*np.sin(delta)+np.sign(np.sin(delta))*np.cos(delta))
-            axes=np.stack((np.stack((ca[ii],sa[ii]),1),np.stack((-sa[ii],ca[ii]),1),
-                           np.stack((ca[jj],sa[jj]),1),np.stack((-sa[jj],ca[jj]),1)),1)
-            proj=np.einsum('mi,mki->mk',d,axes)
-            gaps=np.abs(proj)-.5-ext[:,None]
-            k=np.argmax(gaps,axis=1); row=np.arange(len(ii))
-            v=np.maximum(0.,-gaps[row,k]); value+=v@v
-            axis=axes[row,k]; sg=np.sign(proj[row,k]); coeff=-2*v
-            grad=coeff[:,None]*sg[:,None]*axis
-            np.add.at(gxy,ii,grad); np.add.at(gxy,jj,-grad)
-            directional=sg*(-d[:,0]*axis[:,1]+d[:,1]*axis[:,0])
-            gi=-ep+np.where(k<2,directional,0.)
-            gj=ep+np.where(k>=2,directional,0.)
-            np.add.at(ga,ii,coeff*gi); np.add.at(ga,jj,coeff*gj)
-            return weight*value, weight*np.r_[gxy.ravel(),ga,0.]
-        return loss
-
-    # Alternate warm starts, axis-grid starts, and structured rotation
-    # clusters. Shrinking target sizes turn this into a sequence of SAT
-    # feasibility problems, with each stage increasing collision pressure.
-    start_number = 0
-    while time.monotonic() < deadline:
-        if start_number % 12 == 0:
-            chain, chain_value = warm_start, best_value
-        if start_number % 3 != 2 and chain is not None:
-            xy = np.array([[float(Fraction(s['x'])), float(Fraction(s['y']))]
-                           for s in chain['squares']], dtype=float)
-            angles = np.array([2 * math.atan(float(Fraction(s['t'])))
-                               for s in chain['squares']], dtype=float)
-            side = chain_value
-            xy -= (xy.max(axis=0)+xy.min(axis=0))/2
-            target = min(side, best_value) - (.002,.025,.08,.18)[start_number % 4]
-            xy += np.array([[rng.uniform(-.08, .08),
-                             rng.uniform(-.08, .08)] for _ in range(n)])
-            angles += np.array([rng.uniform(-.08, .08) for _ in range(n)])
-            if start_number % 4 == 3:
-                for index in rng.sample(range(n),max(1,n//6)):
-                    angles[index]+=rng.choice((-.4,.4))
-        else:
-            cols = rng.choice((int(math.sqrt(n)), int(math.sqrt(n))+1))
-            rows = (n + cols - 1) // cols
-            sites = rng.sample(range(cols*rows), n)
-            xy = np.array([[(i % cols) + .5, (i // cols) + .5]
-                           for i in sites], dtype=float)
-            jitter = .12 if start_number == 0 else .38
-            base_side = float(max(cols, rows))
-            # Begin close to the fixed box. The center scaling is only a
-            # continuous start; exact containment is never assumed.
-            target = best_value - (.005 + .008 * ((start_number - 1) % 5))
-            factor = max(.82, target / base_side)
-            xy = (xy - np.array([cols / 2, rows / 2])) * factor
-            xy += np.array([[rng.uniform(-jitter, jitter),
-                             rng.uniform(-jitter, jitter)] for _ in range(n)])
-            # Rotate in a few coherent clusters before adding small noise.
-            clusters = (0., math.pi/8, -math.pi/8, math.pi/4, -math.pi/4)
-            cluster = clusters[(start_number - 1) % len(clusters)]
-            angles = np.array([(cluster if i % cols >= cols//2 else 0.)
-                               + rng.uniform(-.07, .07) for i in sites])
-        z = np.concatenate((xy.ravel(), angles, [target]))
-        start_number += 1
-        for weight in (1.e3, 1.e5, 1.e7):
-            if time.monotonic() >= deadline:
-                break
-            def stop_if_expired(_x):
-                if time.monotonic() >= deadline:
-                    raise DeadlineReached
-            try:
-                result = minimize(loss_factory(weight, target), z,
-                                  method="L-BFGS-B", jac=True, callback=stop_if_expired,
-                                  bounds=[(None, None)] * (len(z)-1) + [(target, target)],
-                                  options={"maxiter": 1000, "ftol": 1.e-12,
-                                           "maxls": 40})
-                iterations += int(getattr(result, "nit", 0))
-                z = result.x
-            except DeadlineReached:
-                break
-            raw = _to_exact(z, n, np)
-            candidate, value = _repair(raw, n)
-            if candidate is not None and _numeric(value) < best_value:
-                best, best_value = candidate, _numeric(value)
-                warm_start = candidate
-            if candidate is not None:
-                numeric = _numeric(value)
-                temperature = .025
-                if numeric <= chain_value or rng.random() < math.exp(min(0.,(chain_value-numeric)/temperature)):
-                    downhill_accepts += int(numeric > chain_value)
-                    chain, chain_value = candidate, numeric
-            if result.fun / weight < 1.e-10:
-                target -= .01
-            if time.monotonic() >= deadline:
-                break
-        # The next loop makes a fully independent randomized start.
-    return best, iterations, "cluster_rotation_sat_annealing_exact_minimal_dilation"
+        result = minimize(objective, z0, jac=objective_jac, method="SLSQP",
+                      bounds=[(1e-5, 1-1e-5)]*(2*n) + [(1e-8, .5)]*n,
+                      constraints={"type": "ineq", "fun": constraints, "jac": jacobian},
+                      callback=callback,
+                      options={"maxiter": 100, "ftol": 1e-11, "disp": False})
+        candidate = result.x
+    except TimeoutError:
+        candidate=latest[0]
+    p = [(max(1, min(_D-1, int(round(candidate[2*i] * _D)))),
+          max(1, min(_D-1, int(round(candidate[2*i+1] * _D))))) for i in range(n)]
+    rs = [max(1, int(candidate[2*n+i] * _D)) for i in range(n)]
+    return p, rs
 
 
 def run_code():
-    started = time.monotonic()
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T002-C01")
-    if cid != CONFIG_ID:
-        raise ValueError("unknown T002 configuration")
-    n = N
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "2002")))
-    budget = max(0.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
-    best = _seed(n)  # Always-valid exact fallback.
-    warm_start = None
-    warm_path = os.environ.get("MATHBENCH_WARM_START")
-    if warm_path:
+    n = _count()
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    # Explicit generation controls keep unit tests short. Normal runs use the
+    # wall-clock budget and stop between solver calls.
+    configured_generations = os.environ.get("MATHBENCH_EVOLUTION_GENERATIONS")
+    generations = max(1, min(2000, int(configured_generations or "2000")))
+    population_size = max(4, min(48, int(os.environ.get("MATHBENCH_EVOLUTION_POPULATION", "4"))))
+    budget = max(1.0, min(240.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45"))))
+    deadline = time.monotonic() + budget
+    # Keep the canonical grid as an independent exact incumbent.
+    seed_points = [((2 * c + 1) * _D // 12, (2 * r + 1) * _D // 12) for r in range(6) for c in range(6)][:n]
+    seed_circles = [{"x": f"{2*c+1}/12", "y": f"{2*r+1}/12", "r": "1/12"} for r in range(6) for c in range(6)][:n]
+    seed_score = sum(Fraction(c["r"]) for c in seed_circles)
+    best = (seed_score, seed_points, seed_circles)
+    warm_start_path = os.environ.get("MATHBENCH_WARM_START")
+    warm_start_loaded = False
+    if warm_start_path:
         try:
-            with open(warm_path, encoding="utf-8") as stream:
-                proposed = json.load(stream)
-            _score(proposed, n)
-            warm_start = proposed
-            if _numeric(_score(proposed, n)) < _numeric(_score(best, n)):
-                best = proposed
-        except (OSError, ValueError, TypeError, KeyError, ZeroDivisionError):
-            warm_start = None
-    best, iterations, method = _optimize(n, max(0.,budget-(time.monotonic()-started)), rng, best, warm_start)
-    # Defensive final replay; never emit a proposal the exact checker rejects.
-    _score(best, n)
-    best["search_method"] = method
-    best["search_iterations"] = iterations
-    return best
+            with open(warm_start_path, encoding="utf-8") as source:
+                witness = json.load(source)
+            circles = witness["circles"]
+            if len(circles) == n:
+                exact_circles = [{key: str(Fraction(circle[key])) for key in ("x", "y", "r")}
+                                 for circle in circles]
+                from tasks.t002.check import validate
+                validation = validate(witness, {"id": "T002-C02"}, strict=True)
+                score = Fraction(validation["objective"])
+                # Restore the warm start's actual layout at the finer integer
+                # grid. SLSQP then refines these centers and radii. Keep the
+                # validated exact witness as the global incumbent.
+                warm_points = [
+                    (max(1, min(_D - 1, int(round(Fraction(circle["x"]) * _D)))),
+                     max(1, min(_D - 1, int(round(Fraction(circle["y"]) * _D)))))
+                    for circle in exact_circles
+                ]
+                best = (score, warm_points, exact_circles)
+                warm_start_loaded = True
+        except (OSError, ValueError, KeyError, TypeError, ZeroDivisionError):
+            pass
+    chains = [best]
+    for _ in range(population_size - 1):
+        points = _initial(n, rng)
+        repaired = _repair(points)
+        chains.append((repaired[1], points, repaired[0]) if repaired else best)
+    history = [{"generation": 0, "objective": str(best[0]), "stagnation": 0,
+                "temperature": "0.01", "mutation_scale": str(_D // 10),
+                "restarts": 0, "downhill_accepts": 0}]
+    evaluations = population_size
+    generations_run = 0
+    stagnant = 0
+    restarts = 0
+    restart_evaluations = 0
+    downhill_accepts = 0
+    solver_calls = 0
+    mutation_scale = _D // 20
+    for generation in range(generations):
+        if time.monotonic() >= deadline:
+            break
+        generations_run = generation + 1
+        improved = False
+        polished_improved = False
+        if generation % 12 == 0:
+            # Keep refinement of the exact incumbent active after other chains
+            # drift downhill. Reproduction does not change the saved witness.
+            chains[generation % population_size] = best
+        for chain_index in range(population_size):
+            if time.monotonic() >= deadline:
+                break
+            current_score, parent, parent_circles = chains[chain_index]
+            child = list(parent)
+            scale = max(_D // 100_000, mutation_scale)
+            # Larger collective moves keep chains mobile between contact basins.
+            pure_polish = ((generation // population_size + generation % population_size) % 4 == 3
+                           and chain_index == generation % population_size)
+            mutation_count = 0 if pure_polish else 1 + rng.randrange(max(1, n // 8))
+            for _mutation in range(mutation_count):
+                idx = rng.randrange(n)
+                x, y = child[idx]
+                child[idx] = (max(1, min(_D - 1, x + rng.randint(-scale, scale))),
+                              max(1, min(_D - 1, y + rng.randint(-scale, scale))))
+            parent_radii = [int(Fraction(circle["r"]) * _D) for circle in parent_circles]
+            proposal_radii = parent_radii
+            was_polished = chain_index == generation % population_size
+            if was_polished:
+                # Reinsert a small circle into the largest sampled free disk.
+                if generation % 5 == 4:
+                    idx=min(range(n),key=lambda i:parent_radii[i])
+                    probes=[(rng.randrange(1,_D),rng.randrange(1,_D)) for _ in range(160)]
+                    def clearance(p):
+                        x,y=p
+                        return min(min(x,y,_D-x,_D-y),min(isqrt((x-a)**2+(y-b)**2)-parent_radii[j]
+                                   for j,(a,b) in enumerate(child) if j!=idx))
+                    point=max(probes,key=clearance)
+                    if clearance(point)>0:
+                        child[idx]=point; parent_radii[idx]=clearance(point)
+                child, proposal_radii = _polish(child, parent_radii, deadline)
+                solver_calls += 1
+            repaired = _repair(child, proposal_radii)
+            evaluations += 1
+            if repaired:
+                proposal = (repaired[1], child, repaired[0])
+                # Cooling is slow; occasional downhill transitions escape local basins.
+                temperature = max(0.00015, 0.01 * (0.997 ** generation))
+                if _accept(current_score, proposal[0], temperature, rng):
+                    if proposal[0] < current_score:
+                        downhill_accepts += 1
+                    chains[chain_index] = proposal
+                if proposal[0] > best[0]:
+                    best = proposal
+                    improved = True
+                    polished_improved = polished_improved or was_polished
+        stagnant = 0 if polished_improved else stagnant + 1
+        if stagnant >= _RESTART_AFTER:
+            # Restart the weakest chain from a fresh shuffled grid, never a witness.
+            weakest = min(range(population_size), key=lambda i: chains[i][0])
+            points = _initial(n, rng)
+            repaired = _repair(points)
+            restart_evaluations += 1
+            evaluations += 1
+            if repaired:
+                chains[weakest] = (repaired[1], points, repaired[0])
+            restarts += 1
+            stagnant = 0
+        # Broaden moves after stagnation and gradually recover after progress.
+        if improved:
+            mutation_scale = max(_D // 500, mutation_scale * 9 // 10)
+        else:
+            mutation_scale = min(_D * 2 // 25, mutation_scale * 11 // 10)
+        history.append({"generation": generation + 1, "objective": str(best[0]),
+                        "stagnation": stagnant, "temperature": f"{max(0.00015, 0.01 * (0.997 ** generation)):.9g}",
+                        "mutation_scale": str(mutation_scale), "restarts": restarts,
+                        "downhill_accepts": downhill_accepts})
+    return {"circles": best[2], "search": {
+        "algorithm": "budgeted multi-chain basin hopping with SLSQP continuous refinement and exact rational repair",
+        "algorithm_version": 5,
+        "seed": int(os.environ.get("MATHBENCH_SEED", "0")),
+        "generations": generations_run,
+        "budget_seconds": budget,
+        "warm_start_loaded": warm_start_loaded,
+        "population_size": population_size,
+        "evaluations": evaluations,
+        "candidate_slots_per_generation": population_size,
+        "solver_calls": solver_calls,
+        "optimizer": "SLSQP, analytic Jacobian, maxiter=100, sampled vacant-disk reinsertion, rotating one chain per generation",
+        "restart_interval": _RESTART_AFTER,
+        "restarts": restarts,
+        "restart_evaluations": restart_evaluations,
+        "downhill_accepts": downhill_accepts,
+        "final_mutation_scale": str(mutation_scale),
+        "coordinate_denominator": _D,
+        "history": history,
+    }}
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

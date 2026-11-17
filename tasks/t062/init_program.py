@@ -1,12 +1,6 @@
-"""Simple valid seed for T062."""
-
+"""Self-contained powers-of-two seed for the configured set size."""
 import os
-
-
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T062-C01")
-    if chosen != "T062-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    # EVOLVE-BLOCK-START
-    return {"elements": [1]}
-    # EVOLVE-BLOCK-END
+    cid=os.environ.get("MATHBENCH_CONFIG_ID","T062-C01")
+    if cid != "T062-C01":raise ValueError(f"unsupported T062 configuration: {cid}")
+    return {"elements":[1<<bit for bit in range(15)]}

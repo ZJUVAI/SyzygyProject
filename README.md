@@ -2,6 +2,13 @@
 
 A benchmark for mathematical constructions with 100 tasks and one official configuration per task.
 
+Task IDs run from `T001` to `T100`, grouped by research direction and then
+by similar mathematical objects and constraints. See the [task catalog](tasks/CATALOG.md)
+for the order and previous IDs. The [ID mapping](tasks/task_id_migration.json)
+records the change from revision `c9f9355` on 2026-11-17.
+Use the matching Git revision to replay earlier run archives. Historical source
+paths and hashes in saved provenance still describe the original search programs.
+
 - `tasks/` contains one package per task.
 - `mathbench/` contains the runner and evaluation tools.
 - `scripts/` contains search, audit, reporting, and website update commands.
@@ -20,7 +27,7 @@ python -m pip install -r requirements-lock.txt
 
 ```sh
 python -m mathbench list
-python scripts/search.py run T013
+python scripts/search.py run T073
 python scripts/search.py resume
 python scripts/search.py audit
 python scripts/result_table.py --highlight-best
@@ -32,7 +39,7 @@ Each task's `task.json` holds its one official configuration. Its top level cont
 The runner saves temporary results in each task's `runs/` directory. To replay a saved construction, pass its task and witness path.
 
 ```sh
-python -m mathbench replay T003 tasks/t003/data/results.json
+python -m mathbench replay T002 tasks/t002/data/results.json
 ```
 
 Some search programs require a C++17 compiler (`g++`). Replay of a saved JSON construction uses Python. Linux applies a 4 GiB address-space limit to workers. On macOS, the runner records that this limit is disabled.

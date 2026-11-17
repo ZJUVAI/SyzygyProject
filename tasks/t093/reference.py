@@ -1,3 +1,9 @@
-"""Replay the shared witness for the public reference role."""
+"""Return the fixed archived best-known tai256c witness for external comparison."""
+try:
+    from human import run_code as _read_archived_witness
+except ImportError:  # Task-qualified import during repository tests.
+    from tasks.t093.human import run_code as _read_archived_witness
 
-from tasks.t093.human import run_code as run_code
+
+def run_code():
+    return _read_archived_witness()

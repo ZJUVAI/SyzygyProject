@@ -2,47 +2,36 @@
 
 Status: `accepted_by_sol`.
 
-## Frozen data and source review
+## Implemented
 
-- Input: `data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json`.
-- Input SHA-256: `f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92`.
-- It contains one 15-vertex container, 44 item types, and `sum(quantity)=50`. The exact source-value coordinates and translations are integers. The container turn check has no nonpositive turns; its polygon is convex.
-- Public solution: `data/source/shadoks2304.json`, SHA-256 `f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1`. `data/source/shadoks2304.json` is an identical frozen copy. These are comparison assets and must not be exported with the cold initial program.
-- The official CG:SHOP page states the packing objective and forbids rotation. The Shadoks paper says the task uses translations and describes integer programming and heuristic search. Its public instance page names Shadoks as the best team for this instance. The solution page lists 2304, 2268, and 2105. The exact 2304 solution JSON is replayed and validated here.
-- The source file metadata says “before digopt optimization.” The source does not disclose whether AI tools were used. The record keeps this uncertainty.
-- Source check on 2026-11-06 did not find an optimality proof for this fixed instance. This is a limited source check, not an exhaustive survey.
+- Fixed QAPLIB `tai256c`, `n=256`, with gzip-compressed matrices. The pinned SHA-256 is checked against the exact decompressed source bytes.
+- Exact permutation checker; it validates all indices and recomputes the integer objective over 65,536 terms.
+- Self-contained identity seed, bounded randomized first-improvement pair-swap baseline, evolution entry point, public-witness replay, and task interface wrapper.
+- Bilingual task README, model instruction, records, and configuration-level SOTA record.
 
-## Geometry checker
+## Source and witness checks
 
-`check.py` uses only Python standard-library integer and `Fraction` arithmetic. `instance.py` verifies the frozen file hash, source structure, exact item counts, and polygon triangulations. Ear clipping returns CCW triangles and checks that triangle areas sum to each source polygon's area.
+- Downloaded the versioned Debian `r-cran-qap` 0.1-1-2 matrix and solution files. Hashes are in `data/README.md` and `bestknown.json`.
+- Parsed dimensions and the archived one-based permutation. It is a bijection on 1..256.
+- Recomputed the objective exactly with integer arithmetic: 44,759,294; this matches the `.sln` score and QAPLIB table entry.
+- QAPLIB labels the feasible record ANT. QAPLIB history identifies T. Stützle as providing an improved tai256c solution in 1997. The archive witness is reproduced; the original search is not.
+- The authoritative arXiv version page identifies v2 as last revised 2024-09-30; the v2 PDF title page says 2024-10-01. The paper body reports LB 44,200,000 and a 1.25% gap. Its abstract retains the earlier 1.48% gap.
+- The checked QAPLIB pages disagree on the older LB: Lehigh lists 43,849,646 and the QAPLIB mirror lists 44,095,032. The paper treats 44,095,032 as the previous LB and reports 44,200,000. Searches on 2026-11-06 found no later primary result or proof that tai256c is solved. This search was not exhaustive.
 
-For each translated item, the checker clips its triangles against every container triangle. Exact intersection areas must sum to the item area. For each pair of items, it checks all triangle pairs and rejects any positive intersection area. This proves containment and pairwise interior disjointness, including concave polygons and boundary contact. The selected-value sum is recomputed from the fixed item definitions. Claimed score fields are ignored.
+## Validation
 
-The checker accepts zero selected items. It rejects noninteger or Boolean indices/translations, mismatched arrays, more than 50 placements, invalid type IDs, multiplicity overflow, placements outside the container, and positive-area overlap.
+- `.venv/bin/python -m pytest tasks/t093 -q`: 14 passed.
+- Cold-seed export test copies only `init_program.py` to a temporary directory, clears `PYTHONPATH`, and runs it without repository imports. It returns the identity permutation.
+- Evolution-entry test calls the task-local baseline with a short explicit budget and validates its output.
+- The default baseline uses 10,000 fixed pair checks. A test runs the same seed twice and confirms that the full output is identical.
+- Baseline smoke run with seed 0 and an explicit 0.05-second cutoff returned a feasible permutation after 74 improving swaps and 254 pair checks; the checker recomputed 51,043,722 exactly. This is a smoke check, not the saved human reference.
+- Checker tests confirm that the full result is unchanged when arbitrary claimed-score, objective, or metadata fields are added to the candidate.
+- Swap-delta tests compare ten seeded pair swaps against full exact objective recomputation.
+- Sol must still independently replay the human witness, review the candidate evaluator path, and decide whether the source evidence and reproduced human baseline satisfy admission.
 
-## Programs and saved run
+## Limitations
 
-- `init_program.py`: standalone empty packing, value 0; no imports from the task package.
-- `baseline.py`: value-density order and random integer first-fit placements, checked by the exact geometry kernel. It reads only the public instance. Default: seed 0, 3 trials, 30 placement attempts per available copy.
-- `human.py`: replays the published Shadoks file from `data/source/`.
-- `reference.py`: replays the frozen copy from `data/reference/`.
-- `evolution.py`: task-qualified wrapper for the bounded search.
-- `evaluator.py`: shared `evaluate_candidate` adapter. Task registration remains owned by the main reviewer.
-- Default seed-0 baseline completed all 3 trials and 3,435 attempts in 18.761 seconds. Its exact score is 711. The search record is saved in `data/search/seed0_solution.json`, `data/search/seed0_verification.json`, and `data/search/seed0_run.json`.
-- Public human/reference witness score is 2304 from 23 placements. The exact checker independently recomputed it in about 0.06 seconds.
-- Generation and verification budgets are 300 seconds and 60 seconds, 4 GiB memory, one thread.
-
-## Tests and commands
-
-Commands run:
-
-```sh
-.venv/bin/python -m pytest tasks/t093/test_task.py -q
-.venv/bin/python -m json.tool tasks/t093/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t093/data/bestknown.json > /dev/null
-git diff --check -- tasks/t093
-```
-
-All 7 test functions passed. They check exact input hashes and counts, all five program entries, the reproduced value against an independent source-value sum, boundary-only triangle contact versus positive-area overlap, invalid translations and multiplicities, strict config matching, ignored claims, seeded repeatability, and `_run` program-error and timeout behavior.
-
-The public 2304 value is a feasible result and is reproduced exactly. This implementation does not prove it is optimal. The CG:SHOP public export whitelist must include only the instance JSON, never either solution JSON.
+- No global optimum proof is claimed. The checker validates candidate feasibility and exact objective only.
+- The original ANT search and run are not reconstructed.
+- The lower-bound report is a result reported by the cited paper; the task checker does not verify its proof.
+- Acceptance is accepted by Sol on 2026-11-06; this task is not in the shared registry.

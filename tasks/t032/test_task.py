@@ -1,59 +1,72 @@
-import copy
-import pytest
+import unittest
+
+from tasks.t032.baseline import run_code as baseline
 from tasks.t032.check import validate
-from tasks.t032.human import run_code
+from tasks.t032.human import run_code as human
+from tasks.t032.init_program import run_code as initial
+from tasks.t032.reference import run_code as reference
 
-CONFIG = {"parameters": {"rows": 14, "columns": 19, "forbidden_submatrix": [3, 3]}}
-
-
-def test_published_witness_and_recount():
-    s = run_code()
-    assert validate(s, CONFIG)["objective"] == 126
-    s["objective"] = -999
-    assert validate(s, CONFIG)["objective"] == 126
+CONFIG = {"id": "T032-C01", "parameters": {
+    "clique_size": 5, "independent_set_size": 5, "max_vertices": 45}}
 
 
-def test_bad_all_ones_block_rejected():
-    s = {"matrix": [[0] * 19 for _ in range(14)]}
-    for i in range(3):
-        for j in range(3):
-            s["matrix"][i][j] = 1
-    with pytest.raises(ValueError):
-        validate(s, CONFIG)
+def _cycle(n):
+    return {"adjacency": [[(v - 1) % n, (v + 1) % n] for v in range(n)]}
 
 
-def test_repeated_rows_are_allowed_when_feasible():
-    s = {"matrix": [[0] * 19 for _ in range(14)]}
-    s["matrix"][0] = [1] * 19
-    s["matrix"][1] = [1] * 19
-    # Two identical rows are valid: a forbidden block needs three rows.
-    assert validate(s, CONFIG)["objective"] == 38
-    s["matrix"][2] = [1] * 19
-    with pytest.raises(ValueError):
-        validate(s, CONFIG)
+class TaskTests(unittest.TestCase):
+    def test_seed_and_search_are_valid(self):
+        self.assertEqual(validate(initial(), CONFIG)["objective"], 5)
+        result = baseline()
+        self.assertEqual(validate(result, CONFIG)["verification_status"], "exact")
+        metadata = result["search_metadata"]
+        self.assertEqual(metadata["seed"], 0)
+        self.assertEqual(metadata["iteration_budget"], 40)
+        self.assertGreaterEqual(metadata["iterations_attempted"], 1)
+        self.assertLessEqual(metadata["iterations_attempted"], 40)
+        self.assertLessEqual(len(result["adjacency"]), 45)
+
+    def test_public_human_witness_replays(self):
+        result = validate(human(), CONFIG)
+        self.assertEqual((result["objective"], result["details"]["edges"]), (42, 425))
+        self.assertEqual(reference(), human())
+
+    def test_claimed_score_is_ignored(self):
+        witness = human()
+        witness["claimed_score"] = 10**100
+        self.assertEqual(validate(witness, CONFIG)["objective"], 42)
+
+    def test_bad_constructions(self):
+        # K5 violates the clique constraint.
+        complete = {"adjacency": [[w for w in range(5) if w != v] for v in range(5)]}
+        # Empty 5-vertex graph violates the independent-set constraint.
+        empty = {"adjacency": [[] for _ in range(5)]}
+        malformed = [
+            complete, empty,
+            {"adjacency": [[1], []]},  # asymmetric edge
+            {"adjacency": [[0]]},  # loop
+            {"adjacency": [[1, 1], [0]]},  # duplicate edge entry
+            {"adjacency": [[True], [0]]},  # bool is not an integer vertex ID
+            {"adjacency": [[] for _ in range(46)]},  # published upper bound
+        ]
+        for candidate in malformed:
+            with self.subTest(candidate=candidate):
+                with self.assertRaises(ValueError):
+                    validate(candidate, CONFIG)
+
+    def test_boundary_and_objective(self):
+        self.assertEqual(validate({"adjacency": []}, CONFIG)["objective"], 0)
+        self.assertEqual(validate(_cycle(4), CONFIG)["objective"], 4)
+        result = validate(human(), CONFIG)
+        self.assertEqual(result["details"]["vertices"], len(human()["adjacency"]))
+
+    def test_nonfinite_and_out_of_range_neighbors(self):
+        for value in (float("nan"), float("inf"), float("-inf")):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                validate({"adjacency": [[value]]}, CONFIG)
+        with self.assertRaises(ValueError):
+            validate({"adjacency": [[1], []]}, CONFIG)
 
 
-@pytest.mark.parametrize("bad", [True, 0.0, float("nan"), 2])
-def test_bad_entry_types_rejected(bad):
-    s = {"matrix": [[0] * 19 for _ in range(14)]}
-    s["matrix"][0][0] = bad
-    with pytest.raises(ValueError):
-        validate(s, CONFIG)
-
-
-def test_dimensions_rejected():
-    with pytest.raises(ValueError):
-        validate({"matrix": [[0] * 19 for _ in range(13)]}, CONFIG)
-
-
-def test_seed_zero_baseline_returns_global_incumbent():
-    from tasks.t032.baseline import run_code as baseline_run
-
-    result = baseline_run()
-    meta = result["search_metadata"]
-    value = validate(result, CONFIG)["objective"]
-    assert meta["actual_steps"] == 10000
-    assert meta["kicks"] == 10
-    assert value == meta["incumbent_score"] == meta["returned_score"]
-    assert value >= meta["final_search_state_score"]
-    assert value == 117
+if __name__ == "__main__":
+    unittest.main()

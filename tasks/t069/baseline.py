@@ -1,88 +1,49 @@
-"""Spatial-order and bounded random 2-opt baseline for T069."""
-
+from mathbench.search import search_deadline, search_steps
+"""Bounded deterministic integer add/delete local search."""
 import math
 import os
 import random
 import time
-
-from tasks.t069.check import CONFIG_ID, load_points, edge_length, tour_length
-
-
-DEFAULT_2OPT_STEPS = 20_000
+from tasks.t069.init_program import run_code as seed_program
 
 
-def _spatial_tour(points):
-    # Sweep 100-unit horizontal bands; reverse alternate bands to join their ends.
-    order = sorted(range(len(points)), key=lambda i: (points[i][1] // 100, points[i][0], i))
-    tour = []
-    start = 0
-    while start < len(order):
-        band = points[order[start]][1] // 100
-        end = start + 1
-        while end < len(order) and points[order[end]][1] // 100 == band:
-            end += 1
-        row = order[start:end]
-        if band & 1:
-            row.reverse()
-        tour.extend(row)
-        start = end
-    return tour
-
-
-def _two_opt(points, tour, steps, seed, deadline=None):
-    rng = random.Random(seed)
-    n = len(tour)
-    score = tour_length(points, tour)
-    completed = accepted = 0
-    for _ in range(steps):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        i = rng.randrange(n - 2)
-        j = rng.randrange(i + 2, min(n, i + 51))
-        a, b = tour[i], tour[i + 1]
-        c, d = tour[j], tour[(j + 1) % n]
-        old = edge_length(points, a, b) + edge_length(points, c, d)
-        new = edge_length(points, a, c) + edge_length(points, b, d)
-        completed += 1
-        if new < old:
-            tour[i + 1:j + 1] = reversed(tour[i + 1:j + 1])
-            score += new - old
-            accepted += 1
-    return score, completed, accepted
+def _score(a):
+    n = len(a)
+    if n < 2:
+        return None
+    sums = {x + y for x in a for y in a}
+    diffs = {x - y for x in a for y in a}
+    if len(sums) <= len(diffs) or len(diffs) <= n:
+        return None
+    return math.log(len(sums) / n) / math.log(len(diffs) / n)
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T069-C01") != "T069-C01":
+        raise ValueError("unsupported configuration")
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
     try:
-        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    except ValueError as exc:
-        raise ValueError("MATHBENCH_SEED must be an integer") from exc
-    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds_text is not None:
-        try:
-            seconds = float(seconds_text)
-        except ValueError as exc:
-            raise ValueError("search seconds must be numeric") from exc
-        if not math.isfinite(seconds) or seconds <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + seconds
-    points = load_points()
-    tour = _spatial_tour(points)
-    steps = DEFAULT_2OPT_STEPS
-    score, completed, accepted = _two_opt(points, tour, steps, seed, deadline)
-    return {
-        "tour": tour,
-        "search_metadata": {
-            "algorithm": "100-unit horizontal spatial bands with alternating direction, followed by local random 2-opt exchanges",
-            "seed": seed,
-            "two_opt_step_limit": steps,
-            "two_opt_steps_completed": completed,
-            "accepted_exchanges": accepted,
-            "computed_objective": score,
-            "reference_data_read": False,
-            "search_seconds_cutoff": seconds_text,
-        },
-    }
+        budget = min(2.0, max(0.01, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
+    except ValueError:
+        budget = 2.0
+    deadline = search_deadline()
+    current = sorted(set(seed_program()["set"]))
+    best = current[:]
+    best_score = _score(best)
+    lo, hi = -1000000, 1000000
+    for _attempt in search_steps(2000):
+        trial = current[:]
+        if len(trial) < 512 and (len(trial) <= 2 or rng.random() < 0.55):
+            choices = [x for x in (rng.randint(lo, hi) for _ in range(20)) if x not in set(trial)]
+            if choices:
+                trial.append(choices[0])
+                trial.sort()
+        elif len(trial) > 2:
+            trial.pop(rng.randrange(len(trial)))
+        score = _score(trial)
+        if score is not None and (best_score is None or score > best_score):
+            best, best_score = trial, score
+            current = trial
+        elif score is not None and rng.random() < 0.08:
+            current = trial
+    return {"set": best}

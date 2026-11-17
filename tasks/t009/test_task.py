@@ -1,91 +1,145 @@
+import copy
+import hashlib
 import json
+import os
 from pathlib import Path
-import unittest
-from tasks.t009.check import validate
-from tasks.t009.baseline import _distance, _mutate_parity
+import sys
 
-class _FixedMutationRng:
-    def randint(self, a, b): return 1
-    def randrange(self, start, stop=None):
-        if stop is None: return 0
-        return start
+import pytest
 
-CONFIG={'id':'T009-C01','parameters':{'n':68,'k':15,'q':2}}
-DATA=Path(__file__).parent/'data'/'human_generator.json'
-SOTA_DATA=Path(__file__).parent/'data'/'sota_generator.json'
+from mathbench.evaluate import _run
+import tasks.t009.baseline as baseline_module
+from tasks.t009.baseline import _MUTATIONS, run_code as baseline_run
+from tasks.t009.builder import tile_bouwkamp_line
+from tasks.t009.check import CONFIG_ID, FROZEN_CONFIG, PARAMETERS, _simple_rectangle_check, validate
+from tasks.t009.evolution import run_code as evolution_run
+from tasks.t009.human import run_code as human_run
+from tasks.t009.init_program import run_code as init_run
+from tasks.t009.reference import run_code as reference_run
 
-class TaskTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.matrix=json.loads(DATA.read_text())['matrix']
+TASK = Path(__file__).parent
+CONFIG = FROZEN_CONFIG
 
-    def test_public_witness_exact_distance(self):
-        result=validate({'generator_matrix':self.matrix,'objective':999},CONFIG)
-        # Independent direct XOR enumeration for the score cross-check.
-        independent=[]
-        for mask in range(1, 1 << 15):
-            word=[0]*68
-            for i in range(15):
-                if (mask >> i) & 1:
-                    word=[a ^ b for a,b in zip(word,self.matrix[i])]
-            independent.append(sum(word))
-        self.assertEqual(min(independent),8)
-        self.assertEqual(result['objective'],min(independent))
-        self.assertEqual(result['verification_status'],'exact')
-        self.assertEqual(result['details']['codewords_checked'],32767)
-        self.assertTrue(result['details']['claimed_objective_ignored'])
 
-    def test_reproduced_sota_witness_exact_distance(self):
-        from tasks.t009.sota import run_code
-        witness=json.loads(SOTA_DATA.read_text())
-        result=validate(run_code(),CONFIG)
-        self.assertEqual(len(witness['matrix']),15)
-        self.assertTrue(all(len(row)==68 for row in witness['matrix']))
-        self.assertEqual(result['objective'],24)
-        self.assertEqual(result['verification_status'],'exact')
-        self.assertEqual(result['details']['rank'],15)
-        self.assertEqual(result['details']['codewords_checked'],32767)
+def test_five_entries_and_reconstructed_construction(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.setenv("T009_SEARCH_ITERS", "0")
+    initial = init_run()
+    baseline = baseline_run()
+    evolved = evolution_run()
+    human = human_run()
+    reference = reference_run()
+    assert baseline == evolved
+    assert human == reference
+    for solution in (initial, baseline, evolved, human, reference):
+        result = validate(solution, CONFIG)
+        assert result["verification_status"] == "exact"
+        assert result["objective"] == solution["side"]
+        assert result["details"]["claimed_objective_ignored"] is True
+    assert initial["side"] == 4755
+    assert human["side"] == 352
 
-    def test_ignores_absent_score(self):
-        self.assertEqual(validate({'generator_matrix':self.matrix},CONFIG)['objective'],8)
 
-    def test_rejects_bool_entry(self):
-        m=[r[:] for r in self.matrix]; m[0][0]=True
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
 
-    def test_rejects_float_entry(self):
-        m=[r[:] for r in self.matrix]; m[0][0]=1.0
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+def test_baseline_proposes_new_side_sets_and_outer_sides(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.setenv("T009_SEARCH_ITERS", "40")
+    result = baseline_run()
+    assert any(delta != 0 for delta, _, _, _ in _MUTATIONS)
+    assert baseline_module.LAST_SEARCH_STATS["size_set_and_outer_side_proposals"] == 40
+    assert any(side != 4755 for side in baseline_module.LAST_SEARCH_STATS["distinct_proposed_outer_sides"])
+    assert baseline_module.LAST_SEARCH_STATS["best_objective"] == validate(result, CONFIG)["objective"]
+    assert baseline_module.LAST_SEARCH_STATS["baseline_fallback_used"] is True
+    assert baseline_module.LAST_SEARCH_STATS["valid_candidates"] == 0
 
-    def test_rejects_wrong_shape(self):
-        with self.assertRaises(ValueError): validate({'generator_matrix':self.matrix[:-1]},CONFIG)
-        m=[r[:] for r in self.matrix]; m[0].pop()
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
 
-    def test_rejects_rank_deficient_matrix(self):
-        m=[r[:] for r in self.matrix]; m[1]=m[0][:]
-        with self.assertRaises(ValueError): validate({'generator_matrix':m},CONFIG)
+def test_bouwkamp_reconstruction_and_source_hash():
+    path = TASK / "data/source/williams_38_352A.bkp"
+    raw = path.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == "ec1858af8249dc4aba58e116f87646f31e3c240f1efdbcf030c72b4b603fcd5b"
+    assert tile_bouwkamp_line(raw.decode().strip()) == reference_run()
 
-    def test_boundary_valid_distance_one_systematic_code(self):
-        m=[]
-        for i in range(15):
-            row=[0]*68; row[i]=1; m.append(row)
-        self.assertEqual(validate({'generator_matrix':m},CONFIG)['objective'],1)
 
-    def test_parity_mutation_changes_code_and_distance_while_preserving_rank(self):
-        # [I|I|0] has distance 2. Clearing one parity bit in row 0
-        # makes that generator weight 1, so the new code has distance 1.
-        rows=[]
-        for i in range(15):
-            rows.append((1 << i) | (1 << (15+i)))
-        changed=_mutate_parity(rows, _FixedMutationRng(), max_flips=1)
-        self.assertEqual(_distance(rows),2)
-        self.assertEqual(_distance(changed),1)
-        self.assertNotEqual(rows,changed)
-        # The identity block remains intact, so rank remains 15.
-        self.assertTrue(all((changed[i] >> i) & 1 for i in range(15)))
+def test_saved_own_seed_and_exact_score():
+    witness = json.loads((TASK / "data/search/seed_4755.json").read_text())
+    assert witness == init_run()
+    assert validate(witness, CONFIG)["objective"] == 4755
+    metadata = json.loads((TASK / "data/search/seed_4755.metadata.json").read_text())
+    assert metadata["objective"] == 4755
 
-    def test_rejects_unknown_parameters(self):
-        with self.assertRaises(ValueError): validate({'generator_matrix':self.matrix},{'id':'T009-C01','parameters':{'n':68,'k':15,'q':3}})
 
-if __name__=='__main__': unittest.main()
+def test_claimed_scores_do_not_change_result():
+    solution = reference_run()
+    expected = validate(solution, CONFIG)
+    for key, value in (("objective", -999), ("score", float("nan")), ("claimed_score", "fake")):
+        assert validate({**solution, key: value}, CONFIG) == expected
+
+
+@pytest.mark.parametrize("bad", [
+    {"id": "T009-C01", "parameters": PARAMETERS, "direction": "minimize", "human_reference": 352.0},
+    {"id": "T009-C01", "parameters": {**PARAMETERS, "order": 38.0}, "direction": "minimize", "human_reference": 352},
+    {"id": "T009-C01", "parameters": {**PARAMETERS, "extra": True}, "direction": "minimize", "human_reference": 352},
+    {"id": "T009-C02", "parameters": PARAMETERS, "direction": "minimize", "human_reference": 352},
+])
+def test_wrong_config_rejected(bad):
+    with pytest.raises(ValueError, match="configuration"):
+        validate(reference_run(), bad)
+
+
+def test_bad_square_data_rejected():
+    source = reference_run()
+    duplicate_size = copy.deepcopy(source)
+    duplicate_size["squares"][1][2] = duplicate_size["squares"][0][2]
+    with pytest.raises(ValueError, match="distinct"):
+        validate(duplicate_size, CONFIG)
+
+    overlap = copy.deepcopy(source)
+    overlap["squares"][1][:2] = overlap["squares"][0][:2]
+    with pytest.raises(ValueError, match="overlap"):
+        validate(overlap, CONFIG)
+
+    bool_coordinate = copy.deepcopy(source)
+    bool_coordinate["squares"][0][0] = True
+    with pytest.raises(ValueError, match="integers"):
+        validate(bool_coordinate, CONFIG)
+
+    float_side = copy.deepcopy(source)
+    float_side["side"] = 352.0
+    with pytest.raises(ValueError, match="positive integer"):
+        validate(float_side, CONFIG)
+
+    nan_coordinate = copy.deepcopy(source)
+    nan_coordinate["squares"][0][0] = float("nan")
+    with pytest.raises(ValueError, match="integers"):
+        validate(nan_coordinate, CONFIG)
+
+    missing_tile = copy.deepcopy(source)
+    missing_tile["squares"].pop()
+    with pytest.raises(ValueError, match="exactly 38"):
+        validate(missing_tile, CONFIG)
+
+
+def test_nonprimitive_and_area_mismatch_rejected():
+    source = reference_run()
+    scaled = {"side": source["side"] * 2, "squares": [[2*x, 2*y, 2*s] for x, y, s in source["squares"]]}
+    with pytest.raises(ValueError, match="primitive"):
+        validate(scaled, CONFIG)
+    wrong_area = copy.deepcopy(source)
+    wrong_area["side"] += 1
+    with pytest.raises(ValueError, match="area"):
+        validate(wrong_area, CONFIG)
+
+
+def test_proper_rectangle_tiled_by_multiple_squares_is_rejected():
+    with pytest.raises(ValueError, match="proper squared rectangle"):
+        _simple_rectangle_check(3, [(0, 0, 1), (1, 0, 1)])
+
+
+def test_runner_error_and_timeout_without_registry():
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T009 failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T009 failure')"], env, 3)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.2)

@@ -1,41 +1,52 @@
 {
   "task_id": "T094",
-  "source_checked": "2026-11-06",
+  "snapshot_date": "2026-11-06",
   "configurations": {
     "T094-C01": {
-      "program": "reference.py",
-      "reproduced_value": "481669373744614531460135/332305777911042658732591",
-      "public_value": 1.4482,
-      "objective": "maximum vertex-pair shortest-path length divided by Euclidean chord length",
+      "parameters": {
+        "instance": "Ta051",
+        "jobs": 50,
+        "machines": 20,
+        "schedule_type": "permutation"
+      },
       "direction": "minimize",
-      "highest_reported": {
-        "value": 1.4482,
-        "source": "https://doi.org/10.1016/j.comgeo.2019.01.009",
-        "source_location": "Theorem: every regular polygon has a triangulation with dilation below 1.4482",
-        "reproduction_status": "published universal upper bound; the theorem's specific n=120 triangulation is not reconstructed",
-        "metric": "maximum shortest-path length divided by Euclidean chord length",
-        "direction": "minimize",
+      "objective": "makespan (integer time units)",
+      "best_human": {
+        "value": 3846,
+        "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Annals of Operations Research 199(1), 269-284.",
+        "url": "https://doi.org/10.1007/s10479-011-0965-2",
+        "witness": "data/human_witness.json",
+        "witness_archive": "Olivier Brunner, Zenodo record 18272308, v8, Taillard_UB_Schedules v8.csv, Ta051 row.",
+        "witness_archive_url": "https://zenodo.org/records/18272308",
+        "evidence_state": "Human published permutation; local exact replay on official processing times returned 3846.",
+        "parameters": {
+          "instance": "Ta051",
+          "jobs": 50,
+          "machines": 20,
+          "schedule_type": "permutation"
+        },
+        "source_url": "https://doi.org/10.1007/s10479-011-0965-2",
         "date_checked": "2026-11-06",
-        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009"
+        "ai_provenance": "The task author retrieved and transcribed a published schedule. No claim is made about authorship of the original construction."
       },
-      "reproduced_witness": {
-        "value": "481669373744614531460135/332305777911042658732591",
-        "file": "data/source/ubc_6fan_120.json",
-        "sha256": "2db7e3a33a5a3b9c9e1b494b58e3a6cf2a2428a6d9f22a222d3a36c967ed7a2f",
-        "provenance": "Rebuilt UBC 6-fan; exact combinatorial check and rational interval distance evaluation.",
-        "evidence_state": "objective enclosed by details.objective_interval"
+      "bounds": {
+        "lower_bound": 3771,
+        "upper_bound": 3846,
+        "current_bounds_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+        "source_snapshot_date": "2026-06-03",
+        "upper_bound_source": "RRMRP (2012)",
+        "lower_bound_source": "Va (as listed by Taillard)",
+        "schedule_scope": "Only permutation schedules are allowed.",
+        "status": "open",
+        "source_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+        "source_snapshot": "data/source/best_lb_up_2026-06-03.txt",
+        "source_snapshot_sha256": "1222a422ca2eeb2898f3afbf6c1d5b06dc835cc113cac4851757248b8c6a53c3",
+        "checked_date": "2026-11-06",
+        "open_interval": [
+          3771,
+          3846
+        ]
       },
-      "certified_score_interval": [
-        "2890016242467687188760789/1993834667466255952395547",
-        "481669373744614531460135/332305777911042658732591"
-      ],
-      "open_status": {
-        "evidence": "Fekete, Keldenich, and Perk (2026) report optimal solutions for regular n-gons up to n=100. Their range does not include n=120. The source review on 2026-11-06 found no same-parameter proof closing the 120-gon case.",
-        "primary_source": "https://doi.org/10.20382/jocg.v17i2a1",
-        "source_location": "Abstract; regular n-gon results and computations for n=4 through 100",
-        "claim_limit": "The checked sources do not establish optimality for n=120; this is not an exhaustive literature survey."
-      },
-      "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -44,23 +55,22 @@
           "task_id": "T094",
           "config_id": "T094-C01",
           "validity": 1.0,
-          "combined_score": 1.0000000000000044,
-          "objective": "481669373744614531460135/332305777911042658732591",
-          "verification_status": "certified",
-          "generation_time": 0.5446564592421055,
-          "verification_time": 3.5000081211328506,
-          "objective_value": "481669373744614531460135/332305777911042658732591",
+          "combined_score": 1.0,
+          "objective": 3846,
+          "verification_status": "exact",
+          "generation_time": 0.16518879681825638,
+          "verification_time": 0.16534177958965302,
+          "objective_value": 3846,
           "details": {
-            "objective_interval": [
-              "2890016242467687188760789/1993834667466255952395547",
-              "481669373744614531460135/332305777911042658732591"
-            ],
-            "scale": "1000000000000000000000000",
-            "vertices": 120,
-            "edges": 237,
+            "instance": "Ta051",
+            "jobs": 50,
+            "machines": 20,
+            "schedule_type": "permutation",
+            "all_operations_recomputed": true,
+            "processing_times_source_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
             "claimed_objective_ignored": true
           },
-          "eval_time": 4.050555758178234,
+          "eval_time": 0.3347446173429489,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -77,80 +87,128 @@
           }
         },
         "independent_quantity": {
-          "ratio_interval": [
-            "2890016242467687188760797308839830568975294941123693699438724/1993834667466255952395546817484088840317853763189687784388893",
-            "2890016242467687188760797308839830568975294941123693699438741/1993834667466255952395546817484088840317853763189687784388892"
-          ],
-          "edges": 237,
-          "method": "Cyclotomic cosine minimal polynomial, exact rational Horner and square-root chord bounds, all-pairs integer Floyd-Warshall."
+          "makespan": 3846,
+          "operations": 1000
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
         "witness": "data/reference/public_c01.json",
-        "witness_sha256": "7d65c3d99f7ffe9dc3241a1583783ac1f26d7ecdfe6e1a29e23c325efb0a89b3"
+        "witness_sha256": "147f8a658081507499421b0d01310ddeda3f1726df4cddc185f6fbee4ca67bd1"
       },
-      "id": "T094-C01",
-      "parameters": {
-        "vertices": 120,
-        "polygon": "regular convex 120-gon, vertices in counterclockwise cyclic order",
-        "construction": "straight-line triangulation using polygon vertices only",
-        "objective": "minimize over triangulations the maximum, over distinct vertex pairs, of shortest-path length divided by Euclidean chord length",
-        "distance": "Euclidean chord length"
+      "optimality_status_review": {
+        "paper": "Gmys et al. (2022), Exactly Solving Hard Permutation Flowshop Scheduling Problems on Peta-Scale GPU-Accelerated Supercomputers.",
+        "url": "https://doi.org/10.1287/ijoc.2022.1193",
+        "finding": "Ta051 is listed among instances that remained open in the paper's experiments.",
+        "latest_archive_checked": "Zenodo record 21715941, v11, published 2026-07-31.",
+        "latest_archive_url": "https://zenodo.org/records/21715941",
+        "caveat": "The v11 page warns that the Optimal column needs extreme caution. This record relies on Taillard's live bounds and the Gmys paper instead."
       },
-      "best_human": {
-        "value": 1.449476373154,
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "vertices": 120
+      "review_status": "accepted_by_sol",
+      "program": "reference.py",
+      "reproduced_value": "3846",
+      "public_value": "3846",
+      "highest_reported": {
+        "value": "3846",
+        "source": {
+          "value": 3846,
+          "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Annals of Operations Research 199(1), 269-284.",
+          "url": "https://doi.org/10.1007/s10479-011-0965-2",
+          "witness": "data/human_witness.json",
+          "witness_archive": "Olivier Brunner, Zenodo record 18272308, v8, Taillard_UB_Schedules v8.csv, Ta051 row.",
+          "witness_archive_url": "https://zenodo.org/records/18272308",
+          "evidence_state": "Human published permutation; local exact replay on official processing times returned 3846."
         },
-        "url": "https://www.cs.ubc.ca/labs/algorithms/tpsg/dilation.html",
-        "source_location": "6-fan construction for n divisible by 6",
-        "provenance": "The published 6-fan rule was rebuilt for n=120. The full edge set was checked, and its dilation was recomputed with rational interval bounds.",
-        "ai_provenance": "Classical human construction; no AI provenance stated by the source.",
-        "evidence_state": "same-parameter witness and certified score reproduced; score is the interval upper endpoint rounded upward"
+        "reproduction_status": "witness reproduced exactly"
       },
       "best_public": {
-        "value": 1.4482,
-        "date_checked": "2026-11-06",
+        "value": 3846,
         "parameters": {
-          "vertices": "any regular polygon, including n=120"
+          "instance": "Ta051",
+          "jobs": 50,
+          "machines": 20,
+          "schedule_type": "permutation"
         },
-        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009",
-        "source_location": "Theorem: dilation of vertices of any regular polygon is less than 1.4482",
-        "provenance": "Published universal upper bound on the optimum. The theorem's specific n=120 triangulation is not reconstructed here.",
-        "ai_provenance": "Human-authored 2019 paper.",
-        "evidence_state": "reported theorem bound; witness not locally reproduced"
+        "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+        "witness_url": "https://zenodo.org/records/18272308",
+        "evidence_state": "Taillard's live bounds table lists upper bound 3846 and attributes it to RRMRP. Zenodo dataset v8 includes a Ta051 permutation. The local permutation is saved in data/human_witness.json and has been independently replayed.",
+        "date_checked": "2026-11-06",
+        "origin_type": "Human-authored published heuristic result; not an optimality proof."
       },
       "best_reproduced": {
-        "value": "481669373744614531460135/332305777911042658732591",
+        "value": 3846,
+        "parameters": {
+          "instance": "Ta051",
+          "jobs": 50,
+          "machines": 20,
+          "schedule_type": "permutation"
+        },
+        "witness": "data/human_witness.json",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Recompute completion times for every job-machine operation with the standard integer recurrence on the frozen official Ta051 matrix.",
+        "processing_times_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+        "official_source_file_sha256": "cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba",
+        "claimed_score_ignored": true,
         "date_reproduced": "2026-11-06",
-        "parameters": {
-          "vertices": 120
-        },
-        "witness_file": "data/source/ubc_6fan_120.json",
-        "provenance": "Task-local rebuild of the UBC 6-fan rule; certified with rational chord and path intervals.",
-        "ai_provenance": "Benchmark reconstruction of a published human method.",
-        "actual_value": "481669373744614531460135/332305777911042658732591",
-        "evidence_state": "valid triangulation; objective enclosed by the interval in bestknown.json",
-        "review_status": "reviewed_by_sol"
+        "review_status": "reviewed_by_sol",
+        "evidence_state": "Exact task checker and independent main-review arithmetic passed; see bestknown.json."
       },
-      "frozen_human_baseline": {
-        "value": 1.449476373154,
-        "parameters": {
-          "vertices": 120
+      "source_review": {
+        "primary_instance": {
+          "citation": "E. Taillard (1993), Benchmarks for basic scheduling problems, European Journal of Operational Research 64(2), 278-285.",
+          "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/tai50_20.txt",
+          "official_source_file": "data/source/tai50_20_official.txt",
+          "official_source_file_sha256": "cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba",
+          "input_file": "data/ta051.json",
+          "input_file_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+          "official_header": {
+            "jobs": 50,
+            "machines": 20,
+            "seed": 1539989115,
+            "original_upper_bound": 3875,
+            "original_lower_bound": 3480
+          }
         },
-        "witness_file": "data/source/ubc_6fan_120.json",
-        "provenance": "Rebuilt UBC 6-fan construction; upward-rounded certified upper endpoint."
-      }
+        "official_bounds_table": {
+          "url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/flowshop.dir/best_lb_up.txt",
+          "header_date": "03.06.2026",
+          "instance_row": "ta051-055; Ta051 lower bound 3771 from Va, upper bound 3846 from RRMRP",
+          "schedule_scope": "The table states that only permutation schedules are allowed."
+        },
+        "upper_bound_reference": {
+          "citation": "M. G. Ravetti, C. Riveros, A. Mendes, M. G. Resende, and P. M. Pardalos (2012), Parallel hybrid heuristics for the permutation flow shop problem, Annals of Operations Research 199(1), 269-284.",
+          "url": "https://doi.org/10.1007/s10479-011-0965-2",
+          "witness_archive": "Olivier Brunner, Permutation Flow-shop: Taillard and VFR benchmarks, Zenodo v8, record 18272308, published 2026-01-16.",
+          "witness_archive_url": "https://zenodo.org/records/18272308",
+          "witness_archive_file": "Taillard_UB_Schedules v8.csv",
+          "replay": "The 50-job permutation was independently replayed on the official Ta051 matrix; makespan is 3846."
+        },
+        "optimality_status_review": {
+          "paper": "Jan Gmys et al. (2022), Exactly Solving Hard Permutation Flowshop Scheduling Problems on Peta-Scale GPU-Accelerated Supercomputers.",
+          "url": "https://doi.org/10.1287/ijoc.2022.1193",
+          "finding": "Ta051 is listed among the instances that remained open in the reported exact-solver experiments.",
+          "newest_schedule_archive_checked": "Olivier Brunner, Zenodo record 21715941, v11, published 2026-07-31.",
+          "newest_schedule_archive_url": "https://zenodo.org/records/21715941",
+          "warning": "The v11 record says its Optimal column must be interpreted with extreme caution. The task status is based on Taillard's live bound table and the Gmys paper, not that column."
+        }
+      },
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": []
     }
   },
   "review_status": "accepted_by_sol",
   "additional_evidence": {
     "configurations": {
       "T094-C01": {
-        "highest_reported": {
-          "source_location": "Universal regular-polygon upper-bound theorem",
-          "reproduction_status": "theorem bound reported; the specific 120-gon witness was not reconstructed"
+        "best_human": {
+          "source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012), Parallel hybrid heuristics for the permutation flow shop problem, Annals of Operations Research 199(1), 269-284.",
+          "evidence_state": "Published human permutation, independently replayed against Taillard's official Ta051 processing times."
+        },
+        "bounds": {
+          "lower_bound_source": "Vaessens branch-and-bound result, as listed by Taillard.",
+          "upper_bound_source": "Ravetti, Riveros, Mendes, Resende, and Pardalos (2012).",
+          "status": "open; exact optimum not established"
         }
       }
     }

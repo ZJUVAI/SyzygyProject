@@ -1,41 +1,33 @@
-# T057: capacitated vehicle routing for X-n1001-k43
+# T057: Social Golfer schedule for 35 players in groups of 5
 
 ## Definition
 
-The fixed instance has depot node 1 and 1000 customers, with TSPLIB node IDs 2 through 1001. Each customer has a positive integer demand. Every route starts and ends at node 1, and its total demand must not exceed the vehicle capacity 131. Every customer must appear once across all routes.
+Schedule 35 players in 7 groups of 5 for each round. Every player must appear once in every round. Any pair of players may share a group at most once. The objective is to maximize the number of rounds.
 
-The number of routes is not fixed and has no upper bound in this benchmark definition. The `k43` suffix is part of the instance name. It is not a fleet limit. The official DIMACS rules state that no route-count restriction applies to any instance, and they explicitly accept 9 routes for E-n101-k8. Here total demand is 5557, so the capacity bound forces at least `ceil(5557/131)=43` routes. A solution may use more than 43.
+For one player, each round uses 4 previously unseen partners. There are 34 other players, so the number of rounds is at most `floor(34/4)=8`.
 
-The objective minimizes total travel distance. For consecutive nodes `i,j`, including depot legs, the edge cost is the TSPLIB `EUC_2D` nearest-integer distance:
+The reproduced 7-round reference is the resolvable transversal design `RTD(5,7)`. Label players by pairs `(a,b)` with `a in {0,...,4}` and `b in F_7`. For each `t,c in F_7`, form one group from `(a, t*a+c mod 7)` for all five values of `a`. For each fixed `t`, each player occurs in exactly one of the seven groups. Two points with different first coordinates meet for at most one value of `t`; two points with the same first coordinate never meet. Thus the seven rounds satisfy the exact pair condition.
 
-`d(i,j) = nint(sqrt((x_i-x_j)^2 + (y_i-y_j)^2))`.
+## Current result and open status
 
-The checker computes this exactly. If `s=(x_i-x_j)^2+(y_i-y_j)^2` and `r=isqrt(s)`, it returns `r+1` exactly when `4s >= (2r+1)^2`; it uses no floating-point square roots.
+Miller, Valkov, and Abel's 2026 supplementary Table 4 lists the `(v=35,k=5)` case with `MAX=8`, construction `RTD(5,7)`, and `r=7`. Their paper uses “optimal” for the best currently known schedule. It uses “maximal” for a schedule that reaches the theoretical upper bound. The 7-round schedule is therefore a reproduced lower bound. The row does not prove that 8 rounds are impossible.
 
-The official TSPLIB `.vrp` source numbers its depot as 1 and customers as 2..1001. CVRPLIB `.sol` witnesses number customers as 1..1000. The reader maps each solution customer ID `c` to TSPLIB node ID `c+1`.
+The OEIS entry for `T(7,5)` currently says the maximum is either 7 or 8. We checked it on 2026-11-06; we did not check its entry revision history. The checked sources give a 7-round construction and an upper bound of 8. We found no 8-round construction or proof that rules one out. The configuration remains open on that evidence.
 
-## Current public result and open status
-
-CVRPLIB's current X-n1001-k43 bound-history page lists 72332 as BKS, submitted 2026-10-24 by Martín Vizzolini. The note says the result starts from published BKS solutions and improves them. The matching official solution file is saved and exactly rechecked. Its route count is 43 and its total demand respects capacity. The library instance table marks `Opt=no`, so 72332 is not a proved optimum. It also lists a historical 72355 solution from literature through 2025. That older witness is retained for comparison and is not called the current record.
-
-The CVRPLib page does not report whether AI tools contributed to Vizzolini's 72332 result. We keep it as `best_public`, not as `best_human`. For a verified same-instance human-method baseline, `human.py` rebuilds the classic Clarke-Wright savings heuristic, published in 1964. This fixed deterministic construction has cost 77398. It is a weak method baseline, not a claim about the best human-only solution.
+The 2021 paper's Lemma 3 proves the bound is not attained for the separate case of 20 players in groups of 4, and its 32-player, groups-of-4 example reaches 10 rounds. Those cases are excluded here. This configuration is 35 players and groups of 5.
 
 Primary sources checked 2026-11-06:
 
-- [CVRPLIB instance listing](https://galgos.inf.puc-rio.br/cvrplib/en/cvrp/instances), row X-n1001-k43: 1000 customers, catalog route count 43, capacity 131, BKS 72332, `Opt=no`.
-- [CVRPLIB bound history](https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257), showing 72332 from 2026-10-24 and the older 72355 entry from 2025.
-- [DIMACS CVRP rules](https://dimacs.rutgers.edu/programs/implementation-challenges/vehicle-routing/implementation-challenge-vehicle-routing/capacitated-vrp), which state route counts are unrestricted for all instances and explain TSPLIB/CVRPLIB formats.
-- Uchoa et al., [New Benchmark Instances for the Capacitated Vehicle Routing Problem](https://doi.org/10.1016/j.ejor.2016.08.012), which introduced the X set.
-- Clarke and Wright, [Scheduling of Vehicles from a Central Depot to a Number of Delivery Points](https://doi.org/10.1287/opre.12.4.568), Operations Research 12(4), 1964, pp. 568–581.
-- Reinelt, [TSPLIB 95 specification](https://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf), §2.1, for the exact `EUC_2D` nearest-integer definition.
+- Miller, Valkov, and Abel, [Combinatorial Solutions to the Social Golfer Problem and the Social Golfer Problem with Adjacent Group Sizes](https://doi.org/10.3390/sym18020269), 2026. The [supplementary material](https://eprints.gla.ac.uk/377866/4/377866_suppl.pdf), Table 4, lists the exact parameters, 7-round RTD construction, and upper bound 8.
+- [OEIS A107431](https://oeis.org/A107431), checked 2026-11-06, currently states that `T(7,5)` is 7 or 8. The entry revision history was not checked.
+- Miller et al., [Breakout group allocation schedules and the social golfer problem with adjacent group sizes](https://doi.org/10.3390/sym13010013), 2021, Lemma 3, for the excluded 20-player, groups-of-four case.
 
 ## Programs and limits
 
-- `init_program.py` returns one customer on each route. Each individual demand is below 131, so this is valid without reading task files or importing task modules.
-- `human.py` rebuilds deterministic parallel Clarke-Wright savings routes from the public instance. It starts with one route per customer and merges route endpoints in descending savings order when capacity allows.
-- `baseline.py` runs six fixed-seed Clarke-Wright starts with randomized tie order among equal savings. It uses only the instance data, never the comparison solutions.
-- With six default trials and seed 0, the search produced a 43-route solution of cost 77170. Its replayable witness and run metadata are in `data/results.json`.
-- `reference.py` replays the official 72332 witness. The 72355 historical witness is also saved under `data/reference/` but is not used by the reference program.
+- `init_program.py` returns one valid round in contiguous groups. It imports no task modules and reads no comparison data.
+- `baseline.py` builds rounds by randomized greedy partitions. The default is eight restarts and at most 5000 random partitions for each added round. It uses only the fixed rules and seed.
+- `human.py` rebuilds the published RTD construction over the finite field `F_7`.
+- `reference.py` reads the fixed 7-round witness saved under `data/reference/`.
 - `evaluator.py` uses the shared runner. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread.
 
 Run from the repository root:
@@ -48,22 +40,18 @@ Run from the repository root:
 
 ## 定义
 
-固定实例有仓库节点 1 和 1000 个客户。TSPLIB 输入中的客户编号为 2 到 1001。每个客户有正整数需求。每条路线从仓库出发并回到仓库，路线需求总和不超过容量 131。所有客户必须恰好出现一次。
+每轮把 35 人分成 7 组，每组 5 人。每轮中每人恰好出现一次。任何两人最多同组一次。目标是最大化轮数。
 
-路线数不固定，也没有上限。名称后缀 `k43` 只是实例名的一部分。官方 DIMACS 规则明确说所有实例的路线数都不受限制，并用 E-n101-k8 可以采用 9 条路线作例子。该实例总需求为 5557，容量约束要求至少 `ceil(5557/131)=43` 条路线，但可使用更多路线。
+对固定的一人，每轮会遇到 4 个新搭档。其余共有 34 人，所以轮数上限是 `floor(34/4)=8`。
 
-目标是最小化总路程。包括仓库连接在内，每条边 `i,j` 的成本为 TSPLIB `EUC_2D` 最近整数距离：
+已复现的 7 轮构造是可解横截设计 `RTD(5,7)`。用 `(a,b)` 表示球员，其中 `a` 取 0 至 4，`b` 属于有限域 `F_7`。对每个 `t,c in F_7`，将五个 `(a, t*a+c mod 7)` 放入同一组。固定 `t` 后，每人恰好进入七组中的一组。首坐标不同的两点最多在一个 `t` 下同组，首坐标相同的两点不会同组。因此七轮满足精确的搭档约束。
 
-`d(i,j) = nint(sqrt((x_i-x_j)^2 + (y_i-y_j)^2))`。
+## 当前结果和开放状态
 
-评测器用整数精确计算。令 `s=(x_i-x_j)^2+(y_i-y_j)^2`、`r=isqrt(s)`。当且仅当 `4s >= (2r+1)^2` 时返回 `r+1`，否则返回 `r`，不使用浮点平方根。
+Miller、Valkov 和 Abel 的 2026 年附表 4 对 `(v=35,k=5)` 列出 `MAX=8`、构造 `RTD(5,7)` 和 `r=7`。论文用 “optimal” 表示当前已知的最佳构造，用 “maximal” 表示达到理论上界。七轮是已复现的下界。表中没有证明八轮不可能。
 
-官方 TSPLIB `.vrp` 将仓库记为 1，客户记为 2 至 1001。CVRPLIB `.sol` 文件将客户记为 1 至 1000。文件读取程序把 `.sol` 客户编号 `c` 转成 TSPLIB 节点编号 `c+1`。
+OEIS 的 `T(7,5)` 条目当前说明最大轮数是 7 或 8。本次于 2026-11-06 核对了条目内容，没有核对条目修订历史。当前来源给出七轮构造和八轮上界。未发现八轮见证或排除八轮的证明，因此按这些来源该参数仍开放。
 
-## 当前公开值和开放状态
+2021 年论文引理 3 证明了 20 人、每组 4 人的另一参数无法达到其轮数上界；其 32 人、每组 4 人示例达到 10 轮。这两种情况不在本配置中。本配置固定 35 人、每组 5 人。
 
-截至 2026-11-06，CVRPLIB 的 X-n1001-k43 bound history 页面将 72332 标为 BKS，提交日期为 2026-10-24，提交者 Martín Vizzolini。来源说明该结果从已发表的 BKS 解继续改进。对应官方解文件已保存并精确复算。此解有 43 条路线，且每条满足容量限制。实例表将 `Opt` 标为 `no`，因此 72332 不是已证明的最优值。页面还保留截至 2025 文献值 72355。这个历史见证仍作为对照，但不称为当前纪录。
-
-CVRPLIB 页面没有说明 Vizzolini 是否使用 AI 工具。因此把 72332 记录为 `best_public`，不归为 `best_human`。任务使用经典 Clarke-Wright 节约值算法作为同参数人类方法基线。该方法发表于 1964 年。`human.py` 固定排序规则并从公开输入重建路线，成本为 77398。这是可复现的弱方法基线，不代表最佳纯人工结果。
-
-上方英文列出了核查日期、主来源和实例来源。任务状态为已通过 Sol 验收（2026-11-06）。
+上方英文列出了核查日期和来源。任务状态为已通过 Sol 验收（2026-11-06）。

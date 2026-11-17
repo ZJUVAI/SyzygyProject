@@ -1,16 +1,13 @@
-"""Exact checker for the CVRPLIB X-n1001-k43 capacitated routing instance."""
-
-from tasks.t057.instance import load_instance, total_route_cost
+"""Exact pair-conflict checker for the 35-player Social Golfer configuration."""
 
 
 CONFIG_ID = "T057-C01"
 PARAMETERS = {
-    "instance": "X-n1001-k43",
-    "customers": 1000,
-    "depot_node_id": 1,
-    "vehicle_capacity": 131,
-    "distance": "TSPLIB EUC_2D nearest-integer rounding",
-    "route_count": "unrestricted; k43 is part of the instance name, not a fleet-size constraint",
+    "players": 35,
+    "groups_per_round": 7,
+    "players_per_group": 5,
+    "constraint": "each player appears once per round; each unordered pair shares a group at most once",
+    "objective": "number of valid rounds",
 }
 
 
@@ -19,52 +16,63 @@ def _check_config(config):
         raise ValueError("configuration must be an object")
     if config.get("id") not in (None, CONFIG_ID):
         raise ValueError(f"unsupported configuration: expected {CONFIG_ID}")
-    parameters = config.get("parameters")
-    if not isinstance(parameters, dict) or parameters != PARAMETERS:
-        raise ValueError("configuration must fix X-n1001-k43, capacity 131, and unrestricted route count")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration must fix 35 players in seven groups of five")
 
 
 def validate(solution, config, strict=False):
-    """Check every route and recompute its full integer travel cost."""
+    """Validate all rounds and count them; no candidate score is trusted."""
     del strict
     _check_config(config)
     if not isinstance(solution, dict):
         raise ValueError("solution must be an object")
-    routes = solution.get("routes")
-    if not isinstance(routes, list) or not routes:
-        raise ValueError("routes must be a nonempty list")
-    instance = load_instance()
-    expected = set(instance["customer_ids"])
-    seen = set()
-    loads = []
-    for route_index, route in enumerate(routes, start=1):
-        if not isinstance(route, list) or not route:
-            raise ValueError(f"route {route_index} must be a nonempty list")
-        load = 0
-        for node in route:
-            if type(node) is not int or node not in expected:
-                raise ValueError(f"route {route_index} has invalid customer node id {node!r}")
-            if node in seen:
-                raise ValueError(f"customer {node} appears more than once")
-            seen.add(node)
-            load += instance["demands"][node]
-        if load > instance["capacity"]:
-            raise ValueError(f"route {route_index} load {load} exceeds capacity 131")
-        loads.append(load)
-    missing = sorted(expected - seen)
-    if missing:
-        raise ValueError(f"missing {len(missing)} customers; first missing ids: {missing[:10]}")
-    objective = total_route_cost(routes, instance)
+    rounds = solution.get("rounds")
+    if not isinstance(rounds, list) or not rounds:
+        raise ValueError("rounds must be a nonempty list")
+    if len(rounds) > 8:
+        raise ValueError("more than eight rounds exceeds the pair-count upper bound")
+
+    player_set = set(range(35))
+    used_pairs = set()
+    round_pair_counts = []
+    for round_index, groups in enumerate(rounds, start=1):
+        if not isinstance(groups, list) or len(groups) != 7:
+            raise ValueError(f"round {round_index} must contain exactly seven groups")
+        seen_players = set()
+        pairs_this_round = 0
+        for group_index, group in enumerate(groups, start=1):
+            if not isinstance(group, list) or len(group) != 5:
+                raise ValueError(f"round {round_index}, group {group_index} must contain exactly five players")
+            if any(type(player) is not int or player not in player_set for player in group):
+                raise ValueError(f"round {round_index}, group {group_index} has an invalid player ID")
+            if len(set(group)) != 5:
+                raise ValueError(f"round {round_index}, group {group_index} repeats a player")
+            for player in group:
+                if player in seen_players:
+                    raise ValueError(f"player {player} appears in multiple groups in round {round_index}")
+                seen_players.add(player)
+            for offset, left in enumerate(group):
+                for right in group[offset + 1:]:
+                    pair = (left, right) if left < right else (right, left)
+                    if pair in used_pairs:
+                        raise ValueError(f"players {pair} meet more than once")
+                    used_pairs.add(pair)
+                    pairs_this_round += 1
+        if seen_players != player_set:
+            raise ValueError(f"round {round_index} must cover each player exactly once")
+        round_pair_counts.append(pairs_this_round)
+
     return {
-        "objective": objective,
+        "objective": len(rounds),
         "verification_status": "exact",
         "details": {
-            "instance": instance["name"],
-            "customer_count": len(expected),
-            "route_count": len(routes),
-            "route_count_unrestricted": True,
-            "capacity": instance["capacity"],
-            "route_loads": loads,
+            "players": 35,
+            "groups_per_round": 7,
+            "players_per_group": 5,
+            "round_count": len(rounds),
+            "distinct_pairs_used": len(used_pairs),
+            "pair_count_upper_bound": 8,
+            "pairs_per_round": round_pair_counts,
             "claimed_objective_ignored": True,
         },
     }

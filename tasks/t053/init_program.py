@@ -1,20 +1,34 @@
-"""Self-contained initial factorization 100000! = 1*2*...*100000."""
-
+"""Deterministic finite covering constructions selected by config id."""
 import os
+from itertools import combinations
 
-N = 100000
+
+PARAMS = {
+    "T053-C01": (24, 14, 4),
+}
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T053-C01") != "T053-C01":
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T053-C01")
+    if config_id not in PARAMS:
         raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
+    if config_id != "T053-C01":
+        raise ValueError("unsupported configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    factors = list(range(1, N + 1))
+    points = tuple(range(24))
+    blocks = []
+    covered = set()
+    # Each uncovered four-set receives one deterministic 14-set containing it.
+    # At most C(24,4)=10626 blocks are created, so this always terminates.
+    for quad in combinations(points, 4):
+        if quad in covered:
+            continue
+        extra = [x for x in points if x not in quad][:10]
+        block = tuple(sorted(quad + tuple(extra)))
+        blocks.append(list(block))
+        covered.update(combinations(block, 4))
+    if seed % 2:
+        blocks.reverse()
     # EVOLVE-BLOCK-END
-    return {"factors": factors}
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    return {"blocks": blocks}

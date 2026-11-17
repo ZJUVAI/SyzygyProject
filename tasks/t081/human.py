@@ -1,48 +1,16 @@
-"""Rational reconstruction of Rechenberg's published 12-point diagram."""
+"""Rebuild a classical fourth-Hermite polynomial-Gaussian example."""
 
-from fractions import Fraction
-import math
 import os
 
 
-SQRT3_DENOMINATOR = 10**63
-SQRT3_LOWER_NUMERATOR = 1732050807568877293527446341505872366942805253810380628055806979
-
-
-def build_rechenberg12_rational():
-    # Exact floor(sqrt(3)*10^63), with the integer proof checked below.
-    numerator = math.isqrt(3 * SQRT3_DENOMINATOR**2)
-    if numerator != SQRT3_LOWER_NUMERATOR:
-        raise ArithmeticError("frozen square-root reconstruction is inconsistent")
-    r = Fraction(numerator, SQRT3_DENOMINATOR)
-    if not (r * r < 3 < Fraction(numerator + 1, SQRT3_DENOMINATOR) ** 2):
-        raise ArithmeticError("rational does not bracket sqrt(3)")
-    half = Fraction(1, 2)
-    points = [
-        (Fraction(0), Fraction(0)),
-        (Fraction(1), Fraction(0)),
-        (half, r / 2),
-        (half, 1 + r / 2),
-        (half - r / 2, half + r / 2),
-        (half + r / 2, half + r / 2),
-        (-r / 2, half),
-        (-r / 2, -half),
-        (Fraction(0), Fraction(-1)),
-        (Fraction(1), Fraction(-1)),
-        (1 + r / 2, -half),
-        (1 + r / 2, half),
-    ]
-    return {
-        "points": [
-            [x.numerator if x.denominator == 1 else str(x),
-             y.numerator if y.denominator == 1 else str(y)]
-            for x, y in points
-        ]
-    }
-
-
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C01")
-    if chosen != "T081-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    return build_rechenberg12_rational()
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T081-C01")
+    if config_id != "T081-C01":
+        raise ValueError(f"unknown T081 configuration: {config_id}")
+    # In t=pi*x^2, H_4(sqrt(2t))/64 = t^2 - 3t/2 + 3/16.
+    # Subtracting 3/16 + 1/1000 keeps the function self-Fourier and makes
+    # both values at the origin strictly negative.
+    return {
+        "coefficients": ["-1/1000", "-3/2", "1"],
+        "method": "published Hermite-Gaussian eigenfunction, reconstructed with exact rational coefficients",
+    }

@@ -1,13 +1,8 @@
-"""Load the frozen reconstructed Lewko construction for T062."""
-
-import json
-import os
+"""Load the best fixed public witness checked for each configured n."""
+import json,os
 from pathlib import Path
-
-
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T062-C01")
-    if chosen != "T062-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    path = Path(__file__).parent / "data" / "reference" / "lewko205_n42025.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    cid=os.environ.get("MATHBENCH_CONFIG_ID","T062-C01")
+    if cid != "T062-C01":raise ValueError(f"unsupported T062 configuration: {cid}")
+    d=json.loads((Path(__file__).parent/'data/reference'/'sharp_8635_transcribed.json').read_text())
+    return {"elements":d["elements"],"reference_metadata":d.get("source",{})}

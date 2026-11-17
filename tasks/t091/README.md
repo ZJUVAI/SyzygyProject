@@ -1,41 +1,65 @@
-# T091：63 列二元强度 4 正交阵最少行数
+# T091: integer Chebyshev polynomial on `[0,1]`
 
-## 定义
+## Definition
 
-求最小行数 \(N\)，使得二元正交阵有 63 列、强度 4。对每组 4 列，16 种二进制模式都必须恰好出现 \(N/16\) 次。允许重复行。固定配置 `T091-C01`。
+For the fixed degree limit `n=146`, find a nonzero polynomial
+`P(x) in Z[x]` with `degree(P) <= 146` that minimizes
 
-Rao 界为
-\[
-N\ge 1+\binom{63}{1}+\binom{63}{2}=2017.
-\]
-强度 4 要求 \(16\mid N\)，所以 \(N\ge2032\)。此界与已知 2048 行构造之间尚有差距。
+`||P||_[0,1] = max_{0 <= x <= 1} |P(x)|`.
 
-## 检查方法
+This definition allows every nonzero integer polynomial through degree 146.
+It does not restrict candidates to products of known factors. Published work
+states that an optimizer has degree exactly `n` for `n >= 2`, but the checker
+still accepts every valid degree-at-most-146 candidate.
 
-每列编码为长度 \(N\) 的整数位集。对 1 至 4 列的每个非空子集，检查按位异或后的 1 数恰为 \(N/2\)。在每个 4 列集合上，这等价于其所有非平凡奇偶特征均平衡；二元 Fourier 反演给出 16 个模式的计数都为 \(N/16\)。检查器会检查 637,392 个奇偶条件。它接受重复行，不会把重复行误判为无效。
+The checker uses exact rational Bernstein coefficients and dyadic subdivision.
+On each interval, the polynomial is a convex combination of its Bernstein
+coefficients, so their largest absolute value is a rigorous upper bound. Exact
+dyadic evaluations give a lower bound. The returned interval encloses the
+whole-domain supremum norm. Sampling is used only by the search baseline.
 
-## 初始程序、基线与来源
+The frozen human baseline is the weak same-parameter reconstruction
+`P(x)=(x(1-x))^73`, with exact norm `2^-146`. Meichsner defines
+`h1(x)=x(1-x)`; the exponent 73 and this n=146 witness are reconstructed for
+this benchmark. The thesis's n=146 table row gives only a one-sided
+reciprocal-root bound and no polynomial. The reported bound is converted to
+the raw objective in `data/bestknown.json`; it is not the frozen human normalization.
+See [source evidence](data/source/research_evidence.md).
 
-模型起点使用 F₂¹⁴ 上的通用随机贪心法选择 63 个标签，再枚举全部 16384 个线性形式，得到 16384 行且互异的有效阵列。它不读取 BCH 对照。传统搜索独立在 F₂¹³ 上运行相同的通用选择规则，得到 8192 行，并执行固定次数的 16 行删除尝试。
+## Open status and sources
 
+Meichsner's 2009 thesis reports complete finite-degree results through 145;
+its n=146 table row does not give an optimizer. Hare and Hodges (arXiv
+1804.05985v2, 2018) added proved cases from degree 147 upward and reported
+remaining unknown cases below 244. The latest checked 2026 paper proves new
+bounds for the asymptotic integer Chebyshev constant, not for finite degree
+146. We found no later n=146 completion in the sources checked by
+2026-11-06. This is not an exhaustive survey claim.
 
-Carlet、Kiss、Nagy 的论文 Remark 5 给出双纠错 BCH 码对偶构造的正交阵。取 \(m=6\) 并删去一列，可重建 4096 行、63 列、强度 4 的正交阵。本任务以这个公式作为人类基线和固定参考，并对全部条件重新计算。论文 Proposition 10 与 Remark 11 给出 Kerdock 构造的 2048 行同参上界；作者明确说最优性尚未确定。本地续搜用模 4 迹码重建了 2048 行构造。独立复算检查了每组四列中 16 种模式的出现次数。
+- Meichsner (2009), thesis: <https://www.collectionscanada.gc.ca/obj/thesescanada/vol2/002/NR59810.PDF>
+- Hare and Hodges, arXiv:1804.05985v2: <https://arxiv.org/abs/1804.05985v2>
+- Niedbala Giraudin, arXiv:2610.00386v3: <https://arxiv.org/abs/2610.00386v3>
 
-- [Simplicity conditions for binary orthogonal arrays](https://doi.org/10.1007/s10623-022-01105-4)
-- Sloane 的 orthogonal array directory：[neilsloane.com/oadir](https://neilsloane.com/oadir/index.html)。
+## Run and budget
 
-2026-11-06 检索未发现 63 列同参最优性证明。公开 2048 构造与 2032 下界之间仍有 16 行缺口。
+Use Python 3.11 or newer. No non-standard package is required.
 
-## English
+```sh
+.venv/bin/python -m pytest tasks/t091 -q
+.venv/bin/python -c 'from tasks.t091.init_program import run_code; from tasks.t091.check import validate; p={"degree_at_most":146,"interval":[0,1],"coefficient_domain":"nonzero integer polynomials"}; print(validate(run_code(), {"parameters":p}, strict=True))'
+```
 
-The standalone start uses a generic random-greedy selection of 63 labels in F₂¹⁴ and enumerates all 16384 linear forms. It produces 16384 distinct rows and does not read the BCH comparator. The traditional search independently builds an F₂¹³ array with 8192 rows and tests fixed 16-row deletions.
+Generation has a 300 second limit. Verification has a separate 60 second
+limit. The checker caps its subdivision work at 100,000 exact splits and raises
+`ValueError` if it cannot complete a certificate. The shared runner applies
+the 4 GiB memory limit and one-thread setting. The traditional search uses a
+fixed limit of 74 factor-exponent trials by default; setting
+`MATHBENCH_SEARCH_SECONDS` enables a wall-clock exploration cutoff.
 
-Find the smallest row count \(N\) for a binary orthogonal array with 63 columns and strength 4. Every 4-column projection must contain each of the 16 binary patterns exactly \(N/16\) times. Duplicate rows are allowed. Configuration `T091-C01` fixes these parameters.
+The initial program is the simple monomial `x^146`. The traditional
+baseline ranks products `h1^a h2^b`, where `h1=x(1-x)`, `h2=2x-1`, and
+`2a+b=146`, on a 513-point dyadic grid. Neither program reads comparison data.
+The fixed reference and human programs are external comparisons.
 
-Rao's bound gives \(N\ge2017\). Since \(16\mid N\), the lower bound rounds up to 2032. A public Kerdock construction gives 2048 rows, so the finite optimum is open in the reviewed sources.
-
-The checker packs every column into an N-bit integer and checks all nonempty parity characters on subsets of 1 to 4 columns. Binary Fourier inversion makes these checks equivalent to uniform 4-column pattern counts. It performs 637,392 exact parity checks and allows repeated rows.
-
-The standalone initializer uses a generic random-greedy set of 63 labels in F₂¹⁴ and enumerates all linear forms, producing 16384 distinct rows. The traditional search independently builds an F₂¹³ seed with 8192 rows and tries fixed 16-row deletions. Neither program reads the BCH witness.
-
-The human baseline rebuilds a 4096-row OA from the dual of a double-error-correcting BCH code, as described by Carlet, Kiss, and Nagy. Their paper also reports a 2048-row Kerdock construction and states that optimality is unknown. The local search rebuilt the 2048-row construction with a trace code over integers modulo 4. An independent check counted all 16 patterns in each four-column projection.
+The task remains `accepted_by_sol`. Its objective is open; the checker
+certifies feasible candidates and their scores, not global optimality.

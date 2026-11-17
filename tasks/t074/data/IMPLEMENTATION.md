@@ -1,53 +1,42 @@
-# T074 implementation and verification record
+# T074 implementation evidence
 
-## Configuration and status
+Status: accepted by Sol on 2026-11-06.
 
-- Configuration: `T074-C01`, 12 distinct rational points in the plane, no three collinear, with no coordinate bounds or fixed container.
-- Objective: maximize minimum triangle area divided by convex-hull area.
-- Reproduced public record: exact ratio `2/51`.
-- Status: `accepted_by_sol`.
+## Selected configuration and source check
 
-## Source and provenance
+- T074-C01 fixes a length-100 sequence over `{-1,+1}` and minimizes the largest magnitude among the 99 nonzero-shift aperiodic autocorrelations.
+- Nunn and Coxson (2008), IEEE TAES 44(1), Table 2, gives the complete N=100 code `DF490FFB1F8390A54E3CD9AAE` and reports PSL 5. The witness was expanded to 100 bits and checked locally with exact integer arithmetic.
+- The latest status source checked on 2026-11-06 is Brest et al., *Binary Sequences with Low Aperiodic Autocorrelations: Small Peak Sidelobe Levels*, version 2, posted 2026-07-28. Section 1 says exact minima are known for n<=61 and n=64, and directs readers to Nunn-Coxson for the reported values at 71<=n<=105. We treat N=100 PSL 5 as a best-known feasible value; the exact minimum is not proved by the checked sources.
+- The witness JSON under `data/source/` and `data/reference/` has SHA-256 `0b3b9047edbb1a720ee1c2776ff9cba020a91f972bb965d10937be0ea3693648`.
 
-The current [Convex, n=12 archive page](https://math.tejstead.com/heilbronn/convex/12/) lists `2/51` and credits David Cantrell, June 2007. The page says that coordinate material was later supplied by an external contributor and re-verified; it cites a 2007 Cantrell Mathematica notebook received in September 2026. The archive's [methods page](https://math.tejstead.com/heilbronn/methods/) describes local reconstruction for some Cantrell records and says those reconstructions are not claimed as the original author's exact arrangements. This implementation preserves those provenance steps and does not label the locally rationalized coordinates as Cantrell's original coordinates.
+## Difference from T073
 
-The archived decimal JSON is stored at `data/source/tejstead_convex_n12.json`, SHA-256 `c5eaf80a1b3f270b949fe891eb9777541f0330c6d33a33e7b3d1eaa267c03b27`. `human.py` reads those decimal strings as exact base-10 rationals, maps the first three points affinely to `(0,0),(1,0),(0,1)`, then applies `limit_denominator(100)` to each normalized coordinate. The resulting fixture is `data/reference/cantrell_n12_rationalized.json`, SHA-256 `6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4`.
+The fixed length is the same as T073-C01, but the objective is different. At length 100, the T073 Dantus record has energy 578 and PSL 8. The Nunn-Coxson record has energy 874 and PSL 5. Both pairs were independently recomputed with exact integer sums. One sequence is better on energy and worse on PSL, so the objectives are not monotone transforms of one another.
 
-Exact recomputation gives minimum triangle area `1/4`, convex-hull area `51/8`, and ratio `2/51`. The hull has 9 vertices. All 220 triples have nonzero determinant. The archive's current record table shows `2/51`; no n=12 optimality proof was found in the checked sources. Its 2026 machine-checked free-convex results for n=3 through n=8 do not cover n=12.
+## Programs and reproduced values
 
-## Rational and real coordinate domains
+- `check.py` requires exactly 100 integer signs. It rejects booleans, floats, NaN, infinities, and values outside `{-1,+1}`. It recomputes all 99 sidelobes, returns their maximum absolute value, and ignores any declared score.
+- `init_program.py` returns 100 positive signs, a valid seed with PSL 99.
+- `baseline.py` uses fixed-seed single-bit-flip simulated annealing. It updates every affected autocorrelation with exact integer deltas and reads no comparison data. The default is 12 restarts of 3000 proposals each.
+- `human.py` rebuilds the Nunn-Coxson hexadecimal witness. `reference.py` replays its frozen copy. Both outputs match and score PSL 5.
+- Strict runner execution of `baseline.py`, seed 0, returned PSL 9. Generation took 4.408 s and verification took 0.799 s on Python 3.13.12/Linux. The runner enforced 300 s generation, 60 s verification, 4 GiB memory, and one thread. Artifacts are in `data/results.json`; `result.json` SHA-256 `96fb20387004c2c9e4cb9c52ac5f1f63742ddd1568865016e9579d01a8afae7d` and `solution.json` SHA-256 `7ad92f3d7a6e2fd542d7e342c8fd5725c5942969fb311cd7b64bffe32e6a76ef`.
 
-The task accepts arbitrary rational coordinates. The rational and real domains have the same supremum. Given any feasible real configuration, its 220 determinants are all nonzero. Small coordinate perturbations preserve this condition. Rational coordinates are dense, and triangle areas, convex-hull area, and their ratio are continuous while hull area remains positive. Thus every feasible real value can be approached by rational configurations. This does not prove that a real maximizer has rational coordinates.
+## Tests and commands
 
-## Programs
+`test_task.py` tests the five `run_code()` entries, exact human witness score, simple-seed boundary, repeated signs, malformed lengths and values, fixed configuration types, forged score invariance, exact single-bit delta/rollback, and runner program-error and timeout handling through `mathbench.evaluate._run`.
 
-- `check.py` parses integer, rational-string, and finite decimal coordinates as exact fractions. It rejects booleans, invalid rationals, duplicates, and every collinear triple. It checks all 220 triples and computes the hull with an exact monotone-chain algorithm followed by exact shoelace area.
-- `init_program.py` is standalone and returns the 12 points `(i,i^2)` for `i=0,...,11`. A line meets a parabola in at most two points, so this seed has no collinear triple.
-- `baseline.py` runs seeded one-point integer-coordinate hill climbing, with occasional equal-score moves.
-- `evolution.py` keeps an elitist population and mutates one integer-coordinate point at a time.
-- Both search programs start from the parabola seed and do not read comparison data. They default to proposals in `[-40,40]`; this is a search proposal range only. The checker does not limit coordinate size or rational denominator. `MATHBENCH_SEARCH_COORDINATE_LIMIT` changes the search range.
-- `human.py` rebuilds the local rational witness from the archived decimal source. `reference.py` replays the fixed local rational witness.
-- `evaluator.py` connects the shared runner. This task does not edit the shared registry.
-
-## Checks performed
-
-Tests cover source and fixture hashes, local reconstruction, independent exact determinant and shoelace calculations, all five program entries, translation/scale invariance at very large integer coordinates, duplicates, collinear points, wrong sizes, malformed coordinate pairs, bool/NaN/infinity/invalid rational inputs, a wrong configuration, forged score fields, runner errors, and timeouts.
-
-Commands:
+Run from the repository root:
 
 ```sh
-.venv/bin/python -m pytest tasks/t074 -q
+.venv/bin/python -m pytest tasks/t074/test_task.py -q
 .venv/bin/python -m json.tool tasks/t074/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t074/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t074/data/source/source_notes.json > /dev/null
 ```
 
-Results on CPython 3.13.12, Linux x86_64:
+The strict baseline run used an in-process temporary configuration/path override for `evaluate_candidate`; no shared registry was changed. Generation and verification still ran in separate constrained workers.
 
-- `.venv/bin/python -m pytest tasks/t074 -q`: 8 passed in 0.44 seconds.
-- Seed 0, default fixed budgets, no wall-clock cutoff: initial objective `1/220`; baseline after 300 steps returned `1/199` in 4.343 seconds; evolution after 60 generations returned `1/220` in 0.111 seconds; human and reference each returned `2/51`.
-- JSON parsing passed for all four JSON records listed above.
-- The public witness was independently checked by enumerating all 220 determinants and using a separately specified 9-vertex hull order for shoelace area. It yielded minimum double area `1/2`, hull double area `51/4`, and ratio `2/51`.
-- Default runner limits remain 300 seconds for generation, 60 seconds for verification, 4 GiB memory, and one thread. The tests exercise `_run` error and timeout paths. The full task suite was not run.
+## Limits
 
-This implementation has not been accepted by Sol. It remains `accepted_by_sol`.
+- PSL 5 is a feasible public result, not a proof of the exact minimum for length 100.
+- The current survey lists reported values for this length range but does not give a nontrivial certified lower bound for this exact instance.
+- Sol should replay the human record, verify the initial and search outputs, reject a damaged sign list, recompute the PSL, and confirm forged objective fields have no effect.

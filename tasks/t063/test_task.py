@@ -1,119 +1,125 @@
-"""Tests for the degree-100 Mahler measure task."""
+"""Tests for the T063 checker, witnesses, and callable programs."""
 
 import hashlib
 import json
+import math
 import os
-from pathlib import Path
 import sys
-from fractions import Fraction
+from pathlib import Path
 
 import pytest
 
-from tasks.t063.check import PARAMETERS, _rat, validate
+from tasks.t063.baseline import run_code as baseline_run
+from tasks.t063.check import validate
+from tasks.t063.evolution import run_code as evolution_run
+from tasks.t063.human import run_code as human_run
+from tasks.t063.init_program import run_code as seed_run
+from tasks.t063.reference import run_code as reference_run
 
-ROOT = Path(__file__).resolve().parent
-CONFIG = {"id": "T063-C01", "parameters": PARAMETERS}
+
+CONFIG = {
+    "id": "T063-C01",
+    "parameters": {
+        "N": 212,
+        "universe": "integers_1_through_N",
+        "forbidden_pattern": "nontrivial_three_term_arithmetic_progression",
+    },
+    "direction": "maximize",
+    "human_reference": 32,
+}
 
 
-def test_pinned_public_witness_and_exact_measure_certificate():
-    from tasks.t063.human import run_code as human_run
+def _independent_ap_audit(elements):
+    values = set(elements)
+    for a in values:
+        for b in values:
+            c = 2 * b - a
+            if a < b < c and c in values:
+                return False
+    return True
 
-    path = ROOT / "data/reference/mossinghoff_degree_100_certificate.json"
-    source = json.loads((ROOT / "data/source/mossinghoff_degree_100_row.json").read_text())
-    witness = human_run()
-    assert witness["coefficients_ascending"] == source["coefficients_ascending"]
-    assert source["coefficients_descending"] == list(reversed(source["coefficients_ascending"]))
-    assert source["coefficients_descending"][:51] == source["reciprocal_prefix_descending"]
-    assert len(witness["root_disks"]) == 100
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
-        "fb01470875be798525b061a301e401dffa3bab18c50de35d6816defda976afb3"
+
+def test_public_43_witness_is_exact_and_matches_source_record():
+    source_file = Path(__file__).parent / "data" / "reference" / "ergezer_n212_k43_witness.json"
+    assert hashlib.sha256(source_file.read_bytes()).hexdigest() == (
+        "41377c0db2e50f2d7753434ac472e82d831d093013562a477fffb068f117eb28"
     )
-    result = validate(witness, CONFIG, strict=True)
-    assert result["verification_status"] == "certified"
-    assert result["details"]["irreducible_over_Q"] is True
-    assert result["details"]["root_disks_checked"] == 100
-    assert result["details"]["pairwise_disjoint_checks"] == 4950
-    assert result["details"]["outside_unit_circle_roots_certified"] == 8
-    lower, upper = map(Fraction, result["details"]["objective_interval"])
-    assert lower > 1
-    assert upper >= lower
-    assert (upper - lower) * 10**10 <= lower
+    candidate = reference_run()
+    result = validate(candidate, CONFIG, strict=True)
+    assert len(candidate["elements"]) == 43
+    assert result["objective"] == 43
+    assert result["verification_status"] == "exact"
+    assert _independent_ap_audit(candidate["elements"])
 
 
-def test_five_program_entries_return_valid_constructs(monkeypatch):
+def test_classical_human_formula_has_32_elements_and_is_valid():
+    candidate = human_run()
+    source_file = Path(__file__).parent / "data" / "reference" / "odlyzko_stanley_n212_32.json"
+    assert hashlib.sha256(source_file.read_bytes()).hexdigest() == (
+        "9c4230152b0e0f1e8a98a35d78944fd190b9d94b0c14ba4a458b640c8fdaf24b"
+    )
+    assert candidate == json.loads(source_file.read_text(encoding="utf-8"))
+    assert len(candidate["elements"]) == 32
+    assert min(candidate["elements"]) == 1
+    assert max(candidate["elements"]) == 122
+    assert validate(candidate, CONFIG, strict=True)["objective"] == 32
+    assert _independent_ap_audit(candidate["elements"])
+
+
+def test_simple_seed_and_edge_sets_are_valid():
+    assert validate(seed_run(), CONFIG)["objective"] == 1
+    assert validate({"elements": [212]}, CONFIG)["objective"] == 1
+    assert validate({"elements": []}, CONFIG)["objective"] == 0
+
+
+def test_checker_rejects_progressions_bad_types_duplicates_and_bad_range():
+    invalid = [
+        {"elements": [1, 2, 3]},
+        {"elements": [1, 1]},
+        {"elements": [0]},
+        {"elements": [213]},
+        {"elements": [True]},
+        {"elements": [1.0]},
+        {"elements": [math.nan]},
+        {"elements": [math.inf]},
+        {"elements": "1,2,3"},
+        None,
+    ]
+    for candidate in invalid:
+        with pytest.raises(ValueError):
+            validate(candidate, CONFIG)
+
+
+def test_claimed_score_is_ignored_and_configuration_is_fixed():
+    witness = reference_run()
+    for forged in (-1, 0, 10**100, "43", math.nan, math.inf, True):
+        result = validate({**witness, "claimed_objective": forged, "score": forged}, CONFIG)
+        assert result["objective"] == 43
+        assert result["details"]["claimed_score_ignored"] is True
+    with pytest.raises(ValueError, match="configuration id"):
+        validate(witness, {**CONFIG, "id": "T063-C02"})
+    with pytest.raises(ValueError, match="parameters"):
+        validate(witness, {**CONFIG, "parameters": {**CONFIG["parameters"], "N": 211}})
+
+
+def test_all_five_program_entries_return_valid_constructions(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T063-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "0")
-    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "2")
-    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "2")
-    monkeypatch.setenv("MATHBENCH_RESTARTS", "1")
-    from tasks.t063.init_program import run_code as init_run
-    from tasks.t063.baseline import run_code as baseline_run
-    from tasks.t063.evolution import run_code as evolution_run
-    from tasks.t063.human import run_code as human_run
-    from tasks.t063.reference import run_code as reference_run
-
-    init = init_run()
-    baseline = baseline_run()
-    evolution = evolution_run()
-    human = human_run()
-    reference = reference_run()
-    for output in (init, baseline, evolution, human):
-        checked = validate(output, CONFIG)
-        assert checked["verification_status"] == "certified"
-    assert reference == human
-    assert baseline["coefficients_ascending"] == init["coefficients_ascending"]
-    assert baseline["search_metadata"]["iterations_run"] == 2
-    assert evolution["search_metadata"]["iterations_run"] == 2
+    monkeypatch.setenv("MATHBENCH_SEED", "212")
+    programs = (seed_run, baseline_run, evolution_run, human_run, reference_run)
+    for program in programs:
+        output = program()
+        assert validate(output, CONFIG)["verification_status"] == "exact"
+    search = baseline_run()
+    assert search["search_metadata"]["seed"] == 212
+    assert search["search_metadata"]["comparison_data_read"] is False
+    assert search["search_metadata"]["restarts"] <= 48
 
 
-def test_checker_rejects_bad_degree_coefficients_and_root_disks():
-    from tasks.t063.init_program import run_code
-
-    valid = run_code()
-    with pytest.raises(ValueError, match="101 integers"):
-        validate({**valid, "coefficients_ascending": [1, 2]}, CONFIG)
-    with pytest.raises(ValueError, match="bool and floats"):
-        bad = {**valid, "coefficients_ascending": list(valid["coefficients_ascending"])}
-        bad["coefficients_ascending"][0] = True
-        validate(bad, CONFIG)
-    with pytest.raises(ValueError, match="bool and floats"):
-        bad = {**valid, "coefficients_ascending": list(valid["coefficients_ascending"])}
-        bad["coefficients_ascending"][0] = float("nan")
-        validate(bad, CONFIG)
-    with pytest.raises(ValueError, match="exact degree 100"):
-        bad = {**valid, "coefficients_ascending": list(valid["coefficients_ascending"])}
-        bad["coefficients_ascending"][-1] = 0
-        validate(bad, CONFIG)
-    with pytest.raises(ValueError, match="100 root disks"):
-        validate({**valid, "root_disks": valid["root_disks"][:-1]}, CONFIG)
-    with pytest.raises(ValueError, match="pairwise disjoint"):
-        bad = {**valid, "root_disks": list(valid["root_disks"])}
-        bad["root_disks"][1] = dict(bad["root_disks"][0])
-        validate(bad, CONFIG)
-    with pytest.raises(ValueError, match="configuration parameters do not match"):
-        validate(valid, {"id": "T063-C01", "parameters": {**PARAMETERS, "degree": 99}})
-
-
-def test_rational_root_certificate_precision_is_not_artificially_capped():
-    large_integer = "9" * 5000
-    assert _rat(large_integer + "/7", "large rational") == Fraction(int(large_integer), 7)
-
-
-def test_claimed_objective_fields_do_not_change_verified_result():
-    from tasks.t063.init_program import run_code
-
-    valid = run_code()
-    checked = validate(valid, CONFIG)
-    for key, claim in (("objective", -100), ("score", float("nan")),
-                       ("claimed_score", {"forged": True})):
-        assert validate({**valid, key: claim}, CONFIG) == checked
-
-
-def test_runner_error_and_timeout_controls():
+def test_shared_runner_surfaces_candidate_error_and_timeout():
     from mathbench.evaluate import _run
 
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T063 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T063 worker failure')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
+    environment = dict(os.environ)
+    with pytest.raises(RuntimeError, match="candidate failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

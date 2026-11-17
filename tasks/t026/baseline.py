@@ -1,56 +1,46 @@
-"""Seeded randomized greedy construction; it never reads reference data."""
-
+"""Fixed-seed search over traditional grid-diagonal patterns."""
 import os
 import random
 
 from mathbench.search import search_steps
+from tasks.t026.grid_method import build_grid
 
-
-COLOR_LIMIT = 6
-PLACEMENT_BUDGET = 50_000
-
-
-def _can_extend(colors, number, color):
-    # For x+y=number, x<=y enumerates each unordered pair once, including x=y.
-    for x in range(1, number // 2 + 1):
-        y = number - x
-        if colors[x - 1] == color and colors[y - 1] == color:
-            return False
-    return True
+ITERATION_LIMIT = 3
 
 
 def run_code():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T026-C01") != "T026-C01":
+        raise ValueError("unsupported T026 configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    rng = random.Random(seed)
-    requested_seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    best = [0, 1, 1, 0]
-    placements = 0
-    restarts = 1
-    colors = []
-    for _ in search_steps(PLACEMENT_BUDGET):
-        number = len(colors) + 1
-        available = [color for color in range(COLOR_LIMIT) if _can_extend(colors, number, color)]
-        if not available:
-            if len(colors) > len(best):
-                best = colors
-            colors = []
-            restarts += 1
-            number = 1
-            available = list(range(COLOR_LIMIT))
-        colors.append(rng.choice(available))
-        placements += 1
-    if len(colors) > len(best):
-        best = colors
-    return {
-        "n": len(best),
-        "colors": best,
-        "search_metadata": {
-            "algorithm": "seeded randomized sequential greedy coloring with restarts",
-            "seed": seed,
-            "placements": placements,
-            "placement_budget": PLACEMENT_BUDGET,
-            "restarts": restarts,
-            "wall_clock_cutoff_seconds": requested_seconds,
-            "reference_data_read": False,
+    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    order = [0, 1, 2]
+    random.Random(seed).shuffle(order)
+    best = None
+    best_count = None
+    tested = []
+    for index in search_steps(ITERATION_LIMIT):
+        pattern = order[index]
+        candidate = build_grid(pattern)
+        count = len(candidate["steiner_points_x"])
+        tested.append(pattern)
+        if best_count is None or count < best_count:
+            best, best_count = candidate, count
+    if best is None:
+        best = build_grid(0)
+        best_count = len(best["steiner_points_x"])
+    best["search_metadata"] = {
+        "algorithm": "fixed-count comparison of Cartesian-grid diagonal patterns",
+        "seed": seed,
+        "tested_patterns": tested,
+        "iterations": len(tested),
+        "iteration_limit": ITERATION_LIMIT,
+        "reference_data_read": False,
+        "budget": {
+            "mode": "wall_clock_cutoff" if seconds is not None else "fixed_iteration_count",
+            "requested_iterations": ITERATION_LIMIT,
+            "actual_iterations": len(tested),
+            "requested_wall_clock_seconds": seconds,
         },
     }
+    best.pop("construction_metadata", None)
+    return best

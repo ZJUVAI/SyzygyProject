@@ -1,81 +1,78 @@
-"""Seeded multi-start DSATUR greedy coloring; reads only the fixed graph."""
-
-import heapq
-import os
-import random
-
-from mathbench.search import search_steps
-from tasks.t030.check import load_graph
+from mathbench.search import search_deadline, search_steps
+"""Greedily reduce a valid LPS graph by deleting a vertex and pairing its neighbours."""
+from collections import deque
+import os, random, time
+from lps import build_graph
 
 
-ITERATION_LIMIT = 8
+def _distance(adj,source,target,blocked,max_depth=8):
+    dist={source:0}; q=deque([source])
+    while q:
+        u=q.popleft(); du=dist[u]
+        if du>=max_depth: continue
+        for v in adj[u]:
+            if v==blocked or v in dist: continue
+            dist[v]=du+1
+            if v==target: return du+1
+            q.append(v)
+    return max_depth+1
 
 
-def dsatur_coloring(adjacency, rng):
-    """Build one proper coloring using saturation-degree vertex selection."""
-    n = len(adjacency)
-    degrees = [len(neighbors) for neighbors in adjacency]
-    saturation = [0] * n  # Bitset of colors already used by colored neighbors.
-    colors = [-1] * n
-    tie_break = [rng.random() for _ in range(n)]
-    queue = [(0, -degrees[v], tie_break[v], v) for v in range(n)]
-    heapq.heapify(queue)
+def _connected(adj):
+    seen={0}; q=[0]
+    for u in q:
+        for v in adj[u]:
+            if v not in seen: seen.add(v); q.append(v)
+    return len(seen)==len(adj)
 
-    for color_step in range(n):
-        while True:
-            neg_sat_degree, neg_degree, tie, vertex = heapq.heappop(queue)
-            if colors[vertex] != -1:
-                continue
-            if neg_sat_degree != -saturation[vertex].bit_count():
-                continue
-            if neg_degree != -degrees[vertex] or tie != tie_break[vertex]:
-                continue
-            break
 
-        used = saturation[vertex]
-        available = ~used
-        color = (available & -available).bit_length() - 1
-        colors[vertex] = color
-        color_bit = 1 << color
-        for neighbor in adjacency[vertex]:
-            if colors[neighbor] == -1 and not (saturation[neighbor] & color_bit):
-                saturation[neighbor] |= color_bit
-                heapq.heappush(queue, (-saturation[neighbor].bit_count(),
-                                       -degrees[neighbor], tie_break[neighbor], neighbor))
-    return colors
+def _try_delete(adj,v):
+    neighbors=list(adj[v])
+    if len(neighbors)!=4: return None
+    a,b,c,d=neighbors
+    pairings=(((a,b),(c,d)),((a,c),(b,d)),((a,d),(b,c)))
+    # A new edge is safe when its endpoints have no old path of length <=8
+    # after deleting v. This prevents every new cycle shorter than 10.
+    for (x,y),(z,w) in pairings:
+        if _distance(adj,x,y,v)<9: continue
+        mapping={u:(u if u<v else u-1) for u in range(len(adj)) if u!=v}
+        reduced=[]
+        for u,row in enumerate(adj):
+            if u==v: continue
+            reduced.append({mapping[q] for q in row if q!=v})
+        x2,y2,z2,w2=(mapping[x],mapping[y],mapping[z],mapping[w])
+        reduced[x2].add(y2); reduced[y2].add(x2)
+        if _distance(reduced,z2,w2,-1)<9:
+            continue
+        reduced[z2].add(w2); reduced[w2].add(z2)
+        if not _connected(reduced):
+            continue
+        edges=[(u,t) for u,row in enumerate(reduced) for t in row if u<t]
+        return {'vertices':len(reduced),'edges':[list(e) for e in edges]}
+    return None
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T030-C01")
-    if config_id != "T030-C01":
-        raise ValueError("unsupported configuration id")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    rng = random.Random(seed)
-    adjacency, _ = load_graph()
-    best = None
-    best_count = len(adjacency) + 1
-    iterations = 0
-    steps = iter(search_steps(ITERATION_LIMIT))
-    for _ in range(ITERATION_LIMIT):
-        if next(steps, None) is None:
-            break
-        candidate = dsatur_coloring(adjacency, rng)
-        count = len(set(candidate))
-        iterations += 1
-        if count < best_count:
-            best, best_count = candidate, count
-    return {
-        "colors": best,
-        "claimed_objective": best_count,
-        "search_metadata": {
-            "algorithm": "multi-start DSATUR greedy coloring with seeded random tie breaks",
-            "configuration_id": config_id,
-            "seed": seed,
-            "iterations": iterations,
-            "iteration_limit": ITERATION_LIMIT,
-            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
-            "reference_data_read": False,
-            "budget": {"iteration_limit": ITERATION_LIMIT,
-                       "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS")},
-        },
-    }
+    if os.environ.get('MATHBENCH_CONFIG_ID','T030-C01') != 'T030-C01':
+        raise ValueError('unsupported configuration')
+    rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
+    try: budget=max(0.01,min(2.0,float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2'))))
+    except ValueError: budget=2.0
+    deadline = search_deadline()
+    # The LPS graph is a known feasible fallback. Search for a one-vertex
+    # reduction by pairing the four neighbours of a deleted vertex.
+    solution=build_graph((0,2))
+    n=solution['vertices']; adj=[set() for _ in range(n)]
+    for u,v in solution['edges']:
+        adj[u].add(v); adj[v].add(u)
+    vertices=list(range(1,n)); rng.shuffle(vertices); vertices.insert(0,0)
+    for v in vertices[:100]:
+        if time.monotonic()>=deadline: break
+        candidate=_try_delete(adj,v)
+        if candidate is not None:
+            # Exact girth and the 10-cycle are confirmed by the separate trusted checker.
+            from check import validate
+            try: validate(candidate, {'parameters': {'degree':4,'girth':10}})
+            except ValueError: continue
+            return candidate
+    return solution

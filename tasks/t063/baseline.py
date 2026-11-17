@@ -1,73 +1,69 @@
-"""Traditional bounded scan in the Eisenstein family x^100-p."""
-import math
+"""Seeded randomized greedy search for 3-AP-free subsets of [1, 212]."""
+
 import os
-import time
+import random
+
+from mathbench.search import search_steps
 
 
-def _prime(n):
-    if n < 2:
-        return False
-    if n % 2 == 0:
-        return n == 2
-    limit = math.isqrt(n)
-    divisor = 3
-    while divisor <= limit:
-        if n % divisor == 0:
-            return False
-        divisor += 2
-    return True
+CONFIG_ID = "T063-C01"
+N = 212
+RESTARTS = 48
 
 
-def _solution(p):
-    degree = 100
-    scale = 10**16
-    radius = "1/100000000000000"
-    root_radius = float(p) ** (1.0 / degree)
-    disks = []
-    for k in range(degree):
-        angle = 2.0 * math.pi * k / degree
-        real = round(root_radius * math.cos(angle) * scale)
-        imag = round(root_radius * math.sin(angle) * scale)
-        disks.append({"center_real": f"{real}/{scale}",
-                      "center_imag": f"{imag}/{scale}",
-                      "radius": radius})
-    coefficients = [-p] + [0] * (degree - 1) + [1]
-    return {"coefficients_ascending": coefficients, "root_disks": disks}
+def _triple_incidence():
+    """Map each point to pairs that would complete a 3-term progression."""
+    incidence = [[] for _ in range(N + 1)]
+    for a in range(1, N + 1):
+        for b in range(a + 1, N + 1):
+            c = 2 * b - a
+            if c <= N:
+                incidence[a].append((b, c))
+                incidence[b].append((a, c))
+                incidence[c].append((a, b))
+    return incidence
+
+
+def _is_compatible(point, selected, incidence):
+    return not any(left in selected and right in selected for left, right in incidence[point])
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T063-C01") != "T063-C01":
-        raise ValueError("unsupported configuration")
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if config_id != CONFIG_ID:
+        raise ValueError("unsupported configuration id")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    requested = max(1, min(1000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "64"))))
-    start = time.monotonic()
-    checked = 0
-    p = 2
-    from mathbench.search import search_steps
-    for _ in search_steps(requested):
-        while not _prime(p):
-            p += 1
-        if _prime(p):
-            checked += 1
-            best_p = p if checked == 1 else min(best_p, p)
-        p += 1
-    if checked == 0:
-        best_p = 2
+    rng = random.Random(seed)
+    incidence = _triple_incidence()
+    best = [1]
+    restarts = 0
+    steps = iter(search_steps(RESTARTS))
+    for _ in range(RESTARTS):
+        if next(steps, None) is None:
+            break
+        order = list(range(2, N + 1))
+        rng.shuffle(order)
+        selected = {1}
+        for point in order:
+            if _is_compatible(point, selected, incidence):
+                selected.add(point)
+        restarts += 1
+        if len(selected) > len(best):
+            best = sorted(selected)
     return {
-        **_solution(best_p),
+        "elements": best,
+        "claimed_objective": len(best),
         "search_metadata": {
-            "algorithm": "fixed-iteration scan of Eisenstein polynomials x^100-p; Mahler measure is p for p>1",
+            "algorithm": "seeded randomized greedy insertion with exact AP-triple incidence checks",
+            "configuration_id": config_id,
             "seed": seed,
-            "iterations_requested": requested,
-            "iterations_run": checked,
-            "restarts": 1,
-            "best_candidate_parameter": best_p,
-            "generation_seconds": time.monotonic() - start,
-            "budget": {"mode": "fixed_iterations unless MATHBENCH_SEARCH_SECONDS is set",
-                       "runner_generation_limit_seconds": 300},
+            "restarts": restarts,
+            "restart_limit": RESTARTS,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            "comparison_data_read": False,
+            "budget": {
+                "restart_limit": RESTARTS,
+                "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            },
         },
     }
-
-
-if __name__ == "__main__":
-    print(run_code())

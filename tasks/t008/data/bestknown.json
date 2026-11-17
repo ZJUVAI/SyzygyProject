@@ -1,64 +1,128 @@
 {
   "task_id": "T008",
-  "review_status": "accepted_by_sol",
   "configurations": {
     "T008-C01": {
-      "public_value": "23",
-      "public_source": {
-        "url": "https://ljcr.dmgordon.org/cover/show_cover.php?v=24&k=14&t=4",
-        "archive_url": "https://zenodo.org/records/19735294",
-        "archive_file": "coverdata.json",
-        "witness_archive_file": "covers.json",
-        "archive_version": "1.2",
-        "recorded_contributor": "Andrei Ochmat",
-        "recorded_date": "2004-07-20",
-        "history": [
-          {
-            "value": "24",
-            "contributor": "JCD article",
-            "date": "1996-11-14 17:08:00"
-          }
-        ],
-        "provenance_note": "Zenodo archive metadata reports the best known size and its improvement history. It does not provide the construction method in this record."
+      "program": "reference.py",
+      "reproduced_value": 27,
+      "public_value": 27,
+      "highest_reported": {
+        "value": 27,
+        "source": "Ed Pegg Jr, Mrs Perkins's Quilt Update, July 2017, row for outer size 1000 in MrsPerkinssQuilts.txt; archived from the squaring.net downloads page.",
+        "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "reproduction_status": "The source row's 27 integer side lengths are decoded by the lowest-leftmost skyline rule. The resulting 27 squares exactly tile the 1000 square and have side gcd 1. This is a reported construction, not a proof of minimum order."
       },
-      "covers_json_byte_offset": 332010995,
-      "reproduced_value": "23",
-      "program": "sota.py",
-      "witness": "data/sota_witness.json",
-      "reproduction_command": ".venv/bin/python -m mathbench evaluate T008 tasks/t008/sota.py --strict",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "checked_at": "2026-11-05",
-      "limitations": [
-        "The archive attributes the 23-block improvement to Andrei Ochmat but does not state the construction method in its metadata.",
-        "The covering repository reports a best known construction, not a proof that 23 is optimal."
-      ],
+      "best_human": {
+        "value": 27,
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "source": "Ed Pegg Jr, July 2017 update to Mrs Perkins's quilts; source file row 1000 gives 27 squares and their side lengths.",
+        "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional mathematical and computer-assisted quilt search, credited by the source to Ed Pegg Jr. The page discusses computer programs and hand analysis; it does not discuss generative-AI use.",
+        "evidence_state": "The exact source row is archived. The skyline decoder reconstructs placements, and the checker verifies exact area, no overlap, complete coverage, and side gcd 1.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "source_url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+        "origin_type": "published traditional computer-assisted construction"
+      },
+      "best_public": {
+        "value": 27,
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "source": "Pegg's July 2017 data row as archived from the primary squaring.net download.",
+        "url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional computer-assisted mathematical construction. No generative-AI contribution is stated by the source.",
+        "evidence_state": "The 27-piece construction is reproduced from its side-length row. Its minimum status at outer side 1000 remains unproved.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "source_url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip"
+      },
+      "best_reproduced": {
+        "value": 27,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "outer_side": 1000,
+          "side_length_gcd": 1,
+          "compound_dissection_allowed": true
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Check integer coordinates, bounds, side lengths and gcd. A 1000-bit occupancy mask for every integer x-column detects overlap and confirms full coverage; area is also summed exactly.",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "origin_type": "published traditional computer-assisted dissection reconstructed from its size row",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 27,
+        "witness_program": "human.py",
+        "witness": "data/reference/pegg_1000_27.json",
+        "witness_sha256": "237d543109959c8939d22f98e91832d3bda47603cfe243f19a6e7beee0c7bfee",
+        "evidence_state": "Same-parameter 1000-square witness, reconstructed from the published 27-side row and exactly verified."
+      },
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": 27,
+        "note": "H is the reproduced 27-square human construction."
+      },
+      "optimality_status": {
+        "status": "open; 27 squares are a feasible construction, not a proved minimum",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The source page says most listed results past order 18 have not been proved best possible. Ed Wynn's exhaustive generation covers order at most 18. The page lists OEIS A005670 only for outer sizes 1 through 120.",
+        "limitations": "The checked sources do not prove that the 1000 square cannot be dissected into fewer than 27 coprime integer squares. Primitive means no sub-quilts in the source terminology; this task does not impose that restriction."
+      },
+      "source_pins": {
+        "primary_problem_page": {
+          "url": "https://www.squaring.net/quilts/mrs-perkins-quilts.html",
+          "date_checked": "2026-11-06",
+          "relevant_sections": "Definition of Mrs Perkins's quilts; Best Known, Not Best Possible; July 2017 update by Ed Pegg Jr"
+        },
+        "published_data": {
+          "url": "https://www.squaring.net/downloads/MrsPerkinssQuilts.txt.zip",
+          "zip_sha256": "ea43c7728ada8bec7fe93d4ffc3dfa88f3b37f0b6be9a36e1e8ea1b1b64bb98a",
+          "text_sha256": "ec6b0f9b21eda14648de00317371cf6f07f456c72fab235fa9ecaaffe798c2e7",
+          "row_number": 1000,
+          "saved_row_sha256": "011cbfe1a1933cf20ba51f78f4c721ca447636bc4e52d8ea1255b7cb92a5e880"
+        },
+        "exhaustive_low_order_source": {
+          "version": "arXiv:1308.5420v2",
+          "url": "https://arxiv.org/abs/1308.5420",
+          "scope": "Exhaustive generation for dissection order at most 18"
+        }
+      },
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T008",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T008",
           "config_id": "T008-C01",
           "validity": 1.0,
-          "combined_score": 2.6956521739130435,
-          "objective": 23,
+          "combined_score": 1.0,
+          "objective": 27,
           "verification_status": "exact",
-          "generation_time": 0.2652539797127247,
-          "verification_time": 0.2151874043047428,
-          "objective_value": 23,
+          "generation_time": 0.5442399978637695,
+          "verification_time": 0.4991121403872967,
+          "objective_value": 27,
           "details": {
-            "parameters": {
-              "v": 24,
-              "k": 14,
-              "t": 4
-            },
-            "blocks": 23,
-            "covered_four_subsets": 10626,
-            "total_four_subsets": 10626,
-            "claimed_objective_mismatch": false,
-            "optimality_proved": false
+            "square_count": 27,
+            "outer_side": 1000,
+            "total_tile_area": 1000000,
+            "covered_area": 1000000,
+            "tile_side_gcd": 1,
+            "integer_columns_checked": 1000,
+            "claimed_objective_ignored": true,
+            "strict": true
           },
-          "eval_time": 0.48527121916413307,
+          "eval_time": 1.054809007793665,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -68,72 +132,60 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t008/data/sota_witness.json",
         "independent_quantity": {
-          "blocks": 23,
-          "four_subsets": 10626
+          "square_count": 27,
+          "total_area": 1000000,
+          "gcd": 1,
+          "method": "independent pairwise exact rectangle separation plus full area"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Sol checked Zenodo v1.2 provenance, independently compared the extracted C(24,14,4) array against the saved 0-based witness, and verified all 10,626 four-subsets using bit masks. Empty coverage is rejected and forged scores are ignored.",
-        "snapshot_date": "2026-11-05"
+        "claimed_score_ignored": true
+      },
+      "parameters": {
+        "outer_side": 1000,
+        "side_length_gcd": 1,
+        "compound_dissection_allowed": true
       }
     }
   },
-  "sol_review": {
-    "T008-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
+  "review_status": "accepted_by_sol",
+  "snapshot_date": "2026-11-06",
+  "additional_evidence": {
+    "configurations": {
+      "T008-C01": {
+        "best_human": {
+          "source": "Ed Pegg Jr, Mrs Perkins's Quilt July 2017 update, row 1000.",
+          "provenance": "Traditional mathematical/computer-assisted search; generative-AI provenance is not discussed in the source.",
+          "evidence_state": "The source's 27 side lengths are archived, skyline-decoded, and exactly checked as a full 1000 square dissection with gcd 1."
+        },
+        "best_public": {
+          "source": "Pegg July 2017 data, archived from the squaring.net download.",
+          "provenance": "Traditional computer-assisted mathematical construction; no generative-AI use is reported.",
+          "evidence_state": "The published 27-square row is reproduced. It is not an optimality proof."
+        },
+        "best_reproduced": {
+          "verification_method": "Integer bit masks per x-column establish exact non-overlap and full coverage; area and side gcd are checked independently.",
+          "origin_type": "published size row reconstructed by lowest-leftmost skyline placement"
+        },
+        "frozen_human_baseline": {
+          "evidence_state": "Exact same-parameter witness from the published data row."
+        },
+        "highest_reported": {
+          "source": "Pegg's July 2017 data row for outer size 1000.",
+          "reproduction_status": "The dissection is reconstructed and verified; its optimality is not proved."
+        },
+        "optimality_status": {
+          "status": "open",
+          "evidence": "The source page labels most results past order 18 as not proven best possible; the 1000-square 27-piece entry is beyond the range exhaustively covered by Wynn's order-18 enumeration.",
+          "limitations": "No proof of a 27-piece minimum for the 1000 square was found. Compound dissections remain allowed."
+        }
+      }
     }
-  },
-  "best_human": {
-    "value": 62,
-    "date_checked": "2026-11-04",
-    "parameters": {
-      "v": 24,
-      "k": 14,
-      "t": 4
-    },
-    "url": "https://arxiv.org/html/math/9502238",
-    "provenance": "Reconstruction of Gordon, Kuperberg and Patashnik (1995), sections III-IV, finite geometry and induced coverings. AG(5,2) hyperplanes restricted to 24 points, padded to 14. The deleted eight-point subset was selected by this implementation. This is a published-method baseline, not a published 62-block record.",
-    "ai_provenance": "AI implemented the published method and selected the restriction.",
-    "evidence_state": "62 blocks independently cover all 10626 four-subsets exactly"
-  },
-  "best_public": {
-    "value": 23,
-    "date_checked": "2026-11-05",
-    "parameters": {
-      "v": 24,
-      "k": 14,
-      "t": 4
-    },
-    "url": "https://ljcr.dmgordon.org/cover.html",
-    "provenance": "La Jolla repository record, corroborated by the James Yu covering project which reports best known 23 and proves a lower bound of 20.",
-    "evidence_state": "published report; optimality not proved",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 23,
-    "parameters": {
-      "v": 24,
-      "k": 14,
-      "t": 4
-    },
-    "date_reproduced": "2026-11-05",
-    "provenance": "La Jolla Covering Repository witness, archived in the Zenodo dataset v1.2; the archive records the 23-block improvement by Andrei Ochmat on 2004-07-20. Labels 1..24 were converted to 0..23 for the local evaluator.",
-    "ai_provenance": "AI retrieved and converted the archived witness; the task evaluator independently checked all blocks and four-subsets.",
-    "evidence_state": "23 saved blocks; all10626four-subsets exactly verified",
-    "witness": "data/sota_witness.json",
-    "program": "sota.py"
-  },
-  "survey_cutoff": "2026-11-05",
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "configuration-specific public or published-method construction"
+  }
 }

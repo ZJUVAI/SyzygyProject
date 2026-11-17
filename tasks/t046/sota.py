@@ -1,0 +1,20 @@
+"""Load the archived public generator for the selected configuration."""
+import json
+import os
+from pathlib import Path
+
+_FILES = {
+    'T046-C01': 'sota_generator.json',
+}
+
+
+def read_generator(name):
+    obj = json.loads((Path(__file__).parent / 'data' / name).read_text())
+    return {'generator_matrix': [[int(bit) for bit in row] for row in obj['matrix']]}
+
+
+def run_code():
+    cid = os.environ.get('MATHBENCH_CONFIG_ID', 'T046-C01')
+    if cid not in _FILES:
+        raise ValueError('unsupported configuration')
+    return read_generator(_FILES[cid])

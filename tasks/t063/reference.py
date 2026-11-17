@@ -1,16 +1,10 @@
-"""Fixed replay of the independently certified degree-100 public polynomial."""
-import os
+"""Read the fixed public 43-element witness; not used by search programs."""
 
-from tasks.t063.human import run_code as _published_polynomial
+import json
+from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T063-C01") != "T063-C01":
-        raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    return _published_polynomial()
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    path = Path(__file__).parent / "data" / "reference" / "ergezer_n212_k43_witness.json"
+    record = json.loads(path.read_text(encoding="utf-8"))
+    return {"elements": record["A"]}

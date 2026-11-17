@@ -1,2 +1,11 @@
-"""Replay the checked public construction selected by MATHBENCH_CONFIG_JSON."""
-from tasks.t005.human import run_code
+"""Fixed reproduced reference: exact transcription of the n=4 pinwheel."""
+import json
+import os
+from pathlib import Path
+
+
+def run_code():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T005-C01") != "T005-C01":
+        raise ValueError("unsupported configuration")
+    path = Path(__file__).parent / "data" / "human" / "friedman4_formula.json"
+    return json.loads(path.read_text())

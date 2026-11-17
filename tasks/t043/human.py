@@ -1,91 +1,83 @@
-"""Rebuild the published 333-code from its printed orbit representatives."""
+"""Reconstruct a classical spectral-sequencing plus adjacent-swap baseline."""
 
-import json
 import os
-from pathlib import Path
 
-DATA = Path(__file__).resolve().parent / "data" / "source" / "heinlein_2019_appendix_c.json"
+import numpy as np
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import laplacian
+from scipy.sparse.linalg import eigsh
 
-
-def _matrix_product(left, right):
-    """Product of 7x7 binary matrices stored as row bitmasks."""
-    columns = [sum(((right[i] >> j) & 1) << i for i in range(7)) for j in range(7)]
-    return tuple(sum(((left[i] & columns[j]).bit_count() & 1) << j for j in range(7))
-                 for i in range(7))
+from tasks.t043.graph import load_graph
 
 
-def _transform(vector, matrix):
-    result = 0
-    for j in range(7):
-        column = sum(((matrix[i] >> j) & 1) << i for i in range(7))
-        result |= ((vector & column).bit_count() & 1) << j
-    return result
+def _spectral_order(n, edges, seed):
+    rows, columns = [], []
+    for u, v in edges:
+        rows.extend((u, v))
+        columns.extend((v, u))
+    adjacency = csr_matrix((np.ones(len(rows)), (rows, columns)), shape=(n, n))
+    graph_laplacian = laplacian(adjacency, normed=False)
+    v0 = np.random.default_rng(seed).normal(size=n)
+    eigenvalues, eigenvectors = eigsh(
+        graph_laplacian, k=2, which="SM", v0=v0, tol=1e-8, maxiter=100000)
+    fiedler = eigenvectors[:, 1]
+    return [int(x) + 1 for x in np.argsort(fiedler)]
 
 
-def _span(rows):
-    return frozenset((a * rows[0]) ^ (b * rows[1]) ^ (c * rows[2])
-                     for a in (0, 1) for b in (0, 1) for c in (0, 1))
-
-
-def _canonical_basis(vectors):
-    """Return a deterministic independent three-row basis of a 3-space."""
-    chosen = []
-    span = {0}
-    for vector in sorted(vectors - {0}):
-        if vector not in span:
-            chosen.append(vector)
-            span |= {value ^ vector for value in span}
-            if len(chosen) == 3:
-                break
-    if len(chosen) != 3:
-        raise ValueError("decoded representative does not span dimension three")
-    return chosen
+def _adjacent_descent(ordering, edges, sweep_limit=100):
+    order = list(ordering)
+    n = len(order)
+    position = [0] * (n + 1)
+    adjacency = [[] for _ in range(n + 1)]
+    for i, vertex in enumerate(order, start=1):
+        position[vertex] = i
+    for u0, v0 in edges:
+        u, v = u0 + 1, v0 + 1
+        adjacency[u].append(v)
+        adjacency[v].append(u)
+    improvements_by_sweep = []
+    for _ in range(sweep_limit):
+        improvements = 0
+        for i in range(n - 1):
+            left, right = order[i], order[i + 1]
+            delta = 0
+            for neighbor in adjacency[left]:
+                if neighbor != right:
+                    delta += abs((i + 2) - position[neighbor]) - abs((i + 1) - position[neighbor])
+            for neighbor in adjacency[right]:
+                if neighbor != left:
+                    delta += abs((i + 1) - position[neighbor]) - abs((i + 2) - position[neighbor])
+            if delta < 0:
+                order[i], order[i + 1] = right, left
+                position[left], position[right] = i + 2, i + 1
+                improvements += 1
+        improvements_by_sweep.append(improvements)
+        if improvements == 0:
+            break
+    return order, improvements_by_sweep
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T043-C01") != "T043-C01":
         raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    data = json.loads(DATA.read_text(encoding="utf-8"))
-    generators = [tuple(sum(bit << j for j, bit in enumerate(row)) for row in matrix)
-                  for matrix in data["generators"]]
-    identity = tuple(1 << i for i in range(7))
-    group = [identity]
-    seen = {identity}
-    for current in group:
-        for generator in generators:
-            product = _matrix_product(current, generator)
-            if product not in seen:
-                seen.add(product)
-                group.append(product)
-    if len(group) != 4:
-        raise ValueError(f"expected G_{{4,6}} of order four, found {len(group)}")
-
-    output = []
-    seen_spaces = set()
-    orbit_sizes = []
-    for representatives, orbit_size in zip(data["representatives_by_orbit"], data["orbit_sizes"]):
-        for digits in representatives:
-            rows = [sum(((digit >> row) & 1) << col for col, digit in enumerate(digits))
-                    for row in range(3)]
-            base = _span(rows)
-            orbit = set()
-            for matrix in group:
-                image = frozenset(_transform(vector, matrix) for vector in base)
-                orbit.add(image)
-            if len(orbit) != orbit_size:
-                raise ValueError(f"orbit has size {len(orbit)}, expected {orbit_size}")
-            orbit_sizes.append(len(orbit))
-            for space in orbit:
-                if space in seen_spaces:
-                    raise ValueError("paper orbit representatives overlap")
-                seen_spaces.add(space)
-                output.append(_canonical_basis(space))
-    if len(output) != 333:
-        raise ValueError(f"reconstructed {len(output)} subspaces, expected 333")
-    return {"codewords": [list(basis) for basis in output],
-            "provenance": "Appendix C representatives expanded by G_{4,6}"}
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    n, edges = load_graph()
+    spectral = _spectral_order(n, edges, seed)
+    ordering, sweep_improvements = _adjacent_descent(spectral, edges, 200)
+    return {
+        "ordering": ordering,
+        "method": "Fiedler-vector spectral sequencing followed by strict adjacent-swap descent",
+        "method_metadata": {
+            "seed": seed,
+            "spectral_solver": "scipy.sparse.linalg.eigsh; two smallest-magnitude Laplacian eigenvectors",
+            "eigenvector_tolerance": 1e-8,
+            "adjacent_swap_sweep_limit": 200,
+            "sweeps_run": len(sweep_improvements),
+            "improvements_by_sweep": sweep_improvements,
+        },
+    }
 
 
 if __name__ == "__main__":
+    import json
     print(json.dumps(run_code()))

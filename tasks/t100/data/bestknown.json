@@ -1,113 +1,144 @@
 {
   "task_id": "T100",
   "review_status": "accepted_by_sol",
-  "checked_at": "2026-11-07",
   "configurations": {
     "T100-C01": {
-      "program": "reference.py",
-      "reproduced_value": 1817,
-      "public_value": 1817,
-      "parameters": {
-        "vertices": 50,
-        "edges": 700,
-        "graph": "simple undirected graph",
-        "objective": "number of triangles"
-      },
-      "witness": "data/reference/hstar_50_700.json",
-      "witness_sha256": "a9ec1045378c7183865b96e1487665b364c0f7a489d4776259a7f8a270d31012",
-      "best_human": {
-        "value": 1817,
-        "witness": "data/reference/hstar_50_700.json",
-        "source": "https://arxiv.org/html/1712.00633v2",
-        "source_location": "Definition 1.1, applied to (n,e)=(50,700)",
-        "reconstruction": "Complete tripartite graph with parts 23,23,4, deleting a 13-edge star from the size-4 part to a size-23 part.",
-        "reproduction_status": "Construction generated from the published formula; all 700 edges and all 1,817 triangles were independently recomputed.",
-        "ai_provenance": "pre-AI published formula",
-        "date_reproduced": "2026-11-07",
-        "parameters": {
-          "vertices": 50,
-          "edges": 700
-        },
-        "witness_file": "data/reference/hstar_50_700.json",
-        "url": "https://arxiv.org/html/1712.00633v2",
-        "provenance": "Published LPS H* construction reconstructed from its complete multipartite part sizes and star deletion.",
-        "actual_value": 1817,
-        "evidence_state": "exact count: 700 edges and 1,817 triangles"
+      "objective": {
+        "name": "length of a string containing every permutation as a contiguous substring",
+        "unit": "symbols",
+        "direction": "minimize",
+        "constraints": [
+          "the string uses exactly the symbols 1 through 7",
+          "each of the 5040 permutations of 1 through 7 occurs as a contiguous length-7 substring"
+        ]
       },
       "best_public": {
-        "value": 1817,
-        "date_checked": "2026-11-07",
+        "value": 5905,
         "parameters": {
-          "vertices": 50,
-          "edges": 700
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
         },
-        "url": "https://zerothesis.com/challenges/min-triangles-fixed-edges?tab=brief",
-        "source_location": "Brief table row 50,700; construction sourced to LPS Definition 1.1",
-        "provenance": "Public challenge pack lists H*=1817 as its best-known construction and marks optimality conjectural.",
-        "ai_provenance": "The formula predates current AI systems; the pack's independent solver provenance is not relevant to this formula witness.",
-        "evidence_state": "same-parameter feasible construction reproduced exactly; the pack does not establish global optimality"
+        "source": "Andrei Teodorescu, Superpermutators Google Group post and attachment 5905_7_sol1.txt",
+        "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+        "evidence_state": "downloaded from the source attachment; all 5040 contiguous permutations independently replayed and length recomputed as 5905",
+        "date_checked": "2026-11-06",
+        "origin_type": "public search result; human/AI contribution not disclosed in the source checked"
       },
-      "best_reproduced": {
-        "value": 1817,
-        "date_reproduced": "2026-11-07",
+      "best_reproduced_human": {
+        "value": 5913,
         "parameters": {
-          "vertices": 50,
-          "edges": 700
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
         },
-        "witness_file": "data/reference/hstar_50_700.json",
-        "provenance": "Generated directly from the LPS H* part-size and edge-deletion formula.",
-        "ai_provenance": "benchmark transcription of a published formula",
-        "actual_value": 1817,
-        "evidence_state": "exact edge and triangle count check; global optimum not proved",
-        "review_status": "pending_sol_review"
+        "witness": "data/reference/human_ashlock_tillotson_5913.txt",
+        "source_url": "https://arxiv.org/abs/1408.5108",
+        "evidence_state": "the recursive construction described by Ashlock and Tillotson was independently implemented, saved, and exactly checked"
       },
-      "known_bounds": {
-        "lower_bound": 1815,
-        "upper_bound": 1817,
-        "lower_bound_exact_rational": "49000/27",
-        "lower_bound_source": "https://arxiv.org/html/1712.00633v2",
-        "lower_bound_location": "Section 1 blow-up inequality following Equation (1.12), using Razborov's exact density theorem",
-        "status": "checked sources leave the exact value unresolved between 1815 and 1817; the lower bound is not a finite-parameter proof of 1817"
+      "optimality": {
+        "status": "not established; best construction found in the reviewed sources has length 5905",
+        "references": [
+          {
+            "citation": "Andrei Teodorescu, n=7 superpermutation of length 5905, Superpermutators Google Group, 2026-08-17",
+            "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+            "finding": "The post attaches four words of length 5905. Andrew Balint reported independently checking all 5040 permutations. The source does not disclose AI involvement."
+          },
+          {
+            "citation": "jhalfar/superpermutations, L(7) >= 5,901, snapshot checked 2026-11-06",
+            "url": "https://github.com/jhalfar/superpermutations/blob/main/proofs/n7_5901/README.md",
+            "finding": "A computer-assisted lower-bound package claims 5901, with a Lean-checked reduction conditional on thirty search equations. Twenty-three of the thirty rely on searches where most are by one program; the README says twenty-three Lean equations are not evaluated. This is not treated here as a fully replayed certificate."
+          },
+          {
+            "citation": "jlebar/superperm7-ge-5898, lower bound audit checked 2026-11-06",
+            "url": "https://github.com/jlebar/superperm7-ge-5898",
+            "finding": "A distinct Lean development states 5898 <= s(7) <= 5906 and has explicit AI-generated authorship disclosure. It independently supports that the exact minimum is unresolved in that artifact, but its upper bound is older than the 5905 construction."
+          }
+        ],
+        "lower_bound": 5898,
+        "upper_bound": 5905,
+        "bound_note": "The 5898 lower bound is a formalized computer-assisted result with a native evaluator/compiler trust base. The stronger 5901 result is recorded as conditional computer-assisted evidence and was not independently replayed for this task. No optimality proof is claimed."
       },
       "highest_reported": {
-        "value": 1817,
-        "metric": "triangles in a feasible graph for this fixed parameter",
-        "direction": "minimize",
-        "date_checked": "2026-11-07",
-        "url": "https://arxiv.org/html/1712.00633v2",
-        "source_location": "Definition 1.1, evaluated at (50,700); zerothesis same-parameter row checked as a status supplement",
-        "reproduction_status": "Published H* candidate reproduced exactly. No optimality claim; checked lower bound is 1815.",
-        "ai_provenance": "pre-AI published formula"
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "source": {
+          "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+          "title": "Andrei Teodorescu, n=7 superpermutation of length 5905",
+          "claim": "Four length-5905 strings were posted; Andrew Balint reports verifying each as a complete superpermutation.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "one attached witness downloaded and exactly replayed; source does not report AI provenance"
       },
-      "optimality_status": {
-        "lower_bound": 1815,
-        "upper_bound": 1817,
-        "source": "https://arxiv.org/html/1712.00633v2",
-        "evidence_state": "no fixed (50,700) proof found in the bounded source check as of 2026-11-07"
+      "unmatched_parameter_records": [],
+      "ai_assisted_records": [],
+      "source_unattributed_records": [
+        {
+          "value": 5905,
+          "parameters": {
+            "symbols": 7,
+            "permutations_required": 5040,
+            "containment": "contiguous_substring"
+          },
+          "source_url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+          "description": "The public construction and its search code are named, but the post does not disclose whether AI contributed."
+        }
+      ],
+      "best_reproduced": {
+        "value": 5905,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
+        },
+        "witness": "data/reference/public_5905_attachment.txt",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "strip source attachment whitespace; enumerate all length-7 windows; compare the valid-window set with all 5040 permutations; recompute string length",
+        "witness_sha256": "f0208fb0e8ea98b015799b8f0dfaadc58d5909bad4a089603f2c9c4768536f67",
+        "normalized_word_sha256": "98564c93f955c9256ca69c819e1b106a2be79e3286be2635d8374bc5595be6ac",
+        "claimed_score_ignored": true,
+        "date_reproduced": "2026-11-06",
+        "review_status": "reviewed_by_sol"
       },
-      "review_status": "accepted_by_sol",
+      "human_method_baseline": {
+        "value": 5913,
+        "witness": "data/reference/human_ashlock_tillotson_5913.txt",
+        "program": "human.py",
+        "source": "Ashlock and Tillotson (1993), Construction of small superpermutations and minimal injective superstrings, Congressus Numerantium 93, 91-98; recursive rule restated in Houston (2014), Section 1, arXiv:1408.5108",
+        "source_url": "https://arxiv.org/abs/1408.5108",
+        "reproduction_level": "method reconstructed independently from the published recursive rule; not a transcription of the authors' length-seven string"
+      },
+      "program": "reference.py",
+      "reproduced_value": "5905",
+      "public_value": "5905",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
-        "date": "2026-11-07",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T100",
           "config_id": "T100-C01",
           "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 1817,
+          "combined_score": 1.001354784081287,
+          "objective": 5905,
           "verification_status": "exact",
-          "generation_time": 6.231329120695591,
-          "verification_time": 2.999872360378504,
-          "objective_value": 1817,
+          "generation_time": 0.21464842557907104,
+          "verification_time": 0.16461127623915672,
+          "objective_value": 5905,
           "details": {
-            "vertices": 50,
-            "edge_count": 700,
-            "triangle_count": 1817,
-            "simple_undirected": true,
-            "claimed_objective_ignored": true
+            "symbols": 7,
+            "required_permutations": 5040,
+            "distinct_permutations_found": 5040,
+            "windows_checked": 5899,
+            "claimed_score_ignored": true,
+            "containment": "contiguous_substring"
           },
-          "eval_time": 9.260718323290348,
+          "eval_time": 0.3821674585342407,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -124,51 +155,98 @@
           }
         },
         "independent_quantity": {
-          "triangle_count": 1817,
-          "edge_count": 700,
-          "vertex_count": 50,
-          "method": "Integer adjacency-matrix cubic trace divided by six; matrix entries and integer overflow bound independently checked (50 cubed is below 2^63)."
+          "string_length": 5905,
+          "required_substrings_checked": 5040
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "6ba79de473c1c64f18d07e0c38fc9c5c9b73194ffa4e946fca4ac50744a6124c"
       },
-      "id": "T100-C01",
-      "frozen_human_baseline": {
-        "value": 1817,
+      "review_status": "accepted_by_sol",
+      "best_human": {
+        "value": 5913,
         "parameters": {
-          "vertices": 50,
-          "edges": 700
+          "symbols": 7,
+          "permutations_required": 5040,
+          "containment": "contiguous_substring"
         },
-        "witness_file": "data/reference/hstar_50_700.json",
-        "provenance": "LPS H* formula reconstructed and exactly checked."
+        "source": "Ashlock and Tillotson (1993), recursive construction; reproduced from the rule restated in Houston (2014), Section 1",
+        "source_url": "https://arxiv.org/abs/1408.5108",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The recursive construction was reimplemented, saved as a witness, and checked against every required contiguous permutation. The resulting length is 5913.",
+        "ai_provenance": "This record is the published human recursive method, reimplemented for this task."
+      },
+      "optimality_status": {
+        "status": "not established",
+        "source_review_date": "2026-11-06",
+        "sources": [
+          {
+            "citation": "Andrei Teodorescu, n=7 superpermutation of length 5905, Superpermutators Google Group, 2026-08-17",
+            "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+            "finding": "A concrete 5905 witness is attached and community checked."
+          },
+          {
+            "citation": "jhalfar/superpermutations, L(7) >= 5,901, state of 2026-11-01",
+            "url": "https://github.com/jhalfar/superpermutations/blob/main/proofs/n7_5901/README.md",
+            "finding": "Conditional computer-assisted lower bound; twenty-three Lean equations are unevaluated and many search counts rely on one program."
+          },
+          {
+            "citation": "jlebar/superperm7-ge-5898, audited Lean proof release",
+            "url": "https://github.com/jlebar/superperm7-ge-5898",
+            "finding": "Formalized lower bound 5898 and checked 5906 construction; the repository explicitly discloses AI-generated authorship of its proof development."
+          }
+        ],
+        "lower_bound": 5898,
+        "upper_bound": 5905,
+        "bound_note": "The best available lower-bound evidence is computer assisted. The stronger 5901 claim is conditional and is not treated as fully replayed."
+      },
+      "reproduced_search_baseline": {
+        "value": 6240,
+        "parameters": {
+          "symbols": 7,
+          "permutations_required": 5040
+        },
+        "seed": 0,
+        "iterations": 8,
+        "witness": "data/search/greedy_seed0_result.json",
+        "verification": "data/search/greedy_seed0_verification.json",
+        "provenance": "data/search/greedy_seed0_provenance.json",
+        "verification_status": "exact",
+        "evidence_state": "The seeded maximum-overlap greedy baseline was run eight times; the best returned word has length 6240 and the checker verified all 5040 required permutations."
       }
     }
   },
+  "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T100-C01": {
-        "best_human": {
-          "source_location": "Definition 1.1, applied at (50,700)"
-        },
         "best_public": {
-          "source_location": "Brief table row (50,700); the construction is LPS H*",
-          "provenance": "The source pack lists 1,817 and labels optimality conjectural. Its API snapshot is pinned by SHA-256 in IMPLEMENTATION.md.",
-          "ai_provenance": "the public construction is the pre-AI LPS formula",
-          "evidence_state": "public same-parameter feasible value, independently reproduced"
+          "evidence_state": "The source post attaches a 5905-symbol word. One attachment was downloaded, hashed, and independently checked against all 5040 permutations.",
+          "origin_type": "public search result; AI provenance not disclosed"
         },
         "best_reproduced": {
-          "provenance": "Exact reconstruction of LPS Definition 1.1.",
-          "evidence_state": "exact checker; open optimum remains between lower bound 1,815 and this upper bound",
-          "review_status": "reviewed_by_sol"
+          "verification_method": "All length-7 windows of the normalized attachment were checked; their valid permutation set equals all 5040 permutations."
         },
         "highest_reported": {
-          "metric": "triangle count for a feasible graph at n=50, e=700",
-          "source_location": "Definition 1.1 applied at (50,700), also listed in the current problem-pack row",
-          "reproduction_status": "same-parameter construction rechecked exactly; not a global-optimality claim"
+          "source": {
+            "title": "n=7 superpermutation of length 5905",
+            "claim": "A public 5905 string and a report that all 5040 permutations were checked."
+          },
+          "reproduction_status": "downloaded and exactly replayed; AI contribution not disclosed"
         },
-        "optimality_status": {
-          "evidence_state": "bounded source check found no finite proof at (50,700); not an exhaustive literature proof"
-        }
+        "source_unattributed_records": [
+          {
+            "value": 5905,
+            "parameters": {
+              "symbols": 7,
+              "permutations_required": 5040,
+              "containment": "contiguous_substring"
+            },
+            "source_url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
+            "description": "The post does not disclose whether the public search result used AI."
+          }
+        ]
       }
     }
   }

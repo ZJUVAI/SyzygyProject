@@ -1,25 +1,145 @@
-# T023 二元强度四覆盖数组
+# T023: Twelve planar points with a small distance spread
 
-## 中文
+## Definition
 
-配置固定为强度 `t=4`、20 列、二元符号集 `{0,1}`。每四列必须覆盖全部 16 种有序模式。目标是最小化行数。评测器允许最多 6,196 行。所有汉明重量不超过 4 的 20 位向量构成一个 6,196 行可行数组，因此此上限不会排除最优解。评测器穷举全部 `C(20,4)=4845` 个列组及其 16 种模式，并从数组本身重算行数。
+Choose 12 distinct points in `R²`. For each pair, compute the squared
+Euclidean distance. Minimize
 
-[NIST IPOG-F 表](https://math.nist.gov/coveringarrays/ipof/tables/table.4.2.html)为相同参数提供 65 行数组。原文件中的 `-` 表示未指定值；`human.py` 将其补为 0，然后由精确检查器复核完整二元数组。归档见证保存在 `data/nist_ca_t4_v2_k20.txt`。
+\[
+J(P)=\frac{\max_{i<j}\|p_i-p_j\|^2}
+           {\min_{i<j}\|p_i-p_j\|^2}.
+\]
 
-[Colbourn 2024 年 11 月表](https://www.data2intelligence.de/ColbournTables/t4v2.html)记录了同参数 39 行构造，来源标记为 Hadamard 构造加 NCK 后优化。表格未附该见证。本任务将 39 记为已报告的公开上界，将 65 记为已下载并可复算的人类基线。
+This is the square of the maximum-to-minimum distance ratio used by Friedman.
+The square is monotone, and the source reports `r²` directly. The input uses
+exact rational coordinates without a bounding box. It has no non-collinearity
+constraint.
 
-本地续搜从 40 行 Paley 构造出发，随机重填可变单元格并删去一行。所得 [39 行构造](data/results.json) 已精确复算。
+Rational coordinates preserve the infimum over all real configurations. For
+any 12 distinct real points, the minimum distance is positive, and the ratio
+is continuous in the coordinates near that configuration. Rational points are
+dense in `R²`, so rational configurations approximate every real score
+arbitrarily closely. Thus the rational search domain has the same infimum as
+the full real-plane problem, even if an irrational configuration attains the
+infimum while no rational configuration does.
 
-下界为 32。任意 20 列数组删去 7 列后仍须覆盖强度 4 的所有模式，因此得到一个 13 列覆盖数组。Izquierdo-Marquez 与 Torres-Jimenez 在 [论文](https://arxiv.org/abs/1711.10040) 中证明 `CAN(4,13,2)=32`。因此当前区间为 `32 <= CAN(4,20,2) <= 39`。所引论文没有证明 20 列实例最优。本任务状态为“已通过 Sol 验收（2026-11-06）”。
+The checker accepts integer or fraction-string coordinates, such as `"3/2"`.
+It rejects floats, duplicate points, and malformed coordinates. It computes
+all 66 squared distances with exact fractions. It imposes no coordinate or
+coefficient bound.
 
-## English
+## Public construction and exact reconstruction
 
-The configuration has strength `t=4`, 20 columns, and the binary alphabet `{0,1}`. Every set of four columns must contain all 16 ordered patterns. The objective is to minimize the number of rows. The checker allows at most 6,196 rows. All 20-bit vectors of Hamming weight at most four form a feasible 6,196-row array, so this cap cannot exclude an optimum. The checker enumerates all `C(20,4)=4845` column sets and all 16 patterns in each projection. It recomputes the row count from the array.
+Friedman's [max/min distance page](https://erich-friedman.github.io/packing/maxmin/)
+lists, for `n=12`, the smallest known squared ratio
+`5 + 2√3 = 8.464...`, credited to Ingo Rechenberg (2006). The page gives a
+diagram, not coordinate strings. The diagram is frozen as `data/source/mm12.gif`;
+the page HTML is `data/source/index.html`.
 
-[NIST's IPOG-F table](https://math.nist.gov/coveringarrays/ipof/tables/table.4.2.html) provides a 65-row array for these parameters. In the source file, `-` marks an unspecified value. `human.py` completes each such entry as 0, then the exact checker verifies the completed binary array. The archived witness is `data/nist_ca_t4_v2_k20.txt`.
+An independent exact reconstruction of that diagram uses `r=√3` and the
+following points, in order:
 
-The [November 2024 Colbourn table](https://www.data2intelligence.de/ColbournTables/t4v2.html) reports a 39-row construction for the same parameters. Its source is listed as a Hadamard construction with NCK postoptimization. The table does not include this witness. This task records 39 as a reported public upper bound and 65 as the downloaded, reproducible human baseline.
+```text
+(0,0), (1,0), (1/2,r/2), (1/2,1+r/2),
+(1/2-r/2,1/2+r/2), (1/2+r/2,1/2+r/2),
+(-r/2,1/2), (-r/2,-1/2), (0,-1), (1,-1),
+(1+r/2,-1/2), (1+r/2,1/2).
+```
 
-A local search started from a 40-row Paley array. It reassigned cells at random while preserving coverage and removed one row. Exact checks passed for the [39-row array](data/results.json).
+Exact arithmetic in `Q(√3)` verifies that the minimum squared distance is 1,
+the maximum is `5+2√3`, and 21 pairs attain the minimum. This proves the
+score of the reconstructed algebraic pattern. The local rational witness
+substitutes
 
-The lower bound is 32. Deleting seven columns from any 20-column array still gives a strength-four covering array, now with 13 columns. Izquierdo-Marquez and Torres-Jimenez prove `CAN(4,13,2)=32` in their [paper](https://arxiv.org/abs/1711.10040). Therefore, the current interval is `32 <= CAN(4,20,2) <= 39`. The cited paper does not prove that the 20-column instance is optimal. Status: accepted by Sol on 2026-11-06.
+```text
+r = floor(10^63 √3) / 10^63
+```
+
+where the floor is computed by `isqrt(3·10^126)`. The checker reports its full
+exact rational objective separately. That rational score is slightly larger
+than `5+2√3`, so the reference is conservative and the local coordinate list
+is not presented as Rechenberg's original coordinate file. The frozen
+`human_reference` is the positive JSON number `8.464101615137755`, rounded up
+from the exact rational reconstruction for the compatibility score.
+
+The 2026-11-06 Friedman page still lists the same n=12 value. AlphaEvolve's
+[2025 paper, Problem 6.50](https://arxiv.org/html/2511.02864v1) lists exact
+values through n=8 and describes later entries for n=9–30 as numerical
+candidates. The n=12 value is a feasible reported upper bound; its optimality
+is not proved in the sources checked.
+
+## Programs and search
+
+The simple initial program returns a 4 by 3 integer grid, with exact objective
+13. The traditional baseline runs a fixed seeded simulated-annealing search
+on a rational grid with denominator 64. It changes one coordinate at a time
+and tracks the best exact ratio. It reads no human or reference data. The
+seed-0 run and exact result are saved under `data/results.json`.
+
+## Sources
+
+- Erich Friedman, [Minimizing the Ratio of Maximum to Minimum Distance](https://erich-friedman.github.io/packing/maxmin/), n=12 entry and diagram; page credits Rechenberg (2006).
+- Ingo Rechenberg, “Point configurations with minimal distance ratio,” 2006, cited as reference [237] in the [AlphaEvolve paper](https://arxiv.org/html/2511.02864v1).
+- Georgiev, Gómez-Serrano, Tao, and Wagner, [Mathematical exploration and discovery at scale](https://arxiv.org/abs/2511.02864), v1, Problem 6.50.
+
+Run tests with:
+
+```sh
+.venv/bin/python -m pytest tasks/t023/test_task.py -q
+```
+
+Status: accepted by Sol on 2026-11-06.
+
+---
+
+# T023：十二个平面点的最大/最小距离比
+
+## 定义
+
+选择 `R²` 中 12 个互异点。计算每一对点的欧氏距离平方，并最小化
+
+\[
+J(P)=\frac{\max_{i<j}\|p_i-p_j\|^2}
+           {\min_{i<j}\|p_i-p_j\|^2}.
+\]
+
+这是 Friedman 使用的最大距离/最小距离比的平方。平方函数保持大小顺序，来源页面也直接报告 `r²`。输入坐标为精确有理数，不设容器边界，也不限制共线。
+
+有理坐标与任意实坐标的下确界相同。对任意 12 个互异实点，最小距离为正，且目标在该点组附近连续。有理点在 `R²` 中稠密，所以可用有理点组任意逼近实数构形的目标值。因此有理搜索域保留整个实平面问题的下确界。若最优构形使用无理数，有理域可能只逼近而不达到该值。
+
+检查器接受整数坐标和有理数字符串，例如 `"3/2"`。它拒绝浮点数、重复点和格式错误的坐标。它以精确分数计算全部 66 个平方距离，不限制坐标或系数大小。
+
+## 公开构造与精确重建
+
+Friedman 的[最大/最小距离页面](https://erich-friedman.github.io/packing/maxmin/)在 `n=12` 行列出当前已知最小平方比 `5+2√3=8.464...`，并注明构造来自 Ingo Rechenberg（2006）。页面提供图形，没有坐标字符串。图形保存在 `data/source/mm12.gif`，页面 HTML 保存在 `data/source/index.html`。
+
+根据该图独立精确重建的坐标使用 `r=√3`：
+
+```text
+(0,0), (1,0), (1/2,r/2), (1/2,1+r/2),
+(1/2-r/2,1/2+r/2), (1/2+r/2,1/2+r/2),
+(-r/2,1/2), (-r/2,-1/2), (0,-1), (1,-1),
+(1+r/2,-1/2), (1+r/2,1/2)。
+```
+
+在 `Q(√3)` 中精确检查得到最小平方距离为 1、最大平方距离为 `5+2√3`，有 21 对点达到最小值。本地有理见证将 `r` 替换为 `floor(10^63√3)/10^63`，其中 floor 由 `isqrt(3·10^126)` 精确计算。检查器另行报告该有理见证的完整精确分数目标。该值略大于 `5+2√3`，所以重建有理见证略弱；本地坐标没有被说成 Rechenberg 的原始坐标文件。兼容分数使用冻结值 `8.464101615137755`，这是由有理重建值向上舍入的 JSON 数字。
+
+截至 2026-11-06，Friedman 页面仍列出同一 n=12 数值。AlphaEvolve [2025 年论文第 6.50 题](https://arxiv.org/html/2511.02864v1)列出 n≤8 的精确值，并将 n=9 到 30 的后续结果称为数值候选。n=12 的构造是已报告可行上界；所查来源没有最优性证明。
+
+## 程序和搜索
+
+简单初始程序返回 4×3 整数网格，精确目标为 13。传统基线在分母为 64 的有理网格上运行固定步数的模拟退火，每次改变一个坐标，并保留精确比值最好的构造。它不读取人类或参考见证。种子 0 的结果及精确成绩保存在 `data/results.json`。
+
+## 来源
+
+- Erich Friedman，[最大距离/最小距离比](https://erich-friedman.github.io/packing/maxmin/)，n=12 行与图形；页面注明 Rechenberg（2006）。
+- Ingo Rechenberg, “Point configurations with minimal distance ratio,” 2006；列为 [AlphaEvolve 论文参考文献 237](https://arxiv.org/html/2511.02864v1)。
+- Georgiev、Gómez-Serrano、Tao 与 Wagner，[Mathematical exploration and discovery at scale](https://arxiv.org/abs/2511.02864)，v1，第 6.50 题。
+
+运行测试：
+
+```sh
+.venv/bin/python -m pytest tasks/t023/test_task.py -q
+```
+
+状态：已通过 Sol 验收（2026-11-06）。

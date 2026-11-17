@@ -3,123 +3,48 @@
   "review_status": "accepted_by_sol",
   "configurations": {
     "T051-C01": {
+      "public_value": 333,
+      "public_source": {
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "preprint_url": "https://arxiv.org/abs/1708.06224",
+        "title": "A subspace code of size 333 in the setting of a binary q-analog of the Fano plane",
+        "authors": [
+          "Daniel Heinlein",
+          "Michael Kiermaier",
+          "Sascha Kurz",
+          "Alfred Wassermann"
+        ],
+        "version": "arXiv v5 dated 2019-03-22; first arXiv version dated 2017-08-21; journal version 2019",
+        "construction_method": "The paper reports an integer-linear-programming search and prints the orbit representatives and G_{4,6} generators.",
+        "ai_provenance": "Not reported in the source; do not describe the result as unaided hand construction.",
+        "witness_reconstruction": "data/source/heinlein_2019_appendix_c.json",
+        "source_tex_sha256": "26622afb1178db82948f215c7befe73172f8c30338f0632d1ae0786d487f2eb7",
+        "checked_at": "2026-11-06"
+      },
+      "reproduced_value": 333,
       "program": "reference.py",
-      "reproduced_value": 130000,
-      "public_value": 130000,
-      "highest_reported": {
-        "value": 130000,
-        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and author data page; fixed 2026-11-06 source snapshot.",
-        "reproduction_status": "Feasible unrestricted C=3 sequence recovered from a publicly linked notebook and exactly checked. This is a lower bound on the unknown finite maximum, not an optimality proof. The recovered text is not claimed byte-identical to the original compressed author download."
-      },
-      "best_human": {
-        "value": 130000,
-        "parameters": {
-          "discrepancy_cap": 3,
-          "sequence_type": "unrestricted",
-          "objective": "length"
-        },
-        "source": "Konev and Lisitsa, Computer-Aided Proof of Erdős Discrepancy Properties, arXiv:1405.3097v2, §4 and author data page.",
-        "url": "https://arxiv.org/html/1405.3097v2",
-        "date_checked": "2026-11-06",
-        "provenance": "Traditional SAT-based computational construction. The paper reports an unrestricted sequence of length 130000, with its first 127600 entries completely multiplicative.",
-        "evidence_state": "A full 130000-sign witness is recovered from a public Wolfram Community notebook discussing this problem and passes exact local checking. The discussion cites the Konev-Lisitsa work and author data page. Notebook data may be a re-encoding; byte identity with the original compressed file is not asserted.",
-        "witness": "data/source/sequence_130000.txt.gz",
-        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
-      },
-      "best_public": {
-        "value": 130000,
-        "parameters": {
-          "discrepancy_cap": 3,
-          "sequence_type": "unrestricted",
-          "objective": "length"
-        },
-        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and author data page.",
-        "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
-        "date_checked": "2026-11-06",
-        "provenance": "Published traditional SAT search; the paper reports the construction, not a proof that it is longest.",
-        "evidence_state": "The paper and author page identify the 130000 unrestricted construction. The saved full witness was reconstructed from a public Wolfram Community notebook discussing this problem and independently verified.",
-        "witness": "data/source/sequence_130000.txt.gz",
-        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
-      },
-      "best_reproduced": {
-        "value": 130000,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "discrepancy_cap": 3,
-          "sequence_type": "unrestricted",
-          "objective": "length"
-        },
-        "program": "reference.py",
-        "verification_status": "exact",
-        "verification_method": "Integer arithmetic scans every homogeneous progression difference d and every prefix length k, checking |sum(x[d], x[2d], ..., x[kd])| <= 3.",
-        "witness": "data/source/sequence_130000.txt.gz",
-        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
-        "origin_type": "published SAT construction recovered from a public Wolfram Community notebook; exact constraint verification, original compressed-file byte identity not established",
-        "review_status": "reviewed_by_sol"
-      },
-      "restricted_results_not_this_configuration": [
-        {
-          "value": 1160,
-          "scope": "unrestricted discrepancy cap C=2",
-          "status": "proved exact maximum; excluded"
-        },
-        {
-          "value": 127645,
-          "scope": "completely multiplicative discrepancy cap C=3",
-          "status": "proved exact maximum; restricted problem, excluded"
-        }
-      ],
-      "optimality_status": {
-        "status": "open; at least 130000, exact finite maximum unknown",
-        "source_survey_date": "2026-11-06",
-        "evidence": "Konev and Lisitsa report the 130000 unrestricted construction but do not prove optimality. Their exact 127645 result is for the completely multiplicative restriction. The 2026 Princeton thesis concerns the solved C=2 case. Tao's theorem rules out infinite bounded-discrepancy sequences but gives no exact finite maximum.",
-        "limitations": "Current-source survey establishes the distinction between the unrestricted and restricted problems; it does not derive a useful finite upper bound for the selected unrestricted C=3 instance.",
-        "survey_date": "2026-11-06",
-        "note": "The exact C=2 and completely multiplicative C=3 results are different restricted/configured problems. Tao's infinite theorem does not determine this finite maximum."
-      },
-      "source_pins": {
-        "paper": {
-          "version": "arXiv:1405.3097v2",
-          "url": "https://arxiv.org/html/1405.3097v2",
-          "record_location": "§4"
-        },
-        "author_data": {
-          "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
-          "date_checked": "2026-11-06"
-        },
-        "recovered_notebook": {
-          "url": "https://community.wolfram.com/uploads/short-url/tecwlpwuwx7kcTAYpoVaduRt9FD.nb",
-          "discussion_url": "https://community.wolfram.com/t/discrepancy-conjecture/6798",
-          "sha256": "cc6066cefd3c28435aee484b8ad4c952f6d17919732acc5e21a412ed45cadbca"
-        },
-        "recovered_sign_text_sha256": "a46775e377eed611fe5e7c086fc761ea8aeec22c2048924c2cd28392f34883fa"
-      },
-      "review_status": "accepted_by_sol",
+      "comparison_tolerance": "0",
       "verification": {
-        "task_id": "T051",
-        "status": "pending_source_review",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T051",
           "config_id": "T051-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 130000,
+          "objective": 333,
           "verification_status": "exact",
-          "generation_time": 1.5008401684463024,
-          "verification_time": 1.3104558661580086,
-          "objective_value": 130000,
+          "generation_time": 0.5679113566875458,
+          "verification_time": 0.5998651869595051,
+          "objective_value": 333,
           "details": {
-            "sequence_length": 130000,
-            "discrepancy": 3,
-            "maximizing_prefix": {
-              "difference": 1,
-              "prefix_length": 91,
-              "signed_sum": 3
-            },
-            "homogeneous_progression_prefixes_checked": 1550902,
+            "codewords_checked": 333,
+            "pairs_checked": 55278,
+            "minimum_subspace_distance": 4,
             "claimed_objective_ignored": true
           },
-          "eval_time": 2.8781457766890526,
+          "eval_time": 1.2367259971797466,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -136,72 +61,145 @@
           }
         },
         "independent_quantity": {
-          "sequence_length": 130000,
-          "discrepancy": 3,
-          "prefixes_checked": 1550902
+          "code_size": 333,
+          "distinct_two_spaces": 2331,
+          "ambient_two_spaces": 2667,
+          "counting_upper_bound": 381
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "witness": "data/source/sequence_130000.txt.gz",
-        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "a63ee7e1769a267c4e4dbf7db1a09ed6c1b95ae9bbc84b4b26c654072cc2b8ce"
       },
-      "parameters": {
-        "discrepancy_cap": 3,
-        "entry_domain": [
-          -1,
-          1
-        ],
-        "sequence_type": "unrestricted"
+      "highest_reported": {
+        "value": 333,
+        "source": {
+          "title": "A subspace code of size 333 in the setting of a binary q-analog of the Fano plane",
+          "url": "https://doi.org/10.3934/amc.2019029",
+          "claim": "Explicit same-parameter lower-bound construction of size 333; this is not an optimum claim.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "reconstructed_and_exactly_verified_pending_Sol_review"
       },
-      "objective": {
-        "name": "sequence length",
-        "direction": "maximize",
-        "unit": "terms"
-      },
-      "frozen_human_baseline": {
-        "value": 130000,
-        "witness_program": "human.py",
-        "witness": "data/source/sequence_130000.txt.gz",
-        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
-        "note": "Same-parameter published unrestricted C=3 construction, recovered and exactly verified."
-      },
-      "restricted_results": [
+      "upper_bound_claims": [
         {
-          "cap": 2,
-          "maximum": 1160,
-          "scope": "unrestricted signs",
-          "status": "solved; excluded"
+          "value": 381,
+          "claim_type": "unconditional exact-counting upper bound",
+          "derivation": "There are [7 choose 2]_2=2667 two-dimensional subspaces, each 3-space contains [3 choose 2]_2=7, and no 2-space can occur in two codewords; floor(2667/7)=381.",
+          "source": "https://miplib.zib.de/instance_details_cdc7-4-3-2.html",
+          "checked_at": "2026-11-06"
         },
         {
-          "cap": 3,
-          "maximum": 127645,
-          "scope": "completely multiplicative signs",
-          "status": "solved restricted problem; excluded"
+          "claim": "A_2(7,4;3) <= 378 or A_2(7,4;3) = 381",
+          "claim_type": "conditional upper-bound alternative",
+          "source": "https://doi.org/10.15495/EPub_UBT_00008787",
+          "version": "2025 survey, section on the binary q-analog of the Fano plane",
+          "checked_at": "2026-11-06"
         }
-      ]
+      ],
+      "current_status_check": {
+        "checked_at": "2026-11-06",
+        "sources": [
+          "https://miplib.zib.de/instance_details_cdc7-4-3-2.html",
+          "https://doi.org/10.15495/EPub_UBT_00008787"
+        ],
+        "result": "The live MIPLIB instance retains 333 as the lower bound and 381 as the upper bound. The 2025 Kurz survey gives the conditional 378-or-381 alternative. No later exact optimum or 381-code proof was located in this check. The live specialist table endpoint returned a gateway error. This is a bounded source check, not a proof that no later result exists."
+      },
+      "limitations": [
+        "The witness proves a lower bound of 333, not optimality.",
+        "The conditional 378-or-381 result does not give an unconditional upper bound of 378.",
+        "No 381-subspace code or proof of nonexistence was found in the checked sources."
+      ],
+      "best_human": {
+        "value": 333,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "provenance": "Heinlein, Kiermaier, Kurz, and Wassermann report an integer-linear-programming search and print the 333-subspace construction. AI provenance is not reported.",
+        "evidence_state": "witness reconstructed from Appendix B/C and independently checked exactly"
+      },
+      "best_public": {
+        "value": 333,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "evidence_state": "same-parameter published construction; witness independently replayed",
+        "origin_type": "human/computational; AI provenance not reported"
+      },
+      "best_reproduced": {
+        "value": 333,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "field_size": 2,
+          "ambient_dimension": 7,
+          "subspace_dimension": 3,
+          "minimum_subspace_distance": 4
+        },
+        "url": "https://doi.org/10.3934/amc.2019029",
+        "provenance": "Parsed the Appendix C RREF representatives, decoded each column digit as a+2b+4c, and applied the Appendix B G_{4,6} group action.",
+        "ai_provenance": "The paper reports an ILP-based search. It does not state whether AI tools were used; no unaided-human claim is made.",
+        "actual_value": 333,
+        "evidence_state": "all 333 row spaces and 55,278 pairwise intersections checked exactly over GF(2)",
+        "review_status": "reviewed_by_sol"
+      },
+      "review_status": "accepted_by_sol",
+      "witness": "data/source/heinlein_2019_appendix_c.json",
+      "survey_scope_note": "The best-public record here is the checked same-parameter construction, not a claim that the code is optimal. Literature and live-table checks are not exhaustive.",
+      "frozen_human_baseline_type": "reconstruction of a published ILP-search construction"
     }
   },
-  "snapshot_date": "2026-11-06",
-  "additional_evidence": {
-    "configurations": {
-      "T051-C01": {
-        "best_human": {
-          "source": "Konev and Lisitsa, §4 and the author data page.",
-          "provenance": "Traditional SAT-based construction; no AI assistance is attributed by the cited paper to this construction.",
-          "evidence_state": "Full witness recovered from a public Wolfram Community notebook discussing the problem and exactly verified across 1550902 progression prefixes. Byte identity with the original compressed download is not established."
-        },
-        "best_public": {
-          "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and data page.",
-          "provenance": "Published SAT search. Reported construction is a lower bound, not an optimality result.",
-          "evidence_state": "Full public-notebook witness independently checked for all 1550902 progression prefixes."
-        },
-        "best_reproduced": {
-          "verification_method": "Check every signed prefix sum in every homogeneous progression using Python integer arithmetic."
-        },
-        "optimality_status": {
-          "status": "open; lower bound 130000, exact maximum unknown"
-        }
-      }
-    }
-  }
+  "best_human": {
+    "value": 333,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "field_size": 2,
+      "ambient_dimension": 7,
+      "subspace_dimension": 3,
+      "minimum_subspace_distance": 4
+    },
+    "url": "https://doi.org/10.3934/amc.2019029",
+    "provenance": "Heinlein, Kiermaier, Kurz, and Wassermann report an integer-linear-programming search and print the 333-subspace construction. AI provenance is not reported.",
+    "evidence_state": "witness reconstructed from Appendix B/C and independently checked exactly"
+  },
+  "best_public": {
+    "value": 333,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "field_size": 2,
+      "ambient_dimension": 7,
+      "subspace_dimension": 3,
+      "minimum_subspace_distance": 4
+    },
+    "url": "https://doi.org/10.3934/amc.2019029",
+    "evidence_state": "same-parameter published construction; witness independently replayed",
+    "origin_type": "human/computational; AI provenance not reported"
+  },
+  "best_reproduced": {
+    "value": 333,
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "field_size": 2,
+      "ambient_dimension": 7,
+      "subspace_dimension": 3,
+      "minimum_subspace_distance": 4
+    },
+    "url": "https://doi.org/10.3934/amc.2019029",
+    "provenance": "Parsed the Appendix C RREF representatives, decoded each column digit as a+2b+4c, and applied the Appendix B G_{4,6} group action.",
+    "ai_provenance": "The paper reports an ILP-based search. It does not state whether AI tools were used; no unaided-human claim is made.",
+    "actual_value": 333,
+    "evidence_state": "all 333 row spaces and 55,278 pairwise intersections checked exactly over GF(2)"
+  },
+  "implementation_review_date": "2026-11-06",
+  "survey_scope_note": "The best-public record here is the checked same-parameter construction, not a claim that the code is optimal. Literature and live-table checks are not exhaustive.",
+  "frozen_human_baseline_type": "reconstruction of a published ILP-search construction"
 }

@@ -1,8 +1,6 @@
-"""Pinned exact-rational transcription of Haugland's printed 51-step witness."""
-import json
-from pathlib import Path
+"""Replay the published exact-coordinate human witness for T017-C01."""
 
+SOLUTION = {"points": [["1/3","0"],["2/3","0"],["0","2/9"],["1","2/9"],["1/3","4/9"],["2/3","4/9"],["0","2/3"],["1","2/3"],["1/2","7/9"],["1/6","1"],["5/6","1"]]}
 
 def run_code():
-    data = json.loads((Path(__file__).parent / "data" / "human_t017.json").read_text())
-    return {"heights": data["coefficients"]}
+    return SOLUTION

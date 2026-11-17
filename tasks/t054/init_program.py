@@ -1,11 +1,15 @@
-"""Simple valid all-positive seed; self-contained for cold exports."""
-import os
-
-_LENGTH = 100
+# EVOLVE-BLOCK-START
+from itertools import combinations
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T054-C01")
-    if config_id != "T054-C01":
-        raise ValueError(f"unsupported configuration: {config_id}")
-    return {"sequence": [1] * _LENGTH}
+    # Every 20-bit vector with Hamming weight at most four.
+    # For any four chosen columns and any pattern, its support gives one row.
+    k = 20
+    rows = []
+    for weight in range(5):
+        for support in combinations(range(k), weight):
+            ones = set(support)
+            rows.append([int(j in ones) for j in range(k)])
+    return {"array": rows}
+# EVOLVE-BLOCK-END

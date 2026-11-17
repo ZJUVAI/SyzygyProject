@@ -1,35 +1,37 @@
-# T037: 五维 kissing number
+# T037：K4⁻-free 三元超图的最大边数
 
-## 定义与配置
+## 目标
 
-给定五维单位球面上的方向集合。每对不同方向的夹角至少为 60 度。目标是最大化方向数。配置 `T037-C01` 固定维数 5 和角度下界 60 度。方向用非零有理向量表示，再作精确归一化。评测器用有理数运算核查角度条件；这限定可提交的证书表示，不声称所有实坐标构形都能用有理坐标表示。
+在固定顶点集 `{0,…,35}` 上选择尽可能多的三元边。每个四点子集最多含两条所选三元边。这等价于不含由四个顶点及其中任意三条三元边组成的 `K4⁻` 子超图。约束按普通子图定义，不要求诱导子图完全相同。
 
-对非零向量 (u,v)，角度条件等价于 (u\cdot v\leq 0)，或在内积为正时满足 (4(u\cdot v)^2\leq (u\cdot u)(v\cdot v))。因此验证不使用浮点容差。
+配置 `T037-C01` 固定 `n=36`、边大小为 3，目标是最大化边数。校验器枚举全部 58,905 个四点子集，并重新计算边数。
 
-## 来源与基线
+## 已知构造与界
 
-Korkine–Zolotareff 的 (D_5) 根系给出 40 个向量：任取两个不同坐标放置 ±1，其余坐标为零。每个向量平方范数为 2，不同向量内积至多为 1。Cohn–Rajagopal 对该构造及五维已知结果作了近期综述：[论文 v3](https://arxiv.org/abs/2412.00937v3)，[期刊版](https://doi.org/10.1007/s00454-026-00841-x)。人类见证由公式重建并由本任务逐对精确验证。
+Frankl–Füredi 的 `H6` 有 6 个顶点和 10 条边。将顶点分成六个大小为 6 的部分：先按每条 `H6` 边加入跨三部分的全部 `6³` 条边，再在每个部分中放入一个 `H6`。所得构造有 `10×6³+6×10=2,220` 条边。精确见证保存在 `data/human/h6_iterated_blowup_n36.json`；`human.py` 从公开模板独立重建。
 
-已知下界为 40，公开证明的上界为 44。尚无已检查来源证明 unrestricted 五维 kissing number 等于 40。有限 ternary 坐标集合中的最优性不推出任意实坐标构形的最优性。搜索指令不包含人类见证；初始构形是十个正负坐标轴方向。
+Falgas-Ravry、Pikhurko、Vaughan 与 Volec 在 2023 年论文第 6.3 节给出 `H6` 的边集，并说明它的 blow-up 和迭代 blow-up 都是 `K4⁻`-free。该论文还指出普通 `K4⁻` Turán 密度未知，`2/7` 是猜想值。这里的固定 `n=36` 目标是普通有限边数问题。论文中的 codegree 结果及 2026 年关于 `K4^(3)` 完全四面体的 uniform Turán 结果都不等同于本配置。
 
-## 状态
+无需文献即可验证的上界为 3,570：每条三元边属于 33 个四点集，每个四点集至多容纳两条边，所以 `33|E|≤2×C(36,4)`。因此本配置的已核实界为 `2,220≤ex(36,K4⁻)≤3,570`。截至 2026-11-06 的来源检索没有发现将此有限规模上界降至 2,220 的证明；这是一项有范围的来源检索结论。
 
-实现状态：已通过 Sol 验收（2026-11-06）。正式排名只使用 checker 验证通过的构造。声称的分数会被忽略。
+## 人类基线与搜索
 
-# T037: Five-dimensional kissing number
+`human.py` 重建上述公开的迭代 `H6` 构造，边数 2,220。原论文没有说明是否使用 AI 工具。
 
-## Definition and configuration
+`init_program.py` 返回空超图作为简单冷启动。`baseline.py` 和 `evolution.py` 都从空边集开始，以不同种子随机排列全部三元候选边；若加入该边后没有四点集超过两条边，就接受它们。两者只使用任务规则和顶点标签，不读取人类或参考见证。
 
-Choose directions in five-dimensional Euclidean space. Every pair must have an angle of at least 60 degrees. Maximize the number of directions. `T037-C01` fixes dimension 5 and the 60 degree limit. Submitted directions use nonzero rational vectors and are normalized exactly. This limits the witness format. It does not claim that every real-coordinate configuration has rational coordinates.
+`reference.py` 返回冻结的 2,220 边 `H6` 见证。没有发现更强的公开有限 `n=36` 构造或精确最优性证明。
 
-For nonzero vectors (u,v), the angle condition holds when (u\cdot v\leq0), or, for positive inner product, when (4(u\cdot v)^2\leq(u\cdot u)(v\cdot v)). The checker uses exact rational arithmetic.
+## English summary
 
-## Source and baseline
+Choose as many 3-element edges as possible on the fixed vertex set `{0,…,35}`. Every 4-vertex set may contain at most two selected triples. This forbids `K4^-`, the 3-uniform hypergraph with three triples on four vertices, as an ordinary non-induced subhypergraph.
 
-The (D_5) root system of Korkine and Zolotareff gives 40 vectors. Place ±1 in any two distinct coordinates and zero in the rest. Each vector has squared norm 2. Distinct vectors have inner product at most 1. Cohn and Rajagopal review this construction and the known five-dimensional results in their [v3 paper](https://arxiv.org/abs/2412.00937v3) and [journal version](https://doi.org/10.1007/s00454-026-00841-x). The human witness is reconstructed from the formula and checked pair by pair exactly.
+Configuration `T037-C01` maximizes the edge count for `n=36`. The checker enumerates all 58,905 four-vertex sets and recomputes the edge count.
 
-The known lower bound is 40. The best published upper bound found is 44. No checked source proves that the unrestricted five-dimensional kissing number is 40. Optimality over a finite ternary alphabet does not prove optimality over unrestricted real coordinates. The model prompt does not expose the human witness. The initial construction is the ten signed coordinate axes.
+Frankl and Füredi's `H6` has six vertices and ten edges. Partition the 36 vertices into six sets of size six. For every `H6` edge, add all `6³` cross-part triples; then place one `H6` inside each part. This iterated blow-up has `10×6³+6×10=2,220` edges. The exact witness is saved in `data/reference/`; `human.py` rebuilds it from the public template.
 
-## Status
+Section 6.3 of the 2023 paper by Falgas-Ravry, Pikhurko, Vaughan, and Volec gives the `H6` edge list and states that its blow-ups and iterated blow-ups are `K4^-`-free. The paper also states that the ordinary `K4^-` Turán density is unknown and conjectured to be `2/7`. The finite `n=36` task is the ordinary edge-count problem. Its result is distinct from codegree results and from the 2026 uniform Turán result for the complete tetrahedron `K4^(3)`.
 
-Implementation status: accepted by Sol on 2026-11-06. Only checker-verified constructions count in formal results. The checker ignores claimed scores.
+A direct double count gives the verified upper bound 3,570: each triple lies in 33 four-sets, and each four-set contains at most two selected triples, so `33|E|≤2×C(36,4)`. The verified range is `2,220≤ex(36,K4^-)≤3,570`. The source review through 2026-11-06 found no proof closing this finite gap. This is a bounded literature review, not an exhaustive claim.
+
+`human.py` rebuilds the published iterated `H6` construction and obtains 2,220 edges. The paper does not state whether AI tools were used. `init_program.py` returns the empty hypergraph. The baseline and evolution programs start from the empty set and use seeded random greedy additions. They read no human or reference witness. `reference.py` returns the frozen 2,220-edge witness.

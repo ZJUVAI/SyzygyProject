@@ -1,6 +1,2 @@
-"""Load a Packomania variable-radius witness by configuration."""
-from tasks.t003.human import load_witness
-
-
-def run_code():
-    return load_witness("sota")
+"""Fixed reproducible construction references, selected by configuration."""
+from tasks.t003.human import run_code

@@ -1,33 +1,85 @@
-# T060: M61 的整数复杂度
-
-## 中文
-
-配置 `T060-C01` 固定目标为 `M61 = 2^61 - 1 = 2305843009213693951`。目标是在表达式树中用最少个 `1` 精确表示该整数。允许的叶子只有 `1`，内部节点只有 `+` 与 `*`。重复写出的子表达式各自计数；不允许共享子树、减法或幂。
-
-评测器用整数栈解析表达式，并从完整字符串重新计算值和 `1` 的数量。它不读取候选声称的分数。Selfridge 定理给出精确下界 116：最多用 115 个 `1` 可表示的最大整数是 `1801135623563989452`，小于 M61。此配置尚无已知最优性证明。
-
-解析器的 100,000 字符上限是输入资源限制，不是数学目标或“任意冗余文本均可接受”的保证。含 `k` 个叶子的二叉表达式可规范化为完全括号化形式，长度至多 `4k−3`；153 个叶子对应 609 字符。本任务保存的三进制表达式为 505 字符。去掉空格和多余括号不会改变表达式树或叶子数。
-
-冻结人类基线为 153。`human.py` 按三进制位展开，用 Horner 法从高位向低位重建表达式。M61 有 39 个三进制位；每步乘以 `1+1+1`，再按当前位加 0、1 或 2 个 `1`。这是对传统整数复杂度表达方法的重建，不是公开最优纪录。Altman 的整数复杂度综述回顾了该问题、Selfridge 界及 Horner 表示。[论文](https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf)
-
-固定参考构造使用 127 个 `1`。该表达式来自 EventCompute 的公开页面及 board 的 PR #4，SHA-256 为 `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`。页面明确说明其研究过程使用生成式 AI 助手，因此记为 AI 辅助公开结果，不归作纯人工发现。[结果与来源说明](https://eventcompute.com/en/challenges/integer-complexity-m61/) · [board PR #4](https://github.com/math-market/integer-complexity-m61/pull/4)
-
-Board 自己的 150 表达式只是挑战基线，不是纪录；来源未说明该构造是否使用 AI。公开页面截至 2026-10-13 报告 127 构造、下界 116，未给出精确复杂度。我们在 2026-11-06 复查了该页面、board 主仓库和 PR 状态；没有发现 M61 精确最优性证明或更短的同参见证。该检查限于所引来源，不表示穷尽所有公开资料。
-
-简单起点用二进制 Horner 法独立生成。传统搜索枚举固定基数 Horner 表达式；进化入口用固定种子搜索混合基数展开。它们都只从目标整数构造，不读取人类或参考文件。正式结果以 `check.py` 的精确重算为准。
+# T060: integer difference bases
 
 ## English
 
-Configuration `T060-C01` fixes `M61 = 2^61 - 1 = 2305843009213693951`. The objective is to minimize the number of `1` leaves in an expression tree that equals this integer. The only leaves are `1`; the only internal nodes are `+` and `*`. Repeated text is counted as separate tree nodes. Shared subtrees, subtraction, and exponentiation are not allowed.
+### Mathematical task
 
-The checker parses the full expression with integer stacks, then recomputes its value and leaf count. It ignores every score supplied by a candidate. Selfridge's theorem gives an exact lower bound of 116: the largest integer that uses at most 115 ones is `1801135623563989452`, below M61. No proof of the exact complexity is known in the sources checked for this task.
+For the fixed integer `N = 6166`, find a finite set `B ⊂ Z` with as few elements as possible such that each integer `d = 1, …, 6166` is a difference `y - x` of two elements of `B`. The score is `|B|`, and lower is better. The checker accepts negative or large marks. Translating every mark by the same integer does not change the differences.
 
-The 100,000-character parser limit is an input resource bound, not part of the mathematical objective and not a promise to accept arbitrary redundant text. A binary expression tree with `k` leaves has a fully parenthesized form of at most `4k−3` characters; for 153 leaves this is 609 characters. The saved base-3 expression is 505 characters. Spaces and redundant parentheses can be removed without changing its tree or leaf count.
+This is the unrestricted integer difference-basis problem `Δ(6166)`. It is distinct from the sparse-ruler problem, which fixes marks inside `[0, 6166]` and usually requires both endpoints. Our witness may have marks above 6166. A sparse ruler is still a valid difference basis when its marks cover the required interval, but its mark-location restriction is not part of this task.
 
-The frozen human baseline is 153. `human.py` rebuilds a base-3 Horner expression from the digits of M61. M61 has 39 base-3 digits. Each step multiplies by `1+1+1` and adds zero, one, or two ones for the next digit. This is a reconstruction of a traditional integer-complexity method, not a reported optimum. Altman's survey reviews integer complexity, Selfridge's bound, and Horner representations. [Paper](https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf)
+The finite value `Δ(6166)` is not known from the sources checked for this release. Leech and Golay report a 128-mark construction, which gives `Δ(6166) ≤ 128`; it does not prove equality. Their 128 is the strongest source-reported human construction at this parameter. For the frozen comparison value, this task uses the weaker 158-mark Wichmann construction and labels it separately.
 
-The fixed reference uses 127 ones. The expression is published by EventCompute and in board PR #4. Its SHA-256 is `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`. The page states that generative AI assistants were used in the research, so this is recorded as an AI-assisted public result, not as a human-only discovery. [Result and provenance](https://eventcompute.com/en/challenges/integer-complexity-m61/) · [Board PR #4](https://github.com/math-market/integer-complexity-m61/pull/4)
+The checked analytic lower bound is 123. Banakh and Gavrylkiv prove `lim Δ(n)^2/n = inf Δ(n)^2/n ≥ 2 + max_{0<φ<π} 2 sin(φ)/(φ+π)`. Setting `φ=π/2` and using `π<22/7` gives `lim Δ(n)^2/n > 80/33`. Thus `33·Δ(6166)^2 > 80·6166 = 493280`. Since `122²·33 = 491172 < 493280` and `123²·33 = 499257 > 493280`, `Δ(6166) ≥ 123`. The resulting reported gap is 123–128. The simpler pair-count bound 112 is also valid but weaker.
 
-The board's 150 expression is a challenge baseline, not a record. Its AI provenance is unstated. The public result page, checked on 2026-10-13, reports the 127 construction and lower bound 116, with no exact complexity. We rechecked that page, the board repository, and PR status on 2026-11-06. We found no proof of the exact value or a shorter same-parameter witness. This review covers the cited sources and is not an exhaustive survey.
+### Sources and records
 
-The simple seed uses binary Horner expansion and is generated from the target alone. The classical baseline enumerates fixed-base Horner expressions. The evolution entry searches mixed-base expansions with a fixed seed. Neither search reads human or reference files. The checker recomputes all formal results with exact integer arithmetic.
+- Georgiev, Gómez-Serrano, Tao, and Wagner, [*Mathematical exploration and discovery at scale*, arXiv:2511.02864v1, §6.3](https://arxiv.org/html/2511.02864v1#S6.SS3). The paper defines `Δ(n)` using integer differences and cites `128²/6166` as the earlier upper bound for its asymptotic constant. It reports a later AlphaEvolve improvement to `360²/49109`; that different parameter is not this task's record.
+- Banakh and Gavrylkiv, [*Difference bases in cyclic groups*, arXiv:1702.02631v6, §§3–4](https://arxiv.org/html/1702.02631). The paper states Singer's theorem for cyclic difference sets and records the Leech–Golay interval constructions, including `Δ(6166) ≤ 128`.
+- The [AlphaEvolve problem repository](https://github.com/google-deepmind/alphaevolve_repository_of_problems) contains its difference-bases notebook. The checked `main` commit is `8f447457957deac61e28bf1676746f0753b3b2f8` (2026-07-11); notebook blob SHA-1 is `0cdb812ada3b6053f749e05301a743fd191e8700`, raw SHA-256 is `e5bd224563055caf53c0fef9b9c67620c7124a14aa77094cce456d9927b65489`. It gives the evolved 49109-parameter construction, not the 6166 witness.
+- The saved 128-mark witness is an independently reconstructed Singer/Leech-family product. It uses a Singer difference set for `q=31`, the interval factor `{0,1,4,6}`, and a cyclic multiplier selected by a finite search. The witness passes the exact checker. It is not claimed to be the identical set used by Leech or Golay. The source paper does not report AI provenance for its historical 128-point construction.
+- The frozen human baseline is the classical Wichmann ruler `W(38,3)`. Its 158 marks form a complete ruler of length 6548, so they cover all required differences through 6166. Saarela and Vanhatalo give the gap formula and a full proof of completeness in their [2026 paper](https://doi.org/10.37236/13806), Definitions 8 and 16 and Theorem 18. This weaker baseline is distinct from the source-reported 128-mark human record. This ruler is a restricted construction used as a valid witness in the unrestricted task; the task itself does not impose the sparse-ruler mark bound.
+
+### Programs and use
+
+The checker exactly recomputes difference coverage with integer arithmetic and minimizes the number of distinct integer marks. It ignores submitted score fields. `init_program.py` returns the valid but deliberately large interval `[0,6166]`. `baseline.py` runs seeded randomized greedy set cover and does not read either comparison witness. `human.py` rebuilds Wichmann `W(38,3)`. `reference.py` loads the pinned reconstructed 128-mark witness. `evolution.py` exposes the traditional search entry point.
+
+Run one program with:
+
+```sh
+MATHBENCH_CONFIG_ID=T060-C01 .venv/bin/python -c 'from tasks.t060.reference import run_code; print(run_code())'
+```
+
+Run the task checks with:
+
+```sh
+.venv/bin/python -m pytest tasks/t060/test_task.py -q
+```
+
+The standard search limits are 300 seconds for generation, 60 seconds for verification, 4 GiB memory, and one CPU thread. Fixed iteration and restart counts are the default. Set `MATHBENCH_SEARCH_SECONDS` only for an explicitly time-limited exploratory run.
+
+### Status and limits
+
+The public 128 result is a feasible upper bound, not an optimality proof. The independent reconstruction verifies another 128-point construction at the fixed parameter. The checked literature does not give an exact value for `Δ(6166)` or a matching lower bound. A current survey found no later proof closing this finite gap; the survey is limited to the sources and snapshots named above.
+
+## 中文
+
+### 数学任务
+
+固定 `N=6166`。寻找整数集 `B⊂Z`，使每个 `d=1,…,6166` 都能写成两个元素之差 `y−x`，并使 `|B|` 尽量小。目标是最小化 `|B|`。检查器允许负数标记，也允许标记大于6166。整体平移不改变差值。
+
+这是无限制整数差基 `Δ(6166)`。它与稀疏尺不同。稀疏尺要求所有标记都在 `[0,6166]` 内，通常还要求包含两个端点。本任务没有这个位置限制。稀疏尺只要覆盖所需差值，也能作为本任务的可行构造；但本任务不要求稀疏尺的限制。
+
+已核查来源没有给出有限值 `Δ(6166)`。Leech 与 Golay 报告了一个128点构造，因此 `Δ(6166)≤128`，但这不证明等号。它是同参数最强的已报告人类构造。冻结对照使用较弱的158点 Wichmann 构造，并单独记录。
+
+核查到的解析下界为123。Banakh 与 Gavrylkiv 证明 `lim Δ(n)^2/n = inf Δ(n)^2/n ≥ 2 + max_{0<φ<π} 2 sin(φ)/(φ+π)`。取 `φ=π/2`，再用 `π<22/7`，得到 `lim Δ(n)^2/n > 80/33`。所以 `33·Δ(6166)^2 > 80·6166 = 493280`。又因 `122²·33=491172<493280`，而 `123²·33=499257>493280`，故 `Δ(6166)≥123`。同参数区间为123到128。简单的成对计数下界112也成立，但较弱。
+
+### 来源与记录
+
+- Georgiev、Gómez-Serrano、Tao、Wagner，[*Mathematical exploration and discovery at scale*，arXiv:2511.02864v1，第6.3节](https://arxiv.org/html/2511.02864v1#S6.SS3)。论文以整数差定义 `Δ(n)`，并用 `128²/6166` 作为渐近常数的旧上界。论文另报 AlphaEvolve 后来把上界改进为 `360²/49109`。该结果的参数不同，不属于本配置。
+- Banakh 与 Gavrylkiv，[*Difference bases in cyclic groups*，arXiv:1702.02631v6，第3–4节](https://arxiv.org/html/1702.02631)。论文陈述 Singer 循环差集定理，并记录 Leech–Golay 的区间构造，包括 `Δ(6166)≤128`。
+- [AlphaEvolve 问题仓库](https://github.com/google-deepmind/alphaevolve_repository_of_problems)包含差基 notebook。核对的 `main` 提交为 `8f447457957deac61e28bf1676746f0753b3b2f8`（2026-07-11）。Notebook blob SHA-1 为 `0cdb812ada3b6053f749e05301a743fd191e8700`，原始文件 SHA-256 为 `e5bd224563055caf53c0fef9b9c67620c7124a14aa77094cce456d9927b65489`。它给出49109参数的新构造，不是6166见证。
+- 保存的128点见证由 Singer/Leech 型乘积独立重建。构造使用 `q=31` 的 Singer 差集、区间因子 `{0,1,4,6}`，并通过有限搜索选择循环乘数。精确检查器验证该见证。我们不声称它与 Leech 或 Golay 使用的原见证相同。来源没有说明历史128点构造的 AI 参与情况。
+- 冻结的人类基线使用经典 Wichmann 尺 `W(38,3)`。它有158个标记，构成长度6548的完全稀疏尺，因此覆盖6166以内的差值。Saarela 与 Vanhatalo 在[2026年论文](https://doi.org/10.37236/13806)的定义8、定义16和定理18给出间隔公式和完整证明。这个弱基线与文献报告的128点人类纪录分开。此稀疏尺仅作为无限制整数差基任务中的可行构造；本任务不设置稀疏尺的位置约束。
+
+### 程序与运行
+
+检查器用整数精确重算差值覆盖，并最小化不同整数标记的数量。它不读取候选声明的成绩。`init_program.py` 返回有效但较大的 `[0,6166]`。`baseline.py` 运行固定种子的随机贪心集合覆盖，不读取对照见证。`human.py` 重建 Wichmann `W(38,3)`。`reference.py` 读取固定的128点重建见证。`evolution.py` 提供传统搜索入口。
+
+运行一个程序：
+
+```sh
+MATHBENCH_CONFIG_ID=T060-C01 MATHBENCH_SEED=0 .venv/bin/python tasks/t060/reference.py
+```
+
+运行任务检查：
+
+```sh
+.venv/bin/python -m pytest tasks/t060/test_task.py -q
+```
+
+默认生成预算为300秒，验证预算为60秒，内存为4 GiB，使用一个 CPU 线程。默认搜索使用固定迭代数和重启数。只有明确进行限时探索时才设置 `MATHBENCH_SEARCH_SECONDS`。
+
+### 状态与限制
+
+公开的128点构造给出可行上界，不是最优性证明。本任务独立重建并验证了一个同参数128点构造。已核查文献没有给出 `Δ(6166)` 的确切值，也没有匹配的下界。截至本次来源快照，未找到关闭有限差距的更新证明。核查范围仅限上文列出的来源和版本。

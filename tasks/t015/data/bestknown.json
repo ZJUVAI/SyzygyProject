@@ -1,200 +1,72 @@
 {
   "task_id": "T015",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T015-C01": {
-      "public_value": "0.88922",
-      "public_source": {
-        "url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
-        "title": "Improved bounds on the supremum of autoconvolutions",
-        "authors": [
-          "Mate Matolcsi",
-          "Carlos Vinuesa"
-        ],
-        "year": 2009,
-        "reported_same_parameter_best": "0.88922... at n=20",
-        "notes": "The paper explicitly calls this the best step-function example then known for the second autoconvolution inequality at n=20 and prints all 20 nonnegative coefficients in the online appendix. The support is [-1/4, 1/4]. Boyer and Li (2025, arXiv:2506.16750, Sections 2-3) independently transcribe the same 20 coefficients, state n=20, and recompute the score as 0.889226. The local checker recomputes the exact rational score from the printed finite decimals. The 2009 paper says the example was not extensively optimized; it does not claim a global optimum over 20-step functions."
+      "program": "reference.py",
+      "reproduced_value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+      "public_value": "2.354634495069",
+      "highest_reported": {
+        "value": "2.354634495069",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "reproduction_status": "The source coordinate archive was reconstructed and exactly rescored. The exact value rounds to the reported value at its 12 decimal places."
       },
-      "reproduced_value": "108065664771600646574507764702/121527759800529249872686490775",
-      "display_value": "0.8892261730897966",
-      "reproduced_exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-      "program": "sota.py",
-      "witness": "data/human_t015.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "Witness-level identity: coefficients match the 20-entry Matolcsi-Vinuesa appendix witness as independently transcribed by Boyer-Li. The source prints only 0.88922...; the exact local score is recomputed from those printed finite decimal coefficients.",
-      "limitations": [
-        "Best located same-parameter public construction, not a proof of optimality among all 20-step functions. Matolcsi-Vinuesa state they did not make extensive efforts to optimize this example.",
-        "This is a finite source comparison of the original Matolcsi-Vinuesa appendix and later directly relevant AlphaEvolve, Boyer-Li, Jaech-Joseph, SimpleTES, and DREAM-RSI reports. It does not establish that every public source has been surveyed.",
-        "The Matolcsi-Vinuesa appendix gives decimal coefficients rather than exact rational coefficients. Exactness here means exact arithmetic on those printed finite decimals, not recovery of hidden higher-precision values.",
-        "The inspected DREAM-RSI paper reports its first autocorrelation inequality result, not a separate result for the second autocorrelation inequality (T015).",
-        "The 2009 source does not describe the numerical search algorithm, random seed, or compute budget that produced its 20-step coefficients. This reproduction uses the printed witness directly and does not invent those missing details."
-      ],
-      "reproduction_method": {
-        "method": "Read the 20 printed decimal heights from the Matolcsi-Vinuesa appendix witness file and rescore them with the T015 exact rational checker.",
-        "random_seed": null,
-        "search_budget": null,
-        "source_search_details": "The paper reports a numerical search and states it did not make extensive efforts to optimize this example; it gives no algorithm, seed, or budget. No new search result is claimed here."
+      "human_reference": 2.3546344950686153,
+      "direction": "maximize",
+      "unit": "unit-radius cubed",
+      "source_coordinate_sha256": "5add684454391c037f97c1d1dd05374387fd3c7b3a12cf13708ebbc7808727e3",
+      "witness": "data/reference/sloane11_rational_stereographic.json",
+      "historical_weaker_candidate": {
+        "value": "2.35462915",
+        "source": {
+          "url": "https://doi.org/10.1007/978-3-540-44400-8_22",
+          "title": "The Polyhedra of Maximal Volume Inscribed in the Unit Sphere",
+          "author": "Nobuaki Mutoh",
+          "year": 2003,
+          "source_status": "weaker numerical local candidate; not the highest reported result"
+        },
+        "reproduction_status": "not reproduced from the cited Mutoh witness; retained as a historical weaker reported candidate"
       },
-      "best_located_same_parameter": {
-        "value": "108065664771600646574507764702/121527759800529249872686490775",
-        "display_value": "0.8892261730897966",
-        "steps": 20,
-        "source_reported_value": "0.88922...",
-        "source": "Matolcsi-Vinuesa 2009 online appendix; 20 printed coefficients; coefficient list and score independently confirmed by Boyer-Li 2025, arXiv:2506.16750"
-      },
-      "highest_located_report_any_step_count": {
-        "value": "0.962694",
-        "system": "SimpleTES",
-        "url": "https://arxiv.org/abs/2604.19341",
-        "parameter_note": "The paper reports the AC2 result and describes the AC2 search as FFT plus L-BFGS-B over sparse witnesses. It does not specify a 20-step witness; this is a different-resolution result, not T015-C01."
-      },
-      "comparison_scope": [
-        {
-          "source": "Matolcsi-Vinuesa 2009, online appendix",
-          "value": "0.88922...",
-          "steps": 20,
-          "parameter_match": true,
-          "witness_available": true,
-          "url": "https://math.bme.hu/~matolcsi/sch0914.pdf",
-          "evidence": "Authors call this the best 20-step example then known and print 20 coefficients."
-        },
-        {
-          "source": "AlphaEvolve, Mathematical exploration and discovery at scale",
-          "value": "0.8962",
-          "steps": 50,
-          "parameter_match": false,
-          "witness_available": true,
-          "url": "https://arxiv.org/abs/2511.02864",
-          "evidence": "Boyer-Li directly identify the AlphaEvolve witness as 50 equal intervals."
-        },
-        {
-          "source": "Boyer-Li, An improved example for an autoconvolution inequality",
-          "value": "0.901562",
-          "steps": 575,
-          "parameter_match": false,
-          "witness_available": true,
-          "url": "https://arxiv.org/abs/2506.16750",
-          "evidence": "Theorem 1 and Appendix A give 575 coefficients; Section 3 compares the n=20 Matolcsi-Vinuesa witness and reports its recomputed score 0.889226."
-        },
-        {
-          "source": "Jaech-Joseph, Further Improvements to the Lower Bound for an Autoconvolution Inequality",
-          "value": "0.94136",
-          "steps": 2236,
-          "parameter_match": false,
-          "witness_available": true,
-          "url": "https://arxiv.org/abs/2508.02803",
-          "evidence": "Abstract states 2,399 intervals for one construction and obtains 0.94136 by 4x upsampling a 559-interval optimizer (2,236 intervals)."
-        },
-        {
-          "source": "AlphaEvolve V2, reported in SimpleTES Appendix O.1",
-          "value": "0.961000",
-          "steps": 50000,
-          "parameter_match": false,
-          "witness_available": true,
-          "url": "https://arxiv.org/abs/2604.19341",
-          "evidence": "SimpleTES Appendix O.1 table reports the value; TTT-Discover's related-work summary identifies the AlphaEvolve V2 construction as 50,000 pieces."
-        },
-        {
-          "source": "SimpleTES, Structured Scaling of AI Discovery Across Diverse Scientific Domains",
-          "value": "0.962694",
-          "steps": null,
-          "parameter_match": false,
-          "witness_available": true,
-          "url": "https://arxiv.org/abs/2604.19341",
-          "evidence": "Appendix O.1 reports AC2 score and says its best program uses FFT evaluation and L-BFGS-B refinement on sparse witnesses; the paper does not report a 20-step witness."
-        },
-        {
-          "source": "DREAM-RSI, Recursive Self-Improvement through Evolving Worlds",
-          "value": null,
-          "steps": null,
-          "parameter_match": false,
-          "witness_available": false,
-          "url": "https://arxiv.org/abs/2609.14858",
-          "evidence": "Its paper reports the first autocorrelation inequality, with lower-is-better scores around 1.45; it does not report a T015 second-autocorrelation score."
-        }
-      ],
-      "related_public_reports": [
-        {
-          "system": "AlphaEvolve V2",
-          "value": "0.9610",
-          "url": "https://arxiv.org/abs/2511.02864",
-          "parameter_note": "Reported using a 50,000-piece step function; not 20 steps. Earlier AlphaEvolve result was 0.8962 with 50 steps."
-        },
-        {
-          "system": "SimpleTES",
-          "value": "0.962694",
-          "url": "https://arxiv.org/abs/2604.19341",
-          "parameter_note": "Reported for AC2 without a matching 20-step specification; its published search description is FFT and L-BFGS-B over sparse witnesses."
-        },
-        {
-          "system": "DREAM-RSI",
-          "value": null,
-          "url": "https://arxiv.org/abs/2609.14858",
-          "parameter_note": "Its comparison table reports first autocorrelation, not the T015 second-autocorrelation task."
-        }
-      ],
-      "checked_at": "2026-11-05",
+      "matches_public_value": "yes at reported decimal precision; exact reconstruction uses rounded source coordinates",
+      "reproduced_at": "2026-11-06",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T015",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T015",
           "config_id": "T015-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": "108065664771600646574507764702/121527759800529249872686490775",
+          "objective": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
           "verification_status": "exact",
-          "generation_time": 0.36552152782678604,
-          "verification_time": 0.3212709166109562,
-          "objective_value": "108065664771600646574507764702/121527759800529249872686490775",
+          "generation_time": 0.9913648702204227,
+          "verification_time": 0.9461091756820679,
+          "objective_value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
           "details": {
-            "objective_fraction": "108065664771600646574507764702/121527759800529249872686490775",
-            "objective_float": 0.8892261730897966,
-            "mass": "31622759/5000000",
-            "convolution": [
-              "16200962089/10000000000",
-              "6924067917/5000000000",
-              "2959251201/10000000000",
-              "0",
-              "0",
-              "0",
-              "0",
-              "67379419861/50000000000",
-              "40503942809/25000000000",
-              "16201132387/10000000000",
-              "40502981753/25000000000",
-              "81009009473/50000000000",
-              "40505047071/25000000000",
-              "16202011507/10000000000",
-              "1620227558389/1000000000000",
-              "32401128753/20000000000",
-              "324041345529/200000000000",
-              "405060144637/250000000000",
-              "162018415863/100000000000",
-              "202520914753/125000000000",
-              "30813452021/20000000000",
-              "762947736667/500000000000",
-              "1620371934517/1000000000000",
-              "810111703623/500000000000",
-              "2563492713/1600000000",
-              "151585626957/100000000000",
-              "3481058777873/2500000000000",
-              "29509494457/25000000000",
-              "999341930229/1000000000000",
-              "2033028209133/2500000000000",
-              "648635922753/1000000000000",
-              "616618372023/1250000000000",
-              "1801632696609/5000000000000",
-              "19222784457/78125000000",
-              "823227288187/5000000000000",
-              "246552776689/2500000000000",
-              "10994514677/200000000000",
-              "3064313241/125000000000",
-              "12272429961/1562500000000"
-            ],
-            "steps": 20
+            "objective_name": "convex_hull_volume",
+            "hull_method": "exact rational supporting-plane enumeration and exact coplanar-face hulls",
+            "supporting_triples_checked": 165,
+            "supporting_triples_found": 18,
+            "unique_supporting_planes": 18,
+            "triangles_after_face_triangulation": 18,
+            "input_representation": "exact Cartesian coordinates",
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.6930502951145172,
+          "eval_time": 1.956413198262453,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -204,109 +76,80 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t015/data/human_t015.json",
         "independent_quantity": {
-          "exact_objective": "108065664771600646574507764702/121527759800529249872686490775",
-          "convolution_entries": 39
+          "volume": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "centroid_pyramids": 18,
+          "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Reviewed original Matolcsi-Vinuesa appendix and Boyer-Li2025 primary paper. The latter explicitly identifies the MV20, AE50 and BL575 grids. The strongest located same-20-step public witness is the archived MV coefficient list; its exact ratio is independently recomputed. This is a finite source comparison, not an optimality proof.",
-        "snapshot_date": "2026-11-05"
-      }
-    }
-  },
-  "sol_review": {
-    "T015-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05",
-      "public_sources_only": true,
-      "highest_reported_reproduced": true
-    }
-  },
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 0.8892261730897966,
-    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-    "parameters": {
-      "steps": 20,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/pdf/0907.1379",
-    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
-    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
-    "witness": "data/human_t015.json"
-  },
-  "best_public": {
-    "value": 0.8892261730897966,
-    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-    "parameters": {
-      "steps": 20,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/pdf/0907.1379",
-    "evidence_state": "appendix coefficients transcribed and exact objective independently recomputed",
-    "optimality": "historical feasible witness; source says the construction was not extensively optimized",
-    "witness": "data/human_t015.json",
-    "survey_scope": "Fixed20step witness checked. Later0.962694report has unmatched step count and is archived separately.",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 0.8892261730897966,
-    "exact_value": "108065664771600646574507764702/121527759800529249872686490775",
-    "parameters": {
-      "steps": 20,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "provenance": "task-local copy of the printed Matolcsi-Vinuesa appendix coefficients",
-    "evidence_state": "exact rational convolution and objective recomputation"
-  },
-  "baseline_seed": {
-    "provenance": "seeded positive integer coefficients generated in init_program.py",
-    "evidence_state": "valid initial point; not a published result"
-  },
-  "other_configurations": [
-    {
-      "value": 0.962694,
-      "parameters": {
-        "steps": null,
-        "support": "not matched to this fixed 20-step configuration"
+        "claimed_score_ignored": true
       },
-      "url": "https://arxiv.org/abs/2604.19341",
-      "evidence_state": "later report listed in research coverage; exact witness and matching step count not independently reproduced",
-      "optimality": "reported public result; not comparable to T015-C01 until configuration and witness are matched",
-      "origin_type": "AI-assisted SimpleTES report; parameter mismatch"
+      "parameters": {
+        "n": 11,
+        "space": "unit sphere S2 in R3",
+        "objective": "Euclidean volume of convex hull",
+        "objective_unit": "unit-radius cubed"
+      },
+      "best_human": {
+        "value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+        "reported_value": "2.354634495069",
+        "date_checked": "2026-11-06",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "provenance": "The exact value is recomputed from the source rounded decimals after rational stereographic reconstruction. It is not the original unrounded source score."
+      },
+      "best_public": {
+        "value": "2.354634495069",
+        "date_checked": "2026-11-06",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "origin_type": "Human numerical construction; source attributes the page to Hardin, Sloane, and Smith and does not state AI involvement.",
+        "provenance": "The source calls these arrangements putatively optimal and reports the rounded 11-point value. This is not a global optimality proof."
+      },
+      "best_reproduced": {
+        "value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+        "program": "reference.py",
+        "witness_file": "data/reference/sloane11_rational_stereographic.json",
+        "source_coordinate_file": "data/maxvol.3.11.txt",
+        "source_coordinate_sha256": "5add684454391c037f97c1d1dd05374387fd3c7b3a12cf13708ebbc7808727e3",
+        "witness_sha256": "69e632317609db1f28ee4f055e1e32ced068718a81568e3a246c097314918b9a",
+        "provenance": "Exact rational stereographic reconstruction from the rounded Hardin-Sloane-Smith coordinates. The exact checker recomputes all support planes and coplanar face hulls.",
+        "ai_provenance": "No AI-generated coordinates; public source coordinates are reconstructed and rescored.",
+        "evidence_state": "Exact feasible score for reconstructed rounded coordinates; 18 support planes and 18 triangulated facets.",
+        "date_reproduced": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      },
+      "human_reference_note": "The exact reconstructed score is stored as a rational in reproduced_value. Frozen H in task.json is its positive binary64 approximation 2.3546344950686153. The public rounded value is stored separately."
     }
-  ],
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  },
+  "checked_at": "2026-11-06",
+  "snapshot_date": "2026-11-06"
 }

@@ -1,106 +1,82 @@
 {
   "task_id": "T022",
-  "snapshot_date": "2026-11-06",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T022-C01": {
-      "parameters": {
-        "clique_size": 5,
-        "independent_set_size": 5
-      },
-      "direction": "maximize",
-      "objective": "vertex count N of a simple graph with no K5 and no independent 5-set",
-      "best_human": {
-        "value": 42,
-        "resulting_bound": "R(5,5) >= 43",
-        "date_checked": "2026-11-06",
-        "source": "Exoo 1989 establishes the 42-vertex lower bound. The specific graph6 row used here is not individually attributed in McKay’s archive.",
-        "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
-        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
-        "witness": "data/graph6.txt",
-        "evidence_state": "Exoo’s publication establishes R(5,5) >= 43. McKay’s archive row supplies the exact locally reproduced graph, but the row does not identify its individual discoverer.",
-        "origin_type": "Published mathematical construction / computational search; the archive line does not identify its individual discoverer.",
-        "ai_provenance": "AI decoded the public graph6 record and expanded it into adjacency lists; no attribution beyond the archive and cited literature is inferred."
-      },
-      "best_public": {
-        "value": 42,
-        "resulting_bound": "R(5,5) >= 43",
-        "date_checked": "2026-11-06",
-        "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
-        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
-        "evidence_state": "The archive documents 328 of the 656 catalogued 42-vertex graphs; the remaining 328 are complements. This is a published lower-bound witness, not an optimality proof.",
-        "origin_type": "Individual provenance not stated in the graph archive."
-      },
-      "best_reproduced": {
-        "value": 42,
-        "date_checked": "2026-11-06",
-        "witness": "data/human_witness.json",
-        "verification_status": "exact",
-        "verification_method": "Trusted checker tested every possible 5-clique in the graph and every possible 5-clique in its complement; recomputed vertex count and edge count.",
-        "actual_edges": 425,
-        "claimed_scores_ignored": true
-      },
-      "unmatched_parameter_records": [],
-      "survey_scope_note": "Checked Exoo 1989, McKay public Ramsey data and archive, and Angeltveit-McKay arXiv v2/current 2026 journal record. The 42-vertex witness is the best located construction; the 46 result is a same-parameter upper bound, not a construction.",
-      "date_checked": "2026-11-06",
-      "checked_at": "2026-11-06",
-      "public_value": 42,
-      "public_source": {
-        "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
-        "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
-        "title": "Brendan McKay, Ramsey graph data",
-        "claim": "The archive provides 328 catalogued (5,5,42)-graphs; their 328 complements complete the 656-graph catalog.",
-        "checked_at": "2026-11-06",
-        "attribution_note": "The first archive record is not individually attributed."
-      },
-      "reproduced_value": 42,
       "program": "reference.py",
-      "witness": "data/human_witness.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0; exact graph6 witness and exact integer objective.",
+      "reproduced_value": 40,
+      "public_value": 40,
       "highest_reported": {
-        "value": 42,
-        "source": {
-          "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
-          "title": "McKay Ramsey graph archive",
-          "claim": "Public construction with 42 vertices, establishing R(5,5) >= 43."
-        },
-        "reproduction_status": "reproduced"
+        "value": 40,
+        "source": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Theorem 2.5 and Proposition 2.6: acnodal cubic parametrization and subgroup construction",
+        "reproduction_status": "The task witness is independently reconstructed from the source's exact cubic group method with subgroup parameter k/17. Pegg's figure is separate same-parameter public evidence, not the source of these coordinates. Exact checking confirms 40 distinct lines containing exactly three points. This is a feasible lower bound, not an optimum proof.",
+        "ai_provenance": "not stated by source",
+        "metric": "distinct lines containing exactly three of 17 points",
+        "direction": "maximize",
+        "date_checked": "2026-11-06",
+        "url": "https://arxiv.org/abs/1208.4714v3",
+        "additional_same_parameter_source": "https://blog.wolfram.com/2018/02/02/cultivating-new-solutions-for-the-orchard-planting-problem/"
       },
-      "same_parameter_bounds": [
-        {
-          "value": 46,
-          "meaning": "R(5,5) <= 46 (upper bound, not a construction)",
-          "authors": [
-            "Vigleik Angeltveit",
-            "Brendan D. McKay"
-          ],
-          "version": "arXiv v2, revised 2025-09-01; Journal of Graph Theory publication 2026",
-          "url": "https://arxiv.org/abs/2409.15709v2",
-          "evidence_state": "Published computer-assisted upper-bound proof; this same-parameter result does not prove the 42-vertex construction optimal."
-        }
+      "parameters": {
+        "point_count": 17,
+        "ambient_space": "Euclidean plane R^2",
+        "coordinate_domain": "real algebraic coordinates in a common real algebraic number field",
+        "objective": "number of distinct lines containing exactly 3 input points"
+      },
+      "witness": "data/reference/cubic_tangent_17.json",
+      "witness_sha256": "0575565b5d4993e07ffcf34a3f4a7799bf214b2486b36c9d1bcec6b966fef77c",
+      "known_bounds": {
+        "lower_bound": 40,
+        "upper_bound": 42,
+        "lower_bound_source": "https://arxiv.org/abs/1208.4714v3",
+        "lower_bound_location": "Section 2, Theorem 2.5 and Proposition 2.6; order-17 subgroup gives 1+floor(17(17-3)/6)=40",
+        "upper_bound_source": "https://erich-friedman.github.io/packing/trees/",
+        "upper_bound_location": "Tree Planting Problems table, k=3, n=17; current range 40-42",
+        "status": "The checked current tables leave a(17) in {40,41,42}; no exact value was found as of 2026-11-06."
+      },
+      "checked_sources": [
+        "https://oeis.org/A003035",
+        "https://erich-friedman.github.io/packing/trees/",
+        "https://mathworld.wolfram.com/Orchard-PlantingProblem.html",
+        "https://doi.org/10.1007/BF00147569",
+        "https://arxiv.org/abs/1208.4714"
       ],
+      "algebraic_construction": {
+        "parameter": "alpha=tan(pi/17), the unique root in (9/50,19/100) of the listed degree-16 minimal polynomial",
+        "points": "P_k=(tan(k*pi/17), tan(k*pi/17)^3/(1+tan(k*pi/17)^2)), k=0,...,16",
+        "primary_source_mapping": "Green-Tao §2 Theorem 2.5 maps the acnodal cubic Y^2 Z=X^2(X-Z) by t=cot(pi*x) to [t^2+1:t(t^2+1):1]. At x=k/17, scale to [sin(theta):cos(theta):sin(theta)^3], then swap the last two homogeneous coordinates to obtain the task's affine points. No cos(k*pi/17) vanishes for k=0,...,16.",
+        "line_identity": "For t_i=tan(theta_i), the collinearity determinant is (t1-t2)(t1-t3)(t2-t3)(t1*t2*t3-t1-t2-t3)/prod(1+t_i^2). Thus a distinct triple is collinear exactly when its three angles sum to 0 modulo pi.",
+        "exact_count": "There are 40 unordered distinct triples k1<k2<k3 in 0..16 with k1+k2+k3=0 mod 17. The points lie on an irreducible cubic with no line component, so no line contains four of them."
+      },
+      "green_tao_scope": "Green-Tao prove the classical bound is sharp for all sufficiently large n, but that asymptotic statement alone does not settle n=17.",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T022",
         "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T022",
           "config_id": "T022-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 42,
+          "objective": 40,
           "verification_status": "exact",
-          "generation_time": 0.7370654754340649,
-          "verification_time": 0.6994385235011578,
-          "objective_value": 42,
+          "generation_time": 0.6972695104777813,
+          "verification_time": 5.399435970932245,
+          "objective_value": 40,
           "details": {
-            "vertices": 42,
-            "edges": 425,
-            "clique_size": 5,
-            "independent_set_size": 5,
-            "clique_search_exhaustive": true,
-            "complement_clique_search_exhaustive": true
+            "point_count": 17,
+            "distinct_lines_checked": 56,
+            "exactly_three_point_lines": 40,
+            "largest_line_incidence": 3,
+            "coordinate_field_degree": 16,
+            "minimal_polynomial_irreducible": true,
+            "real_root_isolated_by_sturm_count": 1,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 1.4447266310453415,
+          "eval_time": 6.1036688052117825,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -117,83 +93,78 @@
           }
         },
         "independent_quantity": {
-          "vertices": 42,
-          "edges": 425,
-          "five_subsets_checked": 850668,
-          "forbidden_subsets": 0
+          "three_point_lines": 40,
+          "method": "exact cubic coordinates, tangent group order17 and index-sum incidence",
+          "group_order": 17,
+          "no_four_collinear": "irreducible cubic has no line component"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "reviewer": "Sol main agent",
-        "date": "2026-11-06",
-        "source_review": "Sol independently checked the same-parameter sources and the limits listed in PLAN.md."
+        "claimed_score_ignored": true
       },
-      "review_status": "accepted_by_sol"
+      "best_human": {
+        "value": 40,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 17
+        },
+        "witness_file": "data/reference/cubic_tangent_17.json",
+        "url": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Theorem 2.5 and Proposition 2.6; the acnodal-cubic subgroup of order 17",
+        "provenance": "Human-published cubic group construction reconstructed from the stated parametrization and subgroup formula. Pegg's page separately provides same-parameter evidence, but the coordinates here are not claimed to match the figure.",
+        "ai_provenance": "not stated by source",
+        "actual_value": 40,
+        "evidence_state": "exact checker verifies 17 distinct points and 40 distinct lines incident with exactly three points"
+      },
+      "best_public": {
+        "value": 40,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "point_count": 17
+        },
+        "url": "https://arxiv.org/abs/1208.4714v3",
+        "source_location": "Section 2, Proposition 2.6; n=17 gives 40 three-rich lines; Pegg's 2018 page also shows a 17-point, 40-line figure",
+        "additional_same_parameter_source": "https://blog.wolfram.com/2018/02/02/cultivating-new-solutions-for-the-orchard-planting-problem/",
+        "provenance": "Best same-parameter feasible construction found in checked sources. Current tables retain the range 40-42.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "public construction independently reconstructed and exactly checked; optimum remains unresolved in checked sources"
+      },
+      "best_reproduced": {
+        "value": 40,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 17
+        },
+        "witness_file": "data/reference/cubic_tangent_17.json",
+        "witness_sha256": "0575565b5d4993e07ffcf34a3f4a7799bf214b2486b36c9d1bcec6b966fef77c",
+        "provenance": "Independently generated from the classical cubic-curve tangent-angle parametrization and checked using rational polynomial arithmetic in Q(tan(pi/17)); not claimed to reproduce the exact coordinates in Pegg's figure.",
+        "ai_provenance": "benchmark reconstruction",
+        "actual_value": 40,
+        "evidence_state": "exact degree-16 field checker; independent determinant identity confirms the 40 zero-sum triples",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 40,
+        "parameters": {
+          "point_count": 17
+        },
+        "witness_file": "data/reference/cubic_tangent_17.json",
+        "provenance": "Same-parameter Pegg result used as public baseline evidence; exact witness independently rebuilt by the classical cubic-curve method."
+      },
+      "optimality_status": {
+        "lower_bound": 40,
+        "upper_bound": 42,
+        "evidence_state": "Current OEIS and Friedman tables checked on 2026-11-06 list a(17) in {40,41,42}; no closure located."
+      }
     }
   },
-  "review_status": "accepted_by_sol",
-  "best_human": {
-    "value": 42,
-    "parameters": {
-      "clique_size": 5,
-      "independent_set_size": 5
-    },
-    "source": "Geoffrey Exoo, A lower bound for r(5,5), Journal of Graph Theory 13 (1989), 97-98.",
-    "source_url": "https://doi.org/10.1002/jgt.3190130113",
-    "date_checked": "2026-11-06",
-    "evidence_state": "Exoo proves the 42-vertex lower-bound construction. The archive row used for local reproduction is not individually attributed, so this exact graph6 line is not assigned to Exoo personally.",
-    "ai_provenance": "AI decoded a public archive row; it did not infer the individual discoverer."
-  },
-  "best_public": {
-    "value": 42,
-    "parameters": {
-      "clique_size": 5,
-      "independent_set_size": 5
-    },
-    "url": "https://users.cecs.anu.edu.au/~bdm/data/ramsey.html",
-    "witness_url": "https://users.cecs.anu.edu.au/~bdm/data/r55_42some.g6",
-    "evidence_state": "McKay archive documents 328 catalogued (5,5,42)-graphs; the other 328 are their complements. The first archive line is a public witness; its individual discoverer is not identified.",
-    "date_checked": "2026-11-06"
-  },
-  "best_reproduced": {
-    "value": 42,
-    "parameters": {
-      "clique_size": 5,
-      "independent_set_size": 5
-    },
-    "witness": "data/human_witness.json",
-    "verification_status": "exact",
-    "edge_count": 425,
-    "date_checked": "2026-11-06",
-    "source_graph6_sha256": "ab0b10364ac62ab07f662c0ed4e8b47a44956f63a78356b64ae64ccb6520ecb0"
-  },
-  "limitations": [
-    "The 42-vertex graph proves only the lower bound R(5,5) >= 43.",
-    "The checker uses the published upper bound R(5,5) <= 46 to set the 45-vertex maximum candidate order.",
-    "No proof establishes that 42 is the maximum feasible graph order."
-  ],
-  "same_parameter_bounds": [
-    {
-      "value": 46,
-      "meaning": "R(5,5) <= 46; upper bound, not a construction",
-      "parameters": {
-        "clique_size": 5,
-        "independent_set_size": 5
-      },
-      "url": "https://arxiv.org/abs/2409.15709v2",
-      "authors": [
-        "Vigleik Angeltveit",
-        "Brendan D. McKay"
-      ],
-      "version_date": "2025-09-01",
-      "evidence_state": "Published proof. This same-parameter upper bound leaves R(5,5) in [43,46]."
+  "additional_evidence": {
+    "configurations": {
+      "T022-C01": {
+        "highest_reported": {
+          "source_location": "Section 2, Proposition 2.6; cubic subgroup construction at n=17",
+          "reproduction_status": "The exact subgroup construction is reproduced. The exact maximum at n=17 remains within the reported interval 40-42; Pegg's figure is independent same-parameter evidence."
+        }
+      }
     }
-  ],
-  "admission_source_review": {
-    "mathematical_definition": "checked",
-    "same_parameter_human_source": "checked and reproduced",
-    "public_record": "checked within cited source scope",
-    "optimality": "No proof of optimality located for this configuration. See task sources and PLAN.md.",
-    "graph6_decode": "NetworkX independent decode confirmed 42 vertices and 425 edges"
   }
 }

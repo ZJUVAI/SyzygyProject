@@ -1,33 +1,53 @@
 {
   "task_id": "T099",
-  "name": "minimum order of the P1 11-omino",
+  "name": "Minimum size of an n-input sorting network",
   "acceptance_status": "accepted_by_sol",
+  "category": "combinatorial_optimization",
+  "definition": "For a fixed number of input wires, minimize the number of compare-exchange elements in a network that sorts every input sequence. Layer count is secondary.",
+  "solution_format": "An object with comparators, an ordered list of two-element lists [left_wire, right_wire] using zero-based wire indices from 0 to inputs-1.",
+  "objective": {
+    "name": "comparator_count",
+    "unit": "compare-exchange elements",
+    "direction": "minimize"
+  },
+  "constraints": [
+    "Each comparator uses two distinct wire indices from 0 through inputs-1, with left_wire less than right_wire.",
+    "Comparators execute in listed order. Comparators on disjoint wires can run in parallel.",
+    "The network sorts every input sequence in a totally ordered domain.",
+    "By the zero-one principle, the checker exhaustively tests all 2^inputs binary input sequences."
+  ],
   "official_configuration": "T099-C01",
   "configurations": [
     {
       "id": "T099-C01",
       "parameters": {
-        "polyomino": "11P1",
-        "tile_area": 11,
-        "congruence": "translations, rotations, and reflections allowed",
-        "region": "any axis-aligned integer rectangle",
-        "objective": "minimize number of congruent tile copies"
+        "inputs": 17
       },
       "direction": "minimize",
-      "human_reference": 270
+      "human_reference": 85,
+      "acceptance_status": "accepted_by_sol"
     }
   ],
+  "sources": [
+    "https://doi.org/10.1145/1468075.1468121",
+    "https://www.jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf",
+    "https://bertdobbelaere.github.io/sorting_networks.html",
+    "https://github.com/bertdobbelaere/SorterHunter"
+  ],
+  "verification": "Exact bit-parallel replay of all 2^inputs binary inputs. The zero-one principle certifies the network on every totally ordered input domain.",
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-07",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "固定P1 11格形状：底行5格，上方两行各3格。采用标准正方格点模型，允许D4八种旋转反射及整数平移。对任意正整数边长矩形，最小化铺满所需的块数；未把区域固定为54乘55。",
-      "primary_source": "Sol核对polyominoes.org/data/11P1的order<=270及smallest known rectangle、MIT Tiling Search data113/K12的270块54乘55记录。后者说明来自Karl Dahlke1997与Wichmann图案档案；不将网站版权年份当作发现年份。270是可行上界，没有匹配最小阶证明。",
-      "human": "源SVG重建270块，同参历史布局由Sol亲自运行human复现。精确覆盖2970格。D4及平移由独立Gaussian整数单位变换复算，所有行区间完整拼合，无重叠无缺口。",
-      "independent_seed": "自有CP-SAT只读11格形状，seed20261106、单线程、1800秒上限，477.481秒找到独立270块。脚本及版本9.15.6755与统计、SHA保存。固定54乘55满足模型的OPTIMAL不证明全矩形最小值。另47乘99的600.281秒UNKNOWN失败保留。",
-      "isolation": "简单程序独立保存自有270布局并重复成540块。传统和演化程序从该自有起点用通用边界切口找270块，不读历史或参考布局。离线搜索477秒与正式生成300秒分开报告；正式静态起点及各搜索在预算内。",
-      "admission": "Sol完成五程序540、270、270、270、270，所有合法与破坏、完整分数声明篡改、严格重放、冷导出、错误、非有限数和超时控制通过。独立行区间核验初始5940格及其他2970格。Sol另跑任务8项测试通过。"
+      "definition": "固定17输入比较排序网络，最小化compare-exchange个数；不限制深度，不将已证最优深度10当作本任务目标。",
+      "primary_sources": "亲自核对Dobbelaere当前表及固定SorterHunter提交8ba90df607cbdc339409e0b173b5a2ffd60fc911；重新下载固定原始HTML，与本地快照逐字节一致，SHAfb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6。逐一解析71个比较器，与保存参考一致；该大小匹配Valsalam–Miikkulainen2013传统进化搜索，但网络深度已由17变12，没有声称是2013同一网络。",
+      "human_baseline": "冻结H85来自Batcher1968 odd-even mergesort，补至32线并移除正无穷哨兵比较；实际对17线全输入复核。人类文献71报告与较弱冻结85分开。SorterHunter自动搜索与未知具体AI来源明确记录。",
+      "open_status": "当前表size63–71，其中63为2025未发表、未评审的加强；主审记录从已发表结论可推出的60，不将63当作已独立复核数学证书。无最少比较器数71的最优性证明。",
+      "independent_verification": "五个网络逐一独立以uint32字打包131072个二元输入，条件交换位并与按位数应得的排序词比较；与正式检查器逐线巨位向量AND/OR不同。由零一原则可覆盖任意全序输入。",
+      "isolation_repair": "初稿baseline导入human并从85对照开始，已退回；当前baseline与evolution均只从136简单程序开始，不读human/reference/data/reference，静态依赖检查通过。初始136、传统136、人类85、参考71、演化126。",
+      "controls": "五种程序、空网络破坏、完整声明成绩不变性、严格回放、冷导出及三类运行失败检查通过；任务及共享检查49项通过。",
+      "limits": "未重做2013完整传统搜索或最优性下界SAT证明；131072输入验证的是可行性，不证明比较器个数最少。"
     }
   }
 }

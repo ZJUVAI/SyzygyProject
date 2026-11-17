@@ -1,21 +1,45 @@
-# T056：Taillard ta41 一般作业车间排程
+# T056：12 阶互相正交拉丁方的数量
 
 ## 中文
 
-配置 `T056-C01` 固定为 Taillard 的 `ta41`，含 30 个工件、20 台机器。每个工件有自己的机器路线和加工时间。路线可以彼此不同。每台机器的加工顺序也分别决定。
+### 目标和配置
 
-目标是最小化最大完工时间。该任务是一般 job-shop，不是 permutation flow-shop。checker 从机器上的工件顺序构造精确的优先关系图，并以整数最长路计算最早完工时间；有环的顺序无效。
+配置 `T056-C01` 固定阶数为 12。程序提交一组同阶拉丁方，并最大化方阵数量。符号固定为整数 0 至 11。每一行和每一列都须各含这些符号一次。任意两个不同方阵叠加后，144 个有序符号对都须恰好出现一次。
 
-公开输入来自 Taillard 官方实例页的 `tai30_20.txt` 首个实例。该文件的旧上界字段已过时；本任务单独记录已验证的公开排程。Shylo 与 Pardalos 的 `ta41` 排程公开值为 2006，已下载并复算。最新核对到 2026-11-06 时，`optimizizer.com/TA.php` 仍列 2006 为上界，1912 为下界；2025 年 OR-Tools 论文还报告运行后数值下界 1915，但作者说明该下界没有形式化证明。没有查到 ta41 最优性闭合。
+验证器逐项检查所有约束，并重算目标值。它不采信程序报告的分数。验证是精确整数运算。
 
-冻结弱人类方法基线为 3296。`human.py` 重建 Giffler–Thompson 活跃排程生成法，并在冲突集中采用最长加工时间规则。最佳公开排程 2006 与该弱基线分开记录。所有搜索从简单的机器内工件升序排程开始；搜索代码不读取 `data/reference/`。
+### 人类构造和公开记录
+
+Charles E. Roberts 的论文报告了阶数 12 的构造，其数量达到当时已知下界 5。SageMath 10.10 的组合设计数据库保存五个 12 阶方阵，并将这份数据归于 Brendan McKay。目录保存了该版本的函数片段和从中逐字提取的五方阵数据。提取时把字母 `a` 至 `l` 映射为 0 至 11，没有执行 Sage 代码。`human.py` 和 `reference.py` 读取这份数据。论文作者与 Sage 数据归属是两项不同记录。
+
+五个方阵已逐行、逐列和逐对精确复算。五是已验证下界，不是最优性证明。普遍上界为 11。11 个方阵等价于阶数 12 的射影平面；其存在性仍未解决。公开资料未给出六个方阵不存在的证明，本配置不声称 5 已最优。
+
+### 起点和传统基线
+
+`init_program.py` 返回一个循环拉丁方。`baseline.py` 用 GF(3) 与 GF(4) 的直积构造两个互相正交的方阵。MacNeish 的乘积构造给出这两个方阵；程序按有限域算术直接重建它们，不读取五方阵对照数据。`evolution.py` 从该构造开始，以固定种子搜索随机同位变换，并保留当前最好可行解。
 
 ## English
 
-Configuration `T056-C01` fixes Taillard's `ta41` instance with 30 jobs and 20 machines. Each job has its own machine route and processing times. Job routes may differ. The processing order is chosen separately for each machine.
+### Goal and configuration
 
-The objective is to minimize the makespan. This is a general job-shop problem, not a permutation flow-shop problem. The checker builds the exact precedence graph from job routes and machine orders, then computes earliest completion times with integer longest paths. A cyclic order is invalid.
+Configuration `T056-C01` fixes the order at 12. Return a family of Latin squares and maximize its size. Use the integer symbols 0 through 11. Each row and column must contain every symbol once. Each pair of different squares must contain all 144 ordered symbol pairs once.
 
-The input is the first instance in Taillard's official `tai30_20.txt` file. Its old bound fields are stale. The task records a separately verified public schedule. Shylo and Pardalos report a `ta41` schedule with makespan 2006; the downloaded sequence was independently checked. As of 2026-11-06, `optimizizer.com/TA.php` still lists 2006 as the upper bound and 1912 as the lower bound. A 2025 OR-Tools paper reports a numerical lower bound of 1915 after a long run, but it does not provide a formal proof for that bound. No proof closing `ta41` was found.
+The checker verifies every constraint and recomputes the objective with exact integer operations. It ignores any score reported by the program.
 
-The frozen weak human method baseline is 3296. `human.py` reconstructs Giffler–Thompson active-schedule generation and uses a longest-processing-time rule within the conflict set. The best public schedule at 2006 is recorded separately. All search starts from the simple machine-order schedule sorted by job index. Search code does not read `data/reference/`.
+### Human construction and public record
+
+Charles E. Roberts reports a construction at order 12 that meets the then-current lower bound of five. The SageMath 10.10 combinatorial design database stores five squares of order 12 and attributes the data to Brendan McKay. This task stores the function fragment and the five squares extracted from it. The extraction maps letters `a` through `l` to 0 through 11. It does not execute Sage code. `human.py` and `reference.py` replay this data. The paper author and the Sage data attribution are separate records.
+
+All five squares pass exact row, column, and pair checks. Five is a verified lower bound, not a proof of optimality. The general upper bound is 11. Eleven squares are equivalent to a projective plane of order 12, whose existence remains open. The sources checked do not prove that six squares cannot exist. This task does not claim that five is optimal.
+
+### Starter and classical baseline
+
+`init_program.py` returns one cyclic Latin square. `baseline.py` uses the direct product of constructions over GF(3) and GF(4) to build two orthogonal squares. MacNeish's product construction gives this family; the program rebuilds it with finite-field arithmetic and does not read the five-square comparison data. `evolution.py` starts from this construction, tries seeded random isotopies, and keeps its best feasible family.
+
+### Sources
+
+- [Charles E. Roberts (1992), “Sets of mutually orthogonal Latin squares with ‘like subsquares’”](https://doi.org/10.1016/0097-3165(92)90052-V).
+- [Harris F. MacNeish (1922), “Euler Squares”](https://doi.org/10.2307/1967920), for the direct-product construction used by the classical baseline.
+- [SageMath 10.10 database entry for `MOLS_12_5`](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5).
+- [Google DeepMind formal-conjectures entry on the order-12 MOLS problem](https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Paper/LatinSquare.lean).
+- [Morris, “Mutually orthogonal Latin squares”](https://www.cs.uleth.ca/~morris/Combinatorics/html/sect_Latin-squares-MOLS.html).

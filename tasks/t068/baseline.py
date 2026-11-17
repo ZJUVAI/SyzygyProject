@@ -1,83 +1,59 @@
-"""Fixed-seed greedy set-cover baseline for the 10-dimensional cube."""
+"""Seeded sequential greedy search; no comparison witness is read."""
 
-import math
 import os
 import random
-import time
 
-from tasks.t068.check import CONFIG_ID, LENGTH, UNIVERSE_MASK, UNIVERSE_SIZE
-
-
-TRIAL_LIMIT = 8
-_BALLS = tuple(
-    (1 << center) | sum(1 << (center ^ (1 << bit)) for bit in range(LENGTH))
-    for center in range(UNIVERSE_SIZE)
-)
+from mathbench.search import search_steps
 
 
-def _greedy(order):
-    uncovered = UNIVERSE_MASK
-    selected = []
-    remaining = set(range(UNIVERSE_SIZE))
-    while uncovered:
-        best = None
-        best_gain = -1
-        for center in order:
-            if center not in remaining:
-                continue
-            gain = (_BALLS[center] & uncovered).bit_count()
-            if gain > best_gain:
-                best, best_gain = center, gain
-        if best is None or best_gain <= 0:
-            raise RuntimeError("greedy set cover failed to cover the cube")
-        selected.append(best)
-        remaining.remove(best)
-        uncovered &= ~_BALLS[best]
+CONFIG_ID = "T068-C01"
+PLACEMENT_BUDGET = 20_000
 
-    # Remove redundant sets in reverse selection order.
-    for center in tuple(reversed(selected)):
-        others = [item for item in selected if item != center]
-        union = 0
-        for item in others:
-            union |= _BALLS[item]
-        if union == UNIVERSE_MASK:
-            selected.remove(center)
-    return sorted(selected)
+
+def _allowed(colors, number, color):
+    # Check exactly the progressions whose final term is the new number.
+    for step in range(1, (number - 1) // 6 + 1):
+        start = number - 1 - 6 * step
+        if all(colors[start + j * step] == color for j in range(6)):
+            return False
+    return True
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if config_id != CONFIG_ID:
+        raise ValueError("unsupported configuration id")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds_text is not None:
-        seconds = float(seconds_text)
-        if not math.isfinite(seconds) or seconds <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + seconds
-
     rng = random.Random(seed)
-    order = list(range(UNIVERSE_SIZE))
-    best = _greedy(order)
-    completed = 0
-    for _ in range(TRIAL_LIMIT):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        rng.shuffle(order)
-        candidate = _greedy(order)
-        completed += 1
-        if len(candidate) < len(best):
-            best = candidate
+    colors = [0] * 6
+    best = colors.copy()
+    placements = 0
+    restarts = 0
+    for _ in search_steps(PLACEMENT_BUDGET):
+        number = len(colors) + 1
+        choices = [c for c in (0, 1) if _allowed(colors, number, c)]
+        if not choices:
+            if len(colors) > len(best):
+                best = colors.copy()
+            colors = [0] * 6
+            restarts += 1
+            continue
+        colors.append(rng.choice(choices))
+        placements += 1
+    if len(colors) > len(best):
+        best = colors
     return {
-        "codewords": best,
+        "n": len(best),
+        "colors": best,
+        "claimed_objective": len(best),
         "search_metadata": {
-            "algorithm": "greedy maximum-new-coverage set cover followed by redundant-center deletion",
+            "algorithm": "seeded randomized sequential greedy extension with restart after dead end",
+            "configuration_id": config_id,
             "seed": seed,
-            "trial_limit": TRIAL_LIMIT,
-            "trials_completed": completed,
+            "placements": placements,
+            "placement_budget": PLACEMENT_BUDGET,
+            "restarts": restarts,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
             "reference_data_read": False,
-            "search_seconds_cutoff": seconds_text,
         },
     }

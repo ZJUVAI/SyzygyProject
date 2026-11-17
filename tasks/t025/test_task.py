@@ -1,98 +1,69 @@
-import hashlib
-import json
-from pathlib import Path
-
 import pytest
 
-from tasks.t025.baseline import run_code as search_run
-from tasks.t025.check import validate
-from tasks.t025.human import run_code as human_run
-from tasks.t025.init_program import run_code as seed_run
-from tasks.t025.reference import run_code as reference_run
-
+from tasks.t025.check import _orientation, validate
+from tasks.t025.human import run_code as human_run_code
 
 CONFIG = {
     "id": "T025-C01",
-    "parameters": {"dimension": 7, "field_order": 3, "max_points": 288},
-    "direction": "maximize",
-    "human_reference": 236,
+    "parameters": {
+        "vertices": 28,
+        "graph": "complete graph K28",
+        "general_position": "no three points collinear",
+        "crossing_definition": "unordered pairs of disjoint straight edges whose relative interiors intersect",
+    },
 }
 
 
-def test_human_cap_is_rebuilt_from_author_matrix_and_recomputed():
-    solution = human_run()
-    result = validate({**solution, "claimed_objective": -1}, CONFIG, strict=True)
-    assert solution == reference_run()
-    assert len(solution["points"]) == 236
-    assert result["objective"] == 236
-    assert result["verification_status"] == "exact"
-    assert result["details"]["all_distinct_pairs_checked"] is True
-    assert result["details"]["claimed_objective_ignored"] is True
-    matrix_path = Path(__file__).parent / "data" / "edel_bierbrauer_248_projective_matrix.txt"
-    assert hashlib.sha256(matrix_path.read_bytes()).hexdigest() == (
-        "0e3ad612ca8ee9259290f4748af505cf6184c2107e77859d3ae6117fe24545eb"
-    )
+def parabola():
+    return {"points": [[i, i * i] for i in range(28)]}
 
 
-def test_binary_seed_is_a_valid_cap():
-    solution = seed_run()
-    assert len(solution["points"]) == 128
-    assert validate(solution, CONFIG)["objective"] == 128
+def test_convex_reference_and_claimed_score_ignored():
+    candidate = human_run_code()
+    checked = validate(candidate, CONFIG)
+    assert checked["objective"] == 20475
+    assert checked["details"]["general_position_triples_checked"] == 3276
+    assert checked["details"]["disjoint_edge_pairings_checked"] == 61425
+    candidate["claimed_objective"] = -999
+    candidate["score"] = float("nan")
+    assert validate(candidate, CONFIG)["objective"] == 20475
 
 
-def test_three_collinear_points_are_rejected():
-    points = [[0] * 7, [1] + [0] * 6, [2] + [0] * 6]
-    with pytest.raises(ValueError, match="affine line"):
-        validate({"points": points}, CONFIG)
+def test_exact_orientation_boundary_values():
+    assert _orientation((0, 0), (2, 0), (1, 1)) == 2
+    assert _orientation((0, 0), (2, 0), (1, -1)) == -2
+    assert _orientation((0, 0), (2, 0), (1, 0)) == 0
 
 
-def test_duplicate_point_rejected():
-    point = [0] * 7
-    with pytest.raises(ValueError, match="duplicate"):
-        validate({"points": [point, point]}, CONFIG)
+def test_rejects_collinear_and_duplicate_points():
+    candidate = parabola()
+    candidate["points"][2] = [2, 2]
+    with pytest.raises(ValueError, match="collinear"):
+        validate(candidate, CONFIG)
+    candidate = parabola()
+    candidate["points"][1] = candidate["points"][0]
+    with pytest.raises(ValueError, match="distinct"):
+        validate(candidate, CONFIG)
 
 
-@pytest.mark.parametrize("bad", [True, 1.0, "1", -1, 3, float("nan"), float("inf")])
-def test_bad_coordinates_rejected(bad):
-    point = [0] * 7
-    point[0] = bad
+@pytest.mark.parametrize("bad_coordinate", [True, 1.25, float("nan"), float("inf"), "2/4", "1/0"])
+def test_rejects_invalid_coordinate_values(bad_coordinate):
+    candidate = parabola()
+    candidate["points"][0][0] = bad_coordinate
     with pytest.raises(ValueError):
-        validate({"points": [point]}, CONFIG)
+        validate(candidate, CONFIG)
 
 
-def test_bad_shape_and_configuration_rejected():
-    with pytest.raises(ValueError, match="points"):
-        validate({"points": None}, CONFIG)
-    with pytest.raises(ValueError, match="seven coordinates"):
-        validate({"points": [[0] * 6]}, CONFIG)
+def test_accepts_exact_rational_coordinates():
+    candidate = parabola()
+    candidate["points"][0] = ["1/3", "1/7"]
+    assert validate(candidate, CONFIG)["verification_status"] == "exact"
+
+
+def test_rejects_wrong_size_or_configuration():
+    candidate = parabola()
+    candidate["points"].pop()
+    with pytest.raises(ValueError, match="exactly 28"):
+        validate(candidate, CONFIG)
     with pytest.raises(ValueError, match="configuration"):
-        validate({"points": []}, {**CONFIG, "parameters": {"dimension": 6}})
-
-
-def test_empty_cap_boundary_and_safe_upper_bound():
-    assert validate({"points": []}, CONFIG)["objective"] == 0
-    too_large = [[(i >> bit) & 1 for bit in range(7)] for i in range(289)]
-    # Duplicates would also make this invalid, but the theorem cutoff applies first.
-    with pytest.raises(ValueError, match="upper bound"):
-        validate({"points": too_large}, CONFIG)
-
-
-def test_seeded_greedy_search_is_reproducible_and_does_not_read_reference(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_SEED", "17")
-    first = search_run()
-    second = search_run()
-    assert first == second
-    assert first["search_metadata"]["seed"] == 17
-    assert first["search_metadata"]["iteration_limit"] == 100_000
-    assert first["search_metadata"]["budget"]["iteration_limit"] == 100_000
-    assert first["search_metadata"]["reference_data_read"] is False
-    assert first["search_metadata"]["iterations"] <= 100_000
-    assert validate(first, CONFIG)["objective"] == len(first["points"])
-
-
-def test_zero_second_search_budget_returns_valid_seed(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
-    solution = search_run()
-    assert solution["search_metadata"]["iterations"] == 0
-    assert len(solution["points"]) == 128
-    assert validate(solution, CONFIG)["objective"] == 128
+        validate(parabola(), {"id": "T025-C02", "parameters": CONFIG["parameters"]})

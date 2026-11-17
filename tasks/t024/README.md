@@ -1,25 +1,21 @@
-# T024：41 点无四环图
-
-## 中文
-
-固定 41 个顶点，提交简单无向图。图中不能有长度为 4 的环，目标是最大化边数。无四环等价于任意两个不同顶点最多有一个共同邻居。检查器精确检查该条件并重算边数。
-
-Afzaly–McKay 公开表在 41 点行给出 `≥132` 条边和三个图。表格说明中，边数前的 `≥` 表示作者尚未证明更多边不可能。38 点行的 117 前没有 `≥`，因此38点配置已有精确最优值，已排除。本任务采用仍开放的41点配置。
-
-任务数据保存原始 sparse6 文件、首条记录解码后的邻接表及 SHA-256。复算结果为41点、132边，所有顶点对的共同邻居数至多为1。该构造证明下界，不证明最优性。
-
-公开表给出40点精确值127。删去41点图的任意一个顶点，所得40点诱导子图至多有127条边。对41种删点结果求边数总和，每条原边恰被计入39次，因此 `39m ≤ 41×127`，从而 `m ≤ 133`。当前可证明区间为 `132 ≤ ex(41,C4) ≤ 133`。
-
-状态：已通过 Sol 验收（2026-11-06）。
+# T024: Largest isosceles-free subset of the 100 by 100 grid
 
 ## English
 
-The fixed graph has 41 vertices. It is simple and undirected, and it must contain no cycle of length four. The objective is to maximize the number of edges. A graph is C4-free exactly when every pair of distinct vertices has at most one common neighbor. The checker tests this condition exactly and recomputes the edge count.
+Configuration `T024-C01` uses the 10,000 integer points `(x,y)` with `0 <= x,y < 100`. Maximize `point_count`. Every three distinct selected points must have three pairwise different squared side lengths. This forbids ordinary and collinear isosceles triangles. Squared integer distances give an exact check.
 
-The Afzaly–McKay public table lists at least 132 edges and three graphs at order 41. Its notes say that a `>=` prefix means that a larger edge count has not been ruled out. The 38-vertex entry 117 has no such prefix, so that solved order was excluded. This task uses the open 41-vertex instance.
+The reproducible human-method baseline has 16 points on one row. Its x-coordinates are `1 + sum(e_i 3^i)` for four digits `e_i` in `{0,1}`. This is the classical ternary construction with no three-term arithmetic progression. For collinear points, an isosceles triple requires a three-term progression, so this set is feasible. It is deliberately weak and is not presented as the best human result.
 
-Task data includes the original sparse6 file, the decoded adjacency list for its first record, and a SHA-256 digest. Recalculation gives 41 vertices and 132 edges, with at most one common neighbor for every vertex pair. This construction proves a lower bound, not optimality.
+The public reference has 164 points. Georgiev, Gomez-Serrano, Tao, and Wagner report this AlphaEvolve construction for the 100 by 100 grid. The saved coordinates are replayed by `reference.py` and checked independently. The paper says the construction is likely not optimal. The reported PatternBoost construction has 160 points; it is AI-assisted and is recorded separately from the human-method baseline. The exact optimum is not known from the sources checked for this task.
 
-The public table gives the exact value 127 at order 40. Deleting any vertex from a 41-vertex graph gives a 40-vertex induced subgraph with at most 127 edges. Summing over all 41 deletions counts each original edge 39 times. Thus `39m <= 41*127`, so `m <= 133`. The proved interval is `132 <= ex(41,C4) <= 133`.
+Sources: [AlphaEvolve paper, arXiv:2511.02864](https://arxiv.org/abs/2511.02864), Appendix “Subsets of the grid with no isosceles triangles”; [Google DeepMind problem 59](https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/59.html); [PatternBoost, arXiv:2411.00566](https://arxiv.org/abs/2411.00566). The public repository also has an October 2026 discussion that reports newer 58-point constructions for the 32 by 32 grid; it does not displace the 164-point 100-grid witness.
 
-Status: accepted by Sol on 2026-11-06.
+## 中文
+
+配置 `T024-C01` 使用 `0 <= x,y < 100` 的 10,000 个整数格点。目标是最大化 `point_count`。任意三个不同格点的三条边长平方必须两两不同。此规则也排除共线等腰三点。验证器使用整数精确计算。
+
+可复现的人类方法基线有 16 个点，全部位于同一行。横坐标为 `1 + sum(e_i 3^i)`，其中四个数字 `e_i` 各为 0 或 1。这是经典的三进制无三项等差构造。共线三点构成等腰图形时必形成三项等差数列，所以该构造有效。此基线较弱，不代表最好的人类成绩。
+
+公开参考构造有 164 个点。Georgiev、Gomez-Serrano、Tao 和 Wagner 在 AlphaEvolve 论文中报告了这个 100 阶方格构造。保存的坐标由 `reference.py` 重放，并由本任务独立检查。论文指出该构造可能不是最优。PatternBoost 报告的 160 点构造使用了 AI 辅助，记录时与人类方法基线分开。根据本任务检查的来源，精确最优值仍未知。
+
+来源见英文部分。公开仓库在 2026 年 10 月另有讨论，报告了 32 阶方格的 58 点构造；这不改变 100 阶方格的 164 点记录。

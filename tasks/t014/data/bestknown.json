@@ -1,53 +1,83 @@
 {
   "task_id": "T014",
-  "review_status": "passed_sol",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T014-C01": {
-      "public_value": "1.5097201507458786",
-      "public_source": {
-        "url": "https://arxiv.org/abs/0907.1379",
-        "authors": "Mate Matolcsi and Carlos Vinuesa",
-        "year": 2009,
-        "claim": "Best nonnegative step function then known, at n=208; coefficients published in the appendix.",
-        "url_pdf": "https://math.bme.hu/~matolcsi/sch0914.pdf",
-        "same_configuration": true
+      "program": "reference.py",
+      "reproduced_value": 768,
+      "public_value": 768,
+      "highest_reported": {
+        "value": 768,
+        "source": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "Dimension 10, DET, MINIMAL_NORM, KISSING_NUMBER, and GRAM entries",
+        "reproduction_status": "The integer Gram matrix was transcribed from the author's catalogue page and independently checked with exact rational arithmetic. Its determinant is 768, it has no nonzero integer vector of squared norm below 4, and exact ellipsoid enumeration finds 336 vectors of squared norm 4. This is a feasible published lattice, not a proof that determinant 768 is the minimum.",
+        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
+        "metric": "determinant of a 10-dimensional Gram matrix with minimum squared norm at least 4",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html"
       },
-      "reproduced_value": "6280435861361744576/4160000022692211721",
-      "program": "sota.py",
-      "witness": "data/human_matolcsi_vinuesa.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "The printed public value is rounded to 16 decimal places; compare its decimal rounding with the exact rational checker value.",
-      "limitations": [
-        "This is the best located published witness for exactly 208 nonnegative coefficients, not a proof of optimality or an exhaustive survey.",
-        "AlphaEvolve reports 1.5053 and later 1.5032 for the continuous AC1 problem using a 600-part step function; those values are not a 208-coefficient witness for this configuration: https://arxiv.org/abs/2511.02864.",
-        "SimpleTES reports 1.503871 for continuous AC1; its representation and reported task score are not established as this fixed 208-step objective: https://arxiv.org/abs/2604.19341.",
-        "Later continuous-problem reports, including 1.5029, are outside the verified 208-step configuration. No corresponding 208-coefficient witness was located.",
-        "DREAM-RSI coverage records do not list AC1 as a DREAM-RSI task; its coverage comes from SimpleTES and AlphaEvolve."
+      "parameters": {
+        "dimension": 10,
+        "gram_entries": "exact rational numbers",
+        "gram_matrix": "symmetric positive definite 10x10 matrix",
+        "minimum_squared_norm": "at least 4 on nonzero integer vectors",
+        "objective": "determinant of the Gram matrix",
+        "direction": "minimize"
+      },
+      "witness": "data/human/lambda10_gram.json",
+      "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+      "source_snapshot": {
+        "file": "data/source/lambda10.html",
+        "sha256": "10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a",
+        "page_last_modified": "2014-07-18",
+        "downloaded_at": "2026-11-06"
+      },
+      "verified_short_vectors": {
+        "count": 336,
+        "witness": "data/human/lambda10_minimal_vectors.json",
+        "witness_sha256": "5499f6ee57683d10f366ce1f50a787b44e4baec94ff7169a4852ef5017144ea9",
+        "reproduction_status": "Enumerated independently with exact LDL ellipsoid bounds. Every vector has squared norm 4."
+      },
+      "optimality_status": {
+        "state": "open in sources checked on 2026-11-06; det 768 is a feasible upper bound",
+        "status_sources": [
+          "https://arxiv.org/html/2508.20719v2",
+          "https://epubs.siam.org/doi/10.1137/22M1532779"
+        ],
+        "status_note": "The 2026 Voronoi enumeration proves the dimension-9 case. The SIAM paper reports exact Hermite constants only through dimensions 1–8 and 24. Searches checked no proof closing dimension 10; the dimension-10 catalog entry gives a lattice construction, not an optimality theorem.",
+        "feasible_upper_bound": 768
+      },
+      "checked_sources": [
+        "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "https://arxiv.org/html/2508.20719v2",
+        "https://epubs.siam.org/doi/10.1137/22M1532779",
+        "https://annals.math.princeton.edu/wp-content/uploads/annals-v170-n3-p01-p.pdf"
       ],
-      "checked_at": "2026-11-05",
+      "review_status": "accepted_by_sol",
       "verification": {
-        "task_id": "T014",
-        "status": "reproduced",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T014",
           "config_id": "T014-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": "6280435861361744576/4160000022692211721",
+          "objective": 768,
           "verification_status": "exact",
-          "generation_time": 0.31502126157283783,
-          "verification_time": 0.265011440962553,
-          "objective_value": "6280435861361744576/4160000022692211721",
+          "generation_time": 0.6496677994728088,
+          "verification_time": 2.0500949695706367,
+          "objective_value": 768,
           "details": {
-            "steps": 208,
-            "coefficient_count": 208,
-            "max_convolution": "7548600794905943/5000000000000000",
-            "max_indices": [
-              321
-            ],
-            "normalization": "normalized to integral 1 before scoring"
+            "dimension": 10,
+            "minimum_squared_norm_at_least": 4,
+            "nonzero_vectors_below_threshold": 0,
+            "ellipsoid_nodes_visited": 371,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.5838731750845909,
+          "eval_time": 2.7077180482447147,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -57,82 +87,81 @@
             "threads": 1
           },
           "environment": {
-            "python": "3.13.2",
+            "python": "3.13.12",
             "platform": "linux",
+            "memory_limit_enforced": true,
             "worker_cpu": 0
           }
         },
-        "witness": "tasks/t014/data/human_matolcsi_vinuesa.json",
         "independent_quantity": {
-          "exact_objective": "6280435861361744576/4160000022692211721",
-          "convolution_entries": 415
+          "determinant": "768",
+          "vectors_with_squared_norm_at_most4": 336,
+          "nodes": 1385,
+          "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "source_review": "Checked the Matolcsi-Vinuesa primary source and later AlphaEvolve reports. This is the strongest located public exactly-208 nonnegative-step witness; later cited stronger values use other discretizations. Exact convolution independently recomputed. Scope remains limited to checked sources.",
-        "snapshot_date": "2026-11-05"
+        "claimed_score_ignored": true
+      },
+      "best_human": {
+        "value": 768,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "LAMBDA10 catalog entry: dimension 10, determinant 768, minimum norm 4, kissing number 336, and exact integer Gram matrix",
+        "provenance": "Classical laminated lattice construction reproduced from the public catalogue page.",
+        "ai_provenance": "Historical mathematical construction; no AI attribution is reported or inferred.",
+        "actual_value": 768,
+        "evidence_state": "Exact arithmetic verifies positive definiteness, determinant 768, and no nonzero integer vector below squared norm 4. Exact enumeration finds 336 shortest vectors."
+      },
+      "best_public": {
+        "value": 768,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "Dimension 10 LAMBDA10 entry; determinant 768 and minimum norm 4",
+        "provenance": "The catalogue publishes the integer Gram matrix. Its exact determinant and minimum-norm constraint were independently recomputed.",
+        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
+        "evidence_state": "Public feasible witness, reproduced exactly. Optimality is open in sources checked on 2026-11-06."
+      },
+      "best_reproduced": {
+        "value": 768,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "provenance": "Transcribed from the author-hosted catalogue HTML, whose raw bytes are frozen under data/source; exact Gram checks were recomputed locally.",
+        "ai_provenance": "Not disclosed by the catalogue; no AI use is inferred.",
+        "actual_value": 768,
+        "evidence_state": "Exact rational LDL decomposition and complete ellipsoid enumeration certify feasibility and determinant.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 768,
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "provenance": "Rebuilt from the frozen official catalogue page."
       }
     }
   },
-  "sol_review": {
-    "T014-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
+  "additional_evidence": {
+    "configurations": {
+      "T014-C01": {
+        "highest_reported": {
+          "source_location": "LAMBDA10 entry; exact published Gram matrix gives determinant 768",
+          "reproduction_status": "Published feasible construction reproduced and exactly checked. No exact dimension-10 optimum proof was found in the sources checked."
+        },
+        "optimality_status": {
+          "state": "open; dimension 10 has no exact Hermite-constant result in sources checked on 2026-11-06"
+        }
+      }
     }
-  },
-  "snapshot_date": "2026-11-03",
-  "best_human": {
-    "value": 1.5097201507458786,
-    "exact_value": "6280435861361744576/4160000022692211721",
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "authors": [
-      "Mate Matolcsi",
-      "Carlos Vinuesa"
-    ],
-    "year": 2009,
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published coefficients transcribed and exact score recomputed",
-    "optimality": "historical construction; no proof of global optimality is claimed",
-    "witness": "data/human_matolcsi_vinuesa.json"
-  },
-  "best_public": {
-    "value": 1.5097201507458786,
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "url": "https://arxiv.org/abs/0907.1379",
-    "evidence_state": "published human witness locally reproduced",
-    "optimality": "not asserted",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 1.5097201507458786,
-    "exact_value": "6280435861361744576/4160000022692211721",
-    "parameters": {
-      "steps": 208,
-      "support": [
-        "-1/4",
-        "1/4"
-      ],
-      "nonnegative": true
-    },
-    "provenance": "human published witness",
-    "evidence_state": "exact rational recomputation"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  }
 }

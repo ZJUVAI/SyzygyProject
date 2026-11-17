@@ -1,123 +1,153 @@
-"""Task-local tests for periodic length-64 binary autocorrelation energy."""
+"""Exact mathematical, source, entry-point, and worker tests for T090."""
 
-import copy
+import ast
+import gzip
+import hashlib
+import importlib
 import json
-import os
 from pathlib import Path
-import random
-import sys
-import time
 
 import pytest
 
-from tasks.t090 import baseline, check, evolution, human, init_program, reference
-from tasks.t090.heuristics import correlations, energy, flip_deltas
+from tasks.t090.check import N, PARAMETERS, validate
+from tasks.t090.reference import DATA
+
+HERE = Path(__file__).resolve().parent
+CONFIG = {"parameters": PARAMETERS}
 
 
-TASK = Path(__file__).resolve().parent
-CONFIG = json.loads((TASK / "task.json").read_text(encoding="utf-8"))["configurations"][0]
+def _reference_solution():
+    with gzip.open(DATA, "rt", encoding="utf-8") as stream:
+        return {"factors": json.load(stream)["factors"]}
 
 
-def test_all_program_entries_and_published_hex_reconstruction(monkeypatch):
-    monkeypatch.setenv("T090_SEARCH_TRIALS", "1")
-    monkeypatch.setenv("T090_ANNEAL_STEPS", "500")
-    outputs = [
-        init_program.run_code(),
-        baseline.run_code(),
-        human.run_code(),
-        reference.run_code(),
-        evolution.run_code(),
-    ]
-    values = [check.validate(item, CONFIG)["objective"] for item in outputs]
-    assert values[0] == 258048
-    assert values[2] == values[3] == 240
-    assert check.validate(outputs[2], CONFIG)["details"]["peak_sidelobe_level"] == 4
-    assert baseline.run_code()["search_metadata"]["reference_data_read"] is False
-    assert evolution.run_code()["search_metadata"]["reference_data_read"] is False
+def _independent_spf(limit):
+    spf = list(range(limit + 1))
+    if limit >= 1:
+        spf[1] = 1
+    for p in range(2, int(limit ** 0.5) + 1):
+        if spf[p] == p:
+            for multiple in range(p * p, limit + 1, p):
+                if spf[multiple] == multiple:
+                    spf[multiple] = p
+    return spf
 
 
-def test_delta_update_matches_full_exact_recomputation():
-    rng = random.Random(218)
-    sequence = [rng.choice((-1, 1)) for _ in range(64)]
-    corr = correlations(sequence)
-    current_energy = energy(corr)
-    for index in (0, 1, 31, 32, 63):
-        deltas, delta_energy = flip_deltas(sequence, corr, index)
-        changed = list(sequence)
-        changed[index] *= -1
-        changed_corr = correlations(changed)
-        assert [corr[k] + deltas[k] for k in range(1, 64)] == changed_corr[1:]
-        assert current_energy + delta_energy == energy(changed_corr)
+def _legendre(n, prime):
+    total = 0
+    power = prime
+    while power <= n:
+        total += n // power
+        if power > n // prime:
+            break
+        power *= prime
+    return total
 
 
-def test_claim_fields_do_not_change_full_validation():
-    witness = human.run_code()
-    expected = check.validate(witness, CONFIG)
-    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "0")):
-        forged = copy.deepcopy(witness)
-        forged[key] = value
-        assert check.validate(forged, CONFIG) == expected
-    assert expected["details"]["claimed_objective_ignored"] is True
+def _independently_check_prime_exponents(factors):
+    spf = _independent_spf(max(factors))
+    counts = {}
+    for value in factors:
+        remaining = value
+        while remaining > 1:
+            prime = spf[remaining]
+            exponent = 0
+            while remaining % prime == 0:
+                remaining //= prime
+                exponent += 1
+            counts[prime] = counts.get(prime, 0) + exponent
+    expected_primes = [p for p in range(2, N + 1) if spf[p] == p]
+    assert set(counts) == set(expected_primes)
+    assert all(counts[p] == _legendre(N, p) for p in expected_primes)
 
 
-@pytest.mark.parametrize(
-    "sequence",
-    [
-        [1] * 63,
-        [0] + [1] * 63,
-        [True] + [1] * 63,
-        [1.0] + [1] * 63,
-        [float("nan")] + [1] * 63,
-        [float("inf")] + [1] * 63,
-    ],
-)
-def test_invalid_sequences_are_rejected(sequence):
+def test_human_witness_exact_product_and_independent_legendre_check():
+    solution = _reference_solution()
+    checked = validate(solution, CONFIG)
+    assert checked["objective"] == 33330
+    assert checked["verification_status"] == "exact"
+    _independently_check_prime_exponents(solution["factors"])
+
+
+def test_human_program_reconstructs_saved_reference():
+    from tasks.t090.human import run_code
+
+    generated = run_code()
+    with gzip.open(DATA, "rt", encoding="utf-8") as stream:
+        saved = json.load(stream)
+    assert generated["factors"] == saved["factors"]
+    assert generated["method_metadata"]["factors_before_restoring_residual"] == 100008
+
+
+def test_source_hashes_and_public_bound_endpoint_meaning():
+    expected_hashes = {
+        "data/source/sutherland_greedy.py": "6bc0a0ac756f406d595eced22ce6d7a004256d24f8fbd913b867570c00d9e344",
+        "data/source/t_large_n_bounds.txt": "9cd480d1f294a6e9d40612bd4644726e22e3ef26eef1dedcd607c260dff4178c",
+    }
+    for relative, expected in expected_hashes.items():
+        assert hashlib.sha256((HERE / relative).read_bytes()).hexdigest() == expected
+    lines = (HERE / "data/source/t_large_n_bounds.txt").read_text().splitlines()
+    samples = ast.literal_eval(lines[0].split(":", 1)[1].strip())
+    bounds = ast.literal_eval(lines[1].split(":", 1)[1].strip())
+    assert len(samples) == len(bounds)
+    assert samples[-1] == 100000
+    assert bounds[-1] == (33641, 33649)
+
+
+@pytest.mark.parametrize("bad", [
+    None,
+    {},
+    {"factors": None},
+    {"factors": []},
+    {"factors": [1] * (N - 1)},
+    {"factors": [True] + [1] * (N - 1)},
+    {"factors": [float("nan")] + [1] * (N - 1)},
+    {"factors": [float("inf")] + [1] * (N - 1)},
+    {"factors": [1.0] + [1] * (N - 1)},
+    {"factors": [0] + [1] * (N - 1)},
+    {"factors": [-1] + [1] * (N - 1)},
+])
+def test_malformed_or_invalid_factorizations_are_rejected(bad):
     with pytest.raises(ValueError):
-        check.validate({"sequence": sequence}, CONFIG)
+        validate(bad, CONFIG)
 
 
-def test_fixed_config_is_required():
+def test_initial_construction_and_claim_invariance():
+    initial = importlib.import_module("tasks.t090.init_program").run_code()
+    assert validate(initial, CONFIG)["objective"] == 1
+    solution = _reference_solution()
+    base = validate(solution, CONFIG)
+    for name, value in [("objective", -1), ("score", float("nan")),
+                        ("claimed_score", {"value": float("inf")})]:
+        forged = dict(solution)
+        forged[name] = value
+        assert validate(forged, CONFIG) == base
     with pytest.raises(ValueError):
-        check.validate(init_program.run_code(), {**CONFIG, "id": "T090-C02"})
-    with pytest.raises(ValueError):
-        check.validate(
-            init_program.run_code(),
-            {**CONFIG, "parameters": {**CONFIG["parameters"], "length": 63}},
-        )
-    with pytest.raises(ValueError):
-        check.validate(
-            init_program.run_code(),
-            {
-                **CONFIG,
-                "parameters": {**CONFIG["parameters"], "alphabet": [-1, True]},
-            },
-        )
-    with pytest.raises(ValueError):
-        check.validate(
-            init_program.run_code(),
-            {**CONFIG, "parameters": {**CONFIG["parameters"], "integer_domain": False}},
-        )
+        validate(solution, {"parameters": {"n": 100001}})
 
 
-def test_seeded_baseline_is_repeatable(monkeypatch):
+@pytest.mark.parametrize("module,expected", [
+    ("tasks.t090.init_program", 1),
+    ("tasks.t090.baseline", None),
+    ("tasks.t090.human", 33330),
+    ("tasks.t090.reference", 33330),
+    ("tasks.t090.evolution", None),
+])
+def test_all_five_run_code_entries(module, expected, monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T090-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "5")
-    monkeypatch.setenv("T090_SEARCH_TRIALS", "1")
-    monkeypatch.setenv("T090_ANNEAL_STEPS", "500")
-    first = baseline.run_code()
-    second = baseline.run_code()
-    assert first == second
-    assert check.validate(first, CONFIG)["objective"] >= 1
-    assert evolution.run_code() == first
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
+    program = importlib.import_module(module)
+    result = program.run_code()
+    objective = validate(result, CONFIG)["objective"]
+    if expected is not None:
+        assert objective == expected
+    assert isinstance(objective, int)
 
 
-def test_runner_errors_and_timeouts_without_registry_changes():
-    from mathbench.evaluate import _run
-
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional failure')"], env, 5)
-    start = time.monotonic()
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.1)
-    assert time.monotonic() - start < 3
+def test_search_programs_have_no_comparison_asset_dependency():
+    for filename in ("baseline.py", "evolution.py"):
+        source = (HERE / filename).read_text()
+        assert "tasks.t090.human" not in source
+        assert "tasks.t090.reference" not in source
+        assert "data/reference" not in source

@@ -1,20 +1,21 @@
 {
   "task_id": "T081",
-  "name": "Minimum squared max-to-min pair-distance ratio for 12 planar points",
+  "name": "one-dimensional sign uncertainty for polynomial Gaussians",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T081-C01",
   "configurations": [
     {
       "id": "T081-C01",
       "parameters": {
-        "dimension": 2,
-        "point_count": 12,
-        "coordinates": "exact rational numbers",
-        "constraint": "all points are distinct",
-        "objective": "maximum squared pair distance divided by minimum squared pair distance"
+        "dimension": 1,
+        "polynomial_variable": "t=pi*x^2",
+        "candidate_family": "p(t)*exp(-pi*x^2), p in Q[t], finite degree without a configured cap",
+        "fourier_convention": "integral f(x)*exp(-2*pi*i*x*xi) dx",
+        "origin_signs": "p(0)<0 and q(0)<0",
+        "objective": "minimize A(f)*A(fhat); exact algebraic root isolation, rational interval returned"
       },
       "direction": "minimize",
-      "human_reference": 8.464101615137755
+      "human_reference": 0.4776769416361765
     }
   ],
   "acceptance_review": {
@@ -22,11 +23,13 @@
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "Twelve arbitrary distinct rational points in the plane minimize maximum squared pair distance divided by minimum squared pair distance. No collinearity or bounding-box constraint. Density and continuity preserve the real-coordinate infimum.",
-      "primary_source": "Friedman maxmin n12 page attributes Rechenberg2006 value5+2sqrt3 without optimality proof. Root read the source diagram and independently reconstructed Q(sqrt3) coordinates: all66 pairs have minimum squared distance1 and maximum5+2sqrt3, with21 minimum pairs. Exact rational approximation to sqrt3 yields the formally reproduced slightly weaker ratio; it is not identified with the exact irrational record.",
-      "independent_method": "For each of five saved witnesses, rebuild all66 distances via the rational Gram identity norm(i)+norm(j)-2dot(i,j), separate from formal coordinate differences, and divide exact maximum by positive minimum.",
-      "open_status": "AlphaEvolve2511.02864v1 section6.50 distinguishes proved n<=8 from numerical n9..30 candidates. Later improvements at16/21/22/29 do not settle12; no n12 optimality proof located in reviewed sources.",
-      "admission": "Initial grid13, independent traditional/evolution48625/5274, human/reference rational near8.4641016151. All five strict runs, damage, claim invariance, independent exact score, replay, cold export and all failure controls pass. Agent16tests passed; main shared run follows."
+      "definition": "One dimension, all finite rational polynomials p(t),t=pi*x^2, no degree cap. f=p(t)exp(-t), Fourier q independently recomputed. Require STRICT p0<0,q0<0 and eventual nonnegativity; minimize actual A(f)A(fhat), certified conservative rational upper endpoint retained.",
+      "human_source": "Goncalves/OliveiraeSilva/Steinerberger1602.03366 and2017JMAA doi10.1016/j.jmaa.2017.02.030 Hermite eigenfunction method, locally reconstructed p=t^2-3t/2-1/1000 with q=p. Positive tail root3/4+sqrt(1127/2000), score about.477676941636177. This weak fixed method reconstruction is distinguished from reported unpublished.3102 whose family membership is not established.",
+      "public_records": "Station degree226 pinned witnessAI report.3089, not fully reproduced under60sec budget. Root independently computes Gaussian moments q0=sum p_k(2k)!/(4^k*k!), checks p0=q0=-1/1000000. This confirms origin signs only, not high-degree tail or full score. TomarOct20 preprint.30272004-.30349081 concerns mixed Gaussians and nonstrict general domain; separately scoped otherfamily result, not a polynomial-family optimum proof.",
+      "independent_method": "Root derives Fourier transform through multiplication-by-pi*x^2 differential recurrence, unlike formal factorial formula. Separately selects largest positive ODD-multiplicity polynomial root; with positive leading coefficient this is last negative-to-positive crossing. Root isolation1e-55, Machin90/35terms and integer sqrt1e70 produce finer intervals inside formal bounds; even contacts excluded.",
+      "admission": "All5 strict entries, deliberately invalidpositiveconstant, whole-return claim invariance, independent Fourier/tailroot/score intervals, strict replay,cold export and all failure controls pass. Human/ref score~.477676941636177, initial~.52565 and searched~.36512 recorded exactly. No floating or sampled sign certificate.",
+      "parameter_type_fix": "Original task agent added exact parameter key and type checks, dimension=True rejected. Root reran every admission check under new label admission_20261106_parameter_types; no old source hash was reused."
     }
-  }
+  },
+  "category": "harmonic_analysis"
 }

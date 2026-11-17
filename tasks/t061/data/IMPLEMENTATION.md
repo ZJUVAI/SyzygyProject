@@ -1,31 +1,36 @@
-# T061 implementation record
+# T061 implementation and validation
 
-Status: accepted by Sol on 2026-11-06.
+Status: **accepted by Sol on 2026-11-06**.
 
-## Source check and construction
+## Mathematical model
 
-The fixed parameter is `sat(100,C6)`. Theorem 1.5 of Lan, Shi, Wang, and Zhang gives a lower bound of `4n/3-2` and the construction upper bound `4n/3+epsilon^2/2-5epsilon/6`, where `epsilon=n mod 3`. At `n=100`, these imply the integer interval 132–133. No exact n=100 closure was found in the sources checked on 2026-11-06.
+`T061-C01` uses 31 distinct integers. It checks the 5,456 multisets of three elements with repetition and minimizes the diameter. All checks and the objective use exact integer arithmetic. There is no integer magnitude cap. Canonical decimal strings support integers beyond Python's default JSON parser digit limit.
 
-The 133-edge construction uses `t=33`, `epsilon=1`: the nine-vertex core `H` from Figure 1(a), 30 attached 3-vertex paths, and one leaf adjacent to `y4`. The core edge list in `human.py` was decoded from the vector graph in the paper PDF and checked against the path descriptions in the proof. The downloaded source PDF SHA-256 is `ecd1d073b69ab5f120b32c408f6ed5b11874368d571698541c417d4f91ba470e`.
+The public comparison is the Table 3 `SG, q=31, m=31` witness in Martos Ojeda, Delgado Ordoñez, and Trujillo Solarte (2021), DOI `10.1109/ACCESS.2021.3106617`. Its listed diameter is 19,407. The list was transcribed from the ResearchGate web rendering because the automated IEEE publisher endpoint rejected retrieval; the transcription is not a byte-for-byte PDF copy. Its SHA-256 is `3c24b9ecb40dfa3a75729b6ae5be6a2450f02b36b33276083be570583c4bed39`.
 
-The frozen witness `data/reference/c6_sat_100_133.json` has SHA-256 `39d7689fd56d2f47b4faef733ce8c3a170433ed111fcf0c991feb9e564d28061`. Exact validation found no simple C6 and found simple 5-edge paths for all 4817 nonedges. A simple path has six distinct vertices; the checker rejects a C6 as soon as a five-edge simple path closes on an existing edge.
+The 2021 paper describes the table as near-optimal and states that exact optimal B3 sets were known through size 7. A literature search on 2026-11-06 for this exact cardinality and record found no later closure. The paper cites Atkinson, Santoro, and Urrutia (1986), DOI `10.1109/TCOM.1986.1096587`, for `G3(m+1) > 10m^3/57`. At `m=30`, this yields diameter at least 4,737. This bound does not establish optimality of the public witness.
 
-The public upper-bound construction and its local proof are from [The saturation number of C6](https://doi.org/10.1016/j.disc.2025.114504), Theorem 1.5 and Figure 1, also available as [arXiv:2108.03910v3](https://arxiv.org/html/2108.03910v3). A 2026 paper on graphs saturated for the family `{C4,C5,C6}` has a different forbidden family and does not settle ordinary C6 saturation. The literature check is not exhaustive.
+## Program separation
 
-## Reproduction and performance
+- The initial program uses the base-4 no-carry construction.
+- The traditional greedy program tests increasing candidates and stops after at most 100,000 candidate checks. It returns the valid base-4 seed if it reaches the cap.
+- The evolution program starts only from the greedy construction and makes 1,500 exact-checked mutations. It does not read human or reference data.
+- The human and reference programs load the public witness from `data/reference/`.
+- The checker ignores all submitted score fields and recomputes all sums and the diameter.
 
-Tests and JSON checks were run with `.venv` Python 3.13.12:
+## Reproduction record
+
+The frozen seed-0 evolution output is in `data/search/seed-0.json`. On Python 3.13.12/Linux, it used the deterministic greedy construction plus 1,500 mutations, accepted 28 valid proposals, and retained diameter 68,302. The record includes seed and shared runner limits. This local search result is weaker than the public comparison.
+
+Run the tests and JSON checks with:
 
 ```sh
 .venv/bin/python -m pytest tasks/t061/test_task.py -q
 .venv/bin/python -m json.tool tasks/t061/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t061/data/bestknown.json > /dev/null
+git diff --check
 ```
 
-The fixed-order initial program returned a valid 198-edge saturated graph in 4.82 seconds; its exact check took 1.72 seconds. The four-trial randomized greedy search completed in 8.94 seconds and returned a valid 221-edge graph. The 133-edge human witness check completed in 0.06 seconds. All are below the shared generation limit of 300 seconds and verification limit of 60 seconds.
+Validation run on Python 3.13.12/Linux: `.venv/bin/python -m pytest tasks/t061/test_task.py -q` passed all 20 tests in 17.17 seconds. The three JSON files parsed with `python -m json.tool`, and `git diff --check -- tasks/t061` passed. The tests verify the human and reference witnesses, the initial program, greedy and evolution entries, all 5,456 sums, duplicate and collision rejection, exact handling of 5,000-digit translated integers, canonical integer strings, score-claim invariance, and runner error and timeout handling through `mathbench.evaluate._run`.
 
-The tests cover all five program entries, the C6-free and saturation checks, a six-vertex simple C6, a non-saturated graph, malformed and duplicate undirected edges, loops, out-of-range and bool/float/NaN endpoints, a repeated-vertex walk that must not count as a simple path, score-field invariance, deterministic search, and runner error and timeout handling through `mathbench.evaluate._run` without task registration.
-
-## Limits
-
-The checker certifies feasibility and the edge count. It does not prove a 132-edge example impossible. The instance remains unresolved between 132 and 133 in the checked literature. The randomized greedy search is a weak baseline and does not read reference data. The shared runner uses 4 GiB memory and one thread by default.
+Known limitation: the local transcription is based on the author's rendered table, not the original PDF bytes. The public value is a feasible upper bound; its optimality is open in the checked sources.

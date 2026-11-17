@@ -3,89 +3,76 @@
   "review_status": "accepted_by_sol",
   "configurations": {
     "T039-C01": {
-      "objective": "minimize the largest positive difference within any row, subject to all within-row differences being globally distinct",
-      "unit": "integer marks",
-      "direction": "minimize",
-      "known_lower_bound": 108,
-      "known_upper_bound": 112,
-      "upper_bound_source": "https://doi.org/10.1002/jcd.22009",
-      "lower_bound_source": "https://doi.org/10.37236/1463",
-      "open_status": "The cited bounds leave five possible integer values, 108 through 112. No optimality claim is made.",
       "program": "reference.py",
-      "reproduced_value": 112,
-      "public_value": 112,
-      "highest_reported": {
-        "value": 112,
-        "source": {
-          "value": 112,
-          "parameters": {
-            "rows": 7,
-            "marks_per_row": 6,
-            "difference_triangle_parameters": "(n,k)=(7,5)"
-          },
-          "source_url": "https://doi.org/10.1002/jcd.22009",
-          "repository_url": "https://github.com/applecoffeecake/dts-search-hdl",
-          "repository_commit": "2ccff8e767c3fe6390fd3af056dfda11847011fc",
-          "repository_archive": "data/dts-search-hdl-2ccff8e.zip",
-          "archive_sha256": "e626454696109efbc72c4e693010ca0facdb9379ce5b29406d476403930c3f87",
-          "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
-          "witness_sha256": "9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f",
-          "origin_type": "published traditional FPGA search result",
-          "ai_provenance": "Not reported in the source.",
-          "evidence_state": "The 112 witness is reproduced. The paper calls it an upper bound, not a proven optimum."
-        },
-        "reproduction_status": "Exact published marks reproduced; original FPGA search not rerun."
-      },
+      "reproduced_value": 80,
+      "public_value": 80,
       "best_human": {
-        "value": 112,
-        "parameters": {
-          "rows": 7,
-          "marks_per_row": 6,
-          "difference_triangle_parameters": "(n,k)=(7,5)"
+        "value": 80,
+        "source": {
+          "title": "Short Communication: Larger Cliques for a DIMACS Test",
+          "authors": "A. Grosso, M. Locatelli, W. J. Pullan",
+          "year": 2005,
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "description": "Reports a 79-vertex clique and then an 80-vertex clique found by a longer run."
         },
-        "source": "Mohannad Shehadeh, William Kingsford, and Frank R. Kschischang, New Difference Triangle Sets by a Field-Programmable Gate Array-Based Search Technique, Journal of Combinatorial Designs 34 (2026), 37-50; first published online 2025-10-02.",
-        "source_url": "https://doi.org/10.1002/jcd.22009",
-        "source_version": "Version of record. Table 1 reports the new upper bound 112 for (n,k)=(7,5), improved from 113. Appendix A lists the construction.",
-        "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
-        "witness_sha256": "9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f",
-        "witness_program": "human.py",
+        "ai_provenance": "Not stated by the source.",
         "date_checked": "2026-11-06",
-        "origin_type": "published traditional FPGA search result",
-        "ai_provenance": "The paper does not report whether AI or LLM tools were used.",
-        "evidence_state": "Exact repository witness replayed and independently checked: 7 rows, 6 marks per row, and 105 distinct positive differences. This verifies feasibility and value 112, not optimality."
+        "parameters": {
+          "instance": "C2000.9",
+          "vertices": 2000,
+          "edges": 1799532
+        },
+        "evidence_state": "full 80-vertex witness copied from the paper and independently checked against all 3160 pairs"
       },
       "best_public": {
-        "value": 112,
-        "parameters": {
-          "rows": 7,
-          "marks_per_row": 6,
-          "difference_triangle_parameters": "(n,k)=(7,5)"
+        "value": 80,
+        "source": {
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "witness": "data/reference/human_2005_clique80.json"
         },
-        "source_url": "https://doi.org/10.1002/jcd.22009",
-        "repository_url": "https://github.com/applecoffeecake/dts-search-hdl",
-        "repository_commit": "2ccff8e767c3fe6390fd3af056dfda11847011fc",
-        "repository_archive": "data/dts-search-hdl-2ccff8e.zip",
-        "archive_sha256": "e626454696109efbc72c4e693010ca0facdb9379ce5b29406d476403930c3f87",
-        "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
-        "witness_sha256": "9ad412af0b33d51190956b866398bfdd42e6a6e0a894e59f531d28be949e4d1f",
-        "origin_type": "published traditional FPGA search result",
-        "ai_provenance": "Not reported in the source.",
-        "evidence_state": "The 112 witness is reproduced. The paper calls it an upper bound, not a proven optimum."
+        "reproduction_status": "all 3160 pairs checked against pinned input",
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "C2000.9",
+          "vertices": 2000,
+          "edges": 1799532
+        },
+        "evidence_state": "published feasible clique; not an optimality proof"
       },
       "best_reproduced": {
-        "value": 112,
-        "parameters": {
-          "rows": 7,
-          "marks_per_row": 6
-        },
+        "value": 80,
         "program": "reference.py",
-        "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
-        "verification_status": "exact",
+        "witness": "data/reference/human_2005_clique80.json",
+        "reproduction_status": "exact all-pairs adjacency check",
         "date_reproduced": "2026-11-06",
-        "ai_provenance": "The source's AI provenance is not reported; this is a replay of the published traditional FPGA-search result.",
+        "parameters": {
+          "instance": "C2000.9",
+          "vertices": 2000,
+          "edges": 1799532
+        },
+        "witness_sha256": "02eecb1280588703bd1a57b55e10c4ce46e0f5672e87c8962182dca7f472ce1c",
         "review_status": "reviewed_by_sol"
       },
-      "review_status": "accepted_by_sol",
+      "highest_reported": {
+        "value": 80,
+        "source": {
+          "title": "Short Communication: Larger Cliques for a DIMACS Test",
+          "url": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+          "snapshot_date": "2026-11-06"
+        },
+        "reproduction_status": "published 80-vertex witness downloaded and independently verified"
+      },
+      "reported_upper_bound": {
+        "value": 168,
+        "source": {
+          "title": "Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules",
+          "url": "https://arxiv.org/abs/2607.11726v1",
+          "code_commit": "79d3fe7dcfb09237042ad5059a4f1352838e3ba2"
+        },
+        "status": "reported by authors as a certified integer upper bound; not independently reproduced here",
+        "method": "core reduction with Lovasz theta SDP bound"
+      },
+      "optimality_status": "unknown",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -95,27 +82,20 @@
           "config_id": "T039-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 112,
+          "objective": 80,
           "verification_status": "exact",
-          "generation_time": 0.4033645689487457,
-          "verification_time": 0.5449595935642719,
-          "objective_value": 112,
+          "generation_time": 0.4916391298174858,
+          "verification_time": 5.300455953925848,
+          "objective_value": 80,
           "details": {
-            "rows": 7,
-            "marks_per_row": 6,
-            "within_row_differences_checked": 105,
-            "distinct_differences": 105,
-            "row_spans": [
-              112,
-              111,
-              110,
-              109,
-              107,
-              106,
-              100
-            ]
+            "instance": "C2000.9",
+            "vertex_count": 2000,
+            "edge_count": 1799532,
+            "clique_edges_checked": 3160,
+            "graph_source_sha256": "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16",
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.9534559585154057,
+          "eval_time": 5.800898235291243,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -132,50 +112,80 @@
           }
         },
         "independent_quantity": {
-          "scope": 112,
-          "distinct_positive_differences": 105,
-          "sum_positive_differences": 5758
+          "clique_cardinality": 80,
+          "required_edges_found": 3160
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "9f9b5b693b7b36aa1551ca355cdfc4753dfcf4d4e0f095fd7940794df6544467"
+        "claimed_score_ignored": true
       },
-      "ai_assisted_records": [],
-      "source_unattributed_records": [
-        {
-          "value": 112,
-          "parameters": {
-            "rows": 7,
-            "marks_per_row": 6
-          },
-          "witness": "data/shehadeh_kingsford_kschischang_7_5_112.txt",
-          "source_url": "https://doi.org/10.1002/jcd.22009",
-          "note": "The result is attributed to FPGA-based search. The article does not report AI or LLM involvement."
-        }
-      ],
-      "unmatched_parameter_records": [],
-      "lower_bound": {
-        "value": 108,
-        "source": "James B. Shearer, Improved LP Lower Bounds for Difference Triangle Sets, Electronic Journal of Combinatorics 6 (1999), R31.",
-        "source_url": "https://doi.org/10.37236/1463",
-        "calculation": "M(I,5) >= (91I+6)/6. At I=7 this is 643/6 = 107.166..., so the integer objective is at least 108."
+      "review_status": "accepted_by_sol",
+      "frozen_human_baseline": {
+        "value": 80,
+        "program": "human.py",
+        "source": "Grosso, Locatelli, and Pullan (2005), 80-vertex clique",
+        "evidence_state": "downloaded and exactly checked"
       },
-      "known_interval": {
-        "lower": 108,
-        "upper": 112,
-        "integer_values": [
-          108,
-          109,
-          110,
-          111,
-          112
-        ],
-        "gap_width": 4,
-        "status": "unresolved in the cited sources; 112 is not claimed optimal"
+      "public_bounds": {
+        "known_clique_lower_bound": 80,
+        "lower_bound_source": "https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf",
+        "reported_integer_upper_bound": 168,
+        "upper_bound_source": "https://arxiv.org/abs/2607.11726v1",
+        "upper_bound_method": "core reduction with Lovasz theta upper bound; tested directly at k=169",
+        "upper_bound_status": "reported as certified by the authors; not independently reproduced by this task",
+        "reported_runtime": "17 days 18 hours 8 minutes; 192 logical threads and 751 GiB RAM",
+        "exact_optimum_status": "unknown"
       },
-      "survey_scope_note": "Checked the 2026 primary article and its pinned public repository witness, plus Shearer's 1999 lower-bound paper, on 2026-11-06. This is not a proof that no later or unpublished result exists."
+      "upper_bound_source_pin": {
+        "paper_version": "arXiv 2607.11726v1, submitted 2026-07-13",
+        "code_repository": "https://github.com/Rudolfovoorg/Improving_Upper_Bounds_of_MCP_using_Reduction_Rules",
+        "repository_commit": "79d3fe7dcfb09237042ad5059a4f1352838e3ba2",
+        "commit_date": "2026-07-13",
+        "zenodo_record": "https://doi.org/10.5281/zenodo.21336337"
+      },
+      "source_data": {
+        "original_input": "C2000.9.clq",
+        "input_origin": "CMU COLOR04/DIMACS benchmark snapshot supplied for this task",
+        "uncompressed_sha256": "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16",
+        "uncompressed_bytes": 19602828,
+        "vertices": 2000,
+        "edges": 1799532,
+        "previous_compressed_file": "data/source/C2000.9.clq.gz",
+        "original_compressed_sha256": "936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639",
+        "packed_file": "data/source/C2000.9.bits",
+        "packed_sha256": "687ce2b39ee17bad81ae8ba2253b40441e270dc61c72e5e39fe58f9d404dca4d",
+        "packed_bytes": 249875,
+        "packed_encoding": "headerless upper-triangle bitset; pair (u,v), 0<=u<v<n, index v*(v-1)//2+u; least-significant bit first; canonical zero padding",
+        "source_url": "https://dimacs.rutgers.edu/Challenges/"
+      },
+      "own_search": {
+        "program": "evolution.py",
+        "witness": "data/search/seed_0.json",
+        "objective": 71,
+        "seed": 0,
+        "iterations": 256,
+        "candidates_checked": 256,
+        "best_improvements": 4,
+        "search_isolation": "starts from init_program.py; does not read data/reference or human.py"
+      },
+      "traditional_search_baseline": {
+        "program": "baseline.py",
+        "objective": 62,
+        "seed": 0,
+        "iterations": 16,
+        "candidates_checked": 16
+      }
     }
   },
-  "snapshot_date": "2026-11-06"
+  "additional_evidence": {
+    "configurations": {
+      "T039-C01": {
+        "best_human": {
+          "ai_provenance": "The source does not state whether AI tools were used. No AI-free claim is made."
+        },
+        "best_reproduced": {
+          "reproduction_status": "all selected pairs independently verified against the exact DIMACS input"
+        }
+      }
+    }
+  }
 }

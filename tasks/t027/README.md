@@ -1,47 +1,55 @@
-# T027：QAPLIB tai256c 二次指派问题
+# 正 120 边形的最小伸长三角剖分
 
 ## 定义
 
-给定 QAPLIB `tai256c` 的固定整数矩阵 `A`、`B`，以及设施到位置的双射 `p`，最小化
+输入是顶点按逆时针编号的正 120 边形。构造只能使用这些顶点。输出须包含全部 120 条边界边和 117 条对角线，且内部没有相交边。
 
-`sum(i=0..255, j=0..255) A[i,j] * B[p[i],p[j]]`。
+对每一对不同顶点，计算三角剖分图中的最短路长度，再除以这两点的欧氏弦长。目标是最小化所有顶点对中最大的比值。评分器以有理区间认证每条弦长和最短路；返回区间上端作为保守目标值。搜索可以使用浮点数作反馈，但浮点值不作为正式证书。
 
-分数是精确整数。合法解须是 `{0,...,255}` 的一个排列。检查器从任务目录中的固定矩阵读取数据；候选程序只提交排列。任何候选声明的分数都会被忽略。
+## 来源与状态
 
-## 配置与证据
+Fekete、Keldenich、Perk 的 2026 年论文给出了正 n 边形在 4≤n≤100 范围内的最优解。120 不在该范围内。2026-11-06 查阅的来源没有给出 120 边形的闭合最优性证明。
 
-配置为 `T027-C01`，实例为 QAPLIB `tai256c`，`n=256`。QAPLIB 归档解复算得分为 44,759,294。QAPLIB 将该纪录标为 ANT；QAPLIB 历史页把 1997 年改进解归于 T. Stützle。我们复播了保存的解，未重跑原 ANT 搜索。
+UBC 的 Theory Problem Solving Group 页面给出 n 能被 6 整除时的 6-fan 构造：先画内接等边三角形，再将其余顶点连向最近的三角形顶点；等距顶点连向两端。该页证明其伸长率随 n 增大趋近 1.45595。这里按该公式构造正 120 边形见证，并用本地认证评分器重算，得到区间
 
-arXiv v2 于 2024-09-30 更新。论文报告下界 44,200,000、上界 44,759,294 和 1.25% 差距。v2 摘要仍写旧的 1.48% 差距；正文第 3 页及表 4 给出改进值。已查 QAPLIB 页面给出的旧下界不一致：Lehigh 表列 43,849,646，QAPLIB 镜像列 44,095,032。论文把 44,095,032 作为旧界，并报告改进到 44,200,000。2026-11-06 的检索未找到之后的主来源结果或最优性证明；检索范围并非穷尽。任务仍为“已通过 Sol 验收（2026-11-06）”。
+`[2890016242467687188760789/1993834667466255952395547, 481669373744614531460135/332305777911042658732591]`，
+
+上端约为 1.4494763731539935。记录中的兼容对照值向上舍入为 1.449476373154。
+
+Sattari 与 Izadi 证明任意正多边形的顶点有一组三角剖分，其伸长率小于 1.4482。这是公开理论上界；本任务没有重建其正 120 边形具体见证。该界不是本任务的冻结人类参考分数。
 
 ## 运行
 
-- `init_program.py`：自包含恒等排列简单起点。
-- `baseline.py`：固定种子驱动的随机首次改进交换局部搜索；不读取归档解。
-- `evolution.py`：演化运行入口，调用本任务局部搜索。
-- `human.py`、`reference.py`：读取公开归档解，仅用于外部对照。
-- `check.py`：检查双射，并用 Python 整数精确计算全部 65,536 项。
+使用 `MATHBENCH_CONFIG_ID=T027-C01`。简单起点是从顶点 0 发出的扇形三角剖分。传统搜索随机生成递归分割三角剖分，并按浮点评分保留较优结果；默认 6 次，种子来自 `MATHBENCH_SEED`。人类和固定参考入口均返回 6-fan 见证。
 
-## Definition
+```sh
+.venv/bin/python -m pytest tasks/t027/test_task.py -q
+```
 
-Given the fixed integer matrices `A` and `B` from QAPLIB `tai256c`, minimize over bijections `p` mapping facilities to locations
+本配置已通过 Sol 验收（2026-11-06）。
 
-`sum(i=0..255, j=0..255) A[i,j] * B[p[i],p[j]]`.
+## English
 
-Here `p` maps facilities to locations. The objective is an exact integer. The candidate returns only the permutation. The checker loads its own pinned matrices and ignores a claimed score.
+### Definition
 
-## Configuration and evidence
+The input is a regular convex 120-gon. Its vertices have counterclockwise labels 0 to 119. A valid output contains all 120 boundary edges and 117 diagonals. No two edges may cross in their interiors.
 
-The fixed configuration is `T027-C01`, QAPLIB `tai256c`, `n=256`. Exact replay of the archived QAPLIB permutation gives 44,759,294. QAPLIB labels the record ANT; its history credits T. Stützle with an improved solution in 1997. This task replays the saved witness. It does not reproduce the original ANT search.
+For each pair of distinct vertices, divide the shortest path length in the triangulation by the Euclidean chord length. The objective is to minimize the maximum ratio. The checker uses rational intervals for chord lengths and shortest paths. It returns a conservative upper bound. Floating-point scores may guide search, but they are not certificates.
 
-The arXiv v2 page lists the last revision as 2024-09-30. Its PDF reports a lower bound of 44,200,000, an upper bound of 44,759,294, and a 1.25% gap. The v2 abstract still gives the earlier 1.48% gap, while the body reports the improved bound. The checked QAPLIB pages disagree on the older lower bound: Lehigh lists 43,849,646 and the QAPLIB mirror lists 44,095,032. The paper treats 44,095,032 as the prior bound and reports 44,200,000. Searches on 2026-11-06 found no later primary result or proof of optimality; the search was not exhaustive. The task status is `accepted_by_sol`.
+### Sources and status
 
-## Files
+Fekete, Keldenich, and Perk (2026) report optimal regular n-gon triangulations for 4≤n≤100. This range does not include 120. Sources checked on 2026-11-06 did not show a proof that closes the 120-gon case.
 
-- `init_program.py`: self-contained identity-permutation seed.
-- `baseline.py`: fixed-seed randomized first-improvement pair-swap local search. It does not read the archived witness.
-- `evolution.py`: evolution entry point that calls this task's local search.
-- `human.py` and `reference.py`: replay the public archived witness for external comparison only.
-- `check.py`: validates the bijection and computes all 65,536 terms with Python integers.
+The UBC Theory Problem Solving Group describes the 6-fan for n divisible by six: inscribe an equilateral triangle, then connect each other vertex to its closest triangle vertex. Connect both vertices in a tie. The page gives an asymptotic dilation near 1.45595. We rebuilt this construction for n=120 and certified its score. Its interval is
 
-The search defaults to 10,000 pair checks with a fixed `MATHBENCH_SEED`. It uses a wall-clock cutoff only when `MATHBENCH_SEARCH_SECONDS` is set. Run metadata records the seed, pair checks, accepted improvements, and budget mode.
+`[2890016242467687188760789/1993834667466255952395547, 481669373744614531460135/332305777911042658732591]`.
+
+The upper endpoint is about 1.4494763731539935. The compatibility reference is rounded up to 1.449476373154.
+
+Sattari and Izadi prove an upper bound below 1.4482 for every regular polygon. We did not rebuild their specific 120-gon witness. This theorem bound is not the frozen human reference score.
+
+### Run
+
+Set `MATHBENCH_CONFIG_ID=T027-C01`. The simple seed is a fan from vertex 0. The conventional search samples recursive split triangulations and keeps the best floating-point feedback score. It uses six trials by default and reads the seed from `MATHBENCH_SEED`. The human and fixed-reference entries return the 6-fan witness.
+
+Status: accepted by Sol on 2026-11-06.

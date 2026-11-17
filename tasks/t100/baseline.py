@@ -1,62 +1,82 @@
-"""Fixed-seed greedy edge-swap search over all 50-vertex graphs."""
+"""Seeded randomized maximum-overlap search over all 7! permutations."""
 
+from itertools import permutations
 import os
 import random
-import time
 
-from tasks.t100._graph import ALL_EDGES, M, N, triangle_count
+from mathbench.search import search_steps
 
 
-def _edge_set(rng):
-    return set(rng.sample(ALL_EDGES, M))
+ITERATION_LIMIT = 8
+
+
+def _best_successors(current, remaining):
+    """Return unused next permutations with the greatest available overlap."""
+    alphabet = "1234567"
+    for overlap in range(6, -1, -1):
+        prefix = current[-overlap:] if overlap else ""
+        missing = tuple(symbol for symbol in alphabet if symbol not in prefix)
+        choices = [
+            prefix + "".join(tail)
+            for tail in permutations(missing)
+            if prefix + "".join(tail) in remaining
+        ]
+        if choices:
+            return overlap, choices
+    return -1, []
+
+
+def _greedy_word(all_permutations, rng):
+    remaining = set(all_permutations)
+    current = rng.choice(all_permutations)
+    remaining.remove(current)
+    word = current
+    while remaining:
+        chosen_overlap, choices = _best_successors(current, remaining)
+        if not choices:
+            raise RuntimeError("no unused permutation successor")
+        current = rng.choice(choices)
+        remaining.remove(current)
+        word += current[chosen_overlap:]
+    return word
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T100-C01") != "T100-C01":
-        raise ValueError("unsupported T100 configuration")
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T100-C01")
+    if config_id != "T100-C01":
+        raise ValueError("unsupported configuration id")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = int(os.environ.get("T100_SEARCH_STEPS", "5000"))
-    if not 0 <= iterations <= 100000:
-        raise ValueError("T100_SEARCH_STEPS must be between 0 and 100000")
     rng = random.Random(seed)
-    deadline = None
-    if os.environ.get("MATHBENCH_SEARCH_SECONDS") is not None:
-        seconds = float(os.environ["MATHBENCH_SEARCH_SECONDS"])
-        if not 0 < seconds <= 300:
-            raise ValueError("MATHBENCH_SEARCH_SECONDS must be in (0, 300]")
-        deadline = time.monotonic() + seconds
-
-    current = _edge_set(rng)
-    score = triangle_count(current)
-    best = set(current)
-    best_score = score
-    completed = 0
-    all_edge_set = set(ALL_EDGES)
-    for step in range(iterations):
-        if deadline is not None and time.monotonic() >= deadline:
+    all_permutations = ["".join(p) for p in permutations("1234567")]
+    best_word = None
+    best_length = None
+    iterations = 0
+    steps = iter(search_steps(ITERATION_LIMIT))
+    for _ in range(ITERATION_LIMIT):
+        if next(steps, None) is None:
             break
-        removed = rng.choice(tuple(current))
-        absent = all_edge_set.difference(current)
-        added = rng.choice(tuple(absent))
-        candidate = set(current)
-        candidate.remove(removed)
-        candidate.add(added)
-        candidate_score = triangle_count(candidate)
-        completed += 1
-        if candidate_score < score or (step + 1) % 250 == 0:
-            current, score = candidate, candidate_score
-        if candidate_score < best_score:
-            best, best_score = candidate, candidate_score
-
+        candidate = _greedy_word(all_permutations, rng)
+        iterations += 1
+        if best_length is None or len(candidate) < best_length:
+            best_word, best_length = candidate, len(candidate)
+    if best_word is None:
+        # A zero-second exploration budget still returns a valid construction.
+        best_word = "".join(all_permutations)
+        best_length = len(best_word)
     return {
-        "vertices": N,
-        "edges": [list(edge) for edge in sorted(best)],
-        "search": {
-            "algorithm": "fixed-seed greedy edge swaps with a 250-step kick",
+        "word": best_word,
+        "claimed_objective": best_length,
+        "search_metadata": {
+            "algorithm": "seeded randomized maximum-overlap greedy path through all permutations",
+            "configuration_id": config_id,
             "seed": seed,
-            "iterations_requested": iterations,
-            "iterations_completed": completed,
-            "best_triangle_count": best_score,
-            "comparison_data_read": False,
+            "iterations": iterations,
+            "iteration_limit": ITERATION_LIMIT,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            "reference_data_read": False,
+            "budget": {
+                "iteration_limit": ITERATION_LIMIT,
+                "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
+            },
         },
     }

@@ -1,19 +1,17 @@
-"""Rebuild the traditional highest-weight real spherical harmonic Re((x+i y)^20)."""
+"""Reconstruct the degree-100 row from Mossinghoff's published database."""
+import json
 import os
-import math
+from pathlib import Path
 
-DEGREE = 20
-EXPONENTS = [(a, b, DEGREE - a - b) for a in range(DEGREE, -1, -1) for b in range(DEGREE - a, -1, -1)]
+DATA = Path(__file__).resolve().parent / "data" / "reference" / "mossinghoff_degree_100_certificate.json"
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T092-C01") != "T092-C01":
         raise ValueError("unsupported configuration")
-    coefficients = []
-    for a, b, c in EXPONENTS:
-        value = 0
-        if c == 0 and b % 2 == 0:
-            j = b // 2
-            value = (-1) ** j * math.comb(20, b)
-        coefficients.append(value)
-    return {"coefficients": coefficients}
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    return json.loads(DATA.read_text(encoding="utf-8"))
+
+
+if __name__ == "__main__":
+    print(json.dumps(run_code()))

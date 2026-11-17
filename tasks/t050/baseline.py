@@ -1,65 +1,83 @@
-"""Seeded randomized greedy endpoint extension with bounded restarts."""
+"""Fixed-seed greedy set-cover baseline for the 10-dimensional cube."""
 
+import math
 import os
 import random
 import time
 
-from tasks.t050.init_program import configured_dimension
+from tasks.t050.check import CONFIG_ID, LENGTH, UNIVERSE_MASK, UNIVERSE_SIZE
 
 
-def _extend(rng, start, order=None, dimension=9):
-    vertices = [start]
-    occupied = {start}
-    while True:
-        coordinates = list(range(dimension)) if order is None else order[:]
-        rng.shuffle(coordinates)
-        legal = []
-        for coordinate in coordinates:
-            candidate = vertices[-1] ^ (1 << coordinate)
-            if candidate in occupied:
+TRIAL_LIMIT = 8
+_BALLS = tuple(
+    (1 << center) | sum(1 << (center ^ (1 << bit)) for bit in range(LENGTH))
+    for center in range(UNIVERSE_SIZE)
+)
+
+
+def _greedy(order):
+    uncovered = UNIVERSE_MASK
+    selected = []
+    remaining = set(range(UNIVERSE_SIZE))
+    while uncovered:
+        best = None
+        best_gain = -1
+        for center in order:
+            if center not in remaining:
                 continue
-            if any((candidate ^ old).bit_count() == 1 for old in vertices[:-1]):
-                continue
-            legal.append(candidate)
-        if not legal:
-            break
-        candidate = rng.choice(legal)
-        vertices.append(candidate)
-        occupied.add(candidate)
-    return vertices
+            gain = (_BALLS[center] & uncovered).bit_count()
+            if gain > best_gain:
+                best, best_gain = center, gain
+        if best is None or best_gain <= 0:
+            raise RuntimeError("greedy set cover failed to cover the cube")
+        selected.append(best)
+        remaining.remove(best)
+        uncovered &= ~_BALLS[best]
+
+    # Remove redundant sets in reverse selection order.
+    for center in tuple(reversed(selected)):
+        others = [item for item in selected if item != center]
+        union = 0
+        for item in others:
+            union |= _BALLS[item]
+        if union == UNIVERSE_MASK:
+            selected.remove(center)
+    return sorted(selected)
 
 
 def run_code():
-    dimension = configured_dimension()
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    restarts = max(1, min(10000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "48"))))
-    from mathbench.search import search_steps
+    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds_text is not None:
+        seconds = float(seconds_text)
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + seconds
 
     rng = random.Random(seed)
-    best = [0]
-    start_time = time.monotonic()
-    run_count = 0
-    for attempt in search_steps(restarts):
-        run_count += 1
-        candidate = _extend(rng, rng.randrange(1 << dimension), dimension=dimension)
-        if len(candidate) > len(best):
+    order = list(range(UNIVERSE_SIZE))
+    best = _greedy(order)
+    completed = 0
+    for _ in range(TRIAL_LIMIT):
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        rng.shuffle(order)
+        candidate = _greedy(order)
+        completed += 1
+        if len(candidate) < len(best):
             best = candidate
-    if len(best) == 1:
-        best = _extend(random.Random(seed), 0, dimension=dimension)
     return {
-        "vertices": best,
+        "codewords": best,
         "search_metadata": {
-            "algorithm": "seeded randomized greedy extension with independent restarts",
+            "algorithm": "greedy maximum-new-coverage set cover followed by redundant-center deletion",
             "seed": seed,
-            "iterations_requested": restarts,
-            "iterations_run": run_count,
-            "objective_recomputed": len(best) - 1,
-            "generation_seconds": time.monotonic() - start_time,
-            "budget": {"mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set", "runner_generation_seconds": 300},
+            "trial_limit": TRIAL_LIMIT,
+            "trials_completed": completed,
+            "reference_data_read": False,
+            "search_seconds_cutoff": seconds_text,
         },
     }
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))

@@ -1,97 +1,106 @@
+"""Tests for the T062 task-local programs and exact checker."""
+
+import copy
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
+import subprocess
 import sys
+import time
 
 import pytest
 
-from mathbench.evaluate import _run
-from tasks.t062.baseline import run_code as baseline_run
-from tasks.t062.check import CONFIG_ID, N, PARAMETERS, validate
-from tasks.t062.evolution import run_code as evolution_run
-from tasks.t062.human import build_human_set, run_code as human_run
-from tasks.t062.init_program import run_code as init_run
-from tasks.t062.reference import run_code as reference_run
+from tasks.t062 import baseline, check, evolution, human, init_program, reference
 
 
-TASK = Path(__file__).parent
-CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
+ROOT = Path(__file__).resolve().parents[2]
+TASK = Path(__file__).resolve().parent
+CONFIG = json.loads((TASK / "task.json").read_text())["configurations"][0]
 
 
-def _validate(solution):
-    return validate(solution, CONFIG)
+def test_all_entries_return_valid_results_and_reference_assets_are_frozen():
+    outputs = [
+        init_program.run_code(),
+        baseline.run_code(),
+        human.run_code(),
+        reference.run_code(),
+    ]
+    values = [check.validate(item, CONFIG)["objective"] for item in outputs]
+    assert values[0] == 1 << 14
+    assert values[1] >= 1
+    assert values[2] == 8807
+    assert values[3] == 8635
+    assert baseline.run_code()["search_metadata"]["reference_data_read"] is False
+    assert hashlib.sha256((TASK / "data/reference/sharp_8635_transcribed.json").read_bytes()).hexdigest() == (
+        "e5b1c66298ad4643ecc22e6d589c764a4aba20c0b18ce0656def98a18d7b0fa0"
+    )
 
 
-def test_all_five_entries_and_exact_reference_value(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("T062_SEARCH_TRIALS", "0")
-    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
-    for solution in outputs:
-        result = _validate(solution)
-        assert result["verification_status"] == "exact"
-        assert result["objective"] == len(solution["elements"])
-    assert _validate(human_run())["objective"] == 2460
-    assert _validate(reference_run())["objective"] == 2460
-
-
-def test_human_formula_and_frozen_file_match():
-    saved_path = TASK / "data/reference/lewko205_n42025.json"
-    saved_bytes = saved_path.read_bytes()
-    metadata = json.loads((TASK / "data/bestknown.json").read_text())
-    record = metadata["configurations"][CONFIG_ID]
-    assert hashlib.sha256(saved_bytes).hexdigest() == record["witness_sha256"]
-    saved = json.loads(saved_bytes)
-    assert saved == build_human_set()
-    result = _validate(saved)
-    assert result["objective"] == 2460
-    assert min(saved["elements"]) == 8
-    assert max(saved["elements"]) == 42020
-    assert result["details"]["positive_square_translations_checked"] > 0
-
-
-@pytest.mark.parametrize(
-    "solution",
-    [
-        {"elements": [1, 1]},
-        {"elements": [1, 2]},  # difference 1
-        {"elements": [1, 5]},  # difference 4
-        {"elements": [0]},
-        {"elements": [N + 1]},
-        {"elements": [True]},
-        {"elements": [1.0]},
-        {"elements": [float("nan")]},
-        {"elements": None},
-        {},
-    ],
-)
-def test_invalid_or_forbidden_input_rejected(solution):
-    with pytest.raises(ValueError):
-        _validate(solution)
-
-
-def test_claimed_scores_do_not_change_validation():
-    solution = build_human_set()
-    expected = _validate(solution)
-    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "fake")):
-        assert validate({**solution, key: value}, CONFIG) == expected
+def test_ignored_claims_cannot_change_any_validation_field():
+    valid = human.run_code()
+    expected = check.validate(valid, CONFIG)
+    for key in ("objective", "score", "claimed_score"):
+        forged = copy.deepcopy(valid)
+        forged[key] = "999999999999999999999999"
+        assert check.validate(forged, CONFIG) == expected
     assert expected["details"]["claimed_objective_ignored"] is True
 
 
-def test_search_is_seeded_and_does_not_read_reference(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("MATHBENCH_SEED", "18")
-    monkeypatch.setenv("T062_SEARCH_TRIALS", "1")
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    first, second = baseline_run(), baseline_run()
+@pytest.mark.parametrize(
+    "elements",
+    [
+        [1] * 15,
+        [0] + list(range(2, 16)),
+        [-1] + list(range(2, 16)),
+        [True] + list(range(2, 16)),
+        [1.0] + list(range(2, 16)),
+        [float("nan")] + list(range(2, 16)),
+        list(range(1, 15)),
+        [1, 2, 3] + [1 << bit for bit in range(3, 15)],
+    ],
+)
+def test_invalid_constructions_are_rejected(elements):
+    with pytest.raises(ValueError):
+        check.validate({"elements": elements}, CONFIG)
+
+
+def test_exact_large_decimal_inputs_have_no_artificial_integer_cap():
+    base = 10**5000
+    result = check.validate(
+        {"elements": [str(base * (1 << bit)) for bit in range(15)]}, CONFIG
+    )
+    assert result["objective"] == base * (1 << 14)
+    assert result["verification_status"] == "exact"
+
+
+def test_config_is_fixed_and_seeded_search_is_repeatable(monkeypatch):
+    with pytest.raises(ValueError):
+        check.validate(init_program.run_code(), {**CONFIG, "id": "T062-C99"})
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T062-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "17")
+    monkeypatch.setattr(baseline, "CAP_START", 8_000)
+    monkeypatch.setattr(baseline, "CAP_STOP", 8_000)
+    first = baseline.run_code()
+    second = baseline.run_code()
     assert first == second
-    assert first["search"]["reference_data_read"] is False
-    _validate(first)
+    assert first["search_metadata"]["cap_trials_completed"] == 1
 
 
-def test_runner_error_and_timeout_without_registry():
+def test_evolution_entry_invokes_its_search(monkeypatch):
+    expected = {"elements": [1, 2, 4], "search_metadata": {"seed": 9}}
+    monkeypatch.setattr(evolution, "_run_search", lambda: expected)
+    assert evolution.run_code() is expected
+
+
+def test_runner_reports_program_errors_and_timeouts_without_registry_changes():
+    from mathbench.evaluate import _run
+
     env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T062 failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T062 failure')"], env, 3)
+    with pytest.raises(RuntimeError, match="intentional failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional failure')"], env, 5)
+    start = time.monotonic()
     with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)
+        _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.1)
+    assert time.monotonic() - start < 3

@@ -1,18 +1,12 @@
-"""Reconstruct the finite m=6,L=5 projection construction from the paper."""
-
+"""Reproduced admissible 208-step nonnegative human construction."""
+import json
 import os
-
-from tasks.t077.construction import projected_simplex
+from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T077-C01") != "T077-C01":
-        raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    values, _weights = projected_simplex(6, 5)
-    return {"set": values}
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T077-C01")
+    if config_id != "T077-C01":
+        raise ValueError("unsupported configuration: " + config_id)
+    data = json.loads((Path(__file__).parent / "data" / "human_matolcsi_vinuesa.json").read_text())
+    return {"coefficients": data["polynomial_coefficients"]}

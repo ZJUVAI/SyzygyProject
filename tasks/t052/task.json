@@ -2,7 +2,7 @@
   "task_id": "T052",
   "name": "Largest permutation code of length 12 and distance 9",
   "acceptance_status": "accepted_by_sol",
-  "category": "combinatorial_search",
+  "category": "coding_theory",
   "definition": "Find a largest set of permutations of {0,...,11} such that every pair differs in at least 9 positions.",
   "solution_format": "An object with codewords, a list of permutations. Each permutation is a list of 12 integers from 0 through 11.",
   "objective": {

@@ -1,0 +1,506 @@
+{
+  "source_revision": "c9f93552f9ad54f779b1f9cca2e13f39e5ab8d30",
+  "date": "2026-11-17",
+  "tasks": [
+    {
+      "previous_task_id": "T001",
+      "task_id": "T001",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T003",
+      "task_id": "T002",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T002",
+      "task_id": "T003",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T041",
+      "task_id": "T004",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T083",
+      "task_id": "T005",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T093",
+      "task_id": "T006",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T085",
+      "task_id": "T007",
+      "category": "geometric_packing_covering"
+    },
+    {
+      "previous_task_id": "T070",
+      "task_id": "T008",
+      "category": "geometric_tilings"
+    },
+    {
+      "previous_task_id": "T098",
+      "task_id": "T009",
+      "category": "geometric_tilings"
+    },
+    {
+      "previous_task_id": "T099",
+      "task_id": "T010",
+      "category": "geometric_tilings"
+    },
+    {
+      "previous_task_id": "T004",
+      "task_id": "T011",
+      "category": "spherical_lattice_geometry"
+    },
+    {
+      "previous_task_id": "T021",
+      "task_id": "T012",
+      "category": "spherical_lattice_geometry"
+    },
+    {
+      "previous_task_id": "T037",
+      "task_id": "T013",
+      "category": "spherical_lattice_geometry"
+    },
+    {
+      "previous_task_id": "T078",
+      "task_id": "T014",
+      "category": "spherical_lattice_geometry"
+    },
+    {
+      "previous_task_id": "T040",
+      "task_id": "T015",
+      "category": "spherical_lattice_geometry"
+    },
+    {
+      "previous_task_id": "T073",
+      "task_id": "T016",
+      "category": "spherical_lattice_geometry"
+    },
+    {
+      "previous_task_id": "T005",
+      "task_id": "T017",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T074",
+      "task_id": "T018",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T035",
+      "task_id": "T019",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T049",
+      "task_id": "T020",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T065",
+      "task_id": "T021",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T066",
+      "task_id": "T022",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T081",
+      "task_id": "T023",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T101",
+      "task_id": "T024",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T036",
+      "task_id": "T025",
+      "category": "discrete_geometry"
+    },
+    {
+      "previous_task_id": "T064",
+      "task_id": "T026",
+      "category": "computational_geometry"
+    },
+    {
+      "previous_task_id": "T094",
+      "task_id": "T027",
+      "category": "computational_geometry"
+    },
+    {
+      "previous_task_id": "T095",
+      "task_id": "T028",
+      "category": "computational_geometry"
+    },
+    {
+      "previous_task_id": "T097",
+      "task_id": "T029",
+      "category": "computational_geometry"
+    },
+    {
+      "previous_task_id": "T006",
+      "task_id": "T030",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T044",
+      "task_id": "T031",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T022",
+      "task_id": "T032",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T024",
+      "task_id": "T033",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T032",
+      "task_id": "T034",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T061",
+      "task_id": "T035",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T100",
+      "task_id": "T036",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T075",
+      "task_id": "T037",
+      "category": "extremal_graph_theory"
+    },
+    {
+      "previous_task_id": "T030",
+      "task_id": "T038",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T059",
+      "task_id": "T039",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T011",
+      "task_id": "T040",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T050",
+      "task_id": "T041",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T033",
+      "task_id": "T042",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T045",
+      "task_id": "T043",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T088",
+      "task_id": "T044",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T082",
+      "task_id": "T045",
+      "category": "graph_optimization"
+    },
+    {
+      "previous_task_id": "T009",
+      "task_id": "T046",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T010",
+      "task_id": "T047",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T067",
+      "task_id": "T048",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T071",
+      "task_id": "T049",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T068",
+      "task_id": "T050",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T043",
+      "task_id": "T051",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T052",
+      "task_id": "T052",
+      "category": "coding_theory"
+    },
+    {
+      "previous_task_id": "T008",
+      "task_id": "T053",
+      "category": "combinatorial_designs"
+    },
+    {
+      "previous_task_id": "T023",
+      "task_id": "T054",
+      "category": "combinatorial_designs"
+    },
+    {
+      "previous_task_id": "T091",
+      "task_id": "T055",
+      "category": "combinatorial_designs"
+    },
+    {
+      "previous_task_id": "T038",
+      "task_id": "T056",
+      "category": "combinatorial_designs"
+    },
+    {
+      "previous_task_id": "T058",
+      "task_id": "T057",
+      "category": "combinatorial_designs"
+    },
+    {
+      "previous_task_id": "T007",
+      "task_id": "T058",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T039",
+      "task_id": "T059",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T047",
+      "task_id": "T060",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T084",
+      "task_id": "T061",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T076",
+      "task_id": "T062",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T042",
+      "task_id": "T063",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T062",
+      "task_id": "T064",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T025",
+      "task_id": "T065",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T079",
+      "task_id": "T066",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T026",
+      "task_id": "T067",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T034",
+      "task_id": "T068",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T012",
+      "task_id": "T069",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T077",
+      "task_id": "T070",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T080",
+      "task_id": "T071",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T072",
+      "task_id": "T072",
+      "category": "additive_combinatorics"
+    },
+    {
+      "previous_task_id": "T013",
+      "task_id": "T073",
+      "category": "binary_sequences"
+    },
+    {
+      "previous_task_id": "T054",
+      "task_id": "T074",
+      "category": "binary_sequences"
+    },
+    {
+      "previous_task_id": "T090",
+      "task_id": "T075",
+      "category": "binary_sequences"
+    },
+    {
+      "previous_task_id": "T014",
+      "task_id": "T076",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T016",
+      "task_id": "T077",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T015",
+      "task_id": "T078",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T087",
+      "task_id": "T079",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T017",
+      "task_id": "T080",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T089",
+      "task_id": "T081",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T092",
+      "task_id": "T082",
+      "category": "harmonic_analysis"
+    },
+    {
+      "previous_task_id": "T051",
+      "task_id": "T083",
+      "category": "discrepancy_theory"
+    },
+    {
+      "previous_task_id": "T102",
+      "task_id": "T084",
+      "category": "discrepancy_theory"
+    },
+    {
+      "previous_task_id": "T018",
+      "task_id": "T085",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T029",
+      "task_id": "T086",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T019",
+      "task_id": "T087",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T020",
+      "task_id": "T088",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T060",
+      "task_id": "T089",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T053",
+      "task_id": "T090",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T046",
+      "task_id": "T091",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T063",
+      "task_id": "T092",
+      "category": "algebra_number_theory"
+    },
+    {
+      "previous_task_id": "T027",
+      "task_id": "T093",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T028",
+      "task_id": "T094",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T056",
+      "task_id": "T095",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T069",
+      "task_id": "T096",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T057",
+      "task_id": "T097",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T055",
+      "task_id": "T098",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T048",
+      "task_id": "T099",
+      "category": "combinatorial_optimization"
+    },
+    {
+      "previous_task_id": "T031",
+      "task_id": "T100",
+      "category": "combinatorial_optimization"
+    }
+  ]
+}

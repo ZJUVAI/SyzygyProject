@@ -1,42 +1,35 @@
 {
   "task_id": "T016",
-  "name": "Signed step-function autoconvolution extremum, 208 steps",
+  "name": "Minimum equal-weight spherical 5-design on S^3",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T016-C01",
   "configurations": [
     {
       "id": "T016-C01",
       "parameters": {
-        "steps": 208,
-        "support": [
-          "-1/4",
-          "1/4"
-        ],
-        "signed_values_allowed": true,
-        "integral": 1
+        "sphere": "S^3 subset R^4 unit sphere",
+        "design_strength": 5,
+        "weights": "equal positive weights",
+        "objective": "number of distinct points",
+        "coordinate_domain": "real algebraic coordinates in one common real algebraic number field"
       },
       "direction": "minimize",
-      "human_reference": 1.5097201507458786
+      "human_reference": 24
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-04",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "evidence": "PLAN.md",
-    "checks": [
-      "mathematical definition and direction",
-      "replayed human witness",
-      "valid cold seed",
-      "classical search",
-      "independent raw score",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "exact or full-domain certificate",
-      "same-parameter record provenance"
-    ],
-    "limitations": [
-      "非负208步人类构造转用于有符号类别。150步正峰值不能作为绝对峰值成绩。"
-    ]
-  }
+    "source_review": {
+      "definition": "Equal-weight spherical strength-5 designs of distinct unit points in R4; minimize point count. Full 126 monomial equations, not a sampled numerical design.",
+      "primary_sources": "Bondarenko/Radchenko/Viazovska Annals2013 p444 gives 22 <= N(3,5) <= 24 and D4 design. Lindblad 2025 Designs Related Through Projective and Hopf Maps section3 still calls the 24-point design putatively optimal. 2026 S2 strength4 closure and odd-sphere construction results do not prove the S3 strength5 minimum.",
+      "human_reconstruction": "Eight signed unit axes plus sixteen half-integer sign vectors form a rational rotation of the D4 roots. Root independently computed all 126 exact moments and norms. This is a reproduced classical construction, not an optimality certificate.",
+      "independent_method": "Separate symbolic real-root expression arithmetic and Dirichlet rising-factorial moment formula, with all 126 moments for each of the five programs; formal checker instead uses explicit rational polynomial quotient arithmetic.",
+      "coordinate_model": "Any finite real solution of the rational sphere/moment equations and distinctness inequalities has a real-algebraic solution by real-closed-field transfer. A common primitive real number field therefore preserves finite minimum; no arbitrary field-degree or coefficient caps.",
+      "cold_start_and_search": "Standalone 96-point signed-permutation seed of (1,1,2,0)/sqrt6. Traditional integer-pattern scan and evolution produce 24 without reading human/reference witnesses. Exact checker and independent audits passed.",
+      "admission": "All five programs, strict replay, whole-return declaration invariance, broken duplicate-point witnesses, cold export and failure controls passed."
+    }
+  },
+  "category": "spherical_lattice_geometry"
 }

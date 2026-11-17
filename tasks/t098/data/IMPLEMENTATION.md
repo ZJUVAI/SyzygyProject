@@ -1,41 +1,52 @@
-# T098 implementation record
+# T098 implementation evidence
 
-Status: `accepted_by_sol`.
+Status: accepted by Sol on 2026-11-06.
 
-## Configuration and objective
+## Definition and fixed instance
 
-`T098-C01` fixes order 38. The feasible objects are integer tilings of an integer square by 38 smaller integer squares. All small sides are distinct, their gcd is 1, and no proper rectangle is tiled by two or more squares. The raw objective is the outer side length, minimized.
+- `T098-C01` is partial MaxSAT: assign 1630 Boolean variables, satisfy all 6150 hard clauses, and maximize the weight of satisfied soft clauses. The 649 soft clauses all have unit weight, so the objective ranges from 0 to 649.
+- The selected normalized WCNF (stored losslessly as `.wcnf.gz`) has SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. `maxsat.py` decompresses the file and checks the original-byte hash before parsing. The parser verifies exactly 6150 `h` clauses and 649 weighted soft clauses, then checks every literal is in `[-1630,1630] \ {0}`.
+- The benchmark is `b4794d123e18a908924d3d33cdeeae3b`, family `inconsistency-measurement`, submitted in 2023, submitter unknown. The complete MSE 2026 benchmark collection is Zenodo record 21283148 (version 2026, published 2026-07-09). The official evaluation dataset is Zenodo record 21358014, v1, published 2026-07-14.
 
-## Source review
+## Public result and human baseline
 
-Checked on 2026-11-06:
+- The MSE 2026 metadata gives best-known unsatisfied soft cost 62 and optimum cost unknown. This maps to task score `649 - 62 = 587`; no optimality proof is given.
+- The official `ANYTIME-UW` 60-second BouMS log for this instance is indexed at `outputs/ANYTIME-UW/60/BouMS/b4794d123e18a908924d3d33cdeeae3b.wcnf.o`, offset `813824899`, CRC32 `10873941`. Its paired completion member has CRC32 `2569026316` and says `62 VERIFIED`. The archive index was available without downloading the full 1.8 GB `logs.zip`.
+- The extracted official assignment is saved as `data/reference/mse2026_boums_60_assignment.json`, SHA-256 `c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543`. Exact validation confirms 1630 values, all 6150 hard clauses satisfied, soft score 587, and unsatisfied soft weight 62.
+- The public MSE record does not state whether AI contributed to BouMS or this run. The AI provenance is unknown; the solver result is not labelled human-only.
+- The frozen human-method baseline is 360. `human.py` runs the traditional DPLL procedure on the hard clauses and then exact feasible single-variable soft hill climbing. The method follows Davis, Logemann, and Loveland (1962), *A Machine Program for Theorem-Proving*, DOI `10.1145/368273.368557`, using SymPy 1.14.0's DPLL2 implementation. The score 360 is recomputed from this instance and is not a public competition score. A separate research seed file was not used; `human.py` and `init_program.py` regenerate the hard-SAT assignment from the fixed formula.
+- The replayed DPLL baseline is saved at `data/reference/human_dpll_assignment.json`, SHA-256 `da78d29bc9625dd3f6fcae85ea8e990c66c02fb95243a9f4aa61d8e9f11e216f`. It satisfies all hard clauses and has soft unsatisfied cost 289.
 
-- Squaring.net, “Simple Perfect Squares”: <https://www.squaring.net/sq/ss/spss/spss.html>. Its order-38 entry gives the Williams 2013 construction of side 352. The catalogue says orders 38 and above are incomplete.
-- OEIS A129947: <https://oeis.org/A129947>. The comments identify the values for orders 38–59 as upper bounds, and the order-38 value is 352.
-- Squaring.net download page: <https://www.squaring.net/downloads/downloads.html>, which links to the Bouwkamp-code archive.
+## Programs and search result
 
-These checked sources show a feasible upper bound. They do not show an order-38 optimality proof or matching lower bound. This source review is not exhaustive.
+- `init_program.py` is standalone and reads only the public `.wcnf.gz` input. It runs DPLL on the hard clauses and returns a feasible assignment. It imports no task module.
+- `baseline.py` uses a fixed-seed random block-flip search. It keeps candidates only when every hard clause remains satisfied.
+- `evolution.py` uses a bounded population and block mutations. It checks hard feasibility exactly before accepting candidates.
+- `human.py` rebuilds the DPLL hard-SAT solution and applies feasible single-variable soft improvements.
+- `reference.py` replays the saved official BouMS assignment. No search entry reads the reference assignment.
+- A saved task-local search used Python 3.13.12, SymPy 1.14.0, Linux x86_64, seed 2026, and 32 generations. It ran 32 mutations, found no hard-feasible mutant, and kept the valid DPLL seed at score 360 / cost 289. Generation took 0.2039 seconds. The exact output, validation result, environment, and replay command are saved in `data/results.json`.
+- Replay command:
 
-## Reproduced human construction
+  ```sh
+  MATHBENCH_CONFIG_ID=T098-C01 MATHBENCH_SEED=2026 MATHBENCH_SEARCH_ITERATIONS=32 .venv/bin/python -m tasks.t098.evolution
+  ```
 
-`data/source/williams_38_352A.bkp` contains the public Bouwkamp row. Its SHA-256 is `ec1858af8249dc4aba58e116f87646f31e3c240f1efdbcf030c72b4b603fcd5b`. `builder.py` rebuilds coordinates with exact integer skyline placement. `human.py` and `reference.py` both reconstruct and validate side 352. The public code is reproduced; the coordinates are generated by this task's parser.
+- Default limits are generation 300 seconds, verification 60 seconds, memory 4 GiB, and one compute thread. Search uses fixed iterations unless `MATHBENCH_SEARCH_SECONDS` is set.
 
-The source catalogue also lists a weaker 1950 Brooks order-38 construction of side 4920. It is recorded as historical context only and is not reconstructed.
+## Validation performed
 
-## Independent cold seed
+From the repository root:
 
-The initial program embeds a separate side-4755 construction generated by a research-time run of Williams's general network method. The source archive is `https://squaring.net/downloads/jbwsrc.zip` (SHA-256 `80e780853283dbaea387e5eb44511903904a21e520baa1a70be89bedb55bd84b`). Metadata lists the actual g++ 9.4.0 environment and compile/replay commands. It used generated network prefixes of sizes 1,391,846 and 370,992, with a 60-second budget for each prefix, and then paired M/F networks. The prefix files were not retained, so the saved result is not guaranteed to reproduce from the commands. The saved witness is `data/search/seed_4755.json`; metadata is in `data/search/seed_4755.metadata.json`. Its SHA-256 is `1ffbceccc9b7f6f81a5d104bc2d34c213656f3c5f25b839f8ede155a14b66092`.
+```sh
+.venv/bin/python -m pytest tasks/t098/test_task.py -q
+.venv/bin/python -m json.tool tasks/t098/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t098/data/bestknown.json > /dev/null
+```
 
-The 38 squares have distinct positive integer sides, gcd 1, total area `4755²`, lie within the outer square, and have disjoint interiors. The exact checker also checked all boundary-aligned proper rectangles and found no tiled proper rectangle. This is a self-generated weak seed, not a published benchmark record. The initial program embeds these own coordinates and does not read comparison files.
+The task-local suite passed: `5 passed in 3.30s` on the final run. It checks the decompressed WCNF hash and clause counts, independently re-counts the 587 public score, checks the 360 DPLL baseline, rejects malformed assignments and an all-false hard-violating assignment, confirms claimed-score fields do not change the result, runs all five program entries, and tests worker errors and timeouts through `mathbench.evaluate._run`. All four task JSON files passed `python -m json.tool`.
 
-The search run that discovered this seed was time-bounded and machine-dependent. The initial entry returns the saved valid seed. The traditional baseline makes one-square size mutations that alter the target outer side while preserving the exact square-area identity, then tries seeded strip/group orderings with the skyline builder. Its 42 available one-side mutations in the ±1000 side neighborhood include both smaller and larger targets. In the default 40-iteration seed-0 run, it proposed 28 distinct target sides, had 0 skyline completions, and returned the valid 4755 fallback. The proposal space changes side sets and outer-side values; the completed candidates still require the full checker. It does not read the human or reference assets.
+## Review limits
 
-## Checker and tests
-
-The checker uses integer arithmetic only. It rejects wrong configuration data with strict type equality, non-integer values including booleans, nonpositive sides, wrong square count, out-of-bounds tiles, repeated sizes, non-primitive lists, area mismatch, overlaps, and tiled proper rectangles. A proper rectangle is tiled if its contained tiles have the same total area as the rectangle; pairwise interior disjointness has already been established.
-
-Tests cover all five program entries, source reconstruction, the own saved seed, the nonconstant baseline mutation/proposal space, score-claim invariance, malformed configurations, duplicate sizes, overlap, booleans, floats, NaN, missing tiles, non-primitive and wrong-area data, a direct proper-rectangle fixture, plus runner program-error and timeout behavior through `mathbench.evaluate._run`.
-
-Commands: `.venv/bin/python -m pytest tasks/t098/test_task.py -q`; `.venv/bin/python -m json.tool tasks/t098/task.json`; `.venv/bin/python -m json.tool tasks/t098/data/bestknown.json`; `.venv/bin/python -m json.tool tasks/t098/data/bestknown.json`.
-
-Default runner budgets are 300 seconds generation, 60 seconds verification, 4 GiB memory, and one numerical thread. A full Sol run and independent review remain pending.
+- The instance metadata says `optimal_cost=unknown`; score 587 is a verified lower bound, not an optimality proof.
+- The official competition release does not disclose the AI provenance of the BouMS solver or this run.
+- The DPLL baseline is deliberately weaker than the public competition assignment. It is a reproducible traditional method baseline, not a claim about best human performance.

@@ -1,58 +1,44 @@
-# T063 implementation and reproduction record
+# T063 implementation evidence
 
-## Configuration
+Status: accepted by Sol on 2026-11-06.
 
-`T063-C01` is the exact-degree-100 problem over primitive irreducible integer polynomials. The domain is not restricted to reciprocal, sparse, or monic polynomials. The objective is the Mahler measure, minimized. The non-cyclotomic condition is checked by proving the measure interval has lower endpoint greater than 1.
+## Definition and source status
 
-## Sources and comparison witness
+- T063-C01 fixes `[1,212]`, maximizes the number of selected integers, and forbids distinct `a < b < c` with `a + c = 2b`.
+- The reproduced human-method baseline has 32 elements and uses the ternary-digit formula for Odlyzko and Stanley's 1978 greedy sequence S(1). This is a feasible construction, not an optimum claim.
+- The public 43-element set is kept under `data/reference/`, separate from `data/results.json`. Its source says it was found for `[1,211]`; the saved set lies in `[1,211]` and is therefore also a valid witness at `[1,212]`. The raw source witness file hash is recorded and tested.
+- The paper v1 leaves the 44-set upper-bound question open. The current linked repository reports DRAT closure of its two historical T1c chunks and partial solver closure of T2. It also says the full T3 cube space remains uncertified. The verified range is still `43 <= r_3(212) <= 44`.
+- The current maintained paper discloses Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 use for writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration. It does not state whether AI proposed or searched for the 43-set. The witness-specific discovery path is recorded as undisclosed. It is not called a human construction.
 
-- Mossinghoff, [Mahler Measure Database](https://github.com/mossinghoff/Mahler-Measure-Database), pinned commit `7e3798516710370a758e16eb5de6bccbee98bb6a`, file `BestByDegree_200.txt`, degree-100 row. The source row reports `1.247365098370`, `v=8`, and 51 reciprocal coefficients. The repository does not describe the row's degree-specific search process.
-- Source-row and expanded-polynomial data: `data/source/mossinghoff_degree_100_row.json`.
-- Certificate-backed reference: `data/reference/mossinghoff_degree_100_certificate.json`, SHA-256 `fb01470875be798525b061a301e401dffa3bab18c50de35d6816defda976afb3`.
-- Chervonyi, Gukov, and Luong, [arXiv:2610.30277v1](https://arxiv.org/html/2610.30277v1), submitted 2026-10-21, §1 and §3.3/Table 4/§6. The paper describes an AI-assisted workflow at project level. It reports matching 85 of 91 literature values and strict improvements at degrees 178, 188, 190, 202, 242, and 250; it lists no degree-100 improvement. This is kept separate from the older Mossinghoff record. The paper reports optimality proofs only through degree 54.
+## Programs and data
 
-The published decimal is a rounded record, not an exact score. The independently certified upper endpoint for this witness is `1.2473650983705...`; the frozen comparison value is rounded upward to `1.247365098371`. The degree-100 minimum remains open.
+- `check.py` validates the fixed configuration, integer types, range, duplicates, and every selected pair that could define an AP midpoint. It recomputes `|A|` and ignores declared scores.
+- `init_program.py` is self-contained and returns `{1}`.
+- `baseline.py` runs seeded randomized greedy insertion with exact precomputed AP incidence. It uses 48 fixed restarts by default and reads no comparison witness. `MATHBENCH_SEARCH_SECONDS` enables a machine-dependent exploration cutoff.
+- `human.py` reconstructs the 32-element Odlyzko-Stanley digit construction.
+- `reference.py` reads the pinned public 43-element witness from `data/reference/`.
+- `evolution.py` exposes `run_code()` through the task's traditional search baseline. `evaluator.py` provides the shared evaluation adapter.
+- `data/results.json` stores the seed-0 baseline output, exact checker result, replay command, environment, budget, and output hash. The run returned 35 elements. No public or human comparison witness is stored there.
 
-## Certificate method
+## Verification commands and results
 
-The reference polynomial is reciprocal, so root enumeration used the reduction `P(z) / z^50 = Q(z + 1/z)` to solve a degree-50 polynomial and map its roots back to 100 proposed complex centers. SymPy produced 110-digit proposals; centers were rounded to rationals with denominator `10^24`; all disks use radius `10^-15`. These numerical operations only propose the disks.
-
-The checker then uses exact rational arithmetic to prove, for each center `c` and radius `r`,
-
-`r * lower(|P'(c)|) > upper(|P(c)|) + r^2/2 * sum(k(k-1)|a_k| R^(k-2))`,
-
-where `R` is a rational upper bound on `|c|+r`. Rouché's theorem gives exactly one root per disk. Exact pair checks prove the 100 disks are disjoint; together they cover all degree-100 roots. Rational modulus bounds then give a certified interval for the full Mahler measure. The observed relative interval width is about `9.96e-14`, below the required `1e-10`. The checker returns the rational upper endpoint. Root-disk precision has no fixed ceiling; normal runner data and memory limits apply.
-
-The checker also proves content 1 and exact irreducibility over `Q` with SymPy. The x^100-2 start is Eisenstein at 2, but the checker does not rely on that shortcut. No floating-point root computation contributes to the accepted objective.
-
-## Programs and controls
-
-- `init_program.py`: self-contained, valid `x^100-2` seed with proposed root disks. It does not import task code or comparison data.
-- `baseline.py`: fixed-count prime scan of `x^100-p`. Eisenstein proves irreducibility for prime `p`, and the family's Mahler measure is `p`. It does not read the comparison witness.
-- `evolution.py`: seeded mutation and elitist selection in the same prime-constant family. Defaults: 60 iterations per restart, 4 restarts; `MATHBENCH_EVOLUTION_ITERATIONS` and `MATHBENCH_RESTARTS` permit bounded changes. This is a transparent traditional-search baseline, not a competitive general search over all degree-100 polynomials.
-- `human.py`: reconstructs the published Mossinghoff row from the saved reference certificate.
-- `reference.py`: fixed replay of the same public polynomial.
-
-All entries read the fixed configuration and seed. Search defaults use fixed iteration counts. `MATHBENCH_SEARCH_SECONDS` enables the shared exploration cutoff. The standard evaluator limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one thread.
-
-## Reproduction environment and commands
-
-Environment: Python 3.13.12, Linux x86_64, repository `.venv`.
-
-Commands:
+Run from the repository root:
 
 ```sh
-.venv/bin/python -m pytest tasks/t063 -q
+.venv/bin/python -m pytest tasks/t063/test_task.py -q
 .venv/bin/python -m json.tool tasks/t063/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t063/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/source/mossinghoff_degree_100_row.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/reference/mossinghoff_degree_100_certificate.json > /dev/null
+.venv/bin/python -m json.tool tasks/t063/data/results.json > /dev/null
 ```
 
-The public witness was also checked through `mathbench.worker` in a separate process with the 4-GiB limit, one CPU, and a 60-second verification timeout. It completed in about 14.6 seconds and returned `certified`, 100 Rouché disks, 4,950 disjointness checks, and relative interval width `9.9564e-14`. The suite tests each program entry, valid and invalid coefficient/disk data, duplicate disks, degree boundaries, bool/float/NaN inputs, arbitrary-length rational strings, claimed-score invariance, worker errors, and worker timeouts.
+The task tests passed: 7 tests. They cover the public 43-set and source-file hash, an independent AP scan, the 32-element Odlyzko-Stanley formula and its archived hash, the simple seed, an empty set and endpoint case, forbidden progressions, duplicate input, bool/float/NaN/infinity, range errors, fixed parameters, forged scores, all five `run_code()` entries, seeded search metadata, and shared-runner candidate errors and timeout reporting.
 
-The baseline and evolution programs are reproducible with seed `0`; the test suite sets 2 iterations for the scan, 2 generations and 1 restart for evolution. Default budgets are recorded above. Direct shared-runner `evaluate()` admission is deferred until Sol registers this configuration; the separate trusted worker check and `_run` error/timeout controls were exercised locally.
+The saved seed-0 result was also replayed through `evaluate_candidate` with strict checking. It returned objective 35, exact status, 2.13 seconds generation, 0.80 seconds verification, Python 3.13.12 on Linux, and the default 300-second/60-second/4-GiB/one-thread policy. The task ID was added only to the local in-process registry tuple for this check; no shared registry file was changed.
 
-## Status and limitations
+The 43-set checker uses integer arithmetic only. For each selected pair `a < b`, it checks whether `2b-a` is selected. This covers every possible nontrivial three-term progression exactly. A separate test scans candidate triples by an independent loop order.
 
-Implementation is `accepted_by_sol`. The construction proves an upper bound only. No proof shows that a degree-100 primitive irreducible polynomial with smaller measure does not exist. The traditional baseline explores only the Eisenstein family `x^100-p`; it is not a global search baseline. The Mossinghoff source does not document its degree-100 search details, and the 2026 paper does not give a degree-specific provenance statement for this matching old record.
+## Limits and review points
+
+- This implementation independently verifies a lower-bound witness. It does not verify the large solver certificate collection or prove the upper bound at N=212.
+- The current maintained paper discloses broad AI collaboration, but not whether AI proposed or searched for the 43-set.
+- Sol must independently replay all five program entries, check at least one valid and one deliberately broken witness, recompute a key quantity, and confirm a forged score does not change the result before acceptance.

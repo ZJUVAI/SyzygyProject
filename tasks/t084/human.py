@@ -1,9 +1,4 @@
-"""Replay the published 31-element near-optimal B3 set from Table 3."""
-
-import json
-from pathlib import Path
-
-
+"""Skutella human construction, padded to the fixed m=15 configuration."""
 def run_code():
-    witness_path = Path(__file__).parent / "data" / "reference" / "public_m31_19407.json"
-    return {"elements": json.loads(witness_path.read_text(encoding="utf-8"))["elements"]}
+    base = [(3,3),(6,4),(4,4),(4,6),(3,3),(4,6),(1,3),(4,6)]
+    return {"pairs": [[str(u)+"/10", str(v)+"/10"] for u,v in base] + [[0,0] for _ in range(7)]}

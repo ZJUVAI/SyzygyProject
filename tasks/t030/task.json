@@ -1,32 +1,32 @@
 {
   "task_id": "T030",
-  "candidate_id": "graph-coloring",
-  "name": "DIMACS DSJC1000.5 vertex coloring",
+  "name": "cage order",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T030-C01",
   "configurations": [
     {
       "id": "T030-C01",
       "parameters": {
-        "instance": "DSJC1000.5",
-        "vertices": 1000,
-        "edges": 249826,
-        "input_sha256": "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779"
+        "degree": 4,
+        "girth": 10
       },
       "direction": "minimize",
-      "human_reference": 86
+      "human_reference": 320,
+      "acceptance_status": "accepted_by_sol"
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-17",
-    "decision": "二进制图输入已通过 Sol 验收",
+    "date": "2026-11-07",
+    "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "数学模型": "固定DSJC1000.5的1000顶点249826条边。最小化合法着色中不同颜色数。",
-      "人类来源": "Titiloye–Crispin2012论文和作者证书提供82色。冻结对照仍用Loudni的86色。原长时间退火搜索未重跑。",
-      "独立验算": "Sol 比较原始 DIMACS 文本、Rutgers 二进制图、旧 JSON 与新位图。解码后的 249826 条边全部相同。另按同色顶点分组直接读取位图，复核 86 色人类构造和 82 色参考构造。",
-      "复核控制": "简单起点为 1000 色，种子 0 的传统搜索为 113 色，保存构造严格重放为 89 色。单色构造被拒绝，声明分数不影响复算。导出仅包含公开位图、简单起点、指令与公开参数。",
-      "开放状态与限制": "Cazenave等2025表4题注说明色数未知。该表83只是其HEAD实验值，不能当公开最好。73下界只作文献报告，未本地重证。"
+      "definition": "Minimize the order of a connected simple 4-regular graph with girth at least 10.",
+      "primary_source": "Exoo et al. arXiv:2511.07247v2, including the reported (4,10) upper bound and the authors' graph data repository.",
+      "witness": "The 320-vertex human witness was converted from the authors' n320_k4_g10.g6 record and is independently checked by the task evaluator.",
+      "independent_method": "The evaluator recomputes graph order, regularity, connectedness, and girth. A feasible witness gives an upper bound; the cited source does not establish optimality.",
+      "baseline": "The deterministic LPS X^(5,37) construction with two generator matchings removed is a 50,616-vertex feasible starting graph and does not read the human witness.",
+      "admission": "T030-C01 was replayed and accepted by Sol. Its saved best construction remains an independently replayable task result."
     }
-  }
+  },
+  "category": "extremal_graph_theory"
 }

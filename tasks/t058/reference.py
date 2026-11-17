@@ -1,13 +1,13 @@
-"""Replay the published seven-round RTD(5,7) construction."""
-
+"""Independent reference witness loaded from task-local JSON data."""
 import json
 import os
 from pathlib import Path
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T058-C01")
-    if chosen != "T058-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    path = Path(__file__).with_name("data") / "reference" / "rtd_5_7.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T058-C01")
+    if config_id != "T058-C01":
+        raise ValueError(f"unknown T058 configuration: {config_id}")
+    filename = "public_29.json"
+    data = json.loads((Path(__file__).parent / "data" / filename).read_text())
+    return data

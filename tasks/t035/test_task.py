@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -5,114 +6,112 @@ import sys
 
 import pytest
 
-from tasks.t035.check import validate
-from tasks.t035.human import build_points
+from mathbench.evaluate import _run
+from tasks.t035.baseline import run_code as baseline_run
+from tasks.t035.check import CONFIG_ID, PARAMETERS, _path_endpoint_pairs, validate
+from tasks.t035.evolution import run_code as evolution_run
+from tasks.t035.human import build_human_graph, run_code as human_run
+from tasks.t035.init_program import run_code as init_run
+from tasks.t035.reference import run_code as reference_run
 
 
-CONFIG = {"parameters": {"forbidden_convex_polygon_vertices": 7}}
+TASK = Path(__file__).parent
+CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
 
 
-def test_reconstructed_human_witness_is_exact_and_score_is_recomputed():
-    candidate = build_points()
-    assert len(candidate["points"]) == 32
-    assert validate(candidate, CONFIG)["objective"] == 32
-    candidate["claimed_objective"] = -1000
-    assert validate(candidate, CONFIG)["objective"] == 32
+def _validate(graph):
+    return validate(graph, CONFIG)
 
 
-def test_saved_witness_replays():
-    candidate = json.loads((Path(__file__).parent / "data" / "human_witness.json").read_text())
-    assert validate(candidate, CONFIG)["objective"] == 32
+def test_all_five_program_entries(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("T035_SEARCH_TRIALS", "1")
+    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
+    for graph in outputs:
+        result = _validate(graph)
+        assert result["verification_status"] == "exact"
+        assert result["objective"] == len(graph["edges"])
+    assert _validate(human_run())["objective"] == 133
+    assert _validate(reference_run())["objective"] == 133
 
 
-def test_simple_initial_program_is_legal():
-    from tasks.t035.init_program import run_code
-
-    assert validate(run_code(), CONFIG)["objective"] == 6
-
-
-def test_convex_seven_points_are_rejected():
-    # Seven points on a parabola are in convex position and in general position.
-    with pytest.raises(ValueError, match="convex 7-gon"):
-        validate({"points": [[x, x * x] for x in range(7)]}, CONFIG)
-
-
-def test_duplicate_point_is_rejected():
-    with pytest.raises(ValueError, match="distinct"):
-        validate({"points": [[0, 0], [1, 1], [0, 0]]}, CONFIG)
+def test_human_reference_file_and_source_hash():
+    witness = TASK / "data/reference/c6_sat_100_133.json"
+    metadata = json.loads((TASK / "data/bestknown.json").read_text())
+    config_record = metadata["configurations"][CONFIG_ID]
+    assert hashlib.sha256(witness.read_bytes()).hexdigest() == config_record["witness_sha256"]
+    saved = json.loads(witness.read_text())
+    assert saved == build_human_graph()
+    verified = _validate(saved)
+    assert verified["objective"] == 133
+    assert verified["details"]["missing_pairs_checked"] == 4817
+    assert verified["details"]["simple_5_path_endpoint_pairs"] == 4817
 
 
-def test_collinear_triple_is_rejected():
-    with pytest.raises(ValueError, match="noncollinear"):
-        validate({"points": [[0, 0], [1, 1], [2, 2]]}, CONFIG)
+def test_repeated_vertex_walk_does_not_count_as_simple_five_path():
+    adjacency = [0] * 100
+    for left, right in ((0, 1), (1, 2), (2, 3)):
+        adjacency[left] |= 1 << right
+        adjacency[right] |= 1 << left
+    repeated_walk = [0, 1, 2, 1, 2, 3]
+    assert len(repeated_walk) == 6
+    assert len(set(repeated_walk)) < len(repeated_walk)
+    assert (0, 3) not in _path_endpoint_pairs(adjacency)
 
 
-@pytest.mark.parametrize("bad", [True, float("nan"), float("inf"), "1/0", None])
-def test_invalid_coordinate_values_are_rejected(bad):
+@pytest.mark.parametrize(
+    "graph",
+    [
+        {"vertices": 99, "edges": []},
+        {"vertices": True, "edges": []},
+        {"vertices": 100, "edges": [[0, 0]]},
+        {"vertices": 100, "edges": [[0, 100]]},
+        {"vertices": 100, "edges": [[False, 1]]},
+        {"vertices": 100, "edges": [[0.0, 1]]},
+        {"vertices": 100, "edges": [[0, float("nan")]]},
+        {"vertices": 100, "edges": [[0]]},
+        {"vertices": 100, "edges": [[0, 1], [1, 0]]},
+    ],
+)
+def test_invalid_graph_input_rejected(graph):
     with pytest.raises(ValueError):
-        validate({"points": [[bad, 0]]}, CONFIG)
+        _validate(graph)
 
 
-def test_finite_float_coordinate_is_rejected_without_approximation():
-    with pytest.raises(ValueError, match="integers or rational strings"):
-        validate({"points": [[0.5, 0]]}, CONFIG)
+def test_cycle_with_six_distinct_vertices_rejected():
+    cycle = [[i, (i + 1) % 6] for i in range(6)]
+    with pytest.raises(ValueError, match="simple cycle of length 6"):
+        _validate({"vertices": 100, "edges": cycle})
 
 
-def test_rational_coordinates_are_exact():
-    points = [["0/1", "0/1"], ["1/1", "1/1"], ["2/1", "4/1"]]
-    assert validate({"points": points}, CONFIG)["objective"] == 3
+def test_non_saturated_graph_rejected():
+    # The isolated graph has no simple 5-edge paths for its missing pairs.
+    with pytest.raises(ValueError, match="not C6-saturated"):
+        _validate({"vertices": 100, "edges": []})
 
 
-def test_empty_boundary_is_valid():
-    assert validate({"points": []}, CONFIG)["objective"] == 0
+def test_claimed_scores_do_not_change_validation():
+    graph = build_human_graph()
+    expected = _validate(graph)
+    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "0")):
+        assert validate({**graph, key: value}, CONFIG) == expected
+    assert expected["details"]["claimed_objective_ignored"] is True
 
 
-def test_malformed_solution_is_rejected():
-    with pytest.raises(ValueError):
-        validate({"points": [[0, 1, 2]]}, CONFIG)
+def test_search_is_seeded_and_does_not_read_reference(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    monkeypatch.setenv("MATHBENCH_SEED", "5")
+    monkeypatch.setenv("T035_SEARCH_TRIALS", "1")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    first, second = baseline_run(), baseline_run()
+    assert first == second
+    assert first["search"]["reference_data_read"] is False
+    _validate(first)
 
 
-def test_human_run_code_entry_round_trips_through_worker(tmp_path):
-    import os
-    import sys
-    from mathbench.evaluate import _run
-    from mathbench.registry import ROOT
-
-    config = tmp_path / "config.json"
-    output = tmp_path / "solution.json"
-    checked = tmp_path / "checked.json"
-    config.write_text(json.dumps({"id": "T035-C01", "parameters": CONFIG["parameters"]}))
-    env = dict(os.environ, PYTHONPATH=str(ROOT))
-    common = [str(config), str(output), "0", "1", str(4 * 1024**3), "60"]
-    _run([sys.executable, "-m", "mathbench.worker", "generate",
-          str(ROOT / "tasks/t035/human.py"), *common], env, 300)
-    env["MATHBENCH_SOLUTION_PATH"] = str(output)
-    _run([sys.executable, "-m", "mathbench.worker", "check",
-          str(ROOT / "tasks/t035/check.py"), str(config), str(checked),
-          "0", "1", str(4 * 1024**3), "60"], env, 60)
-    assert json.loads(checked.read_text())["objective"] == 32
-
-
-def test_program_error_and_timeout_are_visible_to_python_runtime(tmp_path):
-    from mathbench.evaluate import _run
-    from mathbench.registry import ROOT
-
-    config = tmp_path / "config.json"
-    config.write_text(json.dumps({"id": "T035-C01", "parameters": {"forbidden_convex_polygon_vertices": 7}}))
-    env = dict(os.environ, PYTHONPATH=str(ROOT))
-    worker = [sys.executable, "-m", "mathbench.worker", "generate"]
-    output = tmp_path / "output.json"
-    common = [str(config), str(output),
-              "0", "1", str(4 * 1024**3), "5"]
-    broken = tmp_path / "broken_candidate.py"
-    broken.write_text("def run_code():\n    raise RuntimeError('candidate failed')\n")
-    try:
-        with pytest.raises(Exception):
-            _run([*worker, str(broken), *common], env, 10)
-        slow = tmp_path / "slow_candidate.py"
-        slow.write_text("import time\ndef run_code():\n    time.sleep(5)\n    return {}\n")
-        with pytest.raises(TimeoutError):
-            _run([*worker, str(slow), *common], env, 0.5)
-    finally:
-        broken.unlink(missing_ok=True)
-        (tmp_path / "slow_candidate.py").unlink(missing_ok=True)
+def test_runner_error_and_timeout_without_registry():
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional graph task failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional graph task failure')"], env, 3)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)

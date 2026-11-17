@@ -1,12 +1,14 @@
-"""Replay the fixed public exact-rational n=17 construction."""
+"""Replay the fixed 191-edge public Q9 record from Orland et al."""
+
 import json
-import os
 from pathlib import Path
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T041-C01") != "T041-C01":
-        raise ValueError("unsupported T041 configuration")
-    _seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    path = Path(__file__).parent / "data" / "public_witness.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    path = Path(__file__).parent / "data" / "reference" / "orland_v3_q9_191.json"
+    witness = json.loads(path.read_text())
+    return {"vertices": witness["vertices"]}
+
+
+if __name__ == "__main__":
+    print(run_code())

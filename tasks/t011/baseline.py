@@ -1,88 +1,58 @@
 from mathbench.search import search_deadline, search_steps
-"""Seeded randomized greedy and one-for-many bitset local search."""
-import itertools
+"""Deterministic multistart local search over 16 nonzero 3D directions."""
+import math
 import os
-import random
 import time
+import numpy as np
+from scipy.optimize import minimize
 
-def _power():
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
-    powers = {"T011-C01": 5}
-    if cid not in powers:
-        raise ValueError(f"unsupported configuration: {cid}")
-    return powers[cid]
+def _n():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01") != "T011-C01":
+        raise ValueError("unknown T011 configuration")
+    return 16
 
-def _size(power):
-    return 7 ** power
-
-def _decode(v, power):
-    out = [0] * power
-    for i in range(power - 1, -1, -1):
-        out[i] = v % 7
-        v //= 7
-    return tuple(out)
-
-def _encode(w):
-    v = 0
-    for x in w:
-        v = 7 * v + x
-    return v
-
-def _neighbors(v, power):
-    w = _decode(v, power)
-    choices = [((x - 1) % 7, x, (x + 1) % 7) for x in w]
-    for u in itertools.product(*choices):
-        x = _encode(u)
-        if x != v:
-            yield x
+def _score(z):
+    n = _n()
+    if n is None: raise ValueError("unknown T011 configuration")
+    p = np.asarray(z, dtype=float).reshape(n, 3)
+    norms = np.linalg.norm(p, axis=1)
+    if np.any(norms == 0): return -1.0
+    p = p / norms[:, None]
+    dots = p @ p.T
+    return math.acos(float(np.max(dots[np.triu_indices(n, 1)])))
 
 def run_code():
-    power = _power()
-    size = _size(power)
+    n = _n()
+    if n is None: raise ValueError("unknown T011 configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    try:
-        budget = min(2.0, max(0.05, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    except ValueError:
-        budget = 2.0
-    rng = random.Random(seed)
+    rng = np.random.default_rng(seed)
+    budget = max(.1, min(30., float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
     deadline = search_deadline()
-    best = [_encode(w) for w in itertools.product((0,2,4), repeat=power)]
-    for _attempt in search_steps(1):
-        order = list(range(size))
-        rng.shuffle(order)
-        chosen = []
-        blocked = 0
-        for v in order:
-            bit = 1 << v
-            if blocked & bit:
-                continue
-            chosen.append(v)
-            blocked |= bit
-            for u in _neighbors(v, power):
-                blocked |= 1 << u
-        if len(chosen) > len(best):
-            best = chosen
-        # Remove a selected vertex, then greedily insert compatible vertices
-        # from its closed neighborhood. This can improve cardinality.
-        for _ in range(min(8, len(chosen))):
-            if time.monotonic() >= deadline:
-                break
-            pos = rng.randrange(len(chosen))
-            trial = chosen[:pos] + chosen[pos+1:]
-            mask = 0
-            for v in trial:
-                mask |= 1 << v
-                for u in _neighbors(v, power):
-                    mask |= 1 << u
-            pool = list(_neighbors(chosen[pos], power))
-            rng.shuffle(pool)
-            for v in pool:
-                bit = 1 << v
-                if not mask & bit:
-                    trial.append(v); mask |= bit
-                    for u in _neighbors(v, power): mask |= 1 << u
-            if len(trial) > len(chosen):
-                chosen = trial
-            if len(chosen) > len(best):
-                best = chosen[:]
-    return {"words": [list(_decode(v, power)) for v in best]}
+    k=np.arange(n); z=1-2*(k+.5)/n; phi=k*math.pi*(3-math.sqrt(5)); r=np.sqrt(1-z*z)
+    best=np.column_stack((r*np.cos(phi),r*np.sin(phi),z))
+    best_score = _score(best)
+    starts = 0
+    for _attempt in search_steps(2):
+        x = rng.normal(size=(n,3))
+        x /= np.linalg.norm(x, axis=1)[:,None]
+        def objective(z):
+            p=np.asarray(z).reshape(n,3)
+            norms=np.linalg.norm(p,axis=1)
+            if np.any(norms < 1e-10): return 1e3
+            p=p/norms[:,None]
+            return float(np.max((p @ p.T)[np.triu_indices(n,1)]))
+        res=minimize(objective,x.ravel(),method="L-BFGS-B",options={"maxiter":180,"ftol":1e-11})
+        candidate=np.asarray(res.x).reshape(n,3)
+        score=_score(candidate)
+        if np.isfinite(score) and score > best_score:
+            best,best_score=candidate.copy(),score
+        starts+=1
+    if best is None:
+        # Well-defined deterministic fallback, independent of the human file.
+        k=np.arange(n); z=1-2*(k+.5)/n; phi=k*math.pi*(3-math.sqrt(5)); r=np.sqrt(1-z*z)
+        best=np.column_stack((r*np.cos(phi),r*np.sin(phi),z))
+    return {"points": [[float(x) for x in row] for row in best]}
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

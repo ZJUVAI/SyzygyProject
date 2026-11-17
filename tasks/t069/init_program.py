@@ -1,12 +1,14 @@
-"""Standalone simple Hamiltonian cycle seed for T069."""
-
+"""Small deterministic seed; the optimizer can mutate it."""
 import os
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T069-C01")
-    if chosen != "T069-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T069-C01") != "T069-C01":
+        raise ValueError("unsupported configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    return {"tour": list(range(100_000))}
+    values = [0, 2, 3, 4, 7, 11, 12, 14]
+    if seed % 2:
+        values = [14, 12, 11, 7, 4, 3, 2, 0]
     # EVOLVE-BLOCK-END
+    return {"set": values}

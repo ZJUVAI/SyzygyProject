@@ -1,103 +1,125 @@
 {
   "task_id": "T083",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T083-C01": {
       "program": "reference.py",
-      "reproduced_value": "[1,1/3]",
-      "public_value": 1.577350269189626,
+      "reproduced_value": 130000,
+      "public_value": 130000,
       "highest_reported": {
-        "value": 1.577350269189626,
-        "source": "Erich Friedman, Triangles in Squares, n=4 entry; https://erich-friedman.github.io/packing/triinsqu/",
-        "reproduction_status": "The table reports s=1+1/sqrt(3) and credits Erich Friedman in 1996. The archived figure was reconstructed into exact Q(sqrt(3)) coordinates, and the checker independently verifies the four unit triangles and their containment. This is a reported best-known construction, not a proof of optimality."
+        "value": 130000,
+        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and author data page; fixed 2026-11-06 source snapshot.",
+        "reproduction_status": "Feasible unrestricted C=3 sequence recovered from a publicly linked notebook and exactly checked. This is a lower bound on the unknown finite maximum, not an optimality proof. The recovered text is not claimed byte-identical to the original compressed author download."
       },
       "best_human": {
-        "value": 1.577350269189626,
+        "value": 130000,
         "parameters": {
-          "triangle_count": 4,
-          "triangle_side": 1
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted",
+          "objective": "length"
         },
-        "source": "https://erich-friedman.github.io/packing/triinsqu/",
-        "provenance": "Traditional geometric packing construction credited by the source to Erich Friedman in 1996.",
-        "exact_value": "1+sqrt(3)/3",
-        "witness": "data/human/friedman4_formula.json",
-        "evidence_state": "The construction is reconstructed from the published n=4 figure and exact-checked here. The decimal reference is rounded upward.",
-        "ai_provenance": "The source predates current AI methods and credits Erich Friedman; no AI provenance is claimed.",
-        "date": "1996 (source attribution)",
-        "method": "Friedman's published pinwheel packing of four unit equilateral triangles.",
-        "source_artifact": "data/source/friedman_t4.gif",
-        "source_artifact_sha256": "e0784b81873ef0a96ed2a079e94380eeec564e603c53f416c8fad390c8dd6f25"
+        "source": "Konev and Lisitsa, Computer-Aided Proof of Erdős Discrepancy Properties, arXiv:1405.3097v2, §4 and author data page.",
+        "url": "https://arxiv.org/html/1405.3097v2",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional SAT-based computational construction. The paper reports an unrestricted sequence of length 130000, with its first 127600 entries completely multiplicative.",
+        "evidence_state": "A full 130000-sign witness is recovered from a public Wolfram Community notebook discussing this problem and passes exact local checking. The discussion cites the Konev-Lisitsa work and author data page. Notebook data may be a re-encoding; byte identity with the original compressed file is not asserted.",
+        "witness": "data/source/sequence_130000.txt.gz",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
       },
       "best_public": {
-        "value": 1.577350269189626,
+        "value": 130000,
         "parameters": {
-          "triangle_count": 4,
-          "triangle_side": 1
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted",
+          "objective": "length"
         },
-        "source": "https://erich-friedman.github.io/packing/triinsqu/",
+        "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and author data page.",
+        "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
         "date_checked": "2026-11-06",
-        "exact_value": "1+sqrt(3)/3",
-        "source_artifact": "data/source/friedman_t4.gif",
-        "source_artifact_sha256": "e0784b81873ef0a96ed2a079e94380eeec564e603c53f416c8fad390c8dd6f25",
-        "witness": "data/source/friedman4_reconstructed_source.json",
-        "evidence_state": "Same-parameter public construction; exact local reconstruction and checker verification are saved. The source does not claim optimality.",
-        "optimality": "No proof of optimality was found in the reviewed primary source.",
-        "date": "1996 (source attribution); checked 2026-11-06",
-        "ai_provenance": "The source credits Erich Friedman in 1996; no AI provenance is claimed."
+        "provenance": "Published traditional SAT search; the paper reports the construction, not a proof that it is longest.",
+        "evidence_state": "The paper and author page identify the 130000 unrestricted construction. The saved full witness was reconstructed from a public Wolfram Community notebook discussing this problem and independently verified.",
+        "witness": "data/source/sequence_130000.txt.gz",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
       },
       "best_reproduced": {
-        "value": "[1,1/3]",
+        "value": 130000,
         "date_reproduced": "2026-11-06",
         "parameters": {
-          "triangle_count": 4,
-          "triangle_side": 1
+          "discrepancy_cap": 3,
+          "sequence_type": "unrestricted",
+          "objective": "length"
         },
         "program": "reference.py",
-        "verification_status": "certified",
-        "verification_method": "Exact Q(sqrt(3)) reconstruction, exact containment, and exact separating-axis checks for all six triangle pairs; objective interval has rational endpoints.",
-        "exact_value": "1+sqrt(3)/3",
-        "witness": "data/human/friedman4_formula.json",
-        "origin_type": "local exact reconstruction of the published traditional construction",
-        "objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000",
-        "date": "2026-11-06",
-        "evidence_state": "The trusted checker verifies the exact algebraic coordinates and returns a rational interval enclosing the exact side.",
+        "verification_status": "exact",
+        "verification_method": "Integer arithmetic scans every homogeneous progression difference d and every prefix length k, checking |sum(x[d], x[2d], ..., x[kd])| <= 3.",
+        "witness": "data/source/sequence_130000.txt.gz",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
+        "origin_type": "published SAT construction recovered from a public Wolfram Community notebook; exact constraint verification, original compressed-file byte identity not established",
         "review_status": "reviewed_by_sol"
       },
-      "source_review": {
-        "snapshot_date": "2026-11-06",
-        "optimality_status": "The Friedman table continues to label n=4 as a found construction, not as proved optimal. The separately listed October 2026 proof concerns n=3.",
-        "scope": "Four unit equilateral triangles packed inside an axis-aligned square. Covering a square by triangles is a different problem and is not used as a same-parameter record.",
-        "notes": "The frozen H value is rounded upward from 1+sqrt(3)/3. This preserves a conservative minimize-score denominator."
+      "restricted_results_not_this_configuration": [
+        {
+          "value": 1160,
+          "scope": "unrestricted discrepancy cap C=2",
+          "status": "proved exact maximum; excluded"
+        },
+        {
+          "value": 127645,
+          "scope": "completely multiplicative discrepancy cap C=3",
+          "status": "proved exact maximum; restricted problem, excluded"
+        }
+      ],
+      "optimality_status": {
+        "status": "open; at least 130000, exact finite maximum unknown",
+        "source_survey_date": "2026-11-06",
+        "evidence": "Konev and Lisitsa report the 130000 unrestricted construction but do not prove optimality. Their exact 127645 result is for the completely multiplicative restriction. The 2026 Princeton thesis concerns the solved C=2 case. Tao's theorem rules out infinite bounded-discrepancy sequences but gives no exact finite maximum.",
+        "limitations": "Current-source survey establishes the distinction between the unrestricted and restricted problems; it does not derive a useful finite upper bound for the selected unrestricted C=3 instance.",
+        "survey_date": "2026-11-06",
+        "note": "The exact C=2 and completely multiplicative C=3 results are different restricted/configured problems. Tao's infinite theorem does not determine this finite maximum."
       },
-      "reproduced_objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000",
+      "source_pins": {
+        "paper": {
+          "version": "arXiv:1405.3097v2",
+          "url": "https://arxiv.org/html/1405.3097v2",
+          "record_location": "§4"
+        },
+        "author_data": {
+          "url": "https://cgi.csc.liv.ac.uk/~konev/edp/",
+          "date_checked": "2026-11-06"
+        },
+        "recovered_notebook": {
+          "url": "https://community.wolfram.com/uploads/short-url/tecwlpwuwx7kcTAYpoVaduRt9FD.nb",
+          "discussion_url": "https://community.wolfram.com/t/discrepancy-conjecture/6798",
+          "sha256": "cc6066cefd3c28435aee484b8ad4c952f6d17919732acc5e21a412ed45cadbca"
+        },
+        "recovered_sign_text_sha256": "a46775e377eed611fe5e7c086fc761ea8aeec22c2048924c2cd28392f34883fa"
+      },
       "review_status": "accepted_by_sol",
       "verification": {
-        "status": "reviewed_by_sol",
-        "reviewer": "Sol main agent",
-        "date": "2026-11-06",
+        "task_id": "T083",
+        "status": "pending_source_review",
         "run": {
           "task_id": "T083",
           "config_id": "T083-C01",
           "validity": 1.0,
-          "combined_score": 1.0000000000000002,
-          "objective": "[1,1/3]",
-          "verification_status": "certified",
-          "generation_time": 0.4161958433687687,
-          "verification_time": 2.5285554677248,
-          "objective_value": "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000",
+          "combined_score": 1.0,
+          "objective": 130000,
+          "verification_status": "exact",
+          "generation_time": 1.5008401684463024,
+          "verification_time": 1.3104558661580086,
+          "objective_value": 130000,
           "details": {
-            "objective_interval": [
-              "4732050807568877293527446341505872366942805253810380628055806979451933/3000000000000000000000000000000000000000000000000000000000000000000000",
-              "15773502691896257645091487805019574556476017512701268760186023264839777/10000000000000000000000000000000000000000000000000000000000000000000000"
-            ],
-            "exact_side_coefficients": [
-              "1",
-              "1/3"
-            ],
-            "triangle_pairs_checked": 6,
-            "claimed_score_ignored": true,
-            "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+            "sequence_length": 130000,
+            "discrepancy": 3,
+            "maximizing_prefix": {
+              "difference": 1,
+              "prefix_length": 91,
+              "signed_sum": 3
+            },
+            "homogeneous_progression_prefixes_checked": 1550902,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 4.660714149475098,
+          "eval_time": 2.8781457766890526,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -114,37 +136,70 @@
           }
         },
         "independent_quantity": {
-          "exact_side": "sqrt(3)/3 + 1",
-          "unit_sides_checked": 12,
-          "pairs_checked": 6,
-          "method": "SymPy algebraic expressions; exact polygon clipping and intersection area, independent of formal ordered-field separating axes"
+          "sequence_length": 130000,
+          "discrepancy": 3,
+          "prefixes_checked": 1550902
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true
+        "claimed_score_ignored": true,
+        "witness": "data/source/sequence_130000.txt.gz",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
       },
       "parameters": {
-        "triangle_count": 4,
-        "triangle_side": 1
-      }
+        "discrepancy_cap": 3,
+        "entry_domain": [
+          -1,
+          1
+        ],
+        "sequence_type": "unrestricted"
+      },
+      "objective": {
+        "name": "sequence length",
+        "direction": "maximize",
+        "unit": "terms"
+      },
+      "frozen_human_baseline": {
+        "value": 130000,
+        "witness_program": "human.py",
+        "witness": "data/source/sequence_130000.txt.gz",
+        "witness_sha256": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2",
+        "note": "Same-parameter published unrestricted C=3 construction, recovered and exactly verified."
+      },
+      "restricted_results": [
+        {
+          "cap": 2,
+          "maximum": 1160,
+          "scope": "unrestricted signs",
+          "status": "solved; excluded"
+        },
+        {
+          "cap": 3,
+          "maximum": 127645,
+          "scope": "completely multiplicative signs",
+          "status": "solved restricted problem; excluded"
+        }
+      ]
     }
   },
-  "review_status": "accepted_by_sol",
+  "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T083-C01": {
         "best_human": {
-          "source": "Erich Friedman, Triangles in Squares, n=4; https://erich-friedman.github.io/packing/triinsqu/",
-          "evidence_state": "Reconstructed from the published figure and exact-checked. The value stored for compatibility scoring is rounded upward.",
-          "ai_provenance": "Traditional construction credited to Erich Friedman; no AI provenance is claimed."
+          "source": "Konev and Lisitsa, §4 and the author data page.",
+          "provenance": "Traditional SAT-based construction; no AI assistance is attributed by the cited paper to this construction.",
+          "evidence_state": "Full witness recovered from a public Wolfram Community notebook discussing the problem and exactly verified across 1550902 progression prefixes. Byte identity with the original compressed download is not established."
         },
         "best_public": {
-          "evidence_state": "The source lists this as a found construction. It does not state a proof of global optimality."
+          "source": "Konev and Lisitsa, arXiv:1405.3097v2, §4 and data page.",
+          "provenance": "Published SAT search. Reported construction is a lower bound, not an optimality result.",
+          "evidence_state": "Full public-notebook witness independently checked for all 1550902 progression prefixes."
         },
         "best_reproduced": {
-          "origin_type": "published traditional construction reconstructed and verified locally"
+          "verification_method": "Check every signed prefix sum in every homogeneous progression using Python integer arithmetic."
         },
-        "source_review": {
-          "optimality_status": "No n=4 optimality proof found in the reviewed sources. Friedman's table says 'Found'; its n=3 proof is dated October 2026."
+        "optimality_status": {
+          "status": "open; lower bound 130000, exact maximum unknown"
         }
       }
     }

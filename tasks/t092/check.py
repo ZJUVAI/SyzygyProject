@@ -1,171 +1,180 @@
-"""Exact sphere-moment checker for degree-20 real spherical harmonics."""
+"""Exact verifier for degree-100 primitive irreducible integer polynomials.
+
+The candidate supplies rational complex root disks.  Each disk is certified by
+Rouche's theorem using exact rational arithmetic; 100 disjoint disks account
+for all roots.  The returned objective is a certified upper bound on Mahler
+measure, which is conservative for this minimization task.
+"""
+
+from collections.abc import Mapping
 from fractions import Fraction
-from itertools import product
+from math import gcd, isqrt
+import sys
+from typing import Any
 
-DEGREE = 20
-PARAMETERS = {"degree": 20, "domain": "real spherical harmonics on S^2", "coefficient_domain": "rational dense subspace", "objective": "normalized L4/L2 ratio"}
-EXPONENTS = [(a, b, DEGREE - a - b) for a in range(DEGREE, -1, -1) for b in range(DEGREE - a, -1, -1)]
-EXPONENT_INDEX = {exponent: i for i, exponent in enumerate(EXPONENTS)}
+CONFIG_ID = "T092-C01"
+DEGREE = 100
+PARAMETERS = {
+    "degree": 100,
+    "polynomial": "primitive_irreducible_integer",
+    "domain": "Z[x]",
+    "cyclotomic": "excluded",
+    "objective": "Mahler_measure",
+}
+_SCALE = 10**30
 
-
-def _integer_text(text):
-    if not isinstance(text, str) or not text:
-        raise ValueError("invalid integer text")
-    sign = 1
-    if text[0] in "+-":
-        if text[0] == "-":
-            sign = -1
-        text = text[1:]
-    if not text or not text.isascii() or not text.isdigit():
-        raise ValueError("invalid integer text")
-    first = len(text) % 9 or 9
-    value = int(text[:first])
-    for start in range(first, len(text), 9):
-        value = value * 10**9 + int(text[start:start + 9])
-    return sign * value
+# Rational root-disk data are proof inputs and may need arbitrary precision.
+# The public runner limits candidate data to 16 MiB and the checker process to
+# 4 GiB; Python's default decimal-to-int digit guard would impose an unrelated
+# precision ceiling, so exact parsing is enabled here.
+if hasattr(sys, "set_int_max_str_digits"):
+    sys.set_int_max_str_digits(0)
 
 
-def _rational(value):
-    if type(value) is int:
-        return Fraction(value)
-    if isinstance(value, bool) or not isinstance(value, str) or value.count("/") > 1:
-        raise ValueError("coefficients must be rational integer strings or integers")
-    if "/" not in value:
-        return Fraction(_integer_text(value))
-    numerator, denominator = value.split("/")
-    den = _integer_text(denominator)
-    if den == 0:
-        raise ValueError("rational denominator cannot be zero")
-    return Fraction(_integer_text(numerator), den)
-
-
-def _monomial_exponents(total_degree):
-    return [(a, b, total_degree - a - b)
-            for a in range(total_degree, -1, -1)
-            for b in range(total_degree - a, -1, -1)]
-
-
-def _harmonic_laplacian(coefficients):
-    laplacian = {}
-    for (a, b, c), value in zip(EXPONENTS, coefficients):
-        if a >= 2:
-            key = (a - 2, b, c)
-            laplacian[key] = laplacian.get(key, Fraction(0)) + value * a * (a - 1)
-        if b >= 2:
-            key = (a, b - 2, c)
-            laplacian[key] = laplacian.get(key, Fraction(0)) + value * b * (b - 1)
-        if c >= 2:
-            key = (a, b, c - 2)
-            laplacian[key] = laplacian.get(key, Fraction(0)) + value * c * (c - 1)
-    return {key: value for key, value in laplacian.items() if value}
-
-
-def _multiply(left, right):
-    out = {}
-    for (a, b, c), x in left.items():
-        for (d, e, f), y in right.items():
-            key = (a + d, b + e, c + f)
-            out[key] = out.get(key, Fraction(0)) + x * y
-    return {key: value for key, value in out.items() if value}
-
-
-def _double_factorial(n):
-    result = 1
-    while n > 1:
-        result *= n
-        n -= 2
+def _rat(value: Any, name: str) -> Fraction:
+    if not isinstance(value, str):
+        raise ValueError(f"{name} must be a rational string")
+    try:
+        result = Fraction(value)
+    except (ValueError, ZeroDivisionError) as exc:
+        raise ValueError(f"invalid rational in {name}") from exc
     return result
 
 
-def _sphere_moment(exponent):
-    a, b, c = exponent
-    if (a | b | c) & 1:
-        return Fraction(0)
-    p, q, r = a // 2, b // 2, c // 2
-    numerator = _double_factorial(2 * p - 1) * _double_factorial(2 * q - 1) * _double_factorial(2 * r - 1)
-    denominator = _double_factorial(a + b + c + 1)
-    return Fraction(numerator, denominator)
+def _complex_mul(a: tuple[Fraction, Fraction], b: tuple[Fraction, Fraction]):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
 
 
-def _integrate_unit_sphere(poly):
-    return sum((coefficient * _sphere_moment(exponent)
-                for exponent, coefficient in poly.items()), Fraction(0))
+def _complex_eval(coefficients: list[int], z: tuple[Fraction, Fraction]):
+    value = (Fraction(0), Fraction(0))
+    derivative = (Fraction(0), Fraction(0))
+    for coefficient in reversed(coefficients):
+        derivative = _complex_mul(derivative, z)
+        derivative = (derivative[0] + value[0], derivative[1] + value[1])
+        value = _complex_mul(value, z)
+        value = (value[0] + coefficient, value[1])
+    return value, derivative
 
 
-def _integer_output(value):
-    if value == 0:
-        return "0"
-    sign = "-" if value < 0 else ""
-    value = abs(value)
-    chunks = []
-    while value:
-        value, part = divmod(value, 10**9)
-        chunks.append(part)
-    return sign + str(chunks[-1]) + "".join(f"{part:09d}" for part in reversed(chunks[:-1]))
-
-
-def _fraction_text(value):
-    numerator = _integer_output(value.numerator)
-    return numerator if value.denominator == 1 else f"{numerator}/{_integer_output(value.denominator)}"
-
-
-def _fourth_root_bounds(value, scale=10**18):
+def _sqrt_bounds(value: Fraction) -> tuple[Fraction, Fraction]:
+    """Return rational lower and upper bounds for sqrt(value)."""
     if value < 0:
-        raise ValueError("fourth-root argument must be nonnegative")
-    numerator = value.numerator * scale**4
-    denominator = value.denominator
-    q = __import__("math").isqrt(__import__("math").isqrt(numerator // denominator))
-    while (q + 1) ** 4 * denominator <= numerator:
-        q += 1
-    while q**4 * denominator > numerator:
-        q -= 1
-    lower = Fraction(q, scale)
-    upper = lower if q**4 * denominator == numerator else Fraction(q + 1, scale)
-    return lower, upper
+        raise ValueError("negative squared modulus")
+    scaled_floor = isqrt((value.numerator * _SCALE * _SCALE) // value.denominator)
+    lower = Fraction(scaled_floor, _SCALE)
+    if lower * lower == value:
+        return lower, lower
+    return lower, Fraction(scaled_floor + 1, _SCALE)
 
 
-def validate(solution, config, strict=False):
-    if (not isinstance(config, dict) or config.get("id") != "T092-C01"
-            or config.get("direction") != "maximize"
-            or not isinstance(config.get("parameters"), dict)
-            or config["parameters"] != PARAMETERS
-            or any(type(config["parameters"].get(k)) is not type(v) for k, v in PARAMETERS.items())):
-        raise ValueError("unsupported configuration or parameters")
-    if not isinstance(solution, dict) or not isinstance(solution.get("coefficients"), list):
-        raise ValueError("solution must contain a coefficient list")
-    raw = solution["coefficients"]
-    if len(raw) != len(EXPONENTS):
-        raise ValueError("a degree-20 homogeneous polynomial requires 231 coefficients")
-    coefficients = [_rational(value) for value in raw]
-    if not any(coefficients):
-        raise ValueError("the polynomial must be nonzero")
-    residual = _harmonic_laplacian(coefficients)
-    if residual:
-        raise ValueError("the homogeneous polynomial is not harmonic")
-    polynomial = {exp: value for exp, value in zip(EXPONENTS, coefficients) if value}
-    square = _multiply(polynomial, polynomial)
-    fourth_power = _multiply(square, square)
-    m2 = _integrate_unit_sphere(square)
-    m4 = _integrate_unit_sphere(fourth_power)
-    if m2 <= 0 or m4 <= 0:
-        raise ValueError("nonzero harmonic polynomial must have positive second and fourth moments")
-    ratio = m4 / (m2 * m2)
-    lower, upper = _fourth_root_bounds(ratio)
-    ratio_text = _fraction_text(ratio)
-    exact_objective = f"fourth_root({ratio_text})"
+def _complex_bounds(z: tuple[Fraction, Fraction]) -> tuple[Fraction, Fraction]:
+    return _sqrt_bounds(z[0] * z[0] + z[1] * z[1])
+
+
+def _parse_disk(raw: Any, index: int):
+    if not isinstance(raw, Mapping):
+        raise ValueError(f"root disk {index} must be an object")
+    real = _rat(raw.get("center_real"), f"root_disks[{index}].center_real")
+    imag = _rat(raw.get("center_imag"), f"root_disks[{index}].center_imag")
+    radius = _rat(raw.get("radius"), f"root_disks[{index}].radius")
+    if radius <= 0:
+        raise ValueError(f"root disk {index} must have positive radius")
+    return (real, imag), radius
+
+
+def validate(solution: Any, config: Mapping[str, Any], strict: bool = False) -> dict[str, Any]:
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError("unsupported configuration id")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration parameters do not match T092-C01")
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be an object")
+
+    coefficients = solution.get("coefficients_ascending")
+    if not isinstance(coefficients, (list, tuple)) or len(coefficients) != DEGREE + 1:
+        raise ValueError("coefficients_ascending must contain exactly 101 integers")
+    if any(type(value) is not int for value in coefficients):
+        raise ValueError("coefficients must be integers; bool and floats are rejected")
+    if coefficients[-1] == 0:
+        raise ValueError("polynomial must have exact degree 100")
+    content = 0
+    for coefficient in coefficients:
+        content = gcd(content, abs(coefficient))
+    if content != 1:
+        raise ValueError("polynomial must be primitive")
+
+    # Exact factorization over Q for the fixed degree. Runtime and memory are
+    # subject to the shared runner limits.
+    from sympy import Poly, symbols
+
+    x = symbols("x")
+    polynomial = Poly.from_list(list(reversed(coefficients)), x)
+    if not polynomial.is_irreducible:
+        raise ValueError("polynomial must be irreducible over Q")
+
+    raw_disks = solution.get("root_disks")
+    if not isinstance(raw_disks, (list, tuple)) or len(raw_disks) != DEGREE:
+        raise ValueError("exactly 100 root disks are required")
+    disks = [_parse_disk(raw, i) for i, raw in enumerate(raw_disks)]
+
+    # Pairwise disjointness: disjoint coordinate projections suffice.  This
+    # is intentionally a conservative exact test.
+    disjoint_checks = 0
+    for i, (left, left_radius) in enumerate(disks):
+        for right, right_radius in disks[:i]:
+            disjoint_checks += 1
+            if max(abs(left[0] - right[0]), abs(left[1] - right[1])) <= left_radius + right_radius:
+                raise ValueError("root disks are not certified pairwise disjoint")
+
+    lower_measure = Fraction(abs(coefficients[-1]))
+    upper_measure = Fraction(abs(coefficients[-1]))
+    rouche_checks = 0
+    outside_count_lower = 0
+    for index, (center, radius) in enumerate(disks):
+        value, derivative = _complex_eval(coefficients, center)
+        # |p'(c)| >= max(|Re p'(c)|, |Im p'(c)|), while |p(c)| is at
+        # most |Re p(c)|+|Im p(c)|.
+        derivative_lower = max(abs(derivative[0]), abs(derivative[1]))
+        value_upper = abs(value[0]) + abs(value[1])
+        center_lower, center_upper = _complex_bounds(center)
+        disk_radius_upper = center_upper + radius
+        remainder = Fraction(0)
+        power = Fraction(1)
+        for k in range(2, DEGREE + 1):
+            if k > 2:
+                power *= disk_radius_upper
+            remainder += Fraction(k * (k - 1) * abs(coefficients[k]), 2) * radius * radius * power
+        if radius * derivative_lower <= value_upper + remainder:
+            raise ValueError(f"root disk {index} fails the exact Rouche certificate")
+        rouche_checks += 1
+
+        root_lower = max(Fraction(0), center_lower - radius)
+        root_upper = center_upper + radius
+        lower_measure *= max(Fraction(1), root_lower)
+        upper_measure *= max(Fraction(1), root_upper)
+        if root_lower > 1:
+            outside_count_lower += 1
+
+    # All 100 disks contain one root by Rouché and are pairwise disjoint.
+    # Their count equals the degree, so these bounds cover the full root set.
+    if lower_measure <= 1:
+        raise ValueError("the certificate does not establish a noncyclotomic polynomial")
+    if (upper_measure - lower_measure) * 10**10 > lower_measure:
+        raise ValueError("Mahler measure interval is wider than the required relative 1e-10")
+
     return {
-        "objective": exact_objective,
-        "objective_value": _fraction_text(lower),
+        "objective": str(upper_measure),
+        "objective_value": str(upper_measure),
         "verification_status": "certified",
         "details": {
             "degree": DEGREE,
-            "monomial_count": len(EXPONENTS),
-            "harmonic_laplacian_residual_terms": 0,
-            "sphere_average_M2": _fraction_text(m2),
-            "sphere_average_M4": _fraction_text(m4),
-            "fourth_power_ratio": ratio_text,
-            "objective_interval": [_fraction_text(lower), _fraction_text(upper)],
-            "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
-            "claimed_score_ignored": True
-        }
+            "primitive": True,
+            "irreducible_over_Q": True,
+            "root_disks_checked": rouche_checks,
+            "pairwise_disjoint_checks": disjoint_checks,
+            "outside_unit_circle_roots_certified": outside_count_lower,
+            "objective_interval": [str(lower_measure), str(upper_measure)],
+            "relative_interval_width_at_most": "1/10000000000",
+            "claimed_objective_ignored": True,
+        },
     }

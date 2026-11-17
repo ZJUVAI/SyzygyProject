@@ -1,9 +1,1 @@
-Find a largest binary constant-weight code for the fixed configuration A(17,4,5).
-
-Return JSON with `codewords`, a list of distinct 17-character strings over `0` and `1`. Every word must contain exactly five `1` characters. Every two distinct words must have Hamming distance at least four.
-
-The score is the number of codewords. The checker reads all words and recomputes the score. It checks every unordered pair exactly using integer bit operations. It ignores any claimed score fields.
-
-Start from `init_program.py`. Do not read comparison constructions under `data/source` or `data/reference`. Improve the construction by your own search. The target is unrestricted over all binary words with the fixed length and weight.
-
-Read the configuration from `MATHBENCH_CONFIG_ID` and the random seed from `MATHBENCH_SEED`. Use deterministic defaults. Generation has a 300-second limit. Verification has a separate 60-second limit. Memory is limited to 4 GiB and one compute thread.
+Construct a coloring of the consecutive positive integers 1 through N with at most six colors. Maximize N. A coloring is valid only when no same-color x and y, including x = y, have x + y in the same color. Return JSON with exactly this data shape: {"n": N, "colors": [c_1, ..., c_N]}, where c_i is an integer from 0 through 5 and array position i-1 gives the color of integer i. Do not return color classes. Your program must define run_code() and return this object. The evaluator computes N from the array and ignores any claimed score or metadata. The default resource budget is 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread.

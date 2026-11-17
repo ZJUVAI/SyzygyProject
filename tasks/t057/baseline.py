@@ -1,4 +1,4 @@
-"""Bounded multistart Clarke-Wright search with randomized savings ties."""
+"""Fixed-work randomized greedy search for pair-disjoint parallel rounds."""
 
 import math
 import os
@@ -6,8 +6,42 @@ import random
 import time
 
 from tasks.t057.check import CONFIG_ID
-from tasks.t057.heuristics import clarke_wright
-from tasks.t057.instance import load_instance, total_route_cost
+
+
+def _try_add_random_round(used_pairs, rng):
+    players = list(range(35))
+    rng.shuffle(players)
+    groups = [players[i:i + 5] for i in range(0, 35, 5)]
+    new_pairs = set()
+    for group in groups:
+        for offset, left in enumerate(group):
+            for right in group[offset + 1:]:
+                pair = (left, right) if left < right else (right, left)
+                if pair in used_pairs:
+                    return None
+                new_pairs.add(pair)
+    return groups, new_pairs
+
+
+def _grow_once(rng, attempts_per_round, deadline):
+    rounds = []
+    used_pairs = set()
+    attempts = 0
+    for _ in range(8):
+        added = None
+        for _ in range(attempts_per_round):
+            if deadline is not None and time.monotonic() >= deadline:
+                return rounds, attempts, True
+            attempts += 1
+            added = _try_add_random_round(used_pairs, rng)
+            if added is not None:
+                break
+        if added is None:
+            break
+        groups, new_pairs = added
+        rounds.append(groups)
+        used_pairs.update(new_pairs)
+    return rounds, attempts, False
 
 
 def run_code():
@@ -15,41 +49,42 @@ def run_code():
     if chosen != CONFIG_ID:
         raise ValueError(f"unsupported configuration: {chosen}")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T057_SEARCH_TRIALS", "6"))
-    if trials < 0:
-        raise ValueError("search trial count must be nonnegative")
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    if seconds is None:
+    restarts = int(os.environ.get("T057_SEARCH_RESTARTS", "8"))
+    attempts_per_round = int(os.environ.get("T057_ATTEMPTS_PER_ROUND", "5000"))
+    if restarts < 0 or attempts_per_round < 1:
+        raise ValueError("restarts must be nonnegative and attempts per round positive")
+    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    if seconds_text is None:
         deadline = None
     else:
-        duration = float(seconds)
-        if not math.isfinite(duration) or duration <= 0:
+        seconds = float(seconds_text)
+        if not math.isfinite(seconds) or seconds <= 0:
             raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + duration
+        deadline = time.monotonic() + seconds
 
-    instance = load_instance()
-    best_routes = [[customer] for customer in instance["customer_ids"]]
-    best_cost = total_route_cost(best_routes, instance)
     rng = random.Random(seed)
-    completed = 0
-    all_merges = 0
-    for _ in range(trials):
-        if deadline is not None and time.monotonic() >= deadline:
+    best = [[[5 * group + offset for offset in range(5)] for group in range(7)]]
+    completed_restarts = 0
+    total_attempts = 0
+    timed_out = False
+    for _ in range(restarts):
+        candidate, attempts, timed_out = _grow_once(rng, attempts_per_round, deadline)
+        total_attempts += attempts
+        completed_restarts += 1
+        if len(candidate) > len(best):
+            best = candidate
+        if timed_out:
             break
-        routes, meta = clarke_wright(instance, rng=rng)
-        cost = total_route_cost(routes, instance)
-        completed += 1
-        all_merges += meta["merges"]
-        if cost < best_cost:
-            best_routes, best_cost = routes, cost
     return {
-        "routes": best_routes,
+        "rounds": best,
         "search": {
-            "algorithm": "Clarke-Wright capacity-feasible route merging with randomized equal-savings tie order",
+            "algorithm": "randomized greedy construction of pair-disjoint rounds",
             "seed": seed,
-            "trial_limit": trials,
-            "trials_completed": completed,
-            "total_merges_over_trials": all_merges,
+            "restart_limit": restarts,
+            "restarts_completed": completed_restarts,
+            "attempts_per_round": attempts_per_round,
+            "partition_attempts": total_attempts,
+            "time_cutoff_reached": timed_out,
             "reference_data_read": False,
         },
     }

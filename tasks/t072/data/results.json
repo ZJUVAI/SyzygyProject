@@ -32,6 +32,13 @@
       "worker_cpu": 37
     }
   },
+  "initial_result": {
+    "objective": 354,
+    "objective_value": 354,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.4350282485875706
+  },
   "provenance": {
     "reviewer": "Sol main agent",
     "status": "reviewed_by_sol",
@@ -96,14 +103,14 @@
       "search.cpp": "54a90bccadf75cb834c7b6402b2d905f595812472661e531226dabbdbf66445b"
     },
     "warm_start_sha256": "75d07358909997540f30877a5870377b873458db4f2c5ff6ec43139c99f3ff64",
-    "replay_command": ".venv/bin/python -m mathbench replay T072 tasks/t072/data/results.json --config T072-C01"
-  },
-  "initial_result": {
-    "objective": 354,
-    "objective_value": 354,
-    "validity": 1.0,
-    "verification_status": "exact",
-    "combined_score": 0.4350282485875706
+    "replay_command": ".venv/bin/python -m mathbench replay T072 tasks/t072/data/results.json --config T072-C01",
+    "task_id_migration": {
+      "from": "T072",
+      "to": "T072",
+      "source_revision": "c9f93552f9ad54f779b1f9cca2e13f39e5ab8d30",
+      "date": "2026-11-17",
+      "note": "Reordered by research direction. Construction bytes and objective are unchanged. Historical source paths and hashes are preserved."
+    }
   },
   "solution": {
   "elements": [

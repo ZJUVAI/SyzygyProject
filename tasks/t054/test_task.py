@@ -1,133 +1,83 @@
 import json
-import os
 from pathlib import Path
-import sys
-import tempfile
 
 import pytest
 
-from mathbench.evaluate import _run
-from tasks.t054 import baseline, check, evolution, human, init_program, reference
+from tasks.t054.check import validate
+from tasks.t054.human import run_code as human_run
+
+CONFIG = {
+    "id": "T054-C01",
+    "parameters": {"strength": 4, "columns": 20, "alphabet_size": 2,
+                   "rows_upper_bound": 6196},
+    "direction": "minimize",
+    "human_reference": 65,
+}
 
 
-ROOT = Path(__file__).resolve().parents[2]
-CONFIG = json.loads((ROOT / "tasks/t054/task.json").read_text())["configurations"][0]
+def test_human_nist_witness_is_valid_and_recomputed():
+    solution = human_run()
+    result = validate({**solution, "claimed_objective": -100}, CONFIG)
+    assert len(solution["array"]) == 65
+    assert result["objective"] == 65
+    assert result["verification_status"] == "exact"
+    assert result["details"]["projection_count"] == 4845
+    assert result["details"]["uncovered_tuples"] == 0
+    assert result["details"]["claimed_objective_ignored"] is True
 
 
-def _independent_correlations(sequence):
-    values = []
-    for lag in range(1, len(sequence)):
-        total = 0
-        for i, left in enumerate(sequence):
-            if i + lag < len(sequence):
-                total += left * sequence[i + lag]
-        values.append(total)
-    return values
+def test_row_upper_bound_is_enforced():
+    cfg = {**CONFIG, "parameters": {**CONFIG["parameters"], "rows_upper_bound": 64}}
+    with pytest.raises(ValueError, match="row count"):
+        validate(human_run(), cfg)
 
 
-def test_human_reference_and_initial_sequence():
-    human_result = human.run_code()
-    reference_result = reference.run_code()
-    initial = init_program.run_code()
-    assert human_result == reference_result
-    assert len(human_result["sequence"]) == 100
-    correlations = _independent_correlations(human_result["sequence"])
-    assert max(abs(value) for value in correlations) == 5
-    checked = check.validate(human_result, CONFIG)
-    assert checked["objective"] == 5
-    assert checked["details"]["aperiodic_autocorrelations"] == correlations
-    assert check.validate(initial, CONFIG)["objective"] == 99
-    assert len(initial["sequence"]) == 100 and set(initial["sequence"]) == {1}
+def test_missing_projection_rejected():
+    from itertools import product
+    rows = [list(bits) + [0] * 16 for bits in product((0, 1), repeat=4)]
+    rows.pop()
+    with pytest.raises(ValueError, match="misses"):
+        validate({"array": rows}, CONFIG)
 
 
-def test_baseline_and_evolution_are_deterministic_and_do_not_read_witnesses(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_SEED", "17")
-    monkeypatch.setenv("T054_SEARCH_RESTARTS", "2")
-    monkeypatch.setenv("T054_SEARCH_ITERATIONS", "500")
-    first = baseline.run_code()
-    second = evolution.run_code()
-    assert first == second
-    assert first["search"]["reference_data_read"] is False
-    assert check.validate(first, CONFIG)["verification_status"] == "exact"
+def test_duplicate_rows_and_wrong_width_rejected():
+    row = [0] * 20
+    with pytest.raises(ValueError, match="duplicate"):
+        validate({"array": [row, row]}, CONFIG)
+    with pytest.raises(ValueError, match="columns"):
+        validate({"array": [[0] * 19]}, CONFIG)
 
 
-def test_exact_flip_delta_matches_full_recomputation():
-    sequence = [1 if (i * i + 3 * i + 1) % 5 < 2 else -1 for i in range(100)]
-    correlations = check.aperiodic_autocorrelations(sequence)
-    for position in (0, 1, 49, 98, 99):
-        trial = sequence.copy()
-        trial_corr = correlations.copy()
-        deltas = baseline._flip(trial, trial_corr, position)
-        assert trial_corr == check.aperiodic_autocorrelations(trial)
-        trial[position] = -trial[position]
-        for lag in range(1, len(sequence)):
-            trial_corr[lag - 1] -= deltas[lag]
-        assert trial_corr == correlations
+@pytest.mark.parametrize("bad", [True, -1, 2, 0.0, float("nan"), float("inf"), "0"])
+def test_invalid_entries_rejected(bad):
+    row = [0] * 20
+    row[0] = bad
+    with pytest.raises(ValueError, match="integers"):
+        validate({"array": [row]}, CONFIG)
 
 
-@pytest.mark.parametrize("sequence", [None, [], [1] * 99, [1] * 101,
-                                        [1] * 99 + [0], [1] * 99 + [2],
-                                        [1] * 99 + [True], [1] * 99 + [1.0],
-                                        [1] * 99 + [float("nan")]])
-def test_rejects_invalid_sequence(sequence):
-    with pytest.raises(ValueError):
-        check.validate({"sequence": sequence}, CONFIG)
+def test_bad_solution_shape_and_row_limit_rejected():
+    with pytest.raises(ValueError, match="array"):
+        validate([], CONFIG)
+    cfg = {**CONFIG, "parameters": {**CONFIG["parameters"], "rows_upper_bound": 1}}
+    with pytest.raises(ValueError, match="row count"):
+        validate(human_run(), cfg)
 
 
-def test_repeated_signs_are_valid_and_have_expected_boundary_psl():
-    checked = check.validate({"sequence": [1] * 100}, CONFIG)
-    assert checked["objective"] == 99
-    assert checked["details"]["aperiodic_autocorrelations"] == list(range(99, 0, -1))
+def test_search_baseline_is_deterministic_and_valid(monkeypatch):
+    from tasks.t054.baseline import run_code as search_run
+    monkeypatch.setenv("MATHBENCH_SEED", "7")
+    first = search_run()
+    second = search_run()
+    assert first["array"] == second["array"]
+    assert first["search_metadata"]["iterations"] == 512
+    assert validate(first, CONFIG)["objective"] == len(first["array"])
 
 
-def test_fixed_configuration_rejects_numeric_type_substitutions():
-    for value in (100.0, True, 101):
-        config = json.loads(json.dumps(CONFIG))
-        config["parameters"]["length"] = value
-        with pytest.raises(ValueError, match="configuration"):
-            check.validate({"sequence": [1] * 100}, config)
-    config = json.loads(json.dumps(CONFIG))
-    config["parameters"]["alphabet"] = [True, 1]
-    with pytest.raises(ValueError, match="configuration"):
-        check.validate({"sequence": [1] * 100}, config)
-
-
-def test_forged_objective_fields_do_not_change_validation():
-    solution = {"sequence": [1] * 100}
-    forged = {**solution, "objective": 0, "score": float("nan"), "claimed_score": 1e99}
-    assert check.validate(forged, CONFIG) == check.validate(solution, CONFIG)
-
-
-def test_runner_error_and_timeout_controls():
-    env = dict(os.environ)
-    env["PYTHONPATH"] = str(ROOT)
-    with tempfile.TemporaryDirectory() as folder:
-        fail = Path(folder) / "fail.py"
-        fail.write_text("raise RuntimeError('intentional worker failure')\n")
-        with pytest.raises(RuntimeError, match="intentional worker failure"):
-            _run([sys.executable, str(fail)], env, timeout=3)
-        hang = Path(folder) / "hang.py"
-        hang.write_text("import time\ntime.sleep(10)\n")
-        with pytest.raises(TimeoutError, match="Wall time limit"):
-            _run([sys.executable, str(hang)], env, timeout=1)
-
-
-@pytest.mark.parametrize("config_id,length", [("T054-C01",100)])
-def test_init_program_runs_as_cold_export(tmp_path, config_id, length):
-    import subprocess
-    import shutil
-    exported = tmp_path / "init_program.py"
-    shutil.copy(ROOT / "tasks/t054/init_program.py", exported)
-    code = (
-        "import importlib.util,json; "
-        f"s=importlib.util.spec_from_file_location('candidate',{str(exported)!r}); "
-        "m=importlib.util.module_from_spec(s); s.loader.exec_module(m); "
-        "print(json.dumps(m.run_code()))"
-    )
-    env = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
-    env["MATHBENCH_CONFIG_ID"] = config_id
-    result = subprocess.run([sys.executable, "-I", "-c", code], cwd=tmp_path,
-                            env=env, text=True, capture_output=True, check=True)
-    candidate = json.loads(result.stdout)
-    assert len(candidate["sequence"]) == length
-    assert set(candidate["sequence"]) == {1}
+def test_zero_second_budget_falls_back_to_valid_seed(monkeypatch):
+    from tasks.t054.baseline import run_code as search_run
+    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
+    solution = search_run()
+    assert solution["search_metadata"]["fallback"] == "Hamming weight <= 4 seed"
+    assert len(solution["array"]) == 6196
+    assert validate(solution, CONFIG)["objective"] == 6196

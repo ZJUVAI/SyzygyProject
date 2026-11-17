@@ -1,9 +1,9 @@
-"""Return the fixed archived best-known tai256c witness for external comparison."""
-try:
-    from human import run_code as _read_archived_witness
-except ImportError:  # Task-qualified import during repository tests.
-    from tasks.t027.human import run_code as _read_archived_witness
+"""Return the frozen, exactly rechecked 6-fan reference witness."""
+
+import json
+from pathlib import Path
 
 
 def run_code():
-    return _read_archived_witness()
+    path = Path(__file__).resolve().parent / "data/source/ubc_6fan_120.json"
+    return json.loads(path.read_text(encoding="utf-8"))

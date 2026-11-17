@@ -1,14 +1,20 @@
-"""Reproduced public P-192 chain from Clift's downloadable text file."""
-import json
-import os
-from pathlib import Path
+"""Reconstruct the s=6 triangular-lattice hexagon in Erdős--Fishburn."""
 
-FILES = {
-    "T020-C01": "human_t020.json",
-}
+from fractions import Fraction
+
 
 def run_code():
-    name = FILES.get(os.environ.get("MATHBENCH_CONFIG_ID", "T020-C01"))
-    if name is None:
-        raise ValueError("unsupported T020 configuration")
-    return json.loads((Path(__file__).parent / "data" / name).read_text())
+    points = []
+    # Axial coordinates for a radius-5 hexagon: max(|i|, |j|, |i+j|) <= 5.
+    for i in range(-5, 6):
+        for j in range(-5, 6):
+            if max(abs(i), abs(j), abs(i + j)) <= 5:
+                points.append({
+                    "x": [str(Fraction(2 * i + j, 2))],
+                    "y": ["0", str(Fraction(j, 2))],
+                })
+    return {
+        "minimal_polynomial": [-3, 0, 1],
+        "isolating_interval": ["1", "2"],
+        "points": points,
+    }

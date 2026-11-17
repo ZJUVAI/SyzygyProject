@@ -1,11 +1,9 @@
-"""Replay Nunn-Coxson's published witness for the selected T054 config."""
-import json
+"""Reproduce NIST's IPOG-F covering array, completing '-' as zero."""
 from pathlib import Path
-from tasks.t054.check import config_id, config_length
+
 
 def run_code():
-    cid=config_id(); length=config_length(cid)
-    path=Path(__file__).with_name("data") / "source" / f"nunn_coxson_length{length}.json"
-    record=json.loads(path.read_text(encoding="utf-8")); bits=bin(int(record["hex_code"],16))[2:].zfill(length)
-    if len(bits)!=length: raise ValueError("source code length mismatch")
-    return {"sequence":[1 if bit=="1" else -1 for bit in bits]}
+    lines = (Path(__file__).parent / "data/nist_ca_t4_v2_k20.txt").read_text().splitlines()
+    rows = [[0 if x == "-" else int(x) for x in line.split()]
+            for line in lines[1:] if line.strip()]
+    return {"array": rows}

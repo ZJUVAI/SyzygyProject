@@ -1,141 +1,117 @@
-"""Tests for T044 graph validation and program entry points."""
+"""Task-local tests for T044's fixed graph, programs, and exact checker."""
 
+import copy
 import hashlib
-import math
+import json
 import os
-import sys
-from collections import deque
 from pathlib import Path
+import sys
+import time
 
 import pytest
 
-from tasks.t044.baseline import run_code as baseline_run
-from tasks.t044.check import validate
-from tasks.t044.evolution import run_code as evolution_run
-from tasks.t044.human import run_code as human_run
-from tasks.t044.init_program import run_code as seed_run
-from tasks.t044.reference import run_code as reference_run
+from tasks.t044 import baseline, check, evolution, human, init_program, reference
+from tasks.t044.instance import load_graph
 
 
-TASK_DIR = Path(__file__).parent
-CONFIG = {
-    "id": "T044-C01",
-    "parameters": {
-        "maximum_degree": 3,
-        "diameter_at_most": 5,
-        "graph": "simple_undirected_connected",
-    },
-    "direction": "maximize",
-    "human_reference": 70,
-}
+TASK = Path(__file__).resolve().parent
+CONFIG = json.loads((TASK / "task.json").read_text(encoding="utf-8"))["configurations"][0]
 
 
-def _independent_graph_audit(candidate):
-    n = candidate["n"]
-    adjacency = [set() for _ in range(n)]
-    for left, right in candidate["edges"]:
-        adjacency[left].add(right)
-        adjacency[right].add(left)
-    assert max(map(len, adjacency)) == 3
-    diameter = 0
-    for source in range(n):
-        distances = {source: 0}
-        queue = deque([source])
-        while queue:
-            vertex = queue.popleft()
-            for neighbor in adjacency[vertex]:
-                if neighbor not in distances:
-                    distances[neighbor] = distances[vertex] + 1
-                    queue.append(neighbor)
-        assert len(distances) == n
-        diameter = max(diameter, max(distances.values()))
-    return len({tuple(sorted(edge)) for edge in candidate["edges"]}), diameter
+def _independent_cutwidth(ordering):
+    position = {vertex: index for index, vertex in enumerate(ordering)}
+    edges = load_graph()
+    return max(
+        sum((position[left] < cut) != (position[right] < cut) for left, right in edges)
+        for cut in range(1, 130)
+    )
+
+
+def test_graph_source_and_all_entries(monkeypatch):
+    monkeypatch.setenv("T044_SEARCH_TRIALS", "1")
+    monkeypatch.setenv("T044_INSERTION_VERTEX_TRIALS", "2")
+    source = TASK / "data/source/arc130.mtx.rnd"
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == (
+        "be272e3c2b11280c2c8335ae966c3d14ecef94fb4cb8fc2b049ecd7d676734a8"
+    )
+    assert len(load_graph()) == 715
+    assert len(set(load_graph())) == 715
+    outputs = [
+        init_program.run_code(),
+        baseline.run_code(),
+        human.run_code(),
+        reference.run_code(),
+        evolution.run_code(),
+    ]
+    values = [check.validate(item, CONFIG)["objective"] for item in outputs]
+    assert values[0] == _independent_cutwidth(outputs[0]["ordering"])
+    assert values[2] == values[3] == 229
+    assert values[-1] == values[1]
+    assert baseline.run_code()["search_metadata"]["reference_data_read"] is False
+    assert human.run_code()["search_metadata"]["reference_data_read"] is False
+    assert evolution.run_code()["search_metadata"]["reference_data_read"] is False
+
+
+def test_checker_exactly_recomputes_and_ignores_claims():
+    solution = human.run_code()
+    expected = check.validate(solution, CONFIG)
+    assert expected["verification_status"] == "exact"
+    assert expected["objective"] == _independent_cutwidth(solution["ordering"])
+    assert len(expected["details"]["cut_profile"]) == 129
+    for key, value in (("objective", -999), ("score", float("nan")), ("claimed_score", "0")):
+        forged = copy.deepcopy(solution)
+        forged[key] = value
+        assert check.validate(forged, CONFIG) == expected
+    assert expected["details"]["claimed_objective_ignored"] is True
 
 
 @pytest.mark.parametrize(
-    ("filename", "program", "sha256"),
+    "ordering",
     [
-        (
-            "afy_70_adjlist_nx.txt",
-            human_run,
-            "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
-        ),
-        (
-            "coxeter_70_adjlist_nx.txt",
-            reference_run,
-            "2b62872f9ac8ca2f8bed3f6495033aa7e7acd97d16e1427a3532c638100dbde5",
-        ),
+        list(range(1, 130)),
+        [1, 1] + list(range(3, 131)),
+        [True] + list(range(2, 131)),
+        [1.0] + list(range(2, 131)),
+        [0] + list(range(2, 131)),
+        [131] + list(range(2, 131)),
     ],
 )
-def test_two_public_order_70_witnesses_are_exact(filename, program, sha256):
-    source = TASK_DIR / "data" / "reference" / filename
-    assert hashlib.sha256(source.read_bytes()).hexdigest() == sha256
-    candidate = program()
-    result = validate(candidate, CONFIG, strict=True)
-    assert result["objective"] == 70
-    assert result["details"]["edge_count"] == 105
-    assert result["details"]["maximum_degree"] == 3
-    assert result["details"]["diameter"] == 5
-    assert _independent_graph_audit(candidate) == (105, 5)
+def test_invalid_orders_are_rejected(ordering):
+    with pytest.raises(ValueError):
+        check.validate({"ordering": ordering}, CONFIG)
 
 
-def test_simple_seed_and_small_boundary_graphs_are_valid():
-    assert validate(seed_run(), CONFIG)["objective"] == 1
-    assert validate({"n": 2, "edges": [[0, 1]]}, CONFIG)["objective"] == 2
-    assert validate({"n": 6, "edges": [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]]}, CONFIG)["objective"] == 6
+def test_configuration_is_fixed_and_complete():
+    bad_id = {**CONFIG, "id": "T044-C02"}
+    with pytest.raises(ValueError):
+        check.validate(init_program.run_code(), bad_id)
+    bad_parameters = {**CONFIG, "parameters": {**CONFIG["parameters"], "vertices": 129}}
+    with pytest.raises(ValueError):
+        check.validate(init_program.run_code(), bad_parameters)
+    bad_extra = {**CONFIG, "parameters": {**CONFIG["parameters"], "integer_domain": False}}
+    with pytest.raises(ValueError):
+        check.validate(init_program.run_code(), bad_extra)
 
 
-def test_checker_rejects_bad_edges_degree_connectivity_and_diameter():
-    invalid = [
-        {"n": 2, "edges": [[0, 0]]},
-        {"n": 2, "edges": [[0, 1], [1, 0]]},
-        {"n": 2, "edges": [[0, 2]]},
-        {"n": 5, "edges": [[0, 1], [0, 2], [0, 3], [0, 4]]},
-        {"n": 3, "edges": [[0, 1]]},
-        {"n": 7, "edges": [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]]},
-        {"n": True, "edges": []},
-        {"n": 1.0, "edges": []},
-        {"n": math.nan, "edges": []},
-        {"n": 95, "edges": []},
-        {"n": 2, "edges": [[False, 1]]},
-        {"n": 2, "edges": [[0.0, 1]]},
-        {"n": 1, "edges": [[0]]},
-        None,
-    ]
-    for candidate in invalid:
-        with pytest.raises(ValueError):
-            validate(candidate, CONFIG)
-
-
-def test_claimed_scores_are_ignored_and_configuration_is_fixed():
-    candidate = human_run()
-    original = validate(candidate, CONFIG)
-    for forged in (-1, 0, 10**100, "70", math.nan, math.inf, True):
-        changed = {**candidate, "claimed_objective": forged, "score": forged}
-        assert validate(changed, CONFIG) == original
-    with pytest.raises(ValueError, match="configuration id"):
-        validate(candidate, {**CONFIG, "id": "T044-C02"})
-    with pytest.raises(ValueError, match="parameters"):
-        validate(candidate, {**CONFIG, "parameters": {**CONFIG["parameters"], "diameter_at_most": 4}})
-
-
-def test_all_five_programs_return_valid_data_and_seeded_baseline_replays(monkeypatch):
+def test_seeded_baseline_and_evolution_entry_are_repeatable(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T044-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "36")
-    for program in (seed_run, baseline_run, evolution_run, human_run, reference_run):
-        assert validate(program(), CONFIG)["verification_status"] == "exact"
-    first = baseline_run()
-    second = baseline_run()
+    monkeypatch.setenv("MATHBENCH_SEED", "31")
+    monkeypatch.setenv("T044_SEARCH_TRIALS", "1")
+    monkeypatch.setenv("T044_INSERTION_VERTEX_TRIALS", "2")
+    first = baseline.run_code()
+    second = baseline.run_code()
     assert first == second
-    assert first["search_metadata"]["comparison_data_read"] is False
-    assert first["search_metadata"]["attempts"] <= first["search_metadata"]["attempt_limit"]
+    assert check.validate(first, CONFIG)["objective"] >= 1
+    assert evolution.run_code() == first
 
 
-def test_shared_runner_surfaces_candidate_error_and_timeout():
+def test_runner_reports_program_errors_and_timeouts_without_registry_changes():
     from mathbench.evaluate import _run
 
-    environment = dict(os.environ)
-    with pytest.raises(RuntimeError, match="candidate failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
-    with pytest.raises(TimeoutError, match="Wall time limit"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional failure')"], env, 5)
+    start = time.monotonic()
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.1)
+    assert time.monotonic() - start < 3

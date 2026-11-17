@@ -1,6 +1,8 @@
-"""Self-contained powers-of-two seed for the configured set size."""
-import os
+import random
+
 def run_code():
-    cid=os.environ.get("MATHBENCH_CONFIG_ID","T076-C01")
-    if cid != "T076-C01":raise ValueError(f"unsupported T076 configuration: {cid}")
-    return {"elements":[1<<bit for bit in range(15)]}
+    # EVOLVE-BLOCK-START
+    rng=random.Random(0)
+    coeff=[rng.randint(1, 1000) for _ in range(208)]
+    # EVOLVE-BLOCK-END
+    return {"coefficients":coeff}

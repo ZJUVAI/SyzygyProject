@@ -1,58 +1,67 @@
-"""Random recursive triangulation search; it reads no comparison assets."""
+"""NEH construction followed by seeded swap/insertion local search."""
 
 import os
 import random
-import heapq
-import math
 
-from tasks.t094.triangulation import N, random_recursive_triangulation
+from mathbench.search import search_steps
+from tasks.t094.check import load_processing_times, makespan
 
 
-def _fast_value(edges):
-    adjacency = [[] for _ in range(N)]
-    for a, b in edges:
-        d = min((a - b) % N, (b - a) % N)
-        length = 2.0 * math.sin(math.pi * d / N)
-        adjacency[a].append((b, length))
-        adjacency[b].append((a, length))
-    worst = 1.0
-    for source in range(N):
-        dist = [math.inf] * N
-        dist[source] = 0.0
-        todo = [(0.0, source)]
-        while todo:
-            value, node = heapq.heappop(todo)
-            if value != dist[node]:
-                continue
-            for other, length in adjacency[node]:
-                candidate = value + length
-                if candidate < dist[other]:
-                    dist[other] = candidate
-                    heapq.heappush(todo, (candidate, other))
-        for target in range(source + 1, N):
-            direct = 2.0 * math.sin(math.pi * min(target - source, N - target + source) / N)
-            worst = max(worst, dist[target] / direct)
-    return worst
+ITERATION_LIMIT = 2_000
+
+
+def neh(processing_times):
+    jobs = range(1, 51)
+    order = sorted(jobs, key=lambda job: sum(row[job - 1] for row in processing_times), reverse=True)
+    sequence = []
+    for job in order:
+        candidates = [sequence[:index] + [job] + sequence[index:]
+                     for index in range(len(sequence) + 1)]
+        sequence = min(candidates, key=lambda candidate: makespan(candidate, processing_times))
+    return sequence
 
 
 def run_code():
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T094-C01")
+    if config_id != "T094-C01":
+        raise ValueError("configuration id must be T094-C01")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = random.Random(seed)
-    trials = max(1, int(os.environ.get("T094_SEARCH_TRIALS", "6")))
-    best = None
-    best_value = math.inf
-    for _ in range(trials):
-        candidate = random_recursive_triangulation(rng.randrange(1 << 30))
-        value = _fast_value(candidate)
-        if value < best_value:
-            best, best_value = candidate, value
+    processing_times = load_processing_times()
+    current = neh(processing_times)
+    current_score = makespan(current, processing_times)
+    best = current[:]
+    best_score = current_score
+    iterations = 0
+    steps = iter(search_steps(ITERATION_LIMIT))
+    for _ in range(ITERATION_LIMIT):
+        if next(steps, None) is None:
+            break
+        proposal = current[:]
+        left, right = sorted(rng.sample(range(50), 2))
+        if rng.random() < 0.65:
+            proposal[left], proposal[right] = proposal[right], proposal[left]
+        else:
+            job = proposal.pop(right)
+            proposal.insert(left, job)
+        score = makespan(proposal, processing_times)
+        iterations += 1
+        if score < current_score or rng.random() < 0.025:
+            current, current_score = proposal, score
+        if score < best_score:
+            best, best_score = proposal, score
     return {
-        "edges": best,
+        "permutation": best,
+        "claimed_objective": best_score,
         "search_metadata": {
-            "algorithm": "uniform recursive split triangulations; retain the best floating feedback score",
-            "trials": trials,
+            "algorithm": "NEH insertion construction with randomized swap/insertion local search",
+            "config_id": config_id,
             "seed": seed,
+            "iterations": iterations,
+            "iteration_limit": ITERATION_LIMIT,
+            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
             "reference_data_read": False,
-            "feedback_is_certified": False,
+            "budget": {"iteration_limit": ITERATION_LIMIT,
+                       "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS")},
         },
     }

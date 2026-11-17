@@ -1,1 +1,12 @@
-Choose 12 distinct points in the plane to minimize the largest squared pair distance divided by the smallest squared pair distance. Return a JSON object with `points`, a list of exactly 12 coordinate pairs. Each coordinate must be an integer or an exact rational string such as `"3/2"`; floating-point values are not accepted. There are no coordinate bounds, container, or collinearity restriction. The evaluator computes all 66 squared distances with exact rational arithmetic and ignores claimed scores. Do not read human or reference files. The initial program returns a 4 by 3 integer grid.
+Find a polynomial-Gaussian witness for the one-dimensional sign-uncertainty problem.
+
+Use a finite polynomial p with exact rational coefficients and define
+
+    f(x) = p(pi*x^2) exp(-pi*x^2)
+    fhat(xi) = q(pi*xi^2) exp(-pi*xi^2),
+
+where fhat uses the Fourier transform integral f(x) exp(-2*pi*i*x*xi) dx. The checker derives q from p. Require p(0)<0 and q(0)<0. Both polynomials must be nonnegative for all sufficiently large nonnegative arguments.
+
+Minimize A(f) A(fhat), where A(g)=inf{r>0: g(x)>=0 whenever |x|>=r}. The checker finds the last negative-to-positive root of each polynomial by exact rational root isolation. It returns a certified rational interval and ranks the construction by its conservative upper endpoint. Do not report a floating-point root or a claimed score as proof.
+
+Return JSON with a `coefficients` array in ascending powers of t. Each coefficient may be an integer, a finite JSON number interpreted as its exact binary rational, or a rational string such as `-3/2`. Do not read task data, human witnesses, or reference files. Keep the degree finite; there is no configured degree cap.

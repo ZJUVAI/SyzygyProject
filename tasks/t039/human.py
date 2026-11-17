@@ -1,9 +1,15 @@
-"""Replay the published FPGA-search construction archived with this task."""
+"""Replay the published 80-vertex C2000.9 clique from Grosso et al. (2005)."""
+
+import json
+import os
 from pathlib import Path
+
+DATA = Path(__file__).resolve().parent / "data/reference/human_2005_clique80.json"
 
 
 def run_code():
-    path = Path(__file__).resolve().parent / "data" / "shehadeh_kingsford_kschischang_7_5_112.txt"
-    rows = [[int(value) for value in line.split()]
-            for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
-    return {"rows": rows}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T039-C01") != "T039-C01":
+        raise ValueError("unsupported configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    return {"vertices": data["vertices"], "method_metadata": {"seed": seed, "published_value": 80}}

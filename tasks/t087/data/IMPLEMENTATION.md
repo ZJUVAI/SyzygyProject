@@ -1,42 +1,21 @@
-# T087 implementation and validation
+# T087 implementation and review evidence
 
-Status: **accepted by Sol on 2026-11-06**.
+## Configuration and objective
 
-## Fixed mathematical model
+The official configuration is T087-C01 with `k=343`. The objective is to minimize the diameter `max(tuple)-min(tuple)`. A tuple is admissible when it has 343 distinct integers and misses at least one residue class modulo every prime `p <= 343`. A prime `p > 343` has more residue classes than the tuple has entries, so it cannot cover every class.
 
-The configuration fixes 480 nonnegative rational heights on cells of width `13/4800` and support length `13/10`. It maximizes the minimum autocorrelation on all shifts in `[0,1]`, divided by squared L1 mass. For a cell-step function, autocorrelation is linear between multiples of the cell width. Since `1/d=369+3/13`, the checker takes the exact minimum over the 370 nodes `k*d` for `k=0,...,369` and the exact interpolation at `t=1`. This is a whole-interval certificate.
+The checker recomputes admissibility and the exact integer diameter. It ignores candidate-supplied objective fields. It rejects any configuration ID or `k` value that does not match T087-C01.
 
-The checker accepts exact integers, rational strings, and finite floats interpreted as their exact binary rationals. It rejects negative heights, zero mass, wrong vector length, nonfinite values, and changed configurations. It ignores reported scores.
+## Human and public reference
 
-## Source review and baseline status
+Thomas Engelsma's published tuple has diameter 2340. The local witness in `data/human_343.json` matches the tuple in the [MIT Prime Gaps artifact](https://math.mit.edu/~primegaps/tuples/admissible_343_2340.txt). The [MathBases narrow admissible tuples page](https://mathbases.org/d/narrow-admissible-tuples) lists the database scope and record status. The k=343 row has no optimality marker. This evidence does not prove optimality.
 
-Barnard and Steinerberger, arXiv:1903.08731v2 (19 February 2020), define the underlying continuous problem, give bounds `>0.37` and `≤0.411`, and describe the modified-arcsine construction. The frozen human method reconstruction samples the formula at cell centers and rounds to denominator 100,000. Its exact score is `15833948850637600/43788391811747427` (about `0.361601515732983`). This is a local finite-grid reconstruction, not a score reported in the paper.
+The task's source review and exact replay are recorded in `data/bestknown.json`. The checker independently confirms all 68 primes through 343 and the exact diameter.
 
-The public exact certificate is Kevin Russell / ProjectForty2's CHRONOS-assisted construction. Its repository was pinned to current main commit `b23f2d386eda9963e33c7531eeeb35c8f54cba37`, checked on 2026-11-06. The certificate SHA-256 is `11cc0e743163a1e7f4f3b86bdf1f15c2cfd5fc099db3a323d2ea396b9d28d1fa`. The upstream README and license are saved in `data/source/`. Exact recomputation returns `2378625/5958277`; minimum autocorrelation is `82459/13824000`, and L1 mass is `8801/72000`.
+## Initial program and search
 
-Latest-source check found Chen and Gu, arXiv:2610.18888v1, submitted 2026-10-08. It proves a stronger lower bound `C≥0.410377977432121...` for the unrestricted continuous constant. Its construction uses an atomic-polynomial profile and an atom-removal argument. The paper does not give the fixed 480-cell vector used here, so that continuous result is tracked separately and is not used as this configuration's score. The note also does not claim an optimum. The 480-height finite-dimensional optimum remains unknown in sources checked through 2026-11-06.
+The initial program returns 343 consecutive multiples of the product of all primes through 343. Every entry is zero modulo each checked prime. This gives a valid seed with diameter `342` times that product.
 
-## Program separation and local run
+The traditional baseline starts with a greedy admissible tuple and makes bounded randomized replacements. The evolution program uses interval residue masks and exact final validation. Both programs use the configured random seed. A warm-start file is read only from an explicit runner-provided path. The standard limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one thread.
 
-- The initial program returns 480 unit heights.
-- The baseline starts from those heights and makes 400 seeded block mutations. It uses NumPy only for search feedback. The checker recomputes the final score exactly.
-- Evolution runs 1,400 seeded block mutations from the same simple starting vector. It reads no comparison witness.
-- The human program reconstructs the modified-arcsine formula without loading reference data.
-- The reference program loads only the pinned public certificate from `data/reference/`.
-
-With seed 0, the 400-step baseline scored `40960/135759` (about `0.30171112`). The 1,400-step evolution scored `3345600/10694437` (about `0.31283554`). The evolution result is saved in `data/search/seed-0.json`, with the environment and shared limits. Both local results are below the frozen human method reconstruction.
-
-## Validation
-
-On Python 3.13.12/Linux, run:
-
-```sh
-.venv/bin/python -m pytest tasks/t087/test_task.py -q
-.venv/bin/python -m json.tool tasks/t087/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t087/data/bestknown.json > /dev/null
-git diff --check -- tasks/t087
-```
-
-The test command passed all 20 tests in 9.70 seconds on Python 3.13.12/Linux. The tests cover the human and AI witnesses, initial and search entries, exact source score and mass, the `t=1` interpolation using the uniform profile, rational and float inputs, invalid data and altered configurations, claim-score invariance, and `_run` error and timeout controls. All three JSON files parsed, and `git diff --check -- tasks/t087` passed.
-
-Shared limits are 300 seconds for generation, 60 seconds for verification, 4 GiB memory, one thread, and 16 MiB output. Search iteration counts are fixed. No global optimum is known from sources checked.
+The saved best construction and its replay record are in `data/results.json`. The prior Sol review applies to the reviewed implementation and recorded run. This cleanup removes nonofficial configurations. Sol must review the resulting implementation before it receives a current acceptance status.

@@ -1,68 +1,94 @@
-"""Fixed-seed greedy extension search for unrestricted discrepancy C=3."""
+"""Seeded randomized greedy packing of 3-spaces by their 2-subspaces."""
 
-import math
 import os
 import random
 import time
+from functools import lru_cache
 
 
-def _divisors_table(limit):
-    divisors = [[] for _ in range(limit + 1)]
-    for d in range(1, limit + 1):
-        for n in range(d, limit + 1, d):
-            divisors[n].append(d)
-    return divisors
+@lru_cache(maxsize=1)
+def _spaces():
+    spaces = set()
+    vectors = range(1, 128)
+    for a in vectors:
+        for b in range(a + 1, 128):
+            ab = {0, a, b, a ^ b}
+            for c in range(b + 1, 128):
+                if c in ab:
+                    continue
+                space = tuple(sorted(ab | {x ^ c for x in ab}))
+                spaces.add(space)
+    ordered = sorted(spaces)
+    line_ids = {}
+    supports = []
+    for space in ordered:
+        nonzero = [x for x in space if x]
+        lines = set()
+        for i, x in enumerate(nonzero):
+            for y in nonzero[i + 1:]:
+                lines.add(tuple(sorted((x, y, x ^ y))))
+        assert len(lines) == 7
+        ids = []
+        for line in sorted(lines):
+            ids.append(line_ids.setdefault(line, len(line_ids)))
+        supports.append(tuple(ids))
+    assert len(ordered) == 11811 and len(line_ids) == 2667
+    return ordered, supports
 
 
-def _grow(divisors, limit, rng, counter, deadline=None):
-    sums = [0] * (limit + 1)
-    seq = []
-    for n in range(1, limit + 1):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        allowed = [s for s in (-1, 1) if all(abs(sums[d] + s) <= 3 for d in divisors[n])]
-        counter[0] += 1
-        if not allowed:
-            break
-        sign = rng.choice(allowed)
-        seq.append(sign)
-        for d in divisors[n]:
-            sums[d] += sign
-    return seq
+def _basis(space):
+    chosen, span = [], {0}
+    for vector in space:
+        if vector and vector not in span:
+            chosen.append(vector)
+            span |= {x ^ vector for x in span}
+            if len(chosen) == 3:
+                return chosen
+    raise ValueError("space has no three-vector basis")
 
 
 def run_code():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T051-C01") != "T051-C01":
+        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T051_SEARCH_TRIALS", "24"))
-    limit = int(os.environ.get("T051_SEARCH_LIMIT", "5000"))
-    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    if trials < 0 or limit < 1:
-        raise ValueError("search trials must be nonnegative and limit positive")
-    if seconds is None:
-        deadline = None
-    else:
-        duration = float(seconds)
-        if not math.isfinite(duration) or duration <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + duration
-    divisors = _divisors_table(limit)
+    passes = max(1, min(100, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "12"))))
+    from mathbench.search import search_steps
+
+    start = time.monotonic()
+    spaces, supports = _spaces()
     rng = random.Random(seed)
-    best = [1]
-    attempts = [0]
-    completed = 0
-    for _ in range(trials):
-        candidate = _grow(divisors, limit, rng, attempts, deadline)
-        completed += 1
-        if len(candidate) > len(best):
-            best = candidate
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-    return {"sequence": best, "search": {
-        "algorithm": "random greedy legal-sign extension; every divisor-ending prefix checked",
-        "seed": seed,
-        "trial_limit": trials,
-        "trials_completed": completed,
-        "extension_attempts": attempts[0],
-        "search_limit": limit,
-        "reference_data_read": False,
-    }}
+    best, best_pass = [], 0
+    passes_run = 0
+    for pass_index in search_steps(passes):
+        order = list(range(len(spaces)))
+        rng.shuffle(order)
+        used_lines = 0
+        chosen = []
+        for index in order:
+            line_mask = sum(1 << line_id for line_id in supports[index])
+            if not (used_lines & line_mask):
+                chosen.append(index)
+                used_lines |= line_mask
+        passes_run += 1
+        if len(chosen) > len(best):
+            best = chosen
+            best_pass = pass_index
+    return {
+        "codewords": [_basis(spaces[index]) for index in best],
+        "search_metadata": {
+            "algorithm": "seeded randomized greedy packing of enumerated 3-spaces by 2-space supports",
+            "seed": seed,
+            "iterations_requested": passes,
+            "iterations_run": passes_run,
+            "best_pass": best_pass,
+            "candidate_subspaces_enumerated": len(spaces),
+            "line_supports": 2667,
+            "generation_seconds": time.monotonic() - start,
+            "budget": {"mode": "fixed_iterations unless MATHBENCH_SEARCH_SECONDS is set",
+                       "runner_generation_limit_seconds": 300},
+        },
+    }
+
+
+if __name__ == "__main__":
+    print(run_code())

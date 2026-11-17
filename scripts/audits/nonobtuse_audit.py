@@ -6,7 +6,7 @@ from mathbench.registry import ROOT
 
 
 def audit(s):
-    path=ROOT/'tasks/t064/data/source/ortho40.instance.json'
+    path=ROOT/'tasks/t026/data/source/ortho40.instance.json'
     instance=json.loads(path.read_text())
     p=list(zip(map(F,instance['points_x']),map(F,instance['points_y'])))+list(zip(map(F,s['steiner_points_x']),map(F,s['steiner_points_y'])))
     assert len(p)==len(set(p))==40+len(s['steiner_points_x'])

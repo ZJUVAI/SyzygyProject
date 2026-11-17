@@ -1,156 +1,101 @@
 {
   "task_id": "T041",
-  "survey_date": "2026-11-06",
-  "configuration_id": "T041-C01",
-  "parameter_match": {
-    "square_count": 17,
-    "container": "unit square",
-    "rotations": "unrestricted",
-    "side_lengths": "positive and variable",
-    "objective": "maximize the sum of side lengths"
-  },
-  "sources": [
-    {
-      "title": "Sprite143, erdos-106-counterexample",
-      "url": "https://github.com/Sprite143/erdos-106-counterexample",
-      "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
-      "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
-      "reported_closed_form_value": "2190452873/547596200",
-      "reported_search_certificate_value": "2000062156200269/500000000000000",
-      "ai_provenance": "ProbXiv record dated 2026-08-17 says Claude Opus 5 discovered the packing with human-led search infrastructure. The GitHub repository says it has not been checked by a human referee.",
-      "reproduction": "The pinned construct.py is archived. Its closed-form output was converted to exact rational square data and checked independently by tasks/t041/check.py.",
-      "status": "feasible lower-bound candidate, exact task-local reproduction, not an optimum proof"
-    },
-    {
-      "title": "ProbXiv, Erdős Problem #106",
-      "url": "https://probxiv.com/problems/erdos-106",
-      "version": "record checked 2026-11-06; added 2026-08-17",
-      "scope": "AI and machine-review provenance for the same n=17 construction",
-      "status": "record says no person has examined the submission. It reports a machine-checked Lean formalization and warns that this does not establish that the formalization matches the webpage claim."
-    },
-    {
-      "title": "DeepMind, Mathematical exploration and discovery at scale, Section 6.35",
-      "url": "https://arxiv.org/abs/2511.02864v1",
-      "version": "v1, 2025-11",
-      "result": "AlphaEvolve reports a search result of 4 for n=17. This is not an upper bound and does not match the later public construction.",
-      "status": "AI search result; no optimality claim"
-    },
-    {
-      "title": "Baek, Koizumi, and Ueoro, A note on the Erdős conjecture about square packing",
-      "url": "https://arxiv.org/abs/2411.07274",
-      "version": "arXiv v1, 2024-11-11",
-      "scope": "axis-parallel square packings only",
-      "status": "not an upper bound for unrestricted rotations"
-    },
-    {
-      "title": "Erdős and Graham, On packing squares with equal squares",
-      "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
-      "version": "Journal of Combinatorial Theory A 19 (1975), 119–123",
-      "scope": "historical source for equal-square grid methods; the task's exact 17-square witness is reconstructed and not attributed to the paper"
-    }
-  ],
-  "bounds": {
-    "lower_bound": "2190452873/547596200",
-    "upper_bound": "sqrt(17)",
-    "upper_bound_derivation": "The squares have pairwise disjoint interiors in area 1, so the sum of squared side lengths is at most 1. Cauchy–Schwarz gives (sum side)^2 <= 17 * sum(side^2) <= 17.",
-    "status": "No matching upper bound located in the checked sources. The public witness is a feasible lower bound, not an optimum proof."
-  },
-  "frozen_comparison": {
-    "human_reference": "4",
-    "type": "same-parameter human-method reconstruction",
-    "compatibility_score": "raw objective / 4",
-    "limitation": "A score above 1 exceeds the frozen grid baseline only; it does not establish global optimality."
-  },
-  "review_status": "accepted_by_sol",
   "configurations": {
     "T041-C01": {
       "program": "reference.py",
-      "reproduced_value": "2190452873/547596200",
-      "public_value": "2190452873/547596200",
+      "reproduced_value": 191,
+      "public_value": 191,
       "highest_reported": {
-        "value": "2190452873/547596200",
-        "source": {
-          "value": {
-            "T041-C01": "2190452873/547596200"
-          },
-          "date_checked": "2026-11-06",
-          "parameters": {
-            "square_count": 17,
-            "container": "closed unit square [0,1]^2",
-            "orientation": "arbitrary",
-            "objective": "sum of side lengths"
-          },
-          "url": "https://github.com/Sprite143/erdos-106-counterexample",
-          "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
-          "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
-          "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
-          "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
-          "witness_file": "data/public_witness.json",
-          "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
-        },
-        "reproduction_status": "Exact rational witness reproduced; independent Sol admission pending."
+        "value": 191,
+        "source": "Orland et al., arXiv:2607.15270v3, §6 and Appendix E; also the authors' pinned record dataset.",
+        "reproduction_status": "Exact transition sequence from Appendix E is saved and replayed. All 192 vertices and all nonconsecutive pairs are checked exactly."
       },
-      "human_reference": 4,
       "best_human": {
-        "value": {
-          "T041-C01": "4"
-        },
-        "date_checked": "2026-11-06",
+        "value": 190,
         "parameters": {
-          "square_count": 17,
-          "container": "closed unit square [0,1]^2",
-          "orientation": "arbitrary",
-          "objective": "sum of side lengths"
+          "dimension": 9,
+          "object": "induced_path",
+          "length_unit": "edges"
         },
-        "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
-        "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
-        "origin_type": "human mathematical construction, reconstructed for this task",
-        "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
-        "witness_file": "data/human_grid_witness.json",
-        "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
+        "source": "Wynn (2012), arXiv:1201.1647v1, §VI and appendix, Q9 snake transition sequence.",
+        "url": "https://arxiv.org/html/1201.1647",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional human computational construction by sequence joining and permutation search. No generative AI contribution is reported in the 2012 source.",
+        "evidence_state": "The full 190-transition sequence is transcribed, saved, and exactly checked.",
+        "witness": "data/reference/wynn_q9_190.json",
+        "witness_sha256": "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882"
       },
       "best_public": {
-        "value": {
-          "T041-C01": "2190452873/547596200"
-        },
-        "date_checked": "2026-11-06",
+        "value": 191,
         "parameters": {
-          "square_count": 17,
-          "container": "closed unit square [0,1]^2",
-          "orientation": "arbitrary",
-          "objective": "sum of side lengths"
+          "dimension": 9,
+          "object": "induced_path",
+          "length_unit": "edges"
         },
-        "url": "https://github.com/Sprite143/erdos-106-counterexample",
-        "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
-        "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
-        "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
-        "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
-        "witness_file": "data/public_witness.json",
-        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
+        "source": "Orland et al., New Snake-in-the-Box Records via Snakepit Surgery and Learned Construction, arXiv:2607.15270v3, §6 and Appendix E.",
+        "url": "https://arxiv.org/html/2607.15270v3",
+        "date_checked": "2026-11-06",
+        "provenance": "The authors state that the Q9 record came from cube-surgery simulated annealing. Their paper also reports LLM assistance with manuscript work and with writing and optimizing search code; it does not attribute that assistance to this particular witness or experiment. Record as source-reported computational work with project-level LLM assistance disclosed.",
+        "evidence_state": "The paper prints a complete 191-transition Q9 witness and says the maximum is unknown for dimension 9.",
+        "witness": "data/reference/orland_v3_q9_191.json",
+        "witness_sha256": "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4"
       },
       "best_reproduced": {
-        "value": {
-          "T041-C01": "2190452873/547596200"
-        },
+        "value": 191,
         "date_reproduced": "2026-11-06",
-        "witness_file": "data/public_witness.json",
-        "source_files": [
-          "data/source/public_construct.py",
-          "data/source/CERTIFICATE_n17.json",
-          "data/source/repository.tar.gz"
-        ],
-        "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
-        "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
-        "original_search_certificate_value": "2000062156200269/500000000000000",
-        "actual_value": {
-          "T041-C01": "2190452873/547596200"
+        "parameters": {
+          "dimension": 9,
+          "object": "induced_path",
+          "length_unit": "edges"
         },
+        "program": "reference.py",
         "verification_status": "exact",
-        "pairs_checked": 136,
-        "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
-        "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
-        "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe",
+        "verification_method": "Replay the paper's 191 coordinate flips from the origin; check distinct in-range vertices, all consecutive Hamming distances, and every nonconsecutive pair.",
+        "witness": "data/reference/orland_v3_q9_191.json",
+        "witness_sha256": "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4",
+        "origin_type": "published record witness, independently rechecked",
         "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 190,
+        "witness_program": "human.py",
+        "witness": "data/reference/wynn_q9_190.json",
+        "witness_sha256": "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882",
+        "evidence_state": "Published traditional human construction, reproduced from its complete transition sequence.",
+        "note": "Same-parameter published traditional construction."
+      },
+      "optimality_status": {
+        "status": "open; independently verified bounds 191 <= a(9) <= 286",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The current paper v3, pinned author repository, and current Leaps in Bounds entry report a verified 191-edge lower bound and no upper bound. The paper explicitly leaves existence of a 192-edge Q9 snake open.",
+        "limitations": "The reported census of 131 symmetry classes is based on sampling and is not an exhaustive proof of optimality or completeness."
+      },
+      "source_pins": {
+        "paper": {
+          "version": "arXiv:2607.15270v3, submitted 2026-09-30",
+          "url": "https://arxiv.org/html/2607.15270v3",
+          "record_location": "§6 Record provenance; Appendix E"
+        },
+        "authors_repository": {
+          "url": "https://github.com/Math-AI-Caltech/Snake-in-the-Box",
+          "commit": "46c765399353a588ea50444a5d6610f53102b1c2",
+          "commit_date": "2026-10-01",
+          "readme_blob_sha1": "3e66ab83a2be5ddbfacd3081c0df5ce3d4b7ae04",
+          "record_snakes_csv_zip_blob_sha1": "7854e2592325dab85a35a8a4809314edb80f7af8",
+          "record_snakes_csv_zip_size": 16721566
+        },
+        "current_status_entry": {
+          "url": "https://leapsinbounds.org/constants/snake-in-the-box-9/",
+          "date_checked": "2026-11-06",
+          "reported_lower_bound": 191,
+          "reported_upper_bound": null
+        }
+      },
+      "analytic_upper_bound": {
+        "value": 286,
+        "reviewer": "Sol main agent",
+        "derivation": "For k path vertices, the induced graph has k-1 edges. Its outgoing edges are 9k-2(k-1)=7k+2, at most 9(512-k). Thus16k<=4606, k<=287 and path edges<=286.",
+        "scope": "Independent conservative counting bound; no claim that this is the best published upper bound."
       },
       "review_status": "accepted_by_sol",
       "verification": {
@@ -161,23 +106,19 @@
           "task_id": "T041",
           "config_id": "T041-C01",
           "validity": 1.0,
-          "combined_score": 1.0000310781009802,
-          "objective": "2190452873/547596200",
+          "combined_score": 1.0052631578947369,
+          "objective": 191,
           "verification_status": "exact",
-          "generation_time": 0.790732491761446,
-          "verification_time": 0.6489687003195286,
-          "objective_value": "2190452873/547596200",
+          "generation_time": 0.46631766483187675,
+          "verification_time": 0.43076062947511673,
+          "objective_value": 191,
           "details": {
-            "square_count": 17,
-            "pairs_checked": 136,
-            "corners_checked": 68,
-            "objective_name": "sum_of_side_lengths",
-            "touching_allowed": true,
-            "arithmetic": "exact rational arithmetic",
-            "claimed_objective_ignored": true,
-            "strict": true
+            "dimension": 9,
+            "vertices_checked": 192,
+            "nonconsecutive_pairs_checked": 18145,
+            "claimed_objective_ignored": true
           },
-          "eval_time": 1.4518382884562016,
+          "eval_time": 0.9030175022780895,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -194,147 +135,40 @@
           }
         },
         "independent_quantity": {
-          "sum_sides": "2190452873/547596200",
-          "clipped_pairs": 136
+          "induced_path_edges": 191,
+          "neighbor_memberships_checked": 1728,
+          "crossing_edges": 1346,
+          "analytic_edge_upper_bound": 286
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "36de013556d4f81ed0d59b099be71a1dd3578702ee1cba8dd6c2301087a1e453"
+        "claimed_score_ignored": true
       },
-      "other_public_results": [
-        {
-          "value": {
-            "T041-C01": "4"
-          },
-          "source": "https://arxiv.org/abs/2511.02864",
-          "source_version": "v1, 2025-11, section 6.35",
-          "provenance": "AlphaEvolve search result. The paper says its run matched the known value 4 for n=17; this is a search result, not an upper-bound proof.",
-          "origin_type": "AI-assisted search",
-          "same_parameters": true,
-          "evidence_state": "reported in the paper; below the pinned exact rational construction"
-        }
-      ],
-      "survey_scope_note": "The best-public label is limited to the sources listed in tasks/t041/data/bestknown.json and checked on 2026-11-06; this is not a complete literature survey.",
       "parameters": {
-        "square_count": 17,
-        "container": "closed unit square [0,1]^2",
-        "orientation": "arbitrary",
-        "interior_disjoint": true,
-        "objective": "sum of the 17 side lengths"
+        "dimension": 9,
+        "graph": "Q9",
+        "object": "induced_path",
+        "length_unit": "edges"
       },
-      "acceptance_status": "pending_sol_review",
-      "public_lower_bound": "2190452873/547596200",
-      "optimality_status": "open; no matching upper bound located",
-      "generic_upper_bound": "sqrt(17)",
-      "limitations": [
-        "The public construction is AI-assisted and has not had human referee review, according to the checked public record.",
-        "The checker accepts exact rational inputs. Rational unit directions are dense, and strict shrinking followed by rational perturbation preserves the unrestricted supremum.",
-        "The public witness proves a lower bound only. It does not establish the optimum."
-      ]
+      "survey_scope_note": "Q9=191 remains a lower bound, not a solved optimum. The sampled 131-class census is not an optimality proof. The current paper v3, author-repository snapshot, and Leaps in Bounds status entry were checked on 2026-11-06."
     }
   },
-  "survey_cutoff": "2026-11-06",
-  "best_human": {
-    "value": {
-      "T041-C01": "4"
-    },
-    "date_checked": "2026-11-06",
-    "parameters": {
-      "square_count": 17,
-      "container": "closed unit square [0,1]^2",
-      "orientation": "arbitrary",
-      "objective": "sum of side lengths"
-    },
-    "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
-    "provenance": "A 4 by 4 grid of side-1/4 squares with one cell replaced by two side-1/8 squares. This is reconstructed from the elementary grid method; these exact 17 coordinates are not attributed to Erdős and Graham (1975).",
-    "origin_type": "human mathematical construction, reconstructed for this task",
-    "evidence_state": "exact witness archived and independently checked; sum is exactly 4",
-    "witness_file": "data/human_grid_witness.json",
-    "witness_sha256": "a5845c10be261d5ed2b3d3e55978193ef781e5c118d9be9433e7b7bf1a519e02"
-  },
-  "best_public": {
-    "value": {
-      "T041-C01": "2190452873/547596200"
-    },
-    "date_checked": "2026-11-06",
-    "parameters": {
-      "square_count": 17,
-      "container": "closed unit square [0,1]^2",
-      "orientation": "arbitrary",
-      "objective": "sum of side lengths"
-    },
-    "url": "https://github.com/Sprite143/erdos-106-counterexample",
-    "version": "commit edbfb534e78d4f1f9b1a5a7298b9b022285b4962",
-    "provenance": "The repository gives a closed-form rational construction. Its exact witness and score are independently recomputed by this task checker. ProbXiv's 2026-08-17 record discloses AI assistance: Claude Opus 5 discovered the packing. The source says no human has examined it; the repository says it has not had human referee review.",
-    "ai_provenance": "AI-assisted; ProbXiv credits Claude Opus 5 for discovery and describes human-led search infrastructure. No named human author is credited on the record.",
-    "evidence_state": "all 17 corners, containment constraints, and 136 pair tests independently checked with exact rational arithmetic; no optimality proof; no human referee review located",
-    "witness_file": "data/public_witness.json",
-    "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
-  },
-  "best_reproduced": {
-    "value": {
-      "T041-C01": "2190452873/547596200"
-    },
-    "date_reproduced": "2026-11-06",
-    "witness_file": "data/public_witness.json",
-    "source_files": [
-      "data/source/public_construct.py",
-      "data/source/CERTIFICATE_n17.json",
-      "data/source/repository.tar.gz"
-    ],
-    "source_archive_sha256": "52d3dfb518072b709e8abfa4d609a8a5f97f5a3bd33c3431721480ff69317173",
-    "closed_form_source_sha256": "fecd1d59a3989d97a402ab662fca966b60aa8faff3e9fbd8d58a58e0524cd7aa",
-    "original_search_certificate_value": "2000062156200269/500000000000000",
-    "actual_value": {
-      "T041-C01": "2190452873/547596200"
-    },
-    "verification_status": "exact",
-    "pairs_checked": 136,
-    "ai_provenance": "AI-assisted public construction, with discovery credited to Claude Opus 5 by ProbXiv. The task implementation independently replays the pinned closed-form source.",
-    "evidence_state": "exact rational reconstruction and independent exact separating-axis verification; feasibility only, not optimum",
-    "witness_sha256": "2e45dc09c7d64d3b3a9ef99460604409218842dfed073d537a6b832cd9a4d1fe"
-  },
-  "other_public_results": [
-    {
-      "value": {
-        "T041-C01": "4"
-      },
-      "source": "https://arxiv.org/abs/2511.02864",
-      "source_version": "v1, 2025-11, section 6.35",
-      "provenance": "AlphaEvolve search result. The paper says its run matched the known value 4 for n=17; this is a search result, not an upper-bound proof.",
-      "origin_type": "AI-assisted search",
-      "same_parameters": true,
-      "evidence_state": "reported in the paper; below the pinned exact rational construction"
-    }
-  ],
-  "configuration_records": {
-    "T041-C01": {
-      "parameters": {
-        "square_count": 17,
-        "container": "closed unit square [0,1]^2",
-        "orientation": "arbitrary",
-        "interior_disjoint": true,
-        "objective": "sum of the 17 side lengths"
-      },
-      "acceptance_status": "pending_sol_review",
-      "human_reference": "4",
-      "public_lower_bound": "2190452873/547596200",
-      "optimality_status": "open; no matching upper bound located",
-      "generic_upper_bound": "sqrt(17)",
-      "limitations": [
-        "The public construction is AI-assisted and has not had human referee review, according to the checked public record.",
-        "The checker accepts exact rational inputs. Rational unit directions are dense, and strict shrinking followed by rational perturbation preserves the unrestricted supremum.",
-        "The public witness proves a lower bound only. It does not establish the optimum."
-      ]
-    }
-  },
-  "survey_scope_note": "The best-public label is limited to the sources listed in tasks/t041/data/bestknown.json and checked on 2026-11-06; this is not a complete literature survey.",
+  "review_status": "accepted_by_sol",
+  "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T041-C01": {
-        "human_reference": "4",
-        "review_status": "pending_sol_review"
+        "best_human": {
+          "source": "Wynn (2012), arXiv:1201.1647v1, §VI and appendix.",
+          "evidence_state": "Complete transition sequence independently replayed and exactly checked."
+        },
+        "best_public": {
+          "source": "Orland et al., §6 and Appendix E; authors' dataset at commit 46c765399353a588ea50444a5d6610f53102b1c2.",
+          "provenance": "The authors attribute Q9=191 to cube-surgery simulated annealing. They disclose project-level LLM assistance for manuscript work and for writing and optimizing search code, but do not attribute LLM assistance to this particular witness or run.",
+          "evidence_state": "Source paper prints a complete 191-transition witness; exact witness reproduced and validated."
+        },
+        "best_reproduced": {
+          "verification_method": "Replay the published transition sequence and check the complete induced-path constraints."
+        }
       }
     }
   }

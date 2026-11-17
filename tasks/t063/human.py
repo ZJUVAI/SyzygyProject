@@ -1,17 +1,18 @@
-"""Reconstruct the degree-100 row from Mossinghoff's published database."""
-import json
-import os
-from pathlib import Path
-
-DATA = Path(__file__).resolve().parent / "data" / "reference" / "mossinghoff_degree_100_certificate.json"
+"""Rebuild the 32-element initial segment of the Odlyzko-Stanley S(1) sequence."""
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T063-C01") != "T063-C01":
-        raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    return json.loads(DATA.read_text(encoding="utf-8"))
+    elements = [
+        1 + sum(digit * (3**place) for place, digit in enumerate(bits))
+        for bits in _binary_digit_vectors(5)
+    ]
+    return {"elements": elements}
 
 
-if __name__ == "__main__":
-    print(json.dumps(run_code()))
+def _binary_digit_vectors(width):
+    if width == 0:
+        yield ()
+        return
+    for prefix in _binary_digit_vectors(width - 1):
+        yield prefix + (0,)
+        yield prefix + (1,)

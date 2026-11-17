@@ -1,26 +1,19 @@
-# T022 implementation notes
+# T022 implementation record
 
-Status: accepted by Sol on 2026-11-06.
+Status: `accepted_by_sol`.
 
-## Provenance and verification
+The task fixes 17 distinct planar points and maximizes the number of distinct lines containing exactly three input points. A line with four or more input points is excluded. Coordinates are encoded in one real algebraic number field. The checker proves the minimal polynomial irreducible, proves the rational interval contains exactly one real root, reduces coordinates modulo the polynomial, canonicalizes each line over the field, and counts its point incidences exactly.
 
-- Exoo's 1989 paper describes a two-coloring of the edges of K42 and establishes R(5,5) >= 43.
-- McKay's public Ramsey data page says the `r55_42some.g6` archive contains 328 catalogued Ramsey(5,5,42) graphs and that their 328 complements complete the 656-graph catalog.
-- The first graph6 line was decoded into `data/human_witness.json`. Exact verification checked the graph and complement for every 5-clique, and recomputed 42 vertices and 425 edges.
-- Angeltveit and McKay's arXiv v2 (2025-09-01), published in Journal of Graph Theory in 2026, proves R(5,5) <= 46. The checker therefore accepts at most 45 vertices. This bound leaves possible improvements over 42 open.
+The primary source is Green and Tao's §2 acnodal-cubic parametrization and subgroup count, Theorem 2.5 and Proposition 2.6. At n=17 their formula gives 40 lines. Pegg's page is separate same-parameter evidence and is not the source of the exact coordinates here. The task witness is reconstructed by the classical cubic-curve method from `alpha=tan(pi/17)` and the 17 parameters `t_k=tan(k*pi/17)`; its coordinates are not claimed to match Pegg's figure. The minimal polynomial coefficients are stored in ascending order. The frozen witness file is `data/reference/cubic_tangent_17.json`, SHA-256 `0575565b5d4993e07ffcf34a3f4a7799bf214b2486b36c9d1bcec6b966fef77c`. Exact checker output is 40 lines; the maximum line incidence is 3. The independent determinant identity reduces collinearity to `i+j+k=0 mod 17`; direct enumeration gives 40 unordered triples. Since the cubic has no line component, these 40 triples define 40 distinct lines with exactly three points each.
 
-## Programs
+The checked current sources give `a(17) in {40,41,42}`. The witness confirms the lower endpoint. No exact optimum claim is made. The asymptotic Green–Tao theorem is documented without using it to infer a finite-n answer.
 
-`init_program.py` returns a 5-cycle. `baseline.py` uses a fixed seed for up to 40 random one-vertex extension attempts, stops at the theorem-derived 45-vertex cap, and returns the seed, budget, and actual attempt count in `search_metadata`. It does not read task reference files. `human.py` and `reference.py` read the saved public witness.
+The initial program uses 17 points on a rational parabola. The traditional baseline samples fixed-seed 17-point subsets of a 13 by 13 integer grid. Neither reads comparison assets. The human entry rebuilds the algebraic witness; the reference entry reads only its frozen witness under `data/reference/`.
 
-## Replay commands
+Validation command:
 
 ```sh
 .venv/bin/python -m pytest tasks/t022/test_task.py -q
-python3 -m json.tool tasks/t022/task.json > /dev/null
-python3 -m json.tool tasks/t022/data/bestknown.json > /dev/null
 ```
 
-## Acceptance evidence
-
-The task suite tests the seed, baseline metadata, published witness, independent objective, invalid clique and independent-set cases, malformed adjacency, NaN and infinite neighbor indices, empty and boundary graphs, a claimed score, and the proven upper-bound cutoff. The graph6 witness hash is recorded in `bestknown.json`. Sol independently decoded and replayed the human graph, counted all five-vertex subsets, and checked the cold seed. The task passed review on 2026-11-06. See bestknown.json.
+The shared generation and verification budgets are 300 and 60 seconds. Field and determinant arithmetic use exact `Fraction` operations. The checker requires the repository's already declared SymPy dependency for irreducibility and Sturm root isolation.

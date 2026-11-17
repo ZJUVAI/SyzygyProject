@@ -1,6 +1,11 @@
-"""Replay the first 41-vertex, 132-edge graph in the public archive."""
-import json
-from pathlib import Path
+"""Embed the classical ternary 3-AP-free construction on one grid row."""
+import os
 
 def run_code():
-    return json.loads((Path(__file__).parent / "data" / "human_witness.json").read_text())
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T024-C01") != "T024-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    xs = [1 + sum(bit * (3**i) for i, bit in enumerate(bits))
+          for mask in range(16)
+          for bits in [[(mask >> i) & 1 for i in range(4)]]]
+    return {"points": [[x, 0] for x in xs]}

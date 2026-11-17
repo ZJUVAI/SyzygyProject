@@ -1,74 +1,53 @@
-"""Fixed-seed random-order greedy independent-set search for T071."""
+"""Seeded local search from the small valid set {0,1,4}."""
 
-import math
 import os
 import random
 import time
 
-from tasks.t071.check import ALPHABET_SIZE, CONFIG_ID, deletion_outputs
-
-
-TRIAL_LIMIT = 2
-
-
-def _greedy(order, deadline=None):
-    selected = []
-    used_outputs = set()
-    attempted = 0
-    for word in order:
-        if attempted % 1024 == 0 and deadline is not None and time.monotonic() >= deadline:
-            break
-        attempted += 1
-        outputs = deletion_outputs(word)
-        if not outputs.isdisjoint(used_outputs):
-            continue
-        selected.append(word)
-        used_outputs.update(outputs)
-    return selected, attempted
+from mathbench.search import search_steps
+from tasks.t071.search_utils import heuristic_score, mutate
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen}")
-    try:
-        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    except ValueError as exc:
-        raise ValueError("MATHBENCH_SEED must be an integer") from exc
-    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds_text is not None:
-        try:
-            seconds = float(seconds_text)
-        except ValueError as exc:
-            raise ValueError("search seconds must be numeric") from exc
-        if not math.isfinite(seconds) or seconds <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + seconds
-    rng = random.Random(seed)
-    order = list(range(ALPHABET_SIZE))
-    best = []
-    completed = attempted = 0
-    for _ in range(TRIAL_LIMIT):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        rng.shuffle(order)
-        candidate, count = _greedy(order, deadline)
-        attempted += count
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T071-C01") != "T071-C01":
+        raise ValueError("unsupported configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    iterations = max(1, min(5000, int(os.environ.get("MATHBENCH_BASELINE_ITERATIONS", "500"))))
+    rng = random.Random(seed ^ 0x059BA5E)
+    current = [0, 1, 4]
+    current_score = heuristic_score(current)
+    best, best_score = current[:], current_score
+    completed = accepted = invalid = 0
+    start = time.monotonic()
+    for _ in search_steps(iterations):
+        candidate = mutate(current, rng)
+        candidate_score = heuristic_score(candidate)
+        if candidate_score is None:
+            invalid += 1
+            completed += 1
+            continue
+        if candidate_score > current_score or (candidate_score == current_score and rng.random() < 0.05):
+            current, current_score = candidate, candidate_score
+            accepted += 1
+        if candidate_score > best_score:
+            best, best_score = candidate, candidate_score
         completed += 1
-        if len(candidate) > len(best):
-            best = candidate
-        if deadline is not None and time.monotonic() >= deadline:
-            break
     return {
-        "codewords": best,
+        "set": best,
         "search_metadata": {
-            "algorithm": "random-order greedy selection of an independent set in the deletion-conflict graph",
+            "algorithm": "seeded integer-set replacement/add/remove hill climb with occasional plateau moves",
             "seed": seed,
-            "trial_limit": TRIAL_LIMIT,
-            "trials_completed": completed,
-            "candidate_visits": attempted,
-            "reference_data_read": False,
-            "search_seconds_cutoff": seconds_text,
+            "iterations_requested": iterations,
+            "iterations_run": completed,
+            "accepted_moves": accepted,
+            "invalid_strict_bound_trials": invalid,
+            "heuristic_score": best_score,
+            "generation_seconds": time.monotonic() - start,
+            "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds",
         },
     }
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

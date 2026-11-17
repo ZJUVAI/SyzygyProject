@@ -1,10 +1,3 @@
-"""Load the frozen reference generator for the selected configuration."""
-import os
+"""Replay the shared witness for the public reference role."""
 
-from tasks.t009.sota import read_generator, run_code as public_generator
-
-
-def run_code():
-    if os.environ.get('MATHBENCH_CONFIG_ID', 'T009-C01') == 'T009-C01':
-        return read_generator('search_generator.json')
-    return public_generator()
+from tasks.t009.human import run_code as run_code

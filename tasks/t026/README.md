@@ -1,45 +1,29 @@
-# T026：六色 Schur 下界染色
+# T026: ortho40 的最少非钝角三角剖分
 
 ## 中文
 
-### 定义与配置
+配置 `T026-C01` 固定 CG:SHOP 2025 的正交简单多边形 `ortho_40_56a6f463`。输入有 40 个顶点，没有额外约束边。目标是用尽量少的新增 Steiner 点，把整个多边形剖分为非钝角三角形。直角允许。
 
-给正整数的连续前缀 `[1,N]` 使用至多六种颜色。若不存在同色的 `x`、`y` 和 `x+y`，则染色有效。允许 `x=y`；因此也检查 `2x=z`。目标是最大化有效前缀长度 `N`。成绩只表示 `S(6) ≥ N`，不表示 Schur 数已经确定。
+评测器要求候选给出全部 Steiner 坐标和无向边。它使用有理数精确运算检查坐标唯一性、点在多边形内或边界上、边不相交且位于多边形内、边界完整覆盖、图连通，以及每个有界面恰为非退化三角形。每个角的点积必须非负。所有三角形面积之和必须与输入多边形面积相等。评测器不采样、不使用浮点容差，也不信任候选分数。
 
-配置 `T026-C01` 固定颜色数上限为 6。候选 JSON 可用颜色数组 `{"n": N, "colors": [c_1, ..., c_N]}`，位置 `i` 对应整数 `i`，颜色标签为 0 至 5；也可用互不重叠的颜色类 `{"n": N, "classes": [[...], ...]}`。第二种格式必须恰好覆盖 `[1,N]`。检查器拒绝空缺、越界、重复的类成员、布尔数、非整数颜色、NaN、无穷大和任何同色 Schur 三元组。检查器不读取候选声明的分数。
+坐标接口接受任意精度整数、有理数字符串，以及按其精确 IEEE 二进制有理数解释的有限 JSON 浮点数，不设分母位数或字符串长度上限。每次正式验证仍受 16 MiB 输出、4 GiB 内存和 60 秒验证时间限制。Steiner 点数上限为 2000；已知可行上界为 19，因此任何更优构造最多有 18 个 Steiner 点，不会被此上限排除。原几何问题允许任意实坐标；本配置只接收有理坐标见证，不能据此声称覆盖所有实坐标构造。
 
-### 人类基线与公开结果
+人类基线为 129 个 Steiner 点。`human.py` 从输入顶点的全部 x/y 坐标构造笛卡尔网格，并把多边形内的每个网格矩形分成两个直角三角形。这是对公开网格式非钝角剖分方法的弱基线重建，不是竞赛纪录。Ahn 等人的 SoCG 2025 论文报告了以输入点网格为基础的正交实例构造方法。[论文与算法](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.80/LIPIcs.SoCG.2025.80.html)
 
-Fredricksen 与 Sweet 在 2000 年论文中列出 `[1,536]` 的六色对称无和分区。`human.py` 按论文列出的半集及模 537 配对规则重建完整颜色数组。论文允许特殊元素 179 与 358 异色。本地检查器逐项复算分区覆盖，并精确检查所有 `x ≤ y`，包括 `x=y`。该人类对照为 536。
+公开参考构造有 19 个 Steiner 点。Abrahamsen、Brunck、Conradi、Kolbe 和 Nusser 的获胜实现论文在 Figure 10 明确展示本实例及 19 点解；固定源代码版本为提交 `77920a0e578e5bff13c710f988ec1c52d61dcfd8`，见证已存入 `data/reference/` 并精确复核。[SoCG 2025 论文，Figure 10](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.79/LIPIcs.SoCG.2025.79.html) · [归档软件](https://doi.org/10.4230/artifacts.23288)
 
-Chen、Zhu 与 Long 于 2026-10-22 发布 arXiv v1，给出 `[1,537]` 的六色分区。仓库主证书从公开仓库固定提交 `92a9d5f1336a5a064b2bfe6597d967f59191e365` 获取，且 SHA-256 与该提交中的 `SHA256SUMS` 相同。`reference.py` 重放证书；本任务自己的检查器重新计算成绩。论文说明这些分区由搜索找到，但没有披露是否使用 AI 或大语言模型，所以来源标为未披露。该预印本明确不声称 `S(6)` 精确值或 538 不可染色。查验日期为 2026-11-06。
-
-兼容分数冻结为 `J/H`，其中 `J` 是重新计算的有效 `N`，`H=536` 是复现的人类对照。分数大于 1 只表示超过冻结对照。它不表示突破 537 的公开结果，更不表示证明了精确值。
-
-### 程序与验证
-
-`init_program.py` 返回一个简单的四项有效染色，不读取参考数据。`baseline.py` 用固定随机种子执行有界的随机贪心扩展，并记录步数、重启数和预算。`human.py` 重建人类基线。`reference.py` 只重放固定的 537 公开证书。
-
-**状态：已通过 Sol 验收（2026-11-06）。** 精确 Schur 数是否为 537 或更大仍未解决；本任务只验收下界构造。
+已检查的来源没有证明 19 点最优，也没有报告本实例更小的见证。我们在 2026-11-06 复查了论文、归档软件和公开实例数据；这不是穷尽所有资料的声明。获胜团队论文未披露该构造是否使用 AI，因此记录为来源未说明。
 
 ## English
 
-### Definition and configuration
+Configuration `T026-C01` fixes the CG:SHOP 2025 orthogonal simple polygon `ortho_40_56a6f463`. It has 40 vertices and no extra constraint edges. The objective is to minimize the number of added Steiner points in a triangulation of the full polygon. Every triangle must be non-obtuse; right angles are allowed.
 
-Color a consecutive prefix `[1,N]` of the positive integers with at most six colors. A coloring is valid when no same-color `x`, `y`, and `x+y` exist. The terms may be equal, so the checker also tests `2x=z`. The objective is to maximize the valid prefix length `N`. A result gives only the lower bound `S(6) ≥ N`; it does not determine the Schur number.
+The checker takes all Steiner coordinates and undirected edges. It uses exact rational arithmetic to check unique coordinates, point containment, non-crossing edges inside the polygon, full boundary coverage, graph connectivity, and triangular bounded faces. At each triangle vertex, the exact dot product must be non-negative. The sum of triangle areas must equal the polygon area. The checker uses no sampling, floating-point tolerance, or candidate score.
 
-Configuration `T026-C01` fixes an upper limit of six colors. A candidate may use the color-array form `{"n": N, "colors": [c_1, ..., c_N]}`, where position `i` gives the color of integer `i` and labels are 0 through 5. It may also use disjoint color classes: `{"n": N, "classes": [[...], ...]}`. The classes must cover `[1,N]` exactly. The checker rejects gaps, out-of-range values, duplicate class members, booleans, non-integer colors, NaN, infinity, and every monochromatic Schur triple. It ignores any score claimed by the candidate.
+The coordinate interface accepts arbitrary-precision integers, rational strings, and finite JSON floats interpreted as their exact IEEE binary rational values. It sets no denominator-bit or coordinate-string-length limit. Each verification still uses the shared 16 MiB output, 4 GiB memory, and 60 second limits. The checker caps the number of Steiner points at 2,000. Since the known feasible upper bound is 19, any improvement has at most 18 Steiner points and is not excluded by that cap. The geometric problem permits arbitrary real coordinates; this configuration accepts rational-coordinate witnesses only and does not claim to represent every real-coordinate construction.
 
-### Human baseline and public result
+The reconstructed human baseline has 129 Steiner points. `human.py` builds a Cartesian grid from all input x and y coordinates, then splits each grid rectangle inside the polygon into two right triangles. This is a weak reconstruction of a published grid-based method, not a competition record. Ahn et al. describe grid-based constructions for orthogonal instances in their SoCG 2025 paper. [Paper and method](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.80/LIPIcs.SoCG.2025.80.html)
 
-Fredricksen and Sweet list a six-color symmetric sum-free partition of `[1,536]` in their 2000 paper. `human.py` rebuilds the full coloring from the listed half-sets and the paper's pairing rule modulo 537. The paper allows the exceptional elements 179 and 358 to have different colors. The local checker recomputes exact coverage and checks every pair `x ≤ y`, including `x=y`. This is the human baseline at 536.
+The public reference has 19 Steiner points. Figure 10 of the winning implementation paper by Abrahamsen, Brunck, Conradi, Kolbe, and Nusser shows this instance and the 19-point construction. The fixed software commit is `77920a0e578e5bff13c710f988ec1c52d61dcfd8`. The witness is stored under `data/reference/` and was checked with exact arithmetic. [SoCG 2025 paper, Figure 10](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.79/LIPIcs.SoCG.2025.79.html) · [Archived software](https://doi.org/10.4230/artifacts.23288)
 
-Chen, Zhu, and Long posted arXiv v1 on 2026-10-22 with a six-color partition of `[1,537]`. The public main certificate is pinned to repository commit `92a9d5f1336a5a064b2bfe6597d967f59191e365`; its SHA-256 matches that commit's `SHA256SUMS`. `reference.py` replays the certificate, and this task's checker independently recomputes its score. The paper says the partitions were found by search but does not disclose AI or LLM use, so their provenance is recorded as undisclosed. The preprint does not claim the exact value of `S(6)` or impossibility at 538. Checked on 2026-11-06.
-
-The frozen compatibility score is `J/H`, where `J` is the recomputed valid `N` and `H=536` is the reproduced human reference. A score above 1 means only that the construction exceeds the frozen comparator. It does not mean that it exceeds the public 537 result or proves the exact value.
-
-### Programs and validation
-
-`init_program.py` returns a simple valid coloring of length four and does not read reference data. `baseline.py` performs seeded, bounded randomized greedy extension and records its steps, restarts, and budget. `human.py` rebuilds the human baseline. `reference.py` replays only the pinned public 537 certificate.
-
-**Status: accepted by Sol on 2026-11-06.** The exact value of `S(6)` remains unresolved; this task scores lower-bound constructions only.
+The reviewed sources do not prove that 19 is optimal and do not report a smaller witness for this instance. We checked the paper, archived software, and public instance data on 2026-11-06. This is not an exhaustive survey. The winning team did not state whether AI tools were used for this construction, so its AI provenance is recorded as unstated.

@@ -1,18 +1,11 @@
-"""Replay frozen public or traditional product constructions by configuration."""
-import json
+"""Load the public spherical-code witness for the selected configuration."""
 import os
 from pathlib import Path
 
-
-def run_human():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
-    paths = {"T011-C01": "human_reference.json"}
-    try:
-        filename = paths[config_id]
-    except KeyError as exc:
-        raise ValueError(f"unsupported configuration: {config_id}") from exc
-    return json.loads((Path(__file__).parent / "data" / filename).read_text())
-
-
 def run_code():
-    return run_human()
+    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
+    points = []
+    if cid != "T011-C01": raise ValueError("unknown T011 configuration")
+    for line in (Path(__file__).parent / "data" / "spherical_code_3_16.txt").read_text().splitlines():
+        if line.strip(): points.append([x.strip() for x in line.split(",")])
+    return {"points": points}

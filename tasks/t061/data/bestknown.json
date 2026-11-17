@@ -1,57 +1,36 @@
 {
   "task_id": "T061",
-  "review_status": "accepted_by_sol",
-  "checked_at": "2026-11-06",
   "configurations": {
     "T061-C01": {
       "program": "reference.py",
-      "reproduced_value": 133,
-      "public_value": 133,
+      "reproduced_value": 19407,
+      "public_value": 19407,
       "highest_reported": {
-        "value": 133,
-        "metric": "number of edges in a C6-saturated graph on 100 vertices",
-        "direction": "minimize",
-        "source": "https://doi.org/10.1016/j.disc.2025.114504",
-        "source_location": "Theorem 1.5(a), epsilon=1 construction, t=33; Figure 1(a) gives core H",
-        "reproduction_status": "133-edge construction rebuilt from the published description and independently checked for C6-freeness and saturation; this is an upper bound, not a proof of optimality",
-        "ai_provenance": "not stated by source",
-        "date_checked": "2026-11-06",
-        "url": "https://doi.org/10.1016/j.disc.2025.114504"
+        "value": 19407,
+        "source": "Martos Ojeda, Delgado Ordoñez, and Trujillo Solarte, IEEE Access 9 (2021), Table 3, Singer generalized (SG), q=31, m=31",
+        "reproduction_status": "The table entry was transcribed from the web-rendered full text and independently checked; the local transcription is not a byte-identical PDF extraction."
       },
-      "parameters": {
-        "vertices": 100,
-        "forbidden_subgraph": "simple cycle C6",
-        "saturation": "C6-free; adding any missing edge creates a simple C6",
-        "objective": "number of edges"
+      "source": {
+        "title": "B_h Sets as a Generalization of Golomb Rulers",
+        "doi": "10.1109/ACCESS.2021.3106617",
+        "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+        "web_full_text": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+        "table_location": "Table 3, near-optimal B3 sets, row SG q=31, m=31, a_m=19407",
+        "checked_at": "2026-11-06"
       },
-      "witness": "data/reference/c6_sat_100_133.json",
-      "witness_sha256": "39d7689fd56d2f47b4faef733ce8c3a170433ed111fcf0c991feb9e564d28061",
-      "best_human": {
-        "value": 133,
-        "witness": "data/reference/c6_sat_100_133.json",
-        "source": "https://doi.org/10.1016/j.disc.2025.114504",
-        "source_location": "Theorem 1.5(a), Figure 1, n=100",
-        "reconstruction": "Core H on nine vertices, thirty attached 3-vertex paths, and one leaf, as specified by the theorem with t=33 and epsilon=1.",
-        "reproduction_status": "witness and objective exactly rechecked",
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "vertices": 100,
-          "forbidden_subgraph": "C6"
-        },
-        "witness_file": "data/reference/c6_sat_100_133.json",
-        "url": "https://doi.org/10.1016/j.disc.2025.114504",
-        "provenance": "Published construction by Lan, Shi, Wang, and Zhang, reconstructed from the theorem and Figure 1(a).",
-        "ai_provenance": "not stated by source",
-        "actual_value": 133,
-        "evidence_state": "exact checker confirms no simple C6 and a simple 5-edge path for every nonedge"
+      "open_status": {
+        "status": "no_optimality_proof_found_for_this_configuration",
+        "checked_at": "2026-11-06",
+        "evidence": "The 2021 paper calls the table near-optimal and reports optimal B3 sets only through cardinality 7. Searches for G3(31), the exact q=31 row, and current B3 diameter results found no later closure. This is limited to sources checked.",
+        "lower_bound": 4737,
+        "lower_bound_source": "Atkinson, Santoro, and Urrutia, Integer sets with distinct sums and differences and carrier frequency assignments for nonlinear repeaters, IEEE Transactions on Communications 34(6) (1986), DOI 10.1109/TCOM.1986.1096587; https://people.scs.carleton.ca/~santoro/Reports/DistinctSums.pdf; G3(m+1)>10m^3/57 at m=30."
       },
-      "known_bounds": {
-        "lower_bound": 132,
-        "upper_bound": 133,
-        "lower_bound_source": "https://doi.org/10.1016/j.disc.2025.114504",
-        "lower_bound_location": "Theorem 1.5(b): ceil(4n/3 - 2) at n=100",
-        "status": "the exact value at n=100 remains unresolved in checked sources"
-      },
+      "witness": "data/reference/public_m31_19407.json",
+      "comparison_notes": [
+        "The objective is minimum integer diameter for a B3 set of cardinality 31.",
+        "The published construction is feasible; no global optimality claim is made.",
+        "The paper does not state AI provenance. This repository's transcription and checker are benchmark work."
+      ],
       "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
@@ -62,21 +41,18 @@
           "config_id": "T061-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 133,
+          "objective": 19407,
           "verification_status": "exact",
-          "generation_time": 2.397173535078764,
-          "verification_time": 3.8008706904947758,
-          "objective_value": 133,
+          "generation_time": 0.4428384155035019,
+          "verification_time": 0.4164307042956352,
+          "objective_value": 19407,
           "details": {
-            "vertices": 100,
-            "edge_count": 133,
-            "simple_c6_free": true,
-            "saturated": true,
-            "missing_pairs_checked": 4817,
-            "simple_5_path_endpoint_pairs": 4817,
+            "cardinality": 31,
+            "order": 3,
+            "triple_sums_checked": 5456,
             "claimed_objective_ignored": true
           },
-          "eval_time": 6.2518154345452785,
+          "eval_time": 0.870038777589798,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -93,70 +69,66 @@
           }
         },
         "independent_quantity": {
-          "edge_count": 133,
-          "missing_pairs_checked": 4817,
-          "simple_c6_free": true
+          "diameter": 19407,
+          "triple_sums": 5456,
+          "counting_lower_bound": 1819,
+          "method": "Newton complete-symmetric identity h3=(p1^3+3p1*p2+2p3)/6, exact sparse polynomial coefficients all equal one"
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "id": "T061-C01",
-      "best_public": {
-        "value": 133,
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "vertices": 100,
-          "forbidden_subgraph": "C6"
-        },
-        "url": "https://doi.org/10.1016/j.disc.2025.114504",
-        "source_location": "Theorem 1.5(a), epsilon=1, t=33",
-        "provenance": "Theorem gives a 133-edge C6-saturated construction. Its Theorem 1.5(b) lower bound is 132 at n=100, so it does not establish the exact value.",
-        "ai_provenance": "not stated by source",
-        "evidence_state": "public feasible upper bound, independently reproduced"
-      },
-      "best_reproduced": {
-        "value": 133,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "vertices": 100,
-          "forbidden_subgraph": "C6"
-        },
-        "witness_file": "data/reference/c6_sat_100_133.json",
-        "provenance": "Rebuilt from the published core H plus paths and a leaf; exact local validation.",
-        "ai_provenance": "construction transcription for this benchmark",
-        "actual_value": 133,
-        "evidence_state": "exact C6-free and saturation check; lower bound 132 leaves one-edge uncertainty",
-        "review_status": "reviewed_by_sol"
-      },
-      "frozen_human_baseline": {
-        "value": 133,
-        "parameters": {
-          "vertices": 100,
-          "forbidden_subgraph": "C6"
-        },
-        "witness_file": "data/reference/c6_sat_100_133.json",
-        "provenance": "Published theorem construction reconstructed and exactly checked."
-      },
-      "optimality_status": {
-        "lower_bound": 132,
-        "upper_bound": 133,
-        "source": "https://doi.org/10.1016/j.disc.2025.114504",
-        "evidence_state": "not closed at this parameter in the checked sources"
-      }
+      "best_human": 19407,
+      "best_public": 19407,
+      "best_reproduced": 19407,
+      "open_instance": true,
+      "open_evidence": "Checked through 2026-11-06. The source paper says its constructions are near-optimal and reports exact B3 optimality only through cardinality 7; no later closure for 31 was found in the checked sources.",
+      "lower_bound": 4737,
+      "lower_bound_evidence": "Cited Atkinson-Santoro-Urrutia inequality G3(m+1)>10m^3/57 with m=30; DOI 10.1109/TCOM.1986.1096587; https://people.scs.carleton.ca/~santoro/Reports/DistinctSums.pdf.",
+      "source_transcription": "Table 3 copied from web-rendered author full text. The original PDF was not archived because the publisher endpoint rejected automated retrieval.",
+      "ai_provenance": "Source construction provenance is not stated. Repository transcription and replay were generated for this benchmark."
     }
   },
-  "additional_evidence": {
-    "configurations": {
-      "T061-C01": {
-        "best_human": {
-          "source_location": "Theorem 1.5(a), Figure 1, epsilon=1 and t=33"
-        },
-        "highest_reported": {
-          "metric": "edges in a feasible C6-saturated graph on 100 vertices",
-          "source_location": "Theorem 1.5(a), epsilon=1 and t=33",
-          "reproduction_status": "witness independently rebuilt; source also proves a lower bound of 132, so exact optimum is open between 132 and 133"
-        }
-      }
-    }
-  }
+  "review_status": "accepted_by_sol",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "The status reflects the named sources and searches checked on 2026-11-06. It is not a claim that every publication has been surveyed.",
+  "best_human": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness_url": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+    "ai_provenance": "The 2021 paper does not state whether AI assisted the construction. The local table transcription and replay were made for this benchmark.",
+    "evidence_state": "The Table 3 entry was independently checked as a feasible B3 set; optimality is not established.",
+    "origin_type": "published construction, AI provenance not stated"
+  },
+  "best_public": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness_url": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+    "ai_provenance": "Not stated by the source.",
+    "evidence_state": "Strongest same-parameter value found in the checked sources; no proof of optimality is claimed.",
+    "origin_type": "source does not state whether AI assisted the result"
+  },
+  "best_reproduced": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness": "data/reference/public_m31_19407.json",
+    "ai_provenance": "Transcribed for this benchmark from the web-rendered Table 3 entry; not a byte-identical PDF extraction.",
+    "evidence_state": "Exact checker confirmed 31 distinct elements, all 5,456 triple sums distinct, and diameter 19,407.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "published same-parameter construction reproduced from the author's table"
 }

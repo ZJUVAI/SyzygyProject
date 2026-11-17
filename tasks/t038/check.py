@@ -1,66 +1,71 @@
-"""Exact verifier for mutually orthogonal Latin squares of order 12."""
+"""Exact verifier for the fixed DIMACS DSJC1000.5 graph coloring task."""
 
-ORDER = 12
-SYMBOLS = set(range(ORDER))
+from __future__ import annotations
+
+from pathlib import Path
+
+from mathbench.graph_bits import load_adjacency
 
 
-def _squares(solution):
-    if isinstance(solution, dict):
-        if "squares" not in solution:
-            raise ValueError("solution must contain squares")
-        squares = solution["squares"]
-    else:
-        squares = solution
-    if not isinstance(squares, (list, tuple)):
-        raise ValueError("squares must be a list")
-    if len(squares) > ORDER - 1:
-        raise ValueError("a family cannot have more than n-1 squares")
-    checked = []
-    for square_index, square in enumerate(squares):
-        if not isinstance(square, (list, tuple)) or len(square) != ORDER:
-            raise ValueError(f"square {square_index} must have 12 rows")
-        rows = []
-        for row_index, row in enumerate(square):
-            if not isinstance(row, (list, tuple)) or len(row) != ORDER:
-                raise ValueError(f"square {square_index}, row {row_index} must have 12 entries")
-            values = []
-            for value in row:
-                if type(value) is not int or value not in SYMBOLS:
-                    raise ValueError("entries must be integers 0..11; bool and non-integers are rejected")
-                values.append(value)
-            if set(values) != SYMBOLS:
-                raise ValueError(f"row {row_index} of square {square_index} is not a permutation")
-            rows.append(values)
-        for column in range(ORDER):
-            if {rows[row][column] for row in range(ORDER)} != SYMBOLS:
-                raise ValueError(f"column {column} of square {square_index} is not a permutation")
-        checked.append(rows)
-    return checked
+_TASK_DIR = Path(__file__).parent
+_INPUT_PATH = _TASK_DIR / "data" / "DSJC1000.5.bits"
+_INPUT_SHA256 = "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779"
+_VERTICES = 1000
+_EDGES = 249826
+
+
+def load_graph():
+    """Load the verified packed graph and expose the task's set-based API."""
+    masks = load_adjacency(_INPUT_PATH, _VERTICES, _EDGES, _INPUT_SHA256)
+    adjacency = tuple(
+        frozenset(v for v in range(_VERTICES) if mask & (1 << v))
+        for mask in masks
+    )
+    edges = tuple(
+        (u, v)
+        for u, mask in enumerate(masks)
+        for v in range(u + 1, _VERTICES)
+        if mask & (1 << v)
+    )
+    return adjacency, edges
 
 
 def validate(solution, config, strict=False):
-    if config.get("parameters") != {"order": ORDER}:
-        raise ValueError("unsupported configuration")
-    squares = _squares(solution)
-    pair_checks = 0
-    for left in range(len(squares)):
-        for right in range(left + 1, len(squares)):
-            pairs = {
-                (squares[left][row][column], squares[right][row][column])
-                for row in range(ORDER)
-                for column in range(ORDER)
-            }
-            if len(pairs) != ORDER * ORDER:
-                raise ValueError(f"squares {left} and {right} are not orthogonal")
-            pair_checks += 1
+    """Check all edges and recompute the exact number of distinct colors."""
+    del strict  # Feasibility and the objective use exact integer operations.
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    if config.get("id", "T038-C01") != "T038-C01":
+        raise ValueError("configuration id must be T038-C01")
+    params = config.get("parameters", config)
+    expected = {
+        "instance": "DSJC1000.5",
+        "vertices": _VERTICES,
+        "edges": _EDGES,
+        "input_sha256": _INPUT_SHA256,
+    }
+    if not isinstance(params, dict) or any(params.get(k) != v for k, v in expected.items()):
+        raise ValueError("configuration must fix the trusted DSJC1000.5 graph")
+    colors = solution.get("colors")
+    if not isinstance(colors, list) or len(colors) != _VERTICES:
+        raise ValueError("colors must be a list with one entry for each of 1000 vertices")
+    if any(type(color) is not int for color in colors):
+        raise ValueError("color labels must be integers, not bool or numeric values")
+    _, edges = load_graph()
+    for edge_index, (u, v) in enumerate(edges):
+        if colors[u] == colors[v]:
+            raise ValueError(f"edge {edge_index} ({u}, {v}) has equal endpoint colors")
+    objective = len(set(colors))
     return {
-        "objective": len(squares),
+        "objective": objective,
         "verification_status": "exact",
         "details": {
-            "order": ORDER,
-            "squares_checked": len(squares),
-            "orthogonal_pairs_checked": pair_checks,
-            "ordered_pairs_per_square_pair": ORDER * ORDER,
+            "instance": "DSJC1000.5",
+            "vertices": _VERTICES,
+            "edges_checked": _EDGES,
+            "distinct_colors_recomputed": objective,
             "claimed_objective_ignored": True,
+            "claimed_score_ignored": True,
+            "input_sha256": _INPUT_SHA256,
         },
     }

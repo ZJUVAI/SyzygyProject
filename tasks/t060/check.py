@@ -1,125 +1,82 @@
-"""Exact checker for integer-complexity expression trees at M61."""
+"""Exact checker for unrestricted integer difference bases of [1, 6166]."""
 
-TARGET = 2**61 - 1
+from collections.abc import Mapping
+from typing import Any
+
+
 CONFIG_ID = "T060-C01"
-MAX_EXPRESSION_LENGTH = 100_000
+N = 6166
 
 
-def _selfridge_max(k):
-    """Largest integer representable with at most k ones (Selfridge)."""
-    if k == 1:
-        return 1
-    q, r = divmod(k, 3)
-    if r == 0:
-        return 3**q
-    if r == 1:
-        return 4 * 3 ** (q - 1)
-    return 2 * 3**q
+def _is_integer(value: Any) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
 
 
-def _parse(expression):
-    if not isinstance(expression, str):
-        raise ValueError("expression must be a string")
-    if not expression or len(expression) > MAX_EXPRESSION_LENGTH:
-        raise ValueError("expression is empty or too long")
+def validate(solution: Any, config: Mapping[str, Any], strict: bool = False) -> dict[str, Any]:
+    """Check every required distance with exact integer arithmetic."""
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError("unsupported configuration id")
+    if config.get("parameters") != {
+        "N": N,
+        "ambient_group": "integers_under_subtraction",
+        "required_differences": "positive_integers_1_through_N",
+    }:
+        raise ValueError("configuration parameters do not match T060-C01")
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be a JSON object")
+    raw_basis = solution.get("basis")
+    if not isinstance(raw_basis, (list, tuple)):
+        raise ValueError("basis must be a list of integers")
+    if not raw_basis:
+        raise ValueError("basis must contain at least one integer")
 
-    # Shunting-yard evaluation with explicit stacks avoids Python recursion limits.
-    values = []
-    operators = []
-    expect_operand = True
-    depth = 0
-    count_ones = 0
+    basis = []
+    seen = set()
+    for point in raw_basis:
+        if not _is_integer(point):
+            raise ValueError("basis elements must be integers; bool is not accepted")
+        if point in seen:
+            raise ValueError("basis elements must be distinct")
+        seen.add(point)
+        basis.append(point)
 
-    def apply():
-        if len(values) < 2 or not operators or operators[-1] not in ("+", "*"):
-            raise ValueError("malformed expression")
-        op = operators.pop()
-        right = values.pop()
-        left = values.pop()
-        values.append(left + right if op == "+" else left * right)
+    if len(basis) < 2:
+        raise ValueError("a difference basis for positive distances needs at least two points")
 
-    precedence = {"+": 1, "*": 2}
-    i = 0
-    while i < len(expression):
-        ch = expression[i]
-        if ch == " ":
-            i += 1
-            continue
-        if ch == "1":
-            if not expect_operand:
-                raise ValueError("missing operator")
-            values.append(1)
-            count_ones += 1
-            expect_operand = False
-        elif ch == "(":
-            if not expect_operand:
-                raise ValueError("missing operator before parenthesis")
-            operators.append(ch)
-            depth += 1
-            expect_operand = True
-        elif ch == ")":
-            if expect_operand or depth == 0:
-                raise ValueError("unmatched or empty parenthesis")
-            while operators and operators[-1] != "(":
-                apply()
-            if not operators:
-                raise ValueError("unmatched closing parenthesis")
-            operators.pop()
-            depth -= 1
-            expect_operand = False
-        elif ch in precedence:
-            if expect_operand:
-                raise ValueError("operator without a left operand")
-            while (operators and operators[-1] in precedence
-                   and precedence[operators[-1]] >= precedence[ch]):
-                apply()
-            operators.append(ch)
-            expect_operand = True
-        else:
-            raise ValueError("only 1, +, *, parentheses, and ASCII spaces are allowed")
-        i += 1
+    covered = bytearray(N + 1)
+    remaining = N
+    pair_checks = 0
+    ordered = sorted(basis)
+    for left_index, left in enumerate(ordered):
+        right_index = left_index + 1
+        while right_index < len(ordered):
+            right = ordered[right_index]
+            pair_checks += 1
+            difference = right - left
+            if difference > N:
+                break
+            if difference <= N and not covered[difference]:
+                covered[difference] = 1
+                remaining -= 1
+                if remaining == 0:
+                    break
+            right_index += 1
+        if remaining == 0:
+            break
+    if remaining:
+        first_missing = next(distance for distance in range(1, N + 1) if not covered[distance])
+        raise ValueError(f"basis does not cover every required distance; {first_missing} is missing")
 
-    if expect_operand or depth:
-        raise ValueError("incomplete expression")
-    while operators:
-        if operators[-1] == "(":
-            raise ValueError("unmatched opening parenthesis")
-        apply()
-    if len(values) != 1 or count_ones == 0:
-        raise ValueError("malformed expression")
-    return values[0], count_ones
-
-
-def _check_config(config):
-    if not isinstance(config, dict):
-        raise ValueError("configuration must be an object")
-    cid = config.get("id", CONFIG_ID)
-    params = config.get("parameters", config)
-    if cid != CONFIG_ID or not isinstance(params, dict):
-        raise ValueError("unsupported T060 configuration")
-    if params.get("target", "2^61-1") != "2^61-1":
-        raise ValueError("configuration target must be M61")
-    if params.get("target_value", str(TARGET)) != str(TARGET):
-        raise ValueError("configuration target value must equal M61")
-
-
-def validate(solution, config, strict=False):
-    _check_config(config)
-    if not isinstance(solution, dict):
-        raise ValueError("solution must be an object")
-    value, ones = _parse(solution.get("expression"))
-    if value != TARGET:
-        raise ValueError("expression does not evaluate to M61")
     return {
-        "objective": ones,
+        "objective": len(basis),
         "verification_status": "exact",
         "details": {
-            "target": str(TARGET),
-            "expression_value": str(value),
-            "ones_count": ones,
-            "expression_tree": True,
-            "certified_lower_bound": 116,
-            "selfridge_max_at_115": str(_selfridge_max(115)),
+            "N": N,
+            "basis_size": len(basis),
+            "covered_distances": N,
+            "pair_checks_until_full_coverage": pair_checks,
+            "ambient_group": "integers_under_subtraction; differences larger than N are allowed",
             "claimed_objective_ignored": True,
+            "strict_full_interval_check": True,
         },
     }

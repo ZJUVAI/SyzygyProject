@@ -1,17 +1,13 @@
-"""Reconstruct the classical D5 root-system kissing configuration."""
-
-import itertools
+"""Rebuild the Frankl-Furedi recursive H6 example for n=36."""
 import os
+
+try:
+    from .construction import build_iterated_h6
+except ImportError:
+    from construction import build_iterated_h6
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T037-C01") != "T037-C01":
-        raise ValueError("unknown T037 configuration")
-    directions = []
-    for i, j in itertools.combinations(range(5), 2):
-        for a in (-1, 1):
-            for b in (-1, 1):
-                v = [0] * 5
-                v[i], v[j] = a, b
-                directions.append(v)
-    return {"directions": directions}
+        raise ValueError("unsupported T037 configuration")
+    return build_iterated_h6(parts=6)

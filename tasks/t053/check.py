@@ -1,58 +1,43 @@
-"""Exact checker for factorizations of 100000!."""
-
-from functools import lru_cache
-from math import factorial
-
-N = 100000
-PARAMETERS = {"n": N}
-
-
-@lru_cache(maxsize=1)
-def _target():
-    return factorial(N)
-
-
-def _product_tree(values):
-    level = list(values)
-    if not level:
-        return 1
-    while len(level) > 1:
-        next_level = [level[i] * level[i + 1]
-                      for i in range(0, len(level) - 1, 2)]
-        if len(level) % 2:
-            next_level.append(level[-1])
-        level = next_level
-    return level[0]
+"""Exact verifier for configured covering designs."""
+from itertools import combinations
+from math import comb
 
 
 def validate(solution, config, strict=False):
-    if not isinstance(config, dict) or config.get("parameters") != PARAMETERS:
+    if not isinstance(config, dict) or not isinstance(config.get("parameters"), dict):
         raise ValueError("unsupported configuration")
-    if not isinstance(solution, dict) or "factors" not in solution:
-        raise ValueError("solution must contain factors")
-    factors = solution["factors"]
-    if not isinstance(factors, list):
-        raise ValueError("factors must be a list")
-    if len(factors) != N:
-        raise ValueError("factor list must contain exactly 100000 entries")
-    target = _target()
-    for value in factors:
-        if type(value) is not int:
-            raise ValueError("factors must be integers; bool and float are rejected")
-        if value < 1:
-            raise ValueError("factors must be positive")
-        if value > target:
-            raise ValueError("a factor cannot exceed the product 100000!")
-    if _product_tree(factors) != target:
-        raise ValueError("factor product is not exactly 100000!")
-    return {
-        "objective": min(factors),
-        "verification_status": "exact",
-        "details": {
-            "n": N,
-            "factor_count": len(factors),
-            "product_equals_factorial": True,
-            "product_check": "exact balanced product tree",
-            "claimed_objective_ignored": True,
-        },
-    }
+    params = config["parameters"]
+    v, k, t = (params.get(key) for key in ("v", "k", "t"))
+    if any(type(x) is not int for x in (v, k, t)) or not (0 < t <= k <= v):
+        raise ValueError("unsupported configuration")
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be an object")
+    blocks = solution.get("blocks")
+    if not isinstance(blocks, (list, tuple)):
+        raise ValueError("blocks must be a list")
+    normalized, seen = [], set()
+    for i, block in enumerate(blocks):
+        if not isinstance(block, (list, tuple)) or len(block) != k:
+            raise ValueError(f"block {i} must contain exactly {k} points")
+        if any(type(x) is not int for x in block):
+            raise ValueError("points must be integers; bool is rejected")
+        b = tuple(sorted(block))
+        if len(set(b)) != k or any(x < 0 or x >= v for x in b):
+            raise ValueError(f"block {i} has repeated or out-of-range points")
+        if b in seen:
+            raise ValueError("duplicate blocks are not allowed")
+        seen.add(b)
+        normalized.append(b)
+    covered = set()
+    for b in normalized:
+        covered.update(combinations(b, t))
+    total = comb(v, t)
+    if len(covered) != total:
+        raise ValueError(f"covering misses {total-len(covered)} of {total} {t}-subsets")
+    details = {
+        "parameters": {"v": v, "k": k, "t": t}, "blocks": len(normalized),
+        "covered_t_subsets": total, "total_t_subsets": total,
+        "claimed_objective_ignored": True, "optimality_proved": False}
+    if t == 4:
+        details["covered_four_subsets"] = total
+    return {"objective": len(normalized), "verification_status": "exact", "details": details}

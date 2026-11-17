@@ -1,57 +1,85 @@
-# T098：38 阶本原简单完美平方正方形
+# T098：部分 MaxSAT 实例
 
-## 数学目标
+## 定义与固定参数
 
-把一个整数边长正方形剖分为 38 个轴平行的小正方形。小正方形边长均为正整数且两两不同（完美）；任意真子矩形都不能由至少两个小正方形铺满（简单）；38 个边长的最大公约数为 1（本原）。目标是最小化外正方形边长。允许小正方形沿边接触。
+MaxSAT 输入是加权合取范式。硬子句必须全部满足；目标是最大化满足的软子句权重。
 
-固定配置为 `T098-C01`。验证器用整数坐标检查边界、面积、两两内部不相交、边长互异和本原性。它列举所有由小正方形边界确定的候选矩形，并检查其中是否有真子矩形被完整铺满。所有计算均为整数运算。
+配置 `T098-C01` 固定 MSE 2026 实例 `b4794d123e18a908924d3d33cdeeae3b`，属于 `inconsistency-measurement`。它有 1630 个变量、6150 个硬子句和 649 个权重为 1 的软单位子句。输出是按变量 `1,...,1630` 排列的布尔数组。目标分数为满足软子句权重，最大值 649。官方以未满足软权重报告成本；成本 62 对应本任务分数 587。
 
-## 已知构造与开放状态
+`check.py` 解压固定 `.wcnf.gz` 输入，并精确检查所有硬、软子句。它拒绝违反硬子句的赋值，并重新计算软权重；不使用候选自报分数。
 
-Squaring.net 的目录将 38 阶及以上标为不完整，并列出 Williams 2013 的 38 阶边长 352 构造。OEIS A129947 将 38–59 项称为上界，并给出 38 阶上界 352。因此 352 是已知可行上界，不能据此称为最优。我们在 2026-11-06 检查的来源没有给出 38 阶匹配下界或最优性证明；这不是穷尽式文献调查。
+## 来源与记录
 
-- Squaring.net：<https://www.squaring.net/sq/ss/spss/spss.html>，order 38 与 Williams 2013 条目。
-- OEIS A129947：<https://oeis.org/A129947>，说明该段数据是 upper bounds。
-- 原始研究软件及档案目录：<https://www.squaring.net/downloads/downloads.html>。
+规范化实例以 gzip 保存在 `data/source/`。gzip 的 mtime 为 0，且不含原始文件名。解压后的原始输入 SHA-256 为 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`。实例元数据来自 MSE 2026 完整基准集 Zenodo 记录 21283148。比赛结果和解算器日志来自 MSE 2026 Zenodo 记录 21358014（v1，2026-07-14）。
 
-`human.py` 从公开的 `38 352A` Bouwkamp 代码重建 352 构造。这个过程按整数 skyline 放置方块。构造经本任务验证器复算。历史上的 Brooks 1950 边长 4920 只作为较弱旧纪录记载。
+输入采用 MSE `std_wcnf` 格式：硬子句行以 `h` 开头，软子句行以正权重开头，并以 `0` 结束。
 
-## 程序入口
+官方 `ANYTIME-UW` 60 秒赛道的 BouMS 日志给出未满足软成本 62，完成文件标记 `VERIFIED`。日志索引位置和 CRC、完整 assignment 及其 SHA-256 均记录在 `data/bestknown.json`。我们从日志中提取 assignment，并独立检查全部 6150 个硬子句和 649 个软子句，得到分数 587。比赛元数据显示最优成本未知，因此该实例仍未证明最优。公开日志没有说明 BouMS 或这次运行是否使用 AI，AI 来源标记为未知。
 
-五个程序都导出 `run_code()`。输出包含 `side` 和 38 个 `[x, y, side]` 整数三元组。
+冻结人类基线为分数 360。`human.py` 对所有硬子句运行传统 DPLL 可满足性方法，再做精确的硬约束可行单变量软分数改进。DPLL 的方法来源为 Davis、Logemann 和 Loveland 1962 年论文；SymPy 1.14.0 提供本次可重放的实现。该 360 是本地复现的方法基线，不是比赛公开纪录。初始程序也从硬子句重新运行 DPLL，不读取人类或纪录见证。
 
-- `init_program.py` 返回独立网络搜索得到的边长 4755 构造。它把自身生成的方块坐标写在程序中，不读取对照文件。
-- `baseline.py` 先精确改变一个小方块边长，并同时改变目标外边长，使总面积仍为完全平方数；然后打乱自有 B-code 分组并用 skyline 建造器尝试重建。默认 40 次，种子来自 `MATHBENCH_SEED`；`T098_SEARCH_ITERS` 可设为 0–1000。无法重建或未通过完整检查的候选会被跳过。无改进时返回4755保底构造。
-- `human.py` 重建公开的 Williams 38 352A 构造。
-- `reference.py` 从固定的对照文件重建同一构造。
-- `evolution.py` 将传统搜索暴露为任务化入口。
+## 程序与搜索
 
-边长 4755 的起点由一次独立研究搜索生成。使用的 Williams C++ 源码来自 [官方压缩包](https://squaring.net/downloads/jbwsrc.zip)，SHA-256 为 `80e780853283dbaea387e5eb44511903904a21e520baa1a70be89bedb55bd84b`。保存的元数据列出编译器版本和命令。搜索分别生成 `graphgen 23 14` 与 `graphgen 25 16` 的网络前缀，数量为 1,391,846 和 370,992，每段限时 60 秒，再按压缩包中的脚本排序并配对 M/F 网络。原始中间前缀没有保留，所以重放命令能重跑同一公开算法和参数，但不能保证复现这一个构造。已保存的坐标单独通过完整精确检查。基准初始程序固定返回此有效起点。
+- `init_program.py` 独立解析公开 `.wcnf.gz` 输入，只对硬子句运行 DPLL，产生有效起点。
+- `baseline.py` 从硬可行赋值开始，按固定种子做随机块翻转，只保留硬可行解并更新最好软分数。
+- `evolution.py` 从硬可行赋值建立小型种群，做有界块变异并精确过滤硬约束。
+- `human.py` 重建传统 DPLL 硬可行赋值并做单变量贪心改进。
+- `reference.py` 重放固定的 MSE 2026 BouMS 官方解。
+- 搜索默认以固定迭代数运行，种子来自 `MATHBENCH_SEED`。默认每次生成限时 300 秒，验证另限时 60 秒，内存 4 GiB，一个计算线程。`MATHBENCH_SEARCH_SECONDS` 可显式启用按时长截断。
+- 传统搜索和初始程序只读取公开公式，不读取比较 assignment。比较文件应放在模型上下文之外。
 
-默认运行预算为生成 300 秒、验证 60 秒、4 GiB 内存和一个计算线程。基准不读取 human/reference 对照文件。模型不应访问 `data/` 对照资产。
+## 检查
 
-## 评分与验证限制
+从仓库根目录运行：
 
-目标分数是外正方形整数边长，越小越好。验证器完全忽略候选附带的 `objective`、`score` 和 `claimed_score`。有效构造才产生目标分数。边长 352 与 4755 均为构造分数，不代表已证明全局最优。
+```sh
+.venv/bin/python -m pytest tasks/t098/test_task.py -q
+.venv/bin/python -m json.tool tasks/t098/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t098/data/bestknown.json > /dev/null
+```
+
+状态：已通过 Sol 验收（2026-11-06）。
 
 ---
 
-# T098: primitive simple perfect squared square of order 38
+# T098: Partial MaxSAT instance
 
-## Mathematical objective
+## Definition and fixed parameters
 
-Tile an integer-sided square with 38 axis-aligned integer-sided squares. The 38 positive side lengths must be distinct (perfect), their greatest common divisor must be 1 (primitive), and no proper rectangle may be tiled by a subset of at least two squares (simple). Minimize the outer square side.
+A MaxSAT input is a weighted conjunctive normal form. Every hard clause must be true. The objective is to maximize the total weight of satisfied soft clauses.
 
-The checker uses exact integer arithmetic. It checks containment, area, pairwise interior disjointness, distinct side lengths, primitivity, and every candidate rectangle whose sides lie on tile boundaries. A proper rectangle is tiled when the total area of its contained tiles equals its area.
+Configuration `T098-C01` fixes the MSE 2026 instance `b4794d123e18a908924d3d33cdeeae3b` from the `inconsistency-measurement` family. It has 1630 variables, 6150 hard clauses, and 649 soft unit clauses of weight 1. The output is a Boolean array ordered by variables `1,...,1630`. The score is the satisfied soft weight, with maximum 649. The official benchmark reports unsatisfied soft cost; cost 62 corresponds to our score 587.
 
-## Sources and status
+`check.py` reads the fixed `.wcnf.gz` input and checks every hard and soft clause exactly. It rejects assignments that violate a hard clause and recomputes the soft weight. It ignores any score claimed by the candidate.
 
-The squaring.net catalogue marks orders 38 and above incomplete and lists a Williams 2013 order-38 construction with side 352. OEIS A129947 labels the order-38-to-59 values as upper bounds and gives 352 for order 38. The sources checked on 2026-11-06 do not provide a matching lower bound or proof of optimality. This is not an exhaustive literature review.
+## Sources and results
 
-The human entry rebuilds the public `38 352A` Bouwkamp code by exact integer skyline placement. The historical Brooks 1950 construction of side 4920 is recorded separately as a weaker result.
+The normalized source instance is stored as gzip under `data/source/`, with mtime 0 and no embedded filename. The decompressed input SHA-256 is `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. Instance metadata comes from the MSE 2026 complete benchmark collection, Zenodo record 21283148. Competition results and solver logs come from MSE 2026 Zenodo record 21358014, v1, published 2026-07-14.
 
-## Programs and limits
+The input uses the MSE `std_wcnf` format: hard-clause lines start with `h`; soft-clause lines start with a positive weight. Each line ends with `0`. The repository stores the input as gzip; its decompressed bytes must have SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`.
 
-All five programs expose `run_code()`. `init_program.py` returns an independently generated side-4755 seed and reads no comparison files. `baseline.py` tries a fixed number of deterministic strip permutations of that seed. `human.py` reconstructs the published side-352 construction. `reference.py` reads the frozen comparison record. `evolution.py` exposes the search baseline.
+The official BouMS log in the `ANYTIME-UW` 60-second track reports unsatisfied soft cost 62, and the completion file says `VERIFIED`. The log index offset and CRC, the complete assignment, and its SHA-256 are saved in `data/bestknown.json`. We extracted the assignment and independently checked all 6150 hard clauses and 649 soft clauses. The resulting score is 587. The competition metadata lists the optimum cost as unknown, so optimality is open. The official release does not state whether AI contributed to BouMS or this run; AI provenance is recorded as unknown.
 
-Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one compute thread. The public comparison files are external assets and must not enter the model's initial context.
+The frozen human baseline is 360. `human.py` runs the traditional DPLL satisfiability method on the hard clauses, then performs exact single-variable soft-score improvements that preserve every hard clause. The method source is the 1962 paper by Davis, Logemann, and Loveland; SymPy 1.14.0 supplies the replayable implementation. The value 360 is a locally reproduced method baseline, not a published competition record. The initial program also runs DPLL on the hard clauses and does not read any comparison witness.
+
+## Programs and search
+
+- `init_program.py` parses the public `.wcnf.gz` input on its own and runs DPLL on the hard clauses to make a valid starting assignment.
+- `baseline.py` starts from a hard-feasible assignment and applies fixed-seed random block flips. It keeps only hard-feasible assignments and retains the best soft score.
+- `evolution.py` builds a small population from a hard-feasible assignment, mutates bounded blocks, and filters each candidate against every hard clause.
+- `human.py` rebuilds a traditional DPLL assignment and applies greedy single-variable improvements.
+- `reference.py` replays the fixed MSE 2026 BouMS assignment.
+- Searches use a fixed iteration count by default and read the seed from `MATHBENCH_SEED`. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one compute thread. Set `MATHBENCH_SEARCH_SECONDS` to use a wall-clock cutoff.
+- The seed and search programs read only the public formula. They do not read comparison assignments. Keep those files outside the model context.
+
+## Checks
+
+Run from the repository root:
+
+```sh
+.venv/bin/python -m pytest tasks/t098/test_task.py -q
+.venv/bin/python -m json.tool tasks/t098/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t098/data/bestknown.json > /dev/null
+```
+
+Status: accepted by Sol on 2026-11-06.

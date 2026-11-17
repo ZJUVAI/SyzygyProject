@@ -1,55 +1,46 @@
-"""Finite scan of uniform guillotine grids with one coprime refinement."""
+"""Seeded local search from the small set {0,1,3}."""
 
 import os
+import random
 import time
 
 from mathbench.search import search_steps
-from tasks.t070.construction import OUTER_SIDE
-
-
-def _candidate(blocks_per_side):
-    side = OUTER_SIDE // blocks_per_side
-    squares = [
-        [x * side, y * side, side]
-        for y in range(blocks_per_side)
-        for x in range(blocks_per_side)
-    ]
-    # Replace one block by a (side-1) square and two unit-width strips.
-    squares.pop(0)
-    squares.append([0, 0, side - 1])
-    squares.extend([[x, side - 1, 1] for x in range(side)])
-    squares.extend([[side - 1, y, 1] for y in range(side - 1)])
-    return {"squares": squares}
+from tasks.t070.search_utils import heuristic_score, mutate
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T070-C01") != "T070-C01":
         raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    del seed  # This exhaustive finite scan has no random choices.
-    divisors = [q for q in range(1, OUTER_SIDE) if OUTER_SIDE % q == 0 and OUTER_SIDE // q >= 2]
+    iterations = max(1, min(5000, int(os.environ.get("MATHBENCH_BASELINE_ITERATIONS", "500"))))
+    rng = random.Random(seed ^ 0x058BA5E)
+    current = [0, 1, 3]
+    current_score = heuristic_score(current)
+    best, best_score = current[:], current_score
+    completed = accepted = 0
     start = time.monotonic()
-    best = _candidate(divisors[0])
-    checked = 0
-    for index in search_steps(len(divisors)):
-        q = divisors[index]
-        candidate = _candidate(q)
-        if len(candidate["squares"]) < len(best["squares"]):
-            best = candidate
-        checked += 1
-    best["search_metadata"] = {
-        "algorithm": "exhaustive scan of equal-block guillotine grids; replace one block by a coprime Euclidean strip dissection",
-        "seed": 0,
-        "candidate_block_counts": divisors,
-        "candidates_checked": checked,
-        "best_size": len(best["squares"]),
-        "generation_seconds": time.monotonic() - start,
-        "budget": {
-            "mode": "fixed exhaustive candidate count unless MATHBENCH_SEARCH_SECONDS is set",
-            "runner_generation_limit_seconds": 300,
+    for _ in search_steps(iterations):
+        candidate = mutate(current, rng)
+        candidate_score = heuristic_score(candidate)
+        if candidate_score > current_score or (candidate_score == current_score and rng.random() < 0.05):
+            current, current_score = candidate, candidate_score
+            accepted += 1
+        if candidate_score > best_score:
+            best, best_score = candidate, candidate_score
+        completed += 1
+    return {
+        "set": best,
+        "search_metadata": {
+            "algorithm": "seeded one-element replacement/add/remove hill climb with occasional plateau moves",
+            "seed": seed,
+            "iterations_requested": iterations,
+            "iterations_run": completed,
+            "accepted_moves": accepted,
+            "heuristic_score": best_score,
+            "generation_seconds": time.monotonic() - start,
+            "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds",
         },
     }
-    return best
 
 
 if __name__ == "__main__":

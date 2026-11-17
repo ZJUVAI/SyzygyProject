@@ -1,12 +1,9 @@
-"""Simple identity seed for T027-C01; no reference witness is read."""
-import os
+"""Simple valid fan triangulation of the fixed regular 120-gon."""
 
-
+# EVOLVE-BLOCK-START
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T027-C01") != "T027-C01":
-        raise ValueError("unsupported T027 configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    # EVOLVE-BLOCK-START
-    permutation = list(range(256))
-    # EVOLVE-BLOCK-END
-    return {"permutation": permutation}
+    n = 120
+    edges = [[i, i + 1] for i in range(n - 1)] + [[0, n - 1]]
+    edges.extend([[0, i] for i in range(2, n - 1)])
+    return {"edges": edges}
+# EVOLVE-BLOCK-END

@@ -1,39 +1,33 @@
 {
   "task_id": "T023",
-  "name": "Binary strength-four covering array",
+  "name": "Minimum squared max-to-min pair-distance ratio for 12 planar points",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T023-C01",
   "configurations": [
     {
       "id": "T023-C01",
       "parameters": {
-        "strength": 4,
-        "columns": 20,
-        "alphabet_size": 2,
-        "rows_upper_bound": 6196
+        "dimension": 2,
+        "point_count": 12,
+        "coordinates": "exact rational numbers",
+        "constraint": "all points are distinct",
+        "objective": "maximum squared pair distance divided by minimum squared pair distance"
       },
       "direction": "minimize",
-      "human_reference": 65
+      "human_reference": 8.464101615137755
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
-    "checks": [
-      "same-parameter sources and open status",
-      "replayed human witness",
-      "valid cold seed export",
-      "traditional search",
-      "independent exhaustive projection sets",
-      "damaged construction rejected",
-      "claimed score ignored",
-      "program error and timeout rejected"
-    ],
-    "limitations": [
-      "The reported 39-row record has no locally reproduced witness. The frozen reproduced human baseline has 65 rows.",
-      "No new optimality proof was found within the cited source survey.",
-      "The 6196-row resource cap is a proved feasible upper bound. Larger arrays cannot improve the supplied seed."
-    ]
-  }
+    "source_review": {
+      "definition": "Twelve arbitrary distinct rational points in the plane minimize maximum squared pair distance divided by minimum squared pair distance. No collinearity or bounding-box constraint. Density and continuity preserve the real-coordinate infimum.",
+      "primary_source": "Friedman maxmin n12 page attributes Rechenberg2006 value5+2sqrt3 without optimality proof. Root read the source diagram and independently reconstructed Q(sqrt3) coordinates: all66 pairs have minimum squared distance1 and maximum5+2sqrt3, with21 minimum pairs. Exact rational approximation to sqrt3 yields the formally reproduced slightly weaker ratio; it is not identified with the exact irrational record.",
+      "independent_method": "For each of five saved witnesses, rebuild all66 distances via the rational Gram identity norm(i)+norm(j)-2dot(i,j), separate from formal coordinate differences, and divide exact maximum by positive minimum.",
+      "open_status": "AlphaEvolve2511.02864v1 section6.50 distinguishes proved n<=8 from numerical n9..30 candidates. Later improvements at16/21/22/29 do not settle12; no n12 optimality proof located in reviewed sources.",
+      "admission": "Initial grid13, independent traditional/evolution48625/5274, human/reference rational near8.4641016151. All five strict runs, damage, claim invariance, independent exact score, replay, cold export and all failure controls pass. Agent16tests passed; main shared run follows."
+    }
+  },
+  "category": "discrete_geometry"
 }

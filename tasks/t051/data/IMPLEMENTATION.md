@@ -1,42 +1,44 @@
-# T051 implementation evidence
+# T051 implementation record
 
-Status: accepted by Sol on 2026-11-06.
+Status: **accepted by Sol on 2026-11-06**. This task has not been admitted to the shared registry.
 
-## Fixed task
+## Fixed model
 
-T051-C01 maximizes the length of an unrestricted `{-1,+1}` sequence with discrepancy cap 3. The checker enumerates every difference `d=1,...,N` and every prefix that ends at a multiple of `d`. It adds signs with Python integers, rejects a prefix as soon as its magnitude exceeds 3, and returns the sequence length as the exact objective. For the 130000-sign witness, it checks 1550902 progression prefixes.
+Configuration `T051-C01` fixes `q=2`, ambient dimension 7, subspace dimension 3, and minimum subspace distance 4. The objective is to maximize the number of codewords. For two 3-spaces, distance at least 4 is equivalent to intersection dimension at most 1. The checker takes a list of three 7-bit row masks or a 3 by 7 binary basis matrix for each codeword. It checks rank, canonical span identity, and every pair by exact enumeration over `GF(2)`. It ignores claimed objective fields and returns a fixed `claimed_objective_ignored` detail.
 
-## Human and public construction
+An independent upper bound follows by counting 2-spaces. The Gaussian binomial coefficient is `[7 choose 2]_2 = (127*126)/(3*2) = 2667`, and `[3 choose 2]_2 = 7`. A valid code cannot repeat a 2-space, so its size is at most `floor(2667/7) = 381`. The 2025 Kurz survey gives a stronger conditional result: `A₂(7,4;3) ≤ 378` or `A₂(7,4;3) = 381`. The value 378 is not an unconditional upper bound.
 
-- Primary report: Konev and Lisitsa, [arXiv:1405.3097v2, §4](https://arxiv.org/html/1405.3097v2), and the [author data page](https://cgi.csc.liv.ac.uk/~konev/edp/), checked 2026-11-06. The paper reports an unrestricted length-130000 C=3 sequence and says its first 127600 terms are completely multiplicative.
-- The author's compressed sequence URL was not directly downloadable in this environment. A public notebook on [Wolfram Community](https://community.wolfram.com/t/discrepancy-conjecture/6798) discussing this problem was recovered; the discussion refers to Konev-Lisitsa's paper and author data page. Notebook SHA-256: `cc6066cefd3c28435aee484b8ad4c952f6d17919732acc5e21a412ed45cadbca`.
-- Notebook-decoded sign text SHA-256 excluding the final newline: `a46775e377eed611fe5e7c086fc761ea8aeec22c2048924c2cd28392f34883fa`. Stored source and reference files include a final newline and both have SHA-256 `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`.
-- The recovered sequence has exactly 130000 signs, each `-1` or `+1`. An independent exact check found discrepancy 3 and checked all 1550902 prefixes. A second check confirmed complete multiplicativity through index 127600. We do not assert that this notebook recovery is byte-identical to the author's original compressed download.
-- The literature also reports maximum 1160 for unrestricted C=2 and maximum 127645 for completely multiplicative C=3. Those are different problems. Tao's infinite-sequence theorem does not give the finite maximum. The checked 2026 Princeton thesis treats the C=2 case and does not close unrestricted C=3. The selected finite maximum remains open in the checked sources; 130000 is a feasible lower bound, not a proved optimum.
+## Human construction and public status
 
-## Programs, output, and tests
+The primary witness is from Heinlein, Kiermaier, Kurz, and Wassermann, “A subspace code of size 333 in the setting of a binary q-analog of the Fano plane,” *Advances in Mathematics of Communications* 13(3) (2019), DOI [10.3934/amc.2019029](https://doi.org/10.3934/amc.2019029). The checked preprint is arXiv v5, dated 2019-03-22. Its first arXiv version is dated 2017-08-21. The paper reports an integer-linear-programming search and prints the orbit representatives and the two generators of `G_{4,6}`. The source does not report AI use, so the records do not claim an unaided hand construction.
 
-- `init_program.py` returns the valid seed `[1]`.
-- `baseline.py` uses seed 0, 24 fixed greedy extension trials, and a 5000-term cap by default. Each trial stops when neither sign preserves all new divisor-ending prefixes. It reads no human/reference data. `evolution.py` exposes the required `run_code()` and uses the same task-qualified baseline.
-- The frozen baseline run is saved under `data/results.json`. It returned length 55 after 24 trials and 806 attempted extensions. Strict runner verification confirmed discrepancy 3. On Python 3.13.12/Linux, generation took 0.696 s and verification took 0.552 s. The runner enforced 300 s generation, 60 s verification, 4 GiB memory, and one thread. `result.json` SHA-256: `21fae22d065b21bdabe72a48dc19d3282a35a17e94d19ed11c7491cc4ea86649`; `solution.json.gz` decompresses to bytes with SHA-256 `219a2850619e50b1d2dc5e234893f11a222d42c3d5d61b47fcc7dd42d872c604`.
-- `human.py` and `reference.py` load only their respective task-local text data. Their outputs match and both score 130000.
-- `check.py` rejects empty sequences, non-integer signs, booleans, floats, non-finite values, and signs outside `{-1,+1}`. It enforces the fixed configuration. It ignores optional objective, score, and claimed-score values and always reports `claimed_objective_ignored: true`.
-- `test_task.py` exercises all five program entries, independently recomputes the 130000-sequence discrepancy and prefix count, verifies saved text hash, tests malformed and invalid sequences, checks forged-score invariance, and tests `_run` worker errors and timeout handling without changing the shared registry.
+The source TeX provided for the research pass has SHA-256 `26622afb1178db82948f215c7befe73172f8c30338f0632d1ae0786d487f2eb7`. Its Appendix B matrices and Appendix C representatives are extracted into [heinlein_2019_appendix_c.json](source/heinlein_2019_appendix_c.json), whose SHA-256 is `5bcf86a99365ad8eb9971dd6a8a825fd8fb59747d06238d73d779a5e7cd775a1`. The paper encodes a column as `a + 2b + 4c`; the implementation decodes these digits into a 3 by 7 binary matrix, closes each representative under `G_{4,6}`, and confirms the orbit sizes `1^9 2^26 4^68`. It reconstructs 333 distinct spaces. The exact checker then checks all 55,278 pairs. This verifies the lower bound and its score. It does not prove optimality.
 
-Commands run from the repository root:
+For a current source check, the MIPLIB instance page [cdc7-4-3-2](https://miplib.zib.de/instance_details_cdc7-4-3-2.html) states `333 ≤ A₂(7,4;3) ≤ 381` and lists the 333 construction. The Kurz survey [Constructions and bounds for subspace codes](https://doi.org/10.15495/EPub_UBT_00008787) states the conditional 378-or-381 bound and describes this as an open case. No later exact value or 381-code proof was located in these checked sources as of 2026-11-06. This source check is not exhaustive. A direct request to the specialist tables site failed during this check, so the status statement does not treat that page as independently verified.
+
+## Programs and saved search result
+
+- `init_program.py` returns the coordinate 3-space and does not import task modules or comparison data.
+- `baseline.py` enumerates all 11,811 3-spaces and runs a seeded randomized greedy packing against their 2-space supports. It records requested and actual pass counts and supports `MATHBENCH_SEARCH_SECONDS` through `mathbench.search.search_steps`.
+- `evolution.py` runs independent seeded greedy restarts. It does not read the human witness.
+- `human.py` replays the printed representatives and group action. `reference.py` exposes the fixed replay through `run_code()`.
+- `data/search/randomized_greedy_seed0.json` stores a valid local-search result of size 230, its exact checker result, seed 0, 12 completed greedy passes, and the replay command. This direct local run used Python 3.13.12 on Linux. The process resource limits in the saved run record describe the benchmark defaults; the direct shell replay did not enforce them.
+
+The saved search result is a task-generated result. The published 333 witness remains under `data/source/` and is not loaded by the initial program or search programs.
+
+## Validation and pending review
+
+Commands run:
 
 ```sh
 .venv/bin/python -m pytest tasks/t051/test_task.py -q
 .venv/bin/python -m json.tool tasks/t051/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t051/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t051/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t051/data/source/heinlein_2019_appendix_c.json > /dev/null
+.venv/bin/python -m json.tool tasks/t051/data/search/randomized_greedy_seed0.json > /dev/null
 ```
 
-Result: `12 passed in 3.38s`; all three JSON files parsed. A separate strict run through `evaluate_candidate` returned valid score 55 and exact verification. To avoid changing the shared registry, the in-process call supplied the T051 config and task path directly to the evaluator; the evaluator still ran generation and verification in its isolated workers.
+The test command passed: **5 passed**. It covers the 333 witness and all 55,278 pairs, an invalid rank, a distance violation, equivalent bases for the same subspace, a Boolean matrix entry, empty code, objective/score/claimed-score invariance, source hash, orbit counts, every `run_code()` entry, and worker error and timeout controls through `mathbench.evaluate._run`.
 
-## Remaining review points
-
-- Asset update (2026-11-17): the public reference JSON duplicate was removed after confirming it encoded the same 130000 signs as the archived source. The canonical source and saved best solution are now deterministic gzip files: `data/source/sequence_130000.txt.gz` and `data/results.json.gz`. Both use mtime 0 and omit the gzip filename. The decompressed source and the solution embedded in the combined record preserve their respective original bytes and SHA-256 values: source `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`; best solution `219a2850619e50b1d2dc5e234893f11a222d42c3d5d61b47fcc7dd42d872c604`. Replay, loaders, and records point to the compressed files. This asset update is **已通过 Sol 验收（2026-11-17）**; the historical task acceptance record is unchanged.
-
-- This is a feasible public construction, not a finite optimality proof. The exact maximum of unrestricted discrepancy-3 sequences is not claimed known.
-- Confirm the linked notebook's attribution and provenance description. Its complete data were recovered and mathematically verified, but the original compressed archive was not reproduced byte-for-byte.
-- Sol should independently run the human and reference programs, check a deliberately invalid sequence, recompute the objective, and verify that forged score fields do not affect the result.
+The checker was also run directly on the initial seed (objective 1), the traditional search result (230), and the reconstructed published witness/reference (333). The local test executes the evolution entry with one requested restart and verifies its result. Full `evaluate_candidate("T051", ...)` is deferred until Sol admits the task to the shared registry; the expected missing-ID behavior is not a task failure. There are no known mathematical or reconstruction gaps. Sol review remains required for independent replay, source review, the upper-bound derivation, and acceptance status.

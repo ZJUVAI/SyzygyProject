@@ -1,34 +1,44 @@
 {
   "task_id": "T093",
-  "name": "Maximum value polygon packing for random_cf2_74ae2d30_50",
+  "name": "Quadratic assignment on QAPLIB tai256c",
   "acceptance_status": "accepted_by_sol",
+  "candidate_id": "quadratic-assignment",
   "official_configuration": "T093-C01",
   "configurations": [
     {
       "id": "T093-C01",
       "parameters": {
-        "instance": "random_cf2_74ae2d30_50",
-        "container_vertices": 15,
-        "item_types": 44,
-        "available_items_total": 50,
-        "movement": "integer translations only; rotations forbidden",
-        "feasibility": "each selected simple polygon is contained in the container; item interiors are pairwise disjoint; boundary contact is allowed",
-        "objective": "maximize the sum of values of selected items"
+        "instance": "QAPLIB tai256c",
+        "n": 256,
+        "matrix_file": "data/tai256c.dat.gz",
+        "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
+        "permutation_convention": "zero-based location assigned to each zero-based facility",
+        "objective": "sum_{i=0}^{255} sum_{j=0}^{255} A[i,j] * B[p[i],p[j]]",
+        "objective_unit": "QAPLIB objective units",
+        "feasibility": "p is a bijection from {0,...,255} to {0,...,255}",
+        "source_snapshot": "Debian r-cran-qap 0.1-1-2, QAPLIB files"
       },
-      "direction": "maximize",
-      "human_reference": 2304
+      "direction": "minimize",
+      "human_reference": 44759294
     }
   ],
+  "search_metadata": {
+    "algorithm": "randomized first-improvement pair-swap local search",
+    "default_seed": 0,
+    "candidate_reads_reference_witness": false,
+    "baseline_default_checks": 10000,
+    "budget_note": "Default search uses a fixed check count and seed. An explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "FixedCGSHOP2024 random_cf2_74ae2d30_50,44item types50available copies15-vertexconvexcontainer. Integertranslations only, no rotation, contact allowed; maximize total selected value. Arbitrary source simple concave item shapes allowed.",
-      "primary_source": "Rootread2026authorsCGSHOP24.pdf section1integertranslationrules and section5heuristicresults; officialinput SHA f2ad180face7d410ec40cf531d8bbf4a5631a9a6c18f9d7a73579717abca9c92. PublicauthorviewerShadoks2304,SmartPlacer2268,CGA2105. Samefixedinstanceoptimalityproofnotfound in current checked sources; no exhaustive negativeproofclaim.",
-      "human_method": "PublicShadoks23items2304exactintegerwitness SHA f6cd869b458df294ec49dd36a73a805f6ec4acda184c935b17d98b3c23830cc1. PaperdescribestraditionalIPandheuristics; source does not disclose AI use, so no unqualified best-human origin claim. Frozen comparison reproduces exact source construction.",
-      "independent_method": "Root uses no item triangulation or triangle clipping. Reparse source, prove convex container by oriented turns, check all moved vertices in every container halfplane. Every pair of polygons is partitioned into rational vertical slabs at vertices and edge crossings; exact vertical parity intervals never overlap positively. Recompute quantities and value. Public2304 verified in.09seconds.",
-      "admission": "Allfive strict entries pass: emptycold0, genericrandomintegerfirstfitbaseline/evolution711, human/reference2304. Full-resultscoreinvariance, displacedout-of-containerbrokenitem, replay,coldexport,error/nonfinite/timeoutpassed. Only sourceinstancefileexported; noShadokswitness. Agent7testspass, nofutureparameterstatusinheritance."
+      "数学模型": "固定QAPLIB tai256c的两份256阶整数矩阵。最小化65536项二次指派成本。",
+      "人类来源": "QAPLIB将44759294归于ANT，并在1997年历史中记载Stützle。复现归档排列，不声称重跑原搜索。",
+      "独立验算": "主代理取逆排列，按位置顺序独立累计全部65536项。五种程序均通过严格重放、破坏、分数篡改、冷导出及异常控制。",
+      "开放状态与限制": "arXiv:2401.09439v2正文报告下界44200000，上界44759294。版本为2024-09-30，PDF题页2024-10-01。摘要及两个网页仍有不同旧下界，已保留差异。最新搜索未发现闭合证明，搜索并不穷尽。"
     }
-  }
+  },
+  "category": "combinatorial_optimization"
 }

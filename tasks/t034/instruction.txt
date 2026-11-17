@@ -1,10 +1,3 @@
-# Task: improve the two-color van der Waerden lower bound for 7-term progressions
+Construct a 14 by 19 matrix of integer entries 0 or 1. Maximize the number of ones, subject to this rule: no choice of three rows and three columns forms a 3 by 3 submatrix whose nine entries are all 1. Return JSON data as {"matrix": [[...], ...]}. The evaluator recomputes the objective and checks every row triple. Do not include a claimed score as evidence. The fixed configuration is T034-C01.
 
-Return a JSON-compatible object with:
-
-- `n`: a positive integer;
-- `colors`: a list of exactly `n` integer labels from `{0,1}`.
-
-Entry `colors[i]` colors the positive integer `i+1`. The list must describe the full consecutive prefix `[1,n]`. It must contain no monochromatic seven-term arithmetic progression with positive integer common difference. The objective is to maximize `n`.
-
-The evaluator recomputes the objective and checks all progressions. Do not include a claimed score as evidence. The required configuration is T034-C01. Follow the `run_code()` interface and read `MATHBENCH_CONFIG_ID` if needed.
+Define run_code() with no arguments. Generation:300 seconds; separate verification:60 seconds; memory:4 GiB; one CPU thread. MATHBENCH_SEED sets the search seed.

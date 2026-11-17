@@ -1,11 +1,18 @@
-"""Reconstructed traditional triangulation plus greedy convex merging."""
+"""Reconstructed Giffler-Thompson active-schedule construction with LPT rule."""
 
 import os
-
-from tasks.t095.construction import greedy_merge
+from tasks.t095.dispatch import generate_active_schedule
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T095-C01") != "T095-C01":
-        raise ValueError("unknown T095 configuration")
-    return greedy_merge(seed=0, weights=(1.0, 0.0, 0.0), shuffle_ties=False)
+        raise ValueError("unsupported configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    return {
+        "machine_orders": generate_active_schedule(seed=seed, rule="lpt"),
+        "method_metadata": {
+            "algorithm": "Giffler-Thompson active schedule generation; longest processing time within the conflict set",
+            "seed": seed,
+            "iterations": 1,
+        },
+    }

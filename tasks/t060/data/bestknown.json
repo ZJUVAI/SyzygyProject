@@ -3,80 +3,149 @@
   "review_status": "accepted_by_sol",
   "configurations": {
     "T060-C01": {
-      "program": "reference.py",
-      "reproduced_value": 127,
-      "public_value": 127,
-      "highest_reported": {
-        "value": 127,
-        "source": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
-        "reproduction_status": "expression copied from public proposal and exactly re-evaluated; the cited page labels it an AI-assisted result"
+      "objective": {
+        "name": "minimum cardinality of an integer set whose difference set contains every integer from 1 through 6166",
+        "unit": "integer marks",
+        "direction": "minimize",
+        "constraints": [
+          "the set is finite and consists of distinct integers",
+          "each integer d in [1, 6166] is y-x for two marks x,y in the set",
+          "marks are unrestricted integers; no sparse-ruler location bound is imposed",
+          "differences larger than 6166 are allowed"
+        ]
       },
-      "public_source": {
-        "title": "Integer complexity of 2^61-1: 127 ones",
-        "url": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
-        "same_parameters": true,
-        "source_snapshot": "2026-10-13; page and board state rechecked 2026-11-06",
-        "ai_provenance": "The page says generative AI assistants served as research assistants. Classified as AI-assisted; internal division of work is not stated.",
-        "witness": "data/reference/public_127_expression.json",
-        "sha256": "946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449",
-        "board_repository_commit": "394bec0d2c976a967414d95388ca2e024ce19dd1",
-        "proposal": "https://github.com/math-market/integer-complexity-m61/pull/4",
-        "proposal_head": "6b79a6324891b4b196731f78fcd7a9b978524b25",
-        "proposal_status_checked": "open, not merged, 2026-11-06",
-        "optimality": "construction only; no exact value proof is reported by the reviewed sources"
+      "program": "reference.py",
+      "public_value": 128,
+      "reproduced_value": 128,
+      "highest_reported": {
+        "value": 128,
+        "source": "Leech (1956) and Golay (1972), as recorded by Banakh and Gavrylkiv (2017), Theorem 4.1 and Table 3; Georgiev et al. (2025), arXiv:2511.02864v1, §6.3.",
+        "url": "https://arxiv.org/html/1702.02631",
+        "reproduction_status": "The published 128-mark upper bound is independently reproduced by a Singer/Leech-family construction and exactly checked. This is not claimed to be the identical witness used in the cited historical construction. It does not prove optimality.",
+        "parameters": {
+          "N": 6166
+        }
       },
       "best_human": {
-        "value": 153,
+        "value": 128,
         "parameters": {
-          "target": "2^61-1"
+          "N": 6166
         },
-        "method": "reconstructed base-3 Horner expression",
-        "provenance": "Traditional positional Horner construction from the target's base-3 digits; not claimed as a literature record.",
-        "source": "https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf",
-        "witness": "data/human/human_base3_expression.json",
-        "evidence_state": "Rebuilt independently from the 39 base-3 digits and exactly re-evaluated; 153 leaves.",
-        "ai_provenance": "This is the task's reconstruction of a standard method, not an attributed external discovery.",
-        "origin_type": "Traditional method reproduction; not a literature-record claim."
+        "source": "Leech (1956), On the representation of 1,2,...,n by differences; Golay (1972), Notes on the representation of 1,2,...,n by differences. Reported in Banakh and Gavrylkiv (2017), Theorem 4.1 and Table 3, and Georgiev et al. (2025), arXiv:2511.02864v1, §6.3.",
+        "url": "https://arxiv.org/html/1702.02631",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The historical human source reports a 128-mark feasible construction. Its exact original point list was not recovered. A separately reconstructed Singer/Leech-family 128-point witness is saved and exactly verified; it is not claimed to be the identical historical construction.",
+        "ai_provenance": "The Leech and Golay sources predate modern LLM-based generative AI. No AI use is reported for this historical construction.",
+        "original_witness_recovered": false,
+        "independent_same_value_witness": "data/reference/singer_q31_leech_product_n6166_128.json",
+        "independent_same_value_witness_sha256": "e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c",
+        "origin_type": "source-reported human construction; exact original witness not recovered"
       },
       "best_public": {
-        "value": 127,
+        "value": 128,
         "parameters": {
-          "target": "2^61-1"
+          "N": 6166
         },
-        "url": "https://eventcompute.com/en/challenges/integer-complexity-m61/",
-        "witness": "data/reference/public_127_expression.json",
-        "origin_type": "AI-assisted public construction",
-        "evidence_state": "Exact expression is public; SHA-256 matches the file attached to board PR #4.",
-        "optimality": "not proved",
-        "ai_provenance": "AI-assisted; the page states that generative AI assistants were used."
+        "source": "Leech (1956), On the representation of 1,2,...,n by differences; Golay (1972), Notes on the representation of 1,2,...,n by differences. Reported in Banakh and Gavrylkiv, arXiv:1702.02631v6, Theorem 4.1 and Table 3, and Georgiev et al., arXiv:2511.02864v1, §6.3.",
+        "url": "https://arxiv.org/html/1702.02631",
+        "date_checked": "2026-11-06",
+        "evidence_state": "The cited sources report a 128-element construction at N=6166. This task reproduces an equivalent-size Singer/Leech-family witness, not the original historical list.",
+        "ai_provenance": "The cited 1956 and 1972 sources describe traditional human mathematics and predate modern LLM-based generative AI. The AlphaEvolve paper reports 128 as the prior Leech–Golay upper bound and separately reports a later AI-assisted improvement for N=49109. It gives no AI provenance for the historical 128 construction.",
+        "witness": "data/reference/singer_q31_leech_product_n6166_128.json",
+        "witness_sha256": "e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c",
+        "origin_type": "published human upper-bound report; original exact witness not recovered",
+        "source_url": "https://arxiv.org/html/1702.02631",
+        "alphaevolve_paper_url": "https://arxiv.org/html/2511.02864v1#S6.S3"
       },
       "best_reproduced": {
-        "value": 127,
+        "value": 128,
         "parameters": {
-          "target": "2^61-1"
+          "N": 6166
         },
         "program": "reference.py",
-        "witness": "data/reference/public_127_expression.json",
-        "evidence_state": "Task checker exactly parsed the expression, recomputed M61, and counted 127 leaves.",
-        "origin_type": "Reproduction of an AI-assisted public construction; no new discovery claimed.",
-        "provenance": "Reproduction only; the external source classifies the construction as AI-assisted.",
+        "verification_status": "exact",
+        "verification_method": "Rebuild a Singer cyclic difference set from the trace-zero exponents in GF(31^3), multiply its exponents by 172 modulo 993, combine with {0,1,4,6}, then check every integer difference from 1 through 6166 using exact integers.",
+        "witness": "data/reference/singer_q31_leech_product_n6166_128.json",
+        "witness_sha256": "e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c",
+        "origin_type": "independent computational reconstruction of a classical Singer/Leech-family construction; not claimed to be the original published witness",
         "review_status": "reviewed_by_sol"
       },
-      "other_public_baseline": {
-        "value": 150,
-        "source": "https://github.com/math-market/integer-complexity-m61",
-        "witness": "board baseline.txt, Horner expansion in base 32767",
-        "classification": "challenge bar, explicitly not a record; AI provenance unstated"
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": 158,
+        "note": "H is the separately recorded 158-mark Wichmann W(38,3) frozen human baseline; 128 is the source-reported strongest human construction."
       },
-      "lower_bound": {
-        "value": 116,
-        "source": "https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf",
-        "proof_check": "Selfridge's exact extremal formula gives E(115)=1801135623563989452 < M61 and E(116)=2701703435345984178 > M61. The checker uses integer powers only.",
-        "status": "proved lower bound",
-        "method": "Selfridge extremal integer formula",
-        "evidence_state": "Exact integer check: maximum value at 115 ones is below M61."
+      "other_parameter_results": [
+        {
+          "value": 360,
+          "parameters": {
+            "N": 49109
+          },
+          "reported_metric": "360^2/49109 = 2.6390274695... for the asymptotic difference-basis constant upper bound",
+          "source": "Georgiev et al., arXiv:2511.02864v1, §6.3 and the pinned AlphaEvolve notebook.",
+          "url": "https://arxiv.org/html/2511.02864v1#S6.S3",
+          "ai_provenance": "AlphaEvolve used code for generating Singer difference sets supplied by human researchers; the paper describes this result as an AI-assisted improvement.",
+          "reproduction_status": "Not the fixed N=6166 configuration and not used as this task's best value."
+        }
+      ],
+      "optimality_status": {
+        "status": "open from checked sources; 123 <= Delta(6166) <= 128",
+        "analytic_lower_bound": "Banakh and Gavrylkiv (2017), Theorem 4.1: lim Delta(n)^2/n = inf Delta(n)^2/n >= 2 + max_{0<phi<pi} 2 sin(phi)/(phi+pi). At phi=pi/2 this is >= 2+4/(3*pi) > 80/33 because pi<22/7. Therefore 33*Delta(6166)^2 > 80*6166 = 493280. Since 122^2*33=491172<493280 and 123^2*33=499257>493280, Delta(6166)>=123.",
+        "counting_lower_bound": "The simpler pair-count bound is k(k-1)/2 >= 6166 and implies k >= 112; the analytic lower bound 123 is stronger.",
+        "upper_bound": "An exact 128-mark witness is saved and checked.",
+        "source_survey_date": "2026-11-06",
+        "limitation": "No exact value was found in the checked paper, cited classical sources, or current AlphaEvolve problem repository. This is a bounded source survey, not a proof that no later result exists."
       },
-      "survey_note": "On 2026-11-06, the cited result page and board PR were checked. They support 116 <= complexity(M61) <= 127 and do not establish the exact value. This is a bounded source review, not an exhaustive claim.",
+      "source_review": {
+        "alphaevolve_paper": {
+          "url": "https://arxiv.org/abs/2511.02864",
+          "version": "v1, submitted 2025-11-03",
+          "section": "§6.3, Difference bases",
+          "claims": "Defines Delta(n) using integer differences; reports the prior 128^2/6166 upper bound and a later AlphaEvolve improvement at N=49109."
+        },
+        "cyclic_difference_bases_paper": {
+          "url": "https://arxiv.org/abs/1702.02631",
+          "version": "v6, 2017-04-08",
+          "sections": "§3.1 Singer's theorem; §4.1 Leech-Golay bounds; Table 3 lists N=6166 and 128 marks."
+        },
+        "alphaevolve_repository": {
+          "url": "https://github.com/google-deepmind/alphaevolve_repository_of_problems",
+          "snapshot_commit": "8f447457957deac61e28bf1676746f0753b3b2f8",
+          "snapshot_commit_date": "2026-07-11",
+          "notebook_path": "experiments/difference_bases/difference_bases.ipynb",
+          "notebook_blob_sha1": "0cdb812ada3b6053f749e05301a743fd191e8700",
+          "notebook_raw_sha256": "e5bd224563055caf53c0fef9b9c67620c7124a14aa77094cce456d9927b65489",
+          "notebook_bytes": 68217,
+          "scope": "The notebook gives the 49109-parameter evolved construction and is not the 6166/128 historical witness."
+        },
+        "human_baseline_source": {
+          "wichmann_1963": "https://doi.org/10.1112/jlms/s1-38.1.465",
+          "proof_source": "Saarela and Vanhatalo, A Connection Between Unbordered Partial Words and Sparse Rulers, EJC 33(1) (2026), #P1.40, https://doi.org/10.37236/13806",
+          "formula": "W(r,s) gaps = 1^r, r+1, (2r+1)^r, (4r+3)^s, (2r+2)^(r+1), 1^r; r=38,s=3; 158 marks, length 6548.",
+          "witness_sha256": "39bb5d5aaecf6a5ed3c38e088d18cc0759d28b40d2908d68a9ded3a3e7b9c6e4"
+        },
+        "review_status": "sources checked; pending Sol review"
+      },
+      "limitations": [
+        "The finite optimum at N=6166 is not established; 128 is a feasible upper bound only.",
+        "The reconstructed 128-mark witness is not claimed to be the identical historical Leech or Golay witness.",
+        "The AlphaEvolve improvement at N=49109 is kept separate from the fixed N=6166 task.",
+        "The task accepts unrestricted integer marks and must not be reinterpreted as a sparse ruler of length 6166."
+      ],
+      "frozen_human_baseline": {
+        "value": 158,
+        "parameters": {
+          "N": 6166
+        },
+        "source": "Wichmann (1963), reconstructed as W(38,3); completeness formula and proof in Saarela and Vanhatalo (2026), Definitions 8 and 16 and Theorem 18.",
+        "url": "https://doi.org/10.1112/jlms/s1-38.1.465",
+        "additional_source": "https://doi.org/10.37236/13806",
+        "witness_program": "human.py",
+        "witness": "data/reference/wichmann_w38_s3_n6166_158.json",
+        "witness_sha256": "39bb5d5aaecf6a5ed3c38e088d18cc0759d28b40d2908d68a9ded3a3e7b9c6e4",
+        "evidence_state": "The 158-mark Wichmann construction has length 6548 and is exactly checked for every required distance 1..6166. This weaker baseline is distinct from the source-reported best human record of 128.",
+        "origin_type": "published human construction; restricted ruler is a feasible unrestricted integer difference basis"
+      },
       "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
@@ -86,22 +155,22 @@
           "task_id": "T060",
           "config_id": "T060-C01",
           "validity": 1.0,
-          "combined_score": 1.204724409448819,
-          "objective": 127,
+          "combined_score": 1.234375,
+          "objective": 128,
           "verification_status": "exact",
-          "generation_time": 3.798034332692623,
-          "verification_time": 4.200659189373255,
-          "objective_value": 127,
+          "generation_time": 0.5933877490460873,
+          "verification_time": 0.7079957947134972,
+          "objective_value": 128,
           "details": {
-            "target": "2305843009213693951",
-            "expression_value": "2305843009213693951",
-            "ones_count": 127,
-            "expression_tree": true,
-            "certified_lower_bound": 116,
-            "selfridge_max_at_115": "1801135623563989452",
-            "claimed_objective_ignored": true
+            "N": 6166,
+            "basis_size": 128,
+            "covered_distances": 6166,
+            "pair_checks_until_full_coverage": 7367,
+            "ambient_group": "integers_under_subtraction; differences larger than N are allowed",
+            "claimed_objective_ignored": true,
+            "strict_full_interval_check": true
           },
-          "eval_time": 8.007797997444868,
+          "eval_time": 1.348656352609396,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -118,43 +187,50 @@
           }
         },
         "independent_quantity": {
-          "one_count": 127,
-          "exact_value": 2305843009213693951,
-          "strict_lower_bound": 116
+          "difference_basis_size": 128,
+          "required_translations_checked": 6166,
+          "span": 6742
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "additional_public_item": {
-        "value": 150,
-        "parameters": {
-          "target": "2^61-1"
-        },
-        "source": "https://github.com/math-market/integer-complexity-m61",
-        "evidence_state": "Board base-32767 Horner baseline; explicitly a challenge bar and not a record.",
-        "ai_provenance": "Not stated."
-      },
-      "survey_scope_note": "The cited sources and board state were checked on 2026-11-06. No exact M61 complexity proof was found there. This statement is limited to the reviewed sources."
+      "parameters": {
+        "N": 6166,
+        "ambient_group": "integers_under_subtraction"
+      }
     }
   },
   "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T060-C01": {
-        "best_human": {
-          "method": "base-3 Horner reconstruction",
-          "evidence_state": "Reconstructed from the 39 target digits; exact parser confirms value and 153 leaves."
-        },
         "best_public": {
-          "evidence_state": "Published expression matches board PR #4 witness SHA-256 and independently verifies exactly.",
-          "optimality": "Not proved; only a feasible construction."
+          "source": "Leech (1956) and Golay (1972), recorded in Banakh and Gavrylkiv (2017), Theorem 4.1/Table 3; also Georgiev et al. (2025), arXiv:2511.02864v1, §6.3.",
+          "evidence_state": "The cited literature reports a feasible 128-mark construction. Our separately reconstructed 128-mark witness is exactly checked, but is not claimed to be the original historical list.",
+          "ai_provenance": "The Leech and Golay sources are traditional human mathematics and predate modern LLM-based generative AI. The AlphaEvolve paper separately reports an AI-assisted improvement at N=49109. AI involvement in the historical N=6166 construction is not indicated.",
+          "origin_type": "published human upper bound; exact historical witness not recovered"
         },
         "best_reproduced": {
-          "evidence_state": "Expression tree parsed with exact integer arithmetic; 127 leaves and exact target."
+          "verification_method": "Exact integer difference scan over the generated Singer/Leech-family set; verify all 6166 distances.",
+          "origin_type": "independent reconstruction, not asserted to be the source authors' original witness"
         },
-        "lower_bound": {
-          "status": "proved"
-        }
+        "highest_reported": {
+          "source": "Leech-Golay construction as cited by Banakh and Gavrylkiv and by Georgiev et al.",
+          "reproduction_status": "An independent Singer/Leech-family construction of the same cardinality is saved and exactly verified. The original historical witness list is not claimed to have been recovered."
+        },
+        "other_parameter_results": [
+          {
+            "value": 360,
+            "parameters": {
+              "N": 49109
+            },
+            "source": "Georgiev et al. (2025), arXiv:2511.02864v1, §6.3 and its AlphaEvolve repository notebook.",
+            "source_url": "https://arxiv.org/html/2511.02864v1#S6.S3",
+            "reported_metric": "360^2/49109 = 2.6390274695...",
+            "ai_provenance": "AlphaEvolve was given code for Singer-set construction by human researchers; the paper describes this as an AI-assisted improvement.",
+            "evidence_state": "Different N and an asymptotic-constant record; not substituted for the N=6166 record."
+          }
+        ]
       }
     }
   }

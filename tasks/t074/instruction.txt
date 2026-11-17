@@ -1,7 +1,7 @@
-Place exactly 12 distinct rational points in the plane, with no three collinear. There is no coordinate bound and no fixed outer container. Maximize
+For T074-C01, find a 100-sign binary sequence with low aperiodic peak sidelobe level.
 
-    (minimum area of a triangle formed by three points) / (area of the convex hull of all 12 points).
+Return a JSON object with one key, `sequence`, whose value is a list of the configured length integer entries, each -1 or +1. Boolean and floating-point entries are invalid.
 
-Return JSON with a `points` array of 12 coordinate pairs. Integer coordinates, rational strings such as `"3/2"`, and finite decimal numbers are supported. The checker treats each decimal number as the exact rational represented by its decimal text. It checks all 220 triples and computes the convex hull and ratio with exact rational arithmetic. Do not include repeated points or collinear triples.
+For each shift k=1,...,n-1, the aperiodic autocorrelation is C[k]=sum(s[i]*s[i+k] for i=0,...,99-k). The score is PSL=max(abs(C[k]) for k=1,...,n-1), which is minimized. The zero-shift main peak is excluded.
 
-Start from the simple parabola seed in the supplied initial program. Do not read human, reference, source, or best-witness files. Use the `run_code()` interface and respect the configured time and memory limits.
+Start from the supplied simple program. Do not read human, reference, or best witness files. Declared objective and score fields are ignored. The checker recomputes every correlation exactly with integer arithmetic.

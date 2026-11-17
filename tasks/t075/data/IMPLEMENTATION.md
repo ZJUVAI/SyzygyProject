@@ -1,34 +1,32 @@
-# T075 implementation notes
+# T075 implementation record
 
 Status: `accepted_by_sol`.
 
-## Configuration and research
+## Definition and source review
 
-- Fixed configuration `T075-C01`: `n=36`, 3-uniform, maximize edges with at most two triples on every four-vertex set.
-- Primary source: Victor Falgas-Ravry, Oleg Pikhurko, Emil Vaughan, and Jan Volec, “The codegree threshold of `K4^-`,” Journal of the London Mathematical Society 107 (2023), DOI `10.1112/jlms.12722`: <https://pikhurko.github.io/E/FalgasravryPikhurkoVaughanVolec23jlms.pdf>.
-- Section 6.3, page 27, gives `H6={123,234,345,145,125,136,356,256,246,146}`, attributes it to Frankl and Füredi (1984), notes each vertex link is a 5-cycle, and states that blow-ups and iterated blow-ups are `K4^-`-free.
-- The same section states that the ordinary Turán density of `K4^-` is unknown and cites the `2/7` conjecture. Its codegree results concern a different constrained extremal problem.
-- Current-source queries on 2026-11-06 did not find a finite `n=36` exact result or proof that 2,220 is optimal. The 2026 exact result for the uniform Turán density of complete `K4^(3)` is a different forbidden hypergraph and a different density notion.
-- Public H6 template is archived at `data/source/h6_template.json`. The derived 2,220-edge witness is archived at `data/human/h6_iterated_blowup_n36.json`.
+- Configuration: `T075-C01`, length 64, entries in `{−1,+1}`, periodic boundary, minimize the sum of squared correlations for shifts 1 through 63.
+- Tyler and Loftsson's NASA Table 2 supplies the sequence `B24FEAE7E4529CF0`; footnote ZZ cites J. Watkins, personal communication, June 1985. The source report copy has SHA-256 `edc332b8a9410cb0d8f14d6db65225469f592c5096c88fa3e8051315282d63cf`. Exact decoding gives energy 240 and PSL 4. The earlier metadata had the wrong title, authors, year, and NTRS record; these fields and asset filenames are corrected.
+- Mertens and Bessenrodt §4.2 Table 4 gives `ΔE=14` at N=64, which is E=224 under their `ΔE=E/16` definition. The row comes from numerical search and marks ground-state status `?`; it does not claim a proof. The sequence was not recovered.
+- Their table states exhaustive search for the N=4t periodic case only through N≤40. Source checks on 2026-11-06 found no later proof closing periodic N=64. Aperiodic results at N=64 are distinct and do not change this task's objective.
 
-## Construction and checker
+## Programs and stored results
 
-- The witness has ten outer H6 triples, each expanded to `6^3` triples across three parts, plus ten inner H6 edges in each of six parts: `10*216+6*10=2220`.
-- `check.py` requires the exact configuration ID and parameter dictionary. It parses unordered triples, rejects duplicate edges and invalid labels, then checks all `C(36,4)=58905` four-sets. It returns the recomputed edge count and a direct double-counting upper bound of `C(36,3)/2=3570`.
-- `human.py` rebuilds the recursive H6 witness from the public template. `reference.py` reads the frozen witness from `data/reference/`.
-- `init_program.py` returns the empty hypergraph. Baseline and evolution use seeded random-order greedy additions from the empty set. These programs do not read human/reference assets.
-- A direct seed-0 baseline run tested five orders and got 1,245 edges from trial counts `[1226, 1245, 1243, 1226, 1211]`. It was exactly rechecked and saved under `data/results.json`. This task-local run was invoked directly; the record states that runner memory/time limits were not installed.
+- `init_program.py` returns the all-`+1` sequence, with energy 258048.
+- `baseline.py` uses four seeded random restarts, each with 5000 single-spin annealing proposals and exact integer correlation deltas. It reads no comparison sequence.
+- `evolution.py` is the task-qualified search entry.
+- `human.py` reconstructs the NASA report's hex sequence. `reference.py` loads its separately frozen witness in `data/reference/`.
+- The saved seed-0 baseline in `data/search/seed-0.json` has exact energy 608 and PSL 8. The default run took 4.312 seconds locally.
 
-## Validation
+## Checker and validation
 
-Use `.venv/bin/python`:
+- The checker validates all 64 entries as exact integers in `{−1,+1}` and directly recomputes all 63 periodic correlation sums, energy, and PSL using integer arithmetic.
+- Candidate score claims do not affect validation.
+- Command: `.venv/bin/python -m pytest tasks/t075/test_task.py -q`
+- Result: `12 passed in 4.92s`.
+- Tests cover all five program entries, exact human reconstruction, exact flip-delta updates versus full recomputation, invalid length and values, NaN/infinity, fixed configuration, claim invariance, deterministic search, and `_run` errors and timeouts.
+- All JSON files were parsed with `python -m json.tool`; `git diff --check -- tasks/t075` passed.
+- Shared limits remain 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread.
 
-```sh
-.venv/bin/python -m pytest tasks/t075/test_task.py -q
-```
+## Limits
 
-Tests cover the exact 2,220-edge witness, the H6 link cycles, a deliberate three-edge four-set, duplicate/unordered triples, invalid labels and numeric types, empty construction, ignored scores, the direct double-counting bound, all program entries, reproducible search counts, evaluator use with a temporary registry patch, and runner errors/timeouts. The final command completed with 36 passed tests in 16.77 seconds:
-
-```sh
-.venv/bin/python -m pytest tasks/t075/test_task.py -q
-```
+Energy 224 is a reported numerical low-energy result, not a proved minimum. The exact minimum periodic energy at length 64 remains unresolved in the sources checked. The reproducible human baseline is 240.

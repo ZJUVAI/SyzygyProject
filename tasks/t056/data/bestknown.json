@@ -3,154 +3,58 @@
   "review_status": "accepted_by_sol",
   "configurations": {
     "T056-C01": {
+      "public_value": "5",
+      "public_source": {
+        "url": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+        "database": "SageMath combinatorial design database",
+        "release": "10.10",
+        "tag_commit": "cb359e4c6e3b52e1bfc7f4f152e7db3ebd5f5d03",
+        "source_file": "src/sage/combinat/designs/database.py",
+        "source_file_sha256": "55a30e8aebba5b1d34f8e6469dad746a42757b1c2c549715a04b00069be423a9",
+        "function_fragment": "data/source/sage_10_10_MOLS_12_5.py.txt",
+        "function_fragment_sha256": "302e6dbf714f489c42cf3eec3910ed4bb6f9ba3531a067d981bd0abc4228922d",
+        "witness": "data/source/mckay_mols12_5.json",
+        "witness_sha256": "c039701b9f19fea6d6f038e9897035e88cbaf1090318d4d38235b8291823674f",
+        "attribution": "Sage source says these MOLS were found by Brendan McKay. This identifies the data attribution; the 1992 lower-bound paper is by Charles E. Roberts."
+      },
+      "reproduced_value": "5",
       "program": "reference.py",
-      "reproduced_value": 2006,
-      "public_value": 2006,
-      "best_human": {
-        "value": 2006,
-        "source": {
-          "title": "Parallel implementation of GES",
-          "authors": "O. V. Shylo and M. P. Pardalos",
-          "year": 2008,
-          "url": "https://www.optimizizer.com/infoUB.php?UB=2006&name=ta41&problemclass=ta",
-          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta",
-          "algorithm_source": "Parallel global equilibrium search"
-        },
-        "ai_provenance": "Not stated by the source.",
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "instance": "ta41",
-          "jobs": 30,
-          "machines": 20
-        },
-        "evidence_state": "published makespan; the listed machine sequences are downloaded and independently rechecked"
-      },
-      "best_public": {
-        "value": 2006,
-        "source": {
-          "url": "https://www.optimizizer.com/TA.php",
-          "last_update": "2026-10-18",
-          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta"
-        },
-        "reproduction_status": "downloaded schedule independently verified against the official instance",
-        "date_checked": "2026-11-06",
-        "parameters": {
-          "instance": "ta41",
-          "jobs": 30,
-          "machines": 20
-        },
-        "evidence_state": "published upper-bound schedule downloaded and independently checked against the official Taillard instance"
-      },
-      "best_reproduced": {
-        "value": 2006,
-        "program": "reference.py",
-        "witness": "data/reference/ta41_2006_schedule.json",
-        "reproduction_status": "exact checker recomputes makespan 2006",
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "instance": "ta41",
-          "jobs": 30,
-          "machines": 20
-        },
-        "witness_sha256": "d3760f7a46266d9da02920433f027645056704d76fb423846414ca9d275c58ed",
-        "review_status": "reviewed_by_sol"
-      },
       "highest_reported": {
-        "value": 2006,
+        "value": 5,
         "source": {
-          "title": "Parallel implementation of GES",
-          "authors": "O. V. Shylo and M. P. Pardalos",
-          "year": 2008,
-          "url": "https://www.optimizizer.com/TA.php",
-          "snapshot_date": "2026-11-06"
+          "title": "Sets of mutually orthogonal Latin squares with ‘like subsquares’",
+          "author": "Charles E. Roberts",
+          "url": "https://doi.org/10.1016/0097-3165(92)90052-V",
+          "claim": "Reports an order-12 construction meeting the then-current lower bound of five. Sage 10.10 separately preserves a five-square witness and attributes its data to Brendan McKay.",
+          "data_url": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+          "checked_at": "2026-11-06"
         },
-        "reproduction_status": "reported upper-bound schedule downloaded and independently verified"
+        "reproduction_status": "Five-square witness replayed exactly. This is a best-known lower-bound construction among the checked sources, not a proof that five is maximum."
       },
-      "reported_lower_bounds": {
-        "current_page_value": 1912,
-        "source": "https://doi.org/10.2139/ssrn.4938242",
-        "2025_solver_value": 1915,
-        "2025_source": "https://arxiv.org/abs/2504.16106",
-        "2025_status": "numerical solver lower bound, not a formal proof per the authors"
-      },
-      "optimality_status": "open",
+      "witness": "data/source/mckay_mols12_5.json",
+      "comparison_tolerance": "0",
       "verification": {
-        "task_id": "T056",
-        "status": "pending_source_review",
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T056",
           "config_id": "T056-C01",
           "validity": 1.0,
-          "combined_score": 1.6430707876370887,
-          "objective": 2006,
+          "combined_score": 1.0,
+          "objective": 5,
           "verification_status": "exact",
-          "generation_time": 0.2156352810561657,
-          "verification_time": 0.36656878516077995,
-          "objective_value": 2006,
+          "generation_time": 0.16444038972258568,
+          "verification_time": 0.16459429264068604,
+          "objective_value": 5,
           "details": {
-            "instance": "ta41",
-            "jobs": 30,
-            "machines": 20,
-            "operations": 600,
-            "makespan": 2006,
-            "critical_path_lower_bound": 1830,
-            "machine_loads": [
-              1490,
-              1685,
-              1674,
-              1830,
-              1378,
-              1709,
-              1528,
-              1530,
-              1751,
-              1588,
-              1464,
-              1675,
-              1516,
-              1483,
-              1702,
-              1151,
-              1625,
-              1633,
-              1371,
-              1496
-            ],
-            "job_loads": [
-              1077,
-              899,
-              1189,
-              1022,
-              1098,
-              827,
-              953,
-              1151,
-              985,
-              866,
-              1057,
-              1102,
-              1022,
-              987,
-              1157,
-              1092,
-              1040,
-              944,
-              1092,
-              1164,
-              1003,
-              1020,
-              839,
-              1102,
-              1232,
-              1158,
-              953,
-              1172,
-              932,
-              1144
-            ],
+            "order": 12,
+            "squares_checked": 5,
+            "orthogonal_pairs_checked": 10,
+            "ordered_pairs_per_square_pair": 144,
             "claimed_objective_ignored": true
           },
-          "eval_time": 0.6979288049042225,
+          "eval_time": 0.3317199684679508,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -167,61 +71,67 @@
           }
         },
         "independent_quantity": {
-          "makespan": 2006,
-          "operations_dispatched": 600
+          "square_count": 5,
+          "orthogonal_array_rows": 144,
+          "two_column_projections_checked": 21
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "review_status": "accepted_by_sol",
-      "frozen_human_baseline": {
-        "value": 3296,
-        "program": "human.py",
-        "method": "Giffler-Thompson active-schedule generation with longest-processing-time priority in the conflict set",
-        "source": {
-          "title": "Algorithms for Solving Production-Scheduling Problems",
-          "authors": "B. Giffler and G. L. Thompson",
-          "year": 1960,
-          "url": "https://doi.org/10.1287/opre.8.4.487"
-        },
-        "evidence_state": "reconstructed deterministic rule; witness independently checked; not the published 2006 record"
-      },
-      "reported_bounds": {
-        "current_public_lower_bound": 1912,
-        "lower_bound_source": "https://doi.org/10.2139/ssrn.4938242",
-        "lower_bound_reproduction_status": "reported by the current Taillard bounds page; not independently reproduced as an optimality certificate",
-        "2025_cp_numerical_lower_bound": 1915,
-        "2025_cp_source": "https://arxiv.org/abs/2504.16106",
-        "2025_cp_limitation": "The paper's OPT-50000s column reports 1915 for ta41. It describes this as a numerical lower bound and warns that the solver-derived lower bounds are not formally proved because implementation error cannot be excluded.",
-        "optimality_status": "open"
-      },
-      "source_pins": {
-        "official_instance_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/jobshop.dir/tai30_20.txt",
-        "official_snapshot_sha256": "fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9",
-        "normalized_instance": "data/source/ta41_instance.json",
-        "normalized_instance_sha256": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
-        "official_row_note": "ta41 is the first 30-job, 20-machine block in tai30_20.txt; its embedded historical bound fields are superseded and not used as current bounds."
-      },
-      "own_search": {
-        "program": "evolution.py",
-        "witness": "data/search/seed_0.json",
-        "objective": 2795,
-        "seed": 0,
-        "iterations": 500,
-        "search_isolation": "starts from init_program.py; no reference or human witness reads"
-      }
+      "limitations": [
+        "Five is a verified lower bound, not a proved maximum.",
+        "The 11-square complete-set case remains open; this does not decide whether six squares exist."
+      ],
+      "checked_at": "2026-11-06",
+      "review_status": "accepted_by_sol"
     }
   },
-  "additional_evidence": {
-    "configurations": {
-      "T056-C01": {
-        "best_human": {
-          "ai_provenance": "The cited source does not state whether AI tools were used. No AI-free claim is made."
-        },
-        "best_reproduced": {
-          "reproduction_status": "exact integer precedence graph validation; makespan recomputed as 2006"
-        }
-      }
-    }
-  }
+  "best_human": {
+    "value": 5,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "url": "https://doi.org/10.1016/0097-3165(92)90052-V",
+    "provenance": "Charles E. Roberts reports order-12 orthogonal sets meeting the then-current lower bound. Sage's pinned database separately attributes its explicit five-square data to Brendan McKay.",
+    "evidence_state": "five-square witness replayed and exactly verified; no optimality proof"
+  },
+  "best_public": {
+    "value": 5,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "url": "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+    "evidence_state": "pinned Sage 10.10 database includes a McKay-attributed order-12 family of five; no checked source establishes that five is optimal",
+    "origin_type": "human"
+  },
+  "best_reproduced": {
+    "value": 5,
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "witness_file": "data/source/mckay_mols12_5.json",
+    "program": "human.py",
+    "provenance": "Literal digit-for-digit extraction of the MOLS_12_5 string in Sage 10.10 source, mapping a..l to 0..11. The Sage function was not executed.",
+    "actual_value": 5,
+    "evidence_state": "independently replayed; every Latin and orthogonality constraint checked exactly"
+  },
+  "ai_assisted": {
+    "value": null,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "order": 12
+    },
+    "evidence_state": "no higher AI-assisted construction found in the sources checked"
+  },
+  "unmatched_parameters": [],
+  "scope_note": "The five-square lower bound is not an optimality result. The general upper bound is 11. A complete family of 11 is equivalent to a projective plane of order 12, whose existence remains open. This archive does not claim that no six-square family exists.",
+  "checked_sources": [
+    "https://doi.org/10.1016/0097-3165(92)90052-V",
+    "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5",
+    "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Paper/LatinSquare.lean",
+    "https://www.cs.uleth.ca/~morris/Combinatorics/html/sect_Latin-squares-MOLS.html"
+  ]
 }

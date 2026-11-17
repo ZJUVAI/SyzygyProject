@@ -1,9 +1,17 @@
-"""Small deterministic valid seed for the (5,5)-Ramsey graph task."""
+"""Simple standalone seed: 17 points on a rational parabola."""
+
+import os
 
 
 def run_code():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T022-C01")
+    if chosen != "T022-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    n = 5
-    adjacency = [[(v - 1) % n, (v + 1) % n] for v in range(n)]
-    return {"adjacency": adjacency}
+    points = [{"x": [i], "y": [i * i]} for i in range(17)]
+    return {
+        "minimal_polynomial": [0, 1],
+        "isolating_interval": ["-1", "1"],
+        "points": points,
+    }
     # EVOLVE-BLOCK-END

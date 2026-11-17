@@ -1,14 +1,12 @@
-"""A simple 91-point collinear seed with exact rational coordinates."""
+"""Simple standalone valid seed consisting of a single codeword."""
+
+import os
 
 
 def run_code():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T049-C01")
+    if chosen != "T049-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    return {
-        "minimal_polynomial": [0, 1],
-        "isolating_interval": ["-1", "1"],
-        "points": [
-            {"x": [str(i)], "y": ["0"]}
-            for i in range(91)
-        ],
-    }
+    return {"codewords": [0]}
     # EVOLVE-BLOCK-END

@@ -1,13 +1,10 @@
-"""Fixed, reproducible degree-146 comparison construction."""
-
-import json
+"""Load the frozen reference generator for the selected configuration."""
 import os
-from pathlib import Path
+
+from tasks.t046.sota import read_generator, run_code as public_generator
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T046-C01")
-    if config_id != "T046-C01":
-        raise ValueError(f"unsupported configuration: {config_id}")
-    path = Path(__file__).parent / "data" / "reference" / "h1_power_73.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    if os.environ.get('MATHBENCH_CONFIG_ID', 'T046-C01') == 'T046-C01':
+        return read_generator('search_generator.json')
+    return public_generator()

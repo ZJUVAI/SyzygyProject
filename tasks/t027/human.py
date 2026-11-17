@@ -1,17 +1,22 @@
-"""Replay the archived QAPLIB tai256c incumbent permutation."""
-import os
-from pathlib import Path
+"""Rebuild the published UBC 6-fan construction for n divisible by six."""
+
+N = 120
+
+
+def _edge(a, b):
+    return (min(a, b), max(a, b))
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T027-C01") != "T027-C01":
-        raise ValueError("unsupported T027 configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    words = (Path(__file__).parent / "data" / "tai256c.sln").read_text(encoding="ascii").split()
-    if len(words) != 258 or int(words[0]) != 256:
-        raise ValueError("unexpected QAPLIB solution format")
-    claimed = int(words[1])
-    one_based = [int(value) for value in words[2:]]
-    if len(set(one_based)) != 256 or any(value < 1 or value > 256 for value in one_based):
-        raise ValueError("archived solution is not a permutation")
-    return {"permutation": [value - 1 for value in one_based], "claimed_score": claimed}
+    edges = {_edge(i, (i + 1) % N) for i in range(N)}
+    hubs = (0, 40, 80)
+    edges.update(_edge(a, b) for a, b in zip(hubs, hubs[1:] + hubs[:1]))
+    for vertex in range(N):
+        if vertex in hubs:
+            continue
+        distances = [min((vertex - hub) % N, (hub - vertex) % N) for hub in hubs]
+        nearest = min(distances)
+        for hub, distance in zip(hubs, distances):
+            if distance == nearest:
+                edges.add(_edge(vertex, hub))
+    return {"edges": [list(edge) for edge in sorted(edges)]}

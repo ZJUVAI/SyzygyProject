@@ -6,7 +6,7 @@ Required files: `task.json`, `README.md` (Chinese and English), `instruction.txt
 
 `evolution.py` must expose `run_code()` for the shared search runner. It may import the task's baseline with a task-qualified import. Test this entry directly. A checker-only helper does not satisfy this entry. The exported `init_program.py` must work without importing task modules from the source checkout. Public input files may be exported by the main reviewer's explicit whitelist; comparison witnesses and normalization records must not enter that workspace.
 
-`task.json` contains `task_id`, `name`, `acceptance_status`, `official_configuration`, and a `configurations` list with one released configuration. A configuration has `id`, `parameters`, `direction` (`minimize` or `maximize`), and `human_reference` (positive JSON number). The release has 100 official configurations. The T003 release uses C02 for 32 circles. A draft uses `pending_sol_review` until it passes review.
+`task.json` contains `task_id`, `name`, `acceptance_status`, `official_configuration`, and a `configurations` list with one released configuration. A configuration has `id`, `parameters`, `direction` (`minimize` or `maximize`), and `human_reference` (positive JSON number). The release has 100 official configurations. The T002 release uses C02 for 32 circles. A draft uses `pending_sol_review` until it passes review.
 
 The `PLAN.md` references in historical task records refer to the file in commit `942361fbd22f6abe0eefa4d18b611bc6552d3b6f`.
 
@@ -30,9 +30,9 @@ Test valid and invalid examples, boundary constraints, ignored claimed scores, a
 
 Before registration, test runner errors and timeouts through `mathbench.evaluate._run`, or use a temporary registry patch inside the test. A missing task ID in a separate process is expected until Sol admission; do not edit the shared registry or wait for a permanent registration to test these controls.
 
-Use `.venv/bin/python` (Python 3.13 with pytest and science libraries) for validation. The system `python3` is old. Test imports must be task-qualified, e.g. `from tasks.t013.check import validate`, not `from check import validate`, so all 73 task suites can run together without module-name collisions. Program-local imports are supported by the worker. Do not import sibling task data.
+Use `.venv/bin/python` (Python 3.13 with pytest and science libraries) for validation. The system `python3` is old. Test imports must be task-qualified, e.g. `from tasks.t073.check import validate`, not `from check import validate`, so all 73 task suites can run together without module-name collisions. Program-local imports are supported by the worker. Do not import sibling task data.
 
-For an exact algebraic objective, the trusted checker may return the exact expression in `objective` and a rational string in `objective_value` for numeric feedback. This must be a conservative bound (upper for minimize, lower for maximize). Include a rigorously established `details.objective_interval`; the candidate's own numeric claims remain ignored. T002 implements this for Q(sqrt(2)) with integer-square-root bounds.
+For an exact algebraic objective, the trusted checker may return the exact expression in `objective` and a rational string in `objective_value` for numeric feedback. This must be a conservative bound (upper for minimize, lower for maximize). Include a rigorously established `details.objective_interval`; the candidate's own numeric claims remain ignored. T003 implements this for Q(sqrt(2)) with integer-square-root bounds.
 
 Search baseline amendment: defaults use fixed iteration counts and the saved random seed. `mathbench.search.search_steps` supplies this mode. Explicit `MATHBENCH_SEARCH_SECONDS` enables a wall-clock cutoff for exploration; its result can depend on machine speed. Hard runner limits apply in both modes.
 

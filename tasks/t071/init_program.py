@@ -1,12 +1,18 @@
-"""Simple standalone valid seed consisting of a single codeword."""
+"""Simple cold seed U={0,1,4}."""
 
 import os
 
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T071-C01")
-    if chosen != "T071-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T071-C01") != "T071-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    return {"codewords": [0]}
+    solution = {"set": [0, 1, 4]}
     # EVOLVE-BLOCK-END
+    return solution
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

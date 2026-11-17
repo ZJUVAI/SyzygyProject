@@ -1,76 +1,42 @@
-"""Seeded simulated annealing with vertex-swap moves for the MinLA objective."""
+"""Elitist search over valid queen placements, independent of comparison data."""
 
-import math
 import os
 import random
 import time
 
-from tasks.t045.graph import load_graph
-
-
-def _cost(ordering, edges):
-    pos = [0] * (len(ordering) + 1)
-    for i, vertex in enumerate(ordering, start=1):
-        pos[vertex] = i
-    return sum(abs(pos[u + 1] - pos[v + 1]) for u, v in edges), pos
+from mathbench.search import search_steps
+from tasks.t045.construction import greedy_layout, mutate_layout
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T045-C01") != "T045-C01":
         raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    steps = max(1, min(2_000_000, int(os.environ.get("MATHBENCH_SEARCH_ITERATIONS", "100000"))))
-    from mathbench.search import search_deadline
-    deadline = search_deadline()
-    from tasks.t045.baseline import _adjacency, run_code as baseline_run
+    generations = max(1, min(200, int(os.environ.get("MATHBENCH_EVOLUTION_ITERATIONS", "30"))))
+    population_size = max(2, min(10, int(os.environ.get("MATHBENCH_POPULATION", "4"))))
+    rng = random.Random(seed ^ 0x119E701)
     start = time.monotonic()
-    n, edges = load_graph()
-    adjacency = _adjacency(n, edges)
-    incumbent = baseline_run()
-    order = incumbent["ordering"][:]
-    current_cost, position = _cost(order, edges)
-    best_order, best_cost = order[:], current_cost
-    rng = random.Random(seed ^ 0x10896A)
-    accepted = 0
-    iterations_run = 0
-    for step in range(steps):
-        if time.monotonic() >= deadline:
-            break
-        iterations_run += 1
-        i = rng.randrange(n)
-        j = rng.randrange(n - 1)
-        if j >= i:
-            j += 1
-        a, b = order[i], order[j]
-        delta = 0
-        for neighbor0 in adjacency[a - 1]:
-            neighbor = neighbor0 + 1
-            if neighbor != b:
-                delta += abs((j + 1) - position[neighbor]) - abs((i + 1) - position[neighbor])
-        for neighbor0 in adjacency[b - 1]:
-            neighbor = neighbor0 + 1
-            if neighbor != a:
-                delta += abs((i + 1) - position[neighbor]) - abs((j + 1) - position[neighbor])
-        fraction = step / max(1, steps - 1)
-        temperature = 1200.0 * (1.0 - fraction) + 20.0
-        if delta <= 0 or rng.random() < math.exp(-delta / temperature):
-            order[i], order[j] = b, a
-            position[a], position[b] = j + 1, i + 1
-            current_cost += delta
-            accepted += 1
-            if current_cost < best_cost:
-                best_order, best_cost = order[:], current_cost
+    population = [greedy_layout(rng, max_army=45) for _ in range(population_size)]
+    completed = 0
+    for _ in search_steps(generations):
+        population.sort(key=lambda layout: (-len(layout["white"]), layout["white"], layout["black"]))
+        parent = rng.choice(population[:max(1, population_size // 2)])
+        child = mutate_layout(parent, rng)
+        population.append(child)
+        population.sort(key=lambda layout: (-len(layout["white"]), layout["white"], layout["black"]))
+        population = population[:population_size]
+        completed += 1
+    best = max(population, key=lambda layout: len(layout["white"]))
     return {
-        "ordering": best_order,
+        **best,
         "search_metadata": {
-            "algorithm": "randomized RCM incumbent and simulated annealing with vertex-swap neighborhood",
+            "algorithm": "elitist evolutionary search over feasible layouts with pair removal and randomized valid pair extension",
             "seed": seed,
-            "iterations_requested": steps,
-            "iterations_run": iterations_run,
-            "accepted_moves": accepted,
-            "objective_recomputed": best_cost,
+            "generations_requested": generations,
+            "generations_run": completed,
+            "population_size": population_size,
             "generation_seconds": time.monotonic() - start,
-            "budget": {"fixed_iteration_limit": steps, "runner_generation_seconds": 300},
+            "budget": "fixed generations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds",
         },
     }
 

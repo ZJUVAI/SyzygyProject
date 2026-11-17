@@ -1,11 +1,19 @@
-"""Self-contained, deliberately simple seed: 21 coincident unit circles."""
 import os
+import random
 
 
-# EVOLVE-BLOCK-START
+def _config_n():
+    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T085-C01")
+    if cid != "T085-C01":
+        raise ValueError(f"unknown T085 configuration: {cid}")
+    return 29
+
+
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T085-C01")
-    if config_id != "T085-C01":
-        raise ValueError(f"unsupported configuration: {config_id}")
-    return {"radius": "1", "centers": [["0", "0"] for _ in range(21)]}
-# EVOLVE-BLOCK-END
+    # EVOLVE-BLOCK-START
+    n = _config_n()
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    # A deterministic nonsingular seed: 2I-J has eigenvalues 2 (mult. 28), -27.
+    matrix = [[(1 if i == j else -1) for j in range(n)] for i in range(n)]
+    # EVOLVE-BLOCK-END
+    return {"matrix": matrix}

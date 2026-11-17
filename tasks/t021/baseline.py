@@ -1,75 +1,44 @@
-"""Deterministic perturb-and-keep search baseline; no reference data access."""
+"""Exact finite search over rectangular patches of the triangular lattice."""
 
-import json
-import math
 import os
-import random
+import time
 
 from mathbench.search import search_steps
-
-
-def _xyz(pair):
-    u, v = pair
-    d = 1.0 + u * u + v * v
-    return (2.0 * u / d, 2.0 * v / d, (1.0 - u * u - v * v) / d)
-
-
-def _energy(points):
-    xyz = [_xyz(p) for p in points]
-    total = 0.0
-    for i in range(len(xyz)):
-        for j in range(i):
-            d2 = sum((xyz[i][k] - xyz[j][k]) ** 2 for k in range(3))
-            total += 1.0 / math.sqrt(d2)
-    return total
+from tasks.t021.construction import grid_edge_count, rectangular_grid
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T021-C01")
-    lengths = {"T021-C01": 32}
-    if config_id not in lengths: raise ValueError(f"unsupported configuration: {config_id}")
-    n = lengths[config_id]
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T021-C01") != "T021-C01":
+        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    rng = random.Random(seed)
-    requested_seconds_value = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    requested_seconds = float(requested_seconds_value) if requested_seconds_value is not None else None
-    points = []
-    golden = math.pi * (3.0 - math.sqrt(5.0))
-    for k in range(n):
-        z = 1.0 - 2.0 * (k + 0.5) / n
-        theta = k * golden
-        r = math.sqrt(1.0 - z * z)
-        points.append([r * math.cos(theta) / (1.0 + z), r * math.sin(theta) / (1.0 + z)])
-    current = points
-    current_energy = _energy(current)
-    best = [p[:] for p in current]
-    best_energy = current_energy
-    # Fixed 600-step coordinate perturbation. The ambient coordinates are
-    # reprojected by the exact checker; energy here is search feedback only.
-    actual_iterations = 0
-    for step in search_steps(600):
-        actual_iterations += 1
-        candidate = [p[:] for p in current]
-        index = rng.randrange(n)
-        temperature = 0.03 * (1.0 - step / 700.0)
-        candidate[index][0] += rng.gauss(0.0, temperature)
-        candidate[index][1] += rng.gauss(0.0, temperature)
-        score = _energy(candidate)
-        if score < best_energy:
-            best, best_energy = [p[:] for p in candidate], score
-        if score < current_energy or rng.random() < math.exp(min(0.0, (current_energy - score) / max(temperature, 1e-9))):
-            current, current_energy = candidate, score
-    return {
-        "points": best,
-        "search_metadata": {
-            "algorithm": "seeded coordinate perturbation with simulated-annealing acceptance and best-witness retention",
-            "seed": seed,
-            "actual_iterations": actual_iterations,
-            "iteration_budget": 600,
-            "requested_seconds": requested_seconds,
+    start = time.monotonic()
+    factor_pairs = [(columns, 100 // columns)
+                    for columns in range(1, 101) if 100 % columns == 0]
+    best = (1, 100)
+    checked = 0
+    for step in search_steps(len(factor_pairs)):
+        columns, rows = factor_pairs[step]
+        if grid_edge_count(columns, rows) > grid_edge_count(*best):
+            best = (columns, rows)
+        checked += 1
+    construction = rectangular_grid(*best)
+    construction["search_metadata"] = {
+        "algorithm": "exhaustive factor-pair scan of 100-point rectangular triangular-lattice patches",
+        "seed": seed,
+        "iterations_requested": len(factor_pairs),
+        "iterations_run": checked,
+        "candidate_shapes_checked": checked,
+        "best_shape": {"columns": best[0], "rows": best[1]},
+        "family_edge_formula": "(columns-1)*rows + columns*(rows-1) + (columns-1)*(rows-1)",
+        "generation_seconds": time.monotonic() - start,
+        "budget": {
+            "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
+            "runner_generation_limit_seconds": 300,
         },
     }
+    return construction
 
 
 if __name__ == "__main__":
+    import json
     print(json.dumps(run_code()))

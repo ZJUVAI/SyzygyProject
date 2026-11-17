@@ -1,39 +1,33 @@
-"""Rebuild the 32-point Erdős–Szekeres construction from the published recursion."""
+"""Rebuild the 100-vertex, 133-edge C6-saturated construction in Theorem 1.5(a)."""
 
-from functools import lru_cache
+import os
 
 
-def build_points():
-    @lru_cache(None)
-    def s_kl(k, ell):
-        if k <= 2 or ell <= 2:
-            return ((0, 0),)
-        r = k + ell - 1
-        # This is the integer realization P_r specified in §2 of the source.
-        dx = 3 * 4 ** (r - 1)
-        dy = (3 * r + 1) * 4 ** (r - 1)
-        left = s_kl(k - 1, ell)
-        right = tuple((x + dx, y + dy) for x, y in s_kl(k, ell - 1))
-        return left + right
+CONFIG_ID = "T035-C01"
 
-    t = 7
-    scale = (t + 1) * 4 ** (t + 1)
-    points = []
-    wx = wy = 0
-    for i in range(t - 1):
-        layer = s_kl(t - i, i + 2)
-        points.extend((wx * scale + x, wy * scale + y) for x, y in layer)
-        if i < t - 2:
-            wx += 3 * (t - i)
-            wy -= 3 * i
-    return {"points": points, "claimed_objective": 32}
+
+def build_human_graph():
+    # Core graph H, decoded from Figure 1(a) of Lan et al. (2025).
+    x1, x2, y1, y2, y3, y4, a0, b0, c0 = range(9)
+    edges = {
+        (x1, x2), (x1, y1), (x1, y2), (x1, a0),
+        (x2, y3), (x2, y4), (x2, c0),
+        (y2, y1), (y2, y3), (y2, y4),
+        (a0, b0), (b0, c0),
+    }
+    # n=3t+1 with t=33: add t-3=30 paths and one leaf at y4.
+    for i in range(1, 31):
+        a, b, c = 9 + 3 * (i - 1), 10 + 3 * (i - 1), 11 + 3 * (i - 1)
+        edges.update({(a, b), (b, c), (x1, a), (x2, c)})
+    z1 = 99
+    edges.add((y4, z1))
+    canonical = [[min(u, v), max(u, v)] for u, v in edges]
+    canonical.sort()
+    return {"vertices": 100, "edges": canonical}
 
 
 def run_code():
-    """Expose the reconstructed human construction through the task contract."""
-    return build_points()
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code(), separators=(",", ":")))
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != CONFIG_ID:
+        raise ValueError(f"unsupported configuration: {chosen}")
+    return build_human_graph()

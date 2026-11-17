@@ -1,5 +1,7 @@
-Find an expression tree for M61 = 2305843009213693951 that minimizes the number of leaves equal to 1.
+Find a small finite set of integers B such that every integer d from 1 through 6166 is a difference y - x of two elements of B. Minimize the number of distinct marks.
 
-Allowed grammar: the single digit `1`, binary `+`, binary `*`, parentheses, and optional ASCII spaces. Every written `1` is one leaf. The construction is a tree: repeated subexpressions count each time. Do not use constants other than 1, subtraction, division, exponentiation, functions, variables, or shared subexpressions.
+The set may contain negative integers or integers greater than 6166. Do not impose a sparse-ruler restriction B subset [0, 6166]. A sparse ruler can still be a feasible construction, but the task's model has no bound on mark locations. Differences larger than 6166 are allowed.
 
-Return JSON of the form {"expression": "..."}. The evaluator recomputes the exact value and count. Any claimed score is ignored. Start from the provided binary Horner program and improve it using only the target and the allowed grammar. Do not inspect or use human, reference, best, or SOTA comparison files.
+Return a JSON-compatible object with a `basis` list of distinct integers. The checker recomputes all required differences exactly and ignores claimed scores. Use only the fixed configuration T060-C01. Start from this simple valid construction: {0, 1, ..., 6166}. Do not read the human or public reference witnesses in the search program.
+
+The objective is the cardinality of B, to be minimized. The finite optimum at N=6166 is not established by the cited sources. A public 128-mark construction is a feasible upper bound, not a proof of optimality. The frozen human baseline uses Wichmann W(38,3), with 158 marks and length 6548.

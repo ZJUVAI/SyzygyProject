@@ -1,60 +1,41 @@
-"""Exact checks for the fixed Gset G70 maximum-cut instance."""
-
-import json
-import hashlib
-import gzip
-from pathlib import Path
-
-
-_SOURCE_PATH = Path(__file__).parent / "data" / "source" / "G70.gz"
-_SOURCE_BYTES = _SOURCE_PATH.read_bytes()
-_GRAPH_BYTES = gzip.decompress(_SOURCE_BYTES)
-_SOURCE_SHA256 = "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
-_COMPRESSED_SHA256 = "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b"
-_NORMALIZED_SHA256 = "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085"
-_SOURCE_LINES = _GRAPH_BYTES.decode("ascii").splitlines()
-_SOURCE_HEADER = [int(value) for value in _SOURCE_LINES[0].split()]
-_N, _M = _SOURCE_HEADER
-_EDGES = [[int(value) - 1 for value in line.split()[:2]] +
-          [int(line.split()[2])] for line in _SOURCE_LINES[1:]]
-_INSTANCE = {"instance_id": "Gset-G70", "n": _N, "m": _M,
-             "edges": _EDGES, "source_sha256": _SOURCE_SHA256}
-_NORMALIZED = json.dumps(
-    {key: _INSTANCE[key] for key in ("instance_id", "n", "m", "edges")},
-    separators=(",", ":"), ensure_ascii=True).encode()
-if (hashlib.sha256(_SOURCE_BYTES).hexdigest() != _COMPRESSED_SHA256
-        or hashlib.sha256(_GRAPH_BYTES).hexdigest() != _SOURCE_SHA256
-        or hashlib.sha256(_NORMALIZED).hexdigest() != _NORMALIZED_SHA256
-        or (_N, _M) != (10000, 9999)
-        or any(weight != 1 for _, _, weight in _EDGES)):
-    raise RuntimeError("pinned Gset graph input hash mismatch")
-_PARAMETERS = {
-    "instance": _INSTANCE["instance_id"],
-    "n": _N,
-    "m": _INSTANCE["m"],
-    "weights": "all +1",
-    "graph_sha256": _SOURCE_SHA256,
-    "normalized_graph_sha256": _NORMALIZED_SHA256,
-}
-
+"""Exact checker for C4-free simple graphs on 41 vertices."""
 
 def validate(solution, config, strict=False):
-    """Check a partition and recompute its integer cut exactly."""
     del strict
     if not isinstance(solution, dict) or not isinstance(config, dict):
         raise ValueError("solution and config must be objects")
-    parameters = config.get("parameters", config)
-    if parameters != _PARAMETERS:
-        raise ValueError("configuration does not match the pinned Gset graph")
-    labels = solution.get("labels")
-    if not isinstance(labels, list) or len(labels) != _N:
-        raise ValueError(f"labels must contain exactly {_N} vertex sides")
-    if any(type(side) is not int or side not in (0, 1) for side in labels):
-        raise ValueError("each side must be integer 0 or 1; bool is not accepted")
-    cut = sum(weight for u, v, weight in _EDGES if labels[u] != labels[v])
-    return {
-        "objective": cut,
-        "verification_status": "exact",
-        "details": {"n": _N, "m": len(_EDGES), "cut_edges": cut,
-                    "graph_sha256": _INSTANCE["source_sha256"]},
-    }
+    p = config.get("parameters", config)
+    if not isinstance(p, dict) or p.get("vertices") != 41 or p.get("forbidden_cycle_length") != 4:
+        raise ValueError("configuration must be T033-C01 (41 vertices, C4-free)")
+    rows = solution.get("adjacency")
+    if not isinstance(rows, list) or len(rows) != 41:
+        raise ValueError("adjacency must contain exactly 41 rows")
+    normalized = []
+    for v, row in enumerate(rows):
+        if not isinstance(row, list):
+            raise ValueError("each adjacency row must be a list")
+        if any(type(w) is not int or not 0 <= w < 41 for w in row):
+            raise ValueError("neighbor indices must be integers in [0, 40]")
+        if v in row or len(set(row)) != len(row):
+            raise ValueError("loops and duplicate neighbors are forbidden")
+        normalized.append(set(row))
+    for v, ns in enumerate(normalized):
+        if any(v not in normalized[w] for w in ns):
+            raise ValueError("adjacency must be symmetric")
+    # A simple graph is C4-free iff each unordered pair has at most one common neighbor.
+    common_pair_count = {}
+    for neighbors in normalized:
+        ns = sorted(neighbors)
+        for i, u in enumerate(ns):
+            for w in ns[i + 1:]:
+                pair = (u, w)
+                common_pair_count[pair] = common_pair_count.get(pair, 0) + 1
+                if common_pair_count[pair] > 1:
+                    raise ValueError("graph contains a 4-cycle")
+    edges = sum(map(len, normalized)) // 2
+    return {"objective": edges, "verification_status": "exact",
+            "details": {"vertices": 41, "edges": edges,
+                        "common_neighbor_pair_count": len(common_pair_count),
+                        "maximum_common_neighbors": max(common_pair_count.values(), default=0),
+                        "c4_check": "all unordered vertex pairs have at most one common neighbor",
+                        "claimed_objective_ignored": True}}

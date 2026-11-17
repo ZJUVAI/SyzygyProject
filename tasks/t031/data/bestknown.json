@@ -4,118 +4,114 @@
   "configurations": {
     "T031-C01": {
       "objective": {
-        "name": "length of a string containing every permutation as a contiguous substring",
-        "unit": "symbols",
-        "direction": "minimize",
+        "name": "maximum order of a simple undirected connected graph with maximum degree at most 3 and diameter at most 5",
+        "unit": "vertices",
+        "direction": "maximize",
         "constraints": [
-          "the string uses exactly the symbols 1 through 7",
-          "each of the 5040 permutations of 1 through 7 occurs as a contiguous length-7 substring"
+          "the graph is simple and undirected",
+          "the graph is connected",
+          "every vertex has degree at most 3",
+          "the diameter is at most 5"
         ]
       },
-      "best_public": {
-        "value": 5905,
-        "parameters": {
-          "symbols": 7,
-          "permutations_required": 5040,
-          "containment": "contiguous_substring"
-        },
-        "source": "Andrei Teodorescu, Superpermutators Google Group post and attachment 5905_7_sol1.txt",
-        "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
-        "evidence_state": "downloaded from the source attachment; all 5040 contiguous permutations independently replayed and length recomputed as 5905",
-        "date_checked": "2026-11-06",
-        "origin_type": "public search result; human/AI contribution not disclosed in the source checked"
-      },
-      "best_reproduced_human": {
-        "value": 5913,
-        "parameters": {
-          "symbols": 7,
-          "permutations_required": 5040,
-          "containment": "contiguous_substring"
-        },
-        "witness": "data/reference/human_ashlock_tillotson_5913.txt",
-        "source_url": "https://arxiv.org/abs/1408.5108",
-        "evidence_state": "the recursive construction described by Ashlock and Tillotson was independently implemented, saved, and exactly checked"
-      },
-      "optimality": {
-        "status": "not established; best construction found in the reviewed sources has length 5905",
-        "references": [
-          {
-            "citation": "Andrei Teodorescu, n=7 superpermutation of length 5905, Superpermutators Google Group, 2026-08-17",
-            "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
-            "finding": "The post attaches four words of length 5905. Andrew Balint reported independently checking all 5040 permutations. The source does not disclose AI involvement."
-          },
-          {
-            "citation": "jhalfar/superpermutations, L(7) >= 5,901, snapshot checked 2026-11-06",
-            "url": "https://github.com/jhalfar/superpermutations/blob/main/proofs/n7_5901/README.md",
-            "finding": "A computer-assisted lower-bound package claims 5901, with a Lean-checked reduction conditional on thirty search equations. Twenty-three of the thirty rely on searches where most are by one program; the README says twenty-three Lean equations are not evaluated. This is not treated here as a fully replayed certificate."
-          },
-          {
-            "citation": "jlebar/superperm7-ge-5898, lower bound audit checked 2026-11-06",
-            "url": "https://github.com/jlebar/superperm7-ge-5898",
-            "finding": "A distinct Lean development states 5898 <= s(7) <= 5906 and has explicit AI-generated authorship disclosure. It independently supports that the exact minimum is unresolved in that artifact, but its upper bound is older than the 5905 construction."
-          }
-        ],
-        "lower_bound": 5898,
-        "upper_bound": 5905,
-        "bound_note": "The 5898 lower bound is a formalized computer-assisted result with a native evaluator/compiler trust base. The stronger 5901 result is recorded as conditional computer-assisted evidence and was not independently replayed for this task. No optimality proof is claimed."
-      },
+      "program": "reference.py",
+      "public_value": 70,
+      "reproduced_value": 70,
       "highest_reported": {
-        "value": 5905,
-        "parameters": {
-          "symbols": 7,
-          "permutations_required": 5040,
-          "containment": "contiguous_substring"
-        },
-        "source": {
-          "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
-          "title": "Andrei Teodorescu, n=7 superpermutation of length 5905",
-          "claim": "Four length-5905 strings were posted; Andrew Balint reports verifying each as a complete superpermutation.",
-          "checked_at": "2026-11-06"
-        },
-        "reproduction_status": "one attached witness downloaded and exactly replayed; source does not report AI provenance"
+        "value": 70,
+        "source": "Comellas current largest-known degree-diameter table, entry (3,5), citing von Conta (1983) and Alegre, Fiol, and Yebra (1986).",
+        "url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "reproduction_status": "Both the historical AFY list and the Comellas Coxeter list pass exact degree, connectivity, and all-pairs distance checks. The current table does not mark order 70 optimal."
       },
-      "unmatched_parameter_records": [],
-      "ai_assisted_records": [],
-      "source_unattributed_records": [
-        {
-          "value": 5905,
-          "parameters": {
-            "symbols": 7,
-            "permutations_required": 5040,
-            "containment": "contiguous_substring"
-          },
-          "source_url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
-          "description": "The public construction and its search code are named, but the post does not disclose whether AI contributed."
-        }
-      ],
-      "best_reproduced": {
-        "value": 5905,
+      "best_human": {
+        "value": 70,
         "parameters": {
-          "symbols": 7,
-          "permutations_required": 5040,
-          "containment": "contiguous_substring"
+          "maximum_degree": 3,
+          "diameter_at_most": 5
         },
-        "witness": "data/reference/public_5905_attachment.txt",
+        "source": "von Conta (1983), independently reported by Alegre, Fiol, and Yebra (1986).",
+        "url": "https://doi.org/10.1002/jgt.3190100211",
+        "witness_program": "human.py",
+        "witness": "data/reference/afy_70_adjlist_nx.txt",
+        "witness_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "evidence_state": "Historical adjacency list replayed and exact-checker verified at the fixed parameter.",
+        "origin_type": "published human graph construction",
+        "source_url": "https://doi.org/10.1002/jgt.3190100211",
+        "additional_source": "https://ieeexplore.ieee.org/document/1676297",
+        "date_checked": "2026-11-06",
+        "optimality": "A feasible historical construction only; the 70 entry is not marked optimal in the current table."
+      },
+      "best_public": {
+        "value": 70,
+        "parameters": {
+          "maximum_degree": 3,
+          "diameter_at_most": 5
+        },
+        "source": "Comellas current table, detail entry (3,5).",
+        "url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "witness": "data/reference/afy_70_adjlist_nx.txt",
+        "witness_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "evidence_state": "The row says order 70 and Moore bound 94; it is not bolded as optimal.",
+        "ai_provenance": "The table attributes this graph to 1983/1986 sources. Its general page says some SageMath scripts were AI-assisted but does not link the historic graph to those scripts.",
+        "origin_type": "published human graph construction",
+        "source_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "detail_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "date_checked": "2026-11-06"
+      },
+      "best_reproduced": {
+        "value": 70,
+        "parameters": {
+          "maximum_degree": 3,
+          "diameter_at_most": 5
+        },
         "program": "reference.py",
         "verification_status": "exact",
-        "verification_method": "strip source attachment whitespace; enumerate all length-7 windows; compare the valid-window set with all 5040 permutations; recompute string length",
-        "witness_sha256": "f0208fb0e8ea98b015799b8f0dfaadc58d5909bad4a089603f2c9c4768536f67",
-        "normalized_word_sha256": "98564c93f955c9256ca69c819e1b106a2be79e3286be2635d8374bc5595be6ac",
-        "claimed_score_ignored": true,
+        "verification_method": "Every edge is checked; BFS from each of 70 vertices establishes connectedness and diameter 5.",
+        "witness": "data/reference/coxeter_70_adjlist_nx.txt",
+        "witness_sha256": "2b62872f9ac8ca2f8bed3f6495033aa7e7acd97d16e1427a3532c638100dbde5",
+        "construction": "Comellas's 2024 Coxeter edge-pairing alternative; the published adjacency output is replayed. The SageMath script itself is not run.",
         "date_reproduced": "2026-11-06",
+        "source_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
         "review_status": "reviewed_by_sol"
       },
-      "human_method_baseline": {
-        "value": 5913,
-        "witness": "data/reference/human_ashlock_tillotson_5913.txt",
-        "program": "human.py",
-        "source": "Ashlock and Tillotson (1993), Construction of small superpermutations and minimal injective superstrings, Congressus Numerantium 93, 91-98; recursive rule restated in Houston (2014), Section 1, arXiv:1408.5108",
-        "source_url": "https://arxiv.org/abs/1408.5108",
-        "reproduction_level": "method reconstructed independently from the published recursive rule; not a transcription of the authors' length-seven string"
+      "moore_bound": {
+        "value": 94,
+        "formula": "1 + 3 * (1 + 2 + 4 + 8 + 16)",
+        "status": "general upper bound, not attained by the checked witness"
       },
-      "program": "reference.py",
-      "reproduced_value": "5905",
-      "public_value": "5905",
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 70,
+        "note": "H is the reproduced historical human graph."
+      },
+      "checked_at": "2026-11-06",
+      "optimality_status": {
+        "status": "open; best checked construction 70, Moore upper bound 94",
+        "table_entry_bold": false,
+        "detail_page_last_modified": "2026-10-14",
+        "limitations": [
+          "No checked source proves that 70 is the maximum order.",
+          "This implementation verifies constructions, not graph nonexistence above order 70.",
+          "The 2024 Coxeter adjacency list is checked as data; the construction script is not independently executed."
+        ],
+        "checked_sources": [
+          "Current Comellas degree-diameter table checked 2026-11-06.",
+          "Detail page for (3,5), last modified 2026-10-14.",
+          "von Conta (1983) and Alegre, Fiol, and Yebra (1986) as cited by the detail page."
+        ]
+      },
+      "source_review": {
+        "current_table_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html",
+        "detail_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html",
+        "historical_paper_doi": "https://doi.org/10.1002/jgt.3190100211",
+        "historical_adjacency_sha256": "9d2bca25876fb72ca81727a7dbd3d91d7d9c84e2233d6a055742146b0d98cafb",
+        "coxeter_adjacency_sha256": "2b62872f9ac8ca2f8bed3f6495033aa7e7acd97d16e1427a3532c638100dbde5",
+        "current_table_checked": "2026-11-06",
+        "detail_last_modified": "2026-10-14",
+        "historical_witness_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/adjacencies/adjD5/AlFiYe70_Z_adjlist.txt",
+        "coxeter_witness_url": "https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/adjacencies/adjD5/70fromCoxeter_adjlist.txt",
+        "review_status": "source checked; pending Sol review"
+      },
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -124,21 +120,23 @@
           "task_id": "T031",
           "config_id": "T031-C01",
           "validity": 1.0,
-          "combined_score": 1.001354784081287,
-          "objective": 5905,
+          "combined_score": 1.0,
+          "objective": 70,
           "verification_status": "exact",
-          "generation_time": 0.21464842557907104,
-          "verification_time": 0.16461127623915672,
-          "objective_value": 5905,
+          "generation_time": 0.49804916977882385,
+          "verification_time": 0.4676273241639137,
+          "objective_value": 70,
           "details": {
-            "symbols": 7,
-            "required_permutations": 5040,
-            "distinct_permutations_found": 5040,
-            "windows_checked": 5899,
+            "order": 70,
+            "edge_count": 105,
+            "maximum_degree": 3,
+            "diameter": 5,
+            "all_source_distances_checked": 4900,
             "claimed_score_ignored": true,
-            "containment": "contiguous_substring"
+            "strict_full_graph_check": true,
+            "moore_bound": 94
           },
-          "eval_time": 0.3821674585342407,
+          "eval_time": 1.0072221755981445,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -155,65 +153,25 @@
           }
         },
         "independent_quantity": {
-          "string_length": 5905,
-          "required_substrings_checked": 5040
+          "order": 70,
+          "floyd_warshall_diameter": 5,
+          "edge_count": 105,
+          "maximum_degree": 3
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
         "witness": "data/reference/public_c01.json",
-        "witness_sha256": "6ba79de473c1c64f18d07e0c38fc9c5c9b73194ffa4e946fca4ac50744a6124c"
+        "witness_sha256": "e1a78f7cffd375180064d1d332b47fc151fc9e4cc6669f6d559dc7f748a9e227"
       },
       "review_status": "accepted_by_sol",
-      "best_human": {
-        "value": 5913,
-        "parameters": {
-          "symbols": 7,
-          "permutations_required": 5040,
-          "containment": "contiguous_substring"
-        },
-        "source": "Ashlock and Tillotson (1993), recursive construction; reproduced from the rule restated in Houston (2014), Section 1",
-        "source_url": "https://arxiv.org/abs/1408.5108",
-        "date_checked": "2026-11-06",
-        "evidence_state": "The recursive construction was reimplemented, saved as a witness, and checked against every required contiguous permutation. The resulting length is 5913.",
-        "ai_provenance": "This record is the published human recursive method, reimplemented for this task."
+      "parameters": {
+        "maximum_degree": 3,
+        "diameter_at_most": 5
       },
-      "optimality_status": {
-        "status": "not established",
-        "source_review_date": "2026-11-06",
-        "sources": [
-          {
-            "citation": "Andrei Teodorescu, n=7 superpermutation of length 5905, Superpermutators Google Group, 2026-08-17",
-            "url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
-            "finding": "A concrete 5905 witness is attached and community checked."
-          },
-          {
-            "citation": "jhalfar/superpermutations, L(7) >= 5,901, state of 2026-11-01",
-            "url": "https://github.com/jhalfar/superpermutations/blob/main/proofs/n7_5901/README.md",
-            "finding": "Conditional computer-assisted lower bound; twenty-three Lean equations are unevaluated and many search counts rely on one program."
-          },
-          {
-            "citation": "jlebar/superperm7-ge-5898, audited Lean proof release",
-            "url": "https://github.com/jlebar/superperm7-ge-5898",
-            "finding": "Formalized lower bound 5898 and checked 5906 construction; the repository explicitly discloses AI-generated authorship of its proof development."
-          }
-        ],
-        "lower_bound": 5898,
-        "upper_bound": 5905,
-        "bound_note": "The best available lower-bound evidence is computer assisted. The stronger 5901 claim is conditional and is not treated as fully replayed."
-      },
-      "reproduced_search_baseline": {
-        "value": 6240,
-        "parameters": {
-          "symbols": 7,
-          "permutations_required": 5040
-        },
-        "seed": 0,
-        "iterations": 8,
-        "witness": "data/search/greedy_seed0_result.json",
-        "verification": "data/search/greedy_seed0_verification.json",
-        "provenance": "data/search/greedy_seed0_provenance.json",
-        "verification_status": "exact",
-        "evidence_state": "The seeded maximum-overlap greedy baseline was run eight times; the best returned word has length 6240 and the checker verified all 5040 required permutations."
+      "upper_bound": {
+        "value": 94,
+        "source": "Moore bound for maximum degree 3 and diameter 5: 1 + 3(1 + 2 + 4 + 8 + 16) = 94.",
+        "evidence_state": "The bound is exact as a general upper bound, but it is not attained or shown tight for this configuration."
       }
     }
   },
@@ -221,32 +179,34 @@
   "additional_evidence": {
     "configurations": {
       "T031-C01": {
+        "best_human": {
+          "source": "C. von Conta (1983); independently reported by Alegre, Fiol, and Yebra (1986), Theorem/table construction for a cubic graph of diameter 5 and order 70.",
+          "evidence_state": "The published AFY adjacency list is archived, replayed by human.py, and exactly checked for 70 vertices, maximum degree 3, connectivity, and diameter 5."
+        },
         "best_public": {
-          "evidence_state": "The source post attaches a 5905-symbol word. One attachment was downloaded, hashed, and independently checked against all 5040 permutations.",
-          "origin_type": "public search result; AI provenance not disclosed"
+          "source": "Comellas's current largest-known degree-diameter table, entry (3,5); source references vC83 and AFY86.",
+          "evidence_state": "Table lists 70, does not bold the entry, and gives Moore bound 94. Detail page lists the original references and an explicit adjacency file.",
+          "ai_provenance": "The historical graph is attributed to the 1983/1986 sources. The current table page states its material is AI-free except for some SageMath scripts; the checked source does not link the historical graph to those scripts."
         },
         "best_reproduced": {
-          "verification_method": "All length-7 windows of the normalized attachment were checked; their valid permutation set equals all 5040 permutations."
+          "verification_method": "The checker validates the second published adjacency list and runs BFS from every vertex.",
+          "construction": "Comellas (2024), form the 70-vertex graph from the 28-vertex Coxeter graph by pairing its edges, as described on the detail page. The saved file is the author's adjacency-list output; this task verifies that output rather than re-running the SageMath construction script."
         },
         "highest_reported": {
-          "source": {
-            "title": "n=7 superpermutation of length 5905",
-            "claim": "A public 5905 string and a report that all 5040 permutations were checked."
-          },
-          "reproduction_status": "downloaded and exactly replayed; AI contribution not disclosed"
+          "source": "Comellas's current degree-diameter table entry (3,5)",
+          "reproduction_status": "The 70-vertex record is exactly reproduced from two published adjacency lists. The table does not mark it optimal."
         },
-        "source_unattributed_records": [
-          {
-            "value": 5905,
-            "parameters": {
-              "symbols": 7,
-              "permutations_required": 5040,
-              "containment": "contiguous_substring"
-            },
-            "source_url": "https://groups.google.com/g/superpermutators/c/D5sKkV2jBuc/m/bjLMtWZiAQAJ",
-            "description": "The post does not disclose whether the public search result used AI."
-          }
-        ]
+        "compatibility_score": {
+          "note": "H is the reproduced historical order-70 graph."
+        },
+        "optimality_status": {
+          "status": "open; 70 <= maximum order <= 94",
+          "limitations": [
+            "The latest table entry is not bold and does not prove order 70 optimal.",
+            "The 2024 Coxeter construction is replayed from its published adjacency file; this implementation does not rerun SageMath's edge-orbit construction.",
+            "The current table page says that some SageMath scripts were made with ChatGPT, but does not identify whether the cited Coxeter script is among them. The human baseline uses the historical AFY graph instead."
+          ]
+        }
       }
     }
   }

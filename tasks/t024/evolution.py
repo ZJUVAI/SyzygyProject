@@ -1,6 +1,5 @@
-"""Task-local EVOLVE entry point and exact score helper."""
-from tasks.t024.baseline import run_code
-from tasks.t024.check import validate
+"""Evolvable T024 entry point."""
+from tasks.t024.baseline import run_code as baseline_run_code
 
-def score(solution, config):
-    return validate(solution, config)["objective"]
+def run_code():
+    return baseline_run_code()

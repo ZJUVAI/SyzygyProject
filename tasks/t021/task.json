@@ -1,38 +1,62 @@
 {
   "task_id": "T021",
-  "name": "Thomson problem: charges on the unit sphere",
+  "name": "Maximum unit-distance pairs among 100 planar points",
   "acceptance_status": "accepted_by_sol",
+  "category": "discrete_geometry",
+  "definition": "Find 100 distinct points in the Euclidean plane that maximize the number of unordered pairs at distance exactly one.",
+  "solution_format": "An object with a primitive irreducible minimal_polynomial for a real algebraic number alpha, a rational isolating_interval selecting one real root, and 100 points. Each point has x and y arrays of rational polynomial coefficients in ascending powers of alpha.",
+  "objective": {
+    "name": "unit_distance_pairs",
+    "unit": "unordered point pairs",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Exactly 100 points are supplied.",
+    "All points are distinct in the selected real embedding.",
+    "Every coordinate is a polynomial in one common real algebraic number alpha over Q.",
+    "A pair counts exactly when the squared Euclidean distance is exactly 1 in the selected real embedding.",
+    "Every unordered point pair is checked with exact arithmetic; no floating-point tolerance is used."
+  ],
   "official_configuration": "T021-C01",
   "configurations": [
     {
       "id": "T021-C01",
       "parameters": {
-        "n": 32,
-        "space": "unit sphere S2",
-        "potential": "sum over unordered pairs 1 / Euclidean distance",
-        "objective_unit": "Coulomb energy in unit-charge, unit-radius units"
+        "point_count": 100,
+        "ambient_space": "Euclidean plane R^2",
+        "objective": "unit_distance_pairs",
+        "coordinate_domain": "real algebraic coordinates in one common number field"
       },
-      "direction": "minimize",
-      "human_reference": 412.2612746505293,
-      "acceptance_status": "accepted_by_sol"
+      "direction": "maximize",
+      "human_reference": 261
     }
   ],
-  "search_metadata": {
-    "algorithm": "fixed-iteration coordinate perturbation with simulated-annealing acceptance and best-witness retention",
-    "iterations": 600,
-    "default_seed": 0,
-    "objective_feedback": "floating-point exploratory energy; formal scores are recomputed exactly with conservative bounds"
+  "sources": [
+    "https://arxiv.org/html/2406.15317v3",
+    "https://arxiv.org/html/2412.11914v2",
+    "https://codeberg.org/zsamboki/dbs-udg/src/commit/3202dade2cd02b712c182368789a108db02e82c8/README.md",
+    "https://arxiv.org/html/2606.29415v2",
+    "https://eventcompute.com/en/challenges/unit-distances/"
+  ],
+  "verification": "The checker proves the minimal polynomial irreducible over Q, uses a rational interval with exactly one real root, reduces coordinate polynomials modulo that polynomial, and checks all 4,950 squared distances for exact equality to 1.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
   },
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-07",
+    "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "T021-C01 places 32 distinct points on exact unit S2 and minimizes the sum of reciprocal pair distances. The checker reconstructs rational stereographic points and certifies a conservative energy interval.",
-      "primary_sources": "The Cambridge Cluster Database N=32 table row reports 412.2612746 for the Ih structure and links to the archived 32.xyz coordinate file. The table describes a lowest located candidate and does not prove global optimality. The coordinate archive SHA-256 is 967ce3e92de2ab459a28d473cb80a501c6efb2c8dd274a66ab9634e7fd44456c.",
-      "open_status": "The checked source supports a feasible N=32 candidate, not a proof of global optimality. No exhaustive claim is made.",
-      "independent_method": "The human witness was independently reconstructed from archived decimal coordinates as exact rationals. Its certified interval is [4122612746505293102359058597/10000000000000000000000000, 4122612746505293102359059093/10000000000000000000000000] across 496 pairs. The saved best witness has 496 checked pairs, exact unit-sphere equations, independent interval [2061306373252646550377252279566889977/5000000000000000000000000000000000, 10306531866263232751886261397834450009/25000000000000000000000000000000000], and its claimed score is ignored.",
-      "admission": "T021-C01 remains accepted by Sol. Its saved best witness is certified with objective interval [103065318662632327518862607/250000000000000000000000, 515326593313161637594313097/1250000000000000000000000]; 496 pairs were checked. The recorded valid and damaged-witness checks are retained in data/results.json."
+      "definition": "固定100个互异平面点，最大化精确距离1的无序点对。任意共同实代数域表示不限制Moser格，单位距离模式是有理半代数系统，实可行模式有代数实可行解，有限坐标有共同本原元。",
+      "primary_source": "Sol亲自读取Engel等2406.15317v3 Table2 n100行439/22同构类、Definition2.2中1与omega1三角格基及Section6.1 AI训练仅为未来方向。公开439的完整Figshare见证未取到，严格标未复现；不把弱261称文献最强纪录。原作者仓库固定3202dade2cd02b712c182368789a108db02e82c8。",
+      "human_reconstruction": "历史传统三角格10×10，点(i+j/2,sqrt3*j/2)，同参100点；三类单位方向90+90+81=261，H和reference冻结261。坐标经alpha=sqrt3+sqrt11编码，alpha³−20alpha=16sqrt3。",
+      "independent_math": "正式checker逐对计算共同代数域中平方距离余数。Sol另把保存的三角格坐标还原Q(sqrt3)，直接展开有理和sqrt3系数，逐对核对4950对；再对原整数(i,j)差以a²+ab+b²=1单独复算261。起点纯有理点距离2给0，搜索因子块给261。该额外量审计只限保存的这两个构造族，正式checker仍支持一般实代数域。",
+      "open_status": "Alexeev–Mixon–Parshall2412.11914v2精确范围仅至21；2026-10所查同参综述仍报告439，未找到n100匹配最优性证明。渐近或有理平面结果不自动适用有限实平面100点。",
+      "controls": "初始0、传统/演化/人类/固定参考261。五程序、重复点破坏、完整声明不变、严格回放、冷导出、异常/非有限/超时均通过，任务及共享检查12项通过。通用construction.py只包含编码/格公式和公开参数，没有读取或导入human/reference资产。",
+      "limits": "439仍是未复现公开报告，不能以比值超过1声称超过439。没有重跑GPU大规模搜索，没有证明261或439最优。"
     }
   }
 }

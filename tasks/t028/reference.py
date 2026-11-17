@@ -1,3 +1,12 @@
-"""Fixed public Ta051 reference witness, loaded only by the reference program."""
+"""Fixed replay of the pinned official CG:SHOP 2020 construction."""
 
-from tasks.t028.human import run_code
+import json
+import os
+from pathlib import Path
+
+
+def run_code():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T028-C01") != "T028-C01":
+        raise ValueError("unknown T028 configuration")
+    path = Path(__file__).parent / "data/reference/uniform-0000500-1.official_solution.json"
+    return {"edges": json.loads(path.read_text())["edges"]}

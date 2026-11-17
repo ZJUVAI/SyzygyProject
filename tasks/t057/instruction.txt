@@ -1,9 +1,7 @@
-Find a low-cost capacitated vehicle routing solution for T057-C01.
+Find a schedule with as many rounds as possible for 35 players.
 
-Return a JSON object with a `routes` list. Each route must be a nonempty list of TSPLIB node IDs. Customer IDs are 2 through 1001; node 1 is the depot and must not appear in a route. Every customer must occur exactly once. The sum of customer demands on each route must be at most 131.
+Return a JSON object with a `rounds` list. Each round must be a list of exactly 7 groups. Each group must be a list of exactly 5 distinct player IDs from 0 through 34. Every player must appear in exactly one group in each round. No unordered pair of players may share a group in more than one round.
 
-The number of routes is unrestricted. The `k43` text is part of the benchmark instance name and does not impose a maximum or exact route count. Route count is at least 43 because total demand is 5557 and capacity is 131, but solutions may use more routes.
+The objective is to maximize the number of valid rounds. A counting argument gives an upper bound of 8 rounds: each player can meet at most 34 other players, and meets 4 new players per round.
 
-Minimize total travel cost. Each route starts at depot 1, visits its listed customers in order, and returns to depot 1. For nodes i and j, the edge cost is TSPLIB EUC_2D: round sqrt((x_i-x_j)^2+(y_i-y_j)^2) to the nearest integer. The trusted checker computes this exactly with integer arithmetic.
-
-Start from the supplied simple program. Do not read human, reference, or best witness files. Declared scores are ignored.
+Start from the supplied simple one-round program. Do not read reference, human, or best witness files. Declared objective and score fields are ignored.

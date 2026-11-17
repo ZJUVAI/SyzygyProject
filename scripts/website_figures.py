@@ -98,32 +98,32 @@ def squares(rows):
 @cache
 def instance(task):
     if task == 57:
-        from tasks.t057.instance import load_instance
+        from tasks.t097.instance import load_instance
         return load_instance()['coordinates']
     if task == 64:
-        from tasks.t064.check import _instance
+        from tasks.t026.check import _instance
         return _instance()[1]
     if task == 69:
-        from tasks.t069.check import load_points
+        from tasks.t096.check import load_points
         return load_points()
     if task == 93:
-        from tasks.t093.instance import load_instance
+        from tasks.t006.instance import load_instance
         return load_instance()
     if task == 95:
-        from tasks.t095.check import load_points
+        from tasks.t028.check import load_points
         return load_points()
     if task == 99:
-        from tasks.t099.check import _shape, _oriented
+        from tasks.t010.check import _shape, _oriented
         return [_oriented(_shape(), i) for i in range(8)]
     raise ValueError(task)
 
 
 def project(task_id, w, params):
-    if task_id == 'T101':
+    if task_id == 'T024':
         last = params['grid_size'] - 1
         return layout('Selected grid points', '选中的网格点', points=w['points'],
                       outline=[[0, 0], [last, 0], [last, last], [0, last]])
-    if task_id == 'T102':
+    if task_id == 'T084':
         return grid(w['pairs'], 'Demand splits · clockwise and counterclockwise',
                     '需求拆分 · 顺时针和逆时针')
     t = int(task_id[1:])
@@ -172,7 +172,7 @@ def project(task_id, w, params):
     if t == 39:
         return {'kind':'marks','rows':w['rows'],'label':label('Marks on each ruler','各行标尺上的刻度')}
     if t == 41:
-        from tasks.t041.check import _corners, _square
+        from tasks.t004.check import _corners, _square
         polygons = [[list(map(float,p)) for p in _corners(_square(s))] for s in w['squares']]
         return layout('Squares in the unit square','单位正方形内的正方形', polygons=polygons,
                       outline=[[0,0],[1,0],[1,1],[0,1]])
@@ -222,7 +222,7 @@ def project(task_id, w, params):
         corr=[sum(a[i]*a[(i+k)%n] for i in range(n if t==90 else n-k)) for k in range(1,n)]
         return {'kind':'sequence','sequence':a,'correlation':corr,'periodic':t==90}
     if t == 56:
-        from tasks.t056.check import _topology, load_instance
+        from tasks.t095.check import _topology, load_instance
         ops=load_instance()
         duration,starts,finishes,_,_=_topology(w['machine_orders'],ops)
         bars=[[machine,starts[j*len(route)+k],finishes[j*len(route)+k],j]
@@ -269,7 +269,7 @@ def project(task_id, w, params):
         return layout('Positions of the two queen armies','两色皇后的位置',groups=[w['white'],w['black']],
                       outline=[[-.5,-.5],[29.5,-.5],[29.5,29.5],[-.5,29.5]],board=30)
     if t == 83:
-        from tasks.t083.check import _triangle
+        from tasks.t005.check import _triangle
         polygons=[[[float(q.a)+sqrt(3)*float(q.b) for q in p] for p in _triangle(a)] for a in w['triangles']]
         side=w['side']
         length=num(side[0])+sqrt(3)*num(side[1]) if isinstance(side,list) else num(side)

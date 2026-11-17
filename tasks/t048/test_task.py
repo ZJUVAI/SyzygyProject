@@ -1,118 +1,139 @@
-"""Task-local exact checks and runner-control tests for T048."""
+"""Exact tests for T048-C01."""
 
 import hashlib
 import json
+import os
 from pathlib import Path
+import sys
 
 import pytest
 
-from tasks.t048.check import _CONFIGS, validate
-from tasks.t048.human import build_batcher_network
-from tasks.t048.reference import DATA
-
-HERE = Path(__file__).resolve().parent
-CONFIG = {"id":"T048-C01", "parameters": {"inputs":17}}
+from tasks.t048.check import PARAMETERS, validate
 
 
-def _reference_solution():
-    return {"comparators": json.loads(DATA.read_text())["comparators"]}
+ROOT = Path(__file__).resolve().parent
+CONFIG = {"id": "T048-C01", "parameters": PARAMETERS}
+WITNESS_SHA256 = "e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d"
+SOURCE_SHA256 = "bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a"
 
 
-def _scalar_sort(comparators, bits):
-    wires = [(bits >> i) & 1 for i in range(17)]
-    for left, right in comparators:
-        if wires[left] > wires[right]:
-            wires[left], wires[right] = wires[right], wires[left]
-    return all(wires[i] <= wires[i + 1] for i in range(16))
-
-def test_reference_pins_and_independent_full_scalar_replay():
-    net = json.loads(DATA.read_text())
-    source = net["source"]
-    snapshot = HERE / "data/reference/sorterhunter_sorting_networks.html"
-    digest = hashlib.sha256(snapshot.read_bytes()).hexdigest()
-    assert digest == source["snapshot_sha256"]
-    assert len(net["comparators"]) == net["size"] == 71
-    assert len(net["layers"]) == net["depth"] == 12
-    assert [pair for layer in net["layers"] for pair in layer] == net["comparators"]
-    assert source["sorterhunter_commit"] == "8ba90df607cbdc339409e0b173b5a2ffd60fc911"
-    assert validate(_reference_solution(), CONFIG)["objective"] == 71
-    # Scalar simulation is separate from the task's packed-bitset checker.
-    for bits in range(1 << 17):
-        assert _scalar_sort(net["comparators"], bits), bits
+def _word(positions):
+    return "".join("1" if i in positions else "0" for i in range(17))
 
 
-def test_batcher_human_method_baseline_is_exactly_valid():
-    net = build_batcher_network()
-    assert len(net) == 85
-    checked = validate({"comparators": net}, CONFIG)
-    assert checked["objective"] == 85
-    assert checked["verification_status"] == "exact"
+def _independent_pair_check(words):
+    ints = [int(word, 2) for word in words]
+    count = 0
+    minimum = 17
+    for i, word in enumerate(ints):
+        for other in ints[:i]:
+            distance = (word ^ other).bit_count()
+            assert distance >= 4
+            minimum = min(minimum, distance)
+            count += 1
+    return count, minimum
 
 
-def test_unknown_configuration_is_rejected():
-    with pytest.raises(ValueError, match="unsupported configuration"):
-        validate(_reference_solution(), {"id": "T048-C99", "parameters": {"inputs": 17}})
+def test_published_human_and_reference_witness_exactly_replay():
+    from tasks.t048.human import run_code as human_run
+    from tasks.t048.reference import run_code as reference_run
+
+    witness_path = ROOT / "data/reference/a17_4_5_444.json"
+    source_path = ROOT / "data/source/milshtein_a17_4_5_444.txt"
+    assert hashlib.sha256(witness_path.read_bytes()).hexdigest() == WITNESS_SHA256
+    assert hashlib.sha256(source_path.read_bytes()).hexdigest() == SOURCE_SHA256
+    human = human_run()
+    assert reference_run() == human
+    result = validate(human, CONFIG, strict=True)
+    pairs, minimum = _independent_pair_check(human["codewords"])
+    assert result["objective"] == len(human["codewords"]) == 444
+    assert result["details"]["unordered_pairs_checked"] == pairs == 98_346
+    assert result["details"]["minimum_pairwise_distance"] == minimum == 4
 
 
-@pytest.mark.parametrize("solution", [
-    None,
-    {},
-    {"comparators": None},
-    {"comparators": [[0]]},
-    {"comparators": [[0, 0]]},
-    {"comparators": [[1, 0]]},
-    {"comparators": [[0, 17]]},
-    {"comparators": [[False, 1]]},
-    {"comparators": [[0, 1.0]]},
-    {"comparators": [[0, float("nan")]]},
-    {"comparators": [[0, float("inf")]]},
-    {"comparators": []},
-    {"comparators": _reference_solution()["comparators"][:-1]},
-])
-def test_invalid_or_broken_networks_are_rejected(solution):
-    with pytest.raises(ValueError):
-        validate(solution, CONFIG)
-
-
-def test_duplicate_comparator_is_allowed_and_counted():
-    net = _reference_solution()["comparators"]
-    result = validate({"comparators": net + [net[-1]]}, CONFIG)
-    assert result["objective"] == 72
-
-
-def test_configuration_and_claims_are_checked_or_ignored_as_required():
-    with pytest.raises(ValueError):
-        validate(_reference_solution(), {"parameters": {"inputs": 16}})
-    base = validate(_reference_solution(), CONFIG)
-    for field, value in [("objective", -100), ("score", float("nan")),
-                         ("claimed_score", {"value": float("inf")})]:
-        forged = _reference_solution()
-        forged[field] = value
-        assert validate(forged, CONFIG) == base
-
-
-@pytest.mark.parametrize("module,expected", [
-    ("tasks.t048.init_program", 136),
-    ("tasks.t048.baseline", 136),
-    ("tasks.t048.human", 85),
-    ("tasks.t048.reference", 71),
-    ("tasks.t048.evolution", 136),
-])
-def test_all_five_run_code_entries(module, expected, monkeypatch):
+def test_all_five_entries_return_valid_candidates(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T048-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "11")
-    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "2")
-    entry = __import__(module, fromlist=["run_code"])
-    candidate = entry.run_code()
-    checked = validate(candidate, CONFIG)
-    if expected is not None:
-        assert checked["objective"] == expected
-    assert isinstance(checked["objective"], int)
+    monkeypatch.setenv("MATHBENCH_SEED", "7")
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
+    monkeypatch.setenv("MATHBENCH_RESTARTS", "2")
+    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "2")
+    monkeypatch.setenv("MATHBENCH_POPULATION", "2")
+    from tasks.t048.init_program import run_code as initial
+    from tasks.t048.baseline import run_code as baseline
+    from tasks.t048.evolution import run_code as evolution
+    from tasks.t048.human import run_code as human
+    from tasks.t048.reference import run_code as reference
+
+    results = [initial(), baseline(), evolution(), human(), reference()]
+    values = [validate(result, CONFIG, strict=True)["objective"] for result in results]
+    assert values[0] == 1
+    assert values[1] >= 1
+    assert values[2] >= 1
+    assert values[3:] == [444, 444]
+    assert results[1]["search_metadata"]["restarts_run"] == 2
+    assert results[2]["search_metadata"]["generations_run"] == 2
 
 
-def test_search_programs_are_independent_of_comparison_programs():
-    for filename in ("baseline.py", "evolution.py"):
-        source = (HERE / filename).read_text()
-        assert "tasks.t048.human" not in source
-        assert "tasks.t048.reference" not in source
-        assert "data/reference" not in source
+def test_checker_accepts_pair_at_exact_minimum_distance_and_empty_boundary():
+    a = _word({0, 1, 2, 3, 4})
+    b = _word({0, 1, 2, 5, 6})
+    result = validate({"codewords": [a, b]}, CONFIG)
+    assert result["objective"] == 2
+    assert result["details"]["minimum_pairwise_distance"] == 4
+    assert validate({"codewords": []}, CONFIG)["objective"] == 0
+
+
+def test_checker_rejects_bad_word_constraints_and_duplicates():
+    with pytest.raises(ValueError, match="17-character"):
+        validate({"codewords": ["101"]}, CONFIG)
+    with pytest.raises(ValueError, match="weight 5"):
+        validate({"codewords": ["0" * 17]}, CONFIG)
+    duplicate = _word({0, 1, 2, 3, 4})
+    with pytest.raises(ValueError, match="distinct"):
+        validate({"codewords": [duplicate, duplicate]}, CONFIG)
+    near = _word({0, 1, 2, 3, 5})
+    far = _word({0, 1, 2, 3, 4})
+    with pytest.raises(ValueError, match="distance at least 4"):
+        validate({"codewords": [near, far]}, CONFIG)
+    with pytest.raises(ValueError, match="configuration must fix"):
+        validate({"codewords": []}, {"id": "T048-C01", "parameters": {**PARAMETERS, "length": 18}})
+
+
+def test_checker_rejects_non_string_numeric_and_malformed_inputs():
+    for invalid in (True, 3, 1.0, float("nan"), float("inf"), None, [0, 1]):
+        with pytest.raises(ValueError):
+            validate({"codewords": [invalid]}, CONFIG)
+    with pytest.raises(ValueError, match="solution must be an object"):
+        validate([_word({0, 1, 2, 3, 4})], CONFIG)
+    with pytest.raises(ValueError, match="codewords must be"):
+        validate({"codewords": "10101"}, CONFIG)
+
+
+def test_claimed_scores_do_not_change_recomputed_result():
+    from tasks.t048.init_program import run_code
+
+    valid = run_code()
+    result = validate(valid, CONFIG)
+    for key, value in (("objective", 999), ("score", float("nan")),
+                       ("claimed_score", {"forged": True})):
+        assert validate({**valid, key: value}, CONFIG) == result
+
+
+def test_sota_record_separates_verified_444_from_optimality_claim():
+    metadata = json.loads((ROOT / "data/bestknown.json").read_text())
+    item = metadata["configurations"]["T048-C01"]
+    assert item["public_value"] == item["reproduced_value"] == 444
+    assert item["best_human"]["value"] == 444
+    assert item["best_public"]["value"] == 444
+    assert item["optimality_status"]["status"].startswith("open")
+    assert metadata["configurations"]["T048-C01"]["frozen_human_baseline"]["value"] == 444
+
+
+def test_runner_error_and_timeout_controls():
+    from mathbench.evaluate import _run
+
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T048 worker failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T048 worker failure')"], env, 5)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)

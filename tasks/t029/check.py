@@ -1,91 +1,95 @@
-"""Exact checker for bilinear rank decompositions of 3x3 matrix multiplication."""
-from fractions import Fraction
-import re
+"""Exact checker for a minimum convex cover of the fixed socg_fixed92 region."""
+import hashlib
+import json
+from pathlib import Path
 
-_CONFIG = {
-    "matrix_order": 3,
-    "field": "Q",
-    "coefficient_domain": "arbitrary rational strings or exact Fraction values",
-    "max_terms": 27,
-    "term_count_is_scalar_multiplication_count": True,
+from tasks.t029.algebraic import RealAlgebraicField
+from tasks.t029.geometry import certify_cover, cross, signed_double_area, validate_simple_boundary
+
+TASK_DIR = Path(__file__).parent
+INSTANCE_PATH = TASK_DIR / "data/source/socg_fixed92.instance.json"
+INSTANCE_SHA256 = "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38"
+PARAMETERS = {
+    "instance": "socg_fixed92",
+    "instance_sha256": INSTANCE_SHA256,
+    "boundary_vertices": 92,
+    "holes": 0,
+    "cover_domain": "all real convex polygons",
+    "overlap_allowed": True,
 }
-_RATIONAL = re.compile(r"-?(?:0|[1-9][0-9]*)(?:/-?(?:[1-9][0-9]*))?\Z")
 
 
-def _fraction(value):
-    if isinstance(value, bool):
-        raise ValueError("boolean is not a rational coefficient")
-    if isinstance(value, int):
-        return Fraction(value)
-    if isinstance(value, Fraction):
-        return value
-    if isinstance(value, str) and _RATIONAL.fullmatch(value):
-        try:
-            return Fraction(value)
-        except (ValueError, ZeroDivisionError):
-            pass
-    raise ValueError("coefficients must be integers, rational strings, or Fraction values")
+def _fixed_domain(field):
+    raw = INSTANCE_PATH.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != INSTANCE_SHA256:
+        raise ValueError("fixed public input checksum mismatch")
+    source = json.loads(raw)
+    if (source.get("name") != PARAMETERS["instance"] or source.get("n") != 92
+            or source.get("holes") != [] or len(source.get("outer_boundary", [])) != 92):
+        raise ValueError("fixed public input metadata mismatch")
+    polygon = []
+    for point in source["outer_boundary"]:
+        if (not isinstance(point, dict) or type(point.get("x")) is not int
+                or type(point.get("y")) is not int):
+            raise ValueError("fixed input coordinates must be integers")
+        polygon.append((field.const(point["x"]), field.const(point["y"])))
+    validate_simple_boundary(field, polygon)
+    return polygon
 
 
-def _vector(value, name):
-    if not isinstance(value, list) or len(value) != 9:
-        raise ValueError(f"{name} must be a list of exactly nine rational coefficients")
-    return tuple(_fraction(item) for item in value)
+def _parse_pieces(field, raw_pieces):
+    if not isinstance(raw_pieces, list) or not raw_pieces:
+        raise ValueError("solution must contain at least one convex polygon")
+    pieces = []
+    for raw in raw_pieces:
+        if not isinstance(raw, list) or len(raw) < 3:
+            raise ValueError("each convex polygon needs at least three vertices")
+        polygon = []
+        for point in raw:
+            if not isinstance(point, list) or len(point) != 2:
+                raise ValueError("each polygon vertex must be an [x,y] pair")
+            polygon.append((field.element(point[0]), field.element(point[1])))
+        if len(set(polygon)) != len(polygon):
+            raise ValueError("a convex polygon cannot repeat a vertex")
+        area = field.sign(signed_double_area(field, polygon))
+        if area == 0:
+            raise ValueError("convex polygons must have positive area")
+        if area < 0:
+            polygon.reverse()
+        for a, b in zip(polygon, polygon[1:] + polygon[:1]):
+            if a == b:
+                raise ValueError("convex polygons cannot contain zero-length edges")
+            if any(field.sign(cross(field, a, b, p)) < 0 for p in polygon):
+                raise ValueError("a submitted polygon is not convex")
+        pieces.append(polygon)
+    return pieces
 
 
 def validate(solution, config, strict=False):
-    """Check all 729 coefficients of the represented bilinear map exactly."""
-    del strict  # Arithmetic is exact in every mode.
-    if not isinstance(solution, dict) or not isinstance(config, dict):
-        raise ValueError("solution and config must be objects")
-    params = config.get("parameters", config)
-    if not isinstance(params, dict) or any(params.get(k) != v for k, v in _CONFIG.items()):
-        raise ValueError("configuration must specify 3x3 multiplication over Q with a 27-term resource cap")
-    terms = solution.get("terms")
-    if not isinstance(terms, list) or not 1 <= len(terms) <= _CONFIG["max_terms"]:
-        raise ValueError("terms must contain between 1 and 27 bilinear products")
-
-    parsed = []
-    for index, term in enumerate(terms):
-        if not isinstance(term, dict):
-            raise ValueError(f"term {index} must be an object")
-        alpha = _vector(term.get("alpha"), f"term {index} alpha")
-        beta = _vector(term.get("beta"), f"term {index} beta")
-        gamma = _vector(term.get("gamma"), f"term {index} gamma")
-        if not any(alpha) or not any(beta) or not any(gamma):
-            raise ValueError(f"term {index} has a zero factor and does not count as a product")
-        parsed.append((alpha, beta, gamma))
-
-    # Flattening convention: indices are row-major. gamma[i,k] multiplies
-    # alpha(A) beta(B) into output C[i,k]. Hence the target is
-    # sum_j A[i,j] B[j,k], with no exchange or mixing of A and B.
-    for out_i in range(3):
-        for out_k in range(3):
-            gamma_index = 3 * out_i + out_k
-            for a_i in range(3):
-                for a_j in range(3):
-                    a_index = 3 * a_i + a_j
-                    for b_j in range(3):
-                        for b_k in range(3):
-                            b_index = 3 * b_j + b_k
-                            value = sum((a[a_index] * b[b_index] * g[gamma_index]
-                                         for a, b, g in parsed), Fraction(0))
-                            expected = int(a_i == out_i and a_j == b_j and b_k == out_k)
-                            if value != expected:
-                                raise ValueError(
-                                    "tensor identity fails at coefficient "
-                                    f"A[{a_i},{a_j}] B[{b_j},{b_k}] -> C[{out_i},{out_k}]"
-                                )
+    if (not isinstance(config, dict) or config.get("id") != "T029-C01"
+            or config.get("direction") != "minimize"
+            or not isinstance(config.get("parameters"), dict)
+            or config["parameters"] != PARAMETERS
+            or any(type(config["parameters"].get(k)) is not type(v) for k, v in PARAMETERS.items())):
+        raise ValueError("unsupported configuration, objective direction, or parameters")
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be an object")
+    field = RealAlgebraicField(solution.get("algebraic_field"))
+    domain = _fixed_domain(field)
+    pieces = _parse_pieces(field, solution.get("polygons"))
+    checked_cells = certify_cover(field, domain, pieces)
+    count = len(pieces)
     return {
-        "objective": len(parsed),
-        "verification_status": "exact",
+        "objective": count,
+        "objective_value": count,
+        "verification_status": "certified",
         "details": {
-            "matrix_order": 3,
-            "field": "Q",
-            "tensor_coefficients_recomputed": 729,
-            "input_forms": "alpha(A) * beta(B), separate linear forms",
-            "output_convention": "gamma[i,k] contributes to C[i,k]",
-            "claimed_objective_ignored": True,
-            "max_terms_is_resource_cap_not_an_optimality_bound": True,
+            "instance": PARAMETERS["instance"],
+            "convex_polygon_count": count,
+            "total_piece_vertices": sum(map(len, pieces)),
+            "algebraic_field_degree": field.degree,
+            "verified_open_arrangement_cells": checked_cells,
+            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+            "claimed_score_ignored": True,
         },
     }

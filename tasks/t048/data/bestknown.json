@@ -1,102 +1,98 @@
 {
   "task_id": "T048",
-  "review_status": "accepted_by_sol",
   "configurations": {
     "T048-C01": {
       "program": "reference.py",
-      "reproduced_value": 71,
-      "public_value": 71,
+      "reproduced_value": 444,
+      "public_value": 444,
+      "highest_reported": {
+        "value": 444,
+        "source": "Moshe Milshtein, A new binary (17,4,5) constant weight code, Cryptography and Communications 15 (2023), 443-453, online 2022-10-08; Springer DOI 10.1007/s12095-022-00611-5. Brouwer's live table, checked 2026-11-06, lists 444 as a lower bound without an optimality marker.",
+        "reproduction_status": "The published word file is archived and independently checked. The value is a lower bound, not a proved maximum."
+      },
       "best_human": {
-        "value": 71,
-        "source": {
-          "title": "Using Symmetry and Evolutionary Search to Minimize Sorting Networks",
-          "authors": [
-            "Vinod K. Valsalam",
-            "Risto Miikkulainen"
-          ],
-          "url": "https://www.jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf",
-          "publication": "Journal of Machine Learning Research 14(9) (2013), 303-331",
-          "claim": "Reports a 17-input sorting network with 71 comparators, found through symmetry and evolutionary search.",
-          "reproduction_status": "published_result; AI provenance not reported"
-        },
-        "ai_provenance": "Not stated in the cited paper.",
-        "date_checked": "2026-11-06",
+        "value": 444,
         "parameters": {
-          "inputs": 17,
-          "objective": "comparator_count"
+          "length": 17,
+          "minimum_hamming_distance": 4,
+          "constant_weight": 5
         },
-        "url": "https://www.jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf",
-        "provenance": "Valsalam and Miikkulainen report a 71-comparator 17-input network found with their symmetry and evolutionary-search method. The paper does not state whether AI tools were used.",
-        "evidence_state": "published upper-bound result; current distinct 71-comparator witness is independently verified in data/reference"
+        "source": "Moshe Milshtein, A new binary (17,4,5) constant weight code, Cryptography and Communications 15 (2023), 443-453, online 2022-10-08.",
+        "url": "https://link.springer.com/article/10.1007/s12095-022-00611-5",
+        "date_checked": "2026-11-06",
+        "provenance": "Human-designed traditional stochastic local search for maximum independent set; the code was found by computer search using a Generic Scuba Search based method. The paper reports no generative-AI contribution and does not discuss AI provenance separately.",
+        "evidence_state": "All 444 words are archived. Exact checks confirm length 17, weight 5, uniqueness, and minimum Hamming distance 4 over all 98,346 unordered pairs.",
+        "witness": "data/reference/a17_4_5_444.json",
+        "witness_sha256": "e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d"
       },
       "best_public": {
-        "value": 71,
-        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
-        "reproduction_status": "current table network copied and exactly zero-one verified",
-        "ai_provenance": "Unknown; the page identifies SorterHunter generation but does not report AI use.",
-        "date_checked": "2026-11-06",
+        "value": 444,
         "parameters": {
-          "inputs": 17,
-          "objective": "comparator_count"
+          "length": 17,
+          "minimum_hamming_distance": 4,
+          "constant_weight": 5
         },
-        "url": "https://bertdobbelaere.github.io/sorting_networks.html",
-        "evidence_state": "current listed 71-comparator, 12-layer construction; reproduced exactly by exhaustive zero-one testing",
-        "origin_type": "SorterHunter auto-generated network; AI provenance not reported"
+        "source": "Milshtein, DOI 10.1007/s12095-022-00611-5; current Brouwer lower-bound table row A(17,4,5).",
+        "url": "https://aeb.win.tue.nl/codes/Andw.html",
+        "date_checked": "2026-11-06",
+        "provenance": "Traditional computational search described by the author. The paper does not report generative-AI use; its AI provenance is not separately stated.",
+        "evidence_state": "The 444-word witness is independently reproduced from the article's linked word file.",
+        "witness": "data/reference/a17_4_5_444.json",
+        "witness_sha256": "e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d"
       },
       "best_reproduced": {
-        "value": 71,
-        "program": "reference.py",
-        "witness": "data/reference/sorterhunter_17_71_12.json",
-        "method": "Pinned SorterHunter table witness, with 71 comparators and 12 layers.",
-        "ai_provenance": "Not reported by the source.",
-        "reproduction_status": "exactly_verified_pending_Sol_review",
+        "value": 444,
         "date_reproduced": "2026-11-06",
         "parameters": {
-          "inputs": 17,
-          "objective": "comparator_count"
+          "length": 17,
+          "minimum_hamming_distance": 4,
+          "constant_weight": 5
         },
-        "url": "https://bertdobbelaere.github.io/sorting_networks.html",
-        "provenance": "Parsed the current pinned 17-input, 71-comparator, 12-layer network from the SorterHunter-maintained table snapshot.",
-        "actual_value": 71,
-        "evidence_state": "all 131,072 binary inputs checked by the task verifier; an independent scalar replay also passed",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Parse each 17-bit word as an integer, check weight and uniqueness, and compute XOR bit counts for every unordered pair.",
+        "witness": "data/reference/a17_4_5_444.json",
+        "witness_sha256": "e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d",
+        "origin_type": "published traditional computational construction",
         "review_status": "reviewed_by_sol"
       },
-      "highest_reported": {
-        "value": 71,
-        "source": {
-          "title": "List of sorting networks",
-          "url": "https://bertdobbelaere.github.io/sorting_networks.html",
-          "repository": "https://github.com/bertdobbelaere/SorterHunter",
-          "repository_commit": "8ba90df607cbdc339409e0b173b5a2ffd60fc911",
-          "network_id": "N17L71D12",
-          "claim": "Current page lists 71 comparators in 12 layers; it says the size matches Valsalam and Miikkulainen (2013), while depth improves from 17 to 12.",
-          "snapshot": "data/reference/sorterhunter_sorting_networks.html",
-          "snapshot_sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6",
-          "checked_at": "2026-11-06"
+      "frozen_human_baseline": {
+        "value": 444,
+        "witness_program": "human.py",
+        "witness": "data/reference/a17_4_5_444.json",
+        "witness_sha256": "e278101d7c5496d890e87330df664e874225020ded21750515954e8b8a42219d",
+        "evidence_state": "The full published construction and objective are exactly reproduced."
+      },
+      "optimality_status": {
+        "status": "open; the reproduced 444 codewords are a lower bound",
+        "source_survey_date": "2026-11-06",
+        "evidence": "Milshtein's paper states A(17,4,5) <= 474, citing Östergård (2010), and reports the 444-word construction. The live Brouwer table lists 444 without an optimum marker. The inspected sources do not establish equality or a later tighter upper bound.",
+        "limitations": "The value 474 is recorded as the bound cited by the 2022 paper, not as a newly verified or exhaustive current best upper bound. The 2023 correction is checked and does not change the construction or reported bound."
+      },
+      "source_pins": {
+        "primary_paper": {
+          "version": "Published online 2022-10-08; Cryptography and Communications 15 (2023), 443-453",
+          "doi": "10.1007/s12095-022-00611-5",
+          "url": "https://link.springer.com/article/10.1007/s12095-022-00611-5",
+          "record_location": "Abstract and §2; attached word file"
         },
-        "reproduction_status": "current witness independently exhaustively checked over all 131,072 binary inputs"
-      },
-      "known_bounds": {
-        "minimum_size_lower_bound": 63,
-        "published_work_lower_bound": 60,
-        "feasible_size_upper_bound": 71,
-        "source": "https://bertdobbelaere.github.io/sorting_networks.html",
-        "source_statement": "For 17 inputs the table gives minimum-size bounds 63...71.",
-        "lower_bound_provenance": "The listed 63 bound was added in 2025 based on an unpublished suggestion by Jelmer Firet and principles from Van Voorhis (1972). The best lower bound derived from published work in the current review is 60, chained from the proved 12-input value.",
-        "status": "open size gap; 71 is not proved minimum; 63 is an unrefereed bound"
-      },
-      "depth_note": {
-        "minimum_depth": 10,
-        "status": "proven optimal in the current table's cited sources",
-        "not_the_task_objective": true,
-        "17_input_10_layer_network_size": 74
-      },
-      "source_files": {
-        "sorterhunter_table_snapshot": {
-          "path": "data/reference/sorterhunter_sorting_networks.html",
-          "sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6"
+        "correction": {
+          "doi": "10.1007/s12095-023-00638-2",
+          "url": "https://link.springer.com/article/10.1007/s12095-023-00638-2",
+          "date": "2023-03-01",
+          "scope": "The publisher lists a correction. It changes equation numbering and a reference citation; the 444 code and record claim remain unchanged."
+        },
+        "current_table": {
+          "url": "https://aeb.win.tue.nl/codes/Andw.html",
+          "date_checked": "2026-11-06",
+          "row": "A(17,4,5) >= 444; no optimum marker"
+        },
+        "archived_source_file": {
+          "path": "data/source/milshtein_a17_4_5_444.txt",
+          "sha256": "bc5261c3f1b9229985dcd4a95388bf15b42f9d657aa1fa55fd017121d255216a"
         }
       },
+      "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -105,21 +101,22 @@
           "task_id": "T048",
           "config_id": "T048-C01",
           "validity": 1.0,
-          "combined_score": 1.1971830985915493,
-          "objective": 71,
+          "combined_score": 1.0,
+          "objective": 444,
           "verification_status": "exact",
-          "generation_time": 0.47281453013420105,
-          "verification_time": 0.7500740885734558,
-          "objective_value": 71,
+          "generation_time": 1.3893657587468624,
+          "verification_time": 4.5983209908008575,
+          "objective_value": 444,
           "details": {
-            "inputs": 17,
-            "comparators_checked": 71,
-            "binary_inputs_checked": 131072,
-            "asap_depth": 12,
-            "zero_one_principle": true,
-            "claimed_objective_ignored": true
+            "codeword_count": 444,
+            "unordered_pairs_checked": 98346,
+            "minimum_pairwise_distance": 4,
+            "word_length": 17,
+            "constant_weight": 5,
+            "claimed_objective_ignored": true,
+            "strict": true
           },
-          "eval_time": 1.2295114025473595,
+          "eval_time": 6.004660401493311,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -136,44 +133,39 @@
           }
         },
         "independent_quantity": {
-          "comparator_count": 71,
-          "binary_words_simulated": 131072,
-          "arithmetic": "exact uint32 conditional swaps"
+          "code_size": 444,
+          "distinct_four_subsets": 2220,
+          "packing_bound": 476
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
-      },
-      "own_search_seed_0": {
-        "value": 126,
-        "program": "evolution.py",
-        "iterations": 256,
-        "seed": 0,
-        "witness": "data/search/seed_0.json",
-        "verification_status": "exact",
-        "binary_inputs_checked": 131072,
-        "algorithm": "Seeded delete, replacement, and order-swap search from the 136-comparator odd-even transposition seed",
-        "verification_state": "exactly checked over all 131072 binary inputs"
-      },
-      "limitations": [
-        "The current 71-comparator network is a feasible witness, not a proof of minimum size.",
-        "The table lists an unrefereed lower bound of 63; the best lower bound derived from published work is 60.",
-        "The source does not disclose whether AI was used for the listed network or the 2013 evolutionary result."
-      ],
-      "review_status": "accepted_by_sol",
-      "frozen_human_baseline": {
-        "value": 85,
-        "type": "reconstruction of Batcher odd-even mergesort padded to 32 wires",
-        "witness_program": "human.py",
-        "evidence_state": "programmatically reconstructed and exactly zero-one verified"
-      },
-      "survey_scope_note": "The current Dobbelaere table lists size bounds 63 to 71, but 63 is an unpublished and unrefereed strengthening. The strongest lower bound derived from published work in this review is 60. The 71 network is a feasible upper bound, not a proof that 71 is minimal. The separately proven optimal depth of 10 does not determine the minimum network size."
+      }
     }
   },
+  "review_status": "accepted_by_sol",
   "additional_evidence": {
     "configurations": {
       "T048-C01": {
+        "best_human": {
+          "source": "Milshtein, A new binary (17,4,5) constant weight code, DOI 10.1007/s12095-022-00611-5.",
+          "provenance": "Human-designed traditional stochastic local search; a computer search based on Generic Scuba Search found the code. The paper does not state a generative-AI contribution.",
+          "evidence_state": "The 444 words and score are reproduced and exact checked."
+        },
+        "best_public": {
+          "source": "Milshtein (2023); Brouwer's table, checked 2026-11-06.",
+          "provenance": "Traditional computer search as described in the paper; AI provenance is not separately discussed.",
+          "evidence_state": "Reproduced from the published file, exact verification passed."
+        },
         "best_reproduced": {
-          "ai_provenance": "The table labels it auto-generated by SorterHunter. The source does not state AI use; no AI-free claim is made."
+          "origin_type": "published traditional computational construction reconstructed and checked"
+        },
+        "frozen_human_baseline": {
+          "evidence_state": "Exact same-parameter published witness."
+        },
+        "optimality_status": {
+          "status": "open",
+          "evidence": "The checked current Brouwer table lists a lower bound of 444 with no optimum marker. Milshtein reports an upper bound of 474, citing Östergård (2010).",
+          "limitations": "No matching upper-bound proof was found; 444 is a construction, not a proof of maximum."
         }
       }
     }

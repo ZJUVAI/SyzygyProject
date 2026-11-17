@@ -1,54 +1,46 @@
-# T041 implementation notes
+# T041 implementation evidence
 
 Status: accepted by Sol on 2026-11-06.
 
-## Definition and representation
+## Definition and source status
 
-The fixed task is 17 positive-area squares inside the closed unit square, with pairwise-disjoint interiors and unrestricted orientations. The objective is the sum of side lengths and is maximized. Boundary contact is legal. The frozen human-method comparison is 4.
+- T041-C01 fixes the 9-dimensional hypercube `Q9`. A vertex is an integer in `[0,512)`, interpreted as a 9-bit string. A solution is an ordered list of distinct vertices. Consecutive vertices must have Hamming distance one; every nonconsecutive pair must have distance at least two. The score is the number of edges, `len(vertices)-1`, and is maximized.
+- The current paper is Orland et al., arXiv:2607.15270v3, submitted 2026-09-30. Section 6 says the Q9=191 record came from cube-surgery simulated annealing. Appendix E prints a complete Q9 witness. The same paper says LLMs helped with manuscript work and writing and optimizing search code; it does not connect that assistance to this exact witness or run. We record the project-level disclosure and leave the precise run-level contribution unknown.
+- Wynn (2012), arXiv:1201.1647v1 §VI and Appendix, reports Q9=190 and prints its full transition sequence. This is the traditional human construction and frozen baseline. The 190-step sequence is exactly replayed locally.
+- The authors' data repository is pinned at commit `46c765399353a588ea50444a5d6610f53102b1c2` (2026-10-01). README blob SHA-1: `3e66ab83a2be5ddbfacd3081c0df5ce3d4b7ae04`. The `record_snakes.csv.zip` blob SHA-1 is `7854e2592325dab85a35a8a4809314edb80f7af8` and its size is 16,721,566 bytes. The local 191 witness is transcribed from the current v3 Appendix E, rather than extracted from the large archive.
+- A current Q9 status page checked on 2026-11-06 lists verified lower bound 191 and unknown upper bound. The 2026 paper leaves a 192-edge snake open. The 131 reported 191-edge symmetry classes were found across millions of sampled snakes; that count is not a proof of optimality or completeness.
 
-The checker uses exact rational centres, side lengths, and unit edge directions. Rational points on the unit circle are dense. The rational encoding does not lower the supremum of the unrestricted problem: shrink every square about its centre by a common factor below 1. Each wall and pair separation then has a positive margin. A sufficiently small perturbation of centres, sides, and unit directions preserves feasibility, and rational centres, sides, and rational unit directions can approximate those perturbed data. The resulting scores approach the original score. The checker therefore accepts a dense exact certificate language while retaining an exact feasible witness for every submitted result.
+## Saved witnesses
 
-## Sources and records
+- `data/reference/wynn_q9_190.json` stores 190 coordinate flips from Wynn, starting at vertex 0, and the resulting 191 vertices. SHA-256: `3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882`.
+- `data/reference/orland_v3_q9_191.json` stores 191 coordinate flips from Orland et al., Appendix E, starting at vertex 0, and the resulting 192 vertices. SHA-256: `fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4`.
+- Both transition lists were replayed independently. The checker found scores 190 and 191, respectively, and verified every vertex pair.
 
-The human-method witness is the 4 by 4 grid with one cell split into two side-1/8 squares. Its 17 coordinates are reconstructed for this package; they are not attributed as original coordinates from Erdős and Graham (1975).
+## Programs and tests
 
-The AI-assisted public construction is pinned to `Sprite143/erdos-106-counterexample` commit `edbfb534e78d4f1f9b1a5a7298b9b022285b4962`. The task package stores its constructor, source archive, original search certificate, closed-form output, source license, and hashes under `data/`. The closed-form value is `2190452873/547596200`; the earlier numerical certificate is `2000062156200269/500000000000000`. A separate checker independently verifies all corners, containment, all 136 pairs, and the recomputed sum. The score is a lower bound only.
+- `check.py` rejects invalid labels, bools, non-integers, repeated vertices, nonadjacent consecutive vertices and nonconsecutive adjacency. It recalculates the edge count and ignores declared score fields.
+- `init_program.py` makes a valid 9-edge path by flipping each coordinate once.
+- `baseline.py` uses fixed-seed random greedy endpoint extension with a bounded number of restarts. It reads no comparison witness.
+- `evolution.py` uses endpoint truncation and greedy regrowth from a bounded population. It reads no comparison witness.
+- `human.py` and `reference.py` replay the respective fixed witness from `data/reference/`.
+- `evaluator.py` adapts the task to the shared evaluator.
 
-Current-source review on 2026-11-06 found a ProbXiv record identifying AI assistance and Claude Opus 5 as the discoverer; the record states that no person has examined the submission. It reports Lean checking of a formalization and cautions that this does not prove the formalization matches the page claim. The repository also says human referee review has not occurred. The task does not identify the construction as a human result or as optimal.
-
-For all 17 squares, disjoint interiors imply the sum of their areas is at most 1. Thus `sum(side^2) <= 1`, and Cauchy–Schwarz gives `sum(side) <= sqrt(17)`. The checked public witness gives the lower bound above. The review did not locate a matching unrestricted upper bound.
-
-## Programs
-
-- `init_program.py`: exact row of 17 side-`1/17` squares, score 1; independent of comparison assets.
-- `baseline.py`: fixed-seed enumeration of 16 split cells and two orientations; fixed budget of 32 layouts, optionally cut by `MATHBENCH_SEARCH_SECONDS`.
-- `human.py`: rebuilds the grid construction from its formula.
-- `reference.py`: replays the pinned closed-form public construction from task-local data.
-- `evolution.py`: task-qualified `run_code()` entry which calls the witness-free search baseline.
-- `check.py`: exact rational square structure, containment, 68 corner checks, all 136 pairwise SAT checks, and recomputed side sum.
-
-## Validation run by the implementation agent
-
-Command:
+Run from the repository root:
 
 ```sh
 .venv/bin/python -m pytest tasks/t041/test_task.py -q
-```
-
-Result: 15 passed. This includes the score-1 initial seed, human and public witnesses; exact recomputation of the public score; legal boundary contact; damaged overlap, wall, zero side, malformed orientation, Boolean, NaN, positive and negative infinity, and wrong-count inputs; ignored claimed scores; and evaluator valid-result, program-error, and timeout handling.
-
-The public exact value was also independently checked directly by `tasks/t041/check.py`: `2190452873/547596200`, with all 136 unordered pairs tested. The human formula recomputes to exactly 4. This is an implementation self-check, not the Sol acceptance review.
-
-JSON validation:
-
-```sh
 .venv/bin/python -m json.tool tasks/t041/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t041/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t041/data/bestknown.json > /dev/null
 ```
 
-All four JSON files parse. Shared task registration is intentionally unchanged; the main reviewer must register the new task only after review. Consequently, standalone evaluator error/timeout tests add T041 to the registry tuple locally with a test monkeypatch; no shared registry was changed.
+The task-local suite passes: 5 tests. It checks both source witnesses, independently counts the 191 path edges, scans every nonconsecutive pair, checks boundary and malformed inputs, confirms forged score fields do not change validation, runs all five program entries, and tests runner error and timeout handling through `_run`.
 
-## Limits
+The shared runner was exercised in-process with only its task lookup temporarily pointed at this unregistered task. Strict evaluation of `evolution.py` saved a 117-edge search result to `data/results.json`. It used seed 0 and 32 generations. On Python 3.13.12/Linux, generation took 2.03 s and verification took 0.50 s; the runner limits were 300 s generation, 60 s verification, 4 GiB and one thread. A separate strict run of `baseline.py` with seed 1 and 32 restarts returned 103 edges (6.28 s generation, 3.50 s verification). The shared task registry was not changed.
 
-The public construction has not had human referee review according to the checked source. The exact verifier certifies feasibility and score, not global optimality. The simple baseline's finite construction family reaches 4 and is not intended to compete with the fixed public reference. Current acceptance status is accepted by Sol on 2026-11-06.
+## Limits and Sol review points
+
+- The 191-edge public construction is a lower bound. No upper bound for `a(9)` is known in the checked current sources.
+- The authors disclose project-level LLM assistance, but do not attribute it to the exact 191-edge witness or the run that found it.
+- The reported 131 symmetry classes are sampled results, not a completeness certificate.
+- The saved `data/results.json` result is only this task's own seeded search output. The Wynn and Orland witnesses remain under `data/reference/` as external comparisons.
+- Sol should independently replay the 190-edge human and 191-edge public witnesses, check a deliberately broken induced path, recompute the edge count and confirm that forged score fields do not change validation.

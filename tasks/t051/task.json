@@ -1,35 +1,52 @@
 {
   "task_id": "T051",
-  "name": "Longest unrestricted sequence of discrepancy at most 3",
+  "name": "Constant-dimension subspace codes",
   "acceptance_status": "accepted_by_sol",
+  "category": "coding_theory",
+  "definition": "For fixed q=2, n=7, k=3 and minimum subspace distance 4, maximize the number of distinct 3-dimensional linear subspaces of F_2^7 in a code.",
+  "solution_format": "An object with codewords, a list of 3x7 binary basis matrices or three 7-bit integer row masks. Each entry denotes the row span of its basis.",
+  "objective": {
+    "name": "code_size",
+    "unit": "3-dimensional subspaces",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Each codeword is a 3-dimensional linear subspace of F_2^7.",
+    "For distinct U,V, d_S(U,V)=2*3-2*dim(U intersection V) is at least 4.",
+    "Equivalently, two distinct codewords intersect in dimension at most 1."
+  ],
   "official_configuration": "T051-C01",
   "configurations": [
     {
       "id": "T051-C01",
       "parameters": {
-        "discrepancy_cap": 3,
-        "entry_domain": [
-          -1,
-          1
-        ],
-        "constraint": "every prefix of every homogeneous arithmetic progression has absolute sum at most 3"
+        "field_size": 2,
+        "ambient_dimension": 7,
+        "subspace_dimension": 3,
+        "minimum_subspace_distance": 4
       },
       "direction": "maximize",
-      "human_reference": 130000
+      "human_reference": 333
     }
   ],
+  "sources": [
+    "https://doi.org/10.3934/amc.2019029",
+    "https://arxiv.org/abs/1708.06224",
+    "https://doi.org/10.15495/EPub_UBT_00008787",
+    "https://miplib.zib.de/instance_details_cdc7-4-3-2.html"
+  ],
+  "verification": "Exact GF(2) row reduction and exact span enumeration. Each 3-space contains seven 2-spaces, so distinct codewords may share no 2-space.",
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "无乘法限制的±1序列；全部齐次等差子列的全部前缀绝对和≤3，最大化长度。C2与完全乘法C3已解结果均不属于此配置。",
-      "primary_source": "主代理亲自读取1405.3097v2 §4 Theorem11后段及表1，并读取Konev作者edp数据页的unrestricted但前127600完全乘法一节。文字明确构造130000；表1的>130000未当成额外已验证长度。",
-      "witness_provenance": "保存见证来自公开Wolfram讨论notebook的恢复数据，原作者bz2文件主代理直连403，未证明与作者压缩包字节相同。公开notebook和原论文来源分别记录，完整构造可行性可独立核验。",
-      "open_status": "原文仅证明完全乘法及乘法C3最大127645；无约束130000为下界。当前检索未找到无约束C3精确最大值；Tao无限定理排除无限序列但不确定本有限目标。",
-      "independent_math": "主代理以int64向量分片及前缀累加独立复算全部1550902个前缀，与正式Python整数逐项扫描一致；最大3。长度130000确保前缀绝对值远小于int64上限。",
-      "controls": "五程序重放初始1、传统55、演化55、人类及参考130000；四个+1破坏构造、完整声明分数不变性、严格回放、冷导出及错误/非有限数/超时全部通过。",
-      "limits": "未重跑2014 SAT发现过程或求出有限最大值。来源恢复的字节对应限制明确保留。"
+      "definition": "固定F2七维空间中的三维线性子空间，任意两子空间交维数≤1，即子空间距离≥4，最大化子空间数量。",
+      "primary_reconstruction": "亲自解析Heinlein等arXiv1708.06224v5附录B/C：逐字匹配103个代表的721个数字和两个7×7生成矩阵的98个位。核对列编码a+2b+4c与轨道1^9 2^26 4^68，展开得到333个不同三维子空间。v5为2019-03-22，首版2017。",
+      "current_open_status": "主代理查询官方MIPLIB当前索引：cdc7-4-3-2状态open，所列同参数界333–381，2026-08-28记录回引2019人类ILP文献。2025综述的378或381仅是条件替代，未误写成无条件378。",
+      "independent_verification": "逐子空间用异或闭包检查8元素，再独立枚举其中7个二维子空间；全局无重复二维子空间。333构造共2331个不同二维子空间。环境共有127*126/6=2667个，故上界381。正式检查器另按55278个子空间对检查交大小。",
+      "controls": "五种程序、故意相交二维子空间的破坏样例、整个验证结果不受声明成绩影响、严格回放、冷导出及程序错误/非有限数/超时检查全部通过。初始1，传统搜索230，演化227，公开与人类参考333。",
+      "limits": "复现文献可行构造，未重做原始完整ILP搜索，未证明333最优。"
     }
   }
 }

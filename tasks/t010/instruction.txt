@@ -1,4 +1,7 @@
-T010-C01 uses n=17 and d=6. Construct a binary code with the configured length `n` and minimum pairwise Hamming distance at least the configured distance `d`. Maximize the number of codewords. Return JSON with a non-empty `codewords` list. Each codeword must be an integer in `[0, 2^n)` or a list of `n` integer bits. Do not return a claimed objective as evidence.
+Find a low-copy tiling of an axis-aligned rectangle by the fixed P1 11-omino.
 
+Return JSON with integer `width`, integer `height`, and a nonempty `placements` array. Every placement has integer `x`, integer `y`, and integer `orientation` in 0..7. Each orientation code selects one of the eight D4 orientations: bit 0 transposes x/y, bit 1 reflects x, and bit 2 reflects y. The tile is translated so its oriented bounding box starts at (x,y).
 
-Program interface: define run_code() with no arguments and return the construction as JSON-compatible data. The trusted evaluator recomputes the objective. Candidate-reported scores do not affect it. Read MATHBENCH_CONFIG_ID and MATHBENCH_SEED if needed. The generation limit is 300 seconds, with 4 GiB virtual memory and one numerical thread. Verification has a separate 60-second limit. Final scores require exact verification. Compatibility feedback is J/H, where H is the frozen external reference. Start from the supplied initial program.
+The fixed tile has 11 cells. Tile translations, rotations, and reflections are allowed. The target rectangle dimensions are free. Minimize the number of copies. The checker independently checks exact cell coverage and ignores declared score fields.
+
+Start from a simple valid construction. Search deterministically from `MATHBENCH_SEED`. Do not read the human or reference witness files. Expose `run_code()`.

@@ -1,18 +1,18 @@
-"""Exact checker for a coprime square dissection of the 1000 square."""
+"""Exact set counts and a certified logarithmic objective for T070-C01."""
 
 from collections.abc import Mapping
-from math import gcd
 
 
 CONFIG_ID = "T070-C01"
-OUTER_SIDE = 1000
-FULL_COLUMN = (1 << OUTER_SIDE) - 1
+MIN_CARDINALITY = 2
+MAX_CARDINALITY = 512
+LOWER_BOUND = -1_000_000
+UPPER_BOUND = 1_000_000
 PARAMETERS = {
-    "outer_side": 1000,
-    "tile_side_domain": "positive integers less than 1000",
-    "side_length_gcd": 1,
-    "compound_dissection_allowed": True,
-    "objective": "square_count",
+    "min_cardinality": 2,
+    "max_cardinality": 512,
+    "integer_interval": [-1_000_000, 1_000_000],
+    "objective": "ln(|A-A|) / ln(|A+A|)",
 }
 
 
@@ -20,74 +20,60 @@ def _check_config(config):
     if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
         raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
     if config.get("parameters") != PARAMETERS:
-        raise ValueError("configuration must fix the coprime 1000-square dissection")
+        raise ValueError("configuration must fix the T070 cardinality, interval, and objective")
 
 
-def _parse_squares(solution):
-    raw_squares = solution.get("squares")
-    if not isinstance(raw_squares, (list, tuple)):
-        raise ValueError("squares must be a list of [x,y,side] integer triples")
-    squares = []
-    seen = set()
-    area = 0
-    side_gcd = 0
-    for index, square in enumerate(raw_squares):
-        if not isinstance(square, (list, tuple)) or len(square) != 3:
-            raise ValueError(f"square {index} must be an [x,y,side] triple")
-        x, y, side = square
-        if type(x) is not int or type(y) is not int or type(side) is not int:
-            raise ValueError(f"square {index} coordinates and side must be integers")
-        if side <= 0 or side >= OUTER_SIDE:
-            raise ValueError(f"square {index} side must be from 1 through 999")
-        if x < 0 or y < 0 or x + side > OUTER_SIDE or y + side > OUTER_SIDE:
-            raise ValueError(f"square {index} lies outside the 1000 by 1000 outer square")
-        item = (x, y, side)
-        if item in seen:
-            raise ValueError("duplicate square records are not allowed")
-        seen.add(item)
-        squares.append(item)
-        area += side * side
-        side_gcd = gcd(side_gcd, side)
-
-    if not squares:
-        raise ValueError("a dissection must contain at least one tile")
-    if area != OUTER_SIDE * OUTER_SIDE:
-        raise ValueError("tile areas must sum exactly to the outer-square area")
-    if side_gcd != 1:
-        raise ValueError("tile side lengths must have greatest common divisor 1")
-    return squares, area, side_gcd
+def _interval_endpoint_text(endpoint, lower):
+    text = str(endpoint).strip().strip("[]")
+    pieces = text.split(",", 1)
+    return pieces[0].strip() if lower else pieces[-1].strip()
 
 
 def validate(solution, config, strict=False):
-    """Verify a full, non-overlapping, relatively-prime square dissection."""
+    """Validate the set, then return a conservative lower bound for maximization."""
     _check_config(config)
     if not isinstance(solution, Mapping):
         raise ValueError("solution must be an object")
-    squares, area, side_gcd = _parse_squares(solution)
+    raw = solution.get("set")
+    if not isinstance(raw, (list, tuple)):
+        raise ValueError("set must be a list of integers")
+    n = len(raw)
+    if not MIN_CARDINALITY <= n <= MAX_CARDINALITY:
+        raise ValueError("set cardinality must be in 2..512")
+    values = []
+    for index, item in enumerate(raw):
+        if type(item) is not int:
+            raise ValueError(f"element {index} must be an integer; bool is invalid")
+        if item < LOWER_BOUND or item > UPPER_BOUND:
+            raise ValueError(f"element {index} lies outside [-1000000,1000000]")
+        values.append(item)
+    if len(set(values)) != n:
+        raise ValueError("set elements must be distinct")
 
-    # Each integer x-column stores the set of covered integer y-cells as bits.
-    # Since the exact total area is 1,000,000, this loop performs at most
-    # 1,000,000 column updates for any candidate with valid tile areas.
-    columns = [0] * OUTER_SIDE
-    for index, (x, y, side) in enumerate(squares):
-        mask = ((1 << side) - 1) << y
-        for column in range(x, x + side):
-            if columns[column] & mask:
-                raise ValueError(f"square {index} overlaps a previous tile")
-            columns[column] |= mask
-    if any(mask != FULL_COLUMN for mask in columns):
-        raise ValueError("squares do not cover the entire outer square")
+    sumset = {a + b for a in values for b in values}
+    difference_set = {a - b for a in values for b in values}
+    sum_size = len(sumset)
+    difference_size = len(difference_set)
+    if sum_size <= 1 or difference_size <= 1:
+        raise ValueError("both set cardinalities must exceed one for the logarithms")
 
+    from mpmath import iv
+    iv.dps = 80
+    score_interval = iv.ln(iv.mpf(difference_size)) / iv.ln(iv.mpf(sum_size))
+    lower = _interval_endpoint_text(score_interval.a, lower=True)
+    upper = _interval_endpoint_text(score_interval.b, lower=False)
     return {
-        "objective": len(squares),
-        "verification_status": "exact",
+        "objective": lower,
+        "objective_value": lower,
+        "verification_status": "certified",
         "details": {
-            "square_count": len(squares),
-            "outer_side": OUTER_SIDE,
-            "total_tile_area": area,
-            "covered_area": OUTER_SIDE * OUTER_SIDE,
-            "tile_side_gcd": side_gcd,
-            "integer_columns_checked": OUTER_SIDE,
+            "cardinality": n,
+            "sumset_size": sum_size,
+            "difference_set_size": difference_size,
+            "objective_interval": [lower, upper],
+            "objective_lower_bound": lower,
+            "sumset_exact": True,
+            "difference_set_exact": True,
             "claimed_objective_ignored": True,
             "strict": bool(strict),
         },

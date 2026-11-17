@@ -1,65 +1,35 @@
-# T046: integer Chebyshev polynomial on `[0,1]`
+# T046: Binary linear code minimum distance
 
-## Definition
+## 中文
 
-For the fixed degree limit `n=146`, find a nonzero polynomial
-`P(x) in Z[x]` with `degree(P) <= 146` that minimizes
+### 目标
 
-`||P||_[0,1] = max_{0 <= x <= 1} |P(x)|`.
+构造二元线性 `[68,15]` 码，并最大化最小汉明距离。提交 `15 × 68` 的 0/1 生成矩阵。验证器会计算矩阵秩，并枚举全部 `2^15-1` 个非零码字。
 
-This definition allows every nonzero integer polynomial through degree 146.
-It does not restrict candidates to products of known factors. Published work
-states that an optimizer has degree exactly `n` for `n >= 2`, but the checker
-still accepts every valid degree-at-most-146 candidate.
+### 基线
 
-The checker uses exact rational Bernstein coefficients and dyadic subdivision.
-On each interval, the polynomial is a convex combination of its Bernstein
-coefficients, so their largest absolute value is a rigorous upper bound. Exact
-dyadic evaluations give a lower bound. The returned interval encloses the
-whole-domain supremum norm. Sampling is used only by the search baseline.
+公开的 BKLC 页面给出下界 24、上界 26。Magma 的公开 BKLC 数据库为相同参数返回 `[68,15,24]` 码。生成矩阵保存在 `data/sota_generator.json`，`sota.py` 加载该见证，`data/reproduce_sota.m` 记录 Magma 查询。
 
-The frozen human baseline is the weak same-parameter reconstruction
-`P(x)=(x(1-x))^73`, with exact norm `2^-146`. Meichsner defines
-`h1(x)=x(1-x)`; the exponent 73 and this n=146 witness are reconstructed for
-this benchmark. The thesis's n=146 table row gives only a one-sided
-reciprocal-root bound and no polynomial. The reported bound is converted to
-the raw objective in `data/bestknown.json`; it is not the frozen human normalization.
-See [source evidence](data/source/research_evidence.md).
+本任务检查器独立确认矩阵秩为 15，并枚举全部 32,767 个非零码字。重算的最小距离为 24。这复现了公开最佳已知下界，但不证明最优，因为公开上界为 26。原有 `reference.py`、距离 19 搜索见证和距离 8 人类方法见证保持不变。
 
-## Open status and sources
+公开推导的人类基线由三个 `[16,5,8]` 的一阶 Reed–Muller 码直和组成，再补 20 个零坐标。它有 15 个独立生成行，精确最小距离为 8。此基线来自公开码族的标准定义；它不是 BKLC 页面中的构造。另保存了本项目搜索的距离 19 矩阵。它来自系统形式 `[I|P]` 的本地搜索，属于 AI 生成结果，不属于历史人类记录。
 
-Meichsner's 2009 thesis reports complete finite-degree results through 145;
-its n=146 table row does not give an optimizer. Hare and Hodges (arXiv
-1804.05985v2, 2018) added proved cases from degree 147 upward and reported
-remaining unknown cases below 244. The latest checked 2026 paper proves new
-bounds for the asymptotic integer Chebyshev constant, not for finite degree
-146. We found no later n=146 completion in the sources checked by
-2026-11-06. This is not an exhaustive survey claim.
+## English
 
-- Meichsner (2009), thesis: <https://www.collectionscanada.gc.ca/obj/thesescanada/vol2/002/NR59810.PDF>
-- Hare and Hodges, arXiv:1804.05985v2: <https://arxiv.org/abs/1804.05985v2>
-- Niedbala Giraudin, arXiv:2610.00386v3: <https://arxiv.org/abs/2610.00386v3>
+### Goal
 
-## Run and budget
+Construct a binary linear `[68,15]` code and maximize its minimum Hamming distance. Return a `15 × 68` generator matrix with binary entries. The checker computes its rank over GF(2) and enumerates all `2^15-1` nonzero codewords.
 
-Use Python 3.11 or newer. No non-standard package is required.
+### Baselines
 
-```sh
-.venv/bin/python -m pytest tasks/t046 -q
-.venv/bin/python -c 'from tasks.t046.init_program import run_code; from tasks.t046.check import validate; p={"degree_at_most":146,"interval":[0,1],"coefficient_domain":"nonzero integer polynomials"}; print(validate(run_code(), {"parameters":p}, strict=True))'
-```
+The public BKLC page reports a lower bound of 24 and an upper bound of 26. Magma's public BKLC database returns a `[68,15,24]` code for these parameters. The generator matrix is saved in `data/sota_generator.json`; `sota.py` loads this witness, and `data/reproduce_sota.m` records the Magma query.
 
-Generation has a 300 second limit. Verification has a separate 60 second
-limit. The checker caps its subdivision work at 100,000 exact splits and raises
-`ValueError` if it cannot complete a certificate. The shared runner applies
-the 4 GiB memory limit and one-thread setting. The traditional search uses a
-fixed limit of 74 factor-exponent trials by default; setting
-`MATHBENCH_SEARCH_SECONDS` enables a wall-clock exploration cutoff.
+The task checker independently confirms rank 15 and enumerates all 32,767 nonzero codewords. The recomputed minimum distance is 24. This reproduces the public best-known lower bound. It does not prove optimality because the public upper bound is 26. The existing `reference.py`, distance-19 search witness, and distance-8 human-method witness remain unchanged.
 
-The initial program is the simple monomial `x^146`. The traditional
-baseline ranks products `h1^a h2^b`, where `h1=x(1-x)`, `h2=2x-1`, and
-`2a+b=146`, on a 513-point dyadic grid. Neither program reads comparison data.
-The fixed reference and human programs are external comparisons.
+A public-derived human baseline is the direct sum of three first-order Reed–Muller `[16,5,8]` codes, followed by 20 zero coordinates. It has 15 independent generator rows and exact minimum distance 8. This comes from the standard public code family definition. It is not the construction shown on the BKLC page. The package also saves a distance-19 matrix found by this project’s search. That matrix is an AI-generated result, not a historical human record.
 
-The task remains `accepted_by_sol`. Its objective is open; the checker
-certifies feasible candidates and their scores, not global optimality.
+### Sources
+
+- [Grassl BKLC entry for `[68,15]`](https://www.codetables.de/BKLC/BKLC.php?k=15&n=68&q=2), checked 2026-11-05.
+- [Magma best-known linear codes documentation](https://docs.magma-maths.org/CodingTheory/LinearCodes/best-codes.html); the database query ran on the [public calculator](https://magma-maths.org/calc/), Magma 2.30-1, checked 2026-11-05.
+- [MIT 6.451 lecture notes, Reed–Muller codes](https://ocw.mit.edu/courses/6-451-principles-of-digital-communication-ii-spring-2005/bb895c1dee9ce0b39d6846e0aa984981_MIT6_451S05_FullLecNotes.pdf).

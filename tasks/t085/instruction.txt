@@ -1,5 +1,3 @@
-Choose 21 unit disks in the plane to cover a closed disk centered at the origin. Maximize the target disk radius. Circle centers may repeat.
+Find an n by n matrix with entries -1 or +1. T085-C01 uses n=29. Return JSON with a single key, "matrix", containing n rows of n integer entries. Maximize the absolute exact determinant. Booleans are invalid. The evaluator recomputes the score and ignores claimed scores.
 
-Return JSON with `radius` as a positive rational string and `centers` as exactly 21 pairs `[x,y]` of rational strings or integers. Coordinates are unbounded and have no fixed denominator cap. Do not use decimal floats.
-
-The checker verifies coverage over the full continuous disk. It enumerates exact Voronoi critical points and uses rational and quadratic-field arithmetic. A candidate score is ignored and recomputed from the submitted radius after full feasibility checks.
+Define run_code() with no arguments. The generation limit is 300 seconds; verification has a separate 60-second limit. Start from the supplied initial program.

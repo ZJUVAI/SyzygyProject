@@ -1,147 +1,152 @@
 {
   "task_id": "T042",
-  "review_status": "accepted_by_sol",
   "configurations": {
     "T042-C01": {
+      "id": "T042-C01",
       "objective": {
-        "name": "maximum cardinality of a subset of [1, 212] with no nontrivial three-term arithmetic progression",
-        "unit": "integers",
+        "name": "total weight of edges whose endpoints have different labels",
+        "unit": "integer edge weight",
         "direction": "maximize",
         "constraints": [
-          "the universe is exactly [1, 212]",
-          "each selected element is an integer",
-          "elements are distinct",
-          "no selected a < b < c satisfy a + c = 2b"
+          "use the pinned Gset G70 graph with 10,000 vertices and 9,999 edges",
+          "assign each vertex exactly one side in {0,1}",
+          "all edge weights equal +1"
         ]
       },
       "program": "reference.py",
-      "public_value": 43,
-      "reproduced_value": 43,
       "highest_reported": {
-        "value": 43,
-        "source": "Ergezer, arXiv:2606.04016v1, §2.1 and §5.5; results/N212_K43_witness.json",
-        "url": "https://arxiv.org/abs/2606.04016",
-        "reproduction_status": "The witness was extracted from the pinned arXiv v1 source archive and independently checked exactly. No 44-set or complete upper-bound proof is reported in the checked sources.",
-        "parameters": {
-          "N": 212
-        }
+        "value": 9595,
+        "source": {
+          "title": "Cosm: orchestrated collective dynamics give rise to rapid computational search at the solution frontier",
+          "url": "https://arxiv.org/abs/2605.30355v4",
+          "version": "v4, revised 2026-10-11",
+          "claim": "The abstract reports heuristic cuts 5,799 and 9,595 on G61 and G70 as best-known; it separately calls G81, G72, and G77 certified optima.",
+          "checked_at": "2026-11-06"
+        },
+        "corroborating_source": {
+          "title": "A Large Population Island Framework for the Unconstrained Binary Quadratic Problem",
+          "url": "https://doi.org/10.1016/j.cor.2024.106684",
+          "claim": "The paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+          "checked_at": "2026-11-06"
+        },
+        "reproduction_status": "published heuristic report; no public assignment independently reproduced; AI-assistance disclosure unknown"
       },
       "best_human": {
-        "value": 32,
+        "value": 9594,
         "parameters": {
-          "N": 212
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
         },
-        "source": "Odlyzko and Stanley (1978), greedy sequence S(1) with ternary digits restricted to 0 and 1; rebuilt by human.py",
-        "url": "https://www-users.cse.umn.edu/~odlyzko/unpublished/greedy.sequence.pdf",
-        "witness_program": "human.py",
-        "evidence_state": "The formula is replayed and exactly checked at N=212.",
-        "witness": "data/reference/odlyzko_stanley_n212_32.json",
-        "witness_sha256": "9c4230152b0e0f1e8a98a35d78944fd190b9d94b0c14ba4a458b640c8fdaf24b",
-        "origin_type": "published classical construction",
-        "source_url": "https://www-users.cse.umn.edu/~odlyzko/unpublished/greedy.sequence.pdf",
-        "formula": "{1 + sum(epsilon_i * 3^i for i=0..4) : epsilon_i in {0,1}}",
+        "authors": [
+          "Olivier Goudet",
+          "Adrien Goëffon",
+          "Jin-Kao Hao"
+        ],
+        "url": "https://doi.org/10.1016/j.cor.2024.106684",
         "date_checked": "2026-11-06",
-        "optimality": "A feasible human-method baseline only; it is not a claim of optimality."
+        "provenance": "The LPI paper reports 9,594 on its G70 test instance. Its calibration value 9,595 is recorded separately and is not the test score.",
+        "evidence_state": "published score; paper-specific assignment not replayed",
+        "witness": null,
+        "origin_type": "traditional human-designed computational heuristic",
+        "optimality": "not proved"
       },
       "best_public": {
-        "value": 43,
+        "value": 9595,
         "parameters": {
-          "N": 212
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
         },
-        "source": "Ergezer, arXiv:2606.04016v1 and linked repository",
-        "url": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
-        "evidence_state": "Public 43-element witness, exactly reproduced by the task checker.",
-        "ai_provenance": "The current maintained paper discloses Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 use for writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration. It does not state whether AI proposed or searched for this specific witness; witness-specific discovery provenance is undisclosed.",
-        "witness": "data/reference/ergezer_n212_k43_witness.json",
-        "witness_sha256": "41377c0db2e50f2d7753434ac472e82d831d093013562a477fffb068f117eb28",
-        "origin_type": "public construction with witness-specific discovery provenance undisclosed",
-        "source_url": "https://arxiv.org/abs/2606.04016",
-        "repository_url": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
+        "url": "https://arxiv.org/abs/2605.30355v4",
+        "corroborating_url": "https://doi.org/10.1016/j.cor.2024.106684",
         "date_checked": "2026-11-06",
-        "source_archive_sha256": "5eac2ce62cd26fd5114ec0a2fd2d8df48ffcc77cfa82e46e59d5ba208b45ae22",
-        "source_witness_file_sha256": "41377c0db2e50f2d7753434ac472e82d831d093013562a477fffb068f117eb28",
-        "optimality": "No 44-element set was reported, but the upper-bound proof is incomplete; this is a feasible lower-bound witness only."
+        "provenance": "Cosm v4 reports that its heuristic reaches 9,595 on G70. The LPI paper reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+        "evidence_state": "published heuristic score; assignment not replayed here",
+        "witness": null,
+        "origin_type": "author-developed computational heuristic; AI assistance disclosure unknown"
       },
       "best_reproduced": {
-        "value": 43,
+        "value": 8616,
         "parameters": {
-          "N": 212
+          "instance": "Gset-G70",
+          "n": 10000,
+          "m": 9999
         },
-        "program": "reference.py",
+        "url": "https://doi.org/10.1016/j.engappai.2012.09.001",
+        "date_checked": "2026-11-06",
+        "evidence_state": "task-local FLIP reproduction, exact checker verification",
+        "provenance": "This task implements the published single-vertex FLIP neighborhood as seeded steepest local search. It does not reproduce the full BLS algorithm or its reported G70 value.",
+        "witness": "data/human_g70_1flip.json",
+        "actual_value": 8616,
         "verification_status": "exact",
-        "verification_method": "Check all selected pairs a<b and reject if 2b-a is selected; validate range, integer type, and uniqueness.",
-        "witness": "data/reference/ergezer_n212_k43_witness.json",
-        "ai_provenance": "The current maintained paper discloses broad AI collaboration, but not whether AI proposed or searched for this witness. Reproduction does not establish discovery provenance.",
-        "date_reproduced": "2026-11-06",
+        "ai_provenance": "no public record witness used",
         "review_status": "reviewed_by_sol"
       },
-      "compatibility_score": {
-        "frozen_formula": "J/H",
-        "H": 32,
-        "note": "H is the reproduced Odlyzko-Stanley human-method baseline."
+      "optimality": {
+        "status": "open in reviewed sources; 9,595 is a reported feasible value and no matching proof was found",
+        "lower_bound": 9595,
+        "evidence": [
+          {
+            "url": "https://doi.org/10.1016/j.cor.2024.106684",
+            "claim": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value; the latter is not the reported test-instance score."
+          },
+          {
+            "url": "https://arxiv.org/abs/2605.30355v4",
+            "claim": "Cosm v4 reports the heuristic result 9,595 for G70 as best-known. The same abstract distinguishes certified optima for G81, G72, and G77 from heuristic results on G61 and G70."
+          },
+          {
+            "url": "https://arxiv.org/abs/2004.12345v5",
+            "claim": "Qian and Pan, v5 (revised 2021), report upper bounds and known best values for large UBPP instances; this is computational evidence, not a G70 optimality certificate."
+          },
+          {
+            "url": "https://doi.org/10.1364/OE.381850",
+            "claim": "The source reports numerical SDP value 9,683 for G70. This task has not independently certified it as an upper bound."
+          }
+        ],
+        "note": "Cosm v4 reports a heuristic G70 cut of 9,595. LPI reports 9,594 on G70 test data and 9,595 as a calibration value. A 2019 paper reports numerical SDP value 9,683, which this task has not certified. The 88-point difference between the Cosm score and SDP figure is not a certified optimality gap. No checked source proves the G70 result optimal.",
+        "reported_sdp_value": 9683
       },
-      "checked_at": "2026-11-06",
-      "optimality_status": {
-        "status": "open; current certified range is 43 through 44",
-        "paper_v1": "No 44-set was found; the paper leaves the upper bound unresolved. Its original T1c residual had two chunks.",
-        "current_repository": "Current main README says the historical T1c chunks are now DRAT-closed and 6,045/6,071 T2 chunks are solver-attested closed. The full T3 space remains without complete certificate checking, so r_3(212) <= 43 is not proved.",
-        "current_repository_commit": "cfd76934bff8cb5d5016e9f599063d698a09d47e",
-        "zenodo_v2": "10.5281/zenodo.21413746, modified 2026-07-18; states that the upper-bound question remains open.",
-        "paper_v1_state": "The paper reports no 44-set and leaves the upper bound unresolved. Its original T1c residual contained two chunks; this is not the current repository status.",
-        "current_repository_state": "Current repository README says both historical T1c chunks have independently verified DRAT proofs. Its T2 portfolio closes 6,045/6,071 chunks without proof logs. The complete T3 cube space is not certificate-checked, so the full upper bound remains open.",
-        "current_repository_tag": "mpc-submission-v1.4",
-        "current_repository_tag_commit": "4c5811007a286c0b10c9b8bf4a91f79653847b55",
-        "current_zenodo_version": "10.5281/zenodo.21413746, version v2, modified 2026-07-18",
-        "limitations": [
-          "The task verifies the lower-bound witness, not the upper bound.",
-          "The paper's solver campaign and the later partial closures do not cover the full T3 cube space with machine-checkable certificates.",
-          "The current maintained paper discloses broad AI collaboration, but does not state whether AI proposed or searched for the 43-element construction.",
-          "The source survey is limited to the paper, linked repository, and Zenodo v2 record checked on 2026-11-06."
-        ]
+      "input": {
+        "source_url": "https://web.stanford.edu/~yyye/yyye/Gset/G70",
+        "sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061",
+        "file": "data/source/G70.gz",
+        "normalized_graph_sha256": "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085",
+        "source_file": "data/source/G70.gz",
+        "compressed_sha256": "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b",
+        "encoding": "gzip; decompresses to the exact Stanford source bytes"
       },
-      "limitations": [
-        "The 43 construction establishes only r_3(212) >= 43.",
-        "No checked source certifies the complete upper bound at N=212.",
-        "The current maintained paper discloses broad AI collaboration, but not whether AI proposed or searched for the 43-element construction.",
-        "The source check is limited to the cited paper, linked repository, and Zenodo v2 record."
-      ],
-      "source_review": {
-        "paper_url": "https://arxiv.org/abs/2606.04016",
-        "paper_version": "v1, submitted 2026-05-31; HTML body date 2026-08-24",
-        "repository_snapshot_url": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
-        "current_repository_url": "https://github.com/memoatwit/erdos_1194/blob/main/erdos_r3/README.md",
-        "generative_ai_declaration_url": "https://github.com/memoatwit/erdos_1194/blob/cfd76934bff8cb5d5016e9f599063d698a09d47e/erdos_r3/paper/paper.tex#L211-L220",
-        "current_repository_tag": "mpc-submission-v1.4",
-        "current_repository_tag_commit": "4c5811007a286c0b10c9b8bf4a91f79653847b55",
-        "generative_ai_declaration": "paper/paper.tex §Use of generative AI states Claude Sonnet 4.5, Claude Opus 4.6, and Codex GPT-5 assisted writing, code generation/review, experiment planning, repository scaffolding, and computational orchestration; the specific discovery path for the 43-set is not stated.",
-        "artifact_record_url": "https://doi.org/10.5281/zenodo.21413746",
-        "paper": {
-          "title": "Witness-split + window-cardinality refinement for r_3(N): architecture, empirical results, and a structural hard pocket",
-          "authors": [
-            "Mehmet Ergezer"
-          ],
-          "url": "https://arxiv.org/abs/2606.04016",
-          "version": "v1, submitted 2026-05-31; HTML body date 2026-08-24",
-          "source_archive_url": "https://arxiv.org/src/2606.04016v1",
-          "source_archive_sha256": "5eac2ce62cd26fd5114ec0a2fd2d8df48ffcc77cfa82e46e59d5ba208b45ae22"
-        },
-        "repository": {
-          "submission_snapshot": "https://github.com/memoatwit/erdos_1194/tree/mpc-submission-v1.2/erdos_r3",
-          "submission_tag_commit": "53d46832df562b316e5e2b279dc107f6f2a6869d",
-          "current_readme": "https://github.com/memoatwit/erdos_1194/blob/main/erdos_r3/README.md",
-          "generative_ai_declaration": "https://github.com/memoatwit/erdos_1194/blob/cfd76934bff8cb5d5016e9f599063d698a09d47e/erdos_r3/paper/paper.tex#L211-L220",
-          "current_commit": "cfd76934bff8cb5d5016e9f599063d698a09d47e",
-          "current_tag": "mpc-submission-v1.4",
-          "current_tag_commit": "4c5811007a286c0b10c9b8bf4a91f79653847b55",
-          "witness_path": "erdos_r3/results/N212_K43_witness.json"
-        },
-        "zenodo_v2": {
-          "url": "https://doi.org/10.5281/zenodo.21413746",
-          "modified": "2026-07-18",
-          "status": "The 44-set upper-bound question remains open; no complete certificate-checked cube cover is reported."
-        },
-        "review_status": "source checked; pending Sol review"
+      "program_record": {
+        "entrypoint": "run_code()",
+        "cold_start": "init_program.py",
+        "search": "seeded repeated steepest 1-flip local search; fixed restart and flip counts by default",
+        "seed_environment": "MATHBENCH_SEED",
+        "configuration_environment": "MATHBENCH_CONFIG_ID"
       },
+      "reproduced_record": {
+        "value": 8616,
+        "witness": "data/human_g70_1flip.json",
+        "method": "Task-local reproduction of the published steepest single-vertex FLIP neighborhood; four seeded starts; max 10,000 flips per start; fixed seed 0.",
+        "source_url": "https://doi.org/10.1016/j.engappai.2012.09.001",
+        "evidence_state": "replayed from human.py and recomputed exactly by check.py",
+        "reproduction_status": "exactly replayed and independently scored by check.py; 8,616 is this local reproduction, not a score claimed by the source paper.",
+        "date_checked": "2026-11-06"
+      },
+      "reproduced_value": 8616,
+      "public_record": {
+        "value": 9595,
+        "source_url": "https://arxiv.org/abs/2605.30355v4",
+        "source": "Cosm v4 reports that its heuristic reaches 9,595 on G70.",
+        "witness": null,
+        "evidence_state": "reported heuristic score; assignment not independently replayed",
+        "ai_provenance": "unknown; paper does not disclose whether AI assistance was used",
+        "corroboration_url": "https://doi.org/10.1016/j.cor.2024.106684",
+        "corroboration": "LPI reports 9,594 on the G70 test instance and 9,595 as a calibration value.",
+        "reproduction_status": "reported, no assignment reproduced here",
+        "date_checked": "2026-11-06",
+        "version": "arXiv:2605.30355v4, revised 2026-10-11"
+      },
+      "public_value": 9595,
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
@@ -150,20 +155,19 @@
           "task_id": "T042",
           "config_id": "T042-C01",
           "validity": 1.0,
-          "combined_score": 1.34375,
-          "objective": 43,
+          "combined_score": 1.0,
+          "objective": 8616,
           "verification_status": "exact",
-          "generation_time": 2.4941090419888496,
-          "verification_time": 0.6171908974647522,
-          "objective_value": 43,
+          "generation_time": 0.16458547115325928,
+          "verification_time": 0.16469041258096695,
+          "objective_value": 8616,
           "details": {
-            "N": 212,
-            "selected_size": 43,
-            "midpoint_pairs_checked": 903,
-            "claimed_score_ignored": true,
-            "strict_full_domain_check": true
+            "n": 10000,
+            "m": 9999,
+            "cut_edges": 8616,
+            "graph_sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
           },
-          "eval_time": 3.267093040049076,
+          "eval_time": 0.33436764404177666,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -180,47 +184,25 @@
           }
         },
         "independent_quantity": {
-          "cardinality": 43,
-          "endpoint_pairs_checked": 903
+          "cut_weight": 8616,
+          "ising_energy": -7233,
+          "original_edges_checked": 9999
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "15dc9d41be4a2b360480d3a25428a4dbb8d86fd72906018b682d9b676883ce81"
+        "claimed_score_ignored": true
       },
-      "review_status": "accepted_by_sol",
-      "parameters": {
-        "N": 212
+      "review_status": "pending_sol_review",
+      "configuration_id": "T042-C01",
+      "other_parameters": [],
+      "replay": {
+        "command": ".venv/bin/python -c 'from tasks.t042.human import run_code; from tasks.t042.check import validate; import json; from pathlib import Path; c=json.loads(Path(\"tasks/t042/task.json\").read_text())[\"configurations\"][0]; print(validate(run_code(),c))'",
+        "seed": 0,
+        "restarts": 4,
+        "max_flips_per_restart": 10000,
+        "budget": "fixed iteration count; shared runner hard limit applies"
       }
     }
   },
-  "snapshot_date": "2026-11-06",
-  "additional_evidence": {
-    "configurations": {
-      "T042-C01": {
-        "best_human": {
-          "source": "Odlyzko and Stanley (1978), greedy sequence S(1), rebuilt in human.py",
-          "evidence_state": "The formula is rebuilt and exactly checked at N=212; it has 32 elements and maximum 122."
-        },
-        "best_public": {
-          "source": "Mehmet Ergezer, arXiv:2606.04016v1, §2.1 and §5.5; repository results/N212_K43_witness.json",
-          "evidence_state": "The saved witness was extracted from the pinned arXiv v1 source archive and independently checked by this task's exact evaluator."
-        },
-        "best_reproduced": {
-          "verification_method": "This task checks every pair a<b from the witness and rejects if 2b-a is also selected; integer range, element types, and uniqueness are checked first.",
-          "ai_provenance": "The current maintained paper discloses broad AI collaboration, but does not state whether AI proposed or searched for this specific witness. Reproduction does not establish discovery provenance."
-        },
-        "highest_reported": {
-          "source": "Ergezer, arXiv:2606.04016v1 and linked repository witness",
-          "reproduction_status": "The public 43-set is reproduced and exactly validated. No 44-set or complete upper-bound certificate was found in the checked sources."
-        },
-        "compatibility_score": {
-          "note": "H is the reproduced weak human-method baseline. The public 43-set is reported separately and is not substituted for the human reference."
-        },
-        "optimality_status": {
-          "status": "open; 43 <= r_3(212) <= 44"
-        }
-      }
-    }
-  }
+  "review_status": "pending_sol_review",
+  "snapshot_date": "2026-11-06"
 }

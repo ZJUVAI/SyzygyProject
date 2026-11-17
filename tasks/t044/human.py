@@ -1,10 +1,22 @@
-"""Replay the published 70-vertex Alegre-Fiol-Yebra graph witness."""
+"""Reconstruction of a published GRASP-style cutwidth heuristic."""
 
-from pathlib import Path
+import os
 
-from tasks.t044.witness import load_upper_triangle as _load_upper_triangle
+from tasks.t044.heuristics import randomized_method
+from tasks.t044.instance import load_graph
 
 
 def run_code():
-    path = Path(__file__).parent / "data" / "reference" / "afy_70_adjlist_nx.txt"
-    return _load_upper_triangle(path)
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T044-C01")
+    if chosen != "T044-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    order, metadata = randomized_method(
+        load_graph(), seed=seed, trials=3, vertex_trials=8, alpha=0.20
+    )
+    metadata["provenance"] = (
+        "Local reconstruction of the GRASP construction and insertion-local-search "
+        "method family described by Marti et al.; this output is not claimed to "
+        "reproduce their reported arc130 ordering."
+    )
+    return {"ordering": order, "search_metadata": metadata}

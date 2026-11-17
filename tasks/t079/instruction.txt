@@ -1,5 +1,11 @@
-Construct one affine line in every projective direction of F_31^3. Minimize the number of distinct points in the union of these lines.
+Choose 480 nonnegative rational heights `h[0]` through `h[479]`. Define
 
-Return JSON with a `lines` list of exactly 993 records. Each record has `direction` and `origin`, each a list of three integers in 0..30. A direction must be the unique representative whose last nonzero coordinate is 1. The line contains `origin + t * direction` modulo 31 for every t in 0..30.
+`f(x) = h[i]` for `i*(13/4800) <= x < (i+1)*(13/4800)`, and `f(x)=0` elsewhere.
 
-The evaluator checks every direction and rebuilds the complete point union with exact integer arithmetic. It ignores any claimed score. Do not read `data/human/`, `data/reference/`, or any saved comparison witness while generating a candidate. The simple initializer uses all origins equal to zero and is available as `init_program.py`.
+Maximize
+
+`min_{0 <= t <= 1} integral_R f(x) f(x+t) dx / (integral_R f(x) dx)^2`.
+
+Return JSON data with a `heights` list of exactly 480 nonnegative rational values. Encode non-integer rational values as strings such as `"3/7"`. The checker uses exact rational arithmetic and checks the whole interval of shifts, including the endpoint `t=1`; it does not sample the interval. It ignores any score you report.
+
+The initial program is the uniform profile. Do not use human or reference witnesses in your search. Keep the default search deterministic for a fixed seed and within the fixed iteration budget.

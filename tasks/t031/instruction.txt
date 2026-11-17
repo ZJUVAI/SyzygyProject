@@ -1,1 +1,5 @@
-Find a short string over the fixed alphabet {1, 2, 3, 4, 5, 6, 7}. The string must contain every permutation of these seven symbols as a contiguous substring of length 7. The objective is to minimize the string length. Return {"word": "..."} from run_code(). The evaluator checks all 5,040 permutations and recomputes the string length. It ignores claimed scores. Use MATHBENCH_CONFIG_ID for the configuration and MATHBENCH_SEED for seeded search. The initial program is a simple valid construction. Generation budget: 300 seconds. Verification budget: 60 seconds. Memory: 4 GiB. CPU threads: 1.
+Construct a simple undirected connected graph with maximum degree at most 3 and diameter at most 5. Maximize the number of vertices.
+
+Return JSON data as {"n": integer, "edges": [[u, v], ...]}. Vertices must be exactly 0 through n-1. Each edge is an unordered pair of distinct vertices. Do not repeat an edge. The evaluator checks degree, connectivity, and all shortest-path distances, then uses n as the objective. It ignores claimed scores.
+
+There is one configuration, T031-C01. The Moore bound gives n <= 94 for this parameter, but it does not establish the exact maximum. The checked published record is 70.

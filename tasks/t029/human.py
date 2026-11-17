@@ -1,36 +1,29 @@
-"""Rebuild Laderman's 23-product decomposition from Lille's Maple tensor source."""
-import bz2
-import re
-from pathlib import Path
-
-_SOURCE = Path(__file__).parent / "data" / "source" / "3x3x3_tensor.mpl.bz2"
-_SYMBOLS = {"0": 0, "1": 1, "-1": -1, "l": 1, "-l": -1, "1/l": 1, "-1/l": -1}
-
-
-def _matrix(block):
-    rows = re.findall(r"\[([^\[\]]*)\]", block)
-    if len(rows) != 3:
-        raise ValueError("unexpected Maple matrix row count")
-    out = []
-    for row in rows:
-        entries = [value.strip() for value in row.split(",")]
-        if len(entries) != 3 or any(value not in _SYMBOLS for value in entries):
-            raise ValueError("unexpected Maple matrix entry")
-        out.extend(_SYMBOLS[value] for value in entries)
-    return out
+"""Rebuild a feasible 15-piece integer cover inferred from the rounded Shadoks viewer."""
+import os
 
 
 def run_code():
-    source = bz2.decompress(_SOURCE.read_bytes()).decode("ascii")
-    source = source[source.index("Tensor:="):]
-    matrices = re.findall(r"Matrix\(3, 3, \[(.*?)\]\)", source)
-    if len(matrices) != 69:
-        raise ValueError("Lille tensor source must contain 69 factor matrices")
-    factors = [_matrix(block) for block in matrices]
-    terms = []
-    for index in range(23):
-        alpha, beta, third = factors[3 * index:3 * index + 3]
-        # Lille writes scalar * Transpose(third) into the output matrix.
-        gamma = [third[3 * col + row] for row in range(3) for col in range(3)]
-        terms.append({"alpha": alpha, "beta": beta, "gamma": gamma})
-    return {"terms": terms}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T029-C01")
+    if config_id != "T029-C01":
+        raise ValueError(f"unsupported configuration: {config_id}")
+    polygons = [
+        [[96, 704], [512, 704], [512, 640], [96, 640]],
+        [[96, 608], [512, 608], [512, 544], [96, 544]],
+        [[96, 416], [512, 416], [512, 352], [96, 352]],
+        [[96, 320], [512, 320], [512, 256], [96, 256]],
+        [[128, 736], [176, 736], [176, 512], [128, 512]],
+        [[128, 448], [176, 448], [176, 224], [128, 224]],
+        [[96, 560], [128, 608], [288, 752], [320, 752], [480, 608], [512, 560], [432, 544], [176, 544]],
+        [[96, 400], [176, 416], [432, 416], [432, 320], [320, 176], [128, 352]],
+        [[192, 800], [416, 800], [416, 752], [192, 752]],
+        [[192, 208], [416, 208], [416, 160], [192, 160]],
+        [[224, 832], [384, 752], [384, 160], [224, 160]],
+        [[224, 832], [288, 832], [288, 128], [224, 128]],
+        [[320, 832], [384, 832], [384, 128], [320, 128]],
+        [[432, 736], [480, 736], [480, 512], [432, 512]],
+        [[432, 448], [480, 448], [480, 224], [432, 224]],
+    ]
+    return {
+        "algebraic_field": {"minimal_polynomial": ["0", "1"], "isolating_interval": ["-1", "1"]},
+        "polygons": [[[[str(x)], [str(y)]] for x, y in polygon] for polygon in polygons],
+    }

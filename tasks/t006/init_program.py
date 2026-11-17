@@ -1,15 +1,11 @@
-"""Deterministic algebraic seed for T006."""
+"""Standalone legal cold start: select no items."""
+
 import os
-from lps import build_graph
 
-
+# EVOLVE-BLOCK-START
 def run_code():
-    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T006-C01')
-    if config_id != 'T006-C01':
-        raise ValueError('unsupported configuration')
-    seed=int(os.environ.get('MATHBENCH_SEED','0'))
-    # EVOLVE-BLOCK-START
-    drop_pairs=((0,2),(0,4),(2,4))
-    graph=build_graph(drop_pairs[seed % len(drop_pairs)])
-    # EVOLVE-BLOCK-END
-    return graph
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T006-C01")
+    if chosen != "T006-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    return {"item_indices": [], "x_translations": [], "y_translations": []}
+# EVOLVE-BLOCK-END

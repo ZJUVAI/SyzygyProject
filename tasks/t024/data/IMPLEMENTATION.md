@@ -1,29 +1,22 @@
-# T024 implementation notes
+# T024 implementation record
 
-Status: accepted by Sol on 2026-11-06.
+Status: accepted by Sol on 2026-11-09.
 
-## Source review and parameter choice
+- Definition: maximize `point_count` for a subset of the 100 by 100 zero-based integer grid. Each triple of distinct points must have pairwise different squared side lengths. This forbids collinear midpoint triples too.
+- Human method: replay the classical four-digit ternary no-three-term-progression construction on one row. Its 16 points are valid by the one-dimensional progression property. This is a weak baseline, not a best-human claim.
+- Search baseline: seeded randomized greedy insertion, 4 fixed restarts by default. With seed 0 it returns 112 points. It does not read human or reference witness files.
+- Public witness: the 164-point `sol_100` construction from the AlphaEvolve paper's linked official notebook, extracted from repository commit `8f447457957deac61e28bf1676746f0753b3b2f8`. The extracted file is hashed in `bestknown.json`.
+- Checker: exact integer squared-distance uniqueness at each selected apex; this covers all triples, including collinear triples. The checker ignores claimed score fields.
+- Exact independent audit of the public witness: 164 points, 26,732 apex-to-point distance checks; a separate triple checker is in `test_task.py`.
 
-- Checked the Afzaly–McKay extremal graph table and its explanatory note on 2026-11-06. The table says an unprefixed edge count is exact. Its order-38 value 117 is therefore solved and was not selected.
-- The order-41 entry is `>=132` and links to `c4_n41e132.maybe.s6`, which contains three sparse6 records. The prefix means the authors do not claim that 132 is an upper bound. Selected parameters are exactly 41 vertices and forbidden `C4`.
-- The same table gives the exact order-40 value 127. Deleting each of the 41 vertices from a candidate graph and summing induced-edge counts gives `39m <= 41*127`; hence `m <= floor(5207/39)=133`. Together with the 132-edge witness, this proves `132 <= ex(41,C4) <= 133`.
-- The data page describes the tables as joint work by Narjess Afzaly and Brendan McKay and says further details were in preparation. The current checked source is the live data page; no paper version for the order-41 entry was located. This is an explicit source limitation, not a claim that an exhaustive literature survey found no proof.
-- Download URL: `https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6`. SHA-256: `900da21cbbb59d10c30f26feb35ebab4f0e3ef65f21429939584bda497768989`.
-
-## Reproduction
-
-The first record was decoded from sparse6 with NetworkX 3.x, then saved as `data/human_witness.json`. The checker independently recomputes the 132 edges and tests all unordered vertex pairs for at most one common neighbor. Since a C4 exists exactly when two distinct vertices have two common neighbors, this is an exact full-graph check. The result is a feasible construction only; optimality remains open in the cited table.
-
-The seed is a 41-vertex star with 40 edges. The classical baseline starts from that star and uses seeded random edge additions. It checks for a length-three path before accepting an edge and never loads task data. Defaults: seed 38, 3,000 iterations. It records the actual attempt count, accepted additions, seed, and optional wall-clock budget. The evolution entry point delegates to this witness-free baseline; the separate human/reference programs read the archived witness.
-
-## Replay commands
+Validation run:
 
 ```sh
-.venv/bin/python -m pytest tasks/t024/test_task.py -q
-python3 -m json.tool tasks/t024/task.json > /dev/null
-python3 -m json.tool tasks/t024/data/bestknown.json > /dev/null
+.venv/bin/python -m pytest tasks/t024 -q
+.venv/bin/python -m json.tool tasks/t024/task.json >/dev/null
+.venv/bin/python -m json.tool tasks/t024/data/bestknown.json >/dev/null
 ```
 
-## Review status and limitations
+Result: 11 tests passed; JSON checks passed. Tests cover human and public constructions, seed and search entry points, invalid isosceles triples, invalid types and coordinates, boundary cases, independent triple enumeration, and changed claimed scores. Runner subprocess success, nonzero exit, and timeout controls passed through `mathbench.evaluate._run`; full registry admission remains for Sol's review.
 
-Sol accepted this task on 2026-11-06 after full runner replay. See bestknown.json. The 132-edge construction is reproduced exactly. The public table gives no optimality proof for order 41. The live web table was checked on 2026-11-06; this implementation does not establish a complete literature survey.
+Source scope: checked the AlphaEvolve paper and official problem page, and used the linked repository notebook at the pinned commit for the actual coordinates. A public October 2026 issue reports a newer 58-point lower bound for the separate 32 by 32 instance; its table says the 100 by 100 value remains 164. No optimality proof was located in the checked sources. This source review is not exhaustive.

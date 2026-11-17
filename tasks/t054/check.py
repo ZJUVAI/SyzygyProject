@@ -1,37 +1,42 @@
-"""Exact integer checker for binary aperiodic PSL configurations."""
-CONFIGS = {"T054-C01": {"parameters": {"length": 100}}}
-CONFIG_ID = "T054-C01"
-LENGTH = 100
-ALPHABET = [-1, 1]
-PARAMETERS = {"length": LENGTH, "alphabet": ALPHABET, "correlation": "aperiodic", "objective": "max absolute off-zero autocorrelation"}
+"""Exact bit-mask verifier for uniform covering arrays."""
+from itertools import combinations
+from math import comb
 
-def config_id():
-    import os
-    return os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-
-def config_length(cid=None):
-    cid = cid or config_id()
-    if cid not in CONFIGS: raise ValueError(f"unsupported configuration: {cid}")
-    return CONFIGS[cid]["parameters"]["length"]
-
-def aperiodic_autocorrelations(sequence):
-    return [sum(sequence[i] * sequence[i + lag] for i in range(len(sequence)-lag)) for lag in range(1,len(sequence))]
-
-def _check_config(config):
-    if not isinstance(config,dict): raise ValueError("configuration must be an object")
-    cid=config.get("id",CONFIG_ID)
-    if cid not in CONFIGS: raise ValueError(f"unsupported configuration: {cid}")
-    expected=CONFIGS[cid]["parameters"]
-    params=config.get("parameters")
-    if not isinstance(params,dict) or type(params.get("length")) is not int or params.get("length") != expected["length"] or params.get("alphabet") != ALPHABET or params.get("correlation") != "aperiodic" or params.get("objective") != PARAMETERS["objective"]: raise ValueError("configuration parameters do not match a registered T054 configuration")
-    return expected["length"]
 
 def validate(solution, config, strict=False):
-    del strict
-    length=_check_config(config)
-    if not isinstance(solution,dict): raise ValueError("solution must be an object")
-    sequence=solution.get("sequence")
-    if not isinstance(sequence,list) or len(sequence)!=length: raise ValueError(f"sequence must be a list of exactly {length} signs")
-    if any(type(v) is not int or v not in (-1,1) for v in sequence): raise ValueError("sequence entries must be integer -1 or +1; bool is invalid")
-    correlations=aperiodic_autocorrelations(sequence); peak=max(map(abs,correlations))
-    return {"objective":peak,"verification_status":"exact","details":{"length":length,"aperiodic_autocorrelations":correlations,"peak_sidelobe_lag":max(range(1,length),key=lambda k:abs(correlations[k-1])),"claimed_objective_ignored":True}}
+    p = config["parameters"]
+    t, k, v = p["strength"], p["columns"], p["alphabet_size"]
+    if not isinstance(solution, dict) or "array" not in solution:
+        raise ValueError("solution must contain array")
+    array = solution["array"]
+    if not isinstance(array, list) or not 1 <= len(array) <= p["rows_upper_bound"]:
+        raise ValueError("array row count is outside the allowed range")
+    if any(not isinstance(row, list) or len(row) != k for row in array):
+        raise ValueError("each row must have the configured number of columns")
+    if any(type(x) is not int or not 0 <= x < v for row in array for x in row):
+        raise ValueError("entries must be integers in the configured alphabet")
+    if len({tuple(row) for row in array}) != len(array):
+        raise ValueError("duplicate rows are not allowed")
+    symbol_rows = [[0 for _ in range(v)] for _ in range(k)]
+    for ri, row in enumerate(array):
+        row_bit = 1 << ri
+        for j, value in enumerate(row):
+            symbol_rows[j][value] |= row_bit
+    uncovered = 0
+    projection_count = 0
+    for cols in combinations(range(k), t):
+        projection_count += 1
+        for pattern in __import__("itertools").product(range(v), repeat=t):
+            covered = (1 << len(array)) - 1
+            for j, value in zip(cols, pattern):
+                covered &= symbol_rows[j][value]
+                if not covered:
+                    break
+            if not covered:
+                uncovered += 1
+    if uncovered:
+        raise ValueError(f"array misses {uncovered} projections")
+    return {"objective": len(array), "verification_status": "exact",
+            "details": {"rows": len(array), "columns": k, "strength": t,
+                        "alphabet_size": v, "projection_count": projection_count,
+                        "uncovered_tuples": 0, "claimed_objective_ignored": True}}

@@ -1,96 +1,140 @@
 {
   "task_id": "T097",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T097-C01": {
       "program": "reference.py",
-      "reproduced_value": 15,
-      "public_value": 15,
+      "reproduced_value": 72332,
+      "public_value": 72332,
       "highest_reported": {
-        "value": 15,
-        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
-        "reproduction_status": "The Shadoks viewer reports 15 pieces; exact reconstructed witness verified. The complete all-team per-instance inventory is unavailable, so this is not claimed as a global record or optimum."
+        "value": 72332,
+        "metric": "total TSPLIB EUC_2D route distance",
+        "direction": "minimize",
+        "source": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "source_location": "X-n1001-k43 row, bound submitted 2026-10-24",
+        "reproduction_status": "official route file downloaded and independently rechecked exactly; CVRPLIB marks the instance Opt=no, so this is a bound, not a proof of optimality",
+        "ai_provenance": "not stated by CVRPLIB",
+        "date_checked": "2026-11-06",
+        "url": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257"
+      },
+      "parameters": {
+        "instance": "X-n1001-k43",
+        "customers": 1000,
+        "depot_node_id": 1,
+        "vehicle_capacity": 131,
+        "distance": "TSPLIB EUC_2D nearest-integer rounding",
+        "route_count": "unrestricted; k43 is part of the instance name, not a fleet-size constraint"
       },
       "best_human": {
-        "value": 15,
-        "witness": "data/human/socg_fixed92_15.json",
-        "verification_status": "certified",
-        "ai_provenance": "Not disclosed in the reviewed sources.",
-        "date": "2026-11-06 (exact reconstruction and verification)",
+        "value": 77398,
+        "witness": "data/source/human_clarke_wright_77398.json",
+        "source": "https://doi.org/10.1287/opre.12.4.568",
+        "source_location": "Clarke and Wright (1964), savings heuristic",
+        "provenance": "weak deterministic traditional-method baseline rebuilt for this benchmark; not claimed to be the best human result",
+        "reproduction_status": "construction regenerated from the fixed instance and exact objective checker",
+        "date_reproduced": "2026-11-06",
         "parameters": {
-          "instance": "socg_fixed92",
-          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
-          "boundary_vertices": 92,
-          "holes": 0,
-          "cover_domain": "all real convex polygons",
-          "overlap_allowed": true
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
         },
-        "method": "A feasible integer 15-piece cover inferred from the rounded Shadoks CG:SHOP 2023 viewer SVG.",
-        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
-        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
-        "verification_method": "Exact real-algebraic vertical decomposition; the witness is rational/integer and all 276 open arrangement cells were checked.",
-        "evidence_state": "The published viewer reports 15. Nearby integer polygons reconstructed from its rounded display form a separately verified feasible 15-piece cover; the original coordinates are not recovered uniquely. This is not a global-optimality proof."
+        "witness_file": "data/source/human_clarke_wright_77398.json",
+        "url": "https://doi.org/10.1287/opre.12.4.568",
+        "ai_provenance": "benchmark reconstruction",
+        "actual_value": 77398,
+        "evidence_state": "route feasibility and full cost recomputed exactly",
+        "review_status": "pending_sol_review"
       },
-      "best_public": {
-        "value": 15,
-        "witness": "data/human/socg_fixed92_15.json",
-        "evidence": "Public Shadoks viewer witness; all-team per-instance ranking not available.",
+      "historical_public": {
+        "value": 72355,
+        "source": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "source_location": "X-n1001-k43 row, literature value through 2025",
+        "witness": "data/reference/historical_72355.sol",
+        "witness_sha256": "21ee38abc7e1b130444bd30406d5b81aba4f5a08e2c3688e9da63df0da8c2903",
+        "reproduction_status": "official route file independently rechecked exactly; historical, not the current bound",
+        "date_checked": "2026-11-06",
         "parameters": {
-          "instance": "socg_fixed92",
-          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
-          "boundary_vertices": 92,
-          "holes": 0,
-          "cover_domain": "all real convex polygons",
-          "overlap_allowed": true
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
         },
-        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
-        "verification_status": "certified",
-        "reported_piece_count": 15,
-        "evidence_state": "The Shadoks viewer reports this instance with 15 polygons. Nearby integer coordinates inferred from its rounded display give one exactly verified feasible witness of the same size; the original coordinates are not uniquely recovered. The official competition ranking gives aggregate team scores, not per-instance values. The checked all-team per-instance record inventory is incomplete; 15 is not claimed to be the best result of every team."
+        "url": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "witness_file": "data/reference/historical_72355.sol",
+        "actual_value": 72355,
+        "evidence_state": "historical public result, independently rechecked; superseded by 72332"
       },
-      "best_reproduced": {
-        "value": 15,
-        "program": "reference.py",
-        "witness": "data/human/socg_fixed92_15.json",
-        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
-        "verification_status": "certified",
-        "date": "2026-11-06",
-        "parameters": {
-          "instance": "socg_fixed92",
-          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
-          "boundary_vertices": 92,
-          "holes": 0,
-          "cover_domain": "all real convex polygons",
-          "overlap_allowed": true
-        },
-        "origin_type": "Same-count reconstruction from the published Shadoks viewer",
-        "evidence_state": "The viewer SVG is inverse-transformed and rounded to nearby integer coordinates. These inferred polygons pass exact full-region validation; the display does not uniquely identify the original submitted coordinates.",
-        "review_status": "reviewed_by_sol"
-      },
+      "input_sha256": "97c950e592d8a63d4f81669f1fda9762de2a79e4a213f9e7401c699a754dc492",
       "review_status": "accepted_by_sol",
       "verification": {
-        "status": "reviewed_by_sol",
-        "reviewer": "Sol main agent",
-        "date": "2026-11-06",
+        "task_id": "T097",
+        "status": "pending_source_review",
         "run": {
           "task_id": "T097",
           "config_id": "T097-C01",
           "validity": 1.0,
-          "combined_score": 1.0,
-          "objective": 15,
-          "verification_status": "certified",
-          "generation_time": 0.16453132778406143,
-          "verification_time": 1.4165723770856857,
-          "objective_value": 15,
+          "combined_score": 1.0700381573853897,
+          "objective": 72332,
+          "verification_status": "exact",
+          "generation_time": 0.4832257181406021,
+          "verification_time": 0.46778687834739685,
+          "objective_value": 72332,
           "details": {
-            "instance": "socg_fixed92",
-            "convex_polygon_count": 15,
-            "total_piece_vertices": 66,
-            "algebraic_field_degree": 1,
-            "verified_open_arrangement_cells": 276,
-            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
-            "claimed_score_ignored": true
+            "instance": "X-n1001-k43",
+            "customer_count": 1000,
+            "route_count": 43,
+            "route_count_unrestricted": true,
+            "capacity": 131,
+            "route_loads": [
+              131,
+              130,
+              131,
+              130,
+              131,
+              131,
+              131,
+              124,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              64,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131,
+              131
+            ],
+            "claimed_objective_ignored": true
           },
-          "eval_time": 1.5844123810529709,
+          "eval_time": 0.9607373625040054,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -107,35 +151,76 @@
           }
         },
         "independent_quantity": {
-          "polygon_count": 15,
-          "target_area": "206848",
-          "uncovered_area": "0",
-          "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+          "route_cost": 72332,
+          "routes": 43,
+          "maximum_load": 131
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "375a1e1dc730124b92e89666cf6b5dbeefc1b8897b9bd76c6847e99833bb481b"
       },
-      "parameters": {
-        "instance": "socg_fixed92",
-        "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
-        "boundary_vertices": 92,
-        "holes": 0,
-        "cover_domain": "all real convex polygons",
-        "overlap_allowed": true
+      "witness": "data/reference/public_72332.sol",
+      "witness_sha256": "6ea65ad25adab07adfb5d3fc2f0e591fa1c3ae7dd3ee6833d895702036fc86ff",
+      "id": "T097-C01",
+      "best_public": {
+        "value": 72332,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "url": "https://galgos.inf.puc-rio.br/cvrplib/en/bounds/257",
+        "source_location": "X-n1001-k43 bound history row dated 2026-10-24",
+        "provenance": "CVRPLIB says the submission starts from published BKS solutions and improves them; submission details do not identify whether AI tools contributed.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "current public best-known solution; instance table says Opt=no",
+        "witness_file": "data/reference/public_72332.sol",
+        "witness_sha256": "6ea65ad25adab07adfb5d3fc2f0e591fa1c3ae7dd3ee6833d895702036fc86ff"
       },
-      "source_review": {
-        "snapshot_date": "2026-11-06",
-        "optimality_status": "No global proof for this fixed instance was found in the reviewed sources.",
-        "notes": "The viewer reports 15. Its CPLEX Optimal status applies to the generated candidate collection. The official challenge ranking is aggregate, and DIKU (AMW) ranks above Shadoks overall; per-instance values for all teams are not available in the checked sources. The 2026 rotten-potato paper provides an approximation algorithm, not an instance closure. The challenge restricted submitted witness coordinates to rationals; this task keeps the complete all-real MCC objective and encodes algebraic witnesses."
+      "best_reproduced": {
+        "value": 72332,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "witness_file": "data/reference/public_72332.sol",
+        "provenance": "Official CVRPLIB solution file, converted from its customer labels to TSPLIB node IDs and rechecked by the local validator.",
+        "ai_provenance": "not stated by source",
+        "actual_value": 72332,
+        "evidence_state": "43 routes; all 1000 customers covered once; maximum route load 131; exact integer distance recomputed",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 77398,
+        "parameters": {
+          "instance": "X-n1001-k43",
+          "customers": 1000,
+          "vehicle_capacity": 131,
+          "route_count": "unrestricted"
+        },
+        "witness_file": "data/source/human_clarke_wright_77398.json",
+        "provenance": "Deterministic Clarke-Wright savings construction from the published method."
       }
     }
   },
-  "review_status": "accepted_by_sol",
   "additional_evidence": {
     "configurations": {
       "T097-C01": {
         "best_human": {
-          "ai_provenance": "Not disclosed in the reviewed paper or viewer. No claim of an unaided human process is made."
+          "provenance": "Weak deterministic Clarke-Wright method reconstruction for this benchmark. This is a traditional method baseline, not the best reported human result."
+        },
+        "historical_public": {
+          "source_location": "literature value through 2025"
+        },
+        "highest_reported": {
+          "source_location": "X-n1001-k43 bound history row dated 2026-10-24",
+          "reproduction_status": "official witness rechecked exactly; public best-known bound only, not a proved optimum"
         }
       }
     }

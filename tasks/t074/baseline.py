@@ -1,72 +1,102 @@
-"""Seeded local search from the simple parabola construction."""
+"""Fixed-budget simulated annealing for configured-length aperiodic PSL."""
 
+import math
 import os
 import random
 import time
-from fractions import Fraction
 
-from mathbench.search import search_steps
-from tasks.t074.check import PARAMETERS, validate
+from tasks.t074.check import CONFIG_ID, config_length, aperiodic_autocorrelations
 
-
-CONFIG = {"id": "T074-C01", "parameters": PARAMETERS}
+def _length():
+    return config_length()
 
 
-def _score(points):
-    return Fraction(validate({"points": points}, CONFIG)["objective"])
+def _check_config_id():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if chosen != "T074-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
 
 
-def _mutate(points, rng, coordinate_limit):
-    child = [list(point) for point in points]
-    index = rng.randrange(len(child))
-    child[index] = [rng.randint(-coordinate_limit, coordinate_limit),
-                    rng.randint(-coordinate_limit, coordinate_limit)]
-    return child
+def _peak(correlations):
+    return max(abs(value) for value in correlations)
+
+
+def _flip(sequence, correlations, position):
+    old = sequence[position]
+    length = len(sequence)
+    deltas = [0] * length
+    for lag in range(1, length):
+        neighbor_sum = 0
+        if position >= lag:
+            neighbor_sum += sequence[position - lag]
+        if position + lag < length:
+            neighbor_sum += sequence[position + lag]
+        deltas[lag] = -2 * old * neighbor_sum
+        correlations[lag - 1] += deltas[lag]
+    sequence[position] = -old
+    return deltas
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T074-C01") != "T074-C01":
-        raise ValueError("unsupported configuration")
+    _check_config_id()
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = max(1, min(3000, int(os.environ.get("MATHBENCH_BASELINE_ITERATIONS", "300"))))
-    coordinate_limit = max(12, min(1000, int(os.environ.get("MATHBENCH_SEARCH_COORDINATE_LIMIT", "40"))))
-    rng = random.Random(seed ^ 0x013BA5E)
-    current = [[i, i * i] for i in range(12)]
-    current_score = _score(current)
-    best, best_score = [point[:] for point in current], current_score
-    completed = accepted = invalid = 0
-    start = time.monotonic()
-    for _ in search_steps(iterations):
-        candidate = _mutate(current, rng, coordinate_limit)
-        try:
-            candidate_score = _score(candidate)
-        except ValueError:
-            invalid += 1
-            completed += 1
-            continue
-        if candidate_score > current_score or (candidate_score == current_score and rng.random() < 0.08):
-            current, current_score = candidate, candidate_score
-            accepted += 1
-        if candidate_score > best_score:
-            best, best_score = [point[:] for point in candidate], candidate_score
-        completed += 1
+    restarts = int(os.environ.get("T074_SEARCH_RESTARTS", "12"))
+    iterations = int(os.environ.get("T074_SEARCH_ITERATIONS", "3000"))
+    if restarts < 0 or iterations < 1:
+        raise ValueError("restarts must be nonnegative and iterations positive")
+    seconds = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    deadline = None
+    if seconds is not None:
+        duration = float(seconds)
+        if not math.isfinite(duration) or duration <= 0:
+            raise ValueError("search seconds must be finite and positive")
+        deadline = time.monotonic() + duration
+
+    rng = random.Random(seed)
+    length = _length()
+    best_sequence = [1] * length
+    best_psl = _peak(aperiodic_autocorrelations(best_sequence))
+    proposals = 0
+    completed_restarts = 0
+    for _ in range(restarts):
+        if deadline is not None and time.monotonic() >= deadline:
+            break
+        sequence = [rng.choice((-1, 1)) for _ in range(length)]
+        correlations = aperiodic_autocorrelations(sequence)
+        current_psl = _peak(correlations)
+        if current_psl < best_psl:
+            best_psl, best_sequence = current_psl, sequence.copy()
+        for step in range(iterations):
+            if deadline is not None and time.monotonic() >= deadline:
+                break
+            position = rng.randrange(length)
+            deltas = _flip(sequence, correlations, position)
+            proposed_psl = _peak(correlations)
+            proposals += 1
+            if proposed_psl <= current_psl:
+                accept = True
+            else:
+                temperature = 1.5 * (1.0 - step / iterations) + 0.05
+                accept = rng.random() < math.exp((current_psl - proposed_psl) / temperature)
+            if accept:
+                current_psl = proposed_psl
+                if current_psl < best_psl:
+                    best_psl, best_sequence = current_psl, sequence.copy()
+            else:
+                sequence[position] = -sequence[position]
+                for lag in range(1, length):
+                    correlations[lag - 1] -= deltas[lag]
+        completed_restarts += 1
+
     return {
-        "points": best,
-        "search_metadata": {
-            "algorithm": "seeded one-point integer-coordinate hill climb with occasional equal-score plateau moves",
+        "sequence": best_sequence,
+        "search": {
+            "algorithm": "single-bit-flip simulated annealing using exact integer autocorrelations",
             "seed": seed,
-            "iterations_requested": iterations,
-            "iterations_run": completed,
-            "accepted_moves": accepted,
-            "invalid_trials": invalid,
-            "search_only_coordinate_proposal_limit": coordinate_limit,
-            "best_objective": str(best_score),
-            "generation_seconds": time.monotonic() - start,
-            "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds",
+            "restart_limit": restarts,
+            "restarts_completed": completed_restarts,
+            "iterations_per_restart": iterations,
+            "proposals": proposals,
+            "reference_data_read": False,
         },
     }
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))

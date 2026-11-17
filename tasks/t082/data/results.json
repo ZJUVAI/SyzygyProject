@@ -3,38 +3,31 @@
     "task_id": "T082",
     "config_id": "T082-C01",
     "validity": 1.0,
-    "combined_score": 1.0,
-    "objective": 131,
-    "verification_status": "exact",
-    "generation_time": 270.88949528709054,
-    "verification_time": 0.1645871102809906,
-    "objective_value": 131,
+    "combined_score": 1.000000000000001,
+    "objective": "fourth_root(58188232951867590/10575651537777253)",
+    "verification_status": "certified",
+    "generation_time": 0.1644834242761135,
+    "verification_time": 0.16451111435890198,
+    "objective_value": "382888231240325373/250000000000000000",
     "details": {
-      "board_size": 30,
-      "army_size_each_color": 131,
-      "total_queens": 262,
-      "cross_color_pairs_checked": 17161,
-      "cross_color_attacking_pairs": 0,
-      "cross_color_square_overlap": false,
-      "occupied_rows": {
-        "white": 15,
-        "black": 15,
-        "disjoint": true
-      },
-      "occupied_columns": {
-        "white": 16,
-        "black": 14,
-        "disjoint": true
-      },
-      "proven_upper_bound": 225,
-      "claimed_objective_ignored": true,
-      "strict": true
+      "degree": 20,
+      "monomial_count": 231,
+      "harmonic_laplacian_residual_terms": 0,
+      "sphere_average_M2": "137438953472/1412926920405",
+      "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+      "fourth_power_ratio": "58188232951867590/10575651537777253",
+      "objective_interval": [
+        "382888231240325373/250000000000000000",
+        "1531552924961301493/1000000000000000000"
+      ],
+      "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+      "claimed_score_ignored": true
     },
-    "eval_time": 271.0579394213855,
+    "eval_time": 0.3319881744682789,
     "seed": 41113,
     "strict": true,
     "budget": {
-      "generation_seconds": 280,
+      "generation_seconds": 60,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -43,19 +36,31 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 37
+      "worker_cpu": 52
     }
+  },
+  "initial_result": {
+    "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+    "objective_value": "1362912741141099729/1000000000000000000",
+    "validity": 1.0,
+    "verification_status": "certified",
+    "combined_score": 0.8898894180725347
   },
   "provenance": {
     "reviewer": "Sol main agent",
     "status": "reviewed_by_sol",
     "date": "2026-11-09",
-    "source_summary": "tasks/t082/runs/search_routes_20261109_native/summary.json",
+    "source_summary": "tasks/t092/runs/search_routes_20261109_algebra/summary.json",
     "source_hashes_verified": true,
     "independent_quantity": {
-      "army_size": 131,
-      "finite_upper_bound": 225,
-      "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+      "ratio_interval": [
+        "76577646248065074643930091879523927990731951116442781741251/50000000000000000000000000000000000000000000000000000000000",
+        "1531552924961301492878601837590478559814639022328855634825021/1000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "M2": "137438953472/1412926920405",
+      "M4": "37778931862957161709568/725673658950019191115935",
+      "fourth_power_ratio": "58188232951867590/10575651537777253",
+      "method": "Clear rational denominators, symmetric integer polynomial products, exact azimuth central-binomial integral and finite binomial latitude integral."
     },
     "claimed_score_ignored": true,
     "damaged_construction_rejected": true,
@@ -64,8 +69,8 @@
     "search_agent": "GPT-6.1 Sol",
     "generation_record": {
       "scope": "AI-assisted construction search",
-      "limit": 280,
-      "method": "Native single-thread alternative search with exact integer deltas"
+      "limit": 60,
+      "method": "Independent exact reconstruction using a structured algebraic family"
     },
     "classification": "ai_assisted_local_continuation",
     "seed": 41113,
@@ -73,16 +78,16 @@
       "trials": [
         [
           "warm",
-          277,
-          277,
+          57,
+          57,
           "512",
           41113
         ]
       ],
-      "prior_control_summary": "tasks/t082/runs/search_sol1200/summary.json"
+      "prior_control_summary": "tasks/t092/runs/search_sol1200/summary.json"
     },
     "budget": {
-      "generation_seconds": 280,
+      "generation_seconds": 60,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -91,1090 +96,408 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 37
+      "worker_cpu": 52
     },
     "source_sha256": {
-      "tasks/t082/baseline.py": "484b704725bb123399d56ed19f65837c7615d9b7cce1573827ba65b2f8aabbba",
-      "tasks/t082/check.py": "7e0d1fd8bc0007848ffddb82193cf88755a7003de8d4f3e2bda7c358cbea176d",
-      "tasks/t082/construction.py": "4a8374514339f59d8f905771aa51cac5e759bee9e099beaba206e8560991b901",
-      "tasks/t082/evaluator.py": "fb63b4d2006857101ab4d904fe8ae2748c99d92819380a32cb44b9cb1e0c3462",
-      "tasks/t082/evolution.py": "39dedca48218c8c28e9aa9bcb4bf0ad1ac508e7bf55a97672d591fec44d6d273",
-      "tasks/t082/human.py": "1280512835169d05207e7d83b930d24f563c624b2348fe7c9b92147a3dfd64ae",
-      "tasks/t082/init_program.py": "cc3988a00ecf9454dd354b22858bec7737221ac180881647431710b75285d52d",
-      "tasks/t082/reference.py": "769e6194d55d385c1856919453ae9df87886abf1425c539ac5fc25ffe771106d",
-      "tasks/t082/test_task.py": "95a6c48e81f91746aa031f61cf37248b1d4399b61ff7011544dde16132ccecc8",
-      "program.py": "12e45b068ac192df61c887f71d23eb4c8f3705ec39e577d8c7dccfe04f099e11",
-      "plan.json": "c16bc92b221b3b3dfc49df246156afaab730d36ff9f5465e7a87763f11f6f169",
-      "search.cpp": "bcc3c386258ebdc0e68f569c4e9af81064aed3432d1eed56ac694f8e5a39bba9"
+      "tasks/t092/baseline.py": "73fffe16c8e66347e7f369a74e66ecd5bc916a61322ccbdb338cd166a2195139",
+      "tasks/t092/check.py": "4dacc52b3eb6b50fc0b3701f26d7034d13715969d7a615e5562f33d25cc442b8",
+      "tasks/t092/evaluator.py": "3ba6e1462925abd9ce3b3b1ee84f8c27362cbe08dddd3c0950a72c34e78faa46",
+      "tasks/t092/evolution.py": "6d2c2cbb95e0c63ff9b7f1f8d7bc1c8e0a104bdb89e4e1b46ad0d1dddba4a4b0",
+      "tasks/t092/human.py": "ce2e2413b7164f3ce1619e4a21bac8d6ebc5b1bcbbcdc4a469a8cd0d4c514a16",
+      "tasks/t092/init_program.py": "1acdb0afbe73eb57c73dd2bba783330c2dda5d5b6e0482229a5a1e8a25a31841",
+      "tasks/t092/reference.py": "02f06fc865ad0580ed57e2be19915f20f3006e9f6da3139a25d8fc749c299c7b",
+      "tasks/t092/search_core.py": "2e5bab19a938eb3a7495f5500cbc2efd2c510ea4449d9df1daab62dcc99e6b00",
+      "tasks/t092/test_task.py": "4e572fabf8905dd734d01de44bf4b7b3e0bd5376d5b3a345ff75ede652644b10",
+      "program.py": "ade236b94e1eb8f176e7a4088973f98805ccd8327f5e7c1a5d4d7e1412f5803a",
+      "plan.json": "c1d9f5dda39f327f26dd7d0bf9493bddb7f3f3d5e0a265224093063118f6f87e"
     },
-    "warm_start_sha256": "ed619d34013f0afb961bd275024fc0845fb293f7f78f868ca1b7a40cc55d8e7a",
-    "replay_command": ".venv/bin/python -m mathbench replay T082 tasks/t082/data/results.json --config T082-C01"
-  },
-  "initial_result": {
-    "objective": 1,
-    "objective_value": 1,
-    "validity": 1.0,
-    "verification_status": "exact",
-    "combined_score": 0.007633587786259542
+    "warm_start_sha256": "f2537667ec3118cd2268006753a51623676a56716913e9d8ceb44863e04829f2",
+    "replay_command": ".venv/bin/python -m mathbench replay T082 tasks/t082/data/results.json --config T082-C01",
+    "prior_result_records": {
+      "bestknown": {
+        "T092-C01": {
+          "best_own_search": {
+            "value": "fourth_root(58188232951867590/10575651537777253)",
+            "objective_value": "382888231240325373/250000000000000000",
+            "witness": "data/results.json",
+            "witness_sha256": "b191c0b594f451aac946bbff80b8ae83352135c5fd40d2b9471fd088c63077e1",
+            "parameters": {
+              "degree": 20,
+              "domain": "real spherical harmonics on S^2",
+              "coefficient_domain": "rational dense subspace",
+              "objective": "normalized L4/L2 ratio"
+            },
+            "seed": 41113,
+            "verification_status": "certified",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "method": "Expand the real part of (x+iy)^20; highest-weight harmonic formula"
+            },
+            "generation_record": {
+              "task_id": "T092",
+              "config_id": "T092-C01",
+              "validity": 1.0,
+              "combined_score": 1.000000000000001,
+              "objective": "fourth_root(58188232951867590/10575651537777253)",
+              "verification_status": "certified",
+              "generation_time": 0.1644834242761135,
+              "verification_time": 0.16451111435890198,
+              "objective_value": "382888231240325373/250000000000000000",
+              "details": {
+                "degree": 20,
+                "monomial_count": 231,
+                "harmonic_laplacian_residual_terms": 0,
+                "sphere_average_M2": "137438953472/1412926920405",
+                "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+                "fourth_power_ratio": "58188232951867590/10575651537777253",
+                "objective_interval": [
+                  "382888231240325373/250000000000000000",
+                  "1531552924961301493/1000000000000000000"
+                ],
+                "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+                "claimed_score_ignored": true
+              },
+              "eval_time": 0.3319881744682789,
+              "seed": 41113,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 60,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 52
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed.",
+            "objective_interval": [
+              "382888231240325373/250000000000000000",
+              "1531552924961301493/1000000000000000000"
+            ]
+          }
+        }
+      },
+      "records": {
+        "T092-C01": {
+          "best_own_search": {
+            "value": "fourth_root(58188232951867590/10575651537777253)",
+            "objective_value": "382888231240325373/250000000000000000",
+            "witness": "data/results.json",
+            "witness_sha256": "b191c0b594f451aac946bbff80b8ae83352135c5fd40d2b9471fd088c63077e1",
+            "parameters": {
+              "degree": 20,
+              "domain": "real spherical harmonics on S^2",
+              "coefficient_domain": "rational dense subspace",
+              "objective": "normalized L4/L2 ratio"
+            },
+            "seed": 41113,
+            "verification_status": "certified",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "method": "Expand the real part of (x+iy)^20; highest-weight harmonic formula"
+            },
+            "generation_record": {
+              "task_id": "T092",
+              "config_id": "T092-C01",
+              "validity": 1.0,
+              "combined_score": 1.000000000000001,
+              "objective": "fourth_root(58188232951867590/10575651537777253)",
+              "verification_status": "certified",
+              "generation_time": 0.1644834242761135,
+              "verification_time": 0.16451111435890198,
+              "objective_value": "382888231240325373/250000000000000000",
+              "details": {
+                "degree": 20,
+                "monomial_count": 231,
+                "harmonic_laplacian_residual_terms": 0,
+                "sphere_average_M2": "137438953472/1412926920405",
+                "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+                "fourth_power_ratio": "58188232951867590/10575651537777253",
+                "objective_interval": [
+                  "382888231240325373/250000000000000000",
+                  "1531552924961301493/1000000000000000000"
+                ],
+                "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
+                "claimed_score_ignored": true
+              },
+              "eval_time": 0.3319881744682789,
+              "seed": 41113,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 60,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 52
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed.",
+            "objective_interval": [
+              "382888231240325373/250000000000000000",
+              "1531552924961301493/1000000000000000000"
+            ]
+          }
+        }
+      }
+    },
+    "task_id_migration": {
+      "from": "T092",
+      "to": "T082",
+      "source_revision": "c9f93552f9ad54f779b1f9cca2e13f39e5ab8d30",
+      "date": "2026-11-17",
+      "note": "Reordered by research direction. Construction bytes and objective are unchanged. Historical source paths and hashes are preserved."
+    }
   },
   "solution": {
-  "search_metadata": {
-    "method": "Anneal colors of row, column and both diagonal families",
-    "seed": 41113,
-    "native_search_limit_seconds": 270.0
-  },
-  "white": [
-    [
-      8,
-      21
-    ],
-    [
-      8,
-      22
-    ],
-    [
-      8,
-      23
-    ],
-    [
-      8,
-      24
-    ],
-    [
-      8,
-      25
-    ],
-    [
-      8,
-      26
-    ],
-    [
-      8,
-      27
-    ],
-    [
-      8,
-      28
-    ],
-    [
-      8,
-      29
-    ],
-    [
-      9,
-      20
-    ],
-    [
-      9,
-      21
-    ],
-    [
-      9,
-      22
-    ],
-    [
-      9,
-      23
-    ],
-    [
-      9,
-      24
-    ],
-    [
-      9,
-      25
-    ],
-    [
-      9,
-      26
-    ],
-    [
-      9,
-      27
-    ],
-    [
-      9,
-      28
-    ],
-    [
-      9,
-      29
-    ],
-    [
-      10,
-      20
-    ],
-    [
-      10,
-      21
-    ],
-    [
-      10,
-      22
-    ],
-    [
-      10,
-      23
-    ],
-    [
-      10,
-      24
-    ],
-    [
-      10,
-      25
-    ],
-    [
-      10,
-      26
-    ],
-    [
-      10,
-      27
-    ],
-    [
-      10,
-      28
-    ],
-    [
-      10,
-      29
-    ],
-    [
-      11,
-      21
-    ],
-    [
-      11,
-      22
-    ],
-    [
-      11,
-      23
-    ],
-    [
-      11,
-      24
-    ],
-    [
-      11,
-      25
-    ],
-    [
-      11,
-      26
-    ],
-    [
-      11,
-      27
-    ],
-    [
-      11,
-      28
-    ],
-    [
-      11,
-      29
-    ],
-    [
-      12,
-      22
-    ],
-    [
-      12,
-      23
-    ],
-    [
-      12,
-      24
-    ],
-    [
-      12,
-      25
-    ],
-    [
-      12,
-      26
-    ],
-    [
-      12,
-      27
-    ],
-    [
-      12,
-      28
-    ],
-    [
-      12,
-      29
-    ],
-    [
-      13,
-      23
-    ],
-    [
-      13,
-      24
-    ],
-    [
-      13,
-      25
-    ],
-    [
-      13,
-      26
-    ],
-    [
-      13,
-      27
-    ],
-    [
-      13,
-      28
-    ],
-    [
-      13,
-      29
-    ],
-    [
-      14,
-      24
-    ],
-    [
-      14,
-      25
-    ],
-    [
-      14,
-      26
-    ],
-    [
-      14,
-      27
-    ],
-    [
-      14,
-      28
-    ],
-    [
-      14,
-      29
-    ],
-    [
-      15,
-      25
-    ],
-    [
-      15,
-      26
-    ],
-    [
-      15,
-      27
-    ],
-    [
-      15,
-      28
-    ],
-    [
-      15,
-      29
-    ],
-    [
-      23,
-      14
-    ],
-    [
-      23,
-      15
-    ],
-    [
-      23,
-      16
-    ],
-    [
-      23,
-      17
-    ],
-    [
-      23,
-      18
-    ],
-    [
-      23,
-      19
-    ],
-    [
-      23,
-      20
-    ],
-    [
-      23,
-      21
-    ],
-    [
-      24,
-      14
-    ],
-    [
-      24,
-      15
-    ],
-    [
-      24,
-      16
-    ],
-    [
-      24,
-      17
-    ],
-    [
-      24,
-      18
-    ],
-    [
-      24,
-      19
-    ],
-    [
-      24,
-      20
-    ],
-    [
-      24,
-      21
-    ],
-    [
-      24,
-      22
-    ],
-    [
-      25,
-      14
-    ],
-    [
-      25,
-      15
-    ],
-    [
-      25,
-      16
-    ],
-    [
-      25,
-      17
-    ],
-    [
-      25,
-      18
-    ],
-    [
-      25,
-      19
-    ],
-    [
-      25,
-      20
-    ],
-    [
-      25,
-      21
-    ],
-    [
-      25,
-      22
-    ],
-    [
-      25,
-      23
-    ],
-    [
-      26,
-      15
-    ],
-    [
-      26,
-      16
-    ],
-    [
-      26,
-      17
-    ],
-    [
-      26,
-      18
-    ],
-    [
-      26,
-      19
-    ],
-    [
-      26,
-      20
-    ],
-    [
-      26,
-      21
-    ],
-    [
-      26,
-      22
-    ],
-    [
-      26,
-      23
-    ],
-    [
-      26,
-      24
-    ],
-    [
-      27,
-      16
-    ],
-    [
-      27,
-      17
-    ],
-    [
-      27,
-      18
-    ],
-    [
-      27,
-      19
-    ],
-    [
-      27,
-      20
-    ],
-    [
-      27,
-      21
-    ],
-    [
-      27,
-      22
-    ],
-    [
-      27,
-      23
-    ],
-    [
-      27,
-      24
-    ],
-    [
-      27,
-      25
-    ],
-    [
-      28,
-      17
-    ],
-    [
-      28,
-      18
-    ],
-    [
-      28,
-      19
-    ],
-    [
-      28,
-      20
-    ],
-    [
-      28,
-      21
-    ],
-    [
-      28,
-      22
-    ],
-    [
-      28,
-      23
-    ],
-    [
-      28,
-      24
-    ],
-    [
-      28,
-      25
-    ],
-    [
-      28,
-      26
-    ],
-    [
-      29,
-      18
-    ],
-    [
-      29,
-      19
-    ],
-    [
-      29,
-      20
-    ],
-    [
-      29,
-      21
-    ],
-    [
-      29,
-      22
-    ],
-    [
-      29,
-      23
-    ],
-    [
-      29,
-      24
-    ],
-    [
-      29,
-      25
-    ],
-    [
-      29,
-      26
-    ],
-    [
-      29,
-      27
-    ]
+  "coefficients": [
+    1,
+    0,
+    0,
+    -190,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4845,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -38760,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    125970,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -184756,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    125970,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -38760,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4845,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -190,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
   ],
-  "black": [
-    [
-      0,
-      0
-    ],
-    [
-      0,
-      1
-    ],
-    [
-      0,
-      2
-    ],
-    [
-      0,
-      3
-    ],
-    [
-      0,
-      4
-    ],
-    [
-      0,
-      5
-    ],
-    [
-      0,
-      6
-    ],
-    [
-      0,
-      7
-    ],
-    [
-      0,
-      8
-    ],
-    [
-      0,
-      9
-    ],
-    [
-      1,
-      0
-    ],
-    [
-      1,
-      1
-    ],
-    [
-      1,
-      2
-    ],
-    [
-      1,
-      3
-    ],
-    [
-      1,
-      4
-    ],
-    [
-      1,
-      5
-    ],
-    [
-      1,
-      6
-    ],
-    [
-      1,
-      7
-    ],
-    [
-      1,
-      8
-    ],
-    [
-      1,
-      9
-    ],
-    [
-      1,
-      10
-    ],
-    [
-      2,
-      1
-    ],
-    [
-      2,
-      2
-    ],
-    [
-      2,
-      3
-    ],
-    [
-      2,
-      4
-    ],
-    [
-      2,
-      5
-    ],
-    [
-      2,
-      6
-    ],
-    [
-      2,
-      7
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      2,
-      10
-    ],
-    [
-      2,
-      11
-    ],
-    [
-      3,
-      2
-    ],
-    [
-      3,
-      3
-    ],
-    [
-      3,
-      4
-    ],
-    [
-      3,
-      5
-    ],
-    [
-      3,
-      6
-    ],
-    [
-      3,
-      7
-    ],
-    [
-      3,
-      8
-    ],
-    [
-      3,
-      9
-    ],
-    [
-      3,
-      10
-    ],
-    [
-      3,
-      11
-    ],
-    [
-      3,
-      12
-    ],
-    [
-      4,
-      3
-    ],
-    [
-      4,
-      4
-    ],
-    [
-      4,
-      5
-    ],
-    [
-      4,
-      6
-    ],
-    [
-      4,
-      7
-    ],
-    [
-      4,
-      8
-    ],
-    [
-      4,
-      9
-    ],
-    [
-      4,
-      10
-    ],
-    [
-      4,
-      11
-    ],
-    [
-      4,
-      12
-    ],
-    [
-      4,
-      13
-    ],
-    [
-      5,
-      4
-    ],
-    [
-      5,
-      5
-    ],
-    [
-      5,
-      6
-    ],
-    [
-      5,
-      7
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      5,
-      10
-    ],
-    [
-      5,
-      11
-    ],
-    [
-      5,
-      12
-    ],
-    [
-      5,
-      13
-    ],
-    [
-      6,
-      5
-    ],
-    [
-      6,
-      6
-    ],
-    [
-      6,
-      7
-    ],
-    [
-      6,
-      8
-    ],
-    [
-      6,
-      9
-    ],
-    [
-      6,
-      10
-    ],
-    [
-      6,
-      11
-    ],
-    [
-      6,
-      12
-    ],
-    [
-      6,
-      13
-    ],
-    [
-      7,
-      6
-    ],
-    [
-      7,
-      7
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      7,
-      10
-    ],
-    [
-      7,
-      11
-    ],
-    [
-      7,
-      12
-    ],
-    [
-      7,
-      13
-    ],
-    [
-      16,
-      0
-    ],
-    [
-      16,
-      1
-    ],
-    [
-      16,
-      2
-    ],
-    [
-      16,
-      3
-    ],
-    [
-      16,
-      4
-    ],
-    [
-      17,
-      0
-    ],
-    [
-      17,
-      1
-    ],
-    [
-      17,
-      2
-    ],
-    [
-      17,
-      3
-    ],
-    [
-      17,
-      4
-    ],
-    [
-      17,
-      5
-    ],
-    [
-      18,
-      0
-    ],
-    [
-      18,
-      1
-    ],
-    [
-      18,
-      2
-    ],
-    [
-      18,
-      3
-    ],
-    [
-      18,
-      4
-    ],
-    [
-      18,
-      5
-    ],
-    [
-      18,
-      6
-    ],
-    [
-      19,
-      0
-    ],
-    [
-      19,
-      1
-    ],
-    [
-      19,
-      2
-    ],
-    [
-      19,
-      3
-    ],
-    [
-      19,
-      4
-    ],
-    [
-      19,
-      5
-    ],
-    [
-      19,
-      6
-    ],
-    [
-      19,
-      7
-    ],
-    [
-      20,
-      0
-    ],
-    [
-      20,
-      1
-    ],
-    [
-      20,
-      2
-    ],
-    [
-      20,
-      3
-    ],
-    [
-      20,
-      4
-    ],
-    [
-      20,
-      5
-    ],
-    [
-      20,
-      6
-    ],
-    [
-      20,
-      7
-    ],
-    [
-      20,
-      8
-    ],
-    [
-      21,
-      0
-    ],
-    [
-      21,
-      1
-    ],
-    [
-      21,
-      2
-    ],
-    [
-      21,
-      3
-    ],
-    [
-      21,
-      4
-    ],
-    [
-      21,
-      5
-    ],
-    [
-      21,
-      6
-    ],
-    [
-      21,
-      7
-    ],
-    [
-      22,
-      0
-    ],
-    [
-      22,
-      1
-    ],
-    [
-      22,
-      2
-    ],
-    [
-      22,
-      3
-    ],
-    [
-      22,
-      4
-    ],
-    [
-      22,
-      5
-    ],
-    [
-      22,
-      6
-    ]
-  ]
+  "search_metadata": {
+    "method": "Expand the real part of (x+iy)^20; highest-weight harmonic formula"
+  }
 }
 
 }

@@ -1,7 +1,7 @@
-"""Evolvable entry point for T044."""
+"""Task-qualified evolution entry point for T044."""
 
-from tasks.t044.baseline import run_code as baseline_run_code
+from tasks.t044.baseline import run_code as _run_search
 
 
 def run_code():
-    return baseline_run_code()
+    return _run_search()

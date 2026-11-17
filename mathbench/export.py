@@ -6,21 +6,21 @@ from .registry import load_config, task_path
 
 # Sol-reviewed input files. Comparison witnesses are never exported.
 PUBLIC_INPUTS = {
-    'T095': ('data/source/uniform-0000500-1.instance.json',),
-    'T097': ('data/source/socg_fixed92.instance.json',),
-    'T093': ('data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json',),
-    'T088': ('data/source/arc130.mtx.rnd',),
-    'T069': ('data/source/mona-lisa100K.tsp.gz',),
-    'T064': ('data/source/ortho40.instance.json',),
-    'T059': ('data/source/C2000.9.bits',),
-    'T057': ('data/source/X-n1001-k43.vrp',),
-    'T055': ('data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz',),
-    'T056': ('data/source/ta41_instance.json',),
-    'T045': ('data/source/gd96a.rmf',),
-    'T033': ('data/source/G70.gz',),
-    'T030': ('data/DSJC1000.5.bits',),
-    'T027': ('data/tai256c.dat.gz',),
-    'T028': ('data/ta051.json',),
+    'T028': ('data/source/uniform-0000500-1.instance.json',),
+    'T029': ('data/source/socg_fixed92.instance.json',),
+    'T006': ('data/source/random_cf2_74ae2d30_50.cgshop2024_instance.json',),
+    'T044': ('data/source/arc130.mtx.rnd',),
+    'T096': ('data/source/mona-lisa100K.tsp.gz',),
+    'T026': ('data/source/ortho40.instance.json',),
+    'T039': ('data/source/C2000.9.bits',),
+    'T097': ('data/source/X-n1001-k43.vrp',),
+    'T098': ('data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz',),
+    'T095': ('data/source/ta41_instance.json',),
+    'T043': ('data/source/gd96a.rmf',),
+    'T042': ('data/source/G70.gz',),
+    'T038': ('data/DSJC1000.5.bits',),
+    'T093': ('data/tai256c.dat.gz',),
+    'T094': ('data/ta051.json',),
 }
 
 
@@ -31,7 +31,7 @@ def export_seed(task_id, destination, config_id=None):
     source = task_path(task_id)
     for name in ("init_program.py", "instruction.txt"):
         shutil.copyfile(source / name, folder / name)
-    if task_id == "T006":
+    if task_id == "T030":
         shutil.copyfile(source / "lps.py", folder / "lps.py")
     for relative in PUBLIC_INPUTS.get(task_id, ()):
         target = folder / relative

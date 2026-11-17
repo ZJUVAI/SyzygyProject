@@ -1,42 +1,42 @@
 {
   "task_id": "T092",
-  "name": "Degree-20 real spherical harmonic L4 concentration on S2",
+  "name": "Minimum Mahler measure at degree 100",
   "acceptance_status": "accepted_by_sol",
-  "category": "harmonic_analysis",
-  "definition": "Among nonzero real homogeneous harmonic polynomials of degree 20 in three variables, maximize the normalized L4/L2 ratio on the unit sphere S2: J=(M4/M2^2)^(1/4), where Mp is the uniform probability-surface average of |P|^p.",
-  "solution_format": "An object with coefficients: a list of 231 rational numbers in the documented monomial order x^a y^b z^(20-a-b). Each coefficient is an integer or an exact rational string. No coefficient-size bound is imposed.",
+  "category": "algebra_number_theory",
+  "definition": "Find a primitive irreducible polynomial P in Z[x] of exact degree 100, excluding cyclotomic polynomials, that minimizes its Mahler measure M(P)=|a_100| times the product over all complex roots z of max(1, |z|). Polynomials need not be monic.",
+  "solution_format": "An object with coefficients_ascending (101 integer coefficients from constant through leading term) and root_disks (100 pairwise disjoint rational complex disks, each certified by the exact Rouche check).",
   "objective": {
-    "name": "normalized_L4_over_L2",
-    "unit": "dimensionless",
-    "direction": "maximize"
+    "name": "Mahler_measure",
+    "unit": "dimensionless multiplicative measure",
+    "direction": "minimize"
   },
   "constraints": [
-    "The input polynomial is homogeneous of degree exactly 20 in x,y,z.",
-    "The polynomial is real, nonzero, and its ordinary Euclidean Laplacian is identically zero.",
-    "The domain uses rational coefficients. Rational harmonic polynomials are dense in the real 41-dimensional harmonic subspace, so they have the same supremum for this continuous scale-invariant objective.",
-    "The objective uses uniform probability measure on S2; M2=average |P|^2 and M4=average |P|^4.",
-    "No coefficient magnitude or denominator cap is imposed."
+    "The polynomial has exact degree 100.",
+    "All coefficients are integers and their greatest common divisor is 1.",
+    "The polynomial is irreducible over Q.",
+    "The polynomial is noncyclotomic; the checker establishes Mahler measure greater than 1.",
+    "The 100 submitted rational root disks are pairwise disjoint and each contains exactly one root, certified with exact rational arithmetic."
   ],
   "official_configuration": "T092-C01",
   "configurations": [
     {
       "id": "T092-C01",
       "parameters": {
-        "degree": 20,
-        "domain": "real spherical harmonics on S^2",
-        "coefficient_domain": "rational dense subspace",
-        "objective": "normalized L4/L2 ratio"
+        "degree": 100,
+        "polynomial": "primitive_irreducible_integer",
+        "domain": "Z[x]",
+        "cyclotomic": "excluded",
+        "objective": "Mahler_measure"
       },
-      "direction": "maximize",
-      "human_reference": 1.5315529249613
+      "direction": "minimize",
+      "human_reference": 1.247365098371
     }
   ],
   "sources": [
-    "https://doi.org/10.1017/S0305004100058229",
-    "https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/abs/on-the-l4-norm-of-spherical-harmonics/B25E59463AD3A35422BB51ECDA9BFB69",
-    "https://arxiv.org/abs/2610.14160"
+    "https://github.com/mossinghoff/Mahler-Measure-Database/tree/7e3798516710370a758e16eb5de6bccbee98bb6a",
+    "https://arxiv.org/html/2610.30277v1"
   ],
-  "verification": "The checker proves homogeneity by fixed degree-20 monomial indexing, computes the exact rational Laplacian, and exactly integrates P^2 and P^4 using monomial moments on S2. It returns the exact fourth-root expression and a conservative rational lower bound with an enclosing interval.",
+  "verification": "Exact content and irreducibility checks over Q; rational Rouché certificates for all roots; exact rational bounds on the complete Mahler measure interval. The checker returns the certified upper endpoint for minimization.",
   "resource_limits": {
     "generation_seconds": 300,
     "verification_seconds": 60,
@@ -48,11 +48,12 @@
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "Fixed degree20 real homogeneous harmonic polynomial on S2, maximize normalized L4/L2. Full231-coefficient rational dense kernel, dimension41, no magnitude cap. Corrects old Rudin-minimum naming to actual maximum direction.",
-      "primary_source": "Root checked Stanton-Weinstein1981 DOI10.1017/S0305004100058229 local maximality of real highest-weight harmonic; global finite20 optimum not proved there. Sogge asymptotic order and2026Rudin bounded holomorphic bases do not prove this constant. Current finite20 closure search found none.",
-      "human_method": "Re((x+i*y)^20), M2=B20/2 and M4=3B40/8, Bk=4^k*(k!)^2/(2k+1)!. Root independently recomputed these exact quantities and fourth-power ratio58188232951867590/10575651537777253. Human ratio~1.5315529249613015.",
-      "independent_method": "Root clears coefficient denominators and uses symmetric integer products. It integrates first over azimuth using central binomial coefficients, then over latitude with a finite alternating binomial integral. Exact M2,M4 and their ratio match formal double-factorial moments for all five entries; independent fourth-root bounds1e-60 lie inside formal1e-18 interval.",
-      "admission": "Five strict programs and full controls passed. Initial and own searches use Legendre zonal harmonics, not highest-weight reference. Damaged nonharmonic polynomial rejected; full returned result ignores claims; replay,cold export,error,nonfinite,timeout controls pass. Agent28tests pass. Checker direction omission returned and fixed before frozen admission."
+      "definition": "恰为100次、本原、不可约、非分圆的整数多项式最小Mahler测度；不限制互反、稀疏或单首项，与最大根模或Chebyshev范数不同。",
+      "primary_source": "Sol核对Mossinghoff固定7e3798516710370a758e16eb5de6bccbee98bb6a的BestByDegree_200.txt第100行51个系数及报告值1.247365098370，互反展开101项。2026-10-21 Chervonyi–Gukov–Luong2610.30277v1仅列六个其他次数改进，100仍为旧记录；该工作AI协作已披露，不将全部新数据声称纯人类。旧100行逐条发现过程未详述，历史传统搜索归属与现代AI论文分开。",
+      "independent_math": "正式checker精确Rouche根盘与导数余项。Sol另以纯整数Horner值建立Weierstrass插值矩阵，使用列Gershgorin定理认证100个半径1e-20的两两不交圆盘，独立覆盖全部根；根模乘积相对宽9.95685e-19，完全包含于正式区间内，约1.2473650983703855。另模2因子度50+50与模13因子度12+88的子集和交集仅0、100，独立排除有理非平凡因子。自身简单/搜索x100-p由Eisenstein不可约且精确M=p核对。",
+      "scoring": "正式成绩为精确有理区间上端，相对宽≤1e-10；冻结H=1.247365098371是向上取整的固定对照，不称精确Mahler值。采样或浮点根建议不作证书。",
+      "controls": "初始/传统/演化均为x100-2，正式上界约2.000000000002003；人类及参考约1.2473650983705。五程序全部成功，独立量、破坏多项式、完整声明不变、严格回放、冷导出、程序异常/非有限/超时均通过。实际严格验证最高29.50秒，低于60秒。任务代理6项测试通过。",
+      "limits": "未证明100次全局最优。检查器接受任意精度有理根证书及任意整数系数，受公共时间/内存/输出限制；未将只证到54次的排除范围用于闭合100。未重跑历史搜索或现代大规模AI搜索。"
     }
   }
 }

@@ -1,109 +1,155 @@
-"""Exact task-local checks for partial MaxSAT configuration T055-C01."""
-
-import hashlib
-import gzip
+"""Exact checker, task programs, and runner tests for T055-C01."""
+import ast
+import copy
 import json
 import os
-from pathlib import Path
+import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 
 from tasks.t055.check import PARAMETERS, validate
-from tasks.t055.maxsat import HARD, NVAR, SOFT, INSTANCE_SHA256, instance_path, score_assignment
+from tasks.t055.human import run_code as human_run
+from tasks.t055.init_program import run_code as init_run
+from tasks.t055.reference import run_code as reference_run
 
-ROOT = Path(__file__).resolve().parent
-CONFIG = {"parameters": PARAMETERS}
-
-
-def test_pinned_instance_and_public_assignment_are_exact():
-    from tasks.t055.reference import run_code
-
-    assert hashlib.sha256(gzip.decompress(instance_path().read_bytes())).hexdigest() == INSTANCE_SHA256
-    assert instance_path().name.endswith(".wcnf.gz")
-    assert len(HARD) == 6150
-    assert len(SOFT) == 649
-    assert all(weight == 1 and len(clause) == 1 for weight, clause in SOFT)
-    solution = run_code()
-    checked = validate(solution, CONFIG, strict=True)
-    assert len(solution["assignment"]) == NVAR == 1630
-    assert checked["objective"] == 587
-    assert checked["details"]["hard_clauses_satisfied"] == 6150
-    assert checked["details"]["soft_unsatisfied_weight"] == 62
-    path = ROOT / "data/reference/mse2026_boums_60_assignment.json"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == "c129d0fded17b46dca93fe9a4c3c2273926c346c78578bfec2e922023a746543"
+TASK_DIR = Path(__file__).parent
+CONFIG = {"id": "T055-C01", "parameters": PARAMETERS, "direction": "minimize", "human_reference": 4096}
 
 
-def test_human_dpll_baseline_is_independent_and_exact():
-    from tasks.t055.human import run_code
-
-    solution = run_code()
-    result = validate(solution, CONFIG, strict=True)
-    assert result["objective"] == 360
-    assert result["details"]["hard_clauses_satisfied"] == 6150
-    assert score_assignment(solution["assignment"], HARD, SOFT)["soft_cost"] == 289
-    path = ROOT / "data/reference/human_dpll_assignment.json"
-    saved = json.loads(path.read_text())
-    assert saved["assignment"] == [int(value) for value in solution["assignment"]]
+def test_human_and_reference_bch_witness_recompute_exactly():
+    witness = human_run()
+    saved = json.loads((TASK_DIR / "data/human/bch_dual_oa4096.json").read_text())
+    assert witness == reference_run() == saved
+    result = validate(witness, CONFIG, strict=True)
+    assert result["objective"] == result["objective_value"] == 4096
+    assert result["verification_status"] == "exact"
+    assert result["details"]["balanced_parity_checks"] == 637392
 
 
-def test_independent_recount_and_declared_scores_are_ignored():
-    from tasks.t055.reference import run_code
-
-    solution = run_code()
-    assignment = solution["assignment"]
-    hard_satisfied = sum(
-        any(assignment[abs(literal) - 1] == (literal > 0) for literal in clause)
-        for clause in HARD
-    )
-    soft_satisfied_weight = sum(
-        weight for weight, clause in SOFT
-        if any(assignment[abs(literal) - 1] == (literal > 0) for literal in clause)
-    )
-    assert hard_satisfied == 6150
-    assert soft_satisfied_weight == 587
-    checked = validate(solution, CONFIG, strict=True)
-    assert checked["objective"] == soft_satisfied_weight
-    assert validate({**solution, "objective": -5}, CONFIG) == checked
-    assert validate({**solution, "score": float("nan")}, CONFIG) == checked
-    assert validate({**solution, "claimed_score": {"false": True}}, CONFIG) == checked
+def test_random_greedy_seed_is_valid_and_distinct_from_the_bch_comparator():
+    witness = init_run()
+    assert len(witness["rows"]) == 16384
+    assert len(set(witness["rows"])) == 16384
+    assert validate(witness, CONFIG)["objective"] == 16384
 
 
-def test_checker_rejects_malformed_and_hard_violating_assignments():
-    from tasks.t055.init_program import run_code
-
-    valid = run_code()
-    assert validate(valid, CONFIG)["objective"] == 360
-    with pytest.raises(ValueError, match="exactly 1630"):
-        validate({"assignment": valid["assignment"][:-1]}, CONFIG)
-    with pytest.raises(ValueError, match="booleans"):
-        validate({"assignment": [0] * NVAR}, CONFIG)
-    with pytest.raises(ValueError, match="booleans"):
-        validate({"assignment": [False] * (NVAR - 1) + [float("nan")]}, CONFIG)
-    with pytest.raises(ValueError, match="violates"):
-        validate({"assignment": [False] * NVAR}, CONFIG)
-    with pytest.raises(ValueError, match="unsupported"):
-        validate(valid, {"parameters": {**PARAMETERS, "variables": 1629}})
+def test_repeated_rows_are_allowed_when_all_projections_remain_uniform():
+    witness = reference_run()
+    doubled = {"rows": [row for row in witness["rows"] for _ in range(2)]}
+    assert len(set(doubled["rows"])) == 4096
+    assert validate(doubled, CONFIG)["objective"] == 8192
 
 
-def test_all_five_program_entries_and_runner_controls(monkeypatch):
+def test_single_bit_damage_breaks_strength_four():
+    witness = copy.deepcopy(reference_run())
+    witness["rows"][0] ^= 1
+    with pytest.raises(ValueError, match="unbalanced parity"):
+        validate(witness, CONFIG)
+
+
+def test_duplicate_columns_break_orthogonality():
+    witness = copy.deepcopy(reference_run())
+    witness["rows"] = [(row & ~2) | ((row & 1) << 1) for row in witness["rows"]]
+    with pytest.raises(ValueError, match="unbalanced parity"):
+        validate(witness, CONFIG)
+
+
+@pytest.mark.parametrize("bad", [
+    None, [], {}, {"rows": []}, {"rows": [0] * 2016}, {"rows": [0] * 2032},
+    {"rows": [0] * 2048 + [0]},
+    {"rows": [0] * 2032 + [True] * (4096 - 2032)},
+    {"rows": [0] * 4095 + [1.0]},
+    {"rows": [0] * 4095 + [-1]},
+    {"rows": [0] * 4095 + [1 << 63]},
+])
+def test_malformed_or_boundary_solutions_are_rejected(bad):
+    with pytest.raises(ValueError):
+        validate(bad, CONFIG)
+
+
+@pytest.mark.parametrize("bad_config", [None, [], {}, {"id": "T055-C02", "parameters": PARAMETERS}])
+def test_missing_or_unknown_configuration_is_rejected(bad_config):
+    with pytest.raises(ValueError, match="configuration"):
+        validate({"rows": [0] * 4096}, bad_config)
+
+
+def test_configuration_parameters_are_exact_and_type_checked():
+    for params in ({**PARAMETERS, "columns": 62}, {**PARAMETERS, "strength": True}):
+        with pytest.raises(ValueError, match="configuration"):
+            validate({"rows": [0] * 4096}, {**CONFIG, "parameters": params})
+
+
+def test_claimed_score_fields_do_not_change_recomputed_result():
+    witness = reference_run()
+    expected = validate(witness, CONFIG)
+    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", float("inf"))):
+        altered = copy.deepcopy(witness)
+        altered[key] = value
+        assert validate(altered, CONFIG) == expected
+
+
+def test_all_five_run_code_entries_return_valid_arrays(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T055-C01")
     monkeypatch.setenv("MATHBENCH_SEED", "0")
-    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
-    from tasks.t055.init_program import run_code as init_run
+    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
     from tasks.t055.baseline import run_code as baseline_run
-    from tasks.t055.human import run_code as human_run
-    from tasks.t055.reference import run_code as reference_run
     from tasks.t055.evolution import run_code as evolution_run
+    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
+    results = [validate(w, CONFIG, strict=True) for w in outputs]
+    assert [r["objective"] for r in results] == [16384, 8192, 8192, 4096, 4096]
+    assert outputs[1]["search_metadata"]["proposals_evaluated"] == 12
+    assert outputs[2]["search_metadata"]["proposals_evaluated"] == 16
+    assert outputs[1]["search_metadata"]["seed_dimension"] == 13
+    assert outputs[1]["search_metadata"]["seed_rows"] == 8192
+    assert not outputs[1]["search_metadata"]["comparison_data_read"]
+    assert not outputs[2]["search_metadata"]["comparison_data_read"]
 
-    for run in (init_run, baseline_run, human_run, reference_run, evolution_run):
-        result = run()
-        assert validate(result, CONFIG, strict=True)["verification_status"] == "exact"
 
+def test_search_is_reproducible_and_has_no_reference_imports(monkeypatch):
+    from tasks.t055.baseline import run_code as baseline_run
+    monkeypatch.setenv("MATHBENCH_SEED", "81")
+    assert baseline_run() == baseline_run()
+    for filename in ("init_program.py", "baseline.py", "evolution.py", "search_core.py"):
+        tree = ast.parse((TASK_DIR / filename).read_text())
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ImportFrom):
+                assert "human" not in (node.module or "") and "reference" not in (node.module or "")
+            elif isinstance(node, ast.Import):
+                assert all("human" not in x.name and "reference" not in x.name for x in node.names)
+
+
+def test_cold_seed_runs_without_task_package_imports(tmp_path):
+    source = (TASK_DIR / "init_program.py").read_text()
+    imports = [n for n in ast.walk(ast.parse(source)) if isinstance(n, (ast.Import, ast.ImportFrom))]
+    assert len(imports) == 2 and all(isinstance(node, ast.Import) for node in imports)
+    assert {alias.name for node in imports for alias in node.names} <= {"os", "random"}
+    (tmp_path / "init_program.py").write_text(source)
+    env = {"PATH": os.environ.get("PATH", ""), "MATHBENCH_CONFIG_ID": "T055-C01"}
+    code = "import json,runpy;print(json.dumps(runpy.run_path('init_program.py')['run_code']()))"
+    result = subprocess.run([sys.executable, "-c", code], cwd=tmp_path, env=env,
+                            check=True, capture_output=True, text=True, timeout=5)
+    out = json.loads(result.stdout)
+    assert len(out["rows"]) == 16384 and len(set(out["rows"])) == 16384
+
+
+def test_runner_error_and_timeout_paths():
     from mathbench.evaluate import _run
-
     env = dict(os.environ)
     with pytest.raises(RuntimeError, match="intentional T055 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T055 worker failure')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T055 worker failure')"], env, 2)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([sys.executable, "-c", "import time;time.sleep(2)"], env, 0.1)
+
+
+def test_evaluator_with_temporary_registry_patch(monkeypatch, tmp_path):
+    import mathbench.evaluate as evaluate_module
+    from tasks.t055.evaluator import evaluate
+    monkeypatch.setattr(evaluate_module, "load_config", lambda task_id, config_id=None: CONFIG)
+    monkeypatch.setattr(evaluate_module, "task_path", lambda task_id: TASK_DIR)
+    result = evaluate(TASK_DIR / "reference.py", "T055-C01", strict=True, seed=0,
+                      generation_timeout=20, verification_timeout=40, output_dir=tmp_path)
+    assert result["validity"] == 1.0
+    assert result["objective"] == 4096
+    assert result["verification_status"] == "exact"

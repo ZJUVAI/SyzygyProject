@@ -1,28 +1,17 @@
-# T076: Minimum maximum element in a sum-distinct set
+# T076: Nonnegative convolution extremum, 208 steps
 
-## Definition
+## English
 
-For fixed `n`, choose `n` distinct positive integers so that all `2^n` subset sums, including zero, are distinct. Minimize the largest element. T076-C01 fixes `n=15`.
+Return 208 nonnegative rational coefficients, with positive total mass. The support is `[-1/4, 1/4]`. The checker normalizes the coefficients to integral 1, then computes `J = 2 n max(convolution(a,a)) / (sum(a))^2` for `n=208`. It uses exact rational arithmetic over the full convolution array. Since all coefficients are nonnegative, the maximum absolute value equals the maximum value. The checker verifies a feasible score; it does not prove optimality.
 
-The checker enumerates every subset in Gray-code order using exact integer arithmetic. Several modular fingerprints group possible collisions, but every collision is resolved by recomputing exact sums. The fingerprints are an index only. The checker accepts positive decimal strings for large integers and has no magnitude cap.
+The local historical witness comes from Matolcsi and Vinuesa (2009), arXiv:0907.1379. Its 208 coefficients were extracted, rationalized as decimal fractions, and its score was independently recomputed as `1.5097201507458786`. This is a historical construction, not a current-record or optimality claim. The baseline starts from seeded random positive coefficients, then makes nonnegative local edits. It does not read the human witness.
 
-## Human constructions and public bounds
+## 中文
 
-The human witness from the Conway-Guy recurrence has maximum 8,807. The verified public witness from Sharp has maximum 8,635. Both constructions are described in the [source records](data/bestknown.json).
+返回 208 个非负有理数系数，且系数总和大于零。支撑区间为 `[-1/4, 1/4]`。检查器先将系数归一化为积分 1，再精确计算 `J = 2 n max(convolution(a,a)) / (sum(a))^2`，其中 `n=208`。检查器用有理数运算计算完整卷积数组。系数非负，因此绝对值最大值等于最大值。检查器验证可行解和分数，不证明最优性。
 
-## Programs and cold start
+本地历史见证来自 Matolcsi 和 Vinuesa 于 2009 年发表的论文 arXiv:0907.1379。任务提取了 208 个系数，将小数精确转成有理数，并独立重算得到分数 `1.5097201507458786`。这是一项历史构造，不代表当前纪录或最优性。基线从带固定随机种子的正系数开始，再进行保持非负的局部修改。它不读取人类见证。
 
-The initial program returns powers of two. The traditional search uses a deterministic, seed-controlled sweep of descending greedy constructions. It reads no human or reference assets. The human and reference programs are separate comparison entries. Evolution delegates to the same search routine.
+## Full-domain certificate
 
-## Sources
-
-- W. F. Lunnon, [Integer Sets with Distinct Subset-Sums](https://doi.org/10.1090/S0025-5718-1988-0917837-5), *Mathematics of Computation* 50 (1988), 297–320, Table 1 and formula (1.4).
-- [OEIS A006756](https://oeis.org/A006756), generalized Conway-Guy sequence `w²`.
-- Tom Bohman, [A construction for sets of integers with distinct subset sums](https://www.combinatorics.org/volume_5/pdf/v5i1r3.pdf), *Electronic Journal of Combinatorics* 5 (1998), R3, §2 and Theorem 2.1.
-- [OEIS A005318](https://oeis.org/A005318), Conway-Guy recurrence and values.
-- [OEIS A276661](https://oeis.org/A276661), Sharp's n=15 upper-bound witness and the listed extension rule.
-- Quentin Dubroff, Jacob Fox, and Max Wenqiang Xu, [A note on the Erdős distinct subset sums problem](https://arxiv.org/abs/2006.12988), Theorem 1.
-
-## Reproduction
-
-Run `.venv/bin/python -m pytest tasks/t076 -q`. See [IMPLEMENTATION.md](data/IMPLEMENTATION.md) for file hashes, exact counts, source limitations, and validation evidence.
+With bin width h=1/(2n), f*f is linear between adjacent convolution knots. At each knot its value is h times an entry of the discrete convolution. The extrema are therefore attained at knots. Integral-one normalization gives J=2n max(b)/(sum(a))². This is a full-domain argument.

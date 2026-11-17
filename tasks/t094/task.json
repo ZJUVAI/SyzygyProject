@@ -1,20 +1,21 @@
 {
   "task_id": "T094",
-  "name": "Minimum dilation triangulation of the regular 120-gon",
+  "candidate_id": "permutation-flow-shop",
+  "name": "Taillard permutation flow shop Ta051",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T094-C01",
   "configurations": [
     {
       "id": "T094-C01",
       "parameters": {
-        "vertices": 120,
-        "polygon": "regular convex 120-gon, vertices in counterclockwise cyclic order",
-        "construction": "straight-line triangulation using polygon vertices only",
-        "objective": "minimize over triangulations the maximum, over distinct vertex pairs, of shortest-path length divided by Euclidean chord length",
-        "distance": "Euclidean chord length"
+        "instance": "Ta051",
+        "jobs": 50,
+        "machines": 20,
+        "schedule_type": "permutation",
+        "processing_times_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de"
       },
       "direction": "minimize",
-      "human_reference": 1.449476373154
+      "human_reference": 3846
     }
   ],
   "acceptance_review": {
@@ -22,12 +23,11 @@
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "Exactregularconvex120gon, allstraightvertextriangulations, minovertriangulations maxoverdistinctvertexpairs shortestgraphpath/Euclideanchord. NoapproximatepointsetorSteinervertices.",
-      "primary_source": "Rootchecked2026JoCG17(2)Fekete-Keldenich-Perkdoi10.20382/jocg.v17i2a1, computationregularn4..100only. UBC6fanrulefornmultiple6rebuilds120case. SattariIzadi2019universalregularpolygonupperbound1.4482appliesto120butneithera120optimalityproofnorareproducedspecificwitness. Currentfixed120proofsearchfoundnoclosure.",
-      "human_method": "Hubs0,40,80,centraltriangle,nearesthubedgeswithalltiedhubsandallboundaryedges,237edges. Rootindependentupper/lowerinterval~1.4494763731539932. Hroundedup1.449476373154. Humanprogramnowdirectlyrebuildsformula; referenceJSONpinnedseparately.",
-      "independent_method": "Rootusesdegree16cyclotomiccosineminimalpolynomialof2cos(pi/60), exactlargestrealrootisolation1e-100, polynomialChebyshevrecurrenceandHornerintervals, integerisqrtchords1e60, andallpairsintegerFloydWarshall. FormalusesMachinpi/sineTaylor1e24andDijkstra. Allfiveindependentintervalslieinsideformalintervals; noncrossing237edgesandallboundaryproveatrangulation.",
-      "returned_corrections": "RootcaughtincorrectTaylorend-termdirections; fixedsinlowernegativek19,upperpositivek18,andexactdiameterchord2. Addedunrounded120digitDecimalcheckthatexposesoldbugwhichintegerroundingcouldhide. Rootalsoreturnednon-stricttypeconfigequalityandhuman6fanfunctioninsearch-importedmodule; nowtypedrecursivematchandhumanformulaonlyhuman.py. Oldinterruptedandsupersededadmissionrunsretained.",
-      "admission": "Freshisolatedlabelallfiveandfullcontrols pass. Coldfan~1.474,randomrecursivebaseline/evolution~1.484,human/reference~1.44948. Ownsavedbestselectsinitialasbetterthansearch; nofalseclaimofsearchimprovement. Damagedmissingedge,claiminvariance,replay,coldexport,error/nonfinite/timeoutpass.14tasktestspassaftercorrections."
+      "数学模型": "Ta051固定50作业20机器，所有机器采用同一排列。最小化整数完工时间。",
+      "人类来源": "官方输入第一块1000个加工时间逐项核对。作者界表2026-06-03为3771–3846，上界归于RRMRP2012。归档排列重算3846。",
+      "独立验算": "主代理按机器顺序计算20×50完整完工表，独立于任务滚动递推。五程序与完整验收控制通过。",
+      "开放状态与限制": "Gmys2022论文将该例列为开放，作者现行界表仍有差距。Zenodo v11警告Optimal栏不可靠，未用该栏断言最优。"
     }
-  }
+  },
+  "category": "combinatorial_optimization"
 }

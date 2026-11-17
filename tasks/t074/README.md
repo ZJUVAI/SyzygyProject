@@ -1,79 +1,60 @@
-# T074: 自由凸域的 12 点 Heilbronn 问题
+# T074: length-100 binary sequence with low peak sidelobes
 
-## 数学目标
+## Definition
 
-在平面上选取恰好 12 个互不相同的有理点，且任意三点不共线。坐标没有范围限制，也没有固定外容器。目标是最大化
+The input is a configured-length sequence `s_0,...,s_(n-1)`, with every entry in `{-1,+1}`. For each nonzero shift `k=1,...,99`, its aperiodic autocorrelation is
 
-\[
-\frac{\text{所有三点三角形中的最小面积}}{\text{12 点凸包面积}}.
-\]
+`C[k] = sum(s[i] * s[i+k], i=0,...,99-k)`.
 
-该比值不随整体平移、旋转或缩放变化。任务固定为 `T074-C01`。检查器使用精确有理数，验证全部 220 个三点组合，并用精确单调链算法计算凸包面积。
+The task minimizes the peak sidelobe level `PSL = max(abs(C[k]), k=1,...,99)`. The main peak at shift zero is excluded. The checker calculates all 99 values with exact integer arithmetic.
 
-## 有理数与实数配置
+## Why this differs from T073
 
-正式输入使用任意大小的有理坐标。这个选择保留了与实坐标连续问题相同的上确界。对任一可行实数配置，220 个三角形面积都严格为正。足够小的坐标扰动仍保持每个行列式非零。可以用有理数逐点逼近原坐标；三角形面积、凸包面积和它们的比值连续变化。因此有理配置在所有可行实配置中稠密，实数配置的上确界等于有理配置的上确界。该论证不表示任一实数最优配置本身一定具有有理坐标。
+T073 minimizes the energy `E=sum(C[k]^2)`. PSL and energy are not monotone transforms of each other, at the fixed length 100. Exact recalculation gives the T073 public energy witness `E=578, PSL=8`; the Nunn-Coxson PSL witness has `E=874, PSL=5`. Energy prefers the first sequence while PSL prefers the second. Thus neither task's objective order determines the other.
 
-## 公开记录及重建链
+## Public construction and current status
 
-当前记录档案页列出自由凸域、12 点的值为 `2/51`，并把发现归于 David Cantrell，日期为 2007 年 6 月。档案说明此项在 2026 年由后来提交的坐标资料重新核验；来源记录提到一份 2007 Mathematica notebook，于 2026 年 9 月收到。我们不把下述有理点称为 Cantrell 的原始坐标。
+Nunn and Coxson's 2008 Table 2 prints a length-100 code in hexadecimal and reports PSL 5. We expand `DF490FFB1F8390A54E3CD9AAE` to 100 bits, most significant bit first, and map 1 to +1 and 0 to -1. A global sign change leaves every autocorrelation unchanged. The checker recomputes all sidelobes and obtains PSL 5.
 
-本任务保存档案中的原始十进制 JSON 及 SHA-256。`human.py` 将这些十进制字面值按精确十进制有理数读取，把前三点仿射归一化到 `(0,0),(1,0),(0,1)`，再将各坐标重构为分母不超过 100 的有理数。重建结果另存为参考见证，并由本任务检查器精确复核，得到最小三角形面积 `1/4`、凸包面积 `51/8`、比值 `2/51`。所以公开分数、档案重建和本地有理数重建的来源步骤彼此可区分。
+The latest checked survey is version 2 of Brest et al., posted 2026-07-28. Section 1 says exact minima are known for lengths up to 61 and at length 64. It directs readers to Nunn and Coxson for reported values at lengths 71 to 105. It describes results outside the exact range as best-known values. We therefore use N=100 as an open configuration and record PSL 5 as a feasible public construction, not a proof of optimality. The source does not provide a certified nontrivial lower bound for this exact optimum.
 
-档案当前将 `2/51` 列为 12 点自由凸域记录。检查到的页面没有给出该参数的最优性证明。它是已复现的可行记录，不是最优性证明。档案所列 2026 年自由凸域 `n=3…8` 证明不涉及 `n=12`。
+Sources checked on 2026-11-06:
 
-## 运行
+- Nunn and Coxson, [Best-Known Autocorrelation Peak Sidelobe Levels for Binary Codes of Length 71 to 105](https://www.norbertwiener.umd.edu/crowds/documents/best_known_binary.pdf), IEEE Transactions on Aerospace and Electronic Systems 44(1), 2008, Table 2, N=100.
+- Brest et al., [Binary Sequences with Low Aperiodic Autocorrelations: Small Peak Sidelobe Levels, version 2](https://www.preprints.org/manuscript/202605.0907), posted 2026-07-28, §1.
+- The definition and distinction from merit factor are also stated in the 2026 survey, §1. The merit factor is `L^2/(2E)`, so it is a monotone transform of T073 energy at fixed length. PSL is not a monotone transform of that sum of squares.
 
-```sh
-.venv/bin/python -m tasks.t074.init_program
-.venv/bin/python -m tasks.t074.baseline
-.venv/bin/python -m tasks.t074.evolution
-.venv/bin/python -m tasks.t074.human
-.venv/bin/python -m tasks.t074.reference
-.venv/bin/python -m pytest tasks/t074 -q
-```
+## Programs and limits
 
-初始程序返回抛物线上的 `(i,i²)` 点，`i=0,…,11`。传统搜索和演化搜索从同一简单起点开始，只自行尝试整数坐标替换，不读取记录数据。搜索默认在 `[-40,40]` 内提议替换坐标；这是搜索策略范围，不是任务约束。检查器不限制坐标范围或分母。
+- `init_program.py` returns configured-length positive signs. This is valid and has PSL 99.
+- `baseline.py` uses fixed-seed single-bit-flip simulated annealing. It updates exact integer correlations and does not read comparison data. The default is 12 restarts with 3000 flips each. Set `MATHBENCH_SEARCH_SECONDS` for a time cutoff.
+- `human.py` rebuilds the published hexadecimal construction. `reference.py` replays the frozen same-parameter public record from task data.
+- `evaluator.py` uses the shared runner. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread.
 
-全部五个程序都实现 `run_code()`。默认生成预算为 300 秒，验证预算为 60 秒，内存上限 4 GiB，单线程。当前状态：`accepted_by_sol`。
-
----
-
-# T074: Free-convex-domain Heilbronn problem for 12 points
-
-## Objective
-
-Choose exactly 12 distinct rational points in the plane, with no three collinear. Coordinates have no bounds and there is no fixed outer container. Maximize
-
-\[
-\frac{\text{smallest area of a triangle formed by three points}}{\text{area of the convex hull of all points}}.
-\]
-
-The ratio is invariant under translation, rotation, and uniform scaling. The fixed configuration is `T074-C01`. The checker uses exact rational arithmetic, tests all 220 triples, and computes the convex hull with an exact monotone-chain algorithm.
-
-## Rational and real configurations
-
-Inputs use rational coordinates of any size. The supremum is the same as over real configurations. In any feasible real configuration, every one of its 220 triangle determinants is nonzero. A sufficiently small perturbation preserves all these nonzero determinants. Rational coordinates are dense, and the triangle areas, convex-hull area, and ratio vary continuously under such perturbations. Thus rational configurations are dense in the feasible real configurations, and both suprema agree. This does not imply that every real maximizer has rational coordinates.
-
-## Public record and reconstruction chain
-
-The current record archive lists `2/51` for the 12-point free-convex problem and credits David Cantrell, June 2007. The archive says that coordinate material was re-verified later; its source note refers to a 2007 Mathematica notebook received in September 2026. We do not label the rational points below as Cantrell's original coordinates.
-
-This task stores the archived decimal JSON and its SHA-256. `human.py` reads those decimal literals as exact decimal rationals, applies an affine normalization that maps the first three points to `(0,0),(1,0),(0,1)`, and reconstructs each coordinate as a rational with denominator at most 100. The resulting points are stored separately as the fixed reference witness and checked exactly: the smallest triangle area is `1/4`, the convex-hull area is `51/8`, and the ratio is `2/51`. The reported value, archive reconstruction, and local rational reconstruction remain distinct steps in the provenance record.
-
-The current archive lists `2/51` as its n=12 free-convex record. The checked page gives no proof of optimality for this parameter. This is a reproduced feasible record, not an optimality proof. The archive's 2026 proofs for free-convex n=3 through n=8 do not settle n=12.
-
-## Run
+Run from the repository root:
 
 ```sh
-.venv/bin/python -m tasks.t074.init_program
-.venv/bin/python -m tasks.t074.baseline
-.venv/bin/python -m tasks.t074.evolution
-.venv/bin/python -m tasks.t074.human
-.venv/bin/python -m tasks.t074.reference
-.venv/bin/python -m pytest tasks/t074 -q
+.venv/bin/python -m pytest tasks/t074/test_task.py -q
+.venv/bin/python -m json.tool tasks/t074/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t074/data/bestknown.json > /dev/null
 ```
 
-The initial program returns `(i,i²)` for `i=0,...,11`. Traditional and evolutionary search start from this simple seed and try their own integer-coordinate replacements; they do not read comparison data. By default, search proposes replacement coordinates in `[-40,40]`. This is a search strategy range, not a task constraint. The checker has no coordinate or denominator bound.
+## 定义
 
-All five programs expose `run_code()`. Default generation and verification limits are 300 and 60 seconds, with 4 GiB memory and one thread. Status: `accepted_by_sol`.
+输入是长度为 100 的符号序列 `s_0,...,s_99`，每项为 `-1` 或 `+1`。对每个非零位移 `k=1,...,99`，计算非周期自相关
+
+`C[k] = sum(s[i] * s[i+k], i=0,...,99-k)`。
+
+目标是最小化峰值旁瓣 `PSL=max(abs(C[k]), k=1,...,99)`。零位移主峰不计入目标。评测器用整数精确计算全部 99 项。
+
+## 与 T073 的区别
+
+T073 最小化能量 `E=sum(C[k]^2)`。固定长度 100 时，两项目标也不是单调变换关系。对 T073 的公开能量见证精确重算得到 `E=578, PSL=8`；对 Nunn-Coxson 的 PSL 见证精确重算得到 `E=874, PSL=5`。能量目标偏好前者，PSL 目标偏好后者。因此不能用一个目标的排序代替另一个目标。
+
+## 公开构造与当前状态
+
+Nunn 与 Coxson 2008 年论文表 2 给出长度 100 的十六进制序列，报告 PSL 为 5。我们按最高位优先将 `DF490FFB1F8390A54E3CD9AAE` 展开为 100 个二进制位，将 1 映射为 +1、0 映射为 -1。整体符号取反不会改变自相关值。评测器重新计算全部旁瓣，得到 PSL=5。
+
+截至 2026-11-06 检查到的最新综述是 Brest 等人 v2，2026-07-28 发布。第 1 节说长度不超过 61 和长度 64 的精确最小值已知，并将 71 至 105 的报告值指向 Nunn-Coxson。综述将精确范围以外的结果称为已知最好值。因此选择 N=100 作为未解决配置，把 PSL=5 记为公开可行构造，不称全局最优。已查来源没有给出该具体最优值的非平凡认证下界。
+
+任务状态：已通过 Sol 验收（2026-11-06）。

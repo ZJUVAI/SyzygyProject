@@ -1,45 +1,29 @@
-# T038：12 阶互相正交拉丁方的数量
+# T038：DIMACS DSJC1000.5 图着色
 
 ## 中文
 
-### 目标和配置
+本任务固定 DIMACS 图 DSJC1000.5，包含 1000 个顶点和 249,826 条无向边。顶点编号为 0 至 999。候选须给每个顶点一个整数颜色，并确保每条边的端点颜色不同。目标是最小化使用的不同颜色数。评测器逐边检查构造，并从颜色列表重算不同颜色数；候选声明的分数不参与验收。
 
-配置 `T038-C01` 固定阶数为 12。程序提交一组同阶拉丁方，并最大化方阵数量。符号固定为整数 0 至 11。每一行和每一列都须各含这些符号一次。任意两个不同方阵叠加后，144 个有序符号对都须恰好出现一次。
+候选输入为 `data/DSJC1000.5.bits`，采用无头部上三角位集，SHA-256 为 `ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779`。位对 `(u,v)` 的索引为 `v*(v-1)//2+u`，每字节从最低有效位开始，最后一个字节的 4 个未用高位为零。`data/graph_source.json` 保存原 DIMACS 来源、旧文件摘要及独立逐边比对记录。DIMACS 文本、Rutgers 二进制图和展开边表已删除。
 
-验证器逐项检查所有约束，并重算目标值。它不采信程序报告的分数。验证是精确整数运算。
+Olawale Titiloye 与 Alan Crispin 的 2012 年论文报告找到了 DSJC1000.5 的 82 色着色。Titiloye 作者页提供该证书；本任务下载证书后检查了全部 1000 个顶点和 249,826 条边，复算为 82 色且无冲突。证书保存在 `data/source/DSJC1000.5_K82_col.txt`，复算摘要在 `data/DSJC1000.5_K82_verification.json`。这是当前核对到的最佳公开结果。作者页还留有旧的 83 色 QA-col 证书，保存在 `data/source/DSJC1000.5_K83.txt`。
 
-### 人类构造和公开记录
+Samir Loudni 的 ID-VNS 页面提供 86 色着色。下载的见证覆盖 1000 个顶点，独立复算为 86 个不同颜色，且所有边都合法。人类基线取该见证，保存在 `data/human_witness.json`；`human.py` 会重放该构造。冻结的人类参考分数为 86。
 
-Charles E. Roberts 的论文报告了阶数 12 的构造，其数量达到当时已知下界 5。SageMath 10.10 的组合设计数据库保存五个 12 阶方阵，并将这份数据归于 Brendan McKay。目录保存了该版本的函数片段和从中逐字提取的五方阵数据。提取时把字母 `a` 至 `l` 映射为 0 至 11，没有执行 Sage 代码。`human.py` 和 `reference.py` 读取这份数据。论文作者与 Sage 数据归属是两项不同记录。
+最优值仍未确定。Cazenave、Negrevergne 与 Sikora 的 2025 arXiv 论文在第 6.2 节表 4 的说明中明确称这些困难实例的色数未知，并列出下界 73。Held、Cook 与 Sewell 的论文也报告下界 73。本任务未独立重算这个下界。当前报告区间为 73 至 82。Hertz、Plumettaz 与 Zufferey 的 VSS-Col 论文将该图的 `χ` 标为未知、`k*` 标为 83。开放状态依据论文的明确陈述。来源检查日期为 2026-11-06。
 
-五个方阵已逐行、逐列和逐对精确复算。五是已验证下界，不是最优性证明。普遍上界为 11。11 个方阵等价于阶数 12 的射影平面；其存在性仍未解决。公开资料未给出六个方阵不存在的证明，本配置不声称 5 已最优。
-
-### 起点和传统基线
-
-`init_program.py` 返回一个循环拉丁方。`baseline.py` 用 GF(3) 与 GF(4) 的直积构造两个互相正交的方阵。MacNeish 的乘积构造给出这两个方阵；程序按有限域算术直接重建它们，不读取五方阵对照数据。`evolution.py` 从该构造开始，以固定种子搜索随机同位变换，并保留当前最好可行解。
+传统基线使用随机并列打破的多起点 DSATUR 贪心着色。它只读取固定图，不读取比较见证。seed 0 的 113 色输出、复算结果和运行记录保存在 `data/search/seed0_dsatur_*`。初始程序完全自包含，为每个顶点分配独立颜色。状态：已通过 Sol 验收（2026-11-06）。
 
 ## English
 
-### Goal and configuration
+This task fixes the DIMACS DSJC1000.5 graph. It has 1,000 vertices and 249,826 undirected edges. Vertex labels are 0 through 999. A candidate assigns an integer color to every vertex. The endpoints of every edge must have different colors. The objective is to minimize the number of distinct colors. The evaluator checks every edge and counts the colors again. It ignores any score claimed by the candidate.
 
-Configuration `T038-C01` fixes the order at 12. Return a family of Latin squares and maximize its size. Use the integer symbols 0 through 11. Each row and column must contain every symbol once. Each pair of different squares must contain all 144 ordered symbol pairs once.
+Candidate input `data/DSJC1000.5.bits` is a headerless packed upper-triangle bitset. Its SHA-256 is `ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779`. Pair `(u,v)` uses index `v*(v-1)//2+u`; bits are least-significant-bit first within each byte. The four unused high bits in the last byte are zero. `data/graph_source.json` records the original DIMACS source, its old file hashes, and an independent edge-by-edge comparison. The DIMACS text, Rutgers binary graph, and expanded edge list have been removed.
 
-The checker verifies every constraint and recomputes the objective with exact integer operations. It ignores any score reported by the program.
+Titiloye and Crispin's 2012 paper reports an 82-coloring of DSJC1000.5. Titiloye's author page provides the certificate. This task checked all 1,000 vertices and 249,826 edges; the certificate has 82 distinct colors and no conflict. The certificate is saved in `data/source/DSJC1000.5_K82_col.txt`, with a replay summary in `data/DSJC1000.5_K82_verification.json`. This is the best public result found in the reviewed sources. The author page also retains an older 83-color QA-col certificate in `data/source/DSJC1000.5_K83.txt`.
 
-### Human construction and public record
+Samir Loudni's ID-VNS page provides an 86-coloring. The downloaded witness assigns all 1,000 vertices. An independent replay counts 86 distinct colors and checks every edge. The human baseline is this witness, saved in `data/human_witness.json`. `human.py` replays it. The frozen human reference score is 86.
 
-Charles E. Roberts reports a construction at order 12 that meets the then-current lower bound of five. The SageMath 10.10 combinatorial design database stores five squares of order 12 and attributes the data to Brendan McKay. This task stores the function fragment and the five squares extracted from it. The extraction maps letters `a` through `l` to 0 through 11. It does not execute Sage code. `human.py` and `reference.py` replay this data. The paper author and the Sage data attribution are separate records.
+The optimum remains unknown. In their 2025 arXiv paper, Cazenave, Negrevergne, and Sikora state in the note for Section 6.2, Table 4, that the chromatic numbers of these difficult instances seem unknown. Their DSJC1000.5 row reports a lower bound of 73. Held, Cook, and Sewell also report 73. This task has not independently recomputed that lower bound. The reported interval is 73 to 82. The VSS-Col paper by Alain Hertz, Matthieu Plumettaz, and Nicolas Zufferey marks `χ` unknown and gives `k* = 83`. The open status relies on the papers' explicit statements. Sources were checked on 2026-11-06.
 
-All five squares pass exact row, column, and pair checks. Five is a verified lower bound, not a proof of optimality. The general upper bound is 11. Eleven squares are equivalent to a projective plane of order 12, whose existence remains open. The sources checked do not prove that six squares cannot exist. This task does not claim that five is optimal.
-
-### Starter and classical baseline
-
-`init_program.py` returns one cyclic Latin square. `baseline.py` uses the direct product of constructions over GF(3) and GF(4) to build two orthogonal squares. MacNeish's product construction gives this family; the program rebuilds it with finite-field arithmetic and does not read the five-square comparison data. `evolution.py` starts from this construction, tries seeded random isotopies, and keeps its best feasible family.
-
-### Sources
-
-- [Charles E. Roberts (1992), “Sets of mutually orthogonal Latin squares with ‘like subsquares’”](https://doi.org/10.1016/0097-3165(92)90052-V).
-- [Harris F. MacNeish (1922), “Euler Squares”](https://doi.org/10.2307/1967920), for the direct-product construction used by the classical baseline.
-- [SageMath 10.10 database entry for `MOLS_12_5`](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5).
-- [Google DeepMind formal-conjectures entry on the order-12 MOLS problem](https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Paper/LatinSquare.lean).
-- [Morris, “Mutually orthogonal Latin squares”](https://www.cs.uleth.ca/~morris/Combinatorics/html/sect_Latin-squares-MOLS.html).
+The traditional baseline uses multi-start DSATUR greedy coloring with seeded random tie breaks. It reads the fixed graph and does not read comparison witnesses. The seed 0 result with 113 colors, exact verification, and run record are saved under `data/search/seed0_dsatur_*`. The initial program is self-contained and assigns a separate color to each vertex. Status: accepted by Sol on 2026-11-06.

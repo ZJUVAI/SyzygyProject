@@ -1,4 +1,4 @@
-"""Self-contained feasible construction: one customer per vehicle route."""
+"""Simple feasible one-round partition."""
 
 import os
 
@@ -8,5 +8,5 @@ def run_code():
     if chosen != "T057-C01":
         raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    return {"routes": [[customer] for customer in range(2, 1002)]}
+    return {"rounds": [[[5 * group + offset for offset in range(5)] for group in range(7)] ]}
     # EVOLVE-BLOCK-END

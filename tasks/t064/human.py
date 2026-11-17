@@ -1,11 +1,24 @@
-"""Rebuild an orthogonal coordinate-grid triangulation from the public input."""
+"""Rebuild Mark Lewko's residue-class construction at N=42025."""
+
 import os
 
-from tasks.t064.grid_method import build_grid
+N = 42025
+MODULUS = 205
+RESIDUES = (7, 21, 50, 64, 76, 83, 106, 120, 139, 182, 193, 199)
+
+
+def build_human_set():
+    return {
+        "elements": sorted(
+            1 + residue + MODULUS * block
+            for residue in RESIDUES
+            for block in range(MODULUS)
+        )
+    }
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T064-C01") != "T064-C01":
-        raise ValueError("unsupported T064 configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    return build_grid(0)
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T064-C01")
+    if chosen != "T064-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    return build_human_set()

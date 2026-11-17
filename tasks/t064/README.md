@@ -1,29 +1,89 @@
-# T064: ortho40 的最少非钝角三角剖分
+# T064: Square-difference-free subset of [42025]
 
-## 中文
+## Definition
 
-配置 `T064-C01` 固定 CG:SHOP 2025 的正交简单多边形 `ortho_40_56a6f463`。输入有 40 个顶点，没有额外约束边。目标是用尽量少的新增 Steiner 点，把整个多边形剖分为非钝角三角形。直角允许。
+Choose a set `B` contained in `{1,...,42025}`. For every two different elements `x,y` in `B`, require `|x-y|` not to be a positive perfect square. Maximize `|B|`. The fixed configuration is `T064-C01`.
 
-评测器要求候选给出全部 Steiner 坐标和无向边。它使用有理数精确运算检查坐标唯一性、点在多边形内或边界上、边不相交且位于多边形内、边界完整覆盖、图连通，以及每个有界面恰为非退化三角形。每个角的点积必须非负。所有三角形面积之和必须与输入多边形面积相等。评测器不采样、不使用浮点容差，也不信任候选分数。
+The candidate format is `{"elements": [integer, ...]}`. The checker rejects duplicates, booleans, non-integers, and values outside the interval. It checks every possible square translation with exact integer arithmetic.
 
-坐标接口接受任意精度整数、有理数字符串，以及按其精确 IEEE 二进制有理数解释的有限 JSON 浮点数，不设分母位数或字符串长度上限。每次正式验证仍受 16 MiB 输出、4 GiB 内存和 60 秒验证时间限制。Steiner 点数上限为 2000；已知可行上界为 19，因此任何更优构造最多有 18 个 Steiner 点，不会被此上限排除。原几何问题允许任意实坐标；本配置只接收有理坐标见证，不能据此声称覆盖所有实坐标构造。
+## Human construction and finite status
 
-人类基线为 129 个 Steiner 点。`human.py` 从输入顶点的全部 x/y 坐标构造笛卡尔网格，并把多边形内的每个网格矩形分成两个直角三角形。这是对公开网格式非钝角剖分方法的弱基线重建，不是竞赛纪录。Ahn 等人的 SoCG 2025 论文报告了以输入点网格为基础的正交实例构造方法。[论文与算法](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.80/LIPIcs.SoCG.2025.80.html)
+Mark Lewko's 2015 paper gives the 12 residues
 
-公开参考构造有 19 个 Steiner 点。Abrahamsen、Brunck、Conradi、Kolbe 和 Nusser 的获胜实现论文在 Figure 10 明确展示本实例及 19 点解；固定源代码版本为提交 `77920a0e578e5bff13c710f988ec1c52d61dcfd8`，见证已存入 `data/reference/` 并精确复核。[SoCG 2025 论文，Figure 10](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.79/LIPIcs.SoCG.2025.79.html) · [归档软件](https://doi.org/10.4230/artifacts.23288)
+`A = {7,21,50,64,76,83,106,120,139,182,193,199} (mod 205)`.
 
-已检查的来源没有证明 19 点最优，也没有报告本实例更小的见证。我们在 2026-11-06 复查了论文、归档软件和公开实例数据；这不是穷尽所有资料的声明。获胜团队论文未披露该构造是否使用 AI，因此记录为来源未说明。
+For this configuration, rebuild
 
-## English
+`B = {1 + a + 205 b : a in A, 0 <= b < 205}`.
 
-Configuration `T064-C01` fixes the CG:SHOP 2025 orthogonal simple polygon `ortho_40_56a6f463`. It has 40 vertices and no extra constraint edges. The objective is to minimize the number of added Steiner points in a triangulation of the full polygon. Every triangle must be non-obtuse; right angles are allowed.
+This produces 2460 elements from 8 through 42020. The modulus `205=5*41` is square-free. If two members use different residues, their difference modulo 205 is not a square residue, as checked from Lewko's table. If they use the same residue, their nonzero difference is `205(b-b')`, has absolute value below `205^2`, and cannot be a square: square-freeness of 205 would force a square multiple of 205 to be divisible by `205^2`.
 
-The checker takes all Steiner coordinates and undirected edges. It uses exact rational arithmetic to check unique coordinates, point containment, non-crossing edges inside the polygon, full boundary coverage, graph connectivity, and triangular bounded faces. At each triangle vertex, the exact dot product must be non-negative. The sum of triangle areas must equal the polygon area. The checker uses no sampling, floating-point tolerance, or candidate score.
+The value 2460 is a verified feasible lower bound at this N. It is reconstructed from the published formula; Lewko's paper proves an asymptotic lower bound and does not state that 2460 is the exact finite optimum. Dean et al. report exact computation of `D(S,N)` through `N=300`; the OEIS entry also links a table through 410. We found no exact value for `N=42025` in the sources checked on 2026-11-06. This finite-parameter status is limited to those checked sources.
 
-The coordinate interface accepts arbitrary-precision integers, rational strings, and finite JSON floats interpreted as their exact IEEE binary rational values. It sets no denominator-bit or coordinate-string-length limit. Each verification still uses the shared 16 MiB output, 4 GiB memory, and 60 second limits. The checker caps the number of Steiner points at 2,000. Since the known feasible upper bound is 19, any improvement has at most 18 Steiner points and is not excluded by that cap. The geometric problem permits arbitrary real coordinates; this configuration accepts rational-coordinate witnesses only and does not claim to represent every real-coordinate construction.
+The 2026 literature improves asymptotic lower-bound exponents. Krachun's August 2026 preprint gives exponent `0.7527964558...`; Naslund's October 2026 computer-assisted preprint gives `0.7580758318008816...-o(1)`. These statements concern growth as N increases and do not give the exact optimum at `N=42025`.
 
-The reconstructed human baseline has 129 Steiner points. `human.py` builds a Cartesian grid from all input x and y coordinates, then splits each grid rectangle inside the polygon into two right triangles. This is a weak reconstruction of a published grid-based method, not a competition record. Ahn et al. describe grid-based constructions for orthogonal instances in their SoCG 2025 paper. [Paper and method](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.80/LIPIcs.SoCG.2025.80.html)
+Lewko's separate 14-residue construction modulo 91 concerns cube differences. It is not used for this square-difference configuration.
 
-The public reference has 19 Steiner points. Figure 10 of the winning implementation paper by Abrahamsen, Brunck, Conradi, Kolbe, and Nusser shows this instance and the 19-point construction. The fixed software commit is `77920a0e578e5bff13c710f988ec1c52d61dcfd8`. The witness is stored under `data/reference/` and was checked with exact arithmetic. [SoCG 2025 paper, Figure 10](https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/html/LIPIcs.SoCG.2025.79/LIPIcs.SoCG.2025.79.html) · [Archived software](https://doi.org/10.4230/artifacts.23288)
+## Sources
 
-The reviewed sources do not prove that 19 is optimal and do not report a smaller witness for this instance. We checked the paper, archived software, and public instance data on 2026-11-06. This is not an exhaustive survey. The winning team did not state whether AI tools were used for this construction, so its AI provenance is recorded as unstated.
+- Mark Lewko, [An improved lower bound related to the Furstenberg-Sárközy theorem](https://doi.org/10.37236/4656), *Electronic Journal of Combinatorics* 22(1), 2015, Theorem 3 and Section 3.
+- Christian Dean et al., [Notes and Computations on Forbidden Differences](https://alexricemath.com/wp-content/uploads/2025/08/ForbiddenDifferencesPaper4.pdf), abstract and Section 4; exact `D(S,N)` computations through `N<=300`.
+- [OEIS A100719](https://oeis.org/A100719), definition of the finite maximum and linked table through `N=410`.
+- Dmitry Krachun, [Square-Difference-Free Sets beyond the Three-Quarter Barrier](https://arxiv.org/abs/2608.01325), arXiv:2608.01325v1, 2026-08-02.
+- Eric Naslund, [Square-difference-free sets of exponent 0.7580758](https://hexagonmath.org/search?advanced=1&subject=math.NT), hexagon:2610.00151v1, October 2026.
+
+## Reproduction
+
+Run the five entries with `MATHBENCH_CONFIG_ID=T064-C01`. Run the checker tests with:
+
+```sh
+.venv/bin/python -m pytest tasks/t064/test_task.py -q
+```
+
+The fixed reference witness is stored in `data/reference/`. The initial seed and greedy search do not read that file.
+
+---
+
+# T064：区间 [42025] 中的平方差自由子集
+
+## 定义
+
+选择 `{1,...,42025}` 的子集 `B`。任意两个不同元素 `x,y` 均须满足 `|x-y|` 不是正平方数。目标是最大化 `|B|`。固定配置为 `T064-C01`。
+
+候选程序返回 `{"elements": [整数, ...]}`。检查器拒绝重复值、布尔值、非整数和区间外的值，并用整数运算检查所有平方位移。
+
+## 人类构造与有限参数状态
+
+Mark Lewko 2015 年论文给出模 205 的 12 个剩余类：
+
+`A = {7,21,50,64,76,83,106,120,139,182,193,199}`。
+
+对本配置展开为
+
+`B = {1 + a + 205 b : a 属于 A，0 <= b < 205}`。
+
+该构造有 2460 个元素，范围为 8 到 42020。模数 `205=5*41` 无平方因子。若两个元素来自不同剩余类，Lewko 的表证明其模 205 的差不是平方剩余。若来自同一剩余类，非零差为 `205(b-b')`，绝对值小于 `205^2`；若它是平方，205 无平方因子会推出差被 `205^2` 整除，矛盾。
+
+2460 是该固定参数下经过验证的可行下界，来源是已发表公式的有限展开。Lewko 论文证明渐近下界，没有声称 2460 等于该有限参数的最优值。Dean 等人报告的精确计算覆盖 `N<=300`；OEIS 页面还链接到截至 410 的表。截至 2026-11-06 检查的来源中，没有找到 `N=42025` 的精确最优值。此状态仅限于已检查的来源。
+
+2026 年文献改进了渐近下界指数。Krachun 2026 年 8 月预印本给出 `0.7527964558...`；Naslund 2026 年 10 月计算机辅助预印本给出 `0.7580758318008816...-o(1)`。这些结果描述 N 增大时的渐近增长，没有给出 `N=42025` 的精确最优值。
+
+Lewko 另一个模 91 的 14 剩余类构造讨论的是立方差。本任务不使用它。
+
+## 来源
+
+- Mark Lewko，[An improved lower bound related to the Furstenberg-Sárközy theorem](https://doi.org/10.37236/4656)，*Electronic Journal of Combinatorics* 22(1)，2015，定理 3 和第 3 节。
+- Christian Dean 等，[Notes and Computations on Forbidden Differences](https://alexricemath.com/wp-content/uploads/2025/08/ForbiddenDifferencesPaper4.pdf)，摘要和第 4 节；`D(S,N)` 精确计算到 `N<=300`。
+- [OEIS A100719](https://oeis.org/A100719)，有限最大值定义，并链接到 `N=410` 的表。
+- Dmitry Krachun，[Square-Difference-Free Sets beyond the Three-Quarter Barrier](https://arxiv.org/abs/2608.01325)，arXiv:2608.01325v1，2026-08-02。
+- Eric Naslund，[Square-difference-free sets of exponent 0.7580758](https://hexagonmath.org/search?advanced=1&subject=math.NT)，hexagon:2610.00151v1，2026 年 10 月。
+
+## 复现
+
+五个程序均使用 `MATHBENCH_CONFIG_ID=T064-C01`。测试命令：
+
+```sh
+.venv/bin/python -m pytest tasks/t064/test_task.py -q
+```
+
+冻结参考见证保存在 `data/reference/`。简单起点和贪心搜索不读取该文件。

@@ -1,110 +1,80 @@
-import hashlib
-import gzip
+"""Local exact checks for T051, independent of the shared task registry."""
+
 import json
 import os
 from pathlib import Path
 import sys
-import tempfile
 
 import pytest
 
-from mathbench.evaluate import _run
-from tasks.t051 import baseline, check, evolution, human, init_program, reference
+from tasks.t051.check import PARAMETERS, validate
+
+ROOT = Path(__file__).resolve().parent
+CONFIG = {"parameters": PARAMETERS}
 
 
-ROOT = Path(__file__).resolve().parents[2]
-CONFIG = json.loads((ROOT / "tasks/t051/task.json").read_text())["configurations"][0]
+def _one_space():
+    return {"codewords": [[1, 2, 4]]}
 
 
-def _independent_discrepancy(sequence):
-    maximum = 0
-    count = 0
-    for d in range(1, len(sequence) + 1):
-        partial = 0
-        for index in range(d - 1, len(sequence), d):
-            partial += sequence[index]
-            maximum = max(maximum, abs(partial))
-            count += 1
-    return maximum, count
+def test_checker_valid_invalid_duplicate_and_claim_invariance():
+    valid = _one_space()
+    assert validate(valid, CONFIG)["objective"] == 1
+    with pytest.raises(ValueError, match="rank 3"):
+        validate({"codewords": [[1, 2, 3]]}, CONFIG)
+    with pytest.raises(ValueError, match="intersect"):
+        validate({"codewords": [[1, 2, 4], [1, 2, 8]]}, CONFIG)
+    # These bases differ, but they span the same 3-space.
+    with pytest.raises(ValueError, match="duplicate codeword"):
+        validate({"codewords": [[1, 2, 4], [3, 2, 4]]}, CONFIG)
+    with pytest.raises(ValueError, match="bool is rejected"):
+        validate({"codewords": [[[True, 0, 0, 0, 0, 0, 0], [0] * 7, [0] * 7]]}, CONFIG)
+    baseline = validate(valid, CONFIG)
+    assert validate({**valid, "objective": 999}, CONFIG) == baseline
+    assert validate({**valid, "score": float("nan")}, CONFIG) == baseline
+    assert validate({**valid, "claimed_score": {"bad": True}}, CONFIG) == baseline
+    assert validate({"codewords": []}, CONFIG)["objective"] == 0
 
 
-def test_all_five_program_entries_and_reference_witness(monkeypatch):
-    programs = [init_program.run_code, baseline.run_code, evolution.run_code,
-                human.run_code, reference.run_code]
-    monkeypatch.setenv("MATHBENCH_SEED", "0")
-    monkeypatch.setenv("T051_SEARCH_TRIALS", "2")
-    monkeypatch.setenv("T051_SEARCH_LIMIT", "300")
-    results = [program() for program in programs]
-    for result in results:
-        checked = check.validate(result, CONFIG)
-        assert checked["verification_status"] == "exact"
-        assert checked["details"]["claimed_objective_ignored"] is True
-    assert len(results[0]["sequence"]) == 1
-    assert results[1]["search"]["reference_data_read"] is False
-    assert results[2]["search"]["reference_data_read"] is False
-    assert results[3] == results[4]
-    assert len(results[4]["sequence"]) == 130000
-    maximum, prefix_count = _independent_discrepancy(results[4]["sequence"])
-    assert maximum == 3
-    validated = check.validate(results[4], CONFIG)
-    assert validated["objective"] == 130000
-    assert validated["details"]["homogeneous_progression_prefixes_checked"] == prefix_count
-    assert validated["details"]["discrepancy"] == maximum
-    witness = ROOT / "tasks/t051/data/source/sequence_130000.txt.gz"
-    source_bytes = gzip.decompress(witness.read_bytes())
-    assert hashlib.sha256(source_bytes).hexdigest() == (
-        "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
-    )
+def test_published_representatives_reconstruct_and_verify_exactly():
+    from tasks.t051.human import run_code
+
+    witness = run_code()
+    checked = validate(witness, CONFIG, strict=True)
+    assert checked["objective"] == 333
+    assert checked["details"]["pairs_checked"] == 55278
+    data = json.loads((ROOT / "data/source/heinlein_2019_appendix_c.json").read_text())
+    assert data["source"]["source_sha256"] == (
+        "26622afb1178db82948f215c7befe73172f8c30338f0632d1ae0786d487f2eb7")
 
 
-def test_public_reference_reuses_archived_source_witness():
-    sota = json.loads((ROOT / "tasks/t051/data/bestknown.json").read_text())
-    verification = sota["configurations"]["T051-C01"]["verification"]
-    witness = ROOT / "tasks/t051" / verification["witness"]
-    assert witness == ROOT / "tasks/t051/data/source/sequence_130000.txt.gz"
-    assert hashlib.sha256(gzip.decompress(witness.read_bytes())).hexdigest() == verification["witness_sha256"]
-    assert not (ROOT / "tasks/t051/data/reference/public_c01.json").exists()
+def test_source_representatives_have_expected_orbit_counts():
+    data = json.loads((ROOT / "data/source/heinlein_2019_appendix_c.json").read_text())
+    assert [len(group) for group in data["representatives_by_orbit"]] == [9, 26, 68]
+    assert len(data["generators"]) == 2
+    assert 9 + 2 * 26 + 4 * 68 == 333
 
 
-@pytest.mark.parametrize("sequence", [[], [0], [2], [1.0], [float("nan")], [True], ["+"], None])
-def test_rejects_malformed_sequence(sequence):
-    with pytest.raises(ValueError):
-        check.validate({"sequence": sequence}, CONFIG)
+def test_program_entries_return_valid_constructions(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T051-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "19")
+    from tasks.t051.init_program import run_code as init_run
+    from tasks.t051.baseline import run_code as baseline_run
+    from tasks.t051.human import run_code as human_run
+    from tasks.t051.reference import run_code as reference_run
+    from tasks.t051.evolution import run_code as evolution_run
+
+    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
+    monkeypatch.setenv("MATHBENCH_EVOLUTION_ITERATIONS", "1")
+    for run in (init_run, baseline_run, human_run, reference_run, evolution_run):
+        assert validate(run(), CONFIG)["verification_status"] == "exact"
 
 
-def test_rejects_discrepancy_four_and_invalid_configuration():
-    with pytest.raises(ValueError, match="discrepancy exceeds"):
-        check.validate({"sequence": [1, 1, 1, 1]}, CONFIG)
-    bad_config = json.loads(json.dumps(CONFIG))
-    bad_config["parameters"]["discrepancy_cap"] = 2
-    with pytest.raises(ValueError, match="configuration"):
-        check.validate({"sequence": [1]}, bad_config)
-    for invalid in (3.0, True):
-        bad_config = json.loads(json.dumps(CONFIG))
-        bad_config["parameters"]["discrepancy_cap"] = invalid
-        with pytest.raises(ValueError, match="configuration"):
-            check.validate({"sequence": [1]}, bad_config)
-    bad_config = json.loads(json.dumps(CONFIG))
-    bad_config["parameters"]["entry_domain"] = [True, -1]
-    with pytest.raises(ValueError, match="configuration"):
-        check.validate({"sequence": [1]}, bad_config)
+def test_generation_worker_error_and_timeout_controls():
+    from mathbench.evaluate import _run
 
-
-def test_claimed_scores_do_not_change_complete_validation():
-    base = {"sequence": [1, -1, 1]}
-    forged = {**base, "objective": -1000, "score": float("nan"), "claimed_score": 1e99}
-    assert check.validate(forged, CONFIG) == check.validate(base, CONFIG)
-
-
-def test_runner_error_and_timeout_controls():
     env = dict(os.environ)
-    env["PYTHONPATH"] = str(ROOT)
-    with tempfile.TemporaryDirectory() as folder:
-        fail = Path(folder) / "fail.py"
-        fail.write_text("raise RuntimeError('intentional worker failure')\n")
-        with pytest.raises(RuntimeError, match="intentional worker failure"):
-            _run([sys.executable, str(fail)], env, timeout=3)
-        hang = Path(folder) / "hang.py"
-        hang.write_text("import time\ntime.sleep(10)\n")
-        with pytest.raises(TimeoutError, match="Wall time limit"):
-            _run([sys.executable, str(hang)], env, timeout=1)
+    with pytest.raises(RuntimeError, match="intentional T051 worker failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T051 worker failure')"], env, 5)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)

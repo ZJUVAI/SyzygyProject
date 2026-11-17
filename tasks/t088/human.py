@@ -1,22 +1,14 @@
-"""Reconstruction of a published GRASP-style cutwidth heuristic."""
-
+"""Reproduced public P-192 chain from Clift's downloadable text file."""
+import json
 import os
+from pathlib import Path
 
-from tasks.t088.heuristics import randomized_method
-from tasks.t088.instance import load_graph
-
+FILES = {
+    "T088-C01": "human_t088.json",
+}
 
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T088-C01")
-    if chosen != "T088-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    order, metadata = randomized_method(
-        load_graph(), seed=seed, trials=3, vertex_trials=8, alpha=0.20
-    )
-    metadata["provenance"] = (
-        "Local reconstruction of the GRASP construction and insertion-local-search "
-        "method family described by Marti et al.; this output is not claimed to "
-        "reproduce their reported arc130 ordering."
-    )
-    return {"ordering": order, "search_metadata": metadata}
+    name = FILES.get(os.environ.get("MATHBENCH_CONFIG_ID", "T088-C01"))
+    if name is None:
+        raise ValueError("unsupported T088 configuration")
+    return json.loads((Path(__file__).parent / "data" / name).read_text())

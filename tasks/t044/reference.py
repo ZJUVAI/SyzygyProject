@@ -1,10 +1,13 @@
-"""Read Comellas's fixed 2024 Coxeter-graph construction of order 70."""
+"""Fixed best-reproduced comparison witness, separate from the public bound."""
 
+import json
+import os
 from pathlib import Path
-
-from tasks.t044.witness import load_upper_triangle as _load_upper_triangle
 
 
 def run_code():
-    path = Path(__file__).parent / "data" / "reference" / "coxeter_70_adjlist_nx.txt"
-    return _load_upper_triangle(path)
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T044-C01")
+    if chosen != "T044-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    witness = Path(__file__).resolve().parent / "data" / "source" / "human_reconstruction_229.json"
+    return json.loads(witness.read_text(encoding="utf-8"))

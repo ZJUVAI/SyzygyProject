@@ -1,7 +1,15 @@
-"""Evolvable entry point for T042."""
+"""Seeded iterated 1-flip search for the fixed Gset G70 configuration."""
 
-from tasks.t042.baseline import run_code as baseline_run_code
+import os
+
+from tasks.t042._search import repeated_local_search_with_metadata
 
 
 def run_code():
-    return baseline_run_code()
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T042-C01") != "T042-C01":
+        raise ValueError("unknown T042 configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    steps = max(1, int(os.environ.get("MATHBENCH_SEARCH_STEPS", "40")))
+    labels, _, metadata = repeated_local_search_with_metadata(
+        seed, restarts=steps, max_flips=10000)
+    return {"labels": labels, "search_metadata": metadata}

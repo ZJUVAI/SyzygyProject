@@ -1,61 +1,21 @@
-# T095: 固定 500 点集的最少凸分割
+# T095：Taillard ta41 一般作业车间排程
 
-## 定义
+## 中文
 
-本配置使用 CG:SHOP 2020 固定实例 uniform-0000500-1。实例含 500 个平面整数点。分割由输入点之间的直线段组成。每个输入点都是图顶点。凸包内部被若干空凸多边形覆盖，多边形内部互不相交。目标是最小化有界面数。
+配置 `T095-C01` 固定为 Taillard 的 `ta41`，含 30 个工件、20 台机器。每个工件有自己的机器路线和加工时间。路线可以彼此不同。每台机器的加工顺序也分别决定。
 
-这里的“空”表示多边形内部不含输入点。检查器也拒绝边穿过非端点输入点。所有输入坐标从官方 JSON 以十进制精确解析为整数，不用浮点容差。
+目标是最小化最大完工时间。该任务是一般 job-shop，不是 permutation flow-shop。checker 从机器上的工件顺序构造精确的优先关系图，并以整数最长路计算最早完工时间；有环的顺序无效。
 
-检查器核对边端点、重复边、自环、穿点、交叉、图连通性、顶点度、凸包边界、所有有界面和面积覆盖。它从平面嵌入的有向边精确遍历面。每个有界面必须是简单凸多边形且内部无输入点。有界面面积和必须与凸包面积相等。成绩是独立重算的有界面数。
+公开输入来自 Taillard 官方实例页的 `tai30_20.txt` 首个实例。该文件的旧上界字段已过时；本任务单独记录已验证的公开排程。Shylo 与 Pardalos 的 `ta41` 排程公开值为 2006，已下载并复算。最新核对到 2026-11-06 时，`optimizizer.com/TA.php` 仍列 2006 为上界，1912 为下界；2025 年 OR-Tools 论文还报告运行后数值下界 1915，但作者说明该下界没有形式化证明。没有查到 ta41 最优性闭合。
 
-## 构造与公开结果
+冻结弱人类方法基线为 3296。`human.py` 重建 Giffler–Thompson 活跃排程生成法，并在冲突集中采用最长加工时间规则。最佳公开排程 2006 与该弱基线分开记录。所有搜索从简单的机器内工件升序排程开始；搜索代码不读取 `data/reference/`。
 
-固定公开解文件含 770 条边。精确检查得 271 个有界凸面。Euler 公式也给出 (770-500+1=271)。归档只记录时间，不写算法、求解者或 AI 贡献，因此这些来源信息标为未披露。271 是可行解，不是最优性证明。
+## English
 
-冻结的人类方法基线采用 SoCG 2020 论文第 2.2 节记载的传统方法：先做 Delaunay 三角剖分，再随机删除仍保持凸面的边。本地版本由 AI 协助实现，使用确定性次序合并凸并集，得到 384 个面。它不是论文代码或论文成绩的逐字复现，也不是公开纪录。
+Configuration `T095-C01` fixes Taillard's `ta41` instance with 30 jobs and 20 machines. Each job has its own machine route and processing times. Job routes may differ. The processing order is chosen separately for each machine.
 
-Hadrien Cambazard 的项目页面称 100 点实例可解到最优，并说明模型下界可计算到 300 点。页面没有给这个 500 点实例的最优性证明。来源检查截止 2026-11-06。
+The objective is to minimize the makespan. This is a general job-shop problem, not a permutation flow-shop problem. The checker builds the exact precedence graph from job routes and machine orders, then computes earliest completion times with integer longest paths. A cyclic order is invalid.
 
-## 来源与文件
+The input is the first instance in Taillard's official `tai30_20.txt` file. Its old bound fields are stale. The task records a separately verified public schedule. Shylo and Pardalos report a `ta41` schedule with makespan 2006; the downloaded sequence was independently checked. As of 2026-11-06, `optimizizer.com/TA.php` still lists 2006 as the upper bound and 1912 as the lower bound. A 2025 OR-Tools paper reports a numerical lower bound of 1915 after a long run, but it does not provide a formal proof for that bound. No proof closing `ta41` was found.
 
-- [CG:SHOP 2020 输入实例](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip)
-- [CG:SHOP 2020 最佳解归档](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip)
-- [Eder, Held, de Lorenzo, and Palfrader, SoCG 2020](https://doi.org/10.4230/LIPIcs.SoCG.2020.85), section 2.2
-- [Cambazard, Minimum convex partition problem](https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html)
-
-原始实例与 770 边解分别保存在 data/source 和 data/reference；SHA-256 与来源状态保存在 data/source/source_notes.json。
-
-## 运行
-
-使用 .venv/bin/python。init_program.py、baseline.py、human.py、reference.py 和 evolution.py 都提供 run_code()。默认生成预算 300 秒，验证预算 60 秒，内存 4 GiB，单线程。
-
-# T095: Minimum convex partition of a fixed set of 500 points
-
-## Definition
-
-This configuration uses the fixed CG:SHOP 2020 instance uniform-0000500-1. It has 500 integer points in the plane. A partition uses straight segments between input points. Every input point is a graph vertex. Empty convex polygons cover the convex hull with pairwise disjoint interiors. The objective is to minimize the number of bounded faces.
-
-Empty means that no input point lies in a polygon interior. The checker also rejects an edge that passes through an input point that is not one of its endpoints. It reads the official coordinate literals as exact decimals and converts them to integers. It uses no floating-point tolerance.
-
-The checker validates endpoint ids, repeated edges, self-loops, points on edges, crossings, graph connectivity, vertex degree, hull boundary edges, every bounded face, and total area. It traverses the planar embedding using directed edges. Each bounded face must be a simple convex polygon with no input point in its interior. The sum of face areas must equal the convex-hull area. The checker recomputes the bounded-face count.
-
-## Constructions and public result
-
-The pinned public solution has 770 edges. Exact checking gives 271 bounded convex faces. Euler's formula also gives 770-500+1=271. The archive records a timestamp but gives no solver, method, or AI provenance. These details are marked undisclosed. The value 271 is feasible; it is not an optimality proof.
-
-The frozen human-method baseline follows the traditional method described in section 2.2 of the SoCG 2020 paper: start with a Delaunay triangulation, then remove edges while preserving convexity. The local implementation was built with AI assistance and uses deterministic ordering to merge convex unions. It gives 384 faces. This is not the authors' code or reported score, and it is not a published record.
-
-Hadrien Cambazard's project page states that 100-point data sets can be solved to optimality and reports lower bounds up to 300 points. It gives no proof of optimality for this 500-point instance. The source check is dated 2026-11-06.
-
-## Sources and data
-
-- [CG:SHOP 2020 input instances](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip)
-- [CG:SHOP 2020 best-solution archive](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip)
-- [Eder, Held, de Lorenzo, and Palfrader, SoCG 2020](https://doi.org/10.4230/LIPIcs.SoCG.2020.85), section 2.2
-- [Cambazard, Minimum convex partition problem](https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html)
-
-The original instance and the 770-edge solution are saved under data/source and data/reference. Their SHA-256 hashes and source status are in data/source/source_notes.json.
-
-## Run
-
-Use .venv/bin/python. init_program.py, baseline.py, human.py, reference.py, and evolution.py expose run_code(). Default budgets are 300 seconds for generation and 60 seconds for verification, 4 GiB of memory, and one thread.
+The frozen weak human method baseline is 3296. `human.py` reconstructs Giffler–Thompson active-schedule generation and uses a longest-processing-time rule within the conflict set. The best public schedule at 2006 is recorded separately. All search starts from the simple machine-order schedule sorted by job index. Search code does not read `data/reference/`.

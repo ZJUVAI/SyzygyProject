@@ -1,30 +1,56 @@
-# T083：四个等边三角形装入正方形
+# T083: unrestricted discrepancy-3 sequences
+
+## Definition
+
+For a finite sign sequence `x_1,...,x_N` with each `x_i` in `{-1,+1}`, define its homogeneous-progression discrepancy as the largest absolute prefix sum
+
+`|x_d + x_(2d) + ... + x_(kd)|`,
+
+over positive integers `d,k` with `kd <= N`. T083-C01 fixes the cap at 3 and maximizes `N`. Signs are unrestricted; no multiplicative rule is imposed. The checker uses exact integer arithmetic and checks every such prefix.
+
+The initial program returns `[1]`, a valid one-term sequence. `baseline.py` extends a sequence one term at a time. When it chooses `x_n`, it checks each divisor `d` of `n`; these are exactly the progressions whose new prefix ends at `n`. It uses a fixed seed, 24 trials, and a 5000-term limit by default. It reads no comparison witness. Set `MATHBENCH_SEARCH_SECONDS` for an explicit time cutoff.
+
+## Published status and comparison
+
+Konev and Lisitsa's SAT paper reports an unrestricted C=3 sequence of length 130000. The first 127600 terms are completely multiplicative. Their paper and data page do not prove that 130000 is longest. We recovered a complete sign sequence from a public notebook in a Wolfram Community discussion about the problem, then checked every progression prefix locally. The discussion refers to the Konev-Lisitsa report and data page. The saved text is a reconstruction from that public notebook; we do not claim byte identity with the original compressed author download. The source text contains 130000 signs and has SHA-256 `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`.
+
+The recovered text is stored as deterministic gzip at `data/source/sequence_130000.txt.gz`. Decompression gives the original sign text; its SHA-256 remains `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`.
+
+The exact maximum 1160 for C=2 is a different cap. The exact maximum 127645 for completely multiplicative C=3 sequences is a restricted problem. Neither resolves the unrestricted C=3 maximum. Tao's theorem rules out an infinite sequence with bounded discrepancy, but it gives no exact finite maximum. The 2026 Princeton thesis we checked treats the solved C=2 range and does not close the unrestricted C=3 case. We therefore record 130000 as a verified lower bound and leave the finite maximum open.
+
+Primary sources:
+
+- Konev and Lisitsa, [Computer-Aided Proof of Erdős Discrepancy Properties, arXiv:1405.3097v2](https://arxiv.org/html/1405.3097v2), especially §4.
+- [Konev and Lisitsa author data page](https://cgi.csc.liv.ac.uk/~konev/edp/), checked 2026-11-06.
+- The recovered [public notebook](https://community.wolfram.com/uploads/short-url/tecwlpwuwx7kcTAYpoVaduRt9FD.nb) is linked from this [Wolfram Community discussion](https://community.wolfram.com/t/discrepancy-conjecture/6798). Notebook SHA-256: `cc6066cefd3c28435aee484b8ad4c952f6d17919732acc5e21a412ed45cadbca`.
+- Tao, [The Erdős discrepancy problem, arXiv:1509.05363](https://arxiv.org/abs/1509.05363), for the infinite-sequence theorem.
+
+## Programs and budgets
+
+- `check.py` independently recalculates validity and length. Optional score fields do not affect its result.
+- `init_program.py` is a short valid seed. `baseline.py` and `evolution.py` do not read comparison data.
+- `human.py` replays the recovered human construction. `reference.py` replays the frozen public comparison.
+- Both programs use the same recovered 130000-sign witness. The redundant JSON copy was removed; SOTA verification now points to the archived source text and its SHA-256.
+- `evaluator.py` uses the shared evaluator. Generation budget is 300 seconds; verification budget is 60 seconds; default memory is 4 GiB and one thread.
+
+Run from the repository root:
+
+```sh
+.venv/bin/python -m pytest tasks/t083/test_task.py -q
+.venv/bin/python -m json.tool tasks/t083/task.json > /dev/null
+.venv/bin/python -m json.tool tasks/t083/data/bestknown.json > /dev/null
+```
 
 ## 定义
 
-把四个边长为 1 的等边三角形放入轴对齐正方形，三角形可独立平移和旋转，内部不得重叠。目标是最小化正方形边长。正方形左下角固定为原点。
+给定有限符号序列 `x_1,...,x_N`，每项取 `-1` 或 `+1`。对正整数 `d,k` 且 `kd<=N`，检查齐次算术子列前缀和 `x_d+x_(2d)+...+x_(kd)`。T083-C01 固定上界为 3，目标是最大化序列长度 `N`。序列不受乘法性限制。评测器用整数精确计算检查所有前缀。
 
-形式输入使用 `Q(√3)` 中的坐标和平移，并用有理单位向量表示旋转。该表示在所有实平移和旋转中稠密，因此保持问题的下确界；它不声称精确表示每个实数位姿。证明思路是先以趋近 1 的有理比例分别向内缩每个三角形，制造严格间隙，再用稠密坐标和方向近似，最后围绕正方形原点按该比例的倒数放大整个排布。检查器在 `Q(√3)` 上精确计算，不使用浮点容差。
+初始程序返回有效的一项序列 `[1]`。传统搜索程序每次添加一项，并检查所有满足 `d|n` 的前缀。默认固定种子、24 次尝试和 5000 项上限。搜索不读取人类见证或参考见证。可用 `MATHBENCH_SEARCH_SECONDS` 设置显式时间上限。
 
-## 来源与状态
+## 已知结果和对照
 
-Friedman 的公开表将 n=4 的已知构造记为 `1+1/√3`，归于 1996 年。表中把数值列为已发现的构造，没有称其最优已证。2026-11-06 复核时，表仍把 n=4 列作已知构造；n=3 的证明另列在 2026 年 10 月。重建见 [reference witness](data/human/friedman4_formula.json)，原页面图及重建来源见 `data/source/`。
+Konev 与 Lisitsa 的 SAT 论文报告了一条长度 130000、无乘法性限制的 C=3 序列。前 127600 项完全乘法。论文和作者数据页没有证明 130000 是最大值。我们从作者数据页链接的公开 notebook 中恢复了完整序列，并用本地程序精确检查全部前缀。保存的文本是从该 notebook 恢复的表示；没有声称它与原始压缩文件逐字节相同。文本含 130000 项，SHA-256 为 `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`。
 
-冻结人类对照为向上舍入的 `1.577350269189626`。它略高于精确值 `1+√3/3`，这样最小化兼容分数的分母仍是保守对照。该值是可行构造上界，不是最优性证明。
+C=2 的精确最大值 1160 是另一个上界配置。C=3 完全乘法序列的精确最大值 127645 属于受限问题。两者都没有解决无乘法性限制的 C=3。Tao 的定理排除无限且差异有界的序列，但没有给出有限最大长度。我们检查的 2026 年 Princeton 论文讨论已解决的 C=2 范围，未解决无乘法性限制的 C=3。因此将 130000 记为已验证下界，有限最大值仍开放。
 
-## English
-
-Place four unit equilateral triangles in an axis-aligned square. Each triangle may translate and rotate independently. Triangle interiors must be disjoint. Minimize the square side. The square has lower-left corner `(0,0)`.
-
-The exact input domain uses translations in `Q(sqrt(3))` and rational unit directions. To show that it has the same infimum, shrink each triangle about its centroid by a rational factor tending to 1. This creates positive clearance. Approximate the centers and rotations by domain values, then scale the whole arrangement about the square origin by the inverse shrink factor. The result has unit triangles and a square side tending to the original side. The checker performs exact ordered-field comparisons in `Q(sqrt(3))` and uses no floating-point tolerance.
-
-Friedman's public table lists the n=4 construction with side `1+1/sqrt(3)` and dates it to 1996. It labels the construction as found, not proved optimal. The 2026-11-06 source review found n=4 still listed as a construction; the October 2026 proof is for n=3. The frozen human reference is rounded upward to `1.577350269189626`, slightly above the exact construction value. It is a feasible upper bound, not an optimality proof.
-
-## Files
-
-- `instruction.txt`: model-facing task prompt.
-- `check.py`: exact algebraic checker.
-- `init_program.py`: self-contained 2-by-2 seed.
-- `baseline.py` and `evolution.py`: seeded generic placement searches; they do not read comparison assets.
-- `human.py` and `reference.py`: separately generated and archived Friedman construction.
-- `IMPLEMENTATION.md`: reproduction, source and test notes.
+主来源与复核日期见上方英文来源列表。任务状态为已通过 Sol 验收（2026-11-06）。

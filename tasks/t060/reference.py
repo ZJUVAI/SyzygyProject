@@ -1,8 +1,12 @@
-"""Reproduce the fixed public 127-one comparison expression."""
+"""Replay the 128-point Singer/Leech-family difference-basis construction."""
+
 import json
+import os
 from pathlib import Path
 
 
 def run_code():
-    path = Path(__file__).with_name("data") / "reference" / "public_127_expression.json"
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T060-C01") != "T060-C01":
+        raise ValueError("unsupported configuration id")
+    path = Path(__file__).parent / "data" / "reference" / "singer_q31_leech_product_n6166_128.json"
     return json.loads(path.read_text(encoding="utf-8"))

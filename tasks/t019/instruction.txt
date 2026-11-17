@@ -1,1 +1,9 @@
-Construct k distinct integers such that for every prime p at least one residue class modulo p is absent. It is sufficient to check p <= k. Minimize max(tuple)-min(tuple). T019-C01 uses k=343. Return JSON with a single key "tuple" containing k strict integers; booleans are invalid. The evaluator recomputes admissibility and diameter and ignores claimed scores. Define run_code() with no arguments. Start from the supplied self-contained cold initial program. Generation limit is 300 seconds, verification limit 60 seconds, memory 4 GiB, one thread.
+Build a finite set of distinct integer or rational points in the plane. Every three
+points must be noncollinear. Maximize the number of points while ensuring that no
+seven points are in convex position. Forbidden polygons need not be empty: other
+submitted points may lie inside their hull.
+Return JSON data as {"points": [[x, y], ...]}. The evaluator recomputes the score
+and ignores any claimed score. The fixed configuration forbids a convex polygon
+with 7 vertices. Do not output or assume the unknown value ES(7). Default budgets
+are 300 seconds for generation and 60 seconds for verification, with 4 GiB of
+memory and one compute thread.

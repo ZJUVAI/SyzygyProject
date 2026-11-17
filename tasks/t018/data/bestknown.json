@@ -1,45 +1,126 @@
 {
   "task_id": "T018",
-  "review_status": "accepted_by_sol",
   "configurations": {
     "T018-C01": {
-      "public_value": "1188957517256767569920",
-      "public_source": {
-        "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
-        "title": "Order 29, Hadamard maximal determinant problem",
-        "evidence": "Lists a conjectured D-optimal Gram matrix due to Bruce Solomon and gives its determinant as (320*7^12*2^28)^2; the corresponding sign-matrix determinant magnitude is 320*7^12*2^28.",
-        "supporting_witness_source": "https://arxiv.org/abs/math/0304410",
-        "supporting_witness_title": "New lower bounds for the maximal determinant problem"
-      },
-      "reproduced_value": "1188957517256767569920",
       "program": "reference.py",
-      "witness": "data/human_order29.json",
-      "matches_public_best": true,
-      "comparison_tolerance": "0",
-      "limitations": [
-        "This is the published best-known feasible value in the cited sources, not a proof of global optimality.",
-        "The source documents a conjectured Gram matrix and a lower-bound construction; the maximal determinant at order 29 remains uncertified."
-      ],
-      "checked_at": "2026-11-05",
+      "reproduced_value": "2/51",
+      "public_value": "2/51",
+      "highest_reported": {
+        "value": "2/51",
+        "source": "Heilbronn archive, Convex n=12 record page; entry credits David Cantrell, June 2007.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "reproduction_status": "The archive reports 2/51 and its coordinate record was re-verified later. This task separately reconstructs rational coordinates by affine normalization and denominator-100 rational reconstruction; the exact ratio is independently checked. No optimality proof for n=12 was found."
+      },
+      "best_human": {
+        "value": "2/51",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "source": "Historical result credited to David Cantrell, June 2007, as listed by the current Heilbronn archive.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "date_checked": "2026-11-06",
+        "provenance": "The record is credited to Cantrell in 2007. The current archive says coordinate material was supplied by an external contributor and re-verified later, citing a Cantrell 2007 Mathematica notebook received in September 2026. The contributor identity and AI provenance of that later coordinate recovery are not specified. The rational coordinates in this task are our documented reconstruction, not claimed as Cantrell's original coordinates.",
+        "evidence_state": "The archived decimal source is saved. Affine normalization and exact rational reconstruction yield a separate 12-point witness. Exact checking gives minimum triangle area 1/4, hull area 51/8, and ratio 2/51.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "source_url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "origin_type": "historical reported record with later coordinate reconstruction"
+      },
+      "best_public": {
+        "value": "2/51",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "source": "Current Heilbronn archive's Convex n=12 record page, checked 2026-11-06.",
+        "url": "https://math.tejstead.com/heilbronn/convex/12/",
+        "date_checked": "2026-11-06",
+        "provenance": "The site credits the 2007 result to Cantrell and documents later coordinate recovery by an external contributor. The attribution and coordinate history are kept separate.",
+        "evidence_state": "The archive reports 2/51. Its source decimals and this task's separately rationalized witness are saved and independently exact-checked. No n=12 optimality proof was found.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "source_url": "https://math.tejstead.com/heilbronn/convex/12/"
+      },
+      "best_reproduced": {
+        "value": "2/51",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "point_count": 12,
+          "coordinate_domain": "unbounded rational coordinates in the plane",
+          "container": "convex hull of the selected points"
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Parse all coordinates as exact rationals, reject every zero triangle determinant, enumerate all 220 triples, and compute the convex hull area by exact shoelace arithmetic after an exact monotone-chain hull.",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "origin_type": "local affine and rational reconstruction of a later archived coordinate record",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": "2/51",
+        "witness_program": "human.py",
+        "witness": "data/reference/cantrell_n12_rationalized.json",
+        "witness_sha256": "6e7f78156eac11badf81609e08f0c4600e98e31c42000867585e9d6d9cda11b4",
+        "evidence_state": "human.py rebuilds the witness from the archived decimal source by a documented affine normalization and rational reconstruction; the result passes the exact checker."
+      },
+      "compatibility_score": {
+        "frozen_formula": "H/J",
+        "H": "2/51",
+        "note": "H is the exact rational score of the reproduced historical construction."
+      },
+      "optimality_status": {
+        "status": "open in the checked sources; 2/51 is a record construction, not a proof of the maximum",
+        "source_survey_date": "2026-11-06",
+        "evidence": "The current archive lists 2/51 as the n=12 free-convex record. Its proof list includes 2026 formal results for n=3 through n=8, not n=12.",
+        "limitations": "No matching upper bound for n=12 was found. The rational-domain task has the same supremum as the real-coordinate domain by density and continuity, but this fact does not certify optimality."
+      },
+      "source_pins": {
+        "record_page": {
+          "url": "https://math.tejstead.com/heilbronn/convex/12/",
+          "date_checked": "2026-11-06",
+          "record_value": "2/51",
+          "credit": "David Cantrell, June 2007"
+        },
+        "archived_source_coordinates": {
+          "url": "https://math.tejstead.com/heilbronn/convex/12/points.json",
+          "sha256": "c5eaf80a1b3f270b949fe891eb9777541f0330c6d33a33e7b3d1eaa267c03b27",
+          "description": "Current archive source JSON includes decimal coordinates and later coordinate provenance."
+        },
+        "site_methods": {
+          "url": "https://math.tejstead.com/heilbronn/methods/",
+          "date_checked": "2026-11-06",
+          "scope": "Coordinate provenance, reconstruction policy, exact verification, and n=3 through n=8 free-convex proofs."
+        }
+      },
+      "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",
-        "date": "2026-11-07",
+        "date": "2026-11-06",
         "run": {
           "task_id": "T018",
           "config_id": "T018-C01",
           "validity": 1.0,
           "combined_score": 1.0,
-          "objective": 1188957517256767569920,
+          "objective": "2/51",
           "verification_status": "exact",
-          "generation_time": 0.26474758610129356,
-          "verification_time": 0.26491037011146545,
-          "objective_value": 1188957517256767569920,
+          "generation_time": 2.893059618771076,
+          "verification_time": 5.750130265951157,
+          "objective_value": "2/51",
           "details": {
-            "signed_determinant": -1188957517256767569920,
-            "n": 29
+            "point_count": 12,
+            "triangles_checked": 220,
+            "minimum_triangle_area": "1/4",
+            "convex_hull_area": "51/8",
+            "hull_vertex_count": 9,
+            "claimed_objective_ignored": true,
+            "strict": true
           },
-          "eval_time": 0.5330900512635708,
+          "eval_time": 8.65799344331026,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -56,106 +137,55 @@
           }
         },
         "independent_quantity": {
-          "absolute_determinant": "1188957517256767569920"
+          "area_ratio": "2/51",
+          "minimum_triangle_area": "1/4",
+          "hull_area": "51/8",
+          "support_edges": 9,
+          "triangles_checked": 220
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "review_status": "accepted_by_sol",
-      "best_human": {
-        "value": 1188957517256767569920,
-        "parameters": {
-          "n": 29,
-          "entries": "±1"
-        },
-        "authors": [
-          "William P. Orrick",
-          "Bruce Solomon",
-          "Roland Dowdeswell",
-          "Warren D. Smith"
-        ],
-        "year": 2003,
-        "url": "https://arxiv.org/abs/math/0304410",
-        "evidence_state": "published witness transcribed and exactly reproduced",
-        "optimality": "best-known construction; no proof of global optimality is claimed",
-        "witness": "data/human_order29.json"
-      },
-      "best_public": {
-        "value": 1188957517256767569920,
-        "parameters": {
-          "n": 29,
-          "entries": "±1"
-        },
-        "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
-        "evidence_state": "source reports Solomon/Orrick construction and hosts Gram/decomposition data; task uses the printed sign matrix in Orrick et al.",
-        "optimality": "conjectural, not certified",
-        "origin_type": "unknown unless attribution is stated in source/provenance"
-      },
-      "best_reproduced": {
-        "value": 1188957517256767569920,
-        "parameters": {
-          "n": 29,
-          "entries": "±1"
-        },
-        "provenance": "human published witness",
-        "evidence_state": "independently recomputed by integer Bareiss elimination",
-        "review_status": "reviewed_by_sol"
+      "parameters": {
+        "point_count": 12,
+        "coordinate_domain": "unbounded rational coordinates in the plane",
+        "container": "convex hull of the selected points",
+        "objective": "maximize minimum_triangle_area / convex_hull_area"
       }
     }
   },
-  "sol_review": {
-    "T018-C01": {
-      "status": "reproduced",
-      "reviewer": "Sol main agent",
-      "date": "2026-11-05"
+  "review_status": "accepted_by_sol",
+  "snapshot_date": "2026-11-06",
+  "additional_evidence": {
+    "configurations": {
+      "T018-C01": {
+        "best_human": {
+          "source": "Result credited to David Cantrell, June 2007, by the current Heilbronn archive.",
+          "provenance": "The archive says later coordinate material was supplied by an external contributor and re-verified; it refers to a 2007 notebook received September 2026. The identity and AI provenance of that later coordinate contributor are not specified. Our rational points are a separate documented reconstruction.",
+          "evidence_state": "The archive's decimal JSON is saved. The local affine and rational reconstruction is exact-checked at 2/51."
+        },
+        "best_public": {
+          "source": "Current Heilbronn archive, Convex n=12 record.",
+          "provenance": "The value is credited to Cantrell in 2007. Later coordinate recovery is credited separately by the archive to an external contributor.",
+          "evidence_state": "The exact ratio is reproduced from the locally rationalized witness. No n=12 optimality proof was found in the checked sources."
+        },
+        "best_reproduced": {
+          "verification_method": "All 220 exact rational determinants are nonzero; minimum area is 1/4; exact hull shoelace area is 51/8; ratio is 2/51.",
+          "origin_type": "local rationalization of archived record coordinates"
+        },
+        "frozen_human_baseline": {
+          "evidence_state": "Human replay reconstructs from the archived source JSON and passes exact validation."
+        },
+        "highest_reported": {
+          "source": "Current Heilbronn archive's Convex n=12 record page.",
+          "reproduction_status": "The archive reports 2/51 and current record status. The construction is exactly reproduced locally; no optimality proof for n=12 was found."
+        },
+        "optimality_status": {
+          "status": "open in the sources checked",
+          "evidence": "The current archive lists 2/51 as the n=12 record. Its cited machine-checked free-convex optimality results cover n=3 through n=8.",
+          "limitations": "No proof that 2/51 is globally maximal for n=12 was found. Rational configurations have the same supremum as real configurations by density, but this does not give an optimality proof."
+        }
+      }
     }
-  },
-  "snapshot_date": "2026-11-04",
-  "best_human": {
-    "value": 1188957517256767569920,
-    "parameters": {
-      "n": 29,
-      "entries": "±1"
-    },
-    "authors": [
-      "William P. Orrick",
-      "Bruce Solomon",
-      "Roland Dowdeswell",
-      "Warren D. Smith"
-    ],
-    "year": 2003,
-    "url": "https://arxiv.org/abs/math/0304410",
-    "evidence_state": "published witness transcribed and exactly reproduced",
-    "optimality": "best-known construction; no proof of global optimality is claimed",
-    "witness": "data/human_order29.json"
-  },
-  "best_public": {
-    "value": 1188957517256767569920,
-    "parameters": {
-      "n": 29,
-      "entries": "±1"
-    },
-    "url": "https://maths-people.anu.edu.au/~brent/maxdet/order29/",
-    "evidence_state": "source reports Solomon/Orrick construction and hosts Gram/decomposition data; task uses the printed sign matrix in Orrick et al.",
-    "optimality": "conjectural, not certified",
-    "origin_type": "unknown unless attribution is stated in source/provenance"
-  },
-  "best_reproduced": {
-    "value": 1188957517256767569920,
-    "parameters": {
-      "n": 29,
-      "entries": "±1"
-    },
-    "provenance": "human published witness",
-    "evidence_state": "independently recomputed by integer Bareiss elimination"
-  },
-  "baseline_seed": {
-    "value": 7247757312,
-    "formula": "27*2^28",
-    "provenance": "deterministic seed 2I-J, constructed in init_program.py",
-    "evidence_state": "exact determinant; not attributed as a published record"
-  },
-  "implementation_review_date": "2026-11-04",
-  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
-  "frozen_human_baseline_type": "published human witness or explicit construction formula"
+  }
 }

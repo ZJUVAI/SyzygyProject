@@ -1,11 +1,46 @@
-"""Independent 38-square seed found by Williams-style network search; no reference reads."""
-import os
+"""Build a hard-satisfying seed with SymPy's classic DPLL implementation.
 
-# EVOLVE-BLOCK-START
-_SEED = {'side': 4755, 'squares': [[0, 3521, 1234], [0, 2429, 1092], [0, 0, 2429], [1092, 2931, 590], [1092, 2429, 502], [1234, 4076, 679], [1234, 3521, 555], [1594, 2813, 118], [1594, 2429, 384], [1682, 2983, 538], [1682, 2931, 52], [1712, 2909, 22], [1712, 2813, 96], [1734, 2909, 74], [1789, 3952, 124], [1789, 3521, 431], [1808, 2813, 170], [1913, 3952, 803], [1978, 2429, 554], [2220, 2983, 969], [2429, 2326, 103], [2429, 0, 2326], [2532, 2326, 657], [2716, 4319, 436], [2716, 3952, 367], [3083, 4118, 201], [3083, 3952, 166], [3152, 4461, 294], [3152, 4319, 142], [3189, 3892, 60], [3189, 2326, 1566], [3249, 3892, 226], [3284, 4309, 10], [3284, 4118, 191], [3294, 4309, 152], [3446, 4309, 446], [3475, 3892, 417], [3892, 3892, 863]]}
+This entry is self-contained: it reads only the public WCNF input, not task
+modules or comparison witnesses.
+"""
+
+import os
+import gzip
+from pathlib import Path
+
+
+INSTANCE = Path(__file__).parent / "data" / "source" / "b4794d123e18a908924d3d33cdeeae3b.wcnf.gz"
+VARIABLES = 1630
+
+
+def _hard_clauses():
+    clauses = []
+    for raw_line in gzip.decompress(INSTANCE.read_bytes()).decode("utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("c") or line.startswith("%"):
+            continue
+        fields = line.split()
+        if fields[0] == "h":
+            clauses.append([int(literal) for literal in fields[1:-1]])
+    if len(clauses) != 6150:
+        raise ValueError("unexpected hard-clause count")
+    return clauses
+
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T098-C01") != "T098-C01":
-        raise ValueError("unsupported T098 configuration")
-    return {"side": _SEED["side"], "squares": [list(s) for s in _SEED["squares"]]}
-# EVOLVE-BLOCK-END
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    # EVOLVE-BLOCK-START
+    from sympy.logic.algorithms.dpll2 import SATSolver
+
+    clauses = _hard_clauses()
+    model = next(SATSolver(clauses, set(range(1, VARIABLES + 1)), set(), heuristic="vsids")._find_model())
+    assignment = [bool(model[index]) for index in range(1, VARIABLES + 1)]
+    # EVOLVE-BLOCK-END
+    return {"assignment": assignment}
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

@@ -1,33 +1,37 @@
 {
   "task_id": "T033",
-  "candidate_id": "maximum-cut",
-  "name": "Gset G70 maximum cut",
+  "name": "C4-free graph extremal number at order 41",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T033-C01",
   "configurations": [
     {
       "id": "T033-C01",
       "parameters": {
-        "instance": "Gset-G70",
-        "n": 10000,
-        "m": 9999,
-        "weights": "all +1",
-        "graph_sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061",
-        "normalized_graph_sha256": "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085"
+        "vertices": 41,
+        "forbidden_cycle_length": 4
       },
       "direction": "maximize",
-      "human_reference": 8616
+      "human_reference": 132
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-17",
-    "decision": "压缩图来源与重复数据移除已通过 Sol 验收",
-    "source_review": {
-      "数学模型": "固定Gset G70的10000顶点9999条单位权边，最大化二分割的跨边权重。",
-      "人类方法来源": "冻结H8616是公开单顶点FLIP邻域的本地四起点复现，种子0，实耗8774次翻转。它不是文献原始8616纪录，也不是完整BLS复现。",
-      "独立验算": "Sol 核对解压后的 117744 个字节与原图完全相同。由按原图边重算的 Ising 能量独立计算割权。人类及参考构造均为 8616，单次传统搜索为 8932。公开输入导出和简单起点评测均通过。",
-      "开放状态与限制": "Cosm v4（2026-10-11）将9595列为G70最好已知值，并与已认证G72/G77/G81区分。LPI校准9595与测试9594分列。9595证书未取得。9683只作未认证SDP文献数值。G1因来源状态冲突移出。"
-    }
-  }
+    "date": "2026-11-06",
+    "decision": "实现完成并通过Sol验收",
+    "checks": [
+      "same-parameter primary source and open bounds",
+      "independent sparse6 decode",
+      "human and reference replay",
+      "cold seed export",
+      "traditional search",
+      "exhaustive four-vertex subset audit",
+      "claimed scores ignored",
+      "invalid constructions rejected",
+      "program errors and timeout rejected"
+    ],
+    "limitations": [
+      "The live source states that related papers are in preparation; no fixed publication version of this graph archive was located. Archive bytes are frozen by SHA-256."
+    ]
+  },
+  "category": "extremal_graph_theory"
 }

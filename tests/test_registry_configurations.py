@@ -31,15 +31,15 @@ def test_pending_configurations_are_excluded_until_acceptance(tmp_path, monkeypa
 
 def test_release_uses_one_configuration_per_active_task():
     assert len(registry.INITIAL_TASKS) == len(set(registry.INITIAL_TASKS)) == 100
-    assert {"T101", "T102"} <= set(registry.INITIAL_TASKS)
-    directories = {path.name.upper() for path in registry.TASKS.iterdir()
-                   if path.is_dir() and not path.name.startswith("__")}
+    assert registry.INITIAL_TASKS == tuple(f"T{number:03d}" for number in range(1, 101))
+    directories = {path.parent.name.upper() for path in registry.TASKS.glob("*/task.json")}
     assert directories == set(registry.INITIAL_TASKS)
     assert not list(registry.TASKS.glob("*.py"))
     for task in registry.INITIAL_TASKS:
-        config_id = f"{task}-C02" if task == "T003" else f"{task}-C01"
+        config_id = f"{task}-C02" if task == "T002" else f"{task}-C01"
         directory = registry.task_path(task)
         manifest = json.loads((directory / "task.json").read_text())
+        assert manifest["task_id"] == task
         assert [c["id"] for c in manifest["configurations"]] == [config_id]
         assert not (directory / "best").exists()
         assert not (directory / "review").exists()
@@ -52,6 +52,23 @@ def test_release_uses_one_configuration_per_active_task():
         for config in registry.load_task(task)["configurations"]:
             assert registry.load_config(task, config["id"]) == config
             assert config["id"] == config_id
+
+
+def test_task_order_keeps_research_directions_together():
+    migration = json.loads((registry.TASKS / "task_id_migration.json").read_text())
+    rows = migration["tasks"]
+    assert [row["task_id"] for row in rows] == list(registry.INITIAL_TASKS)
+    assert len({row["previous_task_id"] for row in rows}) == 100
+    completed = set()
+    previous = None
+    for row in rows:
+        task = registry.load_task(row["task_id"])
+        category = task["category"]
+        assert category == row["category"]
+        if category != previous:
+            assert category not in completed
+            completed.add(category)
+            previous = category
 
 
 def test_task_programs_and_data_have_no_removed_configuration_ids():
@@ -71,15 +88,15 @@ def test_task_programs_and_data_have_no_removed_configuration_ids():
 
 
 @pytest.mark.parametrize(("task", "config_id"), [
-    ("T003", "T003-C01"),
-    ("T006", "T006-C02"),
+    ("T002", "T002-C01"),
+    ("T030", "T030-C02"),
 ])
 def test_removed_configuration_is_not_available(task, config_id):
     with pytest.raises(ValueError, match="Unknown configuration"):
         registry.load_config(task, config_id)
 
 
-@pytest.mark.parametrize("task", ("T086", "T096"))
+@pytest.mark.parametrize("task", ("T101", "T102"))
 def test_removed_tasks_are_unavailable(task):
     with pytest.raises(ValueError, match="Unknown task"):
         registry.resolve_task_id(task)

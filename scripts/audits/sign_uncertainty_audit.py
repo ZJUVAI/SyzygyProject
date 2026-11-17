@@ -27,7 +27,7 @@ def _fourier_by_differentiation(poly):
 
 
 def audit(s):
-    from tasks.t089.check import positive_root_intervals
+    from tasks.t081.check import positive_root_intervals
     p=list(map(F,s['coefficients']));t=sp.Symbol('u')
     P=sp.Poly.from_list([sp.Rational(v.numerator,v.denominator) for v in reversed(p)],gens=t)
     q=_fourier_by_differentiation(P)

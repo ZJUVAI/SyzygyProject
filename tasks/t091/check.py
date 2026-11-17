@@ -1,68 +1,123 @@
-"""Exact checker for binary strength-4 orthogonal arrays."""
-from itertools import combinations
+"""Exact feasible-polynomial checker for the degree-146 integer Chebyshev task."""
+
+from fractions import Fraction
+import heapq
 import math
 
-PARAMETERS = {"columns": 63, "levels": 2, "strength": 4, "row_repetition": "allowed"}
-COLUMN_COUNT = 63
-ROW_MASK_LIMIT = 1 << COLUMN_COUNT
-MINIMUM_ROW_BOUND = 2032
+DEGREE_LIMIT = 146
+MAX_BERNSTEIN_SPLITS = 100_000
+RELATIVE_WIDTH = Fraction(1, 10**10)
 
 
-def _column_bitsets(rows):
-    columns = [0] * COLUMN_COUNT
-    for row_index, row in enumerate(rows):
-        bit = 1 << row_index
-        for column in range(COLUMN_COUNT):
-            if (row >> column) & 1:
-                columns[column] |= bit
-    return columns
+def _config_n(config):
+    if not isinstance(config, dict):
+        raise ValueError("configuration must be an object")
+    parameters = config.get("parameters")
+    expected = {
+        "degree_at_most": DEGREE_LIMIT,
+        "interval": [0, 1],
+        "coefficient_domain": "nonzero integer polynomials",
+    }
+    if parameters != expected:
+        raise ValueError("configuration must be degree_at_most=146 on [0,1]")
+    return DEGREE_LIMIT
 
 
-def _balanced_parity_characters(columns, row_count):
-    target = row_count // 2
-    for size in range(1, 5):
-        for indices in combinations(range(COLUMN_COUNT), size):
-            parity_rows = 0
-            for index in indices:
-                parity_rows ^= columns[index]
-            if parity_rows.bit_count() != target:
-                return False, size, indices, parity_rows.bit_count(), target
-    return True, 0, (), target, target
+def _parse_coefficients(solution):
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be an object")
+    coefficients = solution.get("coefficients")
+    if not isinstance(coefficients, list) or not coefficients:
+        raise ValueError("coefficients must be a nonempty low-to-high list")
+    if len(coefficients) > DEGREE_LIMIT + 1:
+        raise ValueError("polynomial degree exceeds 146")
+    if any(type(value) is not int for value in coefficients):
+        raise ValueError("coefficients must be integers; bool and numeric approximations are invalid")
+    values = list(coefficients)
+    while len(values) > 1 and values[-1] == 0:
+        values.pop()
+    if all(value == 0 for value in values):
+        raise ValueError("the zero polynomial is excluded")
+    return values
+
+
+def _bernstein_coefficients(power_coefficients):
+    """Convert power coefficients on [0,1] to Bernstein coefficients."""
+    degree = len(power_coefficients) - 1
+    result = []
+    for k in range(degree + 1):
+        value = Fraction(0)
+        for i in range(k + 1):
+            value += Fraction(power_coefficients[i] * math.comb(k, i), math.comb(degree, i))
+        result.append(value)
+    return result
+
+
+def _split_bernstein(coefficients):
+    """Return exact Bernstein coefficients on the left and right half intervals."""
+    row = coefficients[:]
+    left = [row[0]]
+    right = [row[-1]]
+    while len(row) > 1:
+        row = [(row[i] + row[i + 1]) / 2 for i in range(len(row) - 1)]
+        left.append(row[0])
+        right.append(row[-1])
+    right.reverse()
+    return left, right, row[0]
+
+
+def _upper(coefficients):
+    return max(abs(value) for value in coefficients)
+
+
+def _certified_supnorm(power_coefficients):
+    """Bound ||P|| exactly by adaptive Bernstein convex-hull enclosures.
+
+    For each interval, the polynomial is a convex combination of its Bernstein
+    coefficients. Their maximum absolute value is therefore an upper bound.
+    Dyadic subdivision tightens the bound. A dyadic value supplies the lower
+    endpoint. No sample is used as an upper-bound certificate.
+    """
+    initial = _bernstein_coefficients(power_coefficients)
+    lower = max(abs(initial[0]), abs(initial[-1]))
+    serial = 0
+    heap = [(-_upper(initial), serial, initial)]
+    splits = 0
+    while True:
+        upper = -heap[0][0]
+        if upper - lower <= max(lower, upper) * RELATIVE_WIDTH:
+            return lower, upper, splits
+        if splits >= MAX_BERNSTEIN_SPLITS:
+            raise ValueError("exact sup-norm enclosure did not converge within the checker work limit")
+        _, _, current = heapq.heappop(heap)
+        left, right, midpoint_value = _split_bernstein(current)
+        lower = max(lower, abs(midpoint_value))
+        serial += 1
+        heapq.heappush(heap, (-_upper(left), serial, left))
+        serial += 1
+        heapq.heappush(heap, (-_upper(right), serial, right))
+        splits += 1
 
 
 def validate(solution, config, strict=False):
-    if (not isinstance(config, dict) or config.get("id") != "T091-C01"
-            or not isinstance(config.get("parameters"), dict)
-            or config["parameters"] != PARAMETERS
-            or any(type(config["parameters"].get(k)) is not type(v) for k, v in PARAMETERS.items())):
-        raise ValueError("unsupported configuration or parameters")
-    if not isinstance(solution, dict) or not isinstance(solution.get("rows"), list):
-        raise ValueError("solution must contain a row list")
-    rows = solution["rows"]
-    row_count = len(rows)
-    if row_count < MINIMUM_ROW_BOUND:
-        raise ValueError("row count violates the proven Rao lower bound and divisibility")
-    if row_count % 16:
-        raise ValueError("row count must be divisible by 16 for strength 4")
-    for i, row in enumerate(rows):
-        if type(row) is not int or not 0 <= row < ROW_MASK_LIMIT:
-            raise ValueError(f"row {i} must be a 63-bit nonnegative integer mask")
-    columns = _column_bitsets(rows)
-    valid, size, indices, count, target = _balanced_parity_characters(columns, row_count)
-    if not valid:
-        raise ValueError(f"unbalanced parity on {size} columns {indices}: {count}, expected {target}")
+    """Return an exact rational enclosure for the full-domain supremum norm."""
+    del strict  # The same proof method is used in both modes.
+    degree_limit = _config_n(config)
+    coefficients = _parse_coefficients(solution)
+    degree = len(coefficients) - 1
+    lower, upper, splits = _certified_supnorm(coefficients)
     return {
-        "objective": row_count,
-        "objective_value": row_count,
-        "verification_status": "exact",
+        "objective": str(upper),
+        "objective_value": str(upper),
+        "verification_status": "certified",
         "details": {
-            "rows": row_count,
-            "columns": COLUMN_COUNT,
-            "strength": 4,
-            "repeated_rows_allowed": True,
-            "balanced_parity_checks": sum(math.comb(COLUMN_COUNT, k) for k in range(1, 5)),
-            "pattern_equivalence": "For each selected set of four columns, all nontrivial parity characters are balanced; binary Fourier inversion gives every 4-bit pattern exactly N/16 times.",
-            "rao_lower_bound": MINIMUM_ROW_BOUND,
-            "claimed_score_ignored": True
-        }
+            "objective_interval": [str(lower), str(upper)],
+            "domain": "[0,1]",
+            "degree": degree,
+            "degree_at_most": degree_limit,
+            "coefficients_low_to_high": len(coefficients),
+            "method": "exact adaptive Bernstein convex-hull enclosure",
+            "subdivision_count": splits,
+            "claimed_objective_ignored": True,
+        },
     }

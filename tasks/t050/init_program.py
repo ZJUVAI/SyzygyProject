@@ -1,31 +1,12 @@
-"""A simple path made by flipping each coordinate once."""
+"""Simple standalone seed: use every word as a codeword."""
 
 import os
 
 
-CONFIG_DIMENSIONS = {"T050-C01": 9}
-
-
-def configured_dimension():
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T050-C01")
-    try:
-        return CONFIG_DIMENSIONS[cid]
-    except KeyError:
-        raise ValueError("unsupported configuration") from None
-
-
 def run_code():
-    dimension = configured_dimension()
-    int(os.environ.get("MATHBENCH_SEED", "0"))
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T050-C01")
+    if chosen != "T050-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    vertices = [0]
-    current = 0
-    for coordinate in range(dimension):
-        current ^= 1 << coordinate
-        vertices.append(current)
+    return {"codewords": list(range(1 << 10))}
     # EVOLVE-BLOCK-END
-    return {"vertices": vertices}
-
-
-if __name__ == "__main__":
-    print(run_code())

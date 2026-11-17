@@ -1,47 +1,101 @@
-"""Exact sum and difference counts with a certified objective interval."""
+"""Exact rational checker for Thomson energy on the unit sphere."""
+
 from fractions import Fraction
+import math
 
-PARAMETERS = {"max_cardinality": 512, "integer_interval": [-1000000, 1000000]}
 
+def _q(value):
+    if type(value) is int:
+        return Fraction(value)
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError("coordinates must be finite")
+        return Fraction.from_float(value)
+    if isinstance(value, str):
+        try:
+            return Fraction(value)
+        except (ValueError, ZeroDivisionError) as exc:
+            raise ValueError("coordinates must be rational strings") from exc
+    raise ValueError("coordinates must be integers, finite floats, or rational strings")
+
+
+def _sphere_point(pair):
+    if not isinstance(pair, (list, tuple)) or len(pair) != 2:
+        raise ValueError("each stereographic point needs two parameters")
+    u, v = (_q(item) for item in pair)
+    d = 1 + u * u + v * v
+    return (2 * u / d, 2 * v / d, (1 - u * u - v * v) / d)
+
+
+def _sqrt_bounds(q, scale):
+    """Return rational bounds lo <= sqrt(q) <= hi for q > 0."""
+    if q <= 0:
+        raise ValueError("points must be distinct")
+    # floor(scale * sqrt(a/b)) = floor(sqrt(a*b*scale**2) / b).
+    a, b = q.numerator, q.denominator
+    floor_scaled = math.isqrt(a * b * scale * scale) // b
+    return Fraction(floor_scaled, scale), Fraction(floor_scaled + 1, scale)
+
+
+CONFIG_N = {"T012-C01": 32}
 
 def validate(solution, config, strict=False):
-    if not isinstance(config, dict) or config.get("id") != "T012-C01" or config.get("parameters") != PARAMETERS:
-        raise ValueError("unsupported configuration")
-    if not isinstance(solution, dict):
-        raise ValueError("solution must be an object")
-    values = solution.get("set")
-    if not isinstance(values, (list, tuple)):
-        raise ValueError("set must be a list of integers")
-    n = len(values)
-    if not 2 <= n <= 512:
-        raise ValueError("set cardinality must be in 2..512")
-    if any(type(x) is not int for x in values):
-        raise ValueError("elements must be integers; bool is rejected")
-    if len(set(values)) != n:
-        raise ValueError("set elements must be distinct")
-    if any(x < -1000000 or x > 1000000 for x in values):
-        raise ValueError("elements must lie in [-1000000,1000000]")
-    sums = {a + b for a in values for b in values}
-    diffs = {a - b for a in values for b in values}
-    s, d = len(sums), len(diffs)
-    # For ratios > 1, both logarithm arguments must exceed one. The ratio
-    # exceeds one exactly when s > d, so no floating-point comparison is used.
-    if s <= n or d <= n or s <= d:
-        raise ValueError("objective is defined only for |A+A| > |A-A| > |A|")
-    from mpmath import iv
-    iv.dps = 80
-    numerator = iv.ln(iv.mpf(s) / n)
-    denominator = iv.ln(iv.mpf(d) / n)
-    result = numerator / denominator
-    # mpmath prints even a point interval as ``[x, x]``. Extract the
-    # endpoint itself so the record remains a plain decimal string.
-    lower = str(result.a).strip("[]").split(",", 1)[0].strip()
-    upper = str(result.b).strip("[]").split(",", 1)[-1].strip()
+    if not isinstance(config, dict) or config.get("id") not in CONFIG_N:
+        raise ValueError("unsupported T012 configuration")
+    n = CONFIG_N[config["id"]]
+    expected_parameters = {
+        "n": n,
+        "space": "unit sphere S2",
+        "potential": "sum over unordered pairs 1 / Euclidean distance",
+        "objective_unit": "Coulomb energy in unit-charge, unit-radius units",
+    }
+    if config.get("parameters") != expected_parameters:
+        raise ValueError("unsupported T012 configuration")
+    if not isinstance(solution, dict) or not isinstance(solution.get("points"), (list, tuple)):
+        raise ValueError("solution must contain stereographic points")
+    raw = solution["points"]
+    if len(raw) != n:
+        raise ValueError(f"expected exactly {n} points")
+    points = [_sphere_point(pair) for pair in raw]
+
+    # Recheck the defining equation with exact arithmetic, even though the
+    # parameterization makes it hold algebraically.
+    for point in points:
+        if sum(x * x for x in point) != 1:
+            raise ValueError("point is not exactly on the unit sphere")
+
+    scale = 10**25
+    output_scale = 10**30
+    lower_units = 0
+    upper_units = 0
+    pair_count = 0
+    for i in range(n):
+        for j in range(i):
+            squared_distance = sum((points[i][k] - points[j][k]) ** 2 for k in range(3))
+            if squared_distance <= 0:
+                raise ValueError("points must be distinct")
+            # Energy contribution is sqrt(1 / squared_distance). Bounding
+            # this directly also handles distinct points that are extremely
+            # close, where a lower distance bound at fixed precision is zero.
+            term_lower, term_upper = _sqrt_bounds(1 / squared_distance, scale)
+            lower_units += (term_lower.numerator * output_scale) // term_lower.denominator
+            upper_units += -(-term_upper.numerator * output_scale // term_upper.denominator)
+            pair_count += 1
+
+    lower = Fraction(lower_units, output_scale)
+    upper = Fraction(upper_units, output_scale)
+    interval = [str(lower), str(upper)]
     return {
-        "objective": lower,
-        "objective_value": lower,
+        "objective": str(upper),
+        "objective_value": str(upper),
         "verification_status": "certified",
-        "details": {"cardinality": n, "sumset_size": s, "difference_set_size": d,
-                    "objective_interval": [lower, upper], "objective_lower_bound": lower,
-                    "sumset_exact": True, "difference_set_exact": True}
+        "details": {
+            "objective_interval": interval,
+            "point_count": n,
+            "pairs_checked": pair_count,
+            "coordinate_model": "exact rational stereographic projection",
+            "sqrt_bound_scale": str(scale),
+            "energy_bound_scale": str(output_scale),
+            "claimed_score_ignored": True,
+        },
     }

@@ -1,27 +1,19 @@
 {
   "task_id": "T031",
-  "candidate_id": "shortest-superpermutation",
-  "name": "Shortest superpermutation on seven symbols",
+  "candidate_id": "maximum-order-subcubic-diameter-five-graph",
+  "name": "Largest graph with maximum degree 3 and diameter at most 5",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T031-C01",
   "configurations": [
     {
       "id": "T031-C01",
       "parameters": {
-        "symbols": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7"
-        ],
-        "permutations_required": 5040,
-        "containment": "contiguous_substring"
+        "maximum_degree": 3,
+        "diameter_at_most": 5,
+        "graph": "simple_undirected_connected"
       },
-      "direction": "minimize",
-      "human_reference": 5913
+      "direction": "maximize",
+      "human_reference": 70
     }
   ],
   "acceptance_review": {
@@ -29,10 +21,12 @@
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "数学模型": "固定七符号，最小化包含全部5040排列连续子串的字符串长度。",
-      "人类来源": "按Houston2014第1节重建Ashlock–Tillotson递归规则，得5913。公开5905来自Teodorescu2026-08-17附件，其AI使用情况未披露。",
-      "独立验算": "主代理另行下载5907字节原附件，SHA与保存文件一致。逐个查找全部5040目标字符串，独立于任务滑动窗口检查。修复资产路径后重跑五程序及完整控制通过。",
-      "开放状态与限制": "5898和更强5901下界工件均未关闭5905。5901包有未求值方程。本地未重建这些证明，只验证构造。"
+      "definition": "固定简单无向连通图，最大度≤3、直径≤5，最大化顶点数。与固定度及围长最小阶cage的目标和可行域不同。",
+      "primary_sources": "亲自阅读Comellas当前主表与2026-10-14直径5详情页：70阶的vonConta1983/AFY1986构造及2024Coxeter替代构造。主代理重新下载两份原始邻接列表，与保存字节及SHA256完全一致。主表说明粗体才是已证明最优，该70条目未标最优。",
+      "independent_verification": "五种构造以Floyd–Warshall全点对距离独立复算，正式检查器另用逐源BFS。人类与固定参考70顶点105边、最大度3、直径5。Moore树计数1+3*(1+2+4+8+16)=94是上界，未当作可达记录。",
+      "controls": "初始1，传统搜索/演化26；固定种子384次尝试不读取公开构造。全部五种程序、破坏自环、声明成绩完整不变性、严格回放、冷导出和三类失败检查通过。",
+      "limits": "仅复现所引两种公开70阶见证，不重做原始构造搜索或全局最优性证明。"
     }
-  }
+  },
+  "category": "extremal_graph_theory"
 }

@@ -1,12 +1,5 @@
-Find a polynomial-Gaussian witness for the one-dimensional sign-uncertainty problem.
+Find an expression tree for M61 = 2305843009213693951 that minimizes the number of leaves equal to 1.
 
-Use a finite polynomial p with exact rational coefficients and define
+Allowed grammar: the single digit `1`, binary `+`, binary `*`, parentheses, and optional ASCII spaces. Every written `1` is one leaf. The construction is a tree: repeated subexpressions count each time. Do not use constants other than 1, subtraction, division, exponentiation, functions, variables, or shared subexpressions.
 
-    f(x) = p(pi*x^2) exp(-pi*x^2)
-    fhat(xi) = q(pi*xi^2) exp(-pi*xi^2),
-
-where fhat uses the Fourier transform integral f(x) exp(-2*pi*i*x*xi) dx. The checker derives q from p. Require p(0)<0 and q(0)<0. Both polynomials must be nonnegative for all sufficiently large nonnegative arguments.
-
-Minimize A(f) A(fhat), where A(g)=inf{r>0: g(x)>=0 whenever |x|>=r}. The checker finds the last negative-to-positive root of each polynomial by exact rational root isolation. It returns a certified rational interval and ranks the construction by its conservative upper endpoint. Do not report a floating-point root or a claimed score as proof.
-
-Return JSON with a `coefficients` array in ascending powers of t. Each coefficient may be an integer, a finite JSON number interpreted as its exact binary rational, or a rational string such as `-3/2`. Do not read task data, human witnesses, or reference files. Keep the degree finite; there is no configured degree cap.
+Return JSON of the form {"expression": "..."}. The evaluator recomputes the exact value and count. Any claimed score is ignored. Start from the provided binary Horner program and improve it using only the target and the allowed grammar. Do not inspect or use human, reference, best, or SOTA comparison files.

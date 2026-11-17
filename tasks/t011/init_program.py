@@ -1,14 +1,24 @@
-"""Small self-contained product seed for a selected C7 strong power."""
+import json
 import os
-import itertools
+import random
 
-_POWERS = {"T011-C01": 5}
-
+# EVOLVE-BLOCK-START
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
-    try:
-        power = _POWERS[config_id]
-    except KeyError as exc:
-        raise ValueError(f"unsupported configuration: {config_id}") from exc
-    return {"words": [list(word) for word in itertools.product((0, 2, 4), repeat=power)]}
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01") != "T011-C01":
+        raise ValueError("unknown T011 configuration")
+    n = 16
+    points = []
+    # Fibonacci directions give a deterministic, nonzero start for all seeds.
+    for k in range(n):
+        z = 1 - 2 * (k + 0.5) / n
+        phi = (k + rng.random() * 0.001) * (3.141592653589793 * (3 - 5**0.5))
+        r = max(0.0, 1-z*z) ** 0.5
+        points.append([r * __import__("math").cos(phi), r * __import__("math").sin(phi), z])
+    return {"points": points}
+
+# EVOLVE-BLOCK-END
+
+if __name__ == "__main__":
+    print(json.dumps(run_code()))

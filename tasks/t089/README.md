@@ -1,69 +1,33 @@
-# T089: 一维符号不确定性
+# T089: M61 的整数复杂度
 
-## 定义
+## 中文
 
-固定一维 Fourier 变换
+配置 `T089-C01` 固定目标为 `M61 = 2^61 - 1 = 2305843009213693951`。目标是在表达式树中用最少个 `1` 精确表示该整数。允许的叶子只有 `1`，内部节点只有 `+` 与 `*`。重复写出的子表达式各自计数；不允许共享子树、减法或幂。
 
-\[
-\widehat f(\xi)=\int_{\mathbb R}f(x)e^{-2\pi i x\xi}\,dx,
-\qquad
-A(g)=\inf\{r>0:g(x)\ge0\text{ whenever }|x|\ge r\}.
-\]
+评测器用整数栈解析表达式，并从完整字符串重新计算值和 `1` 的数量。它不读取候选声称的分数。Selfridge 定理给出精确下界 116：最多用 115 个 `1` 可表示的最大整数是 `1801135623563989452`，小于 M61。此配置尚无已知最优性证明。
 
-配置 T089-C01 使用有限有理系数多项式
-\[
-f(x)=p(\pi x^2)e^{-\pi x^2},\qquad p\in\mathbb Q[t].
-\]
-没有预设次数上限。Fourier 变换仍为 \(q(\pi\xi^2)e^{-\pi\xi^2}\)，评测器从 \(p\) 精确计算 \(q\)。必须满足 \(p(0)<0\)、\(q(0)<0\)，并且两者最终非负。
+解析器的 100,000 字符上限是输入资源限制，不是数学目标或“任意冗余文本均可接受”的保证。含 `k` 个叶子的二叉表达式可规范化为完全括号化形式，长度至多 `4k−3`；153 个叶子对应 609 字符。本任务保存的三进制表达式为 505 字符。去掉空格和多余括号不会改变表达式树或叶子数。
 
-数学目标是最小化 \(A(f)A(\widehat f)\)。评测器用精确有理实根隔离找到每个多项式最后一个“负变正”根；偶数重接触根不计为半径。输出分数是原始乘积的严格有理区间，兼容排名使用上端。区间不把浮点根当证书。
+冻结人类基线为 153。`human.py` 按三进制位展开，用 Horner 法从高位向低位重建表达式。M61 有 39 个三进制位；每步乘以 `1+1+1`，再按当前位加 0、1 或 2 个 `1`。这是对传统整数复杂度表达方法的重建，不是公开最优纪录。Altman 的整数复杂度综述回顾了该问题、Selfridge 界及 Horner 表示。[论文](https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf)
 
-## 构造与来源
+固定参考构造使用 127 个 `1`。该表达式来自 EventCompute 的公开页面及 board 的 PR #4，SHA-256 为 `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`。页面明确说明其研究过程使用生成式 AI 助手，因此记为 AI 辅助公开结果，不归作纯人工发现。[结果与来源说明](https://eventcompute.com/en/challenges/integer-complexity-m61/) · [board PR #4](https://github.com/math-market/integer-complexity-m61/pull/4)
 
-可重建的人类基线来自经典 Hermite-Gaussian 特征函数。取
-\[
-p(t)=t^2-\frac32t-\frac1{1000}.
-\]
-这是 \(H_4(\sqrt{2t})/64\) 加一个有理常数修正。H4 的 Fourier 特征值为 +1，常数 Gaussian 也为 +1，因此 \(q=p\)；原点严格为负。2017 年 Gonçalves、Oliveira e Silva 与 Steinerberger 的论文系统研究了这类 Hermite 构造：[论文](https://doi.org/10.1016/j.jmaa.2017.02.030)。该弱基线按固定参数重新构造并由本地精确 checker 验证。
+Board 自己的 150 表达式只是挑战基线，不是纪录；来源未说明该构造是否使用 AI。公开页面截至 2026-10-13 报告 127 构造、下界 116，未给出精确复杂度。我们在 2026-11-06 复查了该页面、board 主仓库和 PR 状态；没有发现 M61 精确最优性证明或更短的同参见证。该检查限于所引来源，不表示穷尽所有公开资料。
 
-公开资料另报告了更强结果。Cohn、de Laat 与 Gonçalves 的未发表结果被 Georgiev 等人在 [2025 年 AlphaEvolve 论文](https://arxiv.org/abs/2511.02864v1)中报告为 0.3102。Station v2 后来报告上界 0.3089，使用 226 次多项式及严格有理全尾证书。Station 的[验证笔记](https://dualverse.ai/station/math/sign-uncertainty-principle/)和[论文](https://arxiv.org/abs/2608.23691)说明该结果由多模型 AI agent 协作产生；论文方法章节列出 GPT-5.5、Claude Opus 4.8 与 Gemini 3.1 Pro。精确多项式系数已保存于 `data/source/`，原始压缩数据和证明位于[固定仓库版本](https://github.com/dualverse-ai/station_data_v2/tree/a4ae9192fa75b7ffc6909ed018a712510062378b/artifacts/sign_uncertainty)。本任务没有重放高次数证书，因此将它列作公开报告，不冒称本配置已复现。来源固定版本与证据状态见 `data/bestknown.json`。
+简单起点用二进制 Horner 法独立生成。传统搜索枚举固定基数 Horner 表达式；进化入口用固定种子搜索混合基数展开。它们都只从目标整数构造，不读取人类或参考文件。正式结果以 `check.py` 的精确重算为准。
 
-截至 2026-11-06，检查的来源没有给出本配置的最优性证明。Tomar 的[2026 年预印本](https://www.mefyi.com/papers/sign-uncertainty-constant/)把无约束问题的界缩至 0.30272004 至 0.30349081。其 0.30349081 构造使用多个 Gaussian 的混合，不属于这里固定的单个多项式乘单个 Gaussian 家族，单独记为不同范围。
+## English
 
-## 运行
+Configuration `T089-C01` fixes `M61 = 2^61 - 1 = 2305843009213693951`. The objective is to minimize the number of `1` leaves in an expression tree that equals this integer. The only leaves are `1`; the only internal nodes are `+` and `*`. Repeated text is counted as separate tree nodes. Shared subtrees, subtraction, and exponentiation are not allowed.
 
-使用 `.venv/bin/python`。入口为 `run_code()`；初始构造为 `init_program.py`，传统随机搜索为 `baseline.py`，固定参考为 `reference.py`。评测入口为 `evaluate(program_path)`。默认生成限时 300 秒，验证限时 60 秒，内存 4 GiB，一个线程。
+The checker parses the full expression with integer stacks, then recomputes its value and leaf count. It ignores every score supplied by a candidate. Selfridge's theorem gives an exact lower bound of 116: the largest integer that uses at most 115 ones is `1801135623563989452`, below M61. No proof of the exact complexity is known in the sources checked for this task.
 
-# T089: One-dimensional sign uncertainty
+The 100,000-character parser limit is an input resource bound, not part of the mathematical objective and not a promise to accept arbitrary redundant text. A binary expression tree with `k` leaves has a fully parenthesized form of at most `4k−3` characters; for 153 leaves this is 609 characters. The saved base-3 expression is 505 characters. Spaces and redundant parentheses can be removed without changing its tree or leaf count.
 
-## Definition
+The frozen human baseline is 153. `human.py` rebuilds a base-3 Horner expression from the digits of M61. M61 has 39 base-3 digits. Each step multiplies by `1+1+1` and adds zero, one, or two ones for the next digit. This is a reconstruction of a traditional integer-complexity method, not a reported optimum. Altman's survey reviews integer complexity, Selfridge's bound, and Horner representations. [Paper](https://msp.org/cnt/2019/8-3/moscow-v8-n3-p01-s.pdf)
 
-Use the Fourier transform
-\[
-\widehat f(\xi)=\int_{\mathbb R}f(x)e^{-2\pi i x\xi}\,dx,
-\qquad A(g)=\inf\{r>0:g(x)\ge0\text{ for every }|x|\ge r\}.
-\]
+The fixed reference uses 127 ones. The expression is published by EventCompute and in board PR #4. Its SHA-256 is `946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449`. The page states that generative AI assistants were used in the research, so this is recorded as an AI-assisted public result, not as a human-only discovery. [Result and provenance](https://eventcompute.com/en/challenges/integer-complexity-m61/) · [Board PR #4](https://github.com/math-market/integer-complexity-m61/pull/4)
 
-T089-C01 searches over finite rational polynomials with no configured degree cap:
-\[
-f(x)=p(\pi x^2)e^{-\pi x^2}.
-\]
-Its Fourier transform is \(q(\pi\xi^2)e^{-\pi\xi^2}\). The checker computes \(q\) exactly from \(p\). Both \(p(0)\) and \(q(0)\) must be strictly negative. Both polynomials must become nonnegative on a full tail.
+The board's 150 expression is a challenge baseline, not a record. Its AI provenance is unstated. The public result page, checked on 2026-10-13, reports the 127 construction and lower bound 116, with no exact complexity. We rechecked that page, the board repository, and PR status on 2026-11-06. We found no proof of the exact value or a shorter same-parameter witness. This review covers the cited sources and is not an exhaustive survey.
 
-The raw objective is to minimize \(A(f)A(\widehat f)\). Exact rational real-root isolation finds the last negative-to-positive root of each polynomial. Even-multiplicity contacts do not count as a crossing. The checker returns a rational interval for the raw product and uses its upper endpoint for ranking.
-
-## Construction and sources
-
-The frozen human baseline rebuilds a classical Hermite-Gaussian eigenfunction:
-\[
-p(t)=t^2-\frac32t-\frac1{1000}.
-\]
-It is \(H_4(\sqrt{2t})/64\) plus a rational constant correction. The order-four Hermite Gaussian and the constant Gaussian both have Fourier eigenvalue +1, so \(q=p\), and both values at zero are strictly negative. Gonçalves, Oliveira e Silva, and Steinerberger studied these Hermite constructions in 2017 ([paper](https://doi.org/10.1016/j.jmaa.2017.02.030)). The fixed baseline is rebuilt and checked with exact arithmetic.
-
-Public sources report stronger results. Georgiev et al. reported an unpublished human result of 0.3102 in their [2025 AlphaEvolve paper](https://arxiv.org/abs/2511.02864v1). Station v2 later reported an upper bound of 0.3089 using a degree-226 polynomial and a strict rational whole-tail certificate. Its [verification notes](https://dualverse.ai/station/math/sign-uncertainty-principle/) and [paper](https://arxiv.org/abs/2608.23691) attribute this result to collaboration among AI agents; the paper describes a Station with GPT-5.5, Claude Opus 4.8, and Gemini 3.1 Pro. The exact polynomial coefficients are saved under `data/source/`, and the original compressed data and proof are available in its [pinned repository version](https://github.com/dualverse-ai/station_data_v2/tree/a4ae9192fa75b7ffc6909ed018a712510062378b/artifacts/sign_uncertainty). This task has not replayed that high-degree certificate, so it remains a reported public result rather than a reproduced score. See `data/bestknown.json` for the pinned source and evidence status.
-
-The sources checked through 2026-11-06 do not prove optimality for this configuration. Tomar's [2026 preprint](https://www.mefyi.com/papers/sign-uncertainty-constant/) narrows the unrestricted problem to 0.30272004–0.30349081. Its 0.30349081 construction uses a mixture of Gaussians. It is outside this single-Gaussian polynomial family and is recorded separately.
-
-## Run
-
-Use `.venv/bin/python`. Each program exposes `run_code()`. The simple start is `init_program.py`; the traditional search is `baseline.py`; the frozen reference is `reference.py`. The evaluator entry is `evaluate(program_path)`. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one thread.
+The simple seed uses binary Horner expansion and is generated from the target alone. The classical baseline enumerates fixed-base Horner expressions. The evolution entry searches mixed-base expansions with a fixed seed. Neither search reads human or reference files. The checker recomputes all formal results with exact integer arithmetic.

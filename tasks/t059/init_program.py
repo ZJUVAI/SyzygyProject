@@ -1,18 +1,21 @@
-"""Self-contained one-vertex seed for the C2000.9 maximum clique task."""
-
+"""Self-contained valid seed made from disjoint powers-of-three exponents."""
 import os
 
 
+def _configuration():
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T059-C01")
+    if config_id != "T059-C01":
+        raise ValueError(f"unknown T059 configuration: {config_id}")
+    return 7, 6
+
+
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T059-C01") != "T059-C01":
-        raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    vertices = [0]
+    row_count, marks_per_row = _configuration()
+    rows = []
+    for row_index in range(row_count):
+        exponents = range(row_index * (marks_per_row - 1),
+                          (row_index + 1) * (marks_per_row - 1))
+        rows.append([0] + [3 ** exponent for exponent in exponents])
+    return {"rows": rows}
     # EVOLVE-BLOCK-END
-    return {"vertices": vertices, "seed": seed}
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))

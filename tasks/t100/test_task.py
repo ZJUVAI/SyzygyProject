@@ -1,3 +1,5 @@
+"""Tests for the T100 exact checker and construction entry points."""
+
 import hashlib
 import json
 import os
@@ -6,156 +8,105 @@ import sys
 
 import pytest
 
-from mathbench.evaluate import _run
 from tasks.t100.baseline import run_code as baseline_run
-from tasks.t100.check import CONFIG_ID, PARAMETERS, validate
-from tasks.t100.evaluator import evaluate as task_evaluate
+from tasks.t100.check import validate
 from tasks.t100.evolution import run_code as evolution_run
-from tasks.t100.human import build_human_graph, run_code as human_run
-from tasks.t100.init_program import run_code as init_run
+from tasks.t100.human import run_code as human_run
+from tasks.t100.init_program import run_code as seed_run
 from tasks.t100.reference import run_code as reference_run
 
 
-TASK = Path(__file__).parent
+TASK_DIR = Path(__file__).parent
 CONFIG = {
-    "id": CONFIG_ID,
-    "parameters": PARAMETERS,
+    "id": "T100-C01",
+    "parameters": {
+        "symbols": ["1", "2", "3", "4", "5", "6", "7"],
+        "permutations_required": 5040,
+        "containment": "contiguous_substring",
+    },
     "direction": "minimize",
-    "human_reference": 1817,
+    "human_reference": 5913,
 }
 
 
-def _validate(graph, config=CONFIG):
-    return validate(graph, config)
-
-
-def _trace_cubes(graph):
-    adjacency = [0] * 50
-    for left, right in graph["edges"]:
-        adjacency[left] |= 1 << right
-        adjacency[right] |= 1 << left
-    trace = 0
-    for left in range(50):
-        for right in range(50):
-            if adjacency[left] & (1 << right):
-                trace += (adjacency[left] & adjacency[right]).bit_count()
-    assert trace % 6 == 0
-    return trace // 6
-
-
-def test_all_five_program_entries(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("MATHBENCH_SEED", "17")
-    monkeypatch.setenv("T100_SEARCH_STEPS", "1")
-    monkeypatch.setenv("T100_EVOLVE_STEPS", "1")
-    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
-    for graph in outputs:
-        result = _validate(graph)
-        assert result["verification_status"] == "exact"
-        assert result["objective"] == _trace_cubes(graph)
-        assert result["details"]["edge_count"] == 700
-    assert _validate(human_run())["objective"] == 1817
-    assert _validate(reference_run())["objective"] == 1817
-
-
-def test_public_witness_and_reconstruction_are_pinned():
-    witness = TASK / "data/reference/hstar_50_700.json"
-    metadata = json.loads((TASK / "data/bestknown.json").read_text(encoding="utf-8"))
-    entry = metadata["configurations"][CONFIG_ID]
-    assert hashlib.sha256(witness.read_bytes()).hexdigest() == entry["witness_sha256"]
-    saved = json.loads(witness.read_text(encoding="utf-8"))
-    assert saved == build_human_graph()
-    assert _validate(saved)["objective"] == 1817
-    assert len(saved["edges"]) == 700
-
-
-@pytest.mark.parametrize(
-    "config",
-    [
-        {**CONFIG, "id": "T100-C02"},
-        {**CONFIG, "parameters": {**PARAMETERS, "edges": 700.0}},
-        {**CONFIG, "parameters": {**PARAMETERS, "vertices": True}},
-        {**CONFIG, "parameters": {**PARAMETERS, "extra": 1}},
-        {**CONFIG, "direction": "maximize"},
-        {**CONFIG, "direction": True},
-        {**CONFIG, "human_reference": 1817.0},
-        {**CONFIG, "human_reference": True},
-        {**CONFIG, "extra": 1},
-        {"id": CONFIG_ID, "parameters": PARAMETERS},
-    ],
-)
-def test_config_is_frozen_with_strict_types(config):
-    with pytest.raises(ValueError):
-        _validate(build_human_graph(), config)
-
-
-@pytest.mark.parametrize(
-    "mutate",
-    [
-        lambda graph: graph.update(vertices=49),
-        lambda graph: graph.update(vertices=True),
-        lambda graph: graph.update(edges=graph["edges"][:-1]),
-        lambda graph: graph["edges"].__setitem__(0, [0, 0]),
-        lambda graph: graph["edges"].__setitem__(0, [False, 1]),
-        lambda graph: graph["edges"].__setitem__(0, [0.0, 1]),
-        lambda graph: graph["edges"].__setitem__(0, [0, 50]),
-        lambda graph: graph["edges"].__setitem__(0, [float("nan"), 1]),
-        lambda graph: graph["edges"].__setitem__(0, graph["edges"][1]),
-    ],
-)
-def test_invalid_graphs_are_rejected(mutate):
-    graph = build_human_graph()
-    mutate(graph)
-    with pytest.raises(ValueError):
-        _validate(graph)
-
-
-def test_claimed_scores_and_objective_are_whole_result_invariant():
-    graph = build_human_graph()
-    expected = _validate(graph)
-    for key, value in (
-        ("objective", -1),
-        ("score", float("nan")),
-        ("claimed_score", "999999999"),
-    ):
-        assert _validate({**graph, key: value}) == expected
-    assert expected["details"]["claimed_objective_ignored"] is True
-
-
-def test_search_determinism_and_reference_isolation(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("MATHBENCH_SEED", "33")
-    monkeypatch.setenv("T100_SEARCH_STEPS", "3")
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    first, second = baseline_run(), baseline_run()
-    assert first == second
-    assert first["search"]["comparison_data_read"] is False
-    _validate(first)
-
-
-def test_runner_error_and_timeout_without_task_registry():
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T100 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T100 worker failure')"], env, 3)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)
-
-
-def test_public_evaluate_with_full_config_and_temporary_registry(monkeypatch):
-    import mathbench.evaluate as shared_runner
-
-    task_config = json.loads((TASK / "task.json").read_text(encoding="utf-8"))["configurations"][0]
-    monkeypatch.setattr(shared_runner, "load_config", lambda task_id, config_id=None: task_config)
-    monkeypatch.setattr(shared_runner, "task_path", lambda task_id: TASK)
-    result = task_evaluate(
-        TASK / "reference.py",
-        CONFIG_ID,
-        strict=True,
-        generation_timeout=10,
-        verification_timeout=10,
+def test_public_attachment_hash_and_exact_5905_witness():
+    path = TASK_DIR / "data" / "reference" / "public_5905_attachment.txt"
+    raw = path.read_bytes()
+    assert len(raw) == 5907
+    assert hashlib.sha256(raw).hexdigest() == (
+        "f0208fb0e8ea98b015799b8f0dfaadc58d5909bad4a089603f2c9c4768536f67"
     )
-    assert result["validity"] == 1.0
-    assert result["objective"] == 1817
-    assert result["objective_value"] == 1817
-    assert result["combined_score"] == 1.0
+    witness = reference_run()
+    assert len(witness["word"]) == 5905
+    result = validate(witness, CONFIG, strict=True)
+    assert result["objective"] == 5905
     assert result["verification_status"] == "exact"
+    assert result["details"]["distinct_permutations_found"] == 5040
+    assert result["details"]["windows_checked"] == 5899
+
+
+def test_reconstructed_human_method_witness_and_score():
+    witness = human_run()
+    assert len(witness["word"]) == 5913
+    assert witness["word"] == (TASK_DIR / "data" / "reference" / "human_ashlock_tillotson_5913.txt").read_text()
+    result = validate(witness, CONFIG, strict=True)
+    assert result["objective"] == 5913
+    assert result["details"]["distinct_permutations_found"] == 5040
+
+
+def test_self_contained_seed_is_valid_and_has_35280_symbols():
+    candidate = seed_run()
+    assert set(candidate) == {"word"}
+    assert len(candidate["word"]) == 5040 * 7
+    result = validate(candidate, CONFIG)
+    assert result["objective"] == 35280
+    assert result["verification_status"] == "exact"
+
+
+def test_checker_uses_contiguous_windows_and_ignores_claimed_scores():
+    witness = reference_run()
+    base = validate(witness, CONFIG)
+    for claimed in (-999, 0, 10**100, "5905", float("nan"), float("inf")):
+        candidate = {**witness, "claimed_objective": claimed, "score": claimed}
+        assert validate(candidate, CONFIG)["objective"] == base["objective"]
+    # All required symbols occur repeatedly, but subsequence-only coverage is insufficient.
+    repeated = {"word": "1234567" * 100}
+    with pytest.raises(ValueError, match="missing"):
+        validate(repeated, CONFIG)
+    # Repeating the complete valid witness is permitted by the "at least once" rule.
+    duplicated = {"word": witness["word"] + witness["word"]}
+    assert validate(duplicated, CONFIG)["objective"] == 11810
+
+
+def test_bad_data_and_configuration_are_rejected():
+    for solution in (None, {}, {"word": 123}, {"word": ""}, {"word": "1234568"}, {"word": "12345x7"}):
+        with pytest.raises(ValueError):
+            validate(solution, CONFIG)
+    with pytest.raises(ValueError, match="configuration id"):
+        validate(reference_run(), {**CONFIG, "id": "T100-C02"})
+    with pytest.raises(ValueError, match="parameters"):
+        validate(reference_run(), {**CONFIG, "parameters": {**CONFIG["parameters"], "permutations_required": 1}})
+
+
+def test_traditional_greedy_baseline_and_evolution_are_reproducible(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEED", "73")
+    first = baseline_run()
+    second = baseline_run()
+    assert first == second
+    checked = validate(first, CONFIG)
+    assert checked["objective"] == first["claimed_objective"]
+    assert first["search_metadata"]["seed"] == 73
+    assert first["search_metadata"]["iterations"] <= first["search_metadata"]["iteration_limit"]
+    assert first["search_metadata"]["reference_data_read"] is False
+    evolved = evolution_run()
+    assert validate(evolved, CONFIG)["verification_status"] == "exact"
+
+
+def test_generation_runner_reports_candidate_error_and_timeout():
+    from mathbench.evaluate import _run
+
+    environment = dict(os.environ)
+    with pytest.raises(RuntimeError, match="candidate failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 300)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

@@ -1,8 +1,12 @@
-import random
+"""Simple valid starting form: four times the identity matrix."""
+
+import os
+
 
 def run_code():
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T014-C01")
+    if chosen != "T014-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
     # EVOLVE-BLOCK-START
-    rng=random.Random(0)
-    coeff=[rng.randint(1, 1000) for _ in range(208)]
+    return {"gram": [[4 if i == j else 0 for j in range(10)] for i in range(10)]}
     # EVOLVE-BLOCK-END
-    return {"coefficients":coeff}

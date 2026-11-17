@@ -1,98 +1,93 @@
-"""Seeded random construction, exact repair, then greedy row deletion."""
+"""Seeded simulated annealing on a rational perturbation grid."""
+
+from fractions import Fraction
+import math
 import os
 import random
-from array import array
-from itertools import combinations
-from mathbench.search import search_steps
+
+
+SCALE = 64
+ITERATIONS = 12_000
+POINT_COUNT = 12
+
+
+def _ratio_parts(points):
+    minimum = None
+    maximum = 0
+    for i in range(POINT_COUNT):
+        for j in range(i + 1, POINT_COUNT):
+            dx = points[i][0] - points[j][0]
+            dy = points[i][1] - points[j][1]
+            distance_squared = dx * dx + dy * dy
+            if distance_squared == 0:
+                return None
+            minimum = distance_squared if minimum is None else min(minimum, distance_squared)
+            maximum = max(maximum, distance_squared)
+    return maximum, minimum
+
+
+def _better(left, right):
+    return left[0] * right[1] < right[0] * left[1]
+
+
+def _accept(current, candidate, temperature, rng):
+    current_value = current[0] / current[1]
+    candidate_value = candidate[0] / candidate[1]
+    if candidate_value < current_value:
+        return True
+    return rng.random() < math.exp((current_value - candidate_value) / temperature)
+
+
+def _serialize(points):
+    result = []
+    for x, y in points:
+        pair = []
+        for coordinate in (x, y):
+            value = Fraction(coordinate, SCALE)
+            pair.append(value.numerator if value.denominator == 1 else str(value))
+        result.append(pair)
+    return result
 
 
 def run_code():
-    k, t, v = 20, 4, 2
-    width = v ** t
-    cols = list(combinations(range(k), t))
-    projection_count = len(cols)
-    counts = [0] * (projection_count * width)
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    steps = iter(search_steps(100_000))
-    iterations = 0
-
-    def charge_step():
-        nonlocal iterations
-        step = next(steps, None)
-        if step is None:
-            return False
-        iterations += 1
-        return True
-
-    def add_row(row):
-        ids = array("I")
-        for ci, c in enumerate(cols):
-            pattern = 0
-            for j in c:
-                pattern = (pattern << 1) | row[j]
-            idx = ci * width + pattern
-            ids.append(idx)
-            counts[idx] += 1
-        return ids
-
-    # A random starting sample. Repeated rows are removed deterministically.
-    rows = []
-    row_ids = []
-    present = set()
-    while len(rows) < 256 and charge_step():
-        row = tuple(rng.randrange(v) for _ in range(k))
-        if row in present:
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T023-C01")
+    if chosen != "T023-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    try:
+        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    except ValueError as exc:
+        raise ValueError("MATHBENCH_SEED must be an integer") from exc
+    rng = random.Random(seed)
+    current = [(x * SCALE, y * SCALE) for y in range(3) for x in range(4)]
+    current_value = _ratio_parts(current)
+    best = list(current)
+    best_value = current_value
+    completed = 0
+    step_sizes = (1, 2, 4, 8, 16)
+    for step in range(ITERATIONS):
+        proposal = list(current)
+        point_index = rng.randrange(POINT_COUNT)
+        axis = rng.randrange(2)
+        delta = rng.choice(step_sizes) * rng.choice((-1, 1))
+        x, y = proposal[point_index]
+        proposal[point_index] = (x + delta, y) if axis == 0 else (x, y + delta)
+        candidate_value = _ratio_parts(proposal)
+        completed += 1
+        if candidate_value is None:
             continue
-        present.add(row)
-        rows.append(row)
-        row_ids.append(add_row(row))
-
-    # Repair every uncovered interaction by adding a row that realizes it.
-    missing = {i for i, count in enumerate(counts) if count == 0}
-    while missing and charge_step():
-        target = next(iter(missing))
-        ci, pattern = divmod(target, width)
-        row = [rng.randrange(v) for _ in range(k)]
-        value = pattern
-        for j in reversed(cols[ci]):
-            row[j] = value % v
-            value //= v
-        row = tuple(row)
-        if row in present:
-            # A missing interaction cannot be present in an existing row.
-            raise RuntimeError("repair selected an already present row")
-        present.add(row)
-        rows.append(row)
-        ids = add_row(row)
-        row_ids.append(ids)
-        for idx in ids:
-            if counts[idx] == 1:
-                missing.discard(idx)
-
-    # If an explicit wall-clock cutoff interrupted repair, use the guaranteed
-    # feasible simple construction instead of returning a partial array.
-    if missing:
-        from tasks.t023.init_program import run_code as simple_seed
-        return {**simple_seed(), "search_metadata": {
-            "seed": int(os.environ.get("MATHBENCH_SEED", "0")),
-            "algorithm": "random rows, exact uncovered-pattern repair, greedy deletion",
-            "iterations": iterations, "fallback": "Hamming weight <= 4 seed",
-            "search_limit_steps": 100_000}}
-
-    order = list(range(len(rows)))
-    rng.shuffle(order)
-    alive = bytearray([1]) * len(rows)
-    for ri in order:
-        if not charge_step():
-            break
-        ids = row_ids[ri]
-        if all(counts[idx] > 1 for idx in ids):
-            alive[ri] = 0
-            for idx in ids:
-                counts[idx] -= 1
-    output_rows = [[int(x) for x in row] for i, row in enumerate(rows) if alive[i]]
-    return {"array": output_rows, "search_metadata": {
-        "seed": int(os.environ.get("MATHBENCH_SEED", "0")),
-        "algorithm": "256 random rows, exact uncovered-pattern repair, seeded greedy row deletion",
-        "iterations": iterations, "search_limit_steps": 100_000,
-        "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS")}}
+        if _better(candidate_value, best_value):
+            best, best_value = list(proposal), candidate_value
+        cycle_step = step % 2_000
+        temperature = 0.01 + 0.12 * (1 - cycle_step / 2_000)
+        if _accept(current_value, candidate_value, temperature, rng):
+            current, current_value = proposal, candidate_value
+    return {
+        "points": _serialize(best),
+        "search_metadata": {
+            "algorithm": "single-point coordinate simulated annealing on the 1/64 rational grid",
+            "seed": seed,
+            "iterations_completed": completed,
+            "grid_denominator": SCALE,
+            "reference_data_read": False,
+        },
+    }

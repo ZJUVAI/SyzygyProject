@@ -1,19 +1,18 @@
+"""Standalone valid seed from 12 points on the parabola y=x^2."""
+
 import os
-import random
-
-
-def _config_n():
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T018-C01")
-    if cid != "T018-C01":
-        raise ValueError(f"unknown T018 configuration: {cid}")
-    return 29
 
 
 def run_code():
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T018-C01") != "T018-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    n = _config_n()
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    # A deterministic nonsingular seed: 2I-J has eigenvalues 2 (mult. 28), -27.
-    matrix = [[(1 if i == j else -1) for j in range(n)] for i in range(n)]
+    solution = {"points": [[i, i * i] for i in range(12)]}
     # EVOLVE-BLOCK-END
-    return {"matrix": matrix}
+    return solution
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

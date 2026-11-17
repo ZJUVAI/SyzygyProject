@@ -1,128 +1,151 @@
+"""Mathematical, data integrity, entry-point and failure-control tests for T095."""
+
 import hashlib
+import importlib
 import json
-import os
-import sys
 from pathlib import Path
 
 import pytest
 
-from mathbench.evaluate import _run
-from tasks.t095.baseline import run_code as baseline_run
-from tasks.t095.check import (
-    CONFIG_ID,
-    _EXPECTED,
-    _hull_with_collinear_boundary,
-    _segments_intersect,
-    load_points,
-    validate,
-)
-from tasks.t095.evolution import run_code as evolution_run
-from tasks.t095.human import run_code as human_run
-from tasks.t095.init_program import run_code as init_run
-from tasks.t095.reference import run_code as reference_run
+from tasks.t095.check import PARAMETERS, validate
 
-ROOT = Path(__file__).parent
-CONFIG = json.loads((ROOT / "task.json").read_text())["configurations"][0]
+HERE = Path(__file__).resolve().parent
+CONFIG = {"parameters": PARAMETERS}
 
 
-def test_pinned_instance_and_official_271_face_witness():
-    source = ROOT / "data/source/uniform-0000500-1.instance.json"
-    public = ROOT / "data/reference/uniform-0000500-1.official_solution.json"
-    assert hashlib.sha256(source.read_bytes()).hexdigest() == (
-        "c8ea5c524c52a6d7e0188f566482c124856a8cbd0318e518ff4419f09844c31a"
-    )
-    assert hashlib.sha256(public.read_bytes()).hexdigest() == (
-        "f3de71a8fa4f98adf3314ccc2aa780e594e933b051e3d7cc715d1944eeb01190"
-    )
-    assert len(load_points()) == 500
-    result = validate(reference_run(), CONFIG)
+def _reference():
+    return json.loads((HERE / "data/reference/ta41_2006_schedule.json").read_text())
+
+
+def _independent_makespan(machine_orders):
+    data = json.loads((HERE / "data/source/ta41_instance.json").read_text())
+    jobs, machines = data["jobs"], data["machines"]
+    ops = data["operations"]
+    machine_positions = [{job: i for i, job in enumerate(row)} for row in machine_orders]
+    completion = [[None] * machines for _ in range(jobs)]
+    pending = jobs * machines
+    while pending:
+        progress = False
+        for job in range(jobs):
+            for index in range(machines):
+                if completion[job][index] is not None:
+                    continue
+                machine, duration = ops[job][index]
+                preds = []
+                if index:
+                    pred = completion[job][index - 1]
+                    if pred is None:
+                        continue
+                    preds.append(pred)
+                pos = machine_positions[machine][job]
+                if pos:
+                    previous_job = machine_orders[machine][pos - 1]
+                    previous_index = next(k for k, op in enumerate(ops[previous_job])
+                                          if op[0] == machine)
+                    pred = completion[previous_job][previous_index]
+                    if pred is None:
+                        continue
+                    preds.append(pred)
+                completion[job][index] = max(preds, default=0) + duration
+                pending -= 1
+                progress = True
+        if not progress:
+            raise ValueError("independent cycle check failed")
+    return max(max(row) for row in completion)
+
+
+def test_reference_schedule_and_independent_exact_recomputation():
+    witness = _reference()
+    result = validate({"machine_orders": witness["machine_orders"]}, CONFIG)
+    assert result["objective"] == witness["reported_makespan"] == 2006
     assert result["verification_status"] == "exact"
-    assert result["details"]["edge_count"] == 770
-    assert result["objective_value"] == 271
-    assert result["objective_value"] == 770 - 500 + 1
+    assert _independent_makespan(witness["machine_orders"]) == 2006
 
 
-def test_human_method_baseline_is_replayed():
-    result = validate(human_run(), CONFIG)
-    assert result["verification_status"] == "exact"
-    assert result["objective_value"] == 384
+def test_initial_schedule_is_valid_and_boundary_score_is_exact():
+    initial = importlib.import_module("tasks.t095.init_program").run_code()
+    checked = validate(initial, CONFIG)
+    assert checked["objective"] == 25114
+    assert checked["details"]["critical_path_lower_bound"] <= checked["objective"]
 
 
-def test_all_five_entries_return_valid_partitions():
-    for run in (init_run, baseline_run, evolution_run, human_run, reference_run):
-        result = validate(run(), CONFIG)
-        assert result["verification_status"] == "exact"
-        assert result["details"]["point_count"] == 500
-        assert result["details"]["face_count"] == result["objective_value"]
+def test_source_hash_and_instance_shape():
+    expected = {
+        "data/source/tai30_20.txt": "fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9",
+        "data/source/ta41_instance.json": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
+        "data/reference/ta41_2006_schedule.json": "d3760f7a46266d9da02920433f027645056704d76fb423846414ca9d275c58ed",
+    }
+    for relative, digest in expected.items():
+        assert hashlib.sha256((HERE / relative).read_bytes()).hexdigest() == digest
+    data = json.loads((HERE / "data/source/ta41_instance.json").read_text())
+    assert (data["instance"], data["jobs"], data["machines"]) == ("ta41", 30, 20)
+    assert all(len(job) == 20 for job in data["operations"])
+    assert all(sorted(op[0] for op in job) == list(range(20)) for job in data["operations"])
 
 
-def test_missing_hull_edge_is_rejected():
-    points = load_points()
-    hull = _hull_with_collinear_boundary(points)
-    a, b = hull[0], hull[1]
-    bad = [e for e in reference_run()["edges"] if {e["i"], e["j"]} != {a, b}]
-    with pytest.raises(ValueError, match="hull boundary edge"):
-        validate({"edges": bad}, CONFIG)
+@pytest.mark.parametrize("bad", [
+    None,
+    {},
+    {"machine_orders": None},
+    {"machine_orders": []},
+    {"machine_orders": [[*range(30)] for _ in range(19)]},
+    {"machine_orders": [[*range(30)] for _ in range(20)] + [[*range(30)]]},
+    {"machine_orders": [[*range(29)] + [28] for _ in range(20)]},
+    {"machine_orders": [[True, *range(1, 30)] for _ in range(20)]},
+    {"machine_orders": [[0.0, *range(1, 30)] for _ in range(20)]},
+    {"machine_orders": [[30, *range(1, 30)] for _ in range(20)]},
+])
+def test_invalid_shapes_types_and_duplicate_jobs_rejected(bad):
+    with pytest.raises(ValueError):
+        validate(bad, CONFIG)
 
 
-def test_duplicate_self_loop_and_bad_endpoint_ids_are_rejected():
-    valid = reference_run()
-    with pytest.raises(ValueError, match="Duplicate edges"):
-        validate({"edges": valid["edges"] + [valid["edges"][0]]}, CONFIG)
-    for bad_edge in ({"i": 1, "j": 1}, {"i": True, "j": 2},
-                     {"i": 0.5, "j": 2}, {"i": 0, "j": 500},
-                     {"i": 0, "j": float("nan")}):
-        with pytest.raises(ValueError):
-            validate({"edges": [bad_edge]}, CONFIG)
+def test_cycle_is_rejected_and_claims_do_not_change_validation():
+    orders = [row[:] for row in _reference()["machine_orders"]]
+    orders[15][9], orders[15][10] = orders[15][10], orders[15][9]
+    with pytest.raises(ValueError, match="cycle"):
+        validate({"machine_orders": orders}, CONFIG)
+
+    witness = _reference()
+    base = validate({"machine_orders": witness["machine_orders"]}, CONFIG)
+    for name, forged in [("objective", -1), ("score", float("nan")),
+                         ("claimed_score", {"value": float("inf")})]:
+        candidate = {"machine_orders": witness["machine_orders"], name: forged}
+        assert validate(candidate, CONFIG) == base
+    with pytest.raises(ValueError):
+        validate({"machine_orders": witness["machine_orders"]},
+                 {"parameters": {"instance": "ta42", "jobs": 30, "machines": 20}})
 
 
-def test_crossing_edge_is_rejected():
-    valid = reference_run()
-    edge_set = {tuple(sorted((e["i"], e["j"]))) for e in valid["edges"]}
-    points = load_points()
-    hull = _hull_with_collinear_boundary(points)
-    crossing = None
-    for pos, u in enumerate(hull):
-        for v in hull[pos+1:]:
-            if tuple(sorted((u, v))) in edge_set:
-                continue
-            for edge in valid["edges"]:
-                x, y = edge["i"], edge["j"]
-                if {u, v}.isdisjoint({x, y}) and _segments_intersect(
-                    points[u], points[v], points[x], points[y]
-                ):
-                    crossing = (u, v)
-                    break
-        if crossing:
-            break
-    assert crossing is not None
-    with pytest.raises(ValueError, match="cross or touch"):
-        u, v = crossing
-        validate({"edges": valid["edges"] + [{"i": u, "j": v}]}, CONFIG)
+@pytest.mark.parametrize("module,expected", [
+    ("tasks.t095.init_program", 25114),
+    ("tasks.t095.human", 3296),
+    ("tasks.t095.reference", 2006),
+    ("tasks.t095.baseline", None),
+    ("tasks.t095.evolution", None),
+])
+def test_all_five_run_code_entries(module, expected, monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T095-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "0")
+    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
+    result = importlib.import_module(module).run_code()
+    value = validate(result, CONFIG)["objective"]
+    if expected is not None:
+        assert value == expected
+    assert type(value) is int
+    if module.endswith(("baseline", "evolution")):
+        assert result["search_metadata"]["budget"]["mode"] == (
+            "fixed iterations; runner generation timeout 300 seconds"
+        )
 
 
-def test_claimed_scores_do_not_change_validation_result():
-    witness = reference_run()
-    expected = validate(witness, CONFIG)
-    for key, value in (("objective", -100), ("score", float("nan")),
-                       ("claimed_score", {"forged": True})):
-        assert validate({**witness, key: value}, CONFIG) == expected
-
-
-def test_config_is_strict_and_fixed():
-    with pytest.raises(ValueError, match="fixed"):
-        validate(reference_run(), {
-            "id": CONFIG_ID,
-            "parameters": {**_EXPECTED, "point_count": True},
-            "direction": "minimize",
-        })
-    with pytest.raises(ValueError, match="minimization"):
-        validate(reference_run(), {**CONFIG, "direction": "maximize"})
-
-
-def test_runner_error_and_timeout_controls():
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T095 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T095 worker failure')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
+def test_search_sources_do_not_read_comparison_assets():
+    for filename in ("baseline.py", "evolution.py"):
+        source = (HERE / filename).read_text()
+        assert "tasks.t095.human" not in source
+        assert "tasks.t095.reference" not in source
+        assert "data/reference" not in source
+    init_source = (HERE / "init_program.py").read_text()
+    assert "# EVOLVE-BLOCK-START" in init_source
+    assert "# EVOLVE-BLOCK-END" in init_source
+    assert "tasks.t095" not in init_source

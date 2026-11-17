@@ -1,1 +1,5 @@
-Choose 17 distinct points in the Euclidean plane to maximize the number of distinct straight lines containing exactly three of the input points. Lines containing more than three input points do not count. Return the points as exact real algebraic coordinates: provide a primitive irreducible integer minimal polynomial, a rational interval containing exactly one real root, and rational-coefficient polynomials in that root for each x and y coordinate. The checker recomputes all incidences exactly. Floating-point coordinates are not accepted.
+Construct one affine line in every projective direction of F_31^3. Minimize the number of distinct points in the union of these lines.
+
+Return JSON with a `lines` list of exactly 993 records. Each record has `direction` and `origin`, each a list of three integers in 0..30. A direction must be the unique representative whose last nonzero coordinate is 1. The line contains `origin + t * direction` modulo 31 for every t in 0..30.
+
+The evaluator checks every direction and rebuilds the complete point union with exact integer arithmetic. It ignores any claimed score. Do not read `data/human/`, `data/reference/`, or any saved comparison witness while generating a candidate. The simple initializer uses all origins equal to zero and is available as `init_program.py`.

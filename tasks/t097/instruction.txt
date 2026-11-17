@@ -1,13 +1,9 @@
-For T097-C01, cover the fixed polygonal region `socg_fixed92` with the fewest convex polygons. Every cover polygon must be contained in the input region. Overlap is allowed. The input is the official 92-vertex, hole-free instance at `data/source/socg_fixed92.instance.json`.
+Find a low-cost capacitated vehicle routing solution for T097-C01.
 
-The mathematical domain includes arbitrary real coordinates. Encode all coordinates in one real algebraic number field. Return an object with:
+Return a JSON object with a `routes` list. Each route must be a nonempty list of TSPLIB node IDs. Customer IDs are 2 through 1001; node 1 is the depot and must not appear in a route. Every customer must occur exactly once. The sum of customer demands on each route must be at most 131.
 
-- `algebraic_field.minimal_polynomial`: integer coefficients in ascending degree order. The polynomial must be irreducible over Q and have positive leading coefficient.
-- `algebraic_field.isolating_interval`: two rational strings `[lo, hi]` with `lo < hi` and exactly one real root of the polynomial in the open interval.
-- `polygons`: a nonempty list of convex polygons. Each polygon is a list of vertices. Each vertex is `[x_coefficients, y_coefficients]`; each coordinate is a nonempty list of rational coefficients in ascending powers of the field root alpha. For example, `[["3/2", "1/4"], ["-2"]]` encodes `(3/2 + alpha/4, -2)`.
+The number of routes is unrestricted. The `k43` text is part of the benchmark instance name and does not impose a maximum or exact route count. Route count is at least 43 because total demand is 5557 and capacity is 131, but solutions may use more routes.
 
-All coefficients must be exact integers or rational strings such as `"-7/5"`. Do not use floating-point numbers. There is no fixed cap on coordinate size, denominator, polynomial degree, or number of vertices. The runner limits output size and execution time.
+Minimize total travel cost. Each route starts at depot 1, visits its listed customers in order, and returns to depot 1. For nodes i and j, the edge cost is TSPLIB EUC_2D: round sqrt((x_i-x_j)^2+(y_i-y_j)^2) to the nearest integer. The trusted checker computes this exactly with integer arithmetic.
 
-The checker recomputes convexity, containment, exact coverage, and the number of pieces. It ignores any score supplied by the program. A simple starting construction is an exact ear-clipping triangulation of the public input. You may improve it by merging pieces when their convex hull remains inside the region. Do not read the human or reference witness files.
-
-Implement `run_code()` with no arguments. Use `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED` if needed. Return JSON-compatible data.
+Start from the supplied simple program. Do not read human, reference, or best witness files. Declared scores are ignored.

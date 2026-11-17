@@ -1,1 +1,5 @@
-Find a large set of directions in five-dimensional Euclidean space such that every pair has angle at least 60 degrees. Maximize the number of directions. Return JSON as {"directions": [[q1,q2,q3,q4,q5], ...]}; each coordinate must be an integer or a rational string such as "-2/3". The verifier treats each vector as a direction and normalizes it exactly. A zero vector is invalid. The checker accepts only rational-coordinate witnesses; this is a representation of candidate witnesses, not a claim that all real configurations have rational coordinates. Do not return a claimed score. The best verified human construction has 40 directions. The unrestricted optimum is not known; published bounds are 40 through 44.
+Task T037-C01: maximize the number of edges in a 3-uniform hypergraph on 36 labeled vertices, 0 through 35.
+
+Return a JSON object with an `edges` list. Each edge is a triple of distinct integer vertex labels in the range 0..35. Edges are unordered, so list each triple only once.
+
+The construction must be K4^- free in the ordinary, non-induced sense: every set of four vertices may contain at most two of its four possible triples. Maximize the number of selected triples. The checker recomputes feasibility and edge count. It ignores claimed objective values.

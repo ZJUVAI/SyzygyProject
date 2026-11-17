@@ -1,29 +1,31 @@
-# T031：七符号最短超排列
+# T031: 最大度 3、直径至多 5 的图
 
 ## 中文
 
-本任务固定字母表 `1` 至 `7`。候选须返回一个字符串，使每个七符号排列都至少出现一次，且必须作为长度为 7 的连续子串出现。目标是最小化字符串长度。校验器检查所有长度为 7 的窗口，并精确重算长度。重复出现的排列允许；声明分数不会用于评分。
+配置 T031-C01 研究简单无向连通图。每个顶点的度至多为 3，任意两点间最短路径长度至多为 5。标量目标是顶点数 `n`，单位为个顶点，方向为最大化。程序以 `n` 和无向边列表提交图。检查器逐边检查无向简单图约束，并从每个顶点运行精确 BFS，重新计算连通性、最大度和直径。它不使用候选程序声明的分数。
 
-唯一配置为 T031-C01，共有 5040 个目标排列。配置状态为“已通过 Sol 验收（2026-11-06）”。
+Comellas 的当前度直径表在 `(3,5)` 项列出 70。该项没有加粗，表示表未标为最优。Moore 上界为 94。因此当前证据是 `70 ≤ n_3(5) ≤ 94`，精确最大值仍未解决。详情页最后修改时间为 2026-10-14；主表截至 2026-11-06 仍显示 70。历史来源列出 von Conta (1983) 与 Alegre、Fiol、Yebra (1986)。任务保存并分别验证了来源页提供的 70 点邻接表。
 
-公开来源中，Andrei Teodorescu 于 2026-08-17 发布了长度 5905 的字符串及搜索代码线索。Andrew Balint 报告检查了全部 5040 个排列。我们下载其中一个附件，并独立重算出 5905 个字符和 5040 个排列。公开来源没有说明是否使用 AI，因此记录为来源未披露。
+人类基线程序读取 Alegre–Fiol–Yebra 原始邻接列表，并重建 70 点图。固定参考程序读取 Comellas 2024 年从 28 点 Coxeter 图构造出的另一份 70 点邻接列表。两份数据的原始 SHA-256、来源位置和复算结果均保存在 `data/bestknown.json`。它们都精确通过本任务的度数和直径检查。主表注明网站内容（若干 SageMath 脚本除外）不使用 AI；历史图归于1983/1986年来源。
 
-Ashlock 与 Tillotson 的递归构造可重建长度 5913 的同参数人类方法基线。`human.py` 从底层递归规则生成见证，保存于 `data/reference/human_ashlock_tillotson_5913.txt`，并由校验器逐窗口复核。公开的 5905 见证保存于 `data/reference/public_5905_attachment.txt`。这两个文件仅供对照，不进入简单初始程序或传统搜索。这个值不是公开纪录。
+初始程序返回单点图。传统搜索从小图开始，用固定随机种子按配置模型抽取三正则图，拒绝自环、重边、不连通图和直径超过 5 的图。它不读取两份比较见证。默认尝试 384 次；可用 `MATHBENCH_SEARCH_SECONDS` 设置按时间截断的探索。
 
-最优性尚未确定。当前 5901 下界包标明部分 Lean 方程尚未求值，且多项搜索计数依赖单一程序。本任务不把它作为完整复核的证明。另一份公开 Lean 工件给出下界 5898，但依赖本机原生求值与编译工具链。最佳公开上界 5905 与下界之间仍有缺口。
-
-初始程序独立拼接 5040 个排列，不读取比较见证。传统基线对所有排列做带种子的最大重叠贪心搜索，也不读取比较见证。
+共享运行器默认给生成 300 秒，给验证 60 秒，内存 4 GiB，一个 CPU 线程。此配置仍为“已通过 Sol 验收（2026-11-06）”。Moore 上界用于限制候选输入规模，不用作精确最优性证明。
 
 ## English
 
-This task fixes the alphabet `1` through `7`. A candidate returns a string that contains every permutation of the seven symbols at least once. Each permutation must occur as a contiguous substring of length 7. The objective is to minimize the string length. The checker reads every length-7 window and recomputes the length. A permutation may occur more than once. The checker ignores claimed scores.
+Configuration T031-C01 studies simple undirected connected graphs. Every vertex has degree at most 3, and every pair of vertices has distance at most 5. The scalar objective is the order `n`, measured in vertices and maximized. A candidate returns `n` and an undirected edge list. The checker validates every edge and runs exact breadth-first search from every vertex to recompute connectivity, maximum degree, and diameter. It ignores candidate score claims.
 
-The only configuration is T031-C01. It requires all 5,040 permutations. Its status is accepted by Sol on 2026-11-06.
+Comellas's current degree-diameter table lists 70 for `(3,5)`. The entry is not bold, so the table does not mark it optimal. The Moore bound is 94. The checked range is therefore `70 <= n_3(5) <= 94`, and the exact maximum remains open. The detail page was last modified on 2026-10-14. The main table still listed 70 on 2026-11-06. The historical source row cites von Conta (1983) and Alegre, Fiol, and Yebra (1986). This task saves and checks the 70-vertex adjacency list from that source page.
 
-Andrei Teodorescu posted a 5,905-symbol string and search-code details on 2026-08-17. Andrew Balint reported checking all 5,040 permutations. We downloaded one attachment and independently counted 5,905 symbols and all 5,040 permutations. The public source does not say whether AI contributed. The record marks its AI provenance as undisclosed.
+The human baseline reads and rebuilds the original Alegre–Fiol–Yebra adjacency list. The fixed reference program reads a second 70-vertex adjacency list for Comellas's 2024 construction from the 28-vertex Coxeter graph. The raw file hashes, source locations, and exact check results are recorded in `data/bestknown.json`. Both graphs pass the task's degree and diameter checks. The source page states that its contents are AI-free except for some SageMath scripts; it attributes the historical graph to the 1983/1986 sources.
 
-Ashlock and Tillotson's recursive construction can be rebuilt as a same-parameter human-method baseline of length 5,913. `human.py` generates the witness from the recursive rule. The saved witness is `data/reference/human_ashlock_tillotson_5913.txt`. The public 5,905 witness is saved in `data/reference/public_5905_attachment.txt`. These files are comparison assets. The initial program and traditional search do not read them. The checker verifies every window. This value is not the public record.
+The initial program returns a one-vertex graph. The traditional search starts from small graphs and uses a fixed random seed to sample cubic graphs with the configuration model. It rejects loops, repeated edges, disconnected graphs, and graphs with diameter above 5. It does not read either comparison witness. The default budget is 384 attempts. `MATHBENCH_SEARCH_SECONDS` enables a wall-clock exploration cutoff.
 
-Optimality is unknown. The current package for the 5,901 lower bound says that some Lean equations have not been evaluated. Many search counts rely on one program. This task does not treat that result as a fully replayed proof. A separate public Lean artifact gives a lower bound of 5,898, with a native evaluator and compiler toolchain in its trust base. A gap remains between the 5,905 public construction and the lower bound.
+The shared runner allows 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread by default. This configuration is accepted by Sol on 2026-11-06. The Moore bound limits candidate input size; it is not used as a proof of the exact optimum.
 
-The initial program concatenates all 5,040 permutations. It does not read comparison witnesses. The traditional baseline uses a seeded maximum-overlap greedy search over all permutations. It also does not read comparison witnesses.
+## Sources
+
+- [Current degree-diameter table](https://web.mat.upc.edu/francesc.comellas/delta-d/table_degree_diameter.html), checked 2026-11-06.
+- [Details for degree 3, diameter 5](https://web.mat.upc.edu/francesc.comellas/delta-d/desc_g/desc_g5.html), last modified 2026-10-14. It reports order 70, Moore bound 94, the vC/AFY references, the original adjacency file, and the Comellas 2024 Coxeter construction.
+- von Conta (1983), “Torus and other networks as communication networks with up to some hundred points,” *IEEE Transactions on Computers* 32, 657–666; and Alegre, Fiol, and Yebra (1986), “Some large graphs with given degree and diameter,” *Journal of Graph Theory* 10, 219–224, [DOI](https://doi.org/10.1002/jgt.3190100211).

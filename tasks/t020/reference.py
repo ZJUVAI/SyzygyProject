@@ -1,3 +1,9 @@
-"""Replay the shared witness for the public reference role."""
+"""Frozen same-parameter lattice reference, kept under data/reference/."""
 
-from tasks.t020.human import run_code as run_code
+import json
+from pathlib import Path
+
+
+def run_code():
+    path = Path(__file__).with_name("data") / "reference" / "hexagon_n91.json"
+    return json.loads(path.read_text(encoding="utf-8"))

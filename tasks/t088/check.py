@@ -1,51 +1,37 @@
-"""Exact checker for the fixed arc130 cutwidth instance."""
-
-from tasks.t088.instance import EDGE_COUNT, VERTEX_COUNT, cut_profile, load_graph
-
-
+"""Exact checker for the ordinary addition chain for the P-192 exponent."""
+TARGET_TEXT = "2^192-2^64-3"
+TARGET = 2**192 - 2**64 - 3
 CONFIG_ID = "T088-C01"
-PARAMETERS = {
-    "instance": "arc130.mtx.rnd",
-    "vertices": 130,
-    "edges": 715,
-    "graph": "undirected simple graph; 1-based source labels",
-    "objective": "minimum over linear vertex orders of the maximum number of edges crossing any prefix cut",
-}
-
-
-def _check_config(config):
-    if not isinstance(config, dict) or config.get("id") != CONFIG_ID:
-        raise ValueError(f"configuration id must be {CONFIG_ID}")
-    if config.get("parameters") != PARAMETERS:
-        raise ValueError("configuration parameters do not match the frozen arc130 instance")
-    if config.get("direction") != "minimize":
-        raise ValueError("cutwidth is a minimization objective")
 
 
 def validate(solution, config, strict=False):
-    del strict
-    _check_config(config)
-    if not isinstance(solution, dict):
-        raise ValueError("solution must be an object")
-    ordering = solution.get("ordering")
-    if not isinstance(ordering, list) or len(ordering) != VERTEX_COUNT:
-        raise ValueError("ordering must contain exactly 130 vertex labels")
-    if any(type(vertex) is not int for vertex in ordering):
-        raise ValueError("vertex labels must be integers; booleans are not accepted")
-    if set(ordering) != set(range(1, VERTEX_COUNT + 1)):
-        raise ValueError("ordering must be a permutation of labels 1 through 130")
-    edges = load_graph()
-    if len(edges) != EDGE_COUNT:
-        raise ValueError("frozen source graph has an unexpected edge count")
-    profile = cut_profile(ordering, edges)
-    return {
-        "objective": max(profile),
-        "verification_status": "exact",
-        "details": {
-            "vertices": VERTEX_COUNT,
-            "edges": EDGE_COUNT,
-            "prefix_cut_count": len(profile),
-            "cut_profile": profile,
-            "claimed_objective_ignored": True,
-        },
-    }
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    cid = config.get("id", CONFIG_ID)
+    params = config.get("parameters", config)
+    if cid != CONFIG_ID or not isinstance(params, dict) or params.get("target") != TARGET_TEXT:
+        raise ValueError("configuration must be T088-C01")
+    target = TARGET
+    chain = solution.get("chain")
+    if not isinstance(chain, list) or len(chain) < 2:
+        raise ValueError("chain must be a list with at least two entries")
+    if any(isinstance(x, bool) or not isinstance(x, int) for x in chain):
+        raise ValueError("chain entries must be integers, not booleans")
+    if chain[0] != 1:
+        raise ValueError("chain must start at 1")
+    previous = {1}
+    for i in range(1, len(chain)):
+        if chain[i] <= chain[i-1]:
+            raise ValueError("chain must be strictly increasing")
+        # Set membership checks the exact same sum rule. The two addends may
+        # coincide. This uses O(L^2) total work for an L-entry chain.
+        if not any(chain[i] - value in previous for value in previous):
+            raise ValueError(f"chain entry at index {i} is not a sum of two earlier entries")
+        previous.add(chain[i])
+    if chain[-1] != target:
+        raise ValueError("chain endpoint does not equal the selected target")
+    # Every addition is checked exactly with Python integers; strict mode needs no
+    # relaxation because this certificate covers every step and the endpoint.
+    return {"objective": len(chain)-1, "verification_status": "exact",
+            "details": {"target": str(target), "chain_entries": len(chain), "configuration_id": cid,
+                        "strictly_increasing": True, "all_steps_verified": True}}

@@ -1,80 +1,60 @@
-"""Exact set counts and a certified logarithmic objective for T077-C01."""
-
-from collections.abc import Mapping
-
-
-CONFIG_ID = "T077-C01"
-MIN_CARDINALITY = 2
-MAX_CARDINALITY = 512
-LOWER_BOUND = -1_000_000
-UPPER_BOUND = 1_000_000
-PARAMETERS = {
-    "min_cardinality": 2,
-    "max_cardinality": 512,
-    "integer_interval": [-1_000_000, 1_000_000],
-    "objective": "ln(|A-A|) / ln(|A+A|)",
-}
+"""Exact verifier for signed 208-step autoconvolution candidates."""
+from fractions import Fraction
+import math
 
 
-def _check_config(config):
-    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
-        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
-    if config.get("parameters") != PARAMETERS:
-        raise ValueError("configuration must fix the T077 cardinality, interval, and objective")
-
-
-def _interval_endpoint_text(endpoint, lower):
-    text = str(endpoint).strip().strip("[]")
-    pieces = text.split(",", 1)
-    return pieces[0].strip() if lower else pieces[-1].strip()
+def _rational(value):
+    if isinstance(value, bool) or not isinstance(value, (int, str, float, Fraction)):
+        raise ValueError("coefficients must be integers, finite floats, or rational strings")
+    try:
+        if isinstance(value, float) and not math.isfinite(value):
+            raise ValueError("coefficient floats must be finite")
+        return Fraction(value)
+    except (ValueError, ZeroDivisionError, TypeError, OverflowError) as exc:
+        raise ValueError("coefficients must be finite rational values") from exc
 
 
 def validate(solution, config, strict=False):
-    """Validate the set, then return a conservative lower bound for maximization."""
-    _check_config(config)
-    if not isinstance(solution, Mapping):
-        raise ValueError("solution must be an object")
-    raw = solution.get("set")
-    if not isinstance(raw, (list, tuple)):
-        raise ValueError("set must be a list of integers")
-    n = len(raw)
-    if not MIN_CARDINALITY <= n <= MAX_CARDINALITY:
-        raise ValueError("set cardinality must be in 2..512")
-    values = []
-    for index, item in enumerate(raw):
-        if type(item) is not int:
-            raise ValueError(f"element {index} must be an integer; bool is invalid")
-        if item < LOWER_BOUND or item > UPPER_BOUND:
-            raise ValueError(f"element {index} lies outside [-1000000,1000000]")
-        values.append(item)
-    if len(set(values)) != n:
-        raise ValueError("set elements must be distinct")
-
-    sumset = {a + b for a in values for b in values}
-    difference_set = {a - b for a in values for b in values}
-    sum_size = len(sumset)
-    difference_size = len(difference_set)
-    if sum_size <= 1 or difference_size <= 1:
-        raise ValueError("both set cardinalities must exceed one for the logarithms")
-
-    from mpmath import iv
-    iv.dps = 80
-    score_interval = iv.ln(iv.mpf(difference_size)) / iv.ln(iv.mpf(sum_size))
-    lower = _interval_endpoint_text(score_interval.a, lower=True)
-    upper = _interval_endpoint_text(score_interval.b, lower=False)
+    # Every accepted score is exact. `strict` is retained for runner compatibility.
+    del strict
+    if not isinstance(solution, dict) or not isinstance(config, dict):
+        raise ValueError("solution and config must be objects")
+    params = config.get("parameters", config)
+    expected = {
+        "steps": 208,
+        "support": ["-1/4", "1/4"],
+        "signed_values_allowed": True,
+        "integral": 1,
+    }
+    if not isinstance(params, dict) or any(params.get(k) != v for k, v in expected.items()):
+        raise ValueError("configuration must be T077-C01: 208 signed steps on [-1/4,1/4], integral 1")
+    coeff = solution.get("coefficients")
+    if not isinstance(coeff, list) or len(coeff) != 208:
+        raise ValueError("coefficients must contain exactly 208 values")
+    values = [_rational(x) for x in coeff]
+    mass = sum(values, Fraction(0))
+    if mass == 0:
+        raise ValueError("coefficient mass must be nonzero")
+    # A constant step height on each of 208 equal bins has integral proportional
+    # to this mass. Normalization to integral one cancels in the formula below.
+    conv = [
+        sum((values[i] * values[k-i]
+             for i in range(max(0, k-207), min(207, k)+1)), Fraction(0))
+        for k in range(415)
+    ]
+    peak = max(abs(x) for x in conv)
+    objective = Fraction(416) * peak / (mass * mass)
+    peak_indices = [i for i, x in enumerate(conv) if abs(x) == peak]
     return {
-        "objective": lower,
-        "objective_value": lower,
-        "verification_status": "certified",
+        "objective": str(objective),
+        "verification_status": "exact",
         "details": {
-            "cardinality": n,
-            "sumset_size": sum_size,
-            "difference_set_size": difference_size,
-            "objective_interval": [lower, upper],
-            "objective_lower_bound": lower,
-            "sumset_exact": True,
-            "difference_set_exact": True,
-            "claimed_objective_ignored": True,
-            "strict": bool(strict),
+            "steps": 208,
+            "coefficient_count": 208,
+            "mass": str(mass),
+            "max_abs_convolution": str(peak),
+            "max_abs_indices": peak_indices,
+            "normalization": "integral-one normalization; objective is invariant under nonzero scaling",
+            "objective_definition": "416 * max_k(abs(sum_i a_i*a_(k-i))) / (sum_i a_i)^2",
         },
     }

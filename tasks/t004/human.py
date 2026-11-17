@@ -1,11 +1,20 @@
-"""Load the public spherical-code witness for the selected configuration."""
+"""Rebuild the 17-square grid-derived human baseline from its formula."""
 import os
-from pathlib import Path
+
 
 def run_code():
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01")
-    points = []
-    if cid != "T004-C01": raise ValueError("unknown T004 configuration")
-    for line in (Path(__file__).parent / "data" / "spherical_code_3_16.txt").read_text().splitlines():
-        if line.strip(): points.append([x.strip() for x in line.split(",")])
-    return {"points": points}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01") != "T004-C01":
+        raise ValueError("unsupported T004 configuration")
+    _seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    squares = []
+    for row in range(4):
+        for col in range(4):
+            if (row, col) == (0, 0):
+                continue
+            squares.append({"x": f"{2*col+1}/8", "y": f"{2*row+1}/8",
+                            "side": "1/4", "cos": "1", "sin": "0"})
+    squares.extend([
+        {"x": "1/16", "y": "1/16", "side": "1/8", "cos": "1", "sin": "0"},
+        {"x": "3/16", "y": "1/16", "side": "1/8", "cos": "1", "sin": "0"},
+    ])
+    return {"squares": squares, "objective": "4"}

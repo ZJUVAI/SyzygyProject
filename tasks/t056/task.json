@@ -1,54 +1,45 @@
 {
   "task_id": "T056",
-  "name": "Taillard ta41 job-shop makespan",
+  "name": "Maximum number of mutually orthogonal Latin squares",
   "acceptance_status": "accepted_by_sol",
-  "category": "scheduling",
-  "definition": "For the fixed Taillard ta41 instance, schedule every operation. Each job follows its own prescribed machine route, and each machine processes at most one operation at a time. Minimize the final completion time (makespan).",
-  "solution_format": "An object with machine_orders: one permutation of all 30 job indices for each of the 20 machines.",
+  "category": "combinatorial_designs",
+  "definition": "For fixed order n=12, maximize the number of pairwise orthogonal Latin squares over the symbol set {0,...,11}.",
+  "solution_format": "An object with a squares list; each square is a 12 by 12 integer array.",
   "objective": {
-    "name": "makespan",
-    "unit": "integer time units",
-    "direction": "minimize"
+    "name": "number_of_squares",
+    "unit": "Latin squares",
+    "direction": "maximize"
   },
   "constraints": [
-    "Every one of the 30 jobs has 20 operations on its prescribed route.",
-    "Each machine processes all 30 assigned operations exactly once, without overlap.",
-    "Operations within each job follow the fixed route order.",
-    "Processing times are positive integers; operations are non-preemptive.",
-    "The directed graph formed by job precedence and machine order must be acyclic."
+    "Each square has exactly 12 rows and 12 columns.",
+    "Each row and each column contains every integer from 0 through 11 exactly once.",
+    "For each pair of distinct input squares, all 144 ordered symbol pairs occur exactly once."
   ],
   "official_configuration": "T056-C01",
   "configurations": [
     {
       "id": "T056-C01",
       "parameters": {
-        "instance": "ta41",
-        "jobs": 30,
-        "machines": 20
+        "order": 12
       },
-      "direction": "minimize",
-      "human_reference": 3296
+      "direction": "maximize",
+      "human_reference": 5
     }
   ],
   "sources": [
-    "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html",
-    "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/jobshop.dir/tai30_20.txt",
-    "https://doi.org/10.1287/opre.8.4.487",
-    "https://www.optimizizer.com/TA.php"
+    "https://doi.org/10.1016/0097-3165(92)90052-V",
+    "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/database.html#sage.combinat.designs.database.MOLS_12_5"
   ],
-  "verification": "Exact integer longest-path evaluation on the acyclic graph of job precedences and consecutive operations in each machine order. A cycle or invalid machine permutation is rejected.",
+  "verification": "Exact integer checks of all entries, row and column symbol sets, and pairwise ordered-pair counts.",
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "Taillard ta41，30工件20机器、每工件各自固定机器顺序、非抢占、最小化makespan。不同机器可用不同工件顺序，与T028 permutation flowshop不同。",
-      "primary_sources": "Sol重新下载Taillard官方tai30_20.txt与Shylo公开2006排程HTML，逐字节匹配源快照；全部600个machine/duration操作及20条机器工件排列逐项匹配保存JSON。原始实例SHA256 fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9。",
-      "record_and_status": "亲自读取当前optimizizer TA表ta41行，仍列1912–2006，2008传统GES构造2006保存且可复算；2025论文Table5、14给1915是new lower bound而非可行值，结论明确未形式证明其solver下界，故单独记为报告。所查来源未闭合。",
-      "human_baseline": "Giffler–Thompson冲突集算法配最长加工时间优先，复现3296；该弱H不冒充最强公开人类2006。实现逐步选最早完成操作对应机器，冲突集取可开始时间小于该完成时间的待选操作。",
-      "independent_math": "正式checker构造前驱DAG后拓扑最长路；Sol另用工件下一操作与机器下一工件双游标逐步dispatch，维护两类ready时间。全部600操作调度完成，独立得相同makespan。",
-      "controls": "初始25114、传统/演化2795、人类3296、参考2006；重复工件破坏、完整声明不变性、严格回放、仅公开instance冷导出、三类运行失败通过。预算metadata初稿虚称支持秒数截断，交原代理改成实际固定迭代后完整重跑。",
-      "limits": "未验证1915的计算下界证明，未重跑2008并行GES或2025长时solver；2006只是可行公开纪录，不称最优。"
+      "数学模型": "固定12阶，最大化两两正交拉丁方阵数量。每行每列恰好含0至11，每对方阵产生全部144个有序符号对。",
+      "人类来源": "Sage 10.10固定提交cb359e4c6e3b52e1bfc7f4f152e7db3ebd5f5d03，将显式五方阵归于Brendan McKay。主代理从原函数M字面字符串重建720个符号并逐项匹配，不执行外部代码。1992年相关论文作者是Charles E. Roberts，两种归属分开。",
+      "独立验算": "主代理将五方阵转换为144行、7列的正交数组，核对全部21个二列投影。该方法同时涵盖拉丁条件与两两正交条件。初始1，MacNeish基线和演化2，人类及参考5。五程序及完整验收控制通过。",
+      "开放状态与限制": "五方阵是已知下界，未称最优。官方2026形式猜想库仍将12阶完整11方阵是否存在列为开放。本地未重建非存在证明，公开检索未见更高构造；检索不是穷尽。原检查器的声明分数差异标志已移除，伪造分数不会改变完整校验结果。"
     }
   }
 }

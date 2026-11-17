@@ -1,58 +1,103 @@
+import hashlib
 import json
+import os
+import sys
 from pathlib import Path
-import unittest
-from tasks.t010.check import validate
-from tasks.t010.sota import run_code as run_sota
 
-CONFIG={'parameters':{'n':17,'distance':6}}
-DATA=Path(__file__).parent/'data'/'bch_extended_128.json'
+import pytest
 
-class TaskTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls): cls.words=json.loads(DATA.read_text())['codewords']
+from mathbench.evaluate import _run
+from tasks.t010.check import CONFIG_ID, _EXPECTED, validate
+from tasks.t010.human import run_code as human_run
+from tasks.t010.reference import run_code as reference_run
 
-    def test_reproduced_witness_and_independent_pair_count(self):
-        result=validate({'codewords':self.words,'objective':999},CONFIG)
-        direct=min(bin(a^b).count('1') for i,a in enumerate(self.words) for b in self.words[i+1:])
-        self.assertEqual((len(self.words),direct),(128,6))
-        self.assertEqual(result['objective'],128)
-        self.assertEqual(result['details']['pairs_checked'],8128)
-        clean=validate({'codewords':self.words},CONFIG)
-        self.assertEqual(result,clean)
-        self.assertTrue(result['details']['claimed_objective_ignored'])
+ROOT = Path(__file__).parent
+CONFIG = json.loads((ROOT / "task.json").read_text())["configurations"][0]
 
-    def test_sota_replay_matches_saved_octacode_witness(self):
-        solution = run_sota()
-        result = validate(solution, CONFIG)
-        saved = json.loads((Path(__file__).parent / 'data' / 'sota_nordstrom_robinson_256.json').read_text())
-        self.assertEqual(solution, saved)
-        self.assertEqual(result['objective'], 256)
-        self.assertEqual(result['details']['minimum_pairwise_distance'], 6)
-        self.assertEqual(result['details']['pairs_checked'], 32640)
 
-    def test_accepts_bit_list(self):
-        words=[[((x>>i)&1) for i in range(17)] for x in self.words[:2]]
-        self.assertEqual(validate({'codewords':words},CONFIG)['objective'],2)
+def test_public_witness_hash_and_exact_coverage():
+    path = ROOT / "data/reference/11P1_54x55.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
+        "4ca03f1b4984073bc481c76e90e1cabfd4c49351831784813f070686fb7877f0"
+    )
+    result = validate(reference_run(), CONFIG)
+    assert result["verification_status"] == "exact"
+    assert result["objective_value"] == 270
+    assert result["details"]["rectangle"] == [54, 55]
+    assert result["details"]["covered_cells"] == 2970
 
-    def test_singleton_boundary(self):
-        self.assertEqual(validate({'codewords':[0]},CONFIG)['objective'],1)
 
-    def test_rejects_duplicate(self):
-        with self.assertRaises(ValueError): validate({'codewords':[4,4]},CONFIG)
+def test_human_program_replays_public_human_construction():
+    assert validate(human_run(), CONFIG)["objective_value"] == 270
 
-    def test_rejects_too_close(self):
-        with self.assertRaises(ValueError): validate({'codewords':[0,31]},CONFIG)
 
-    def test_rejects_bool_float_and_invalid_bit(self):
-        for bad in (True, 1.0, [0]*16+[False], [0]*16+[2]):
-            with self.subTest(bad=bad), self.assertRaises(ValueError): validate({'codewords':[bad]},CONFIG)
+def test_independent_solver_seed_hash_and_exact_score():
+    path = ROOT / "data/search/independent_cpsat_seed_270.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
+        "5d194c9589c9dab166b66f85feeeca8fe6f3ac831dc3400e9e66da506a10c225"
+    )
+    assert validate(json.loads(path.read_text()), CONFIG)["objective_value"] == 270
 
-    def test_rejects_out_of_range_and_wrong_length(self):
-        for bad in (-1,1<<17,[0]*16):
-            with self.subTest(bad=bad), self.assertRaises(ValueError): validate({'codewords':[bad]},CONFIG)
 
-    def test_rejects_empty_and_unknown_config(self):
-        with self.assertRaises(ValueError): validate({'codewords':[]},CONFIG)
-        with self.assertRaises(ValueError): validate({'codewords':[0]},{'parameters':{'n':17,'distance':5}})
+def test_all_program_entries_produce_exact_tilings():
+    from tasks.t010.baseline import run_code as baseline_run
+    from tasks.t010.evolution import run_code as evolution_run
+    from tasks.t010.init_program import run_code as init_run
 
-if __name__=='__main__': unittest.main()
+    for run in (init_run, baseline_run, evolution_run, human_run, reference_run):
+        result = validate(run(), CONFIG)
+        assert result["verification_status"] == "exact"
+        assert result["details"]["covered_cells"] == result["details"]["area"]
+        assert result["objective_value"] == result["details"]["tile_count"]
+
+
+def test_invalid_dimensions_orientation_overlap_and_hole_are_rejected():
+    witness = reference_run()
+    bad = {**witness, "width": True}
+    with pytest.raises(ValueError, match="positive integers"):
+        validate(bad, CONFIG)
+    bad = json.loads(json.dumps(witness))
+    bad["placements"][0]["orientation"] = True
+    with pytest.raises(ValueError, match="Orientation"):
+        validate(bad, CONFIG)
+    bad = json.loads(json.dumps(witness))
+    bad["placements"][0] = dict(bad["placements"][1])
+    with pytest.raises(ValueError):
+        validate(bad, CONFIG)
+    bad = json.loads(json.dumps(witness))
+    bad["placements"].pop()
+    with pytest.raises(ValueError, match="area"):
+        validate(bad, CONFIG)
+
+
+def test_bad_translation_and_noninteger_are_rejected():
+    witness = reference_run()
+    for x in (True, 0.5, float("nan"), -1):
+        bad = json.loads(json.dumps(witness))
+        bad["placements"][0]["x"] = x
+        with pytest.raises(ValueError):
+            validate(bad, CONFIG)
+    bad = json.loads(json.dumps(witness))
+    bad["placements"][0]["orientation"] = 8
+    with pytest.raises(ValueError):
+        validate(bad, CONFIG)
+
+
+def test_fixed_parameters_and_forged_score_do_not_change_result():
+    with pytest.raises(ValueError, match="fixed"):
+        validate(reference_run(), {
+            "id": CONFIG_ID,
+            "parameters": {**_EXPECTED, "tile_area": True},
+            "direction": "minimize",
+        })
+    expected = validate(reference_run(), CONFIG)
+    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", {"fake": 1})):
+        assert validate({**reference_run(), key: value}, CONFIG) == expected
+
+
+def test_runner_error_and_timeout_controls():
+    env = dict(os.environ)
+    with pytest.raises(RuntimeError, match="intentional T010 worker failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional T010 worker failure')"], env, 5)
+    with pytest.raises(TimeoutError):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)

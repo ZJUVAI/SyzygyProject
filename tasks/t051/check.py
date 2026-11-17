@@ -1,71 +1,86 @@
-"""Exact checker for finite +/-1 sequences with discrepancy at most 3."""
+"""Exact verifier for binary (7,4;3) constant-dimension subspace codes."""
+
+PARAMETERS = {
+    "field_size": 2,
+    "ambient_dimension": 7,
+    "subspace_dimension": 3,
+    "minimum_subspace_distance": 4,
+}
+N = 7
+K = 3
 
 
-SEQUENCE_LENGTH = "variable"
-CONFIG_ID = "T051-C01"
-CAP = 3
-ENTRY_DOMAIN = [-1, 1]
-CONSTRAINT = "every prefix of every homogeneous arithmetic progression has absolute sum at most 3"
+def _rank(rows):
+    rows = list(rows)
+    rank = 0
+    for col in range(N):
+        pivot = next((i for i in range(rank, len(rows)) if (rows[i] >> col) & 1), None)
+        if pivot is None:
+            continue
+        rows[rank], rows[pivot] = rows[pivot], rows[rank]
+        for i in range(len(rows)):
+            if i != rank and ((rows[i] >> col) & 1):
+                rows[i] ^= rows[rank]
+        rank += 1
+        if rank == len(rows):
+            break
+    return rank
 
 
-def _check_config(config):
-    if not isinstance(config, dict):
-        raise ValueError("configuration must be an object")
-    if config.get("id") not in (None, CONFIG_ID):
-        raise ValueError(f"unsupported configuration: expected {CONFIG_ID}")
-    parameters = config.get("parameters")
-    if not isinstance(parameters, dict) or set(parameters) != {
-        "discrepancy_cap", "entry_domain", "constraint"
-    }:
-        raise ValueError("configuration must fix discrepancy cap C=3 and unrestricted signs")
-    domain = parameters.get("entry_domain")
-    if (type(parameters.get("discrepancy_cap")) is not int
-            or parameters["discrepancy_cap"] != CAP
-            or not isinstance(domain, list)
-            or len(domain) != 2
-            or any(type(value) is not int for value in domain)
-            or domain != ENTRY_DOMAIN
-            or parameters.get("constraint") != CONSTRAINT):
-        raise ValueError("configuration must fix discrepancy cap C=3 and unrestricted signs")
+def _span(rows):
+    return frozenset((a * rows[0]) ^ (b * rows[1]) ^ (c * rows[2])
+                     for a in (0, 1) for b in (0, 1) for c in (0, 1))
+
+
+def _parse_basis(value):
+    if not isinstance(value, (list, tuple)) or len(value) != K:
+        raise ValueError("each codeword must contain exactly three basis rows")
+    if all(type(x) is int for x in value):
+        rows = []
+        for x in value:
+            if x < 0 or x >= (1 << N):
+                raise ValueError("row masks must be integers from 0 through 127")
+            rows.append(x)
+    else:
+        rows = []
+        for row in value:
+            if not isinstance(row, (list, tuple)) or len(row) != N:
+                raise ValueError("basis matrices must have shape 3 by 7")
+            if any(type(x) is not int or x not in (0, 1) for x in row):
+                raise ValueError("matrix entries must be integer 0 or 1; bool is rejected")
+            rows.append(sum(x << j for j, x in enumerate(row)))
+    if _rank(rows) != K:
+        raise ValueError("each codeword basis must have rank 3 over GF(2)")
+    return _span(rows)
 
 
 def validate(solution, config, strict=False):
-    """Recompute all homogeneous-progression prefix sums exactly."""
-    _check_config(config)
-    if not isinstance(solution, dict):
-        raise ValueError("solution must be an object")
-    sequence = solution.get("sequence")
-    if not isinstance(sequence, list) or not sequence:
-        raise ValueError("sequence must be a nonempty JSON array")
-    for i, value in enumerate(sequence):
-        if type(value) is not int or value not in (-1, 1):
-            raise ValueError(f"sequence entry {i} must be the integer -1 or +1")
-
-    n = len(sequence)
-    maximum = 0
-    maximizing_witness = None
-    for d in range(1, n + 1):
-        partial = 0
-        k = 0
-        for index in range(d - 1, n, d):
-            partial += sequence[index]
-            k += 1
-            magnitude = abs(partial)
-            if magnitude > CAP:
-                raise ValueError(
-                    f"discrepancy exceeds 3: d={d}, k={k}, signed_sum={partial}"
-                )
-            if magnitude > maximum:
-                maximum = magnitude
-                maximizing_witness = {"difference": d, "prefix_length": k, "signed_sum": partial}
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("unsupported configuration")
+    if not isinstance(solution, dict) or "codewords" not in solution:
+        raise ValueError("solution must contain codewords")
+    codewords = solution["codewords"]
+    if not isinstance(codewords, (list, tuple)):
+        raise ValueError("codewords must be a list")
+    spaces = [_parse_basis(word) for word in codewords]
+    canonical = set()
+    for space in spaces:
+        if space in canonical:
+            raise ValueError("duplicate codeword subspace")
+        canonical.add(space)
+    pair_count = 0
+    for i, left in enumerate(spaces):
+        for right in spaces[i + 1:]:
+            pair_count += 1
+            if len(left.intersection(right)) > 2:
+                raise ValueError("codewords intersect in dimension at least 2")
     return {
-        "objective": n,
+        "objective": len(spaces),
         "verification_status": "exact",
         "details": {
-            "sequence_length": n,
-            "discrepancy": maximum,
-            "maximizing_prefix": maximizing_witness,
-            "homogeneous_progression_prefixes_checked": sum(n // d for d in range(1, n + 1)),
+            "codewords_checked": len(spaces),
+            "pairs_checked": pair_count,
+            "minimum_subspace_distance": 4,
             "claimed_objective_ignored": True,
         },
     }

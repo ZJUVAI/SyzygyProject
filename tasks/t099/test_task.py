@@ -1,103 +1,118 @@
+"""Task-local exact checks and runner-control tests for T099."""
+
 import hashlib
 import json
-import os
-import sys
 from pathlib import Path
 
 import pytest
 
-from mathbench.evaluate import _run
-from tasks.t099.check import CONFIG_ID, _EXPECTED, validate
-from tasks.t099.human import run_code as human_run
-from tasks.t099.reference import run_code as reference_run
+from tasks.t099.check import _CONFIGS, validate
+from tasks.t099.human import build_batcher_network
+from tasks.t099.reference import DATA
 
-ROOT = Path(__file__).parent
-CONFIG = json.loads((ROOT / "task.json").read_text())["configurations"][0]
-
-
-def test_public_witness_hash_and_exact_coverage():
-    path = ROOT / "data/reference/11P1_54x55.json"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
-        "4ca03f1b4984073bc481c76e90e1cabfd4c49351831784813f070686fb7877f0"
-    )
-    result = validate(reference_run(), CONFIG)
-    assert result["verification_status"] == "exact"
-    assert result["objective_value"] == 270
-    assert result["details"]["rectangle"] == [54, 55]
-    assert result["details"]["covered_cells"] == 2970
+HERE = Path(__file__).resolve().parent
+CONFIG = {"id":"T099-C01", "parameters": {"inputs":17}}
 
 
-def test_human_program_replays_public_human_construction():
-    assert validate(human_run(), CONFIG)["objective_value"] == 270
+def _reference_solution():
+    return {"comparators": json.loads(DATA.read_text())["comparators"]}
 
 
-def test_independent_solver_seed_hash_and_exact_score():
-    path = ROOT / "data/search/independent_cpsat_seed_270.json"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
-        "5d194c9589c9dab166b66f85feeeca8fe6f3ac831dc3400e9e66da506a10c225"
-    )
-    assert validate(json.loads(path.read_text()), CONFIG)["objective_value"] == 270
+def _scalar_sort(comparators, bits):
+    wires = [(bits >> i) & 1 for i in range(17)]
+    for left, right in comparators:
+        if wires[left] > wires[right]:
+            wires[left], wires[right] = wires[right], wires[left]
+    return all(wires[i] <= wires[i + 1] for i in range(16))
+
+def test_reference_pins_and_independent_full_scalar_replay():
+    net = json.loads(DATA.read_text())
+    source = net["source"]
+    snapshot = HERE / "data/reference/sorterhunter_sorting_networks.html"
+    digest = hashlib.sha256(snapshot.read_bytes()).hexdigest()
+    assert digest == source["snapshot_sha256"]
+    assert len(net["comparators"]) == net["size"] == 71
+    assert len(net["layers"]) == net["depth"] == 12
+    assert [pair for layer in net["layers"] for pair in layer] == net["comparators"]
+    assert source["sorterhunter_commit"] == "8ba90df607cbdc339409e0b173b5a2ffd60fc911"
+    assert validate(_reference_solution(), CONFIG)["objective"] == 71
+    # Scalar simulation is separate from the task's packed-bitset checker.
+    for bits in range(1 << 17):
+        assert _scalar_sort(net["comparators"], bits), bits
 
 
-def test_all_program_entries_produce_exact_tilings():
-    from tasks.t099.baseline import run_code as baseline_run
-    from tasks.t099.evolution import run_code as evolution_run
-    from tasks.t099.init_program import run_code as init_run
-
-    for run in (init_run, baseline_run, evolution_run, human_run, reference_run):
-        result = validate(run(), CONFIG)
-        assert result["verification_status"] == "exact"
-        assert result["details"]["covered_cells"] == result["details"]["area"]
-        assert result["objective_value"] == result["details"]["tile_count"]
+def test_batcher_human_method_baseline_is_exactly_valid():
+    net = build_batcher_network()
+    assert len(net) == 85
+    checked = validate({"comparators": net}, CONFIG)
+    assert checked["objective"] == 85
+    assert checked["verification_status"] == "exact"
 
 
-def test_invalid_dimensions_orientation_overlap_and_hole_are_rejected():
-    witness = reference_run()
-    bad = {**witness, "width": True}
-    with pytest.raises(ValueError, match="positive integers"):
-        validate(bad, CONFIG)
-    bad = json.loads(json.dumps(witness))
-    bad["placements"][0]["orientation"] = True
-    with pytest.raises(ValueError, match="Orientation"):
-        validate(bad, CONFIG)
-    bad = json.loads(json.dumps(witness))
-    bad["placements"][0] = dict(bad["placements"][1])
+def test_unknown_configuration_is_rejected():
+    with pytest.raises(ValueError, match="unsupported configuration"):
+        validate(_reference_solution(), {"id": "T099-C99", "parameters": {"inputs": 17}})
+
+
+@pytest.mark.parametrize("solution", [
+    None,
+    {},
+    {"comparators": None},
+    {"comparators": [[0]]},
+    {"comparators": [[0, 0]]},
+    {"comparators": [[1, 0]]},
+    {"comparators": [[0, 17]]},
+    {"comparators": [[False, 1]]},
+    {"comparators": [[0, 1.0]]},
+    {"comparators": [[0, float("nan")]]},
+    {"comparators": [[0, float("inf")]]},
+    {"comparators": []},
+    {"comparators": _reference_solution()["comparators"][:-1]},
+])
+def test_invalid_or_broken_networks_are_rejected(solution):
     with pytest.raises(ValueError):
-        validate(bad, CONFIG)
-    bad = json.loads(json.dumps(witness))
-    bad["placements"].pop()
-    with pytest.raises(ValueError, match="area"):
-        validate(bad, CONFIG)
+        validate(solution, CONFIG)
 
 
-def test_bad_translation_and_noninteger_are_rejected():
-    witness = reference_run()
-    for x in (True, 0.5, float("nan"), -1):
-        bad = json.loads(json.dumps(witness))
-        bad["placements"][0]["x"] = x
-        with pytest.raises(ValueError):
-            validate(bad, CONFIG)
-    bad = json.loads(json.dumps(witness))
-    bad["placements"][0]["orientation"] = 8
+def test_duplicate_comparator_is_allowed_and_counted():
+    net = _reference_solution()["comparators"]
+    result = validate({"comparators": net + [net[-1]]}, CONFIG)
+    assert result["objective"] == 72
+
+
+def test_configuration_and_claims_are_checked_or_ignored_as_required():
     with pytest.raises(ValueError):
-        validate(bad, CONFIG)
+        validate(_reference_solution(), {"parameters": {"inputs": 16}})
+    base = validate(_reference_solution(), CONFIG)
+    for field, value in [("objective", -100), ("score", float("nan")),
+                         ("claimed_score", {"value": float("inf")})]:
+        forged = _reference_solution()
+        forged[field] = value
+        assert validate(forged, CONFIG) == base
 
 
-def test_fixed_parameters_and_forged_score_do_not_change_result():
-    with pytest.raises(ValueError, match="fixed"):
-        validate(reference_run(), {
-            "id": CONFIG_ID,
-            "parameters": {**_EXPECTED, "tile_area": True},
-            "direction": "minimize",
-        })
-    expected = validate(reference_run(), CONFIG)
-    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", {"fake": 1})):
-        assert validate({**reference_run(), key: value}, CONFIG) == expected
+@pytest.mark.parametrize("module,expected", [
+    ("tasks.t099.init_program", 136),
+    ("tasks.t099.baseline", 136),
+    ("tasks.t099.human", 85),
+    ("tasks.t099.reference", 71),
+    ("tasks.t099.evolution", 136),
+])
+def test_all_five_run_code_entries(module, expected, monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T099-C01")
+    monkeypatch.setenv("MATHBENCH_SEED", "11")
+    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "2")
+    entry = __import__(module, fromlist=["run_code"])
+    candidate = entry.run_code()
+    checked = validate(candidate, CONFIG)
+    if expected is not None:
+        assert checked["objective"] == expected
+    assert isinstance(checked["objective"], int)
 
 
-def test_runner_error_and_timeout_controls():
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional T099 worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional T099 worker failure')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
+def test_search_programs_are_independent_of_comparison_programs():
+    for filename in ("baseline.py", "evolution.py"):
+        source = (HERE / filename).read_text()
+        assert "tasks.t099.human" not in source
+        assert "tasks.t099.reference" not in source
+        assert "data/reference" not in source

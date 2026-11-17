@@ -1,79 +1,140 @@
-"""Exact verifier for configured binary linear codes."""
+"""Exact checker for primitive simple perfect squared squares of order 38."""
+
+from functools import lru_cache
+from math import gcd
 
 
-SUPPORTED = {
-    "T009-C01": {"n": 68, "k": 15, "q": 2},
+CONFIG_ID = "T009-C01"
+PARAMETERS = {
+    "order": 38,
+    "object": "axis-aligned tiling of an integer-sided square by 38 smaller squares",
+    "perfect": "all 38 positive integer square side lengths are distinct",
+    "simple": "no proper rectangle is tiled by a subset of at least two component squares",
+    "primitive": "greatest common divisor of the 38 square side lengths is 1",
+    "objective": "minimum outer square side length over all valid tilings",
 }
+FROZEN_CONFIG = {
+    "id": CONFIG_ID,
+    "parameters": PARAMETERS,
+    "direction": "minimize",
+    "human_reference": 352,
+}
+ORDER = 38
 
 
-def _rank(rows, n, k):
-    packed = [sum(bit << j for j, bit in enumerate(row)) for row in rows]
-    rank = 0
-    for col in range(n):
-        pivot = next((i for i in range(rank, k) if (packed[i] >> col) & 1), None)
-        if pivot is None:
-            continue
-        packed[rank], packed[pivot] = packed[pivot], packed[rank]
-        for i in range(k):
-            if i != rank and ((packed[i] >> col) & 1):
-                packed[i] ^= packed[rank]
-        rank += 1
-        if rank == k:
-            break
-    return rank
+def _same_typed(left, right):
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(_same_typed(left[k], right[k]) for k in left)
+    if isinstance(left, list):
+        return len(left) == len(right) and all(_same_typed(a, b) for a, b in zip(left, right))
+    return left == right
 
 
-def _matrix(solution, n, k):
-    if not isinstance(solution, dict) or "generator_matrix" not in solution:
-        raise ValueError("solution must contain generator_matrix")
-    matrix = solution["generator_matrix"]
-    if not isinstance(matrix, (list, tuple)) or len(matrix) != k:
-        raise ValueError(f"generator_matrix must have {k} rows")
-    rows = []
-    for row in matrix:
-        if not isinstance(row, (list, tuple)) or len(row) != n:
-            raise ValueError(f"each generator row must have {n} entries")
-        if any(type(bit) is not int or bit not in (0, 1) for bit in row):
-            raise ValueError("matrix entries must be integer 0 or 1 (bool is rejected)")
-        rows.append(list(row))
-    if _rank(rows, n, k) != k:
-        raise ValueError(f"generator matrix must have rank {k} over GF(2)")
-    return rows
+def _simple_rectangle_check(side, squares):
+    xs = sorted({0, side, *(x for x, _, size in squares), *(x + size for x, _, size in squares)})
+    ys = sorted({0, side, *(y for _, y, size in squares), *(y + size for _, y, size in squares)})
+    index = {id(square): i for i, square in enumerate(squares)}
 
+    x_ranges = []
+    for ix, x0 in enumerate(xs[:-1]):
+        for x1 in xs[ix + 1 :]:
+            mask = 0
+            for i, (x, y, size) in enumerate(squares):
+                if x0 <= x and x + size <= x1:
+                    mask |= 1 << i
+            x_ranges.append((x0, x1, mask))
 
-def _min_distance(rows):
-    k = len(rows)
-    n = len(rows[0])
-    packed = [sum(bit << j for j, bit in enumerate(row)) for row in rows]
-    word = 0
-    previous_gray = 0
-    best = n + 1
-    for i in range(1, 1 << k):
-        gray = i ^ (i >> 1)
-        changed = gray ^ previous_gray
-        word ^= packed[changed.bit_length() - 1]
-        best = min(best, word.bit_count())
-        previous_gray = gray
-    return best
+    y_ranges = []
+    for iy, y0 in enumerate(ys[:-1]):
+        for y1 in ys[iy + 1 :]:
+            mask = 0
+            for i, (x, y, size) in enumerate(squares):
+                if y0 <= y and y + size <= y1:
+                    mask |= 1 << i
+            y_ranges.append((y0, y1, mask))
+
+    areas = tuple(size * size for _, _, size in squares)
+
+    @lru_cache(maxsize=65536)
+    def contained_area(mask):
+        total = 0
+        while mask:
+            bit = mask & -mask
+            total += areas[bit.bit_length() - 1]
+            mask -= bit
+        return total
+
+    for x0, x1, x_mask in x_ranges:
+        for y0, y1, y_mask in y_ranges:
+            if x0 == 0 and x1 == side and y0 == 0 and y1 == side:
+                continue
+            inside = x_mask & y_mask
+            if inside.bit_count() < 2:
+                continue
+            if contained_area(inside) == (x1 - x0) * (y1 - y0):
+                raise ValueError("tiling contains a proper squared rectangle")
 
 
 def validate(solution, config, strict=False):
-    if not isinstance(config, dict):
-        raise ValueError("unsupported configuration")
-    config_id = config.get("id")
-    params = config.get("parameters")
-    if config_id not in SUPPORTED or params != SUPPORTED[config_id]:
-        raise ValueError("unsupported configuration")
-    n, k = params["n"], params["k"]
-    rows = _matrix(solution, n, k)
-    distance = _min_distance(rows)
+    del strict
+    if not isinstance(config, dict) or not _same_typed(config, FROZEN_CONFIG):
+        raise ValueError(f"configuration must match {CONFIG_ID} exactly")
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be an object")
+    side = solution.get("side")
+    if type(side) is not int or side <= 0:
+        raise ValueError("outer side must be a positive integer")
+    raw_squares = solution.get("squares")
+    if not isinstance(raw_squares, list) or len(raw_squares) != ORDER:
+        raise ValueError("squares must contain exactly 38 entries")
+    squares = []
+    for item in raw_squares:
+        if not isinstance(item, list) or len(item) != 3:
+            raise ValueError("each square must be [x, y, side]")
+        x, y, size = item
+        if any(type(value) is not int for value in item):
+            raise ValueError("square coordinates and sides must be integers; booleans are rejected")
+        if size <= 0:
+            raise ValueError("square side lengths must be positive")
+        if x < 0 or y < 0 or x + size > side or y + size > side:
+            raise ValueError("square lies outside the outer square")
+        squares.append((x, y, size))
+
+    sizes = [size for _, _, size in squares]
+    if len(set(sizes)) != ORDER:
+        raise ValueError("all square side lengths must be distinct")
+    common = 0
+    for size in sizes:
+        common = gcd(common, size)
+    if common != 1:
+        raise ValueError("the squared square must be primitive (gcd of sides equals 1)")
+
+    area = sum(size * size for size in sizes)
+    if area != side * side:
+        raise ValueError("component areas do not equal the outer square area")
+    for i, (x, y, size) in enumerate(squares):
+        for xx, yy, other_size in squares[i + 1 :]:
+            if not (
+                x >= xx + other_size
+                or x + size <= xx
+                or y >= yy + other_size
+                or y + size <= yy
+            ):
+                raise ValueError("square interiors overlap")
+
+    _simple_rectangle_check(side, squares)
     return {
-        "objective": distance,
+        "objective": side,
         "verification_status": "exact",
         "details": {
-            "parameters": {"n": n, "k": k, "q": 2},
-            "rank": k,
-            "codewords_checked": (1 << k) - 1,
+            "order": ORDER,
+            "outer_side": side,
+            "distinct_sizes": len(set(sizes)),
+            "primitive_gcd": common,
+            "area_sum": area,
+            "proper_subrectangles_checked": True,
             "claimed_objective_ignored": True,
         },
     }

@@ -1,58 +1,21 @@
-from mathbench.search import search_deadline, search_steps
-"""Bounded numerical search; exact checker remains the authority."""
-import os
-import time
+"""Bounded classical local search with exact-feasible grid fallback."""
+import os, random
 from fractions import Fraction
-
-from scipy.optimize import minimize
-
-# This file intentionally uses only a generated grid seed, never human data.
-def _seed(n):
-    return [(str(Fraction(2*c+1,12)), str(Fraction(2*r+1,12)), '1/12') for r in range(6) for c in range(6)][:n]
+from tasks.t003.check import validate, Q
+from tasks.t003.init_program import run_code as initial
 
 def run_code():
-    import os
-    cid = os.environ.get("MATHBENCH_CONFIG_ID", "T003-C02")
-    if cid != "T003-C02":
-        raise ValueError(f"unsupported T003 configuration: {cid}") from None
-    n = 32
-    valid = _seed(n)
-    budget = max(0.1, min(30.0, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    deadline = search_deadline()
-    # SLSQP proposes center and radius updates. Retain the exact grid if the
-    # proposal does not finish or does not improve this feasible objective.
-    try:
-        import numpy as np
-        z0 = np.array([[float(Fraction(v)) for v in circle] for circle in valid], dtype=float).reshape(-1)
-        def objective(z): return -float(sum(z[2::3]))
-        constraints = []
-        for i in range(n):
-            constraints += [
-                {"type":"ineq", "fun":lambda z,i=i: z[3*i]-z[3*i+2]},
-                {"type":"ineq", "fun":lambda z,i=i: 1-z[3*i]-z[3*i+2]},
-                {"type":"ineq", "fun":lambda z,i=i: z[3*i+1]-z[3*i+2]},
-                {"type":"ineq", "fun":lambda z,i=i: 1-z[3*i+1]-z[3*i+2]},
-            ]
-        for i in range(n):
-            for j in range(i):
-                constraints.append({"type":"ineq", "fun":lambda z,i=i,j=j:
-                    (z[3*i]-z[3*j])**2+(z[3*i+1]-z[3*j+1])**2-(z[3*i+2]+z[3*j+2])**2})
-        result = minimize(objective, z0, method="SLSQP", bounds=[(0,1),(0,1),(1e-8,0.5)]*n,
-                          constraints=constraints, options={"maxiter":max(1, min(12, int(budget*2))),"ftol":1e-9})
-        if time.monotonic() <= deadline and result.success and -result.fun > n/12:
-            proposal = [(float(result.x[3*i]),float(result.x[3*i+1]),float(result.x[3*i+2])-1e-8) for i in range(n)]
-            from tasks.t003.check import validate
-            candidate = {"circles":[{"x":x,"y":y,"r":r} for x,y,r in proposal]}
-            if time.monotonic() <= deadline:
-                try:
-                    validate(candidate, {"id": "T003-C02"}, strict=True)
-                    valid = proposal
-                except ValueError:
-                    pass
-    except Exception:
-        pass
-    return {"circles":[{"x":x,"y":y,"r":r} for x,y,r in valid]}
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    cid=os.environ.get('MATHBENCH_CONFIG_ID','T003-C01')
+    if cid != 'T003-C01': raise ValueError('unknown T003 configuration')
+    n=26
+    best=initial(); config={'parameters':{'n':n}}
+    rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
+    for _ in range(40):
+        candidate={'squares':[dict(s) for s in best['squares']]}
+        i=rng.randrange(n); sq=candidate['squares'][i]
+        sq['x']=str(Fraction(sq['x'])+Fraction(rng.randrange(-2,3),1000))
+        sq['y']=str(Fraction(sq['y'])+Fraction(rng.randrange(-2,3),1000))
+        try:
+            if Q.parse(validate(candidate,config)['objective']) < Q.parse(validate(best,config)['objective']): best=candidate
+        except ValueError: pass
+    return best

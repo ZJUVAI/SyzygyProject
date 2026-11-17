@@ -1,8 +1,6 @@
-"""Load the best fixed public witness checked for each configured n."""
-import json,os
-from pathlib import Path
-def run_code():
-    cid=os.environ.get("MATHBENCH_CONFIG_ID","T076-C01")
-    if cid != "T076-C01":raise ValueError(f"unsupported T076 configuration: {cid}")
-    d=json.loads((Path(__file__).parent/'data/reference'/'sharp_8635_transcribed.json').read_text())
-    return {"elements":d["elements"],"reference_metadata":d.get("source",{})}
+"""Pinned witness and evaluator wrapper for T076."""
+from tasks.t076.human import run_code
+from mathbench.evaluate import evaluate_candidate
+
+def evaluate(program_path, config_id=None, **kwargs):
+    return evaluate_candidate("T076", program_path, config_id, **kwargs)

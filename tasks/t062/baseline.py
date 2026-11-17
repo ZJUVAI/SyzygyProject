@@ -1,57 +1,58 @@
-"""Deterministic fixed-seed greedy search for large independent sets."""
+"""Seeded cap-sweep greedy search for 15 sum-distinct integers."""
 
-import math
 import os
 import random
-import time
-
-from tasks.t062.check import CONFIG_ID, N
 
 
-def _greedy(order):
-    chosen = set()
-    for value in order:
-        if all(value - k * k not in chosen and value + k * k not in chosen
-               for k in range(1, math.isqrt(N) + 1)):
-            chosen.add(value)
-    return {"elements": sorted(chosen)}
+CAP_START = 8_000
+CAP_STOP = 10_000
+CAP_STEP = 25
+ELEMENT_COUNT = 15
+
+
+def _greedy_descending(cap, element_count):
+    subset_sums = 1
+    selected = []
+    for value in range(cap, 0, -1):
+        shifted = subset_sums << value
+        if subset_sums & shifted:
+            continue
+        selected.append(value)
+        subset_sums |= shifted
+        if len(selected) == element_count:
+            return sorted(selected)
+    return None
 
 
 def run_code():
-    chosen_config = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen_config != CONFIG_ID:
-        raise ValueError(f"unsupported configuration: {chosen_config}")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    trials = int(os.environ.get("T062_SEARCH_TRIALS", "3"))
-    if trials < 0:
-        raise ValueError("trial count must be nonnegative")
-    seconds_text = os.environ.get("MATHBENCH_SEARCH_SECONDS")
-    deadline = None
-    if seconds_text is not None:
-        seconds = float(seconds_text)
-        if not math.isfinite(seconds) or seconds <= 0:
-            raise ValueError("search seconds must be finite and positive")
-        deadline = time.monotonic() + seconds
-
-    best = _greedy(range(1, N + 1))
-    rng = random.Random(seed)
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T062-C01")
+    if chosen != "T062-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    element_count = ELEMENT_COUNT
+    try:
+        seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    except ValueError as exc:
+        raise ValueError("MATHBENCH_SEED must be an integer") from exc
+    caps = list(range(CAP_START, CAP_STOP + 1, CAP_STEP))
+    random.Random(seed).shuffle(caps)
+    best = None
     completed = 0
-    for _ in range(trials):
-        if deadline is not None and time.monotonic() >= deadline:
-            break
-        order = list(range(1, N + 1))
-        rng.shuffle(order)
-        candidate = _greedy(order)
+    for cap in caps:
+        candidate = _greedy_descending(cap, element_count)
         completed += 1
-        if len(candidate["elements"]) > len(best["elements"]):
+        if candidate is not None and (best is None or max(candidate) < max(best)):
             best = candidate
+    if best is None:
+        best = [1 << bit for bit in range(element_count)]
     return {
-        **best,
-        "search": {
-            "algorithm": "ascending greedy incumbent plus fixed-seed random-order greedy",
+        "elements": best,
+        "search_metadata": {
+            "algorithm": "greedy descending scan with exact subset-sum bitset, over a seeded fixed cap grid",
             "seed": seed,
-            "trial_limit": trials,
-            "trials_completed": completed,
+            "cap_start": min(caps) if caps else None,
+            "cap_stop": max(caps) if caps else None,
+            "cap_step": (caps[1]-caps[0]) if len(caps)>1 else 0,
+            "cap_trials_completed": completed,
             "reference_data_read": False,
         },
     }

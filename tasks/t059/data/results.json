@@ -3,25 +3,32 @@
     "task_id": "T059",
     "config_id": "T059-C01",
     "validity": 1.0,
-    "combined_score": 0.9625,
-    "objective": 77,
+    "combined_score": 0.9572649572649573,
+    "objective": 117,
     "verification_status": "exact",
-    "generation_time": 146.17821998894215,
-    "verification_time": 2.8529307395219803,
-    "objective_value": 77,
+    "generation_time": 116.37358560413122,
+    "verification_time": 0.409878458827734,
+    "objective_value": 117,
     "details": {
-      "instance": "C2000.9",
-      "vertex_count": 2000,
-      "edge_count": 1799532,
-      "clique_edges_checked": 2926,
-      "graph_source_sha256": "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16",
-      "claimed_objective_ignored": true
+      "rows": 7,
+      "marks_per_row": 6,
+      "within_row_differences_checked": 105,
+      "distinct_differences": 105,
+      "row_spans": [
+        117,
+        111,
+        115,
+        104,
+        98,
+        112,
+        114
+      ]
     },
-    "eval_time": 149.03620490804315,
-    "seed": 6405903,
+    "eval_time": 116.78966436907649,
+    "seed": 6803901,
     "strict": true,
     "budget": {
-      "generation_seconds": 200,
+      "generation_seconds": 160,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -30,48 +37,54 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 34
+      "worker_cpu": 125
     }
+  },
+  "initial_result": {
+    "objective": 16677181699666569,
+    "objective_value": 16677181699666569,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 6.715763011818673e-15
   },
   "provenance": {
     "reviewer": "Sol main agent",
     "status": "reviewed_by_sol",
     "date": "2026-11-09",
-    "source_summary": "tasks/t059/runs/search_gap30_20261109_gap30_lemon/summary.json",
+    "source_summary": "tasks/t039/runs/search_gap38_20261109_gap38_elitecover/summary.json",
     "source_hashes_verified": true,
     "independent_quantity": {
-      "clique_cardinality": 77,
-      "required_edges_found": 2926
+      "scope": 117,
+      "distinct_positive_differences": 105,
+      "sum_positive_differences": 5891
     },
     "claimed_score_ignored": true,
     "damaged_construction_rejected": true,
     "initial_baseline_human_valid": true,
-    "scope": "Pinned LEMON implementation started from the fixed graph without a clique witness.",
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
     "search_agent": "GPT-6.1 Sol",
     "generation_record": {
       "scope": "AI-assisted construction search",
-      "limit": 200,
-      "seed": 6405903,
-      "method": "Cold search with LEMON's Grosso–Locatelli–Pullan heuristic and independent random seeds",
-      "classification": "upstream_solver_run",
-      "upstream": "https://github.com/The-OpenROAD-Project/lemon-graph/tree/31d79d686f776a62ace1925cb2e40e84a80d1394"
+      "limit": 160,
+      "seed": 6803901,
+      "method": "Search candidate full rows in independent subsets of the near-feasible layouts; pack the remaining disjoint difference masks"
     },
-    "classification": "upstream_solver_run",
-    "seed": 6405903,
+    "classification": "ai_assisted_local_continuation",
+    "seed": 6803901,
     "controls": {
       "trials": [
         [
           "warm",
-          197,
-          197,
+          157,
+          157,
           "512",
-          6405903
+          6803901
         ]
       ],
-      "prior_control_summary": "tasks/t059/runs/search_sol1200/summary.json"
+      "prior_control_summary": "tasks/t039/runs/search_sol1200/summary.json"
     },
     "budget": {
-      "generation_seconds": 200,
+      "generation_seconds": 160,
       "verification_seconds": 60,
       "memory_bytes": 4294967296,
       "threads": 1
@@ -80,119 +93,105 @@
       "python": "3.13.12",
       "platform": "linux",
       "memory_limit_enforced": true,
-      "worker_cpu": 34
+      "worker_cpu": 125
     },
     "source_sha256": {
-      "tasks/t059/baseline.py": "3f848be7b50b9efc3a1417a3036004c22de0d16c12a747d1afe465f90fcfb616",
-      "tasks/t059/check.py": "dc2a1ff44a7fc0d07bdae6f716cbf42e314a1b5c2b4c8296a6abd76f344ec454",
-      "tasks/t059/evaluator.py": "417508d8188386da322e0647099ffa2e5242021dd9a29395167adf80eaa8e374",
-      "tasks/t059/evolution.py": "2e4a585fa4a926bd67aaa2a8c1d92e0e9596fc4b863cffcfe64dfc8e546bb98e",
-      "tasks/t059/graph.py": "12118d7c47a080dcec38e7fa90c33f81aa75c9a0f0c6a3ff1f32b9018e4ef48a",
-      "tasks/t059/human.py": "293e52f82807e3a2aa4b1568dd49e0adb755af17dc3de4cc78e0a8001e08731f",
-      "tasks/t059/init_program.py": "4628d09f48b9ee188b566dab24ce1d51fc4fe2d890b2fdd499780a7ac346da1e",
-      "tasks/t059/reference.py": "15f2184e348b26f6f52654e1d5f6aa45ba3aaa8965225acfd2468e5b327880a5",
-      "tasks/t059/test_task.py": "e3f87a591a84121ed96b3a52ca3cacfb6c3bd4ae823c788ebc0f92d1efd0f242",
-      "tasks/t059/data/source/C2000.9.clq.gz": "936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639",
-      "program.py": "345bc14b4808ae7798e96fd07d581ef9cb4c6bfaa1df5e06762e3c1eaf7a3982",
-      "lemon_source.tar.gz": "125c5ee85834af980ad303d2a1592630ceac3ea04e3df3ff3788b1fd7dd019ef",
-      "plan.json": "53204826ef7ab031d2450fdd216dc23cbf53ddacf802ea587cb185f816f9bad6",
-      "search.cpp": "ec7084e349358e40b97c1d56ddc52816c0b014b80649a622973bc1c47b4d0e55",
-      "search": "96181b48dffd2b0821e85fde0d937ccafd452c82182078873aa98c661941b4ea"
+      "tasks/t039/baseline.py": "15ab5b5b2942ff435c800e4a3e238cc86a8b78306f1c2f4ef7b72c4dfcb5fcd6",
+      "tasks/t039/check.py": "624657d3a1b844b85177b224f97c59566bd0b3dc052eb541133126646e463ea5",
+      "tasks/t039/evaluator.py": "5673e1ad50788be72b08c38a6d14333d188d80802191d2de38a88804477028c5",
+      "tasks/t039/evolution.py": "709b0ff4472e0a30f259bcf4e620697e2bdcc8bfcf515d0b346f8df02525fa5e",
+      "tasks/t039/human.py": "51cbcd05d40f66c4731c63f5d7e1b49a60549321c7bf6332a6534387d1aa21aa",
+      "tasks/t039/init_program.py": "83c07963e800a525fba7708e43d043fa5357353e89f6d47c6e0ce0c6e5e51b3d",
+      "tasks/t039/reference.py": "475efcee7baf6f1ed75171f2e657bdaede77638ed7305845998b3becc11c1446",
+      "tasks/t039/test_task.py": "26bd05a3c549bb4560148aeb83c6d6885a167def7b89955ff3a7af445f1270f6",
+      "program.py": "8c9a042f8256edd90f1f2595d15658878d1d96daac0d36dc8f8538360950443c",
+      "portfolio.json": "43ab7556df75c671d2e1bb13185388bf477affbdda8d13c1f75bee0c5bf829f0",
+      "plan.json": "b889b2b7cb1077a7873e45829abe22176c78c71917f5536930550813243eab96",
+      "search.cpp": "18071a7ab61f1ac30563f574057f84c373a8f96b5f4aa4f08dcb49d159ec6205",
+      "cover.cpp": "4f9cc430bb1f3acd955be51cab5385ee8ca0b13509eb869a97bc41fec4c7ccd7"
     },
-    "warm_start_sha256": "248c2417d2f77cb2e3605ba9ace80100ccd3baa25a90490b4ce21c5286876fd1",
-    "replay_command": ".venv/bin/python -m mathbench replay T059 tasks/t059/data/results.json --config T059-C01"
-  },
-  "initial_result": {
-    "objective": 1,
-    "objective_value": 1,
-    "validity": 1.0,
-    "verification_status": "exact",
-    "combined_score": 0.0125
+    "warm_start_sha256": "75abc53ca628763b3cfacb9a2b1395f5737006bf6d586bbcf494f3da49dab071",
+    "replay_command": ".venv/bin/python -m mathbench replay T059 tasks/t059/data/results.json --config T059-C01",
+    "task_id_migration": {
+      "from": "T039",
+      "to": "T059",
+      "source_revision": "c9f93552f9ad54f779b1f9cca2e13f39e5ab8d30",
+      "date": "2026-11-17",
+      "note": "Reordered by research direction. Construction bytes and objective are unchanged. Historical source paths and hashes are preserved."
+    }
   },
   "solution": {
-  "vertices": [
-    1971,
-    1922,
-    1905,
-    1891,
-    1877,
-    1842,
-    1821,
-    1813,
-    1801,
-    1795,
-    1774,
-    1731,
-    1722,
-    1695,
-    1615,
-    1609,
-    1578,
-    1557,
-    1535,
-    1531,
-    1510,
-    1473,
-    1406,
-    1380,
-    1284,
-    1236,
-    1230,
-    1221,
-    1219,
-    1194,
-    1182,
-    1181,
-    1152,
-    1151,
-    1107,
-    1099,
-    1063,
-    1054,
-    947,
-    923,
-    920,
-    853,
-    818,
-    809,
-    800,
-    762,
-    759,
-    731,
-    723,
-    715,
-    710,
-    678,
-    677,
-    606,
-    551,
-    430,
-    416,
-    412,
-    359,
-    349,
-    286,
-    261,
-    256,
-    255,
-    241,
-    237,
-    235,
-    233,
-    222,
-    198,
-    141,
-    137,
-    134,
-    89,
-    67,
-    52,
-    27
+  "rows": [
+    [
+      0,
+      1,
+      33,
+      69,
+      94,
+      117
+    ],
+    [
+      0,
+      4,
+      34,
+      87,
+      106,
+      111
+    ],
+    [
+      0,
+      16,
+      55,
+      73,
+      86,
+      115
+    ],
+    [
+      0,
+      3,
+      40,
+      50,
+      78,
+      104
+    ],
+    [
+      0,
+      2,
+      9,
+      76,
+      90,
+      98
+    ],
+    [
+      0,
+      12,
+      27,
+      71,
+      92,
+      112
+    ],
+    [
+      0,
+      6,
+      51,
+      62,
+      97,
+      114
+    ]
   ],
   "search_metadata": {
-    "cold_best": 77,
-    "native_log": [
-      "restarts 3"
+    "native": "202977124 1360 3",
+    "near_layouts": 16,
+    "repair_counts": [
+      1,
+      0,
+      52,
+      235,
+      351,
+      0,
+      59,
+      33356,
+      3013046
     ]
   }
 }

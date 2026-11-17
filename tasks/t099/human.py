@@ -1,11 +1,30 @@
-"""Replay of the published 54 by 55, 270-copy human construction."""
-import json
+"""Reconstruct Batcher odd-even mergesort with padded sentinel wires removed."""
 import os
-from pathlib import Path
-
-
+_CONFIGS={"T099-C01":17}
+def build_batcher_network(inputs=None):
+    if inputs is None:
+        cid=os.environ.get("MATHBENCH_CONFIG_ID","T099-C01")
+        try:inputs=_CONFIGS[cid]
+        except KeyError:raise ValueError(f"unsupported T099 configuration: {cid}") from None
+    padded=1
+    while padded<inputs:padded*=2
+    comps=[]
+    def merge(start,length,stride):
+        step=2*stride
+        if step<length:
+            merge(start,length,step);merge(start+stride,length,step)
+            for left in range(start+stride,start+length-stride,step):
+                right=left+stride
+                if right<inputs:comps.append((left,right))
+        else:
+            right=start+stride
+            if right<inputs:comps.append((start,right))
+    def sort(start,length):
+        if length>1:
+            half=length//2;sort(start,half);sort(start+half,half);merge(start,length,1)
+    sort(0,padded)
+    return comps
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T099-C01") != "T099-C01":
-        raise ValueError("unknown T099 configuration")
-    path = Path(__file__).parent / "data/reference/11P1_54x55.json"
-    return json.loads(path.read_text())
+    cid=os.environ.get("MATHBENCH_CONFIG_ID","T099-C01")
+    if cid not in _CONFIGS:raise ValueError(f"unsupported T099 configuration: {cid}")
+    return {"comparators":[list(x) for x in build_batcher_network(_CONFIGS[cid])],"method":"Batcher odd-even mergesort padded to the next power of two; sentinel-wire comparisons omitted","method_metadata":{"inputs":_CONFIGS[cid]}}

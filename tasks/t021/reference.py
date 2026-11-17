@@ -1,7 +1,17 @@
-"""Replay the archived, rationalized N=32 CCD reference configuration."""
+"""Fixed replay of the verified 261-edge human triangular-grid baseline."""
 
-from tasks.t021.human import run_code as _run_human
+import os
+
+from tasks.t021.human import run_code as _human_grid
 
 
 def run_code():
-    return _run_human()
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T021-C01") != "T021-C01":
+        raise ValueError("unsupported configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    return _human_grid()
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

@@ -1,101 +1,159 @@
-"""Exact rational checker for Thomson energy on the unit sphere."""
+"""Exact unit-distance counter over one real algebraic number field."""
 
+from __future__ import annotations
+
+from collections.abc import Mapping
 from fractions import Fraction
-import math
+from functools import reduce
+from math import gcd
+import re
+import sys
+
+import sympy as sp
+
+from mathbench.exact_math import (
+    rational as _rational,
+    reduce_polynomial as _reduce_polynomial,
+    multiply_mod as _multiply_mod,
+)
 
 
-def _q(value):
+POINT_COUNT = 100
+CONFIG_ID = "T021-C01"
+PARAMETERS = {
+    "point_count": 100,
+    "ambient_space": "Euclidean plane R^2",
+    "objective": "unit_distance_pairs",
+    "coordinate_domain": "real algebraic coordinates in one common number field",
+}
+_INTEGER_RE = re.compile(r"-?(?:0|[1-9][0-9]*)\Z")
+
+if hasattr(sys, "set_int_max_str_digits"):
+    # Exact polynomial and rational inputs are bounded by the shared runner's
+    # 16 MiB output limit and 4 GiB checker process limit.
+    sys.set_int_max_str_digits(0)
+
+
+def _integer(value, label):
     if type(value) is int:
-        return Fraction(value)
-    if isinstance(value, float):
-        if not math.isfinite(value):
-            raise ValueError("coordinates must be finite")
-        return Fraction.from_float(value)
-    if isinstance(value, str):
-        try:
-            return Fraction(value)
-        except (ValueError, ZeroDivisionError) as exc:
-            raise ValueError("coordinates must be rational strings") from exc
-    raise ValueError("coordinates must be integers, finite floats, or rational strings")
+        return value
+    if isinstance(value, str) and _INTEGER_RE.fullmatch(value):
+        return int(value)
+    raise ValueError(f"{label} must be an integer or an integer string")
 
 
-def _sphere_point(pair):
-    if not isinstance(pair, (list, tuple)) or len(pair) != 2:
-        raise ValueError("each stereographic point needs two parameters")
-    u, v = (_q(item) for item in pair)
-    d = 1 + u * u + v * v
-    return (2 * u / d, 2 * v / d, (1 - u * u - v * v) / d)
+def _check_config(config):
+    if not isinstance(config, Mapping) or config.get("id") != CONFIG_ID:
+        raise ValueError(f"unsupported configuration; expected {CONFIG_ID}")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration must fix 100 distinct points in R^2")
 
 
-def _sqrt_bounds(q, scale):
-    """Return rational bounds lo <= sqrt(q) <= hi for q > 0."""
-    if q <= 0:
-        raise ValueError("points must be distinct")
-    # floor(scale * sqrt(a/b)) = floor(sqrt(a*b*scale**2) / b).
-    a, b = q.numerator, q.denominator
-    floor_scaled = math.isqrt(a * b * scale * scale) // b
-    return Fraction(floor_scaled, scale), Fraction(floor_scaled + 1, scale)
+def _read_field(solution):
+    raw = solution.get("minimal_polynomial")
+    if not isinstance(raw, (list, tuple)) or len(raw) < 2:
+        raise ValueError("minimal_polynomial must be a nonconstant coefficient array")
+    coefficients = [_integer(c, "minimal_polynomial coefficient") for c in raw]
+    if coefficients[-1] <= 0 or reduce(gcd, (abs(c) for c in coefficients), 0) != 1:
+        raise ValueError("minimal_polynomial must be primitive with positive leading coefficient")
+
+    x = sp.Symbol("x")
+    polynomial = sp.Poly.from_list(list(reversed(coefficients)), gens=x, domain=sp.QQ)
+    try:
+        irreducible = polynomial.is_irreducible
+    except Exception as exc:
+        raise ValueError("could not certify minimal_polynomial irreducibility") from exc
+    if not irreducible:
+        raise ValueError("minimal_polynomial must be irreducible over Q")
+
+    interval = solution.get("isolating_interval")
+    if not isinstance(interval, (list, tuple)) or len(interval) != 2:
+        raise ValueError("isolating_interval must contain two rational endpoints")
+    left = _rational(interval[0], "left isolating endpoint")
+    right = _rational(interval[1], "right isolating endpoint")
+    if left >= right:
+        raise ValueError("isolating_interval endpoints must be increasing")
+    left_sym = sp.Rational(left.numerator, left.denominator)
+    right_sym = sp.Rational(right.numerator, right.denominator)
+    if polynomial.eval(left_sym) == 0 or polynomial.eval(right_sym) == 0:
+        raise ValueError("isolating interval endpoints cannot be roots")
+    try:
+        root_count = polynomial.count_roots(left_sym, right_sym)
+    except Exception as exc:
+        raise ValueError("could not certify the real-root isolating interval") from exc
+    if root_count != 1:
+        raise ValueError("isolating_interval must contain exactly one real root")
+
+    modulus = tuple(Fraction(c) for c in coefficients)
+    return modulus, len(coefficients) - 1
 
 
-CONFIG_N = {"T021-C01": 32}
+def _parse_coordinates(solution, modulus, degree):
+    raw_points = solution.get("points")
+    if not isinstance(raw_points, (list, tuple)) or len(raw_points) != POINT_COUNT:
+        raise ValueError(f"points must contain exactly {POINT_COUNT} entries")
+    points = []
+    for index, raw_point in enumerate(raw_points):
+        if not isinstance(raw_point, Mapping) or set(raw_point) != {"x", "y"}:
+            raise ValueError(f"point {index} must contain exactly x and y coordinates")
+        parsed = []
+        for axis in ("x", "y"):
+            raw_coefficients = raw_point[axis]
+            if not isinstance(raw_coefficients, (list, tuple)) or not raw_coefficients:
+                raise ValueError(f"point {index} {axis} must be a nonempty rational coefficient array")
+            coefficients = [
+                _rational(value, f"point {index} {axis} coefficient")
+                for value in raw_coefficients
+            ]
+            parsed.append(_reduce_polynomial(coefficients, modulus))
+        points.append((parsed[0], parsed[1]))
+    if len(set(points)) != POINT_COUNT:
+        raise ValueError("all 100 points must be distinct in the selected real embedding")
+    return points
+
+
+def _add(left, right):
+    return tuple(a + b for a, b in zip(left, right))
+
+
+def _subtract(left, right):
+    return tuple(a - b for a, b in zip(left, right))
+
 
 def validate(solution, config, strict=False):
-    if not isinstance(config, dict) or config.get("id") not in CONFIG_N:
-        raise ValueError("unsupported T021 configuration")
-    n = CONFIG_N[config["id"]]
-    expected_parameters = {
-        "n": n,
-        "space": "unit sphere S2",
-        "potential": "sum over unordered pairs 1 / Euclidean distance",
-        "objective_unit": "Coulomb energy in unit-charge, unit-radius units",
-    }
-    if config.get("parameters") != expected_parameters:
-        raise ValueError("unsupported T021 configuration")
-    if not isinstance(solution, dict) or not isinstance(solution.get("points"), (list, tuple)):
-        raise ValueError("solution must contain stereographic points")
-    raw = solution["points"]
-    if len(raw) != n:
-        raise ValueError(f"expected exactly {n} points")
-    points = [_sphere_point(pair) for pair in raw]
+    """Count all exact unit-distance pairs; candidate score fields are ignored."""
+    _check_config(config)
+    if not isinstance(solution, Mapping):
+        raise ValueError("solution must be an object")
+    modulus, degree = _read_field(solution)
+    points = _parse_coordinates(solution, modulus, degree)
 
-    # Recheck the defining equation with exact arithmetic, even though the
-    # parameterization makes it hold algebraically.
-    for point in points:
-        if sum(x * x for x in point) != 1:
-            raise ValueError("point is not exactly on the unit sphere")
-
-    scale = 10**25
-    output_scale = 10**30
-    lower_units = 0
-    upper_units = 0
+    one = (Fraction(1),) + (Fraction(0),) * (degree - 1)
+    unit_pairs = 0
     pair_count = 0
-    for i in range(n):
-        for j in range(i):
-            squared_distance = sum((points[i][k] - points[j][k]) ** 2 for k in range(3))
-            if squared_distance <= 0:
-                raise ValueError("points must be distinct")
-            # Energy contribution is sqrt(1 / squared_distance). Bounding
-            # this directly also handles distinct points that are extremely
-            # close, where a lower distance bound at fixed precision is zero.
-            term_lower, term_upper = _sqrt_bounds(1 / squared_distance, scale)
-            lower_units += (term_lower.numerator * output_scale) // term_lower.denominator
-            upper_units += -(-term_upper.numerator * output_scale // term_upper.denominator)
+    for i, (xi, yi) in enumerate(points):
+        for xj, yj in points[:i]:
+            dx = _subtract(xi, xj)
+            dy = _subtract(yi, yj)
+            squared_distance = _add(
+                _multiply_mod(dx, dx, modulus),
+                _multiply_mod(dy, dy, modulus),
+            )
+            if squared_distance == one:
+                unit_pairs += 1
             pair_count += 1
 
-    lower = Fraction(lower_units, output_scale)
-    upper = Fraction(upper_units, output_scale)
-    interval = [str(lower), str(upper)]
     return {
-        "objective": str(upper),
-        "objective_value": str(upper),
-        "verification_status": "certified",
+        "objective": unit_pairs,
+        "verification_status": "exact",
         "details": {
-            "objective_interval": interval,
-            "point_count": n,
-            "pairs_checked": pair_count,
-            "coordinate_model": "exact rational stereographic projection",
-            "sqrt_bound_scale": str(scale),
-            "energy_bound_scale": str(output_scale),
-            "claimed_score_ignored": True,
+            "point_count": POINT_COUNT,
+            "unordered_pairs_checked": pair_count,
+            "unit_distance_pairs": unit_pairs,
+            "coordinate_field_degree": degree,
+            "minimal_polynomial_irreducible": True,
+            "selected_real_root_count": 1,
+            "claimed_objective_ignored": True,
+            "strict": bool(strict),
         },
     }

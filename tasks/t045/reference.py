@@ -1,18 +1,18 @@
-"""Fixed verified replay of the reconstructed spectral-search baseline."""
+"""Replay the frozen 131-per-army public construction."""
 
 import json
 import os
 from pathlib import Path
 
-DATA = Path(__file__).resolve().parent / "data" / "reference" / "spectral_adjacent_ordering.json"
+
+WITNESS = Path(__file__).resolve().parent / "data" / "reference" / "peaceable_queens_n30_131.json"
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T045-C01") != "T045-C01":
         raise ValueError("unsupported configuration")
     int(os.environ.get("MATHBENCH_SEED", "0"))
-    data = json.loads(DATA.read_text(encoding="utf-8"))
-    return {"ordering": data["ordering"], "reference_metadata": data["provenance"]}
+    return json.loads(WITNESS.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

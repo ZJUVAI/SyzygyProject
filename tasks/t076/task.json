@@ -1,35 +1,42 @@
 {
   "task_id": "T076",
-  "name": "Minimum largest element of n-element sum-distinct sets",
+  "name": "Nonnegative convolution extremum, 208 steps",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T076-C01",
   "configurations": [
     {
       "id": "T076-C01",
       "parameters": {
-        "element_count": 15,
-        "elements": "positive integers",
-        "constraint": "all 2^15 subset sums are distinct",
-        "objective": "largest element"
+        "steps": 208,
+        "support": [
+          "-1/4",
+          "1/4"
+        ],
+        "nonnegative": true
       },
       "direction": "minimize",
-      "human_reference": 8807,
-      "acceptance_status": "accepted_by_sol"
+      "human_reference": 1.5097201507458786
     }
   ],
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-06",
+    "date": "2026-11-04",
     "decision": "实现完成并通过Sol验收",
-    "source_review": {
-      "definition": "Exactly15 positive integers, all32768 subset sums distinct, minimize largest element. No artificial integer magnitude bound. Gray-traversal modular buckets in formal checker are only indices; all hash collisions resolved by exact integer sums.",
-      "human_source": "Bohman1998 section2 Theorem2.1 classical Conway-Guy recurrence. Root independently recomputed recurrence and its15 elements, maximum8807, and all32768 sums.",
-      "public_reference": "Sharp Oct20 2026 OEIS A276661 linked explicit A-file,15 elements maximum8635. Root transcribed web-rendered list and independently enumerated all sums. No claim of source-byte identity; AI role undisclosed.",
-      "open_status_and_lower_bounds": "OEIS exact values only through10. Root found Costa/DellaFiore2026 arXiv2609.27941 Theorem1.1 finite bandwidth lower bound H15=7060, independently summed15 central-binomial terms; underlying bandwidth theorem cited, not re-proved. Hasratyan/Ruszinko2610.32580 bound6864 is weaker here; historical DFX6435 retained. Reported asymptotic counterexample does not settle finite15.",
-      "independent_method": "Root uses direct recursively doubled exact integer sum list and set of32768 values, independent of formal Gray-code traversal, gcd reduction and modular fingerprints.",
-      "initial_and_search": "Standalone powers2 initial16384; generic81-trial descending greedy baseline8875, evolution8875. Human8807 and public8635 external only. Search bitsets have own bounded proposals; formal verifier does not allocate magnitude-sized bitsets.",
-      "admission": "All five strict runs, broken subset-sum collisions, whole-return claim invariance, exact independent quantities, replay, cold export and failure controls passed."
-    }
+    "evidence": "PLAN.md",
+    "checks": [
+      "mathematical definition and direction",
+      "replayed human witness",
+      "valid cold seed",
+      "classical search",
+      "independent raw score",
+      "damaged construction rejected",
+      "claimed score ignored",
+      "exact or full-domain certificate",
+      "same-parameter record provenance"
+    ],
+    "limitations": [
+      "公开最好值限于已查来源。未声称已证明全局最优。"
+    ]
   },
-  "definition": "For a fixed element count, choose distinct positive integers with all subset sums distinct and minimize the largest element."
+  "category": "harmonic_analysis"
 }

@@ -1,34 +1,42 @@
 {
   "task_id": "T089",
-  "name": "one-dimensional sign uncertainty for polynomial Gaussians",
+  "name": "Integer complexity of the Mersenne prime 2^61-1",
+  "candidate_id": "integer-complexity-m61",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T089-C01",
   "configurations": [
     {
       "id": "T089-C01",
       "parameters": {
-        "dimension": 1,
-        "polynomial_variable": "t=pi*x^2",
-        "candidate_family": "p(t)*exp(-pi*x^2), p in Q[t], finite degree without a configured cap",
-        "fourier_convention": "integral f(x)*exp(-2*pi*i*x*xi) dx",
-        "origin_signs": "p(0)<0 and q(0)<0",
-        "objective": "minimize A(f)*A(fhat); exact algebraic root isolation, rational interval returned"
+        "target": "2^61-1",
+        "target_value": "2305843009213693951",
+        "allowed_expression_grammar": "1, +, *, parentheses",
+        "expression_model": "binary expression tree; repeated text denotes separate occurrences; no shared subexpressions"
       },
       "direction": "minimize",
-      "human_reference": 0.4776769416361765
+      "human_reference": 153
     }
   ],
+  "search_metadata": {
+    "algorithm": "seeded mixed-radix Horner candidate search",
+    "default_seed": 0,
+    "default_iterations": 1000,
+    "candidate_reads_reference_witness": false,
+    "budget_note": "Fixed candidate count and seed by default. Explicit MATHBENCH_SEARCH_SECONDS enables a machine-dependent cutoff; runner limits still apply."
+  },
   "acceptance_review": {
     "reviewer": "Sol main agent",
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "definition": "One dimension, all finite rational polynomials p(t),t=pi*x^2, no degree cap. f=p(t)exp(-t), Fourier q independently recomputed. Require STRICT p0<0,q0<0 and eventual nonnegativity; minimize actual A(f)A(fhat), certified conservative rational upper endpoint retained.",
-      "human_source": "Goncalves/OliveiraeSilva/Steinerberger1602.03366 and2017JMAA doi10.1016/j.jmaa.2017.02.030 Hermite eigenfunction method, locally reconstructed p=t^2-3t/2-1/1000 with q=p. Positive tail root3/4+sqrt(1127/2000), score about.477676941636177. This weak fixed method reconstruction is distinguished from reported unpublished.3102 whose family membership is not established.",
-      "public_records": "Station degree226 pinned witnessAI report.3089, not fully reproduced under60sec budget. Root independently computes Gaussian moments q0=sum p_k(2k)!/(4^k*k!), checks p0=q0=-1/1000000. This confirms origin signs only, not high-degree tail or full score. TomarOct20 preprint.30272004-.30349081 concerns mixed Gaussians and nonstrict general domain; separately scoped otherfamily result, not a polynomial-family optimum proof.",
-      "independent_method": "Root derives Fourier transform through multiplication-by-pi*x^2 differential recurrence, unlike formal factorial formula. Separately selects largest positive ODD-multiplicity polynomial root; with positive leading coefficient this is last negative-to-positive crossing. Root isolation1e-55, Machin90/35terms and integer sqrt1e70 produce finer intervals inside formal bounds; even contacts excluded.",
-      "admission": "All5 strict entries, deliberately invalidpositiveconstant, whole-return claim invariance, independent Fourier/tailroot/score intervals, strict replay,cold export and all failure controls pass. Human/ref score~.477676941636177, initial~.52565 and searched~.36512 recorded exactly. No floating or sampled sign certificate.",
-      "parameter_type_fix": "Original task agent added exact parameter key and type checks, dimension=True rejected. Root reran every admission check under new label admission_20261106_parameter_types; no old source hash was reused."
+      "definition": "固定M61=2305843009213693951，表达式树叶子仅1、内部仅加乘，最小化叶子数。重复文本单独计数，禁止DAG、减法、幂；与加法链目标不同。",
+      "primary_source": "Sol亲自读取Altman2019综述导言及Theorem1.1，确认整数复杂度定义、Horner方法、Selfridge极值公式；同参重建三进制39位Horner表达式153个1。该153为弱传统方法基线，不声称文献最强。",
+      "record_and_status": "Sol下载PR4固定6b79a6324891b4b196731f78fcd7a9b978524b25的689字节127表达式，SHA256 946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449；独立AST求值正确。EventCompute明确披露生成式AI协作，记录为AI辅助。PR仍开放未合并，不影响表达式可行性。所查页面与仓库未给M61最优性证明，116至127间仍未闭合。",
+      "independent_math": "正式checker用整数栈语法解析；Sol另用受限Python AST逐节点求值及计数。另独立动态规划枚举所有二叉根分裂，复算115个1的最大数1801135623563989452，小于M61，从而下界116，不调用任务公式。",
+      "resource_scope": "100000字符只限输入资源；k叶二叉树总可规范化至4k-3字符，任何优于153的解都存在不足609字符的表示，不排除更优表达式。",
+      "controls": "初始181、传统153、演化166、人类153、参考127。五程序、故意加1破坏、完整声明不变、严格重放、冷导出、异常和超时均通过，任务及共享检查43项通过。",
+      "limits": "未重跑公开127的发现过程，未证明127最优；未将挑战150基线或AI辅助127称为纯人类纪录。开放性结论限所列来源。"
     }
-  }
+  },
+  "category": "algebra_number_theory"
 }

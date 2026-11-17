@@ -2,30 +2,28 @@
 
 Status: accepted by Sol on 2026-11-06.
 
-## Source and configuration review
+## Source review and parameter choice
 
-- The selected configuration is Gset G70: 10,000 vertices, 9,999 undirected edges, all with weight +1.
-- The Stanford source is retained once as deterministic gzip at `data/source/G70.gz` (compressed SHA-256 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`). Decompression reproduces the byte-exact 117,744-byte original (SHA-256 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`). The duplicate normalized `data/instance.json` was removed; checker and search readers parse the compressed source.
-- The normalized zero-based edge-list SHA-256 is `76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085`. The checker verifies this pinned hash when it loads the graph.
-- Goudet, Goëffon, and Hao report 9,594 on the G70 test instance and 9,595 as a calibration value in their 2024 LPI paper. The paper-specific assignment was not obtained.
-- Cosm v4 (revised 2026-10-11) reports a heuristic G70 score of 9,595. Its abstract distinguishes this as best-known from the certified optima it reports for G81, G72, and G77. AI-assistance disclosure is unknown.
-- The LPI paper reports 9,594 on its G70 test instance and 9,595 as a calibration value. A 2019 coherent-Ising-machine paper reports numerical SDP value 9,683 for G70. This task did not independently certify it as an upper bound; the 88-point difference is not a certified gap.
-- Qian and Pan's arXiv v5 (revised 2021) relaxation paper reports upper bounds and known best values on large UBPP instances. The 2026 result table does not provide a G70 upper bound or proof. No checked source proves G70 optimal.
-- The reproduced traditional baseline uses a single-vertex FLIP neighborhood from published Max-Cut local search. It is a task-local implementation, not a reproduction of the full BLS algorithm or its reported G70 result.
+- Checked the Afzaly–McKay extremal graph table and its explanatory note on 2026-11-06. The table says an unprefixed edge count is exact. Its order-38 value 117 is therefore solved and was not selected.
+- The order-41 entry is `>=132` and links to `c4_n41e132.maybe.s6`, which contains three sparse6 records. The prefix means the authors do not claim that 132 is an upper bound. Selected parameters are exactly 41 vertices and forbidden `C4`.
+- The same table gives the exact order-40 value 127. Deleting each of the 41 vertices from a candidate graph and summing induced-edge counts gives `39m <= 41*127`; hence `m <= floor(5207/39)=133`. Together with the 132-edge witness, this proves `132 <= ex(41,C4) <= 133`.
+- The data page describes the tables as joint work by Narjess Afzaly and Brendan McKay and says further details were in preparation. The current checked source is the live data page; no paper version for the order-41 entry was located. This is an explicit source limitation, not a claim that an exhaustive literature survey found no proof.
+- Download URL: `https://users.cecs.anu.edu.au/~bdm/data/extremal/c4_n41e132.maybe.s6`. SHA-256: `900da21cbbb59d10c30f26feb35ebab4f0e3ef65f21429939584bda497768989`.
 
-## Reproduction and validation
+## Reproduction
 
-- Human-method baseline: fixed seed 0, four starts, at most 10,000 steepest improving flips per start; actual flips were 2,163, 2,226, 2,227, and 2,158 (8,774 total); checker result 8,616. The saved witness records these counts.
-- Cold start: 10,000 labels on side 0; checker result 0.
-- Checker reads the pinned 9,999 edges and sums integer weights exactly. It ignores candidate score fields and supplied graph edges.
-- Test command: `.venv/bin/python -m pytest tasks/t033/test_task.py -q`.
-- Test result: 14 passed.
-- Direct entry-point smoke run with `MATHBENCH_SEARCH_STEPS=1`: init 0, baseline 8,888, evolution 8,595, human 8,616, reference 8,616. The human default seed result matches frozen H=8,616.
-- Standalone cold-start export was run with Python isolated mode; it returned 10,000 valid labels without importing task modules.
-- The shared evaluator cannot load T033 until the main reviewer temporarily registers the task. The task-local checker and all four `run_code()` entries can be exercised directly.
+The first record was decoded from sparse6 with NetworkX 3.x, then saved as `data/human_witness.json`. The checker independently recomputes the 132 edges and tests all unordered vertex pairs for at most one common neighbor. Since a C4 exists exactly when two distinct vertices have two common neighbors, this is an exact full-graph check. The result is a feasible construction only; optimality remains open in the cited table.
 
-## Limitations
+The seed is a 41-vertex star with 40 edges. The classical baseline starts from that star and uses seeded random edge additions. It checks for a length-three path before accepting an edge and never loads task data. Defaults: seed 38, 3,000 iterations. It records the actual attempt count, accepted additions, seed, and optional wall-clock budget. The evolution entry point delegates to this witness-free baseline; the separate human/reference programs read the archived witness.
 
-- The reported 9,595 value has no witness replayed here. The external comparison witness is in `data/human_g70_1flip.json`; `data/results.json` is reserved for own-search results. The saved local FLIP witness scores 8,616 and is the frozen human baseline.
-- The G1 configuration was removed after a 2026 paper reported a Gurobi value matching its listed known optimum. G70 is selected because the checked literature reports 9,595 as a heuristic lower bound and no certificate was found.
-- The reviewed-source search does not prove that no G70 certificate exists elsewhere.
+## Replay commands
+
+```sh
+.venv/bin/python -m pytest tasks/t033/test_task.py -q
+python3 -m json.tool tasks/t033/task.json > /dev/null
+python3 -m json.tool tasks/t033/data/bestknown.json > /dev/null
+```
+
+## Review status and limitations
+
+Sol accepted this task on 2026-11-06 after full runner replay. See bestknown.json. The 132-edge construction is reproduced exactly. The public table gives no optimality proof for order 41. The live web table was checked on 2026-11-06; this implementation does not establish a complete literature survey.

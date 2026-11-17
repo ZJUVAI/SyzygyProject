@@ -1,20 +1,21 @@
 {
   "task_id": "T034",
-  "candidate_id": "van-der-waerden-2-7",
-  "name": "Two-color van der Waerden lower-bound coloring for 7-term progressions",
+  "name": "Zarankiewicz number z(14,19;3,3)",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T034-C01",
   "configurations": [
     {
       "id": "T034-C01",
       "parameters": {
-        "colors": 2,
-        "progression_length": 7,
-        "domain": "consecutive_prefix_of_positive_integers",
-        "common_difference": "positive_integer"
+        "rows": 14,
+        "columns": 19,
+        "forbidden_submatrix": [
+          3,
+          3
+        ]
       },
       "direction": "maximize",
-      "human_reference": 3703
+      "human_reference": 126
     }
   ],
   "acceptance_review": {
@@ -22,10 +23,11 @@
     "date": "2026-11-06",
     "decision": "实现完成并通过Sol验收",
     "source_review": {
-      "数学模型": "两色连续正整数前缀，禁止同色七项正公差等差数列，最大化前缀长度。已解W(2,6)排除。",
-      "人类方法来源": "Herwig等2007表中prime617、不zip的3703构造，以Rabung幂剩余方法重建。旧预印本日期2005与正式出版日期分开。Monroe代码固定提交f1223097f4adc0a41ccb92ace51ebafd2b996fb1，未跑上游分布式搜索。",
-      "独立验算": "任务按首项和步长检查，主代理按末项和步长独立检查全部1140833个等差数列。五程序与完整控制通过。",
-      "开放状态与限制": "Monroe2025表仍只报下界，2026渐近论文未关闭k7。本次未证明3704不可能。"
+      "数学模型": "固定14×19二元矩阵，禁止全1的3×3子矩阵，最大化1的数量。此约束区别于一般图无四环。",
+      "人类方法来源": "Saurabh2026 v1附录矩阵126已逐项核对。原文明确传统kicked-greedy，无语言模型或学习模块；NOVA自主选择单元、运行和整理。未声称人工手工发现，也未重跑原随机搜索。",
+      "独立验算": "任务检查364个行三元组，主代理检查969个列三元组。最初搜索丢失较好构造，原代理修复保留全局最佳并加回归；重跑五程序及完整控制通过，传统和演化117。",
+      "开放状态与限制": "主来源表1报告126–135。相邻单元的2026精确结果不适用于本单元。后续搜索未发现闭合证明，并非穷尽文献。"
     }
-  }
+  },
+  "category": "extremal_graph_theory"
 }

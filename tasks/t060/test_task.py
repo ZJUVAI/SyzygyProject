@@ -1,156 +1,138 @@
-"""Task-local tests for exact M61 integer-complexity checking."""
+"""Exact tests for T060 integer difference bases."""
+
 import hashlib
-import ast
 import json
+import math
 import os
-import shutil
-import subprocess
-import sys
 from pathlib import Path
 
 import pytest
 
+from mathbench.evaluate import _run
 from tasks.t060.baseline import run_code as baseline_run
-from tasks.t060.check import TARGET, _selfridge_max, validate
+from tasks.t060.check import validate
 from tasks.t060.evolution import run_code as evolution_run
 from tasks.t060.human import run_code as human_run
 from tasks.t060.init_program import run_code as seed_run
 from tasks.t060.reference import run_code as reference_run
 
+
 TASK_DIR = Path(__file__).parent
 CONFIG = {
     "id": "T060-C01",
-    "parameters": {"target": "2^61-1", "target_value": str(TARGET)},
+    "parameters": {
+        "N": 6166,
+        "ambient_group": "integers_under_subtraction",
+        "required_differences": "positive_integers_1_through_N",
+    },
     "direction": "minimize",
-    "human_reference": 153,
+    "human_reference": 158,
 }
+REFERENCE_PATH = TASK_DIR / "data" / "reference" / "singer_q31_leech_product_n6166_128.json"
+REFERENCE_SHA256 = "e7af998f30472857a1403e637b595e7d69dbde02dc851060c03bbdf1fe0e248c"
 
 
-def test_exact_selfridge_bound_uses_integer_arithmetic():
-    assert _selfridge_max(115) == 1801135623563989452
-    assert _selfridge_max(115) < TARGET < _selfridge_max(116)
+def _independent_differences(basis):
+    return {right - left for index, left in enumerate(sorted(basis)) for right in sorted(basis)[index + 1 :]}
 
 
-def test_human_base3_expression_rebuilds_saved_witness():
-    generated = human_run()
-    saved = json.loads((TASK_DIR / "data/human/human_base3_expression.json").read_text())
-    result = validate(generated, CONFIG, strict=True)
-    assert generated == saved
-    assert result["objective"] == 153
-    assert result["verification_status"] == "exact"
+def test_public_128_reconstruction_and_independent_all_distance_scan():
+    assert hashlib.sha256(REFERENCE_PATH.read_bytes()).hexdigest() == REFERENCE_SHA256
+    solution = reference_run()
+    result = validate(solution, CONFIG, strict=True)
+    assert result["objective"] == 128
+    assert len(set(solution["basis"])) == 128
+    differences = _independent_differences(solution["basis"])
+    assert all(distance in differences for distance in range(1, 6167))
+    assert solution["construction"]["modulus"] == 993
+    assert solution["construction"]["cyclic_multiplier"] == 172
 
 
-def test_public_127_witness_exactly_replays_and_hash_matches():
-    witness = reference_run()
-    path = TASK_DIR / "data/reference/public_127_expression.json"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
-        "946a56e064e60422f49c98aeeb0ceae0a99c22d5070318a7b84fcbca28699449"
-    )
-    result = validate(witness, CONFIG, strict=True)
-    assert result["objective"] == 127
-    assert result["details"]["expression_value"] == str(TARGET)
+def test_wichmann_human_baseline_and_classical_parameters():
+    solution = human_run()
+    result = validate(solution, CONFIG, strict=True)
+    assert result["objective"] == 158
+    assert solution["basis"][0] == 0
+    assert solution["basis"][-1] == 6548
+    assert len(solution["basis"]) == 158
+    assert _independent_differences(solution["basis"]).issuperset(range(1, 6167))
 
 
-def test_all_five_program_entries_return_valid_expressions(monkeypatch):
+def test_simple_initial_seed_is_valid_but_not_a_comparison_input():
+    solution = seed_run()
+    assert len(solution["basis"]) == 6167
+    assert validate(solution, CONFIG)["objective"] == 6167
+    assert validate({"basis": list(range(6168))}, CONFIG)["objective"] == 6168
+
+
+@pytest.mark.parametrize(
+    "solution",
+    [
+        {"basis": [0]},
+        {"basis": []},
+        {"basis": [0, 2]},
+        {"basis": [0, 6166, 6168]},
+        {"basis": [0, 1, 1]},
+        {"basis": [False, 1]},
+        {"basis": [0, 1.0]},
+        {"basis": [0, math.nan]},
+        {"basis": [0, math.inf]},
+        {"basis": "0,1"},
+    ],
+)
+def test_checker_rejects_invalid_or_out_of_contract_basis(solution):
+    with pytest.raises(ValueError):
+        validate(solution, CONFIG)
+
+
+def test_claimed_score_changes_do_not_change_validation():
+    basis = reference_run()["basis"]
+    expected = validate({"basis": basis}, CONFIG)
+    for key, value in (("claimed_objective", -10**9), ("objective", 0), ("score", 1e300)):
+        forged = {"basis": basis, key: value}
+        assert validate(forged, CONFIG) == expected
+
+
+def test_wrong_config_is_rejected():
+    wrong = {**CONFIG, "parameters": {**CONFIG["parameters"], "N": 6167}}
+    with pytest.raises(ValueError):
+        validate({"basis": [0, 1]}, wrong)
+
+
+def test_all_five_program_entries_and_seeded_search_metadata(monkeypatch):
+    assert validate(evolution_run(), CONFIG)["objective"] <= 6167
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T060-C01")
     monkeypatch.setenv("MATHBENCH_SEED", "17")
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    for run in (seed_run, baseline_run, human_run, reference_run, evolution_run):
-        assert validate(run(), CONFIG)["verification_status"] == "exact"
+    candidate = baseline_run()
+    result = validate(candidate, CONFIG, strict=True)
+    assert result["verification_status"] == "exact"
+    metadata = candidate["search_metadata"]
+    assert metadata["seed"] == 17
+    assert metadata["comparison_data_read"] is False
+    assert metadata["restart_limit"] == 6
+    assert metadata["completed_restarts"] >= 0
 
 
-def test_binary_seed_is_self_contained_when_exported(tmp_path):
-    seed_copy = tmp_path / "init_program.py"
-    shutil.copy(TASK_DIR / "init_program.py", seed_copy)
-    environment = {
-        "PATH": os.environ.get("PATH", ""),
-        "MATHBENCH_CONFIG_ID": "T060-C01",
-        "MATHBENCH_SEED": "0",
-    }
-    code = "import json, runpy; print(json.dumps(runpy.run_path('init_program.py')['run_code']()))"
-    completed = subprocess.run(
-        [sys.executable, "-c", code], cwd=tmp_path, env=environment,
-        check=True, capture_output=True, text=True, timeout=10,
-    )
-    assert validate(json.loads(completed.stdout), CONFIG)["objective"] == 181
+def test_program_entries_reject_an_unknown_configuration(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T060-UNKNOWN")
+    for program in (seed_run, baseline_run, human_run, reference_run, evolution_run):
+        with pytest.raises(ValueError, match="unsupported configuration"):
+            program()
 
 
-def test_baseline_and_evolution_are_seeded_and_report_actual_iterations(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_SEED", "5")
-    monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    first = baseline_run()
-    assert first == baseline_run()
-    assert first["search_metadata"]["iterations"] == 15
-    assert first["search_metadata"]["reference_data_read"] is False
-    evolved = evolution_run()
-    assert evolved == evolution_run()
-    assert evolved["search_metadata"]["seed"] == 5
-    assert evolved["search_metadata"]["iterations"] == 1000
-    assert evolved["search_metadata"]["reference_data_read"] is False
-    assert evolved["search_metadata"]["budget"]["mode"] == "fixed_iteration_count"
+def test_runner_reports_candidate_error_and_timeout(tmp_path):
+    error_program = tmp_path / "error_program.py"
+    error_program.write_text("raise RuntimeError('expected failure')\n", encoding="utf-8")
+    timeout_program = tmp_path / "timeout_program.py"
+    timeout_program.write_text("import time\ntime.sleep(5)\n", encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="expected failure"):
+        _run([os.sys.executable, str(error_program)], dict(os.environ), timeout=3)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([os.sys.executable, str(timeout_program)], dict(os.environ), timeout=0.1)
 
 
-def test_zero_second_budget_returns_valid_seed(monkeypatch):
-    monkeypatch.setenv("MATHBENCH_SEARCH_SECONDS", "0")
-    result = evolution_run()
-    assert result["search_metadata"]["iterations"] == 0
-    assert validate(result, CONFIG)["verification_status"] == "exact"
-    assert result["search_metadata"]["budget"]["mode"] == "wall_clock_cutoff"
-
-
-def test_claimed_scores_are_ignored_even_when_nonfinite():
-    candidate = reference_run()
-    expected = validate(candidate, CONFIG)
-    changed = {
-        **candidate,
-        "objective": float("nan"),
-        "score": float("inf"),
-        "claimed_score": -1,
-        "claimed_objective": True,
-        "metadata": [None, False],
-    }
-    assert validate(changed, CONFIG) == expected
-
-
-@pytest.mark.parametrize("bad", [
-    None, True, 1, 1.0, float("nan"), float("inf"), [], {},
-    "", "2", "1-1", "1/1", "1^1", "x", "1+", "+1", "()",
-    "1 1", "1\t+1", "1\n+1", "1(1)", "(1+1", "1+1)", "(1+)1", "1**1",
-])
-def test_invalid_expressions_are_rejected(bad):
-    with pytest.raises(ValueError):
-        validate({"expression": bad}, CONFIG)
-
-
-def test_wrong_value_and_wrong_configuration_are_rejected():
-    with pytest.raises(ValueError, match="does not evaluate"):
-        validate({"expression": "1+1"}, CONFIG)
-    with pytest.raises(ValueError, match="configuration"):
-        validate(reference_run(), {**CONFIG, "parameters": {"target": "2^61-2"}})
-
-
-def test_expression_tree_repetition_is_counted_as_separate_leaves():
-    # The same text is repeated, but the expression is a tree and evaluates to 4.
-    from tasks.t060.check import _parse
-
-    assert _parse("(1+1)*(1+1)") == (4, 4)
-
-
-def test_search_program_imports_do_not_reach_comparison_programs():
-    for filename in ("baseline.py", "evolution.py", "init_program.py"):
-        tree = ast.parse((TASK_DIR / filename).read_text(encoding="utf-8"))
-        imported = []
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ImportFrom):
-                imported.append(node.module or "")
-            elif isinstance(node, ast.Import):
-                imported.extend(alias.name for alias in node.names)
-        assert not any("t060.human" in name or "t060.reference" in name for name in imported)
-
-
-def test_expression_length_limit_and_deep_parentheses_are_safe():
-    from tasks.t060.check import MAX_EXPRESSION_LENGTH, _parse
-
-    with pytest.raises(ValueError, match="too long"):
-        _parse("1" + " " * MAX_EXPRESSION_LENGTH)
-    assert _parse("(" * 3000 + "1" + ")" * 3000) == (1, 1)
+def test_saved_witness_json_is_strict_and_matches_reference_program():
+    stored = json.loads(REFERENCE_PATH.read_text(encoding="utf-8"))
+    assert stored == reference_run()
+    assert len(stored["basis"]) == 128

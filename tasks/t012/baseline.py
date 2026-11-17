@@ -1,49 +1,75 @@
-from mathbench.search import search_deadline, search_steps
-"""Bounded deterministic integer add/delete local search."""
+"""Deterministic perturb-and-keep search baseline; no reference data access."""
+
+import json
 import math
 import os
 import random
-import time
-from tasks.t012.init_program import run_code as seed_program
+
+from mathbench.search import search_steps
 
 
-def _score(a):
-    n = len(a)
-    if n < 2:
-        return None
-    sums = {x + y for x in a for y in a}
-    diffs = {x - y for x in a for y in a}
-    if len(sums) <= len(diffs) or len(diffs) <= n:
-        return None
-    return math.log(len(sums) / n) / math.log(len(diffs) / n)
+def _xyz(pair):
+    u, v = pair
+    d = 1.0 + u * u + v * v
+    return (2.0 * u / d, 2.0 * v / d, (1.0 - u * u - v * v) / d)
+
+
+def _energy(points):
+    xyz = [_xyz(p) for p in points]
+    total = 0.0
+    for i in range(len(xyz)):
+        for j in range(i):
+            d2 = sum((xyz[i][k] - xyz[j][k]) ** 2 for k in range(3))
+            total += 1.0 / math.sqrt(d2)
+    return total
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T012-C01") != "T012-C01":
-        raise ValueError("unsupported configuration")
-    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    try:
-        budget = min(2.0, max(0.01, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
-    except ValueError:
-        budget = 2.0
-    deadline = search_deadline()
-    current = sorted(set(seed_program()["set"]))
-    best = current[:]
-    best_score = _score(best)
-    lo, hi = -1000000, 1000000
-    for _attempt in search_steps(2000):
-        trial = current[:]
-        if len(trial) < 512 and (len(trial) <= 2 or rng.random() < 0.55):
-            choices = [x for x in (rng.randint(lo, hi) for _ in range(20)) if x not in set(trial)]
-            if choices:
-                trial.append(choices[0])
-                trial.sort()
-        elif len(trial) > 2:
-            trial.pop(rng.randrange(len(trial)))
-        score = _score(trial)
-        if score is not None and (best_score is None or score > best_score):
-            best, best_score = trial, score
-            current = trial
-        elif score is not None and rng.random() < 0.08:
-            current = trial
-    return {"set": best}
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T012-C01")
+    lengths = {"T012-C01": 32}
+    if config_id not in lengths: raise ValueError(f"unsupported configuration: {config_id}")
+    n = lengths[config_id]
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    rng = random.Random(seed)
+    requested_seconds_value = os.environ.get("MATHBENCH_SEARCH_SECONDS")
+    requested_seconds = float(requested_seconds_value) if requested_seconds_value is not None else None
+    points = []
+    golden = math.pi * (3.0 - math.sqrt(5.0))
+    for k in range(n):
+        z = 1.0 - 2.0 * (k + 0.5) / n
+        theta = k * golden
+        r = math.sqrt(1.0 - z * z)
+        points.append([r * math.cos(theta) / (1.0 + z), r * math.sin(theta) / (1.0 + z)])
+    current = points
+    current_energy = _energy(current)
+    best = [p[:] for p in current]
+    best_energy = current_energy
+    # Fixed 600-step coordinate perturbation. The ambient coordinates are
+    # reprojected by the exact checker; energy here is search feedback only.
+    actual_iterations = 0
+    for step in search_steps(600):
+        actual_iterations += 1
+        candidate = [p[:] for p in current]
+        index = rng.randrange(n)
+        temperature = 0.03 * (1.0 - step / 700.0)
+        candidate[index][0] += rng.gauss(0.0, temperature)
+        candidate[index][1] += rng.gauss(0.0, temperature)
+        score = _energy(candidate)
+        if score < best_energy:
+            best, best_energy = [p[:] for p in candidate], score
+        if score < current_energy or rng.random() < math.exp(min(0.0, (current_energy - score) / max(temperature, 1e-9))):
+            current, current_energy = candidate, score
+    return {
+        "points": best,
+        "search_metadata": {
+            "algorithm": "seeded coordinate perturbation with simulated-annealing acceptance and best-witness retention",
+            "seed": seed,
+            "actual_iterations": actual_iterations,
+            "iteration_budget": 600,
+            "requested_seconds": requested_seconds,
+        },
+    }
+
+
+if __name__ == "__main__":
+    print(json.dumps(run_code()))

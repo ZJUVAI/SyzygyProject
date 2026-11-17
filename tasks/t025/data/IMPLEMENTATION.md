@@ -1,36 +1,20 @@
-# T025 implementation notes
+# T025 implementation evidence — accepted by Sol on 2026-11-06
 
-Status: accepted by Sol on 2026-11-06.
+## Scope
 
-## Configuration and sources
+Implemented only configuration T025-C01 (K28, minimize crossing pairs). The checker accepts integer and canonical rational-string coordinates and uses exact `Fraction` orientation tests. It checks every point triple for general position, then counts all three disjoint-edge pairings on each four-set. The human construction uses `(i,i^2)` and has `binom(28,4)=20,475` crossings.
 
-- `T025-C01` fixes the affine space `F_3^7` and maximizes cap cardinality. The checker limits candidates to 288 points because Thackeray proves that no 289-cap 7-flat exists. This is a theorem-derived candidate ceiling, not a reported construction.
-- Edel and Bierbrauer (2001), Table 2 and Theorem 5, give a 236-cap in `AG(7,3)` and identify it as the Calderbank–Fishburn cap. Calderbank and Fishburn (1994) are credited with the first 236-cap.
-- The public matrix page `https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html` was retrieved on 2026-11-06. Its eight rows each have 248 ternary entries. The eighth row has 236 entries equal to 1. `human.py` extracts those columns, drops the eighth coordinate, and rebuilds the affine point list.
-- The saved matrix has SHA-256 `0e3ad612ca8ee9259290f4748af505cf6184c2107e77859d3ae6117fe24545eb`. The saved point witness has SHA-256 `40e588a2a8b17cacb2443a60bd9cfd1c94ded78fdfdde13adee4d74af59c9159`.
-- Thackeray, arXiv:2206.09804 (2022), proves the upper bound 288. The literature check found no proof of the exact maximum. Current located bounds are 236 to 288.
+## Sources and open status
 
-## Programs and exact verification
+The Lovász–Vesztergombi–Wagner–Welzl paper supports the convex four-set construction. The 2011 Abrego–Fernández-Merchant–Salazar survey says 28 remains open. The numeric interval 7,233–7,234 is recorded in Abrego’s own 2008-05-05 comment on OEIS A014540; the 2024 DMTCS paper also says only orders through 27 and 30 are solved. Current MathWorld cites Schaefer (2026), p. 86, and still calls K28 the smallest unresolved case with value 7,233 or 7,234. The public 7,234 point set was not obtained or replayed. No later proof was found in the source review supplied for this implementation. The stronger public claim is recorded as reported, not reproduced. Review date: 2026-11-06.
 
-- `init_program.py` returns all 128 binary vectors in `F_3^7`. This is a valid cap and uses no comparison data.
-- `baseline.py` uses Python's seeded random generator to order candidate points and greedily add each point whose addition preserves the cap property. It has a fixed 100,000-candidate budget by default. `MATHBENCH_SEARCH_SECONDS` enables the shared optional wall-clock cutoff. Search metadata records the seed, fixed budget, actual iteration count, restart count, and whether reference data was read.
-- `human.py` reconstructs the published affine slice from the saved public matrix. `reference.py` loads the fixed point witness.
-- `check.py` validates each coordinate and duplicate, then checks every distinct pair. For a pair `a,b`, the only possible third point is `-a-b` modulo 3. A candidate score field is ignored. The integer arithmetic covers the full domain exactly. No sampling is used.
+## Validation
 
-## Validation performed
+- Checker suite: `.venv/bin/python -m pytest tasks/t025/test_task.py -q` — passed (11 tests).
+- Human and reference programs: `.venv/bin/python -c 'from tasks.t025.human import run_code; from tasks.t025.check import validate; print(validate(run_code(), {"id":"T025-C01","parameters":{"vertices":28,"graph":"complete graph K28","general_position":"no three points collinear","crossing_definition":"unordered pairs of disjoint straight edges whose relative interiors intersect"}}))'` — passed; exact objective 20,475; all 3,276 triples and 61,425 edge-pairings checked.
+- Search baseline: seed 0, 80 single-point replacement attempts, exact validation after each proposed move; replay command and outcome are in `data/search/seed0_search_provenance.json` — seed 0 completed 80 attempts, accepted 16 replacements, and scored 12,516. Exact result and metadata are saved in `data/results.json`. Sol review remains pending. The exported evolution entry also ran directly and returned a valid 12,516-crossing drawing; the simple initial entry returned a valid 20,475-crossing drawing.
+- Program-error and timeout behavior remains provided by the shared candidate runner. This local task test covers valid/invalid constructions, duplicates, rational and malformed coordinates, exact orientation boundaries, and ignored score claims.
 
-Command:
+Default runner budget: 300 seconds generation, 60 seconds verification, 4 GiB virtual memory, one numerical thread. Configuration status remains `accepted_by_sol`.
 
-```sh
-.venv/bin/python -m pytest tasks/t025/test_task.py -q
-```
-
-Result: 16 passed in 4.50 seconds under Python 3.13.12. The suite rebuilds and checks the 236-point matrix slice, independently recalculates its cardinality, validates the simple seed, rejects a collinear triple, duplicate points, wrong shapes, bool, noninteger, out-of-range, NaN, and infinite coordinates, ignores a claimed score, checks the 288-point theorem cutoff, tests seeded search reproducibility and zero-second fallback, and exercises the shared process runner's program-error and timeout handling.
-
-The automated test uses the deterministic local matrix snapshot. No network fetch is performed by tests. The main reviewer must independently replay the human baseline and compare the local source row interpretation against the cited paper and the author's page.
-
-## Open items for review
-
-- The exact maximum in `F_3^7` remains unproved. The 288 limit is an upper bound only.
-- The public matrix is projective; the affine witness is the slice with last coordinate 1. Sol should check this extraction convention and the affine no-line proof.
-- The repository's shared evaluator registry has not yet been updated for T025. End-to-end `evaluate(program_path)` testing must follow main-agent integration. This task does not change shared files.
+Main source correction: the retrieved 2011 survey has Table 1, no Table 3. It supports open status, while the numeric7233–7234 interval is attributed to Bernardo M. Abrego’s first-party comment at https://oeis.org/A014540/internal . The current crossingconstants page concerns asymptotic constants and is not cited as a K28 table. FrozenH20475 is a reconstructed weak convex-position formula; reported besthuman7234 remains unverified locally.

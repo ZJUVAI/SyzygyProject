@@ -1,8 +1,7 @@
+import hashlib
 import json
-import math
 import os
 from pathlib import Path
-import subprocess
 import sys
 
 import pytest
@@ -11,10 +10,8 @@ from mathbench.evaluate import _run
 from tasks.t057.baseline import run_code as baseline_run
 from tasks.t057.check import CONFIG_ID, PARAMETERS, validate
 from tasks.t057.evolution import run_code as evolution_run
-from tasks.t057.human import run_code as human_run
+from tasks.t057.human import build_schedule, run_code as human_run
 from tasks.t057.init_program import run_code as init_run
-from tasks.t057.instance import load_instance, rounded_euc_2d_distance, total_route_cost
-from tasks.t057.io import read_solution
 from tasks.t057.reference import run_code as reference_run
 
 
@@ -22,118 +19,100 @@ TASK = Path(__file__).parent
 CONFIG = {"id": CONFIG_ID, "parameters": PARAMETERS}
 
 
-def _checked(routes):
-    return validate({"routes": routes}, CONFIG)
+def _check(rounds):
+    return validate({"rounds": rounds}, CONFIG)
 
 
-def test_all_program_entries_and_simple_initial_solution(monkeypatch):
+def _round_with_invalid_last_player(last):
+    groups = [list(range(5))]
+    groups.extend([list(range(5 * i, 5 * i + 5)) for i in range(1, 6)])
+    groups.append([30, 31, 32, 33, last])
+    return [groups]
+
+
+def test_all_five_program_entries(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    monkeypatch.setenv("T057_SEARCH_TRIALS", "0")
+    monkeypatch.setenv("T057_SEARCH_RESTARTS", "1")
+    monkeypatch.setenv("T057_ATTEMPTS_PER_ROUND", "20")
     monkeypatch.delenv("MATHBENCH_SEARCH_SECONDS", raising=False)
-    initial = init_run()
-    assert _checked(initial["routes"])["objective"] == total_route_cost(initial["routes"])
-    assert len(initial["routes"]) == 1000
-    human = human_run()
-    reference = reference_run()
-    baseline = baseline_run()
-    evolved = evolution_run()
-    for item in (human, reference, baseline, evolved):
-        assert isinstance(item, dict)
-        assert isinstance(item["routes"], list)
-        _checked(item["routes"])
-    assert _checked(human["routes"])["objective"] == 77398
-    assert _checked(reference["routes"])["objective"] == 72332
+    outputs = [init_run(), baseline_run(), evolution_run(), human_run(), reference_run()]
+    for output in outputs:
+        assert isinstance(output, dict)
+        assert _check(output["rounds"])["objective"] == len(output["rounds"])
+    assert _check(init_run()["rounds"])["objective"] == 1
+    assert _check(human_run()["rounds"])["objective"] == 7
+    assert _check(reference_run()["rounds"])["objective"] == 7
+
+
+def test_reference_file_hash_and_exact_reconstruction():
+    witness = TASK / "data/reference/rtd_5_7.json"
+    assert hashlib.sha256(witness.read_bytes()).hexdigest() == json.loads(
+        (TASK / "data/bestknown.json").read_text()
+    )["configurations"][CONFIG_ID]["witness_sha256"]
+    saved = json.loads(witness.read_text())
+    assert saved["rounds"] == build_schedule()
+    result = _check(saved["rounds"])
+    assert result["objective"] == 7
+    assert result["details"]["distinct_pairs_used"] == 490
+
+
+def test_valid_alternate_one_round_construction():
+    rounds = [[[5 * group + offset for offset in range(5)] for group in range(7)]]
+    assert _check(rounds)["objective"] == 1
 
 
 @pytest.mark.parametrize(
-    ("filename", "expected"),
-    [("public_72332.sol", 72332), ("historical_72355.sol", 72355)],
-)
-def test_saved_official_witnesses(filename, expected):
-    routes = read_solution(TASK / "data" / "reference" / filename)
-    result = _checked(routes)
-    assert result["objective"] == expected
-    assert result["verification_status"] == "exact"
-    assert len(routes) == 43
-    assert max(result["details"]["route_loads"]) == 131
-
-
-def test_human_witness_is_saved_and_exact():
-    evidence = json.loads((TASK / "data/source/human_clarke_wright_77398.json").read_text())
-    result = _checked(evidence["routes"])
-    assert result["objective"] == evidence["verification"]["objective"] == 77398
-    assert evidence["construction"]["method"] == "parallel Clarke-Wright savings"
-
-
-def test_exact_distance_rounding_against_integer_definition():
-    instance = load_instance()
-    for left, right in ((1, 2), (2, 3), (17, 991), (1, 1001)):
-        x1, y1 = instance["coordinates"][left]
-        x2, y2 = instance["coordinates"][right]
-        square = (x1 - x2) ** 2 + (y1 - y2) ** 2
-        floor_root = math.isqrt(square)
-        expected = floor_root + (1 if 4 * square >= (2 * floor_root + 1) ** 2 else 0)
-        assert rounded_euc_2d_distance(left, right, instance) == expected
-
-
-def test_route_count_is_not_limited_by_k43():
-    routes = read_solution(TASK / "data/reference/public_72332.sol")
-    first = routes.pop(0)
-    routes.extend([[first[0]], first[1:]])
-    result = _checked(routes)
-    assert result["details"]["route_count"] == 44
-    assert result["details"]["route_count_unrestricted"] is True
-
-
-@pytest.mark.parametrize(
-    "routes",
+    "rounds",
     [
         [],
-        [[2]],  # missing customers
-        [[2, 2]],  # duplicate
-        [[True]],  # bool is not an integer node id
-        [[2.0]],
-        [[float("nan")]],
-        [[1]],  # depot is not a customer
-        [[1002]],
-        [[]],
+        [[ [0, 1, 2, 3, 4] ]],  # not seven groups
+        [[list(range(5)) for _ in range(7)]],  # same players in every group
+        _round_with_invalid_last_player(99),
+        _round_with_invalid_last_player(True),
+        _round_with_invalid_last_player(34.0),
+        _round_with_invalid_last_player(float("nan")),
     ],
 )
-def test_invalid_routes_rejected(routes):
+def test_invalid_rounds_rejected(rounds):
     with pytest.raises(ValueError):
-        _checked(routes)
+        _check(rounds)
 
 
-def test_capacity_violation_rejected():
-    instance = load_instance()
-    overloaded = []
-    load = 0
-    for customer in instance["customer_ids"]:
-        if load > 131:
-            break
-        overloaded.append(customer)
-        load += instance["demands"][customer]
-    assert load > 131
-    overloaded_set = set(overloaded)
-    routes = [[node] for node in instance["customer_ids"]]
-    routes = [route for route in routes if route[0] not in overloaded_set]
-    routes.insert(0, overloaded)
-    with pytest.raises(ValueError, match="exceeds capacity"):
-        _checked(routes)
+def test_repeated_pair_rejected():
+    rounds = build_schedule()
+    rounds[1] = [group[:] for group in rounds[0]]
+    with pytest.raises(ValueError, match="meet more than once"):
+        _check(rounds)
 
 
-def test_claimed_objectives_never_change_validation():
-    routes = read_solution(TASK / "data/reference/public_72332.sol")
-    baseline = validate({"routes": routes}, CONFIG)
-    for key, value in (("objective", -1), ("score", float("nan")), ("claimed_score", "999999999")):
-        altered = validate({"routes": routes, key: value}, CONFIG)
-        assert altered == baseline
-    assert baseline["details"]["claimed_objective_ignored"] is True
+def test_upper_bound_enforced():
+    rounds = build_schedule() + [build_schedule()[0]] * 2
+    with pytest.raises(ValueError, match="upper bound"):
+        _check(rounds)
 
 
-def test_runner_error_and_timeout_without_task_registration():
+def test_claimed_scores_do_not_affect_validation():
+    rounds = build_schedule()
+    expected = validate({"rounds": rounds}, CONFIG)
+    for key, value in (("objective", -100), ("score", float("nan")), ("claimed_score", "8")):
+        assert validate({"rounds": rounds, key: value}, CONFIG) == expected
+    assert expected["details"]["claimed_objective_ignored"] is True
+
+
+def test_fixed_baseline_is_deterministic_and_search_does_not_read_reference(monkeypatch):
+    monkeypatch.setenv("MATHBENCH_SEED", "12")
+    monkeypatch.setenv("T057_SEARCH_RESTARTS", "3")
+    monkeypatch.setenv("T057_ATTEMPTS_PER_ROUND", "50")
+    one = baseline_run()
+    two = baseline_run()
+    assert one == two
+    assert one["search"]["reference_data_read"] is False
+    _check(one["rounds"])
+
+
+def test_runner_error_and_timeout_without_registry():
     env = dict(os.environ)
-    with pytest.raises(RuntimeError, match="intentional worker failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('intentional worker failure')"], env, 3)
+    with pytest.raises(RuntimeError, match="intentional task failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('intentional task failure')"], env, 3)
     with pytest.raises(TimeoutError):
         _run([sys.executable, "-c", "import time; time.sleep(10)"], env, 0.2)

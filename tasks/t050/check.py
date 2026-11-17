@@ -1,56 +1,73 @@
-"""Exact validator for induced paths in the configured cube."""
-from tasks.t050.init_program import CONFIG_DIMENSIONS
+"""Exact checker for binary length-10 radius-one covering codes."""
 
-DIMENSION = 9
-VERTEX_COUNT = 1 << DIMENSION
+CONFIG_ID = "T050-C01"
+LENGTH = 10
+UNIVERSE_SIZE = 1 << LENGTH
+UNIVERSE_MASK = (1 << UNIVERSE_SIZE) - 1
 PARAMETERS = {
-    "dimension": DIMENSION,
-    "graph": "Q9",
-    "object": "induced_path",
-    "length_unit": "edges",
+    "length": LENGTH,
+    "alphabet": "{0,1}",
+    "covering_radius": 1,
+    "universe": "all 1024 binary words of length 10",
+    "objective": "number of codewords",
 }
 
 
+def _check_config(config):
+    if not isinstance(config, dict):
+        raise ValueError("configuration must be an object")
+    if config.get("id") not in (None, CONFIG_ID):
+        raise ValueError(f"unsupported configuration: expected {CONFIG_ID}")
+    if config.get("parameters") != PARAMETERS:
+        raise ValueError("configuration must fix binary length 10 and covering radius 1")
+
+
+def _ball_mask(center):
+    mask = 1 << center
+    for bit in range(LENGTH):
+        mask |= 1 << (center ^ (1 << bit))
+    return mask
+
+
 def validate(solution, config, strict=False):
-    params = config.get("parameters")
-    if not isinstance(params, dict):
-        raise ValueError("unsupported configuration")
-    dimension = params.get("dimension")
-    if type(dimension) is not int or dimension not in CONFIG_DIMENSIONS.values():
-        raise ValueError("unsupported dimension")
-    if params != dict(PARAMETERS, dimension=dimension, graph=f"Q{dimension}"):
-        raise ValueError("unsupported configuration")
-    if "id" in config and CONFIG_DIMENSIONS.get(config["id"]) != dimension:
-        raise ValueError("configuration ID does not match dimension")
-    vertex_count = 1 << dimension
-    if not isinstance(solution, dict) or "vertices" not in solution:
-        raise ValueError("solution must contain vertices")
-    vertices = solution["vertices"]
-    if not isinstance(vertices, (list, tuple)):
-        raise ValueError("vertices must be a list or tuple")
-    if len(vertices) < 2:
-        raise ValueError("an induced path must contain at least one edge")
-    if any(type(vertex) is not int for vertex in vertices):
-        raise ValueError("vertex labels must be integers; bool and non-integer values are rejected")
-    if any(vertex < 0 or vertex >= vertex_count for vertex in vertices):
-        raise ValueError(f"vertex labels must be in the range [0, {vertex_count})")
-    if len(set(vertices)) != len(vertices):
-        raise ValueError("path vertices must be distinct")
-    for index, (left, right) in enumerate(zip(vertices, vertices[1:])):
-        if (left ^ right).bit_count() != 1:
-            raise ValueError(f"consecutive vertices {index} and {index + 1} are not adjacent")
-    for i, left in enumerate(vertices):
-        for j in range(i + 2, len(vertices)):
-            if (left ^ vertices[j]).bit_count() == 1:
-                raise ValueError(f"nonconsecutive vertices {i} and {j} are adjacent")
-    objective = len(vertices) - 1
+    """Verify complete coverage of the 10-cube using exact bitset arithmetic."""
+    del strict
+    _check_config(config)
+    if not isinstance(solution, dict):
+        raise ValueError("solution must be an object")
+    codewords = solution.get("codewords")
+    if not isinstance(codewords, list):
+        raise ValueError("codewords must be a list of integers")
+    seen = set()
+    for index, word in enumerate(codewords):
+        if type(word) is not int:
+            raise ValueError(f"codeword {index} must be an integer (booleans are not accepted)")
+        if not 0 <= word < UNIVERSE_SIZE:
+            raise ValueError(f"codeword {word} is outside 0..1023")
+        if word in seen:
+            raise ValueError(f"duplicate codeword {word}")
+        seen.add(word)
+
+    covered = 0
+    for word in seen:
+        covered |= _ball_mask(word)
+    if covered != UNIVERSE_MASK:
+        missing_mask = UNIVERSE_MASK ^ covered
+        first_missing = (missing_mask & -missing_mask).bit_length() - 1
+        missing_count = missing_mask.bit_count()
+        raise ValueError(
+            f"code is not a radius-one cover: {missing_count} words uncovered; first is {first_missing:010b}"
+        )
+
     return {
-        "objective": objective,
+        "objective": len(seen),
         "verification_status": "exact",
         "details": {
-            "dimension": dimension,
-            "vertices_checked": len(vertices),
-            "nonconsecutive_pairs_checked": (len(vertices) - 1) * (len(vertices) - 2) // 2,
+            "length": LENGTH,
+            "universe_size": UNIVERSE_SIZE,
+            "codeword_count": len(seen),
+            "covered_word_count": covered.bit_count(),
+            "radius": 1,
             "claimed_objective_ignored": True,
         },
     }

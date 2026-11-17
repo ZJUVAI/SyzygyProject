@@ -1,19 +1,16 @@
 {
   "task_id": "T017",
-  "name": "Erdős minimum overlap, 51 steps",
+  "name": "Heilbronn triangles",
   "acceptance_status": "accepted_by_sol",
   "official_configuration": "T017-C01",
   "configurations": [
     {
       "id": "T017-C01",
       "parameters": {
-        "steps": 51,
-        "support": "[0,2]",
-        "range": "0≤f≤1",
-        "integral": 1
+        "n": 11
       },
-      "direction": "minimize",
-      "human_reference": 0.38092685343308696
+      "direction": "maximize",
+      "human_reference": 0.037037037037037035
     }
   ],
   "acceptance_review": {
@@ -35,5 +32,6 @@
     "limitations": [
       "公开最好值限于已查来源。未声称已证明全局最优。"
     ]
-  }
+  },
+  "category": "discrete_geometry"
 }

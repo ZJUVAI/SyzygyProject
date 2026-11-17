@@ -1,102 +1,62 @@
-import json
-import gzip
-import hashlib
-from pathlib import Path
+import unittest
 
-import pytest
+from tasks.t033.baseline import run_code as baseline
+from tasks.t033.check import validate
+from tasks.t033.human import run_code as human
+from tasks.t033.init_program import run_code as initial
+from tasks.t033.reference import run_code as reference
+from tasks.t033.evolution import run_code as evolution
 
-from tasks.t033.check import validate, _EDGES as GRAPH_EDGES
-from tasks.t033.human import run_code as human_run
-from tasks.t033.reference import run_code as reference_run
+CONFIG = {"id": "T033-C01", "parameters": {"vertices": 41, "forbidden_cycle_length": 4}}
 
+class TaskTests(unittest.TestCase):
+    def test_simple_seed_and_classical_search(self):
+        self.assertEqual(validate(initial(), CONFIG)["objective"], 40)
+        result = baseline()
+        checked = validate(result, CONFIG)
+        self.assertEqual(checked["verification_status"], "exact")
+        self.assertEqual(result["search_metadata"]["seed"], 38)
+        self.assertEqual(result["search_metadata"]["iteration_budget"], 3000)
 
-TASK = json.loads((Path(__file__).parent / "task.json").read_text())
-CONFIG = TASK["configurations"][0]
-N = 10000
+    def test_evolution_entry_point(self):
+        result = evolution()
+        self.assertEqual(validate(result, CONFIG)["verification_status"], "exact")
 
+    def test_archive_witness(self):
+        result = validate(human(), CONFIG)
+        self.assertEqual((result["objective"], result["details"]["vertices"]), (132, 41))
+        self.assertEqual(reference(), human())
 
-def test_all_same_side_is_valid_and_exact():
-    result = validate({"labels": [0] * N}, CONFIG)
-    assert result["objective"] == 0
-    assert result["verification_status"] == "exact"
+    def test_claimed_score_is_ignored(self):
+        value = human(); value["claimed_score"] = 10**100
+        self.assertEqual(validate(value, CONFIG)["objective"], 132)
 
+    def test_invalid_graphs(self):
+        witness = human()
+        bad = [
+            {"adjacency": [[] for _ in range(40)]},
+            {"adjacency": [[1, 1]] + [[] for _ in range(40)]},
+            {"adjacency": [[True]] + [[] for _ in range(40)]},
+            {"adjacency": [[float("nan")]] + [[] for _ in range(40)]},
+            {"adjacency": [[float("inf")]] + [[] for _ in range(40)]},
+            {"adjacency": [[float("-inf")]] + [[] for _ in range(40)]},
+        ]
+        # Create a C4 by adding both diagonals to a 4-cycle-free witness only
+        # when the selected vertices have no edges; the direct pattern below
+        # is independently rejected by the checker.
+        c4 = [[] for _ in range(41)]
+        for a, b in ((0, 1), (1, 2), (2, 3), (3, 0)):
+            c4[a].append(b); c4[b].append(a)
+        bad.append({"adjacency": c4})
+        for item in bad:
+            with self.subTest(item=str(item)[:80]), self.assertRaises(ValueError):
+                validate(item, CONFIG)
 
-def test_one_vertex_cut_equals_its_degree():
-    labels = [0] * N
-    labels[0] = 1
-    result = validate({"labels": labels}, CONFIG)
-    degree = sum(weight for u, v, weight in GRAPH_EDGES if u == 0 or v == 0)
-    assert result["objective"] == degree
+    def test_valid_boundary_and_actual_edge_count(self):
+        star = initial()
+        self.assertEqual(validate(star, CONFIG)["details"]["edges"], 40)
+        self.assertEqual(validate(human(), CONFIG)["details"]["edges"],
+                         sum(map(len, human()["adjacency"])) // 2)
 
-
-def test_pinned_graph_has_expected_edges_without_duplicates():
-    edges = GRAPH_EDGES
-    pairs = [(min(u, v), max(u, v)) for u, v, _ in edges]
-    assert (N, len(edges)) == (10000, 9999)
-    assert all(u != v and w == 1 for u, v, w in edges)
-    assert len(set(pairs)) == len(edges)
-
-
-def test_compressed_source_decompresses_to_pinned_original():
-    source = Path(__file__).parent / "data" / "source" / "G70.gz"
-    compressed = source.read_bytes()
-    original = gzip.decompress(compressed)
-    assert hashlib.sha256(compressed).hexdigest() == (
-        "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b")
-    assert hashlib.sha256(original).hexdigest() == (
-        "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061")
-    assert len(original) == 117744
-
-
-def test_human_baseline_witness_replays(monkeypatch):
-    monkeypatch.delenv("MATHBENCH_SEED", raising=False)
-    solution = human_run()
-    assert validate(solution, CONFIG)["objective"] == 8616
-    metadata = solution["search_metadata"]
-    assert metadata == {
-        "algorithm": "steepest_improving_single_vertex_flip",
-        "seed": 0,
-        "restarts": 4,
-        "max_flips_per_restart": 10000,
-        "flips_per_restart": [2163, 2226, 2227, 2158],
-        "total_flips": 8774,
-        "budget": "fixed iteration cap; stop early at 1-flip local optimum",
-    }
-
-
-def test_fixed_reference_replays_and_claim_is_ignored():
-    solution = reference_run()
-    result = validate(solution, CONFIG)
-    assert result["objective"] == 8616
-    solution["claimed_score"] = 10**9
-    assert validate(solution, CONFIG)["objective"] == 8616
-
-
-@pytest.mark.parametrize("labels", [
-    [0] * (N - 1),
-    [0] * (N - 1) + [True],
-    [0] * (N - 1) + [2],
-    [0] * (N - 1) + [0.0],
-    [0] * (N - 1) + [float("nan")],
-    [0] * (N - 1) + [float("inf")],
-    [0] * (N - 1) + ["1"],
-])
-def test_invalid_label_vectors_are_rejected(labels):
-    with pytest.raises(ValueError):
-        validate({"labels": labels}, CONFIG)
-
-
-def test_candidate_duplicate_edges_are_ignored():
-    labels = [0] * N
-    labels[0] = 1
-    candidate = {"labels": labels, "edges": [[0, 1, 1], [0, 1, 1]],
-                 "claimed_score": 999}
-    expected = validate({"labels": labels}, CONFIG)["objective"]
-    assert validate(candidate, CONFIG)["objective"] == expected
-
-
-def test_configuration_must_match_pinned_graph():
-    changed = dict(CONFIG)
-    changed["parameters"] = dict(CONFIG["parameters"], n=N + 1)
-    with pytest.raises(ValueError):
-        validate({"labels": [0] * N}, changed)
+if __name__ == "__main__":
+    unittest.main()

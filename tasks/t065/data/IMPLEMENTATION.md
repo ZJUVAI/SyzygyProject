@@ -1,66 +1,36 @@
-# T065 implementation and research record
+# T065 implementation notes
 
-## Fixed configuration
+Status: accepted by Sol on 2026-11-06.
 
-`T065-C01` is the maximum number `u(100)` of unordered pairs at distance exactly one among 100 distinct points in `R^2`. The configuration does not constrain points to rational coordinates or a particular lattice. It accepts a common real algebraic number field. Each coordinate is a rational polynomial in one algebraic generator `alpha`, and a rational interval selects the relevant real root.
+## Configuration and sources
 
-This format covers the finite equality pattern of any feasible real configuration: the unit-distance equalities and point-distinctness inequalities form a semialgebraic system over `Q`. A nonempty such system has a point over the real algebraic closure of `Q`; a finite set of algebraic coordinates lies in one number field by the primitive element theorem.
+- `T065-C01` fixes the affine space `F_3^7` and maximizes cap cardinality. The checker limits candidates to 288 points because Thackeray proves that no 289-cap 7-flat exists. This is a theorem-derived candidate ceiling, not a reported construction.
+- Edel and Bierbrauer (2001), Table 2 and Theorem 5, give a 236-cap in `AG(7,3)` and identify it as the Calderbank–Fishburn cap. Calderbank and Fishburn (1994) are credited with the first 236-cap.
+- The public matrix page `https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html` was retrieved on 2026-11-06. Its eight rows each have 248 ternary entries. The eighth row has 236 entries equal to 1. `human.py` extracts those columns, drops the eighth coordinate, and rebuilds the affine point list.
+- The saved matrix has SHA-256 `0e3ad612ca8ee9259290f4748af505cf6184c2107e77859d3ae6117fe24545eb`. The saved point witness has SHA-256 `40e588a2a8b17cacb2443a60bd9cfd1c94ded78fdfdde13adee4d74af59c9159`.
+- Thackeray, arXiv:2206.09804 (2022), proves the upper bound 288. The literature check found no proof of the exact maximum. Current located bounds are 236 to 288.
 
-## Current sources and reported record
+## Programs and exact verification
 
-- Engel, Hammond-Lee, Su, Varga, and Zsámboki, [arXiv:2406.15317v3](https://arxiv.org/html/2406.15317v3), dated 2025-06-13. Definition 2.4 and Theorems 2.3 and 2.5 describe the Moser-lattice coordinates. Table 2 reports 439 edges at `n=100` and 22 found isomorphism classes. The paper describes a GPU diverse backtracking beam search and an approximately 60-million-graph dataset. §6.1 discusses AI as a possible later use of that data, not as a reported contributor to this search.
-- The authors' [Codeberg repository](https://codeberg.org/zsamboki/dbs-udg) is pinned at commit `3202dade2cd02b712c182368789a108db02e82c8`, dated 2025-05-26. README and source hashes are in `data/source/source_notes.json`. It links the graph dataset through Figshare; browser retrieval returned 403 and direct access triggered a WAF challenge. The n=100 coordinates were therefore not reproduced.
-- Alexeev, Mixon, and Parshall, [arXiv:2412.11914v2](https://arxiv.org/html/2412.11914v2), dated 2025-02-12, prove exact `u(n)` through `n=21`. Their result does not settle `n=100`.
-- The 2026-10-13 [unit-distance survey](https://eventcompute.com/en/challenges/unit-distances/) still cites 439 as the reported real-plane `n=100` value. It notes that Rodis, [arXiv:2606.29415v2](https://arxiv.org/html/2606.29415v2), explores the rational plane at very large sizes but reports no `n=100` value. Rodis reports AI code-assistant use in code optimization; the paper supplies no competing n=100 construction.
+- `init_program.py` returns all 128 binary vectors in `F_3^7`. This is a valid cap and uses no comparison data.
+- `baseline.py` uses Python's seeded random generator to order candidate points and greedily add each point whose addition preserves the cap property. It has a fixed 100,000-candidate budget by default. `MATHBENCH_SEARCH_SECONDS` enables the shared optional wall-clock cutoff. Search metadata records the seed, fixed budget, actual iteration count, restart count, and whether reference data was read.
+- `human.py` reconstructs the published affine slice from the saved public matrix. `reference.py` loads the fixed point witness.
+- `check.py` validates each coordinate and duplicate, then checks every distinct pair. For a pair `a,b`, the only possible third point is `-a-b` modulo 3. A candidate score field is ignored. The integer arithmetic covers the full domain exactly. No sampling is used.
 
-The current evidence supports a 439-edge reported lower bound and does not prove the maximum. The 439 witness is absent from the sources retrieved for this task. It stays in `best_public` as unreproduced; it is not loaded by any program.
+## Validation performed
 
-## Reproduced human construction
-
-The frozen human baseline uses the `10 × 10` patch
-
-`(i + j/2, sqrt(3) j/2)`, for `0 <= i,j < 10`.
-
-Its three positive unit directions contribute `9*10`, `10*9`, and `9*9` pairs, giving 261. The patch is a direct reconstruction from the triangular lattice generated by `1` and `omega_1` in the paper. It is a weaker same-parameter human construction; it is not presented as the paper's 439 graph.
-
-The saved point list is `data/reference/triangular_grid_10x10.json`, SHA-256 `5be485e67a475c9eb7a4127d9160fd7f928e9ecb241b9592151a31fa4e2e2a56`.
-
-## Exact coordinate and checker method
-
-For the reference, use `alpha=sqrt(3)+sqrt(11)`, which is a root of `x^4-28*x^2+64`. The interval `[5,51/10]` selects exactly one real root. Coordinates are stored as rational coefficient arrays in ascending powers of `alpha`. The identity
-
-`sqrt(3) = (alpha^3 - 20*alpha)/16`
-
-encodes the triangular grid in this field.
-
-The checker validates a primitive irreducible minimal polynomial over `Q`, a Sturm-certified interval with exactly one real root, rational coordinate coefficients, and 100 distinct normalized field elements. It reduces each squared distance modulo the minimal polynomial and counts exact residues equal to 1. It checks every one of the 4,950 unordered pairs. Floating-point tolerances do not appear in scoring.
-
-The field degree is not hard-coded to four. This keeps the task unrestricted by the Moser lattice. Rational coordinate polynomials use only a degree-one field; arbitrary real algebraic point configurations can use another primitive element and irreducible polynomial.
-
-## Programs and separation
-
-- `init_program.py` returns 100 distinct collinear rational points spaced by 2, with score 0. It imports no task module and reads no comparison data.
-- `baseline.py` scans the nine factor pairs of 100 and maximizes the exact edge formula over rectangular triangular-lattice patches. It does not read comparison data.
-- `evolution.py` performs seeded mutation and elitist selection over the same finite family of factor pairs. It is a simple traditional search baseline, not a search over unrestricted point configurations.
-- `human.py` reconstructs the saved 100-point triangular-grid witness with 261 unit-distance pairs.
-- `reference.py` replays that same fixed 100-point construction with 261 unit-distance pairs.
-
-The five programs expose `run_code()` and read `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED`. Search uses fixed iteration counts by default; `MATHBENCH_SEARCH_SECONDS` enables the shared exploration cutoff. The evaluator's standard budgets are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread.
-
-## Reproduction environment and results
-
-Environment: Python 3.13.12, Linux x86_64, repository `.venv`.
+Command:
 
 ```sh
-.venv/bin/python -m pytest tasks/t065 -q
-.venv/bin/python -m json.tool tasks/t065/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/data/source/source_notes.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/data/reference/triangular_grid_10x10.json > /dev/null
+.venv/bin/python -m pytest tasks/t065/test_task.py -q
 ```
 
-Tests passed: `7 passed in 4.12s`. They run all five entries, verify the human witness and independently count the three grid directions, test all 4,950 pair checks, reject repeated points and malformed algebraic inputs, reject bool/float/NaN/infinity coordinates, confirm claimed-score invariance, and exercise worker errors and timeouts. A separate `mathbench.worker` check under the 4-GiB, one-thread, 60-second limit returned objective 261, exact status, 4,950 pairs, and field degree four in 2.10 seconds.
+Result: 16 passed in 4.50 seconds under Python 3.13.12. The suite rebuilds and checks the 236-point matrix slice, independently recalculates its cardinality, validates the simple seed, rejects a collinear triple, duplicate points, wrong shapes, bool, noninteger, out-of-range, NaN, and infinite coordinates, ignores a claimed score, checks the 288-point theorem cutoff, tests seeded search reproducibility and zero-second fallback, and exercises the shared process runner's program-error and timeout handling.
 
-## Status and limitations
+The automated test uses the deterministic local matrix snapshot. No network fetch is performed by tests. The main reviewer must independently replay the human baseline and compare the local source row interpretation against the cited paper and the author's page.
 
-Status remains `accepted_by_sol`. The exact 439 public witness was not retrieved. The 261 human baseline is valid and reproduced at the same `n=100` but is weaker. The source's Moser-lattice search and any search over rational coordinates do not prove a global upper bound for unrestricted real points. The finite factor-pair search in `baseline.py` and `evolution.py` does not cover that full domain.
+## Open items for review
+
+- The exact maximum in `F_3^7` remains unproved. The 288 limit is an upper bound only.
+- The public matrix is projective; the affine witness is the slice with last coordinate 1. Sol should check this extraction convention and the affine no-line proof.
+- The repository's shared evaluator registry has not yet been updated for T065. End-to-end `evaluate(program_path)` testing must follow main-agent integration. This task does not change shared files.

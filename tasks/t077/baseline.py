@@ -1,48 +1,39 @@
-"""Seeded local search from the small set {0,1,3}."""
-
+from mathbench.search import search_deadline, search_steps
+"""Seeded signed-coordinate search; it does not read the human witness."""
 import os
 import random
 import time
+import numpy as np
+from tasks.t077.init_program import run_code as initial
 
-from mathbench.search import search_steps
-from tasks.t077.search_utils import heuristic_score, mutate
+
+def _score(a):
+    mass = float(np.sum(a))
+    if not np.isfinite(mass) or abs(mass) < 1e-12:
+        return float("inf")
+    conv = np.convolve(a, a)
+    return 416.0 * float(np.max(np.abs(conv))) / (mass * mass)
 
 
 def run_code():
-    if os.environ.get("MATHBENCH_CONFIG_ID", "T077-C01") != "T077-C01":
-        raise ValueError("unsupported configuration")
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    iterations = max(1, min(5000, int(os.environ.get("MATHBENCH_BASELINE_ITERATIONS", "500"))))
-    rng = random.Random(seed ^ 0x058BA5E)
-    current = [0, 1, 3]
-    current_score = heuristic_score(current)
-    best, best_score = current[:], current_score
-    completed = accepted = 0
-    start = time.monotonic()
-    for _ in search_steps(iterations):
-        candidate = mutate(current, rng)
-        candidate_score = heuristic_score(candidate)
-        if candidate_score > current_score or (candidate_score == current_score and rng.random() < 0.05):
-            current, current_score = candidate, candidate_score
-            accepted += 1
-        if candidate_score > best_score:
-            best, best_score = candidate, candidate_score
-        completed += 1
-    return {
-        "set": best,
-        "search_metadata": {
-            "algorithm": "seeded one-element replacement/add/remove hill climb with occasional plateau moves",
-            "seed": seed,
-            "iterations_requested": iterations,
-            "iterations_run": completed,
-            "accepted_moves": accepted,
-            "heuristic_score": best_score,
-            "generation_seconds": time.monotonic() - start,
-            "budget": "fixed iterations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds",
-        },
-    }
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T077-C01")
+    if config_id != "T077-C01":
+        raise ValueError("unsupported configuration: " + config_id)
+    rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
+    best = np.asarray(initial()["coefficients"], dtype=np.float64)
+    score = _score(best)
+    deadline = search_deadline()
+    scale = 0.1
+    for _attempt in search_steps(100):
+        cand = best.copy()
+        i, j = rng.sample(range(208), 2)
+        delta = rng.gauss(0.0, scale)
+        cand[i] += delta
+        cand[j] -= delta  # preserve the mass, hence the integral
+        value = _score(cand)
+        if value < score:
+            best, score = cand, value
+            scale = min(0.5, scale * 1.01)
+        else:
+            scale = max(1e-4, scale * 0.999)
+    return {"coefficients": [float(x) for x in best]}

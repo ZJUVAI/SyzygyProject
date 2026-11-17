@@ -1,32 +1,26 @@
 # T043 implementation record
 
-Status: **accepted by Sol on 2026-11-06**. This task has not been admitted to the shared registry.
+Status: **accepted by Sol on 2026-11-06**. The task has not been admitted to the shared registry.
 
-## Fixed model
+## Model and fixed graph
 
-Configuration `T043-C01` fixes `q=2`, ambient dimension 7, subspace dimension 3, and minimum subspace distance 4. The objective is to maximize the number of codewords. For two 3-spaces, distance at least 4 is equivalent to intersection dimension at most 1. The checker takes a list of three 7-bit row masks or a 3 by 7 binary basis matrix for each codeword. It checks rank, canonical span identity, and every pair by exact enumeration over `GF(2)`. It ignores claimed objective fields and returns a fixed `claimed_objective_ignored` detail.
+Configuration `T043-C01` fixes the unweighted undirected graph `gd96a`: 1,096 vertices and 1,676 edges. A solution lists each vertex ID from 1 through 1,096 once. The objective is to minimize the integer sum of `abs(position[u] - position[v])` over every edge.
 
-An independent upper bound follows by counting 2-spaces. The Gaussian binomial coefficient is `[7 choose 2]_2 = (127*126)/(3*2) = 2667`, and `[3 choose 2]_2 = 7`. A valid code cannot repeat a 2-space, so its size is at most `floor(2667/7) = 381`. The 2025 Kurz survey gives a stronger conditional result: `A₂(7,4;3) ≤ 378` or `A₂(7,4;3) = 381`. The value 378 is not an unconditional upper bound.
+The graph comes from Jordi Petit’s MinLA experiment archive at [the official experiments page](https://www.cs.upc.edu/~jpetit/MinLA/Experiments/). The downloaded archive URL is `https://www.cs.upc.edu/~jpetit/MinLA/Experiments/jpetit-extra.tar.gz`. Its path is `CodeJEA/Graphs/gd96a.rmf`. The archive SHA-256 was `69f2b258f866122ed1cd8517ad41c5866940db1a3642db0e1b4e1315715d7621`. The task stores the exact unweighted edge list as [gd96a.rmf](source/gd96a.rmf), SHA-256 `a3f6f97b8c084f41b6312a02544d71b293bfb8e809f627e4c5e7a04495061f4c`. The checker reads the pinned file and rejects a header, edge count, weight, endpoint, loop, or duplicate-edge mismatch.
 
-## Human construction and public status
+The initial program returns the identity permutation. The traditional search baseline uses randomized reverse-Cuthill–McKee traversals and adjacent-swap descent. The evolution program starts from that graph-only search method and uses a seeded simulated-annealing run with vertex swaps. Neither search entry reads the human or reference ordering.
 
-The primary witness is from Heinlein, Kiermaier, Kurz, and Wassermann, “A subspace code of size 333 in the setting of a binary q-analog of the Fano plane,” *Advances in Mathematics of Communications* 13(3) (2019), DOI [10.3934/amc.2019029](https://doi.org/10.3934/amc.2019029). The checked preprint is arXiv v5, dated 2019-03-22. Its first arXiv version is dated 2017-08-21. The paper reports an integer-linear-programming search and prints the orbit representatives and the two generators of `G_{4,6}`. The source does not report AI use, so the records do not claim an unaided hand construction.
+## Human-method baseline and open record
 
-The source TeX provided for the research pass has SHA-256 `26622afb1178db82948f215c7befe73172f8c30338f0632d1ae0786d487f2eb7`. Its Appendix B matrices and Appendix C representatives are extracted into [heinlein_2019_appendix_c.json](source/heinlein_2019_appendix_c.json), whose SHA-256 is `5bcf86a99365ad8eb9971dd6a8a825fd8fb59747d06238d73d779a5e7cd775a1`. The paper encodes a column as `a + 2b + 4c`; the implementation decodes these digits into a 3 by 7 binary matrix, closes each representative under `G_{4,6}`, and confirms the orbit sizes `1^9 2^26 4^68`. It reconstructs 333 distinct spaces. The exact checker then checks all 55,278 pairs. This verifies the lower bound and its score. It does not prove optimality.
+The public MinLA experiment tables and the primary 2011 paper were checked on 2026-11-06. Caprara, Letchford, and Salazar-González, “Decorous Lower Bounds for Minimum Linear Arrangement,” *INFORMS Journal on Computing* 23(1) (2011), [DOI 10.1287/ijoc.1100.0390](https://doi.org/10.1287/ijoc.1100.0390), report a best heuristic cost of 95,242 for `gd96a` in Table 1 and attribute it to Rodriguez-Tello et al. (2008). Table 1 lists the earlier 5,155 lower bound. Table 2 gives the stronger LP lower bound of 77,860 and an 18.3% gap. The original 95,242 ordering was not present in the checked archive or located in the checked sources. It remains a reported result with AI provenance not stated by its source.
 
-For a current source check, the MIPLIB instance page [cdc7-4-3-2](https://miplib.zib.de/instance_details_cdc7-4-3-2.html) states `333 ≤ A₂(7,4;3) ≤ 381` and lists the 333 construction. The Kurz survey [Constructions and bounds for subspace codes](https://doi.org/10.15495/EPub_UBT_00008787) states the conditional 378-or-381 bound and describes this as an open case. No later exact value or 381-code proof was located in these checked sources as of 2026-11-06. This source check is not exhaustive. A direct request to the specialist tables site failed during this check, so the status statement does not treat that page as independently verified.
+The latest source check included the current [Petit upper-bound table](https://www.cs.upc.edu/~jpetit/MinLA/Experiments/upperbounds.html), the [lower-bound table](https://www.cs.upc.edu/~jpetit/MinLA/Experiments/lowerbounds.html), and the 2026 paper [Small boundary: a family of linear-time greedy heuristics for the minimum linear arrangement problem](https://doi.org/10.1007/s10732-026-09604-6). The current upper-bound table lists 96,342 as its best simulated-annealing value and 170,903 as its spectral value for this graph; neither improves on 95,242. The 2026 paper studies another set of 26 large real-world graphs and does not include `gd96a`. No exact optimum or newer same-parameter result was located in these sources. The check is bounded; it does not prove that no later result exists.
 
-## Programs and saved search result
+The fixed human-method reference is a task-local reproduction of spectral sequencing followed by adjacent-swap descent. The source archive’s `spectral` method uses a Fiedler-vector ordering. This implementation uses SciPy’s sparse Laplacian eigensolver with fixed seed 0, then accepts only adjacent swaps that lower the exact MinLA objective. It stops when a sweep finds no improvement, up to 200 sweeps. The resulting ordering has cost **147,653** after 124 sweeps. This is an AI-assisted implementation of a traditional method. The score is not attributed to the source paper, and it is weaker than the reported 95,242 result. The saved ordering is [spectral_adjacent_ordering.json](reference/spectral_adjacent_ordering.json); `reference.py` replays it.
 
-- `init_program.py` returns the coordinate 3-space and does not import task modules or comparison data.
-- `baseline.py` enumerates all 11,811 3-spaces and runs a seeded randomized greedy packing against their 2-space supports. It records requested and actual pass counts and supports `MATHBENCH_SEARCH_SECONDS` through `mathbench.search.search_steps`.
-- `evolution.py` runs independent seeded greedy restarts. It does not read the human witness.
-- `human.py` replays the printed representatives and group action. `reference.py` exposes the fixed replay through `run_code()`.
-- `data/search/randomized_greedy_seed0.json` stores a valid local-search result of size 230, its exact checker result, seed 0, 12 completed greedy passes, and the replay command. This direct local run used Python 3.13.12 on Linux. The process resource limits in the saved run record describe the benchmark defaults; the direct shell replay did not enforce them.
+## Saved search result and verification
 
-The saved search result is a task-generated result. The published 333 witness remains under `data/source/` and is not loaded by the initial program or search programs.
-
-## Validation and pending review
+`data/search/seeded_rcm_adjacent_seed0.json` stores a separate search result with cost **280,285**, seed 0, eight requested and completed starts, and at most 12 adjacent-swap sweeps per start. It includes the exact checker result, local Python/platform details, budget fields, and replay command. The direct local replay did not enforce MathBench process resource limits; official runner defaults remain 300 seconds for generation, 60 seconds for checking, 4 GiB, and one thread.
 
 Commands run:
 
@@ -35,10 +29,12 @@ Commands run:
 .venv/bin/python -m json.tool tasks/t043/task.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/data/bestknown.json > /dev/null
-.venv/bin/python -m json.tool tasks/t043/data/source/heinlein_2019_appendix_c.json > /dev/null
-.venv/bin/python -m json.tool tasks/t043/data/search/randomized_greedy_seed0.json > /dev/null
+.venv/bin/python -m json.tool tasks/t043/data/reference/spectral_adjacent_ordering.json > /dev/null
+.venv/bin/python -m json.tool tasks/t043/data/search/seeded_rcm_adjacent_seed0.json > /dev/null
 ```
 
-The test command passed: **5 passed**. It covers the 333 witness and all 55,278 pairs, an invalid rank, a distance violation, equivalent bases for the same subspace, a Boolean matrix entry, empty code, objective/score/claimed-score invariance, source hash, orbit counts, every `run_code()` entry, and worker error and timeout controls through `mathbench.evaluate._run`.
+The task test command passed: **4 passed**. Tests cover the exact graph hash and counts, the 1,096-element legal reference, an independently recomputed 1,676-edge score, short and empty orderings, duplicate vertices, Boolean, NaN, and out-of-range values, claimed-score invariance, all five `run_code()` entries, and process error/timeout controls through `mathbench.evaluate._run`.
 
-The checker was also run directly on the initial seed (objective 1), the traditional search result (230), and the reconstructed published witness/reference (333). The local test executes the evolution entry with one requested restart and verifies its result. Full `evaluate_candidate("T043", ...)` is deferred until Sol admits the task to the shared registry; the expected missing-ID behavior is not a task failure. There are no known mathematical or reconstruction gaps. Sol review remains required for independent replay, source review, the upper-bound derivation, and acceptance status.
+The local entries produced these verified objectives: identity seed 579,874; randomized RCM search 280,285 for its saved seed; spectral plus adjacent-swap method and reference 147,653. `evolution.py` was also run with a one-step test budget and its permutation passed exact checking. Full `evaluate_candidate("T043", ...)` is deferred until Sol admits the task to the shared registry. The expected missing-ID behavior is not a task failure.
+
+Sol review remains required for an independent graph-source replay, source-date and open-status audit, human reference replay, upper/lower-bound wording, and acceptance status. The 95,242 published ordering and an LP lower-bound certificate are not stored, so the records distinguish those reports from the reproduced reference.

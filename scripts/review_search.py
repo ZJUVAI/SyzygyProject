@@ -20,44 +20,44 @@ from scripts.search import bounded_audit, save
 
 
 QUANTITY_KEYS = {
-    'T101': 'point_count',
-    'T102': 'discrepancy',
-    'T099':'tile_count','T100':'triangle_count','T098':'outer_side','T095':'face_count','T097':'polygon_count','T093':'packed_value','T091':'row_count','T090':'energy','T088':'cutwidth','T087':'minimum_autocorrelation_ratio','T085':'radius','T084':'diameter','T082':'army_size','T081':'distance_ratio','T079':'union_cardinality','T078':'determinant','T075':'edge_count','T076':'largest_element','T074':'area_ratio','T073':'point_count','T072':'max_size','T071':'code_size','T070':'square_count','T069':'tour_cost','T068':'code_size','T067':'code_size',
-    'T066':'three_point_lines',
-    'T065':'unit_pairs',
-    'T064':'steiner_count',
-    'T062':'cardinality',
-    'T061':'edge_count',
-    'T060':'one_count','T058':'round_count','T059':'clique_cardinality','T057':'route_cost','T055':'satisfied_soft_weight','T056':'makespan','T054':'peak_sidelobe','T053':'minimum_factor','T051':'sequence_length','T052':'code_size','T050': 'induced_path_edges',
-    'T049': 'distance_count',
-    'T048': 'comparator_count',
-    'T047': 'difference_basis_size',
-    'T045': 'linear_arrangement_cost',
-    'T044': 'order',
-    'T043': 'code_size',
-    'T042': 'cardinality',
-    'T041': 'sum_sides', 'T040': 'volume',
-    'T039': 'scope',
-    'T038': 'square_count',
-    'T037': 'direction_count', 'T036': 'crossings',
-    'T035': 'point_count',
-    'T034': 'prefix_length',
-    'T033': 'cut_weight',
-    'T032': 'ones',
-    'T030': 'color_count',
-    'T031': 'string_length',
-    'T028': 'makespan', 'T029': 'rank_terms',
-    'T027': 'quadratic_cost',
-    'T026': 'prefix_length',
-    'T025': 'points',
-    'T024': 'edges',
-    'T022': 'vertices', 'T023': 'rows',
-    'T001': 'radius', 'T003': 'sum_radii', 'T005': 'minimum_triangle_area',
-    'T006': 'order', 'T007': 'span', 'T008': 'blocks', 'T009': 'minimum_distance',
-    'T010': 'codewords', 'T011': 'independent_words', 'T013': 'energy',
-    'T014': 'exact_objective', 'T015': 'exact_objective', 'T016': 'exact_objective',
-    'T017': 'maximum_overlap', 'T018': 'absolute_determinant',
-    'T019': 'diameter', 'T020': 'additions',
+    'T024': 'point_count',
+    'T084': 'discrepancy',
+    'T010':'tile_count','T036':'triangle_count','T009':'outer_side','T028':'face_count','T029':'polygon_count','T006':'packed_value','T055':'row_count','T075':'energy','T044':'cutwidth','T079':'minimum_autocorrelation_ratio','T007':'radius','T061':'diameter','T045':'army_size','T023':'distance_ratio','T066':'union_cardinality','T014':'determinant','T037':'edge_count','T062':'largest_element','T018':'area_ratio','T016':'point_count','T072':'max_size','T049':'code_size','T008':'square_count','T096':'tour_cost','T050':'code_size','T048':'code_size',
+    'T022':'three_point_lines',
+    'T021':'unit_pairs',
+    'T026':'steiner_count',
+    'T064':'cardinality',
+    'T035':'edge_count',
+    'T089':'one_count','T057':'round_count','T039':'clique_cardinality','T097':'route_cost','T098':'satisfied_soft_weight','T095':'makespan','T074':'peak_sidelobe','T090':'minimum_factor','T083':'sequence_length','T052':'code_size','T041': 'induced_path_edges',
+    'T020': 'distance_count',
+    'T099': 'comparator_count',
+    'T060': 'difference_basis_size',
+    'T043': 'linear_arrangement_cost',
+    'T031': 'order',
+    'T051': 'code_size',
+    'T063': 'cardinality',
+    'T004': 'sum_sides', 'T015': 'volume',
+    'T059': 'scope',
+    'T056': 'square_count',
+    'T013': 'direction_count', 'T025': 'crossings',
+    'T019': 'point_count',
+    'T068': 'prefix_length',
+    'T042': 'cut_weight',
+    'T034': 'ones',
+    'T038': 'color_count',
+    'T100': 'string_length',
+    'T094': 'makespan', 'T086': 'rank_terms',
+    'T093': 'quadratic_cost',
+    'T067': 'prefix_length',
+    'T065': 'points',
+    'T033': 'edges',
+    'T032': 'vertices', 'T054': 'rows',
+    'T001': 'radius', 'T002': 'sum_radii', 'T017': 'minimum_triangle_area',
+    'T030': 'order', 'T058': 'span', 'T053': 'blocks', 'T046': 'minimum_distance',
+    'T047': 'codewords', 'T040': 'independent_words', 'T073': 'energy',
+    'T076': 'exact_objective', 'T078': 'exact_objective', 'T077': 'exact_objective',
+    'T080': 'maximum_overlap', 'T085': 'absolute_determinant',
+    'T087': 'diameter', 'T088': 'additions',
 }
 
 
@@ -80,37 +80,37 @@ def check_quantity(task, quantity, result):
     assert 'error' not in quantity, quantity
     if task in QUANTITY_KEYS:
         assert Fraction(str(quantity[QUANTITY_KEYS[task]])) == Fraction(str(result['objective']))
-    elif task=='T092':
+    elif task=='T082':
         a,b=map(Fraction,quantity['ratio_interval'])
         lo,hi=map(Fraction,result['details']['objective_interval'])
         assert lo<=a<=b<=hi and objective_number(result)==lo
         assert quantity['fourth_power_ratio']==result['details']['fourth_power_ratio']
         assert quantity['M2']==result['details']['sphere_average_M2']
         assert quantity['M4']==result['details']['sphere_average_M4']
-    elif task in ('T094','T089'):
+    elif task in ('T027','T081'):
         a,b=map(Fraction,quantity['ratio_interval'])
         lo,hi=map(Fraction,result['details']['objective_interval'])
         assert lo<=a<=b<=hi and objective_number(result)==hi
-    elif task=='T083':
+    elif task=='T005':
         import sympy as sp
         lo,hi=map(Fraction,result['details']['objective_interval'])
         exact=sp.sympify(quantity['exact_side'])
         assert exact>=sp.Rational(lo.numerator,lo.denominator) and exact<=sp.Rational(hi.numerator,hi.denominator)
         assert objective_number(result)==hi
         assert hi-lo<Fraction(1,10**40)
-    elif task in ('T077', 'T080'):
+    elif task in ('T070', 'T071'):
         a,b=map(Fraction,quantity['ratio_interval'])
         lo,hi=map(Fraction,result['details']['objective_interval'])
         assert lo<=a<=b<=hi
         assert Fraction(result['objective'])==lo
         assert hi-lo<lo*Fraction(1,10**70)
-    elif task == 'T063':
+    elif task == 'T092':
         a,b=map(Fraction,quantity['mahler_interval'])
         lo,hi=map(Fraction,result['details']['objective_interval'])
         assert lo<=a<=b<=hi
         assert Fraction(result['objective'])==hi
         assert hi-lo<=lo*Fraction(1,10**10)
-    elif task == 'T046':
+    elif task == 'T091':
         lo,hi = map(Fraction,result['details']['objective_interval'])
         if 'exact_supnorm' in quantity:
             a = b = Fraction(quantity['exact_supnorm'])
@@ -120,21 +120,21 @@ def check_quantity(task, quantity, result):
         assert b-a <= hi*Fraction(1,10**10)
         assert Fraction(result['objective']) == hi
         assert hi-lo <= hi*Fraction(1,10**10)
-    elif task == 'T021':
+    elif task == 'T012':
         a, b = map(Fraction, quantity['energy_interval'])
         lo, hi = map(Fraction, result['details']['objective_interval'])
         assert max(a, lo) <= min(b, hi)
         assert Fraction(result['objective']) == hi
         assert hi-lo < Fraction(1, 10**18)
-    elif task == 'T002':
+    elif task == 'T003':
         import sympy as sp
         assert sp.simplify(sp.sympify(quantity['bounding_side']) -
                            sp.sympify(str(result['objective']).replace('sqrt2', 'sqrt(2)'))) == 0
-    elif task == 'T012':
+    elif task == 'T069':
         assert quantity['sumset'] == result['details']['sumset_size']
         assert quantity['difference_set'] == result['details']['difference_set_size']
         assert abs(quantity['ratio'] - float(result['objective'])) < 1e-12
-    elif task == 'T004':
+    elif task == 'T011':
         import mpmath as mp
         with mp.workdps(80):
             angle = mp.mpf(quantity['minimum_angle_80_digits'])

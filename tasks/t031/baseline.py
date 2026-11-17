@@ -1,81 +1,83 @@
-"""Seeded randomized maximum-overlap search over all 7! permutations."""
+"""Seeded search over random simple cubic graphs, without comparison data."""
 
-from itertools import permutations
+from collections import deque
 import os
 import random
 
 from mathbench.search import search_steps
 
 
-ITERATION_LIMIT = 8
+CONFIG_ID = "T031-C01"
+ATTEMPT_LIMIT = 384
+ORDER_CHOICES = tuple(range(14, 95, 2))
 
 
-def _best_successors(current, remaining):
-    """Return unused next permutations with the greatest available overlap."""
-    alphabet = "1234567"
-    for overlap in range(6, -1, -1):
-        prefix = current[-overlap:] if overlap else ""
-        missing = tuple(symbol for symbol in alphabet if symbol not in prefix)
-        choices = [
-            prefix + "".join(tail)
-            for tail in permutations(missing)
-            if prefix + "".join(tail) in remaining
-        ]
-        if choices:
-            return overlap, choices
-    return -1, []
+def _random_cubic_graph(order, rng):
+    stubs = [vertex for vertex in range(order) for _ in range(3)]
+    rng.shuffle(stubs)
+    edges = set()
+    adjacency = [set() for _ in range(order)]
+    for index in range(0, len(stubs), 2):
+        left, right = stubs[index : index + 2]
+        if left == right:
+            return None
+        edge = (min(left, right), max(left, right))
+        if edge in edges:
+            return None
+        edges.add(edge)
+        adjacency[left].add(right)
+        adjacency[right].add(left)
+    if any(len(neighbors) != 3 for neighbors in adjacency):
+        return None
 
-
-def _greedy_word(all_permutations, rng):
-    remaining = set(all_permutations)
-    current = rng.choice(all_permutations)
-    remaining.remove(current)
-    word = current
-    while remaining:
-        chosen_overlap, choices = _best_successors(current, remaining)
-        if not choices:
-            raise RuntimeError("no unused permutation successor")
-        current = rng.choice(choices)
-        remaining.remove(current)
-        word += current[chosen_overlap:]
-    return word
+    for source in range(order):
+        distances = [-1] * order
+        distances[source] = 0
+        queue = deque([source])
+        while queue:
+            current = queue.popleft()
+            for neighbor in adjacency[current]:
+                if distances[neighbor] == -1:
+                    distances[neighbor] = distances[current] + 1
+                    if distances[neighbor] > 5:
+                        return None
+                    queue.append(neighbor)
+        if -1 in distances:
+            return None
+    return {"n": order, "edges": [list(edge) for edge in sorted(edges)]}
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T031-C01")
-    if config_id != "T031-C01":
+    config_id = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
+    if config_id != CONFIG_ID:
         raise ValueError("unsupported configuration id")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = random.Random(seed)
-    all_permutations = ["".join(p) for p in permutations("1234567")]
-    best_word = None
-    best_length = None
-    iterations = 0
-    steps = iter(search_steps(ITERATION_LIMIT))
-    for _ in range(ITERATION_LIMIT):
-        if next(steps, None) is None:
-            break
-        candidate = _greedy_word(all_permutations, rng)
-        iterations += 1
-        if best_length is None or len(candidate) < best_length:
-            best_word, best_length = candidate, len(candidate)
-    if best_word is None:
-        # A zero-second exploration budget still returns a valid construction.
-        best_word = "".join(all_permutations)
-        best_length = len(best_word)
+    best = {"n": 1, "edges": []}
+    attempts = 0
+    accepted = 0
+    for _ in search_steps(ATTEMPT_LIMIT):
+        order = rng.choice(ORDER_CHOICES)
+        candidate = _random_cubic_graph(order, rng)
+        attempts += 1
+        if candidate is not None:
+            accepted += 1
+            if order > best["n"]:
+                best = candidate
     return {
-        "word": best_word,
-        "claimed_objective": best_length,
+        **best,
+        "claimed_objective": best["n"],
         "search_metadata": {
-            "algorithm": "seeded randomized maximum-overlap greedy path through all permutations",
+            "algorithm": "seeded configuration-model sampling of simple cubic graphs; exact BFS rejects disconnected graphs and diameter above 5",
             "configuration_id": config_id,
             "seed": seed,
-            "iterations": iterations,
-            "iteration_limit": ITERATION_LIMIT,
+            "attempts": attempts,
+            "attempt_limit": ATTEMPT_LIMIT,
+            "accepted_candidates": accepted,
             "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
-            "reference_data_read": False,
+            "comparison_data_read": False,
             "budget": {
-                "iteration_limit": ITERATION_LIMIT,
+                "attempt_limit": ATTEMPT_LIMIT,
                 "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
             },
         },

@@ -1,26 +1,11 @@
-"""Rebuild Fredricksen and Sweet's published symmetric partition of [1,536]."""
+"""Rebuild an orthogonal coordinate-grid triangulation from the public input."""
+import os
 
-import json
-from pathlib import Path
+from tasks.t026.grid_method import build_grid
 
 
 def run_code():
-    data_path = Path(__file__).parent / "data" / "fredricksen_sweet_536_halfsets.json"
-    payload = json.loads(data_path.read_text())
-    n = payload["n"]
-    modulus = payload["modulus"]
-    exceptional = set(payload["exceptional_elements"])
-    colors = [None] * n
-    for color, representatives in enumerate(payload["representatives"]):
-        for value in representatives:
-            for member in (value, modulus - value):
-                if member in exceptional and member != value:
-                    continue
-                if not 1 <= member <= n:
-                    raise ValueError("representative expands outside [1,n]")
-                if colors[member - 1] is not None:
-                    raise ValueError("overlapping representative sets")
-                colors[member - 1] = color
-    if any(color is None for color in colors):
-        raise ValueError("published representative sets do not cover [1,n]")
-    return {"n": n, "colors": colors}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T026-C01") != "T026-C01":
+        raise ValueError("unsupported T026 configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    return build_grid(0)

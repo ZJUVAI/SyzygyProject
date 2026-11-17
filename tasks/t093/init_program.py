@@ -1,11 +1,12 @@
-"""Standalone legal cold start: select no items."""
-
+"""Simple identity seed for T093-C01; no reference witness is read."""
 import os
 
-# EVOLVE-BLOCK-START
+
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T093-C01")
-    if chosen != "T093-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    return {"item_indices": [], "x_translations": [], "y_translations": []}
-# EVOLVE-BLOCK-END
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T093-C01") != "T093-C01":
+        raise ValueError("unsupported T093 configuration")
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    # EVOLVE-BLOCK-START
+    permutation = list(range(256))
+    # EVOLVE-BLOCK-END
+    return {"permutation": permutation}

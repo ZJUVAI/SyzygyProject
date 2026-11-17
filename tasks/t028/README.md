@@ -1,25 +1,61 @@
-# T028：Taillard Ta051 排列流水车间
+# T028: 固定 500 点集的最少凸分割
 
-## 中文
+## 定义
 
-本任务固定 Taillard Ta051：50 个作业、20 台机器。每个作业都按相同机器顺序加工。候选须提交所有机器共用的一条作业排列。任务不接受非排列调度。目标是最小化最大完工时间（makespan）。
+本配置使用 CG:SHOP 2020 固定实例 uniform-0000500-1。实例含 500 个平面整数点。分割由输入点之间的直线段组成。每个输入点都是图顶点。凸包内部被若干空凸多边形覆盖，多边形内部互不相交。目标是最小化有界面数。
 
-候选输入为 `data/ta051.json`，其中只有 20×50 的正整数加工时间矩阵。矩阵行对应机器，列对应作业编号减一。评测器用整数递推独立计算所有完工时间，并忽略候选声明的分数。官方 Taillard 原始数据副本和当前上下界表保存在 `data/source/`，不属于候选输入白名单。
+这里的“空”表示多边形内部不含输入点。检查器也拒绝边穿过非端点输入点。所有输入坐标从官方 JSON 以十进制精确解析为整数，不用浮点容差。
 
-Eric Taillard 的官方页面列出 Ta051 同参数的下界 3771 和上界 3846。该表注明仅允许排列调度，并标记上界来源为 Va、下界来源为 Taillard。Taillard 页面把该界列为截至 2026-06-03 的当前记录。上界见证采用 Ravetti、Riveros、Mendes、Resende、Pardalos 2012 年公布的排列。独立地用官方矩阵复算得到 makespan 3846。这个见证是可行构造，不是最优性证明；当前区间为 3771 至 3846。
+检查器核对边端点、重复边、自环、穿点、交叉、图连通性、顶点度、凸包边界、所有有界面和面积覆盖。它从平面嵌入的有向边精确遍历面。每个有界面必须是简单凸多边形且内部无输入点。有界面面积和必须与凸包面积相等。成绩是独立重算的有界面数。
 
-Olivier Brunner 的 Zenodo v8 数据集（2026-01-16）也记录 Ta051 的上界见证。该记录后来更新到 v11（2026-07-31）；v11 页面警告应谨慎解释 `Optimal` 字段。本任务不依据该字段判断最优性，而以 Taillard 官方界表和 Gmys 2022 年论文的 Ta051 仍开放结论核对状态。若发现新的更优见证或最优性证明，应更新记录并重新审查配置。
+## 构造与公开结果
 
-状态：已通过 Sol 验收（2026-11-06）。
+固定公开解文件含 770 条边。精确检查得 271 个有界凸面。Euler 公式也给出 (770-500+1=271)。归档只记录时间，不写算法、求解者或 AI 贡献，因此这些来源信息标为未披露。271 是可行解，不是最优性证明。
 
-## English
+冻结的人类方法基线采用 SoCG 2020 论文第 2.2 节记载的传统方法：先做 Delaunay 三角剖分，再随机删除仍保持凸面的边。本地版本由 AI 协助实现，使用确定性次序合并凸并集，得到 384 个面。它不是论文代码或论文成绩的逐字复现，也不是公开纪录。
 
-This task fixes Taillard Ta051 with 50 jobs and 20 machines. Every job uses the same machine order. A candidate must return one job permutation for all machines. Non-permutation schedules are invalid. The objective is to minimize the makespan.
+Hadrien Cambazard 的项目页面称 100 点实例可解到最优，并说明模型下界可计算到 300 点。页面没有给这个 500 点实例的最优性证明。来源检查截止 2026-11-06。
 
-The candidate input is `data/ta051.json`. It contains only the 20 by 50 positive integer processing-time matrix. Rows index machines. Columns index job labels minus one. The evaluator recomputes all completion times with integer arithmetic and ignores any score claimed by the candidate. A copy of Taillard's original data and the current bounds table is in `data/source/`. These files are outside the candidate input allowlist.
+## 来源与文件
 
-Eric Taillard's official page lists a same-instance lower bound of 3771 and upper bound of 3846 for Ta051. The page says that only permutation schedules are allowed. It credits Va for the upper bound and Taillard for the lower bound. The page labels these as the current bounds as of 2026-06-03. The upper-bound witness is a permutation published by Ravetti, Riveros, Mendes, Resende, and Pardalos in 2012. An independent replay on Taillard's official matrix gives makespan 3846. This witness proves feasibility, not optimality. The current interval is 3771 to 3846.
+- [CG:SHOP 2020 输入实例](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip)
+- [CG:SHOP 2020 最佳解归档](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip)
+- [Eder, Held, de Lorenzo, and Palfrader, SoCG 2020](https://doi.org/10.4230/LIPIcs.SoCG.2020.85), section 2.2
+- [Cambazard, Minimum convex partition problem](https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html)
 
-Olivier Brunner's Zenodo v8 dataset (2026-01-16) also records the Ta051 upper-bound witness. The record was later updated to v11 (2026-07-31). Its page warns readers to use caution with the `Optimal` field. This task does not use that field to establish optimality. It cross-checks the open status against Taillard's official bounds table and Gmys's 2022 paper, which reports Ta051 as still open. Update the records and review the configuration if a better witness or an optimality proof is found.
+原始实例与 770 边解分别保存在 data/source 和 data/reference；SHA-256 与来源状态保存在 data/source/source_notes.json。
 
-Status: accepted by Sol on 2026-11-06.
+## 运行
+
+使用 .venv/bin/python。init_program.py、baseline.py、human.py、reference.py 和 evolution.py 都提供 run_code()。默认生成预算 300 秒，验证预算 60 秒，内存 4 GiB，单线程。
+
+# T028: Minimum convex partition of a fixed set of 500 points
+
+## Definition
+
+This configuration uses the fixed CG:SHOP 2020 instance uniform-0000500-1. It has 500 integer points in the plane. A partition uses straight segments between input points. Every input point is a graph vertex. Empty convex polygons cover the convex hull with pairwise disjoint interiors. The objective is to minimize the number of bounded faces.
+
+Empty means that no input point lies in a polygon interior. The checker also rejects an edge that passes through an input point that is not one of its endpoints. It reads the official coordinate literals as exact decimals and converts them to integers. It uses no floating-point tolerance.
+
+The checker validates endpoint ids, repeated edges, self-loops, points on edges, crossings, graph connectivity, vertex degree, hull boundary edges, every bounded face, and total area. It traverses the planar embedding using directed edges. Each bounded face must be a simple convex polygon with no input point in its interior. The sum of face areas must equal the convex-hull area. The checker recomputes the bounded-face count.
+
+## Constructions and public result
+
+The pinned public solution has 770 edges. Exact checking gives 271 bounded convex faces. Euler's formula also gives 770-500+1=271. The archive records a timestamp but gives no solver, method, or AI provenance. These details are marked undisclosed. The value 271 is feasible; it is not an optimality proof.
+
+The frozen human-method baseline follows the traditional method described in section 2.2 of the SoCG 2020 paper: start with a Delaunay triangulation, then remove edges while preserving convexity. The local implementation was built with AI assistance and uses deterministic ordering to merge convex unions. It gives 384 faces. This is not the authors' code or reported score, and it is not a published record.
+
+Hadrien Cambazard's project page states that 100-point data sets can be solved to optimality and reports lower bounds up to 300 points. It gives no proof of optimality for this 500-point instance. The source check is dated 2026-11-06.
+
+## Sources and data
+
+- [CG:SHOP 2020 input instances](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip)
+- [CG:SHOP 2020 best-solution archive](https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip)
+- [Eder, Held, de Lorenzo, and Palfrader, SoCG 2020](https://doi.org/10.4230/LIPIcs.SoCG.2020.85), section 2.2
+- [Cambazard, Minimum convex partition problem](https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html)
+
+The original instance and the 770-edge solution are saved under data/source and data/reference. Their SHA-256 hashes and source status are in data/source/source_notes.json.
+
+## Run
+
+Use .venv/bin/python. init_program.py, baseline.py, human.py, reference.py, and evolution.py expose run_code(). Default budgets are 300 seconds for generation and 60 seconds for verification, 4 GiB of memory, and one thread.

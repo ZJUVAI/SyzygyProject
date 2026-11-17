@@ -1,15 +1,16 @@
-"""Self-contained simple seed: the coordinate 3-space in F_2^7."""
+"""Self-contained identity ordering for gd96a."""
+
 import os
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T043-C01") != "T043-C01":
         raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))  # Read the fixed runner seed; this seed is deterministic.
+    int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    codewords = [[1, 2, 4]]
+    ordering = list(range(1, 1097))
     # EVOLVE-BLOCK-END
-    return {"codewords": codewords, "objective": 1}
+    return {"ordering": ordering}
 
 
 if __name__ == "__main__":

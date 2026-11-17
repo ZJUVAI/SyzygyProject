@@ -2,23 +2,84 @@
 
 Status: accepted by Sol on 2026-11-06.
 
-## Configuration and sources
+## Fixed objective and domain
 
-- Configuration: `T023-C01`, CA(4; 20, 2). Minimize rows.
-- NIST's downloadable IPOG-F witness has 65 rows and is replayed by `human.py`. The source's dash entries are completed as zero and the completed binary array passes exact checking.
-- The frozen Colbourn table (November 2024) reports a 39-row construction, listed as Hadamard (Colbourn-Keri) with NCK postoptimization. The linked table does not include a witness.
-- Lower bound: 32. Deleting columns gives a 13-column strength-four CA, and Izquierdo-Marquez and Torres-Jimenez prove CAN(4,13,2)=32 in arXiv:1711.10040v2. Thus 32 <= CAN(4,20,2) <= 39.
-- An exact-parameter source search located the 39-row upper bound but no proof that CAN(4,20,2) is exact. This is a bounded survey, not a complete literature review.
+`T023-C01` uses 12 distinct points in the plane and minimizes the exact ratio
+of the largest squared pair distance to the smallest squared pair distance.
+The formal candidate domain is all of `Q^2` with no coordinate or coefficient
+bound. Since rational points are dense and the objective is continuous around
+every 12-point set with positive separation, the infimum over rational point
+sets equals the infimum over all real point sets. The input is 12 pairs of
+integers or rational strings. The checker recomputes all 66 squared distances
+and returns an exact rational objective. Candidate claims are ignored.
 
-## Replay and checks
+## Sources and construction
 
-- Human witness: `data/nist_ca_t4_v2_k20.txt`, SHA-256 `fd79ad1d35cdcbf6a8f594ffc7aab18abd6358e3722cad78039559223de4a12c`.
-- Exact checker: enumerate 4,845 four-column sets and all 16 binary patterns. Candidate score claims are ignored.
-- Cold seed: all 20-bit vectors with Hamming weight at most four. There are 6,196 rows. For any four columns and target pattern, choose the support of its 1 entries and set every other column to zero; that row is in the seed.
-- Classical baseline: 256 seeded random rows, exact uncovered-pattern repair, then seeded greedy deletion. It keeps exact projection-pattern counts and uses compact unsigned-integer storage. `MATHBENCH_SEED` controls order; `search_steps` fixes the default iteration count and supports the shared optional time cutoff. The fixed-seed replay with seed 7 returned 96 rows in 4.064 s; exact verification took 0.095 s on Python 3.13.12, Linux x86_64. The simple seed returned 6,196 rows and passed exact verification in 0.472 s. It does not read human or reference files.
-- Evolution entry point delegates to the task search baseline and does not read reference data.
-- Run `.venv/bin/python -m pytest tasks/t023/test_task.py -q` for legal and damaged arrays, duplicates, malformed rows, exceptional values, score-claim ignoring, and upper-bound rejection.
+Friedman's current max/min page lists the n=12 report `r^2 = 5+2*sqrt(3)`
+and credits Ingo Rechenberg (2006). The captured page and diagram are:
 
-## Limits
+- `data/source/index.html`, 5,862 bytes, SHA-256
+  `2e4558ef1115ba5ca203fb0474a9dc8e4eb39558ff0c76e74e8feec84e98658e`.
+- `data/source/mm12.gif`, 9,218 bytes, SHA-256
+  `3b7ecd7f25e1253479bc997869642631a5c2c3a4ebba8e5f3de3b8d6e4a75c09`.
 
-The Colbourn 39-row witness is not reproduced. The NIST source generator is not rerun. The exact 20-column optimum remains unknown in the cited sources. Full runner process-error and timeout checks are part of Sol's shared-runner acceptance.
+The source page gives a diagram and exact reported value, but it does not give
+coordinate strings. The local human program independently reconstructs the
+pictured 12-point pattern by the formula documented in `README.md`. Exact
+arithmetic in `Q(sqrt(3))` gives minimum squared distance 1, maximum squared
+distance `5+2*sqrt(3)`, and 21 minimum-distance pairs.
+
+The frozen candidate replaces `sqrt(3)` with
+`floor(10^63*sqrt(3))/10^63`. `isqrt(3*10^126)` computes this numerator and
+proves the two strict rational bounds. The exact rational checker gives:
+
+- objective: `33856406460551018348219570732046978935542442030483045024446455830434458106192147637714398026789709384238645547380720042905106441/3999999999999999999999999999999999999999999999999999999999999998434458106192147637714398026789709384238645547380720042905106441`;
+- minimum squared distance: `3999999999999999999999999999999999999999999999999999999999999998434458106192147637714398026789709384238645547380720042905106441/4000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`;
+- maximum squared distance: `33856406460551018348219570732046978935542442030483045024446455830434458106192147637714398026789709384238645547380720042905106441/4000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`.
+
+The rational objective is strictly larger than `5+2*sqrt(3)`. The source
+diagram reconstruction and the rational witness are kept distinct. The
+compatibility reference is the positive JSON number `8.464101615137755`,
+rounded upward from the exact rational witness objective.
+
+The 2026-11-06 Friedman page still lists this n=12 value as the smallest known.
+AlphaEvolve's 2025 v1 paper, Problem 6.50, lists exact values through n=8 and
+describes the n=9 through n=30 values as numerical candidates. The exact
+minimum for 12 points is open in the sources checked; the reported value is an
+upper bound, not a proof of optimality.
+
+## Programs and saved baseline
+
+- `init_program.py` returns a 4 by 3 grid with objective 13.
+- `baseline.py` runs 12,000 seeded simulated-annealing moves on the rational
+  grid with denominator 64. It uses integer squared distances to rank moves
+  and reads no comparison witness.
+- `human.py` builds the rational reconstruction directly from its formula.
+- `reference.py` loads the frozen rational points.
+- `evolution.py` invokes the baseline search.
+
+The seed-0 search took 1.69 seconds on Python 3.13.12 / Linux and returned the
+exact ratio `48625/5274`. The witness and run metadata are in
+`data/search/seed-0.json` and `data/search/seed-0.metadata.json`. The recorded runner budget
+is 300 seconds generation, 60 seconds verification, 4 GiB, and one thread.
+
+## Tests
+
+Command:
+
+```sh
+.venv/bin/python -m pytest tasks/t023/test_task.py -q
+```
+
+The tests cover all five program entries, exact Q(sqrt(3)) extrema, local
+rational witness values, source hashes, invalid shapes and coordinates,
+duplicate points, a 5,001-digit coordinate, ignored score claims, repeatable
+seeds, and runner errors and timeouts through `mathbench.evaluate._run`.
+Result: 16 passed in 5.70 seconds. All task and witness JSON files parse.
+`git diff --check` passes.
+
+## Sources checked on 2026-11-06
+
+- Erich Friedman, [Minimizing the Ratio of Maximum to Minimum Distance](https://erich-friedman.github.io/packing/maxmin/), n=12 entry and `mm12.gif`.
+- Ingo Rechenberg, “Point configurations with minimal distance ratio,” 2006, cited in [AlphaEvolve v1](https://arxiv.org/html/2511.02864v1), reference 237.
+- Georgiev, Gómez-Serrano, Tao, and Wagner, [Mathematical exploration and discovery at scale](https://arxiv.org/abs/2511.02864), v1 dated 2025-11-03, Problem 6.50.

@@ -1,2 +1,3 @@
-"""Fixed best reproduced public witness; excluded from model starting context."""
-from tasks.t032.human import run_code
+"""Fixed public reference witness, stored as task-local data."""
+
+from tasks.t032.human import run_code as run_code

@@ -1,3 +1,2 @@
-"""Runner entry point for the task's traditional search baseline."""
-
+"""Task-local EVOLVE entry point."""
 from tasks.t034.baseline import run_code

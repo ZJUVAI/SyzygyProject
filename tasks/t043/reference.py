@@ -1,16 +1,19 @@
-"""Fixed replay entry for the verified published human construction."""
+"""Fixed verified replay of the reconstructed spectral-search baseline."""
 
+import json
 import os
+from pathlib import Path
 
-from tasks.t043.human import run_code as reconstruct_published_code
+DATA = Path(__file__).resolve().parent / "data" / "reference" / "spectral_adjacent_ordering.json"
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T043-C01") != "T043-C01":
         raise ValueError("unsupported configuration")
     int(os.environ.get("MATHBENCH_SEED", "0"))
-    return reconstruct_published_code()
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    return {"ordering": data["ordering"], "reference_metadata": data["provenance"]}
 
 
 if __name__ == "__main__":
-    print(run_code())
+    print(json.dumps(run_code()))

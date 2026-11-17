@@ -71,23 +71,23 @@ def audit(task_ids):
             checked = checker.validate(solution, config, strict=True)
             # Independently compute at least one mathematical quantity.
             quantity = independent_quantity(tid, solution, config)
-            key = {'T099':'tile_count','T100':'triangle_count','T098':'outer_side','T095':'face_count','T097':'polygon_count','T093':'packed_value','T091':'row_count','T090':'energy','T088':'cutwidth','T087':'minimum_autocorrelation_ratio','T085':'radius','T084':'diameter','T082':'army_size','T081':'distance_ratio','T079':'union_cardinality','T078':'determinant','T075':'edge_count','T076':'largest_element','T074':'area_ratio','T073':'point_count','T072':'max_size','T071':'code_size','T070':'square_count','T069':'tour_cost','T068':'code_size','T067':'code_size','T066':'three_point_lines','T065':'unit_pairs','T064':'steiner_count','T062':'cardinality','T061':'edge_count','T060':'one_count','T058':'round_count','T059':'clique_cardinality','T057':'route_cost','T055':'satisfied_soft_weight','T056':'makespan','T054':'peak_sidelobe','T053':'minimum_factor','T051':'sequence_length','T052':'code_size','T050':'induced_path_edges','T049':'distance_count','T048':'comparator_count','T047':'difference_basis_size','T045':'linear_arrangement_cost','T044':'order','T043':'code_size','T042':'cardinality','T041':'sum_sides','T040':'volume','T039':'scope','T038':'square_count','T035':'point_count','T036':'crossings','T037':'direction_count','T034':'prefix_length','T032':'ones','T033':'cut_weight','T031':'string_length','T030':'color_count','T028':'makespan','T029':'rank_terms','T027':'quadratic_cost','T026':'prefix_length','T025':'points','T024':'edges','T022':'vertices','T023':'rows','T001':'radius','T003':'sum_radii','T005':'minimum_triangle_area',
-                   'T006':'order','T007':'span','T012':'ratio','T008':'blocks',
-                   'T009':'minimum_distance','T010':'codewords','T013':'energy',
-                   'T014':'exact_objective','T015':'exact_objective','T016':'exact_objective',
-                   'T017':'maximum_overlap','T011':'independent_words','T018':'absolute_determinant',
-                   'T019':'diameter','T020':'additions'}.get(tid)
+            key = {'T010':'tile_count','T036':'triangle_count','T009':'outer_side','T028':'face_count','T029':'polygon_count','T006':'packed_value','T055':'row_count','T075':'energy','T044':'cutwidth','T079':'minimum_autocorrelation_ratio','T007':'radius','T061':'diameter','T045':'army_size','T023':'distance_ratio','T066':'union_cardinality','T014':'determinant','T037':'edge_count','T062':'largest_element','T018':'area_ratio','T016':'point_count','T072':'max_size','T049':'code_size','T008':'square_count','T096':'tour_cost','T050':'code_size','T048':'code_size','T022':'three_point_lines','T021':'unit_pairs','T026':'steiner_count','T064':'cardinality','T035':'edge_count','T089':'one_count','T057':'round_count','T039':'clique_cardinality','T097':'route_cost','T098':'satisfied_soft_weight','T095':'makespan','T074':'peak_sidelobe','T090':'minimum_factor','T083':'sequence_length','T052':'code_size','T041':'induced_path_edges','T020':'distance_count','T099':'comparator_count','T060':'difference_basis_size','T043':'linear_arrangement_cost','T031':'order','T051':'code_size','T063':'cardinality','T004':'sum_sides','T015':'volume','T059':'scope','T056':'square_count','T019':'point_count','T025':'crossings','T013':'direction_count','T068':'prefix_length','T034':'ones','T042':'cut_weight','T100':'string_length','T038':'color_count','T094':'makespan','T086':'rank_terms','T093':'quadratic_cost','T067':'prefix_length','T065':'points','T033':'edges','T032':'vertices','T054':'rows','T001':'radius','T002':'sum_radii','T017':'minimum_triangle_area',
+                   'T030':'order','T058':'span','T069':'ratio','T053':'blocks',
+                   'T046':'minimum_distance','T047':'codewords','T073':'energy',
+                   'T076':'exact_objective','T078':'exact_objective','T077':'exact_objective',
+                   'T080':'maximum_overlap','T040':'independent_words','T085':'absolute_determinant',
+                   'T087':'diameter','T088':'additions'}.get(tid)
             if key:
-                if tid == 'T012':
+                if tid == 'T069':
                     assert math.isclose(float(checked['objective']), quantity[key], rel_tol=1e-14)
                 else:
                     assert Fraction(str(checked['objective'])) == Fraction(str(quantity[key]))
-            elif tid in ('T094', 'T092', 'T089', 'T083', 'T021', 'T046', 'T063', 'T077', 'T080', 'T101', 'T102'):
+            elif tid in ('T027', 'T082', 'T081', 'T005', 'T012', 'T091', 'T092', 'T070', 'T071', 'T024', 'T084'):
                 from scripts.review_search import check_quantity
                 check_quantity(tid, quantity, result)
-            elif tid == 'T004':
+            elif tid == 'T011':
                 assert math.isclose(checked['objective'], float(quantity['minimum_angle_80_digits']), rel_tol=1e-14)
-            elif tid == 'T002':
+            elif tid == 'T003':
                 import sympy as sp
                 assert sp.simplify(sp.sympify(str(checked['objective']).replace('sqrt2','sqrt(2)')) - sp.sympify(quantity['bounding_side'])) == 0
             assert same_exact_value(checked['objective'], record['reproduced_value']), f'{cid}: reproduced_value must equal the exact checker output'

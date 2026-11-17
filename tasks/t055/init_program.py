@@ -1,46 +1,44 @@
-"""Build a hard-satisfying seed with SymPy's classic DPLL implementation.
-
-This entry is self-contained: it reads only the public WCNF input, not task
-modules or comparison witnesses.
-"""
-
+"""Standalone random-greedy F_2^14 seed; it uses no BCH or comparison assets."""
 import os
-import gzip
-from pathlib import Path
+import random
 
 
-INSTANCE = Path(__file__).parent / "data" / "source" / "b4794d123e18a908924d3d33cdeeae3b.wcnf.gz"
-VARIABLES = 1630
-
-
-def _hard_clauses():
-    clauses = []
-    for raw_line in gzip.decompress(INSTANCE.read_bytes()).decode("utf-8").splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("c") or line.startswith("%"):
+def _labels(dimension, seed):
+    rng = random.Random(seed)
+    chosen = []
+    blocked = {0}
+    proposed = 0
+    while len(chosen) < 63:
+        value = rng.randrange(1, 1 << dimension)
+        proposed += 1
+        if value in blocked:
             continue
-        fields = line.split()
-        if fields[0] == "h":
-            clauses.append([int(literal) for literal in fields[1:-1]])
-    if len(clauses) != 6150:
-        raise ValueError("unexpected hard-clause count")
-    return clauses
+        old = chosen
+        blocked.add(value)
+        for a in old:
+            blocked.add(value ^ a)
+        for i, a in enumerate(old):
+            for b in old[i + 1:]:
+                blocked.add(value ^ a ^ b)
+        chosen.append(value)
+    return chosen, proposed
+
+
+def _rows(labels, dimension):
+    rows = []
+    for linear_form in range(1 << dimension):
+        row = 0
+        for j, label in enumerate(labels):
+            row |= ((linear_form & label).bit_count() & 1) << j
+        rows.append(row)
+    if len(set(rows)) != 1 << dimension:
+        raise RuntimeError("the labels do not span the full row space")
+    return rows
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T055-C01") != "T055-C01":
         raise ValueError("unsupported configuration")
-    int(os.environ.get("MATHBENCH_SEED", "0"))
-    # EVOLVE-BLOCK-START
-    from sympy.logic.algorithms.dpll2 import SATSolver
-
-    clauses = _hard_clauses()
-    model = next(SATSolver(clauses, set(range(1, VARIABLES + 1)), set(), heuristic="vsids")._find_model())
-    assignment = [bool(model[index]) for index in range(1, VARIABLES + 1)]
-    # EVOLVE-BLOCK-END
-    return {"assignment": assignment}
-
-
-if __name__ == "__main__":
-    import json
-    print(json.dumps(run_code()))
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    labels, _ = _labels(14, seed)
+    return {"rows": _rows(labels, 14)}

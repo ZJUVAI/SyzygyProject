@@ -1,53 +1,156 @@
 {
+  "task_id": "T095",
+  "review_status": "accepted_by_sol",
   "configurations": {
     "T095-C01": {
       "program": "reference.py",
-      "reproduced_value": 271,
-      "public_value": 271,
+      "reproduced_value": 2006,
+      "public_value": 2006,
+      "best_human": {
+        "value": 2006,
+        "source": {
+          "title": "Parallel implementation of GES",
+          "authors": "O. V. Shylo and M. P. Pardalos",
+          "year": 2008,
+          "url": "https://www.optimizizer.com/infoUB.php?UB=2006&name=ta41&problemclass=ta",
+          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta",
+          "algorithm_source": "Parallel global equilibrium search"
+        },
+        "ai_provenance": "Not stated by the source.",
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "evidence_state": "published makespan; the listed machine sequences are downloaded and independently rechecked"
+      },
+      "best_public": {
+        "value": 2006,
+        "source": {
+          "url": "https://www.optimizizer.com/TA.php",
+          "last_update": "2026-10-18",
+          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta"
+        },
+        "reproduction_status": "downloaded schedule independently verified against the official instance",
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "evidence_state": "published upper-bound schedule downloaded and independently checked against the official Taillard instance"
+      },
+      "best_reproduced": {
+        "value": 2006,
+        "program": "reference.py",
+        "witness": "data/reference/ta41_2006_schedule.json",
+        "reproduction_status": "exact checker recomputes makespan 2006",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "witness_sha256": "d3760f7a46266d9da02920433f027645056704d76fb423846414ca9d275c58ed",
+        "review_status": "reviewed_by_sol"
+      },
       "highest_reported": {
-        "value": 271,
-        "source": "CG:SHOP 2020 best_solutions.zip, uniform-0000500-1.solution.json",
-        "reproduction_status": "Pinned archive witness with 770 edges passes the exact checker and gives 271 bounded faces. Archive metadata does not identify the producing solver or prove optimality."
+        "value": 2006,
+        "source": {
+          "title": "Parallel implementation of GES",
+          "authors": "O. V. Shylo and M. P. Pardalos",
+          "year": 2008,
+          "url": "https://www.optimizizer.com/TA.php",
+          "snapshot_date": "2026-11-06"
+        },
+        "reproduction_status": "reported upper-bound schedule downloaded and independently verified"
       },
-      "source": {
-        "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
-        "input_url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip",
-        "checked_at": "2026-11-06"
+      "reported_lower_bounds": {
+        "current_page_value": 1912,
+        "source": "https://doi.org/10.2139/ssrn.4938242",
+        "2025_solver_value": 1915,
+        "2025_source": "https://arxiv.org/abs/2504.16106",
+        "2025_status": "numerical solver lower bound, not a formal proof per the authors"
       },
-      "parameters": {
-        "instance": "uniform-0000500-1",
-        "point_count": 500,
-        "input_coordinates": "exact integer coordinates",
-        "partition": "straight-line planar graph; all input points are vertices; bounded faces are empty convex polygons",
-        "objective": "minimize number of internal convex faces"
-      },
-      "optimality_status": "Open: the pinned witness gives a feasible value of 271. No proof of optimality for this 500-point instance was found in checked sources through 2026-11-06.",
-      "review_status": "accepted_by_sol",
+      "optimality_status": "open",
       "verification": {
-        "status": "reviewed_by_sol",
-        "reviewer": "Sol main agent",
-        "date": "2026-11-06",
+        "task_id": "T095",
+        "status": "pending_source_review",
         "run": {
           "task_id": "T095",
           "config_id": "T095-C01",
           "validity": 1.0,
-          "combined_score": 1.4169741697416973,
-          "objective": 271,
+          "combined_score": 1.6430707876370887,
+          "objective": 2006,
           "verification_status": "exact",
-          "generation_time": 0.1647304855287075,
-          "verification_time": 0.7664335668087006,
-          "objective_value": 271,
+          "generation_time": 0.2156352810561657,
+          "verification_time": 0.36656878516077995,
+          "objective_value": 2006,
           "details": {
-            "point_count": 500,
-            "edge_count": 770,
-            "face_count": 271,
-            "convex_hull_vertex_count_including_collinear": 19,
-            "hull_area_twice": 1736930960,
-            "bounded_face_area_twice_sum": 1736930960,
-            "euler_edge_face_check": 271,
-            "claimed_score_ignored": true
+            "instance": "ta41",
+            "jobs": 30,
+            "machines": 20,
+            "operations": 600,
+            "makespan": 2006,
+            "critical_path_lower_bound": 1830,
+            "machine_loads": [
+              1490,
+              1685,
+              1674,
+              1830,
+              1378,
+              1709,
+              1528,
+              1530,
+              1751,
+              1588,
+              1464,
+              1675,
+              1516,
+              1483,
+              1702,
+              1151,
+              1625,
+              1633,
+              1371,
+              1496
+            ],
+            "job_loads": [
+              1077,
+              899,
+              1189,
+              1022,
+              1098,
+              827,
+              953,
+              1151,
+              985,
+              866,
+              1057,
+              1102,
+              1022,
+              987,
+              1157,
+              1092,
+              1040,
+              944,
+              1092,
+              1164,
+              1003,
+              1020,
+              839,
+              1102,
+              1232,
+              1158,
+              953,
+              1172,
+              932,
+              1144
+            ],
+            "claimed_objective_ignored": true
           },
-          "eval_time": 0.9352919720113277,
+          "eval_time": 0.6979288049042225,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -64,67 +167,60 @@
           }
         },
         "independent_quantity": {
-          "face_count": 271,
-          "point_count": 500,
-          "edge_count": 770,
-          "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+          "makespan": 2006,
+          "operations_dispatched": 600
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "f058b9152556ea7f25132fa464dce64389dfbb65a09f9b5c9af97fab6ca5b7f0"
+        "claimed_score_ignored": true
       },
-      "human_reference_value": 384
+      "review_status": "accepted_by_sol",
+      "frozen_human_baseline": {
+        "value": 3296,
+        "program": "human.py",
+        "method": "Giffler-Thompson active-schedule generation with longest-processing-time priority in the conflict set",
+        "source": {
+          "title": "Algorithms for Solving Production-Scheduling Problems",
+          "authors": "B. Giffler and G. L. Thompson",
+          "year": 1960,
+          "url": "https://doi.org/10.1287/opre.8.4.487"
+        },
+        "evidence_state": "reconstructed deterministic rule; witness independently checked; not the published 2006 record"
+      },
+      "reported_bounds": {
+        "current_public_lower_bound": 1912,
+        "lower_bound_source": "https://doi.org/10.2139/ssrn.4938242",
+        "lower_bound_reproduction_status": "reported by the current Taillard bounds page; not independently reproduced as an optimality certificate",
+        "2025_cp_numerical_lower_bound": 1915,
+        "2025_cp_source": "https://arxiv.org/abs/2504.16106",
+        "2025_cp_limitation": "The paper's OPT-50000s column reports 1915 for ta41. It describes this as a numerical lower bound and warns that the solver-derived lower bounds are not formally proved because implementation error cannot be excluded.",
+        "optimality_status": "open"
+      },
+      "source_pins": {
+        "official_instance_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/jobshop.dir/tai30_20.txt",
+        "official_snapshot_sha256": "fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9",
+        "normalized_instance": "data/source/ta41_instance.json",
+        "normalized_instance_sha256": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
+        "official_row_note": "ta41 is the first 30-job, 20-machine block in tai30_20.txt; its embedded historical bound fields are superseded and not used as current bounds."
+      },
+      "own_search": {
+        "program": "evolution.py",
+        "witness": "data/search/seed_0.json",
+        "objective": 2795,
+        "seed": 0,
+        "iterations": 500,
+        "search_isolation": "starts from init_program.py; no reference or human witness reads"
+      }
     }
   },
-  "review_status": "accepted_by_sol",
-  "source_date": "2026-11-06",
-  "survey_scope_note": "Fixed CG:SHOP 2020 uniform-0000500-1 instance. The objective is the minimum number of empty convex faces in a straight-line partition of the convex hull using the 500 input points.",
-  "best_human": {
-    "value": 384,
-    "date_checked": "2026-11-06",
-    "parameters": {
-      "instance": "uniform-0000500-1",
-      "point_count": 500,
-      "quantity": "bounded convex face count"
-    },
-    "url": "https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html",
-    "ai_provenance": "Traditional method described by Eder, Held, de Lorenzo, and Palfrader (SoCG 2020, section 2.2, pages 85:2-3); the local deterministic reconstruction was implemented with AI assistance. It is not the authors' code or run.",
-    "evidence_state": "The local deterministic Delaunay-plus-convex-merge reconstruction is exactly checked and yields 384 faces. This is a reconstructed human-method baseline, not a published best result or a literal reproduction of the paper's randomized edge-removal method.",
-    "origin_type": "traditional computational baseline, locally reconstructed"
-  },
-  "best_public": {
-    "value": 271,
-    "date_checked": "2026-11-06",
-    "parameters": {
-      "instance": "uniform-0000500-1",
-      "point_count": 500,
-      "quantity": "bounded convex face count"
-    },
-    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
-    "ai_provenance": "The archive gives a solution and timestamp but does not identify the solver, algorithm, or AI contribution. Provenance is therefore marked undisclosed.",
-    "evidence_state": "The archived 770-edge construction is pinned locally and independently passes the exact checker with 271 bounded faces. It is a feasible result, not a proof of optimality.",
-    "origin_type": "competition archive result with undisclosed solver provenance"
-  },
-  "best_reproduced": {
-    "value": 271,
-    "date_checked": "2026-11-06",
-    "parameters": {
-      "instance": "uniform-0000500-1",
-      "point_count": 500,
-      "edge_count": 770
-    },
-    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
-    "witness": "data/reference/uniform-0000500-1.official_solution.json",
-    "ai_provenance": "The original archive does not state solver provenance. This task replays and verifies the supplied witness.",
-    "evidence_state": "Exact check confirms all 500 vertices are used, the straight-line graph is planar and connected, every bounded face is empty and convex, and face areas sum to the hull area. Euler's formula gives 770-500+1=271 faces.",
-    "verification_status": "exact"
-  },
-  "frozen_human_baseline_type": "Delaunay triangulation followed by deterministic greedy convex-face merging",
   "additional_evidence": {
     "configurations": {
       "T095-C01": {
-        "optimality_status": "Open in sources checked through 2026-11-06. Cambazard's project page describes optimality results up to 100 points and lower bounds up to 300 points; it does not prove optimality for this 500-point instance."
+        "best_human": {
+          "ai_provenance": "The cited source does not state whether AI tools were used. No AI-free claim is made."
+        },
+        "best_reproduced": {
+          "reproduction_status": "exact integer precedence graph validation; makespan recomputed as 2006"
+        }
       }
     }
   }

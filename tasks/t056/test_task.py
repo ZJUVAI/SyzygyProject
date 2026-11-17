@@ -1,151 +1,92 @@
-"""Mathematical, data integrity, entry-point and failure-control tests for T056."""
-
-import hashlib
-import importlib
-import json
-from pathlib import Path
+import copy
+import os
+import sys
 
 import pytest
 
-from tasks.t056.check import PARAMETERS, validate
-
-HERE = Path(__file__).resolve().parent
-CONFIG = {"parameters": PARAMETERS}
+from tasks.t056.check import validate
+from tasks.t056 import baseline, evolution, human, init_program
 
 
-def _reference():
-    return json.loads((HERE / "data/reference/ta41_2006_schedule.json").read_text())
+CONFIG = {"parameters": {"order": 12}}
 
 
-def _independent_makespan(machine_orders):
-    data = json.loads((HERE / "data/source/ta41_instance.json").read_text())
-    jobs, machines = data["jobs"], data["machines"]
-    ops = data["operations"]
-    machine_positions = [{job: i for i, job in enumerate(row)} for row in machine_orders]
-    completion = [[None] * machines for _ in range(jobs)]
-    pending = jobs * machines
-    while pending:
-        progress = False
-        for job in range(jobs):
-            for index in range(machines):
-                if completion[job][index] is not None:
-                    continue
-                machine, duration = ops[job][index]
-                preds = []
-                if index:
-                    pred = completion[job][index - 1]
-                    if pred is None:
-                        continue
-                    preds.append(pred)
-                pos = machine_positions[machine][job]
-                if pos:
-                    previous_job = machine_orders[machine][pos - 1]
-                    previous_index = next(k for k, op in enumerate(ops[previous_job])
-                                          if op[0] == machine)
-                    pred = completion[previous_job][previous_index]
-                    if pred is None:
-                        continue
-                    preds.append(pred)
-                completion[job][index] = max(preds, default=0) + duration
-                pending -= 1
-                progress = True
-        if not progress:
-            raise ValueError("independent cycle check failed")
-    return max(max(row) for row in completion)
+def test_starter_and_classical_baseline_are_valid():
+    assert validate(init_program.run_code(), CONFIG)["objective"] == 1
+    result = baseline.run_code()
+    assert validate(result, CONFIG)["objective"] == 2
 
 
-def test_reference_schedule_and_independent_exact_recomputation():
-    witness = _reference()
-    result = validate({"machine_orders": witness["machine_orders"]}, CONFIG)
-    assert result["objective"] == witness["reported_makespan"] == 2006
-    assert result["verification_status"] == "exact"
-    assert _independent_makespan(witness["machine_orders"]) == 2006
+def test_human_witness_and_reference_are_valid():
+    result = human.run_code()
+    checked = validate(result, CONFIG)
+    assert checked["objective"] == 5
+    assert checked["details"]["orthogonal_pairs_checked"] == 10
 
 
-def test_initial_schedule_is_valid_and_boundary_score_is_exact():
-    initial = importlib.import_module("tasks.t056.init_program").run_code()
-    checked = validate(initial, CONFIG)
-    assert checked["objective"] == 25114
-    assert checked["details"]["critical_path_lower_bound"] <= checked["objective"]
-
-
-def test_source_hash_and_instance_shape():
-    expected = {
-        "data/source/tai30_20.txt": "fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9",
-        "data/source/ta41_instance.json": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
-        "data/reference/ta41_2006_schedule.json": "d3760f7a46266d9da02920433f027645056704d76fb423846414ca9d275c58ed",
-    }
-    for relative, digest in expected.items():
-        assert hashlib.sha256((HERE / relative).read_bytes()).hexdigest() == digest
-    data = json.loads((HERE / "data/source/ta41_instance.json").read_text())
-    assert (data["instance"], data["jobs"], data["machines"]) == ("ta41", 30, 20)
-    assert all(len(job) == 20 for job in data["operations"])
-    assert all(sorted(op[0] for op in job) == list(range(20)) for job in data["operations"])
-
-
-@pytest.mark.parametrize("bad", [
-    None,
-    {},
-    {"machine_orders": None},
-    {"machine_orders": []},
-    {"machine_orders": [[*range(30)] for _ in range(19)]},
-    {"machine_orders": [[*range(30)] for _ in range(20)] + [[*range(30)]]},
-    {"machine_orders": [[*range(29)] + [28] for _ in range(20)]},
-    {"machine_orders": [[True, *range(1, 30)] for _ in range(20)]},
-    {"machine_orders": [[0.0, *range(1, 30)] for _ in range(20)]},
-    {"machine_orders": [[30, *range(1, 30)] for _ in range(20)]},
+@pytest.mark.parametrize("field,value", [
+    ("objective", 999),
+    ("score", -1),
+    ("claimed_score", 999999),
+    ("objective", float("nan")),
+    ("score", float("nan")),
+    ("claimed_score", float("nan")),
 ])
-def test_invalid_shapes_types_and_duplicate_jobs_rejected(bad):
+def test_all_claim_fields_leave_the_full_verification_result_unchanged(field, value):
+    solution = human.run_code()
+    expected = validate(solution, CONFIG)
+    altered = copy.deepcopy(solution)
+    altered[field] = value
+    actual = validate(altered, CONFIG)
+    assert actual == expected
+    assert actual["objective"] == 5
+    assert actual["details"]["claimed_objective_ignored"] is True
+
+
+def test_broken_latin_row_rejected():
+    result = init_program.run_code()
+    result["squares"][0][0][0] = result["squares"][0][0][1]
     with pytest.raises(ValueError):
-        validate(bad, CONFIG)
+        validate(result, CONFIG)
 
 
-def test_cycle_is_rejected_and_claims_do_not_change_validation():
-    orders = [row[:] for row in _reference()["machine_orders"]]
-    orders[15][9], orders[15][10] = orders[15][10], orders[15][9]
-    with pytest.raises(ValueError, match="cycle"):
-        validate({"machine_orders": orders}, CONFIG)
+def test_duplicate_square_is_rejected_by_orthogonality():
+    square = init_program.run_code()["squares"][0]
+    with pytest.raises(ValueError, match="not orthogonal"):
+        validate({"squares": [square, copy.deepcopy(square)]}, CONFIG)
 
-    witness = _reference()
-    base = validate({"machine_orders": witness["machine_orders"]}, CONFIG)
-    for name, forged in [("objective", -1), ("score", float("nan")),
-                         ("claimed_score", {"value": float("inf")})]:
-        candidate = {"machine_orders": witness["machine_orders"], name: forged}
-        assert validate(candidate, CONFIG) == base
+
+@pytest.mark.parametrize("value", [True, 1.0, float("nan"), float("inf"), "1"])
+def test_non_integer_or_non_finite_symbol_rejected(value):
+    result = init_program.run_code()
+    result["squares"][0][0][0] = value
     with pytest.raises(ValueError):
-        validate({"machine_orders": witness["machine_orders"]},
-                 {"parameters": {"instance": "ta42", "jobs": 30, "machines": 20}})
+        validate(result, CONFIG)
 
 
-@pytest.mark.parametrize("module,expected", [
-    ("tasks.t056.init_program", 25114),
-    ("tasks.t056.human", 3296),
-    ("tasks.t056.reference", 2006),
-    ("tasks.t056.baseline", None),
-    ("tasks.t056.evolution", None),
-])
-def test_all_five_run_code_entries(module, expected, monkeypatch):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T056-C01")
-    monkeypatch.setenv("MATHBENCH_SEED", "0")
-    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS", "1")
-    result = importlib.import_module(module).run_code()
-    value = validate(result, CONFIG)["objective"]
-    if expected is not None:
-        assert value == expected
-    assert type(value) is int
-    if module.endswith(("baseline", "evolution")):
-        assert result["search_metadata"]["budget"]["mode"] == (
-            "fixed iterations; runner generation timeout 300 seconds"
-        )
+def test_empty_family_is_valid_boundary_case():
+    assert validate({"squares": []}, CONFIG)["objective"] == 0
 
 
-def test_search_sources_do_not_read_comparison_assets():
-    for filename in ("baseline.py", "evolution.py"):
-        source = (HERE / filename).read_text()
-        assert "tasks.t056.human" not in source
-        assert "tasks.t056.reference" not in source
-        assert "data/reference" not in source
-    init_source = (HERE / "init_program.py").read_text()
-    assert "# EVOLVE-BLOCK-START" in init_source
-    assert "# EVOLVE-BLOCK-END" in init_source
-    assert "tasks.t056" not in init_source
+def test_evolution_preserves_valid_incumbent_and_records_actual_run():
+    old = dict(os.environ)
+    try:
+        os.environ.update({"MATHBENCH_CONFIG_ID": "T056-C01", "MATHBENCH_SEED": "123", "MATHBENCH_SEARCH_ITERATIONS": "3"})
+        result = evolution.run_code()
+    finally:
+        os.environ.clear()
+        os.environ.update(old)
+    assert validate(result, CONFIG)["objective"] >= 2
+    assert result["search_metadata"]["seed"] == 123
+    assert result["search_metadata"]["iterations_run"] == 3
+    assert result["search_metadata"]["budget"]["iteration_limit"] == 3
+
+
+def test_program_errors_and_timeouts_are_reported_by_runner():
+    from mathbench.evaluate import _run
+
+    environment = dict(os.environ)
+    with pytest.raises(RuntimeError, match="candidate failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

@@ -1,4 +1,4 @@
-"""Standalone valid 2000-tile initial dissection."""
+"""Small valid seed A={0,1,3}."""
 
 import os
 
@@ -8,10 +8,7 @@ def run_code():
         raise ValueError("unsupported configuration")
     int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
-    squares = [[0, 0, 999]]
-    squares.extend([[x, 999, 1] for x in range(999)])
-    squares.extend([[999, y, 1] for y in range(1000)])
-    solution = {"squares": squares}
+    solution = {"set": [0, 1, 3]}
     # EVOLVE-BLOCK-END
     return solution
 

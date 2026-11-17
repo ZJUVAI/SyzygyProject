@@ -1,207 +1,120 @@
-"""Integer tabu and bounded clique search for independent sets in C7^5.
-
-Only an optional owned incumbent supplied by the runner is read. A compiled
-single-thread kernel searches exact neighborhoods and saves feasible sets.
-"""
-
-import itertools
+"""Multistart smooth search for Tammes configurations on the unit sphere."""
 import json
+import math
 import os
 import random
 import time
 
-N = 7 ** 5
-_POWERS = (7 ** 4, 7 ** 3, 7 ** 2, 7, 1)
-_NEIGHBORHOODS = None
+
+def _size():
+    config = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
+    if config != "T011-C01":
+        raise ValueError("unsupported MATHBENCH_CONFIG_ID")
+    return 16
 
 
-def _build_neighborhoods():
-    """Build closed-neighborhood bitsets for all 7^5 words."""
-    out = [0] * N
-    for v in range(N):
-        x = v
-        digits = [0] * 5
-        for i in range(4, -1, -1):
-            digits[i] = x % 7
-            x //= 7
-        choices = [((d - 1) % 7, d, (d + 1) % 7) for d in digits]
-        mask = 0
-        for word in itertools.product(*choices):
-            u = 0
-            for d in word:
-                u = 7 * u + d
-            mask |= 1 << u
-        out[v] = mask
-    return out
+def _fibonacci(n, rng, jitter=0.0):
+    golden = math.pi * (3.0 - math.sqrt(5.0))
+    points = []
+    for k in range(n):
+        z = 1.0 - 2.0 * (k + 0.5) / n
+        phi = k * golden + rng.uniform(-jitter, jitter)
+        r = math.sqrt(max(0.0, 1.0 - z*z))
+        points.append((r*math.cos(phi), r*math.sin(phi), z))
+    return points
 
 
-def _decode(v):
-    word = [0] * 5
-    for i in range(4, -1, -1):
-        word[i] = v % 7
-        v //= 7
-    return word
-
-
-def _encode(word):
-    value = 0
-    for digit in word:
-        value = 7 * value + digit
-    return value
-
-
-def _warm_start():
-    path = os.environ.get("MATHBENCH_WARM_START")
-    if not path:
-        return None
+def _optimize(points, seconds, deadline):
+    import numpy as np
+    from scipy.optimize import minimize
+    n = len(points)
+    pairs = [(i, j) for i in range(n) for j in range(i)]
+    ii = np.array([i for i, _ in pairs]); jj = np.array([j for _, j in pairs])
+    x0 = np.concatenate((np.asarray(points, dtype=float).reshape(-1), [0.0]))
+    incumbent = [np.asarray(points, dtype=float)]
+    # Minimize t subject to every normalized-direction dot product <= t.
+    def objective(x): return float(x[-1])
+    def objective_jac(x):
+        g=np.zeros(3*n+1); g[-1]=1.0; return g
+    def sphere(x):
+        p=x[:-1].reshape(n,3); return np.einsum("ij,ij->i",p,p)-1.0
+    def sphere_jac(x):
+        p=x[:-1].reshape(n,3); g=np.zeros((n,3*n+1))
+        for i in range(n): g[i,3*i:3*i+3]=2*p[i]
+        return g
+    def gaps(x):
+        p=x[:-1].reshape(n,3); return x[-1]-np.einsum("ij,ij->i",p[ii],p[jj])
+    def gaps_jac(x):
+        p=x[:-1].reshape(n,3); g=np.zeros((len(pairs),3*n+1))
+        for k,(i,j) in enumerate(pairs):
+            g[k,3*i:3*i+3]=-p[j]; g[k,3*j:3*j+3]=-p[i]; g[k,-1]=1
+        return g
+    def callback(_x):
+        p=_x[:-1].reshape(n,3).copy()
+        p/=np.maximum(np.linalg.norm(p,axis=1)[:,None],1e-12)
+        incumbent[0]=p
+        if time.monotonic() >= deadline: raise TimeoutError("evolution budget reached")
     try:
-        with open(path, encoding="utf-8") as stream:
-            solution = json.load(stream)
-        words = solution["words"]
-        if not isinstance(words, list):
-            return None
-        encoded = [_encode(word) for word in words]
-        if len(set(encoded)) != len(encoded):
-            return None
-        return encoded
-    except (OSError, ValueError, TypeError, KeyError):
-        return None
-
-
-def _affine_variant(source, rng):
-    """Apply a coordinate permutation and independent dihedral maps of C7."""
-    permutation = list(range(5))
-    rng.shuffle(permutation)
-    offsets = [rng.randrange(7) for _ in range(5)]
-    signs = [rng.choice((-1, 1)) for _ in range(5)]
-    result = []
-    for value in source:
-        digits = _decode(value)
-        mapped = [(signs[i] * digits[permutation[i]] + offsets[i]) % 7
-                  for i in range(5)]
-        result.append(_encode(mapped))
-    return result
-
-
-def _local_exchange(chosen, neighborhoods, rng, deadline):
-    """Remove a small set and greedily refill its neighborhood.
-
-    A move is committed only if its cardinality grows, so every incumbent
-    remains a valid independent set and the search cannot lose its best.
-    """
-    if len(chosen) < 2 or time.monotonic() >= deadline:
-        return chosen
-    remove_count = rng.choices((2, 3, 4, 5, 7, 9),
-                               weights=(24, 23, 20, 16, 11, 6))[0]
-    remove_count = min(remove_count, len(chosen))
-    if rng.random() < 0.75:
-        # Center destruction on an unselected vertex. Its actual blockers
-        # form a coherent cavity; independent random removals rarely do.
-        anchor = rng.randrange(N)
-        positions = {i for i, v in enumerate(chosen)
-                     if neighborhoods[anchor] & (1 << v)}
-        if not positions or len(positions) > 14:
-            positions = set(rng.sample(range(len(chosen)), remove_count))
-    else:
-        positions = set(rng.sample(range(len(chosen)), remove_count))
-    removed = [chosen[i] for i in positions]
-    retained = [v for i, v in enumerate(chosen) if i not in positions]
-    blocked = 0
-    for v in retained:
-        blocked |= neighborhoods[v]
-
-    pool_mask = 0
-    for v in removed:
-        pool_mask |= neighborhoods[v]
-    available_mask = pool_mask & ~blocked
-    cavity_mask = available_mask
-    candidates = []
-    while available_mask:
-        bit = available_mask & -available_mask
-        candidates.append(bit.bit_length() - 1)
-        available_mask ^= bit
-
-    # Low-conflict vertices tend to leave more room for later additions.
-    # Random jitter preserves diversity across repeated exchanges.
-    rng.shuffle(candidates)
-    candidates.sort(key=lambda v: (neighborhoods[v] & cavity_mask).bit_count()
-                    + rng.random() * 0.15)
-    trial = retained[:]
-    for v in candidates:
-        if time.monotonic() >= deadline:
-            break
-        bit = 1 << v
-        if not blocked & bit:
-            trial.append(v)
-            blocked |= neighborhoods[v]
-    return trial if len(trial) >= len(chosen) else chosen
-
-
-def _random_greedy(neighborhoods, rng, deadline):
-    order = list(range(N))
-    rng.shuffle(order)
-    chosen = []
-    blocked = 0
-    for v in order:
-        if time.monotonic() >= deadline:
-            break
-        bit = 1 << v
-        if not blocked & bit:
-            chosen.append(v)
-            blocked |= neighborhoods[v]
-    return chosen
+        result=minimize(objective,x0,jac=objective_jac,method="SLSQP",
+                        constraints=[{"type":"eq","fun":sphere,"jac":sphere_jac},
+                                     {"type":"ineq","fun":gaps,"jac":gaps_jac}],
+                        callback=callback,
+                        options={"maxiter":240,"ftol":2e-13,"disp":False})
+        p=result.x[:-1].reshape(n,3)
+    except TimeoutError:
+        p=incumbent[0]
+    norms=np.linalg.norm(p,axis=1)
+    p=p/np.maximum(norms[:,None],1e-12)
+    return p.tolist()
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
-    if config_id != "T011-C01":
-        # The compiled cavity kernel below is specialized to the accepted C7^5
-        # search. New powers use the dimension-aware classical greedy baseline.
-        from baseline import run_code as run_baseline
-        candidate = run_baseline()
-        candidate["_evolution"] = {"method": "dimension-aware seeded randomized greedy"}
-        return candidate
-    global _NEIGHBORHOODS
-    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
-    try:
-        budget = min(240.0, max(0.0, float(
-            os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45"))))
-    except ValueError:
-        budget = 45.0
-    rng = random.Random(seed)
-    # Valid cold-start construction: {0,2,4}^5.
-    best = [sum(d * p for d, p in zip(word, _POWERS))
-            for word in itertools.product((0, 2, 4), repeat=5)]
-    started = time.monotonic()
-    warm = _warm_start()
-    if warm is not None:
-        from check import validate
-        validate({"words": [_decode(v) for v in warm]},
-                 {"id": "T011-C01", "parameters": {"q": 7, "power": 5}})
-    if warm is not None and len(warm) > len(best):
-        best = warm
-    if budget <= 0:
-        return {"words": [_decode(v) for v in best]}
+    n=_size(); seed=int(os.environ.get("MATHBENCH_SEED","0")); rng=random.Random(seed)
+    budget=max(0.2,float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS","45")))
+    start=time.monotonic(); deadline=start+budget
+    best=_fibonacci(n,rng)
+    best_score=min(sum((best[i][k]-best[j][k])**2 for k in range(3))
+                   for i in range(n) for j in range(i))
+    exact_best={"points":best}
+    from tasks.t011.check import validate
+    config={"id":os.environ.get("MATHBENCH_CONFIG_ID","T011-C01"),"parameters":{"n":n,"space":"S2","objective":"minimum pairwise angular separation in radians"}}
+    warm_path=os.environ.get("MATHBENCH_WARM_START")
+    if warm_path:
+        from fractions import Fraction
+        with open(warm_path) as f: warm=json.load(f)
+        validate(warm,config,strict=True)
+        exact_best=warm
+        best=[[float(Fraction(v)) for v in p] for p in warm["points"]]
+        import numpy as np
+        arr=np.asarray(best); arr/=np.linalg.norm(arr,axis=1)[:,None]; best=arr.tolist()
+        best_score=min(sum((best[i][k]-best[j][k])**2 for k in range(3)) for i in range(n) for j in range(i))
+    certified=validate(exact_best,config,strict=True)["objective"]
+    attempts=0
+    while attempts == 0 or time.monotonic()-start < budget:
+        init=_fibonacci(n,rng,0.8 if attempts else 0.0)
+        if attempts % 4 != 3:
+            import numpy as np
+            arr=np.asarray(best)
+            scale=(.001,.025,.10,.25)[(attempts//4)%4]
+            arr+=np.array([[rng.gauss(0,scale) for _ in range(3)] for _ in range(n)])
+            arr/=np.linalg.norm(arr,axis=1)[:,None]; init=arr.tolist()
+        try:
+            candidate=_optimize(init,max(0.0,budget-(time.monotonic()-start)),deadline)
+            # Save every valid incumbent immediately; checker recomputes score.
+            score=min(sum((candidate[i][k]-candidate[j][k])**2 for k in range(3))
+                      for i in range(n) for j in range(i))
+            if score>best_score:
+                checked=validate({"points":candidate},config,strict=True)["objective"]
+                if checked>certified:
+                    best_score=score; best=candidate; exact_best={"points":candidate}; certified=checked
+        except TimeoutError:
+            break
+        except Exception:
+            pass
+        attempts+=1
+    return {**exact_best,"search":{"algorithm":"Fibonacci and perturbed multistart SLSQP chord-maximization",
+            "seed":seed,"attempts":attempts,"seconds":time.monotonic()-start}}
 
-    import subprocess
-    import tempfile
-    from pathlib import Path
-    with tempfile.TemporaryDirectory(prefix='t011_kernel_') as temporary:
-        executable = Path(temporary) / 'search_kernel'
-        subprocess.run(['g++', '-O3', '-std=c++17', str(Path(__file__).with_name('search_kernel.cpp')),
-                        '-o', str(executable)], check=True, capture_output=True, timeout=35)
-        remaining = max(0.0, budget-(time.monotonic()-started))
-        payload = f'{seed % 2**32} {remaining:.6f} {len(best)}\n' + ' '.join(map(str,best)) + '\n'
-        result = subprocess.run([str(executable)],input=payload,text=True,capture_output=True,
-                                check=True,timeout=remaining+10)
-    header, raw = result.stdout.strip().split('\n')
-    size,moves,cavities,improvements=map(int,header.split())
-    candidate = list(map(int,raw.split()))
-    from check import validate
-    output = {'words': [_decode(v) for v in candidate]}
-    validate(output, {'id':'T011-C01','parameters':{'q':7,'power':5}},strict=True)
-    if len(candidate)!=size:
-        raise RuntimeError('kernel size mismatch')
-    output['_evolution'] = {'method':'compiled fixed-size tabu and exact bounded clique cavity',
-        'moves':moves,'cavities':cavities,'improvements':improvements,'kernel_log':result.stderr.strip()}
-    return output
+
+if __name__ == "__main__":
+    print(json.dumps(run_code()))

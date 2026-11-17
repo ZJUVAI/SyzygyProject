@@ -1,59 +1,72 @@
-"""Seeded sequential greedy search; no comparison witness is read."""
-
+"""Seeded kicked-greedy search, independent of witness files."""
 import os
 import random
-
+from itertools import combinations
 from mathbench.search import search_steps
 
+ROWS, COLS = 14, 19
+ROW_TRIPLES = tuple(combinations(range(ROWS), 3))
 
-CONFIG_ID = "T034-C01"
-PLACEMENT_BUDGET = 20_000
+
+def _valid(masks):
+    return all((masks[a] & masks[b] & masks[c]).bit_count() < 3
+               for a, b, c in ROW_TRIPLES)
 
 
-def _allowed(colors, number, color):
-    # Check exactly the progressions whose final term is the new number.
-    for step in range(1, (number - 1) // 6 + 1):
-        start = number - 1 - 6 * step
-        if all(colors[start + j * step] == color for j in range(6)):
-            return False
-    return True
+def _score(matrix):
+    return sum(sum(row) for row in matrix)
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if config_id != CONFIG_ID:
-        raise ValueError("unsupported configuration id")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = random.Random(seed)
-    colors = [0] * 6
-    best = colors.copy()
-    placements = 0
-    restarts = 0
-    for _ in search_steps(PLACEMENT_BUDGET):
-        number = len(colors) + 1
-        choices = [c for c in (0, 1) if _allowed(colors, number, c)]
-        if not choices:
-            if len(colors) > len(best):
-                best = colors.copy()
-            colors = [0] * 6
-            restarts += 1
-            continue
-        colors.append(rng.choice(choices))
-        placements += 1
-    if len(colors) > len(best):
-        best = colors
+    matrix = [[0] * COLS for _ in range(ROWS)]
+    masks = [0] * ROWS
+    incumbent = [row[:] for row in matrix]
+    incumbent_score = 0
+    accepted_additions = 0
+    steps = 0
+    kicks = 0
+
+    for step in search_steps(10000):
+        steps += 1
+        # Kick only by deleting existing ones, so feasibility is preserved.
+        if step and step % 997 == 0:
+            present = [(i, j) for i in range(ROWS) for j in range(COLS) if matrix[i][j]]
+            for i, j in rng.sample(present, min(4, len(present))):
+                matrix[i][j] = 0
+                masks[i] &= ~(1 << j)
+            kicks += 1
+
+        # Greedy one-bit addition. Rejected additions leave the matrix untouched.
+        i, j = rng.randrange(ROWS), rng.randrange(COLS)
+        if not matrix[i][j]:
+            matrix[i][j] = 1
+            masks[i] |= 1 << j
+            if _valid(masks):
+                accepted_additions += 1
+                score = _score(matrix)
+                if score > incumbent_score:
+                    incumbent_score = score
+                    incumbent = [row[:] for row in matrix]
+            else:
+                matrix[i][j] = 0
+                masks[i] &= ~(1 << j)
+
+    final_score = _score(matrix)
     return {
-        "n": len(best),
-        "colors": best,
-        "claimed_objective": len(best),
+        "matrix": incumbent,
         "search_metadata": {
-            "algorithm": "seeded randomized sequential greedy extension with restart after dead end",
-            "configuration_id": config_id,
+            "algorithm": "seeded greedy one-bit addition with four-one deletion kicks",
             "seed": seed,
-            "placements": placements,
-            "placement_budget": PLACEMENT_BUDGET,
-            "restarts": restarts,
-            "wall_clock_cutoff_seconds": os.environ.get("MATHBENCH_SEARCH_SECONDS"),
-            "reference_data_read": False,
+            "iteration_budget": 10000,
+            "actual_steps": steps,
+            "kicks": kicks,
+            "accepted_additions": accepted_additions,
+            "incumbent_score": incumbent_score,
+            "final_search_state_score": final_score,
+            "returned_score": incumbent_score,
+            "time_budget_seconds": float(os.environ["MATHBENCH_SEARCH_SECONDS"])
+                if "MATHBENCH_SEARCH_SECONDS" in os.environ else None,
         },
     }

@@ -1,11 +1,21 @@
-"""Standalone simple initial ordering for arc130."""
-
+"""Deterministic binary-method seed; no reference witness is read."""
 import os
 
-# EVOLVE-BLOCK-START
+TARGETS = {
+    "T088-C01": 2**192 - 2**64 - 3,
+}
+
+
 def run_code():
-    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T088-C01")
-    if chosen != "T088-C01":
-        raise ValueError(f"unsupported configuration: {chosen}")
-    return {"ordering": list(range(1, 131))}
-# EVOLVE-BLOCK-END
+    target = TARGETS.get(os.environ.get("MATHBENCH_CONFIG_ID", "T088-C01"))
+    if target is None:
+        raise ValueError("unsupported T088 configuration")
+    # EVOLVE-BLOCK-START
+    bits = bin(target)[2:]
+    chain = [1]
+    for bit in bits[1:]:
+        chain.append(2 * chain[-1])
+        if bit == "1":
+            chain.append(chain[-1] + 1)
+    # EVOLVE-BLOCK-END
+    return {"chain": chain}

@@ -1,94 +1,34 @@
-"""Iterated local search for binary A(17, 6), starting from an owned witness."""
+"""Evolution-style search over symmetries and clean rectangular cuts."""
 
-import json
+from __future__ import annotations
+
 import os
+
 import random
-import time
-import subprocess
-import tempfile
-from pathlib import Path
 
-N = 17
-SEARCH_N = 16
-UNIVERSE = 1 << SEARCH_N
-
-
-def _valid(words):
-    if not isinstance(words, list) or not words or any(type(w) is not int or not 0 <= w < (1 << N) for w in words):
-        return False
-    if len(words) != len(set(words)):
-        return False
-    return all((a ^ b).bit_count() >= 6
-               for i, a in enumerate(words) for b in words[i + 1:])
-
-
-def _read_start():
-    path = os.environ.get("MATHBENCH_WARM_START")
-    if path:
-        with open(path, encoding="utf-8") as source:
-            words = json.load(source)["codewords"]
-    else:
-        # Keep the public run_code() contract useful without runner-provided
-        # warm starts. This is the task's deterministic traditional seed.
-        try:
-            from baseline import _start
-        except ModuleNotFoundError:
-            from tasks.t010.baseline import _start
-        words = list(_start())
-    if not isinstance(words, list) or not _valid(words):
-        raise RuntimeError("warm start failed exact A(17, 6) validation")
-    return words
-
-
-def _extend(word):
-    return word | ((word.bit_count() & 1) << SEARCH_N)
-
-
-def _puncture(words):
-    # Puncturing reduces distance by at most one. Adding parity raises every
-    # odd distance by one, so every 16-bit distance-five code extends to six.
-    projected = [word & (UNIVERSE - 1) for word in words]
-    if len(projected) != len(set(projected)) or any(
-            (a ^ b).bit_count() < 5 for i, a in enumerate(projected)
-            for b in projected[i + 1:]):
-        raise RuntimeError("punctured code failed exact distance-five validation")
-    return projected
+from tasks.t010.construction import _trim_candidates, _whole_board_transform
+from tasks.t010.init_program import run_code as initial_solution
 
 
 def run_code():
-    """Run the single-thread integer kernel using only the supplied start."""
-    config_id=os.environ.get("MATHBENCH_CONFIG_ID", "T010-C01")
-    if config_id != "T010-C01": raise ValueError("unsupported configuration")
-    started = time.monotonic()
-    best = _read_start()
-    projected = _puncture(best)
-    try:
-        budget = max(0.0, min(255.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45"))))
-    except (TypeError, ValueError):
-        budget = 45.0
-    if budget == 0:
-        return {"codewords": best, "search_method": "exact_start_only",
-                "search_start_size": len(best), "search_final_size": len(best)}
-    seed = int(os.environ.get("MATHBENCH_SEED", "0")) % (1 << 32)
-    source = Path(__file__).with_name("search_kernel.cpp")
-    with tempfile.TemporaryDirectory(prefix="t010_kernel_") as temporary:
-        executable = Path(temporary) / "search_kernel"
-        subprocess.run(["g++", "-O3", "-std=c++17", str(source), "-o", str(executable)],
-                       check=True, capture_output=True, text=True, timeout=35)
-        remaining = max(0.0, budget - (time.monotonic() - started))
-        payload = f"{seed} {remaining:.6f} {len(projected)}\n" + " ".join(map(str, projected)) + "\n"
-        result = subprocess.run([str(executable)], input=payload, capture_output=True,
-                                text=True, check=True, timeout=remaining + 10)
-    header, raw = result.stdout.strip().split("\n")
-    size, moves, cavities, improvements = map(int, header.split())
-    candidate = [_extend(word) for word in map(int, raw.split())]
-    if len(candidate) != size or not _valid(candidate):
-        raise RuntimeError("kernel result failed exact A(17, 6) validation")
-    if len(candidate) > len(best):
-        best = candidate
-    return {"codewords": best,
-            "search_method": "integer_multibit_switch_tabu_Hamming_ball_coloring_cavity",
-            "search_iterations": moves + cavities, "search_tabu_moves": moves,
-            "search_cavities": cavities, "search_improvements": improvements,
-            "search_start_size": len(projected), "search_final_size": len(best),
-            "search_kernel_log": result.stderr.strip()}
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T010-C01") != "T010-C01":
+        raise ValueError("unknown T010 configuration")
+    seed = int(os.environ.get("MATHBENCH_SEED", "0"))
+    rng = random.Random(seed)
+    initial = initial_solution()
+    population = [initial]
+    best = initial
+    best_count = len(initial["placements"])
+    # Twelve generations mutate D4 orientation genes and tile-aligned crop cuts.
+    for _ in range(12):
+        parent = rng.choice(population)
+        child = _whole_board_transform(parent, rng.randrange(8))
+        children = [child, *_trim_candidates(child, rng)]
+        child = min(children, key=lambda item: len(item["placements"]))
+        count = len(child["placements"])
+        population.append(child)
+        population.sort(key=lambda item: len(item["placements"]))
+        population = population[:4]
+        if count < best_count:
+            best, best_count = child, count
+    return best

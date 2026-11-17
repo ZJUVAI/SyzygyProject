@@ -123,5 +123,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
     for task in args.tasks:
         if not (task.startswith(('T', 'N')) and task[1:].isdigit()):
-            parser.error('Expected a task ID such as T022')
+            parser.error('Expected a task ID such as T032')
         review(task, args.label)

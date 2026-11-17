@@ -1,10 +1,16 @@
-"""Fixed archived highest-weight harmonic construction."""
-import json
+"""Fixed replay of the independently certified degree-100 public polynomial."""
 import os
-from pathlib import Path
+
+from tasks.t092.human import run_code as _published_polynomial
 
 
 def run_code():
     if os.environ.get("MATHBENCH_CONFIG_ID", "T092-C01") != "T092-C01":
         raise ValueError("unsupported configuration")
-    return json.loads((Path(__file__).parent / "data/human/highest_weight_degree20.json").read_text())
+    int(os.environ.get("MATHBENCH_SEED", "0"))
+    return _published_polynomial()
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(run_code()))

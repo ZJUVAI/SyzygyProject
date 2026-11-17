@@ -1,24 +1,34 @@
-# T028 implementation notes
+# T028 implementation and verification
 
-Status: accepted by Sol on 2026-11-06.
+## Frozen instance and sources
 
-## Configuration and source data
+- Configuration: `T028-C01`, CG:SHOP 2020 `uniform-0000500-1`, 500 points.
+- Input SHA-256: `c8ea5c524c52a6d7e0188f566482c124856a8cbd0318e518ff4419f09844c31a`.
+- Archived solution SHA-256: `f3de71a8fa4f98adf3314ccc2aa780e594e933b051e3d7cc715d1944eeb01190`.
+- The source archive supplies a 770-edge feasible partition. The exact checker finds 271 bounded faces. Its metadata gives a date but no producing method, solver, or AI provenance. The score is not an optimality proof.
+- Hadrien Cambazard's project page reports optimality results for 100-point data sets and lower bounds up to 300 points. It does not give a proof for this 500-point instance. The source audit date is 2026-11-06.
+- An exact determinant scan checked all 20,708,500 triples of input points and found no collinear triple.
+- `data/source/source_notes.json` records URLs, hashes, provenance, and the checks above.
 
-- `T028-C01` fixes Taillard Ta051: 50 jobs, 20 machines, one common job permutation, and makespan minimization.
-- The official `tai50_20.txt` snapshot has Ta051 seed 1539989115 and original header bounds 3480–3875. The Ta051 processing-time matrix was extracted from that snapshot into `data/ta051.json`. The JSON contains only the matrix. Its SHA-256 is `57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de`. The full original source has SHA-256 `cc139745dece17a2538e74ad2eaed232cc97321293f6b121883a6e3c69c8f8ba`.
-- Taillard's live bounds page, read 2026-11-06, reports Ta051 bounds 3771–3846 and says that only permutation schedules are allowed. Its dated header is 03.06.2026. The table attributes the upper bound to RRMRP and the lower bound to Va.
-- The public upper-bound witness is the Ta051 permutation archived in Olivier Brunner's Zenodo v8 dataset and associated with Ravetti et al. (2012). Exact replay on the official input returns 3846. `data/source/` preserves the official data and bounds snapshots. The candidate input allowlist must contain only `data/ta051.json`.
-- Gmys et al. (2022) list Ta051 among instances that remained open. The later Zenodo v11 page (2026-07-31) cautions readers about its `Optimal` field. We do not rely on that field to assert open status.
+## Programs
 
-## Programs and exact verification
+- `init_program.py` returns the SciPy Delaunay triangulation. It reads only the fixed public input and has no imports from this task package.
+- `human.py` reconstructs the traditional Delaunay-plus-convex-edge-removal method described by Eder, Held, de Lorenzo, and Palfrader (SoCG 2020, section 2.2, pages 85:2-3). The local deterministic implementation was built with AI assistance; it is not the paper's code or score. Exact validation gives 384 faces.
+- `baseline.py` runs four seeded greedy trials over fixed merge policies.
+- `evolution.py` mutates greedy merge-policy weights for a fixed number of steps. Its search starts from the input and does not load human or public comparison data.
+- `reference.py` loads the pinned public 770-edge construction.
 
-- `init_program.py` is self-contained and returns jobs 1 through 50 in identity order. It does not import task modules or read comparison data.
-- `baseline.py` builds an NEH permutation, then runs a seeded swap/insertion local search with 2,000 fixed iterations by default. `MATHBENCH_SEARCH_SECONDS` enables the shared optional wall-clock cutoff. The result records the seed, iteration count, budget, algorithm, and that no reference data was read.
-- `evolution.py` starts from an NEH order and uses order crossover, swap mutation, and a fixed population/generation budget. It records the seed, population, generations, cutoff, and comparison-data access status.
-- `human.py` rebuilds the public reference from task-local witness data. `reference.py` is the fixed reference interface.
-- `check.py` validates exactly one copy of each job label 1–50. It reads its fixed input independently of candidate output and recomputes the makespan with integer arithmetic for every operation. No float arithmetic or heuristic penalty is used. Claimed scores are ignored.
+Observed objectives at the saved defaults were: initial Delaunay 979, human-method reconstruction 384, traditional search 398, evolution search 368, and public reference 271. Search scores may vary when the documented seed or iteration settings change. The reference and human values are fixed and replayable.
 
-## Validation performed
+## Exact validation
+
+`check.py` reads coordinate literals as `Decimal`, accepts only exact finite integer coordinates, and performs all geometric predicates with integers. It checks every edge endpoint and every pair of edges, then verifies vertex coverage, connectivity, the convex-hull boundary, planar face walks, simple convex empty bounded faces, Euler's face count, and exact area coverage. The objective is recomputed from bounded faces. Candidate fields named `objective`, `score`, or `claimed_score` do not affect the result.
+
+The maximum possible simple planar edge count bounds the pairwise checks. The expected verification budget is 60 seconds on one CPU thread. Strict mode uses the same exact geometric checks; it does not substitute sampling or floating-point tolerances.
+
+## Validation run
+
+Environment: Python 3.13.12, NumPy 2.4.3, SciPy 1.17.0, local `.venv`.
 
 Command:
 
@@ -26,13 +36,6 @@ Command:
 .venv/bin/python -m pytest tasks/t028/test_task.py -q
 ```
 
-Result: 9 passed in 4.35 seconds under Python 3.13.12. Tests independently extract the matrix from the official Taillard source snapshot, check both SHA-256 values, replay the 50-job reference, validate the identity seed, reject incomplete, duplicate, out-of-range, bool, noninteger, NaN, infinite, and non-permutation payloads, ignore altered and nonfinite claimed scores, check seeded baseline and evolution reproducibility, and verify generation error and timeout handling.
+The task tests replay the pinned input and official solution, run the human baseline and all five program entries, reject a missing hull edge, duplicate edge, self-loop, invalid endpoint, and a crossing edge, check strict fixed parameters, confirm forged score fields do not alter the validation result, and exercise worker error and timeout reporting through `mathbench.evaluate._run`.
 
-The reference permutation was independently recomputed as 3846. The fixed seed-0 NEH/local-search baseline returned 4078 in 2,000 iterations (about 1.40 seconds for generation in this run), then passed the exact checker. This run is saved under `data/results.json` with a replay command. Full `evaluate_candidate` integration awaits the main reviewer adding T028 to shared registries.
-
-## Open review items
-
-- Sol must confirm the saved permutation matches the Ta051 row in the cited Zenodo v8 file and the RRMRP publication, then independently replay the human program.
-- Sol must independently verify a key matrix quantity and exercise one valid result, one damaged permutation, a changed claimed score, a program error, and a timeout.
-- Sol must review the open-status sources and confirm the candidate export contains only the matrix JSON, not the saved witness or source records.
-- The exact optimum is unknown within the currently recorded interval 3771–3846. This task does not prove optimality.
+All task-local JSON files are checked with `python -m json.tool` as part of delivery. Status: `accepted_by_sol`.

@@ -1,102 +1,56 @@
 {
   "task_id": "T050",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
   "configurations": {
     "T050-C01": {
       "program": "reference.py",
-      "reproduced_value": 191,
-      "public_value": 191,
+      "reproduced_value": 120,
+      "public_value": 120,
       "highest_reported": {
-        "value": 191,
-        "source": "Orland et al., arXiv:2607.15270v3, §6 and Appendix E; also the authors' pinned record dataset.",
-        "reproduction_status": "Exact transition sequence from Appendix E is saved and replayed. All 192 vertices and all nonconsecutive pairs are checked exactly."
-      },
-      "best_human": {
-        "value": 190,
-        "parameters": {
-          "dimension": 9,
-          "object": "induced_path",
-          "length_unit": "edges"
-        },
-        "source": "Wynn (2012), arXiv:1201.1647v1, §VI and appendix, Q9 snake transition sequence.",
-        "url": "https://arxiv.org/html/1201.1647",
+        "value": 120,
+        "source": "https://oeis.org/A000983/a000983.txt",
+        "source_location": "a(10)<=120, list of 120 ten-bit words; do not use the following a(11) entry",
+        "reproduction_status": "The 2020 OEIS file publishes an explicit length-10 list. The list is frozen and independently verified to cover all 1024 words within Hamming distance 1. This establishes an upper bound on the minimum, not optimality.",
+        "ai_provenance": "not stated by source",
+        "metric": "codewords in a binary length-10 covering code of radius 1",
+        "direction": "minimize",
         "date_checked": "2026-11-06",
-        "provenance": "Traditional human computational construction by sequence joining and permutation search. No generative AI contribution is reported in the 2012 source.",
-        "evidence_state": "The full 190-transition sequence is transcribed, saved, and exactly checked.",
-        "witness": "data/reference/wynn_q9_190.json",
-        "witness_sha256": "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882"
+        "url": "https://oeis.org/A000983/a000983.txt"
       },
-      "best_public": {
-        "value": 191,
-        "parameters": {
-          "dimension": 9,
-          "object": "induced_path",
-          "length_unit": "edges"
-        },
-        "source": "Orland et al., New Snake-in-the-Box Records via Snakepit Surgery and Learned Construction, arXiv:2607.15270v3, §6 and Appendix E.",
-        "url": "https://arxiv.org/html/2607.15270v3",
-        "date_checked": "2026-11-06",
-        "provenance": "The authors state that the Q9 record came from cube-surgery simulated annealing. Their paper also reports LLM assistance with manuscript work and with writing and optimizing search code; it does not attribute that assistance to this particular witness or experiment. Record as source-reported computational work with project-level LLM assistance disclosed.",
-        "evidence_state": "The paper prints a complete 191-transition Q9 witness and says the maximum is unknown for dimension 9.",
-        "witness": "data/reference/orland_v3_q9_191.json",
-        "witness_sha256": "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4"
+      "parameters": {
+        "length": 10,
+        "alphabet": "{0,1}",
+        "covering_radius": 1,
+        "universe": "all 1024 binary words of length 10",
+        "objective": "number of codewords"
       },
-      "best_reproduced": {
-        "value": 191,
-        "date_reproduced": "2026-11-06",
-        "parameters": {
-          "dimension": 9,
-          "object": "induced_path",
-          "length_unit": "edges"
-        },
-        "program": "reference.py",
-        "verification_status": "exact",
-        "verification_method": "Replay the paper's 191 coordinate flips from the origin; check distinct in-range vertices, all consecutive Hamming distances, and every nonconsecutive pair.",
-        "witness": "data/reference/orland_v3_q9_191.json",
-        "witness_sha256": "fff784d8d79ec56682765735ad3263d9978338279ea1854f43438ea9bd37b7a4",
-        "origin_type": "published record witness, independently rechecked",
-        "review_status": "reviewed_by_sol"
+      "source_file": "data/source/oeis_a000983.txt",
+      "source_file_sha256": "d221fc00d230773ad7a696ec57b6cc1317d4492f2c594ecb8357477aa8d28900",
+      "known_bounds": {
+        "lower_bound": 107,
+        "upper_bound": 120,
+        "lower_bound_source": "https://doi.org/10.1002/jcd.20008",
+        "lower_bound_location": "Bertolo, Östergård, and Weakley (2004); also recorded in the current Kéri table",
+        "upper_bound_source": "https://oeis.org/A000983/a000983.txt",
+        "upper_bound_location": "a(10)<=120 with explicit list",
+        "status": "OEIS A000983 still lists the next value a(10) in the range 107-120; the checked Kéri table also gives 107-120. The exact value was not closed in sources checked on 2026-11-06."
       },
-      "frozen_human_baseline": {
-        "value": 190,
-        "witness_program": "human.py",
-        "witness": "data/reference/wynn_q9_190.json",
-        "witness_sha256": "3f74e9ce45736179738ae16fb447e4c5ea7cb594ea776b930fa5c7acbac00882",
-        "evidence_state": "Published traditional human construction, reproduced from its complete transition sequence.",
-        "note": "Same-parameter published traditional construction."
+      "historical_construction": {
+        "source": "https://doi.org/10.1109/18.61135",
+        "source_location": "Östergård, A new binary code of length 10 and covering radius 1, IEEE Transactions on Information Theory 37 (1991), 179-180",
+        "reported_method": "A 60-word mixed F_4 x F_2^7 radius-one cover is transformed to a 120-word binary length-10 cover.",
+        "witness_identity": "No claim is made that the 2020 OEIS list is byte-for-byte or construction-equivalent to Östergård's code."
       },
-      "optimality_status": {
-        "status": "open; independently verified bounds 191 <= a(9) <= 286",
-        "source_survey_date": "2026-11-06",
-        "evidence": "The current paper v3, pinned author repository, and current Leaps in Bounds entry report a verified 191-edge lower bound and no upper bound. The paper explicitly leaves existence of a 192-edge Q9 snake open.",
-        "limitations": "The reported census of 131 symmetry classes is based on sampling and is not an exhaustive proof of optimality or completeness."
-      },
-      "source_pins": {
-        "paper": {
-          "version": "arXiv:2607.15270v3, submitted 2026-09-30",
-          "url": "https://arxiv.org/html/2607.15270v3",
-          "record_location": "§6 Record provenance; Appendix E"
-        },
-        "authors_repository": {
-          "url": "https://github.com/Math-AI-Caltech/Snake-in-the-Box",
-          "commit": "46c765399353a588ea50444a5d6610f53102b1c2",
-          "commit_date": "2026-10-01",
-          "readme_blob_sha1": "3e66ab83a2be5ddbfacd3081c0df5ce3d4b7ae04",
-          "record_snakes_csv_zip_blob_sha1": "7854e2592325dab85a35a8a4809314edb80f7af8",
-          "record_snakes_csv_zip_size": 16721566
-        },
-        "current_status_entry": {
-          "url": "https://leapsinbounds.org/constants/snake-in-the-box-9/",
-          "date_checked": "2026-11-06",
-          "reported_lower_bound": 191,
-          "reported_upper_bound": null
-        }
-      },
-      "analytic_upper_bound": {
-        "value": 286,
-        "reviewer": "Sol main agent",
-        "derivation": "For k path vertices, the induced graph has k-1 edges. Its outgoing edges are 9k-2(k-1)=7k+2, at most 9(512-k). Thus16k<=4606, k<=287 and path edges<=286.",
-        "scope": "Independent conservative counting bound; no claim that this is the best published upper bound."
-      },
+      "checked_sources": [
+        "https://oeis.org/A000983",
+        "https://oeis.org/A000983/a000983.txt",
+        "https://old.sztaki.hu/~keri/codes/index.htm",
+        "https://old.sztaki.hu/~keri/codes/2_tables.pdf",
+        "https://doi.org/10.1002/jcd.20008",
+        "https://doi.org/10.1109/18.61135",
+        "https://users.aalto.fi/~pat/patric_pub.html"
+      ],
       "review_status": "accepted_by_sol",
       "verification": {
         "status": "reviewed_by_sol",
@@ -106,19 +60,21 @@
           "task_id": "T050",
           "config_id": "T050-C01",
           "validity": 1.0,
-          "combined_score": 1.0052631578947369,
-          "objective": 191,
+          "combined_score": 1.0666666666666667,
+          "objective": 120,
           "verification_status": "exact",
-          "generation_time": 0.46631766483187675,
-          "verification_time": 0.43076062947511673,
-          "objective_value": 191,
+          "generation_time": 2.3968497179448605,
+          "verification_time": 0.5995572581887245,
+          "objective_value": 120,
           "details": {
-            "dimension": 9,
-            "vertices_checked": 192,
-            "nonconsecutive_pairs_checked": 18145,
+            "length": 10,
+            "universe_size": 1024,
+            "codeword_count": 120,
+            "covered_word_count": 1024,
+            "radius": 1,
             "claimed_objective_ignored": true
           },
-          "eval_time": 0.9030175022780895,
+          "eval_time": 3.002908121794462,
           "seed": 0,
           "strict": true,
           "budget": {
@@ -135,39 +91,98 @@
           }
         },
         "independent_quantity": {
-          "induced_path_edges": 191,
-          "neighbor_memberships_checked": 1728,
-          "crossing_edges": 1346,
-          "analytic_edge_upper_bound": 286
+          "code_size": 120,
+          "words_checked": 1024,
+          "maximum_distance": 1,
+          "sphere_bound": 94
         },
         "broken_construction_rejected": true,
-        "claimed_score_ignored": true
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "e07521e6feffb3314ba311f6281141e98f139ef6fe56ab56a4b96babb3975612"
       },
-      "parameters": {
-        "dimension": 9,
-        "graph": "Q9",
-        "object": "induced_path",
-        "length_unit": "edges"
+      "witness": "data/reference/oeis_a000983_n10.json",
+      "witness_sha256": "65c8a7ec1574a64ef45e7334f8166966f70062cbf0ad09eb1499e5068842f8dd",
+      "best_human": {
+        "value": 120,
+        "url": "https://doi.org/10.1109/18.61135",
+        "source_location": "Östergård (1991), IEEE Transactions on Information Theory 37, 179–180",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "provenance": "Traditional mixed-code construction reported by the author. The frozen 128-word Hamming-product comparison is a separate, weaker construction.",
+        "reproduction_status": "Reported historical construction; identity with the independently verified 2020 OEIS list has not been established.",
+        "ai_provenance": "1991 human publication; no AI role reported"
       },
-      "survey_scope_note": "Q9=191 remains a lower bound, not a solved optimum. The sampled 131-class census is not an optimality proof. The current paper v3, author-repository snapshot, and Leaps in Bounds status entry were checked on 2026-11-06."
+      "best_public": {
+        "value": 120,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "url": "https://oeis.org/A000983/a000983.txt",
+        "source_location": "a(10)<=120 and its following 120-word list",
+        "provenance": "Public list credited by OEIS to Dmitry Kamenetsky (2020), verified here as a feasible cover. The exact minimum remains in the interval 107-120.",
+        "ai_provenance": "not stated by source",
+        "evidence_state": "all 1024 binary words are covered within Hamming distance 1 by the frozen 120-word list"
+      },
+      "best_reproduced": {
+        "value": 120,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "witness_file": "data/reference/oeis_a000983_n10.json",
+        "witness_sha256": "65c8a7ec1574a64ef45e7334f8166966f70062cbf0ad09eb1499e5068842f8dd",
+        "provenance": "Parsed only the a(10) list from the pinned OEIS A000983 text file; the subsequent a(11) code is excluded.",
+        "ai_provenance": "benchmark transcription and exact exhaustive verification",
+        "actual_value": 120,
+        "evidence_state": "exact bitset check covers all 1024 words",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 128,
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "witness_file": "data/human/hamming7_times_f2_3.json",
+        "witness_sha256": "e3aada0ead9ee0098d30776a53fbe932f7a7afcdfff4770ce80f6ba35b7b069f",
+        "provenance": "Length-7 perfect Hamming code times all 3-bit suffixes."
+      },
+      "optimality_status": {
+        "lower_bound": 107,
+        "upper_bound": 120,
+        "evidence_state": "OEIS A000983 and the Kéri binary table checked on 2026-11-06 retain 107-120 for length 10, radius 1."
+      },
+      "historical_record_note": "Östergård (1991) reports a 120-word binary code derived from a 60-word F_4 x F_2^7 mixed code. The public 2020 OEIS word list is treated as a separate frozen witness; no identity between the two is asserted.",
+      "reproduced_human_method": {
+        "value": 128,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "length": 10,
+          "covering_radius": 1
+        },
+        "witness_file": "data/human/hamming7_times_f2_3.json",
+        "witness_sha256": "e3aada0ead9ee0098d30776a53fbe932f7a7afcdfff4770ce80f6ba35b7b069f",
+        "url": "https://doi.org/10.1002/j.1538-7305.1950.tb00463.x",
+        "source_location": "R. W. Hamming, Error Detecting and Error Correcting Codes (1950); binary [7,4,3] Hamming code construction",
+        "provenance": "Reconstructed as the product of the length-7 perfect Hamming code with all 3-bit suffixes. The parity-check columns are the seven nonzero vectors in F_2^3.",
+        "ai_provenance": "classical human construction",
+        "actual_value": 128,
+        "evidence_state": "exact parity-check argument and independent full-universe checker confirm coverage"
+      }
     }
   },
-  "review_status": "accepted_by_sol",
-  "snapshot_date": "2026-11-06",
   "additional_evidence": {
     "configurations": {
       "T050-C01": {
-        "best_human": {
-          "source": "Wynn (2012), arXiv:1201.1647v1, §VI and appendix.",
-          "evidence_state": "Complete transition sequence independently replayed and exactly checked."
-        },
-        "best_public": {
-          "source": "Orland et al., §6 and Appendix E; authors' dataset at commit 46c765399353a588ea50444a5d6610f53102b1c2.",
-          "provenance": "The authors attribute Q9=191 to cube-surgery simulated annealing. They disclose project-level LLM assistance for manuscript work and for writing and optimizing search code, but do not attribute LLM assistance to this particular witness or run.",
-          "evidence_state": "Source paper prints a complete 191-transition witness; exact witness reproduced and validated."
-        },
-        "best_reproduced": {
-          "verification_method": "Replay the published transition sequence and check the complete induced-path constraints."
+        "highest_reported": {
+          "source_location": "a(10)<=120 list",
+          "reproduction_status": "The 120-word witness is independently verified. Kéri and OEIS record the remaining minimum-size interval as 107-120; no exact optimum claim is made."
         }
       }
     }

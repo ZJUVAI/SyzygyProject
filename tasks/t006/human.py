@@ -1,15 +1,13 @@
-"""Replay the public Exoo et al. 320-vertex graph6 construction."""
-import json, os
+"""Replay the published Shadoks 2304-value packing witness."""
+
+import json
+import os
 from pathlib import Path
 
 
-def run_human():
-    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T006-C01')
-    if config_id != 'T006-C01':
-        raise ValueError('unsupported configuration')
-    int(os.environ.get('MATHBENCH_SEED','0'))
-    return json.loads((Path(__file__).parent/'data'/'human_graph.json').read_text())
-
-
 def run_code():
-    return run_human()
+    chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T006-C01")
+    if chosen != "T006-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    path = Path(__file__).resolve().parent / "data" / "source" / "shadoks2304.json"
+    return json.loads(path.read_text(encoding="utf-8"))

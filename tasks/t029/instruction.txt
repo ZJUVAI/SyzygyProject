@@ -1,3 +1,13 @@
-Find a short exact bilinear algorithm for multiplying two 3x3 matrices over Q. Return JSON data with a `terms` list. Each term must contain three length-9 row-major vectors: `alpha`, `beta`, and `gamma`. It represents `alpha(A) * beta(B)`, added to the output matrix with `gamma[i,k]` as the coefficient of output entry C[i,k]. The first two factors must be separate linear forms of A and B. Coefficients may be integers or exact rational strings such as `"-3/2"`; do not use decimal floats. The evaluator checks all 729 tensor coefficients exactly and computes the term count. A zero factor is invalid. The public resource cap is 27 terms. The cap is a resource limit based on the simple seed, not a lower bound on the mathematical optimum. Do not include a claimed score in place of the construction.
+For T029-C01, cover the fixed polygonal region `socg_fixed92` with the fewest convex polygons. Every cover polygon must be contained in the input region. Overlap is allowed. The input is the official 92-vertex, hole-free instance at `data/source/socg_fixed92.instance.json`.
 
-Define `run_code()` with no arguments. The local simple program returns the elementary 27-product construction and is available as the starting point. Use `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED` if needed. Generation has a 300-second limit; verification has a separate 60-second limit. Memory is limited to 4 GiB, with one CPU thread. The fixed parameters are public and are not a hidden test set.
+The mathematical domain includes arbitrary real coordinates. Encode all coordinates in one real algebraic number field. Return an object with:
+
+- `algebraic_field.minimal_polynomial`: integer coefficients in ascending degree order. The polynomial must be irreducible over Q and have positive leading coefficient.
+- `algebraic_field.isolating_interval`: two rational strings `[lo, hi]` with `lo < hi` and exactly one real root of the polynomial in the open interval.
+- `polygons`: a nonempty list of convex polygons. Each polygon is a list of vertices. Each vertex is `[x_coefficients, y_coefficients]`; each coordinate is a nonempty list of rational coefficients in ascending powers of the field root alpha. For example, `[["3/2", "1/4"], ["-2"]]` encodes `(3/2 + alpha/4, -2)`.
+
+All coefficients must be exact integers or rational strings such as `"-7/5"`. Do not use floating-point numbers. There is no fixed cap on coordinate size, denominator, polynomial degree, or number of vertices. The runner limits output size and execution time.
+
+The checker recomputes convexity, containment, exact coverage, and the number of pieces. It ignores any score supplied by the program. A simple starting construction is an exact ear-clipping triangulation of the public input. You may improve it by merging pieces when their convex hull remains inside the region. Do not read the human or reference witness files.
+
+Implement `run_code()` with no arguments. Use `MATHBENCH_CONFIG_ID` and `MATHBENCH_SEED` if needed. Return JSON-compatible data.
