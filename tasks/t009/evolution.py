@@ -138,15 +138,6 @@ def _energy(histogram):
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T009-C01")
-    if config_id in ("T009-C02", "T009-C03"):
-        from tasks.t009.baseline import run_code as systematic_search
-        result = systematic_search()
-        result["search_metadata"] = {
-            "method": "configuration-aware systematic parity annealing",
-            "source": "baseline.py; exact full-spectrum score per proposal",
-            "seed": int(os.environ.get("MATHBENCH_SEED", "0")),
-        }
-        return result
     if config_id != "T009-C01":
         raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))

@@ -5,17 +5,6 @@
   "official_configuration": "T003-C02",
   "configurations": [
     {
-      "id": "T003-C01",
-      "parameters": {
-        "n": 26,
-        "container": "unit square",
-        "radii": "variable"
-      },
-      "direction": "maximize",
-      "human_reference": 2.50542078826,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
       "id": "T003-C02",
       "parameters": {
         "n": 32,
@@ -24,17 +13,6 @@
       },
       "direction": "maximize",
       "human_reference": 2.811460994816,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T003-C03",
-      "parameters": {
-        "n": 40,
-        "container": "unit square",
-        "radii": "variable"
-      },
-      "direction": "maximize",
-      "human_reference": 3.16747010068,
       "acceptance_status": "accepted_by_sol"
     }
   ],

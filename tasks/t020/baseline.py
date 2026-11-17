@@ -4,8 +4,6 @@ from mathbench.search import search_steps
 
 TARGETS = {
     "T020-C01": 2**192 - 2**64 - 3,
-    "T020-C02": 2**221 - 5,
-    "T020-C03": 2**521 - 3,
 }
 
 

@@ -1,6 +1,4 @@
 import unittest
-from unittest.mock import patch
-
 from tasks.t013.baseline import run_code as baseline
 from tasks.t013.check import aperiodic_autocorrelations, validate
 from tasks.t013.human import run_code as human
@@ -40,34 +38,10 @@ class TaskTests(unittest.TestCase):
     def test_correlation_count(self):
         self.assertEqual(len(aperiodic_autocorrelations([1, -1, 1])), 2)
 
-    def test_staged_human_witnesses_and_exact_scores(self):
-        for config_id, length, energy in (("T013-C02", 80, 352),
-                                          ("T013-C03", 120, 872)):
-            config = {"id": config_id, "parameters": {"L": length},
-                      "direction": "minimize"}
-            with patch.dict("os.environ", {"MATHBENCH_CONFIG_ID": config_id}):
-                witness = human()
-                self.assertEqual(len(witness["sequence"]), length)
-                scored = validate({**witness, "claimed_score": -999999}, config)
-                self.assertEqual(scored["objective"], energy)
-                self.assertEqual(reference(), witness)
-                self.assertEqual(len(initial()["sequence"]), length)
-                self.assertEqual(len(baseline()["sequence"]), length)
-                broken = witness["sequence"][:-1]
-                with self.assertRaises(ValueError):
-                    validate({"sequence": broken, "claimed_score": energy}, config)
-
-    def test_staged_length_mismatch_rejected(self):
-        config = {"id": "T013-C02", "parameters": {"L": 80}}
+    def test_non_official_length_rejected(self):
+        config = {"id": "T013-C01", "parameters": {"L": 80}}
         with self.assertRaises(ValueError):
             validate({"sequence": [1] * 100}, config)
-
-    def test_environment_switches_between_live_and_staged_configs(self):
-        for config_id, length in (("T013-C01", 100), ("T013-C02", 80),
-                                  ("T013-C03", 120)):
-            with patch.dict("os.environ", {"MATHBENCH_CONFIG_ID": config_id}):
-                self.assertEqual(len(initial()["sequence"]), length)
-                self.assertEqual(len(human()["sequence"]), length)
 
 
 if __name__ == "__main__":

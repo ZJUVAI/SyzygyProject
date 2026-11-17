@@ -3,7 +3,7 @@
 def _parameters(config):
     p = config.get('parameters', {})
     n, d = p.get('n'), p.get('distance')
-    if type(n) is not int or type(d) is not int or (n,d) not in {(17,6),(23,10),(25,10)}:
+    if type(n) is not int or type(d) is not int or (n,d) != (17,6):
         raise ValueError('unsupported configuration')
     return n, d
 

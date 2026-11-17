@@ -5,7 +5,7 @@ from lps import build_graph
 
 def run_code():
     config_id=os.environ.get('MATHBENCH_CONFIG_ID','T006-C01')
-    if config_id not in ('T006-C01','T006-C02'):
+    if config_id != 'T006-C01':
         raise ValueError('unsupported configuration')
     seed=int(os.environ.get('MATHBENCH_SEED','0'))
     # EVOLVE-BLOCK-START

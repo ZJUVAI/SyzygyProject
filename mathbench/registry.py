@@ -26,19 +26,16 @@ def task_path(task_id):
 
 
 def load_task(task_id, *, include_history=False):
+    """Read the selected configuration. Allow explicit access to retired tasks."""
     task = json.loads((task_path(task_id) / "task.json").read_text())
-    task["configurations"] = [
-        config for config in task["configurations"]
-        if config.get("acceptance_status", "accepted_by_sol") == "accepted_by_sol"
-    ]
-    official = task.get("official_configuration")
-    if official is not None:
-        active = [config for config in task["configurations"] if config["id"] == official]
-        if len(active) != 1:
-            raise ValueError(f"{task_id}: invalid official configuration {official!r}")
-        if not include_history:
-            task["configurations"] = active
-    if task_id in ARCHIVED_TASKS and not include_history:
+    configs = task["configurations"]
+    if len(configs) != 1:
+        raise ValueError(f"{task_id}: expected one configuration")
+    config = configs[0]
+    if task.get("official_configuration", config["id"]) != config["id"]:
+        raise ValueError(f"{task_id}: invalid official configuration")
+    if (config.get("acceptance_status", "accepted_by_sol") != "accepted_by_sol"
+            or (task_id in ARCHIVED_TASKS and not include_history)):
         task["configurations"] = []
     return task
 
@@ -47,7 +44,9 @@ def load_config(task_id, config_id=None):
     if config_id is None:
         configs = load_task(task_id)["configurations"]
         if not configs:
-            raise ValueError(f"{task_id} is archived. Specify its configuration ID.")
+            if task_id in ARCHIVED_TASKS:
+                raise ValueError(f"{task_id} is archived. Specify its configuration ID.")
+            raise ValueError(f"{task_id} has no accepted configuration.")
         return configs[0]
     configs = load_task(task_id, include_history=True)["configurations"]
     for config in configs:

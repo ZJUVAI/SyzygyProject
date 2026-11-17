@@ -18,7 +18,6 @@ from tasks.t076 import baseline, check, evolution, human, init_program, referenc
 ROOT = Path(__file__).resolve().parents[2]
 TASK = Path(__file__).resolve().parent
 CONFIG = json.loads((TASK / "task.json").read_text())["configurations"][0]
-CONFIGS = {item["id"]: item for item in json.loads((TASK / "task.json").read_text())["configurations"]}
 
 
 def test_all_entries_return_valid_results_and_reference_assets_are_frozen():
@@ -78,7 +77,7 @@ def test_exact_large_decimal_inputs_have_no_artificial_integer_cap():
 
 def test_config_is_fixed_and_seeded_search_is_repeatable(monkeypatch):
     with pytest.raises(ValueError):
-        check.validate(init_program.run_code(), {**CONFIG, "id": "T076-C02"})
+        check.validate(init_program.run_code(), {**CONFIG, "id": "T076-C99"})
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T076-C01")
     monkeypatch.setenv("MATHBENCH_SEED", "17")
     monkeypatch.setattr(baseline, "CAP_START", 8_000)
@@ -105,55 +104,3 @@ def test_runner_reports_program_errors_and_timeouts_without_registry_changes():
     with pytest.raises(TimeoutError):
         _run([sys.executable, "-c", "import time; time.sleep(5)"], env, 0.1)
     assert time.monotonic() - start < 3
-
-
-@pytest.mark.parametrize(("config_id", "human_value", "reference_value", "subset_count"), [
-    ("T076-C02", 17305, 17072, 1 << 16),
-    ("T076-C03", 34301, 33531, 1 << 17),
-])
-def test_expanded_configuration_witnesses_and_programs(monkeypatch, config_id, human_value, reference_value, subset_count):
-    config = CONFIGS[config_id]
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", config_id)
-    h = human.run_code()
-    r = reference.run_code()
-    assert check.validate(h, config)["objective"] == human_value
-    checked_reference = check.validate(r, config)
-    assert checked_reference["objective"] == reference_value
-    assert checked_reference["details"]["subset_sums_verified"] == subset_count
-    assert check.validate(init_program.run_code(), config)["verification_status"] == "exact"
-    assert check.validate(baseline.run_code(), config)["verification_status"] == "exact"
-    assert check.validate(evolution.run_code(), config)["verification_status"] == "exact"
-
-
-@pytest.mark.parametrize("config_id", ["T076-C02", "T076-C03"])
-def test_expanded_config_rejects_parameter_mismatch_and_ignores_claims(monkeypatch, config_id):
-    config = CONFIGS[config_id]
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", config_id)
-    witness = human.run_code()
-    before = check.validate(witness, config)
-    forged = {**witness, "objective": -999, "claimed_score": -999, "score": -999}
-    assert check.validate(forged, config) == before
-    mismatch = copy.deepcopy(config)
-    mismatch["parameters"]["element_count"] -= 1
-    with pytest.raises(ValueError, match="parameters do not match"):
-        check.validate(witness, mismatch)
-
-
-def test_expanded_witness_hashes_and_records_match():
-    records = json.loads((TASK / "records.json").read_text())
-    sota = json.loads((TASK / "sota.json").read_text())
-    expected_public = {"T076-C02": 17072, "T076-C03": 33531}
-    for cid in ("T076-C02", "T076-C03"):
-        entry = records["configurations"][cid]
-        for label in ("best_human", "best_public"):
-            witness = TASK / entry[label]["witness_file"]
-            assert hashlib.sha256(witness.read_bytes()).hexdigest() == entry[label]["witness_sha256"]
-        se = sota["configurations"][cid]
-        assert se["acceptance_status"] == "accepted_by_sol"
-        assert se["best_human"]["witness_sha256"] == entry["best_human"]["witness_sha256"]
-        assert se["best_public"]["witness_sha256"] == entry["best_public"]["witness_sha256"]
-        assert se["best_reproduced"]["witness_sha256"] == entry["best_public"]["witness_sha256"]
-        assert se["public_value"] == se["reproduced_value"] == expected_public[cid]
-        assert se["matches_public_best"] is True
-        assert entry["best_public"]["value"] == expected_public[cid]
-        assert entry["previously_selected_public_candidate"]["status"].startswith("valid but weaker")

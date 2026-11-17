@@ -109,37 +109,3 @@ def test_runner_error_and_timeout_controls():
         _run([sys.executable, "-c", "raise RuntimeError('intentional T050 worker failure')"], env, 5)
     with pytest.raises(TimeoutError):
         _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.1)
-
-@pytest.mark.parametrize(("cid", "dimension", "human_edges", "record_edges"), [
-    ("T050-C02", 10, 191, 379),
-    ("T050-C03", 11, 192, 746),
-])
-def test_expanded_dimension_witnesses_and_mutations(monkeypatch, cid, dimension, human_edges, record_edges):
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", cid)
-    params = dict(PARAMETERS, dimension=dimension, graph=f"Q{dimension}")
-    config = {"id": cid, "parameters": params}
-    from tasks.t050.human import run_code as run_human
-    from tasks.t050.reference import run_code as run_reference
-    human = run_human()
-    reference = run_reference()
-    assert validate(human, config, strict=True)["objective"] == human_edges
-    result = validate(reference, config, strict=True)
-    assert result["objective"] == record_edges
-    for forged in (dict(reference, objective=-999), dict(reference, score={"false": True})):
-        assert validate(forged, config, strict=True) == result
-    broken = dict(reference, vertices=reference["vertices"] + [reference["vertices"][0]])
-    with pytest.raises(ValueError):
-        validate(broken, config, strict=True)
-
-@pytest.mark.parametrize(("cid", "dimension"), [("T050-C02", 10), ("T050-C03", 11)])
-def test_expanded_initial_single_file_cold_run(monkeypatch, tmp_path, cid, dimension):
-    import shutil
-    import subprocess
-    source = ROOT / "init_program.py"
-    shutil.copy(source, tmp_path / "candidate.py")
-    env = dict(os.environ, MATHBENCH_CONFIG_ID=cid)
-    script = f"import runpy,json; m=runpy.run_path({str(tmp_path / 'candidate.py')!r}); print(json.dumps(m['run_code']()))"
-    output = subprocess.check_output([sys.executable, "-I", "-c", script], cwd=tmp_path, env=env, text=True)
-    candidate = __import__("json").loads(output)
-    cfg = {"id": cid, "parameters": dict(PARAMETERS, dimension=dimension, graph=f"Q{dimension}")}
-    assert validate(candidate, cfg, strict=True)["objective"] == dimension

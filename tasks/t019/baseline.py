@@ -23,37 +23,20 @@ def _admissible(values, primes):
 
 def run_code():
     cid = os.environ.get("MATHBENCH_CONFIG_ID", "T019-C01")
-    try: k = {"T019-C01":343,"T019-C02":1000,"T019-C03":3000}[cid]
-    except KeyError: raise ValueError(f"unsupported T019 configuration: {cid}") from None
+    if cid != "T019-C01":
+        raise ValueError(f"unsupported T019 configuration: {cid}")
+    k = 343
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
     primes = _primes(k)
-    if k != 343:
-        from tasks.t019.init_program import run_code as cold_start
-        best = cold_start()["tuple"]
-        best_span = max(best)-min(best)
-        # A small number of full exact-feasibility proposals scales to k=3000.
-        for _ in range(3):
-            candidate = best[:]
-            i = rng.randrange(k)
-            candidate[i] = rng.randrange(min(best), max(best)+1)
-            if len(set(candidate)) == k and _admissible(candidate, primes):
-                span = max(candidate)-min(candidate)
-                if span < best_span: best,best_span=candidate,span
-        return {"tuple":best}
-    if k == 343:
-        values = []
-        occupied = {p: set() for p in primes}
-        # Preserve the original accepted C01 greedy start.
-        for x in range(200000):
-            if all(len(occupied[p]) < p - 1 or x % p in occupied[p] for p in primes):
-                values.append(x)
-                for p in primes: occupied[p].add(x % p)
-                if len(values) == k: break
-        if len(values) != k: raise RuntimeError("greedy construction did not find k entries")
-    else:
-        # New configurations share the finite-span, reference-free cold seed.
-        from tasks.t019.init_program import run_code as cold_start
-        values = cold_start()["tuple"]
+    values = []
+    occupied = {p: set() for p in primes}
+    # Preserve the original accepted C01 greedy start.
+    for x in range(200000):
+        if all(len(occupied[p]) < p - 1 or x % p in occupied[p] for p in primes):
+            values.append(x)
+            for p in primes: occupied[p].add(x % p)
+            if len(values) == k: break
+    if len(values) != k: raise RuntimeError("greedy construction did not find k entries")
     # Restarted random interval search gives actual objective improvements when
     # it finds a feasible replacement. All checks cover the full prime domain.
     budget = max(0.0, float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2")))

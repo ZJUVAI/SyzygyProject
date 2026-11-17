@@ -1,0 +1,54 @@
+{
+  "task_id": "T020",
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "authors": [
+      "Neill Clift"
+    ],
+    "year": 2026,
+    "url": "https://additionchains.com/LargeChains.html",
+    "evidence_state": "downloaded public one-integer-per-line witness; all 203 entries and 202 additions independently replayed with exact integers",
+    "optimality": "construction only; source states none of listed lengths is proved optimal",
+    "witness": "data/human_t020.json"
+  },
+  "best_public": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "url": "https://additionchains.com/LargeChains.html",
+    "evidence_state": "page updated 2026-11-02; exact P-192 row says previous 203, new length 202; linked witness downloaded and reproduced",
+    "optimality": "not proved; page says none of the listed lengths is proved optimal",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "provenance": "task-local exact copy of P-192_field_inverse_202.txt linked by Clift's page",
+    "evidence_state": "independently checked start, strict increase, each sum-of-two-earlier-terms relation, endpoint, and length with Python integers",
+    "witness": "data/human_t020.json"
+  },
+  "baseline_seed": {
+    "provenance": "binary expansion chain generated from the fixed integer target",
+    "evidence_state": "checker verifies all steps; no human/reference files read"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {},
+  "initial_results": {
+    "T020-C01": {
+      "objective": 380,
+      "objective_value": 380,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.531578947368421
+    }
+  }
+}

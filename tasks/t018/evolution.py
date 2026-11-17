@@ -147,7 +147,9 @@ def _improve(matrix, deadline, rng):
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T018-C01")
-    n = {"T018-C01": 29, "T018-C02": 27, "T018-C03": 31}.get(config_id, 29)
+    if config_id != "T018-C01":
+        raise ValueError(f"unknown T018 configuration: {config_id}")
+    n = 29
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     seconds = max(0.1, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
     rng = random.Random(seed)

@@ -39,22 +39,6 @@ class TaskTests(unittest.TestCase):
     def test_bareiss_pivot_swap(self):
         self.assertEqual(determinant_bareiss([[0, 1], [1, 0]]), -1)
 
-    def test_order27_human_and_public_witness_exact(self):
-        from tasks.t018 import human, reference
-        config = {"id": "T018-C02", "parameters": {"n": 27, "entries": "±1"}, "direction": "maximize"}
-        with patch.dict(os.environ, {"MATHBENCH_CONFIG_ID": "T018-C02"}):
-            h = human.run_code()
-            public = reference.run_code()
-        self.assertEqual(validate(h, config)["objective"], 12611693314584870912)
-        self.assertEqual(validate(public, config)["objective"], 13293406466724593664)
-        broken = {"matrix": [r[:] for r in public["matrix"]]}
-        broken["matrix"][0][0] *= -1
-        with self.assertRaises(ValueError):
-            # Wrong dimensions and Boolean damage are both rejected.
-            validate({"matrix": broken["matrix"][:-1]}, config)
-        claimed = validate({**public, "claimed_score": 0}, config)
-        self.assertEqual(claimed["objective"], 13293406466724593664)
-
     def test_unknown_config_id_rejected(self):
         from tasks.t018.human import run_code
         with patch.dict(os.environ, {"MATHBENCH_CONFIG_ID": "T018-C99"}):

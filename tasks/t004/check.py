@@ -3,7 +3,7 @@ from fractions import Fraction
 import math
 
 _OBJECTIVE = "minimum pairwise angular separation in radians"
-_CONFIGS = {f"T004-C{cid}": {"n": n, "space": "S2", "objective": _OBJECTIVE} for cid,n in (("01",16),("02",17),("03",19))}
+_CONFIGS = {"T004-C01": {"n": 16, "space": "S2", "objective": _OBJECTIVE}}
 
 def _q(value):
     if type(value) is int:

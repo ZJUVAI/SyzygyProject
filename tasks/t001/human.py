@@ -3,8 +3,7 @@ import json
 import os
 from pathlib import Path
 
-_FILES = {"T001-C01": "human_reference.json", "T001-C02": "human_reference_n32.json",
-          "T001-C03": "packomania_n50.json"}
+_FILES = {"T001-C01": "human_reference.json"}
 
 
 def run_human():

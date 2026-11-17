@@ -1,0 +1,185 @@
+{
+  "result": {
+    "task_id": "T039",
+    "config_id": "T039-C01",
+    "validity": 1.0,
+    "combined_score": 0.9572649572649573,
+    "objective": 117,
+    "verification_status": "exact",
+    "generation_time": 116.37358560413122,
+    "verification_time": 0.409878458827734,
+    "objective_value": 117,
+    "details": {
+      "rows": 7,
+      "marks_per_row": 6,
+      "within_row_differences_checked": 105,
+      "distinct_differences": 105,
+      "row_spans": [
+        117,
+        111,
+        115,
+        104,
+        98,
+        112,
+        114
+      ]
+    },
+    "eval_time": 116.78966436907649,
+    "seed": 6803901,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 160,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 125
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t039/runs/search_gap38_20261109_gap38_elitecover/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "scope": 117,
+      "distinct_positive_differences": 105,
+      "sum_positive_differences": 5891
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 160,
+      "seed": 6803901,
+      "method": "Search candidate full rows in independent subsets of the near-feasible layouts; pack the remaining disjoint difference masks"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 6803901,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          157,
+          157,
+          "512",
+          6803901
+        ]
+      ],
+      "prior_control_summary": "tasks/t039/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 160,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 125
+    },
+    "source_sha256": {
+      "tasks/t039/baseline.py": "15ab5b5b2942ff435c800e4a3e238cc86a8b78306f1c2f4ef7b72c4dfcb5fcd6",
+      "tasks/t039/check.py": "624657d3a1b844b85177b224f97c59566bd0b3dc052eb541133126646e463ea5",
+      "tasks/t039/evaluator.py": "5673e1ad50788be72b08c38a6d14333d188d80802191d2de38a88804477028c5",
+      "tasks/t039/evolution.py": "709b0ff4472e0a30f259bcf4e620697e2bdcc8bfcf515d0b346f8df02525fa5e",
+      "tasks/t039/human.py": "51cbcd05d40f66c4731c63f5d7e1b49a60549321c7bf6332a6534387d1aa21aa",
+      "tasks/t039/init_program.py": "83c07963e800a525fba7708e43d043fa5357353e89f6d47c6e0ce0c6e5e51b3d",
+      "tasks/t039/reference.py": "475efcee7baf6f1ed75171f2e657bdaede77638ed7305845998b3becc11c1446",
+      "tasks/t039/test_task.py": "26bd05a3c549bb4560148aeb83c6d6885a167def7b89955ff3a7af445f1270f6",
+      "program.py": "8c9a042f8256edd90f1f2595d15658878d1d96daac0d36dc8f8538360950443c",
+      "portfolio.json": "43ab7556df75c671d2e1bb13185388bf477affbdda8d13c1f75bee0c5bf829f0",
+      "plan.json": "b889b2b7cb1077a7873e45829abe22176c78c71917f5536930550813243eab96",
+      "search.cpp": "18071a7ab61f1ac30563f574057f84c373a8f96b5f4aa4f08dcb49d159ec6205",
+      "cover.cpp": "4f9cc430bb1f3acd955be51cab5385ee8ca0b13509eb869a97bc41fec4c7ccd7"
+    },
+    "warm_start_sha256": "75abc53ca628763b3cfacb9a2b1395f5737006bf6d586bbcf494f3da49dab071",
+    "replay_command": ".venv/bin/python -m mathbench replay T039 tasks/t039/data/best/result.json --config T039-C01"
+  },
+  "solution": {
+  "rows": [
+    [
+      0,
+      1,
+      33,
+      69,
+      94,
+      117
+    ],
+    [
+      0,
+      4,
+      34,
+      87,
+      106,
+      111
+    ],
+    [
+      0,
+      16,
+      55,
+      73,
+      86,
+      115
+    ],
+    [
+      0,
+      3,
+      40,
+      50,
+      78,
+      104
+    ],
+    [
+      0,
+      2,
+      9,
+      76,
+      90,
+      98
+    ],
+    [
+      0,
+      12,
+      27,
+      71,
+      92,
+      112
+    ],
+    [
+      0,
+      6,
+      51,
+      62,
+      97,
+      114
+    ]
+  ],
+  "search_metadata": {
+    "native": "202977124 1360 3",
+    "near_layouts": 16,
+    "repair_counts": [
+      1,
+      0,
+      52,
+      235,
+      351,
+      0,
+      59,
+      33356,
+      3013046
+    ]
+  }
+}
+
+}

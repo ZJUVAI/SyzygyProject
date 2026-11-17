@@ -2,7 +2,7 @@
 import os
 from fractions import Fraction
 
-_N = {"T001-C01": 26, "T001-C02": 32, "T001-C03": 50}
+_N = {"T001-C01": 26}
 
 
 def run_code():

@@ -4,10 +4,9 @@ import os
 
 def _mark_count():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T007-C01")
-    counts = {"T007-C01": 29, "T007-C02": 30, "T007-C03": 32}
-    if config_id not in counts:
+    if config_id != "T007-C01":
         raise ValueError(f"unknown T007 configuration: {config_id}")
-    return counts[config_id]
+    return 29
 
 
 def run_code():

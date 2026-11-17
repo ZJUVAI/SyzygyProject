@@ -63,10 +63,10 @@ def test_bouwkamp_reconstruction_and_source_hash():
 
 
 def test_saved_own_seed_and_exact_score():
-    witness = json.loads((TASK / "best/seed_4755.json").read_text())
+    witness = json.loads((TASK / "data/search/seed_4755.json").read_text())
     assert witness == init_run()
     assert validate(witness, CONFIG)["objective"] == 4755
-    metadata = json.loads((TASK / "best/seed_4755.metadata.json").read_text())
+    metadata = json.loads((TASK / "data/search/seed_4755.metadata.json").read_text())
     assert metadata["objective"] == 4755
 
 

@@ -32,7 +32,7 @@ def test_human_program_replays_public_human_construction():
 
 
 def test_independent_solver_seed_hash_and_exact_score():
-    path = ROOT / "best/independent_cpsat_seed_270.json"
+    path = ROOT / "data/search/independent_cpsat_seed_270.json"
     assert hashlib.sha256(path.read_bytes()).hexdigest() == (
         "5d194c9589c9dab166b66f85feeeca8fe6f3ac831dc3400e9e66da506a10c225"
     )

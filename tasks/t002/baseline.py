@@ -6,8 +6,8 @@ from tasks.t002.init_program import run_code as initial
 
 def run_code():
     cid=os.environ.get('MATHBENCH_CONFIG_ID','T002-C01')
-    n={'T002-C01':26,'T002-C02':29,'T002-C03':38}.get(cid)
-    if n is None: raise ValueError('unknown T002 configuration')
+    if cid != 'T002-C01': raise ValueError('unknown T002 configuration')
+    n=26
     best=initial(); config={'parameters':{'n':n}}
     rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
     for _ in range(40):

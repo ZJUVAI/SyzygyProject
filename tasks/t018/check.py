@@ -31,8 +31,8 @@ def validate(solution, config, strict=False):
         raise ValueError("solution and config must be objects")
     params = config.get("parameters", config)
     n = params.get("n") if isinstance(params, dict) else None
-    if type(n) is not int or n not in (27, 29, 31):
-        raise ValueError("configuration must specify n=27, 29, or 31")
+    if type(n) is not int or n != 29:
+        raise ValueError("configuration must specify n=29")
     matrix = solution.get("matrix")
     if not isinstance(matrix, list) or len(matrix) != n:
         raise ValueError(f"matrix must have {n} rows")

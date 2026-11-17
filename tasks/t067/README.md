@@ -35,8 +35,8 @@ Milshtein 于 2022-10-08 在线发表的论文报告了 444 个码字。论文�
 ```sh
 .venv/bin/python -m pytest tasks/t067 -q
 .venv/bin/python -m json.tool tasks/t067/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t067/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t067/data/records.json > /dev/null
 ```
 
 测试涵盖已发表见证、初始构造、搜索程序、精确距离、重量和长度、重复字、破坏距离、配置错误、伪造分数、程序异常及超时。独立复算全部 (444*443/2 = 98,346) 个字对。状态为已通过 Sol 验收（2026-11-06）。
@@ -76,8 +76,8 @@ Run:
 ```sh
 .venv/bin/python -m pytest tasks/t067 -q
 .venv/bin/python -m json.tool tasks/t067/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t067/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t067/data/records.json > /dev/null
 ```
 
 Tests cover the published witness, the initial construction, search programs, exact distance, weight and length, duplicates, a broken distance constraint, wrong configuration, forged scores, worker errors, and timeouts. An independent count checks all 444*443/2 = 98,346 word pairs. Status is accepted by Sol on 2026-11-06.

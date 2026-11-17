@@ -10,7 +10,7 @@ from scipy.optimize import minimize
 
 from tasks.t005.check import validate
 
-_CONFIG_N = {"T005-C01": 11, "T005-C02": 12, "T005-C03": 16}
+_CONFIG_N = 11
 
 
 class _DeadlineReached(Exception):
@@ -26,8 +26,7 @@ def _exact_score(points):
 
 
 def run_code():
-    config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T005-C01")
-    n = _CONFIG_N.get(config_id, _CONFIG_N["T005-C01"])
+    n = _CONFIG_N
     seconds = max(0.1, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     rng = np.random.default_rng(seed)

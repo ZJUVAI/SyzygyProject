@@ -4,7 +4,7 @@ import os
 import random
 from mathbench.search import search_steps
 
-_N = {"T001-C01": 26, "T001-C02": 32, "T001-C03": 50}
+_N = {"T001-C01": 26}
 
 
 def _grid(n):
@@ -21,7 +21,7 @@ def _grid(n):
 def _feasible(candidate):
     from tasks.t001.check import validate
     n = len(candidate["centers"])
-    cid = {26: "T001-C01", 32: "T001-C02", 50: "T001-C03"}[n]
+    cid = {26: "T001-C01"}[n]
     try:
         validate(candidate, {"id": cid, "parameters": {"n": n, "container": "unit square"}}, strict=True)
         return True

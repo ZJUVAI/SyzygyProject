@@ -4,10 +4,9 @@ import random
 
 def _config_n():
     cid = os.environ.get("MATHBENCH_CONFIG_ID", "T018-C01")
-    try:
-        return {"T018-C01": 29, "T018-C02": 27}[cid]
-    except KeyError:
-        raise ValueError(f"unknown T018 configuration: {cid}") from None
+    if cid != "T018-C01":
+        raise ValueError(f"unknown T018 configuration: {cid}")
+    return 29
 
 
 def run_code():

@@ -93,7 +93,7 @@ def test_pinned_certificate_matches_upstream_checksum():
     certificate_path = ROOT / "data" / "chen_zhu_long_537_certificate.col"
     actual = hashlib.sha256(certificate_path.read_bytes()).hexdigest()
     assert actual == expected
-    manifest = json.loads((ROOT / "source_hashes.json").read_text())
+    manifest = json.loads((ROOT / "data/source_hashes.json").read_text())
     public_source = manifest["arxiv_2610_31362_v1"]
     assert public_source["repository_commit"] == "92a9d5f1336a5a064b2bfe6597d967f59191e365"
     assert public_source["certificate_sha256"] == actual
@@ -102,7 +102,7 @@ def test_pinned_certificate_matches_upstream_checksum():
 
 
 def test_saved_human_transcription_hash():
-    manifest = json.loads((ROOT / "source_hashes.json").read_text())
+    manifest = json.loads((ROOT / "data/source_hashes.json").read_text())
     human_source = manifest["fredricksen_sweet_2000"]
     witness = ROOT / "data/fredricksen_sweet_536_halfsets.json"
     actual = hashlib.sha256(witness.read_bytes()).hexdigest()

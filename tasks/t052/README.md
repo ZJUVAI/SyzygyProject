@@ -31,8 +31,8 @@ Smith 和 Montemanni 的表报告 `M(12,9) ≥ 1320`、`M(12,9) ≤ 11880`。论
 ```sh
 .venv/bin/python -m pytest tasks/t052/test_task.py -q
 .venv/bin/python -m json.tool tasks/t052/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t052/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t052/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t052/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t052/data/records.json > /dev/null
 ```
 
 状态：已通过 Sol 验收（2026-11-06）。
@@ -72,8 +72,8 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t052/test_task.py -q
 .venv/bin/python -m json.tool tasks/t052/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t052/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t052/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t052/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t052/data/records.json > /dev/null
 ```
 
 Status: accepted by Sol on 2026-11-06.

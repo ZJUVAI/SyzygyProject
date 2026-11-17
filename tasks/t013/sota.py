@@ -8,21 +8,16 @@ from check import validate
 
 
 _ROOT = Path(__file__).parent
-_WITNESSES = {
-    "T013-C01": "human_labs100_record.json",
-    "T013-C02": "human_labs80_record.json",
-    "T013-C03": "sota_labs120.json",
-}
+_WITNESS = "human_labs100_record.json"
 
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T013-C01")
-    if config_id not in _WITNESSES:
+    if config_id != "T013-C01":
         raise ValueError(f"unsupported T013 configuration: {config_id}")
-    data = json.loads((_ROOT / "data" / _WITNESSES[config_id]).read_text())
+    data = json.loads((_ROOT / "data" / _WITNESS).read_text())
     sequence = data["sequence"]
-    expected_length = {"T013-C01": 100, "T013-C02": 80, "T013-C03": 120}[config_id]
-    if len(sequence) != expected_length:
+    if len(sequence) != 100:
         raise ValueError("stored witness has the wrong length")
     return {"sequence": sequence}
 
@@ -30,5 +25,4 @@ def run_code():
 if __name__ == "__main__":
     result = run_code()
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T013-C01")
-    length = {"T013-C01": 100, "T013-C02": 80, "T013-C03": 120}[config_id]
-    print(validate(result, {"parameters": {"L": length}})["objective"])
+    print(validate(result, {"parameters": {"L": 100}})["objective"])

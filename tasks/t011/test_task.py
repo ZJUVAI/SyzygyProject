@@ -14,8 +14,6 @@ from tasks.t011.reference import run_code as run_reference
 ROOT = Path(__file__).parent
 CONFIGS = {
     "T011-C01": ({"q": 7, "power": 5}, 367, 367),
-    "T011-C02": ({"q": 7, "power": 4}, 100, 100),
-    "T011-C03": ({"q": 7, "power": 6}, 1101, 1120),
 }
 
 @pytest.mark.parametrize("cid", CONFIGS)

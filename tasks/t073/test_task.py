@@ -40,7 +40,7 @@ def test_all_five_entries_and_exact_human_reference(monkeypatch):
 
 
 def test_reference_is_pinned_and_independent_certificate_matches():
-    metadata = json.loads((TASK / "sota.json").read_text())
+    metadata = json.loads((TASK / "data/sota.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     witness = TASK / record["witness"]
     assert hashlib.sha256(witness.read_bytes()).hexdigest() == record["witness_sha256"]

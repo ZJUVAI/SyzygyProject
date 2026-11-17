@@ -35,10 +35,6 @@ def run_code():
     import json, os
     from pathlib import Path
     config_id=os.environ.get('MATHBENCH_CONFIG_ID','T010-C01')
-    if config_id in ('T010-C02','T010-C03'):
-        filename={'T010-C02':'parity_extended_23_84_10.json','T010-C03':'parity_extended_25_196_10.json'}[config_id]
-        data=json.loads((Path(__file__).parent/'data'/filename).read_text())
-        return {'codewords':data['codewords']}
     if config_id != 'T010-C01': raise ValueError('unsupported configuration')
     # A zero coordinate preserves every distance, giving n=17, d=6.
     return {"codewords": [word << 1 for word in nordstrom_robinson_words()]}

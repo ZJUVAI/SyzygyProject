@@ -1,7 +1,7 @@
 """Exact bit-parallel zero-one verifier for sorting networks."""
 from functools import lru_cache
 
-_CONFIGS={"T048-C01":17,"T048-C02":18,"T048-C03":19}
+_CONFIGS={"T048-C01":17}
 @lru_cache(maxsize=3)
 def _input_bitsets(inputs):
     lanes=1<<inputs;patterns=[]

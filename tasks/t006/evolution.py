@@ -1,4 +1,4 @@
-"""Search cyclic covers for C01 and return a valid LPS fallback for C02."""
+"""Search cyclic covers for the official degree-4, girth-10 configuration."""
 import itertools
 import json
 import math
@@ -205,14 +205,8 @@ def _lift(base_adj, voltage, modulus):
 
 def run_code():
     config_id=os.environ.get('MATHBENCH_CONFIG_ID', 'T006-C01')
-    if config_id not in ('T006-C01','T006-C02'):
+    if config_id != 'T006-C01':
         raise ValueError('unsupported configuration')
-    if config_id == 'T006-C02':
-        from lps import build_graph
-        graph=build_graph((0,2))
-        validate(graph, {'parameters': {'degree':4,'girth':9}})
-        graph['_evolution']={'method':'valid LPS girth-10 fallback for the girth-9 configuration','iterations':0}
-        return graph
     try:
         budget = max(0.1, min(240.0, float(os.environ.get('MATHBENCH_EVOLUTION_SECONDS', '45'))))
     except ValueError:

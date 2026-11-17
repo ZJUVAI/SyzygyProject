@@ -13,4 +13,3 @@ def test_residue_incremental_counts_match_rebuild():
 
 def test_missing_rejects_duplicates():
     assert _missing([0]*343, _primes(343)) is None
-    assert _missing([0]*1000, _primes(1000)) is None

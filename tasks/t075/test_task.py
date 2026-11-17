@@ -61,9 +61,10 @@ def test_h6_link_graphs_are_five_cycles():
 
 
 def test_saved_own_search_result_recomputes_objective():
-    saved = json.loads((TASK_DIR / "best/T075-C01/solution.json").read_text())
-    saved_result = json.loads((TASK_DIR / "best/T075-C01/result.json").read_text())
-    provenance = json.loads((TASK_DIR / "best/T075-C01/provenance.json").read_text())
+    record = json.loads((TASK_DIR / "data/best/result.json").read_text())
+    saved = record["solution"]
+    saved_result = record["result"]
+    provenance = record["provenance"]
     result = validate(saved, CONFIG, strict=True)
     expected = saved_result["objective"]
     assert result["objective"] == expected

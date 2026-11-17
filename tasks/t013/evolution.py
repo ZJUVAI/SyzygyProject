@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 import numpy as np
 
-LENGTHS = {"T013-C01": 100, "T013-C02": 80, "T013-C03": 120}
+LENGTH = 100
 
 
 def _state(seq):
@@ -69,7 +69,7 @@ def _best_pair(seq, corr, neighbors, delta):
 
 def _python_run_code():
     config = os.environ.get("MATHBENCH_CONFIG_ID", "T013-C01")
-    n = LENGTHS[config]
+    n = LENGTH
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "7301")))
     budget = float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS",
                                   os.environ.get("T013_SEARCH_SECONDS", "45")))
@@ -177,7 +177,7 @@ def run_code():
     if shutil.which("g++") is None:
         return _python_run_code()
     config = os.environ.get("MATHBENCH_CONFIG_ID", "T013-C01")
-    n = LENGTHS[config]
+    n = LENGTH
     seed = int(os.environ.get("MATHBENCH_SEED", "7301"))
     budget = max(0.1, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
     started = time.monotonic()

@@ -94,7 +94,7 @@ def _max(values):
 
 def validate(solution,config,strict=False):
     n=config.get('parameters',{}).get('n')
-    if type(n) is not int or n not in (26,29,38) or config.get('parameters')!={'n':n}: raise ValueError('unsupported configuration')
+    if type(n) is not int or n != 26 or config.get('parameters')!={'n':n}: raise ValueError('unsupported configuration')
     if not isinstance(solution,dict) or not isinstance(solution.get('squares'),(list,tuple)): raise ValueError('solution must contain squares')
     raw=solution['squares']
     if len(raw)!=n: raise ValueError(f'expected exactly {n} squares')

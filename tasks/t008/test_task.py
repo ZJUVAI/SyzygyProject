@@ -35,33 +35,7 @@ def test_claimed_score_is_ignored():
     assert checked["details"]["claimed_objective_ignored"] is True
 
 
-def test_c02_public_witness_is_exact_cover():
-    import json
-    from pathlib import Path
-    from tasks.t008.sota import run_code as public_cover
-    config = {"id": "T008-C02", "parameters": {"v": 20, "k": 10, "t": 4}}
-    import os
-    old = os.environ.get("MATHBENCH_CONFIG_ID")
-    os.environ["MATHBENCH_CONFIG_ID"] = "T008-C02"
-    try:
-        result = public_cover()
-    finally:
-        if old is None:
-            os.environ.pop("MATHBENCH_CONFIG_ID", None)
-        else:
-            os.environ["MATHBENCH_CONFIG_ID"] = old
-    checked = validate(result, config)
-    assert checked["objective"] == 36
-    assert checked["details"]["total_t_subsets"] == 4845
-    forged = dict(result, objective=-100)
-    assert validate(forged, config) == checked
-    damaged = dict(result, blocks=result["blocks"][:-1])
-    with pytest.raises(ValueError, match="covering misses"):
-        validate(damaged, config)
-
-
-def test_c02_initial_program_is_valid(monkeypatch):
+def test_unsupported_configuration_is_rejected(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T008-C02")
-    result = run_code()
-    checked = validate(result, CONFIG | {"id": "T008-C02", "parameters": {"v": 20, "k": 10, "t": 4}})
-    assert checked["verification_status"] == "exact"
+    with pytest.raises(ValueError, match="unsupported configuration"):
+        run_code()

@@ -26,24 +26,6 @@
       "direction": "minimize",
       "human_reference": 85,
       "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T048-C02",
-      "parameters": {
-        "inputs": 18
-      },
-      "direction": "minimize",
-      "human_reference": 90,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T048-C03",
-      "parameters": {
-        "inputs": 19
-      },
-      "direction": "minimize",
-      "human_reference": 98,
-      "acceptance_status": "accepted_by_sol"
     }
   ],
   "sources": [
@@ -67,21 +49,5 @@
       "controls": "五种程序、空网络破坏、完整声明成绩不变性、严格回放、冷导出及三类运行失败检查通过；任务及共享检查49项通过。",
       "limits": "未重做2013完整传统搜索或最优性下界SAT证明；131072输入验证的是可行性，不证明比较器个数最少。"
     }
-  },
-  "configuration_expansion_review": {
-    "reviewer": "Sol main agent",
-    "date": "2026-11-07",
-    "decision": "实现完成并通过Sol验收",
-    "source_review": {
-      "definition": "Minimize comparator count of an ascending sorting network; retain17 wires, add18 and19. Depth is reported separately and is not the objective.",
-      "primary_source": "Sol read Dobbelaere SorterHunter table at https://bertdobbelaere.github.io/sorting_networks.html. Live size intervals are68–77 for18 and73–85 for19; lowest listed depth is a separate field. Exact77/85 comparator lists archived from pinned author revision8ba90df607cbdc339409e0b173b5a2ffd60fc911. AI-use status is not disclosed.",
-      "human_method": "Reconstruct Batcher odd-even merge with sentinel wires trimmed from32 to n. With +infinity on high padding wires and min-to-low comparators, padding never enters real wire positions. Traditional90/98 comparator baselines reproduced and verified.",
-      "independent_method": "Sol personally ran human and reference. In contrast to the checker bitset per wire, the audit packs each binary input as its own uint32 and uses conditional swaps, then checks the exact sorted popcount pattern for all262144 and524288 inputs. Feasible public scores77/85 match. No known size optimality proof found in checked sources.",
-      "admission": "All five strict programs and complete declared-score, malformed, cold export, error/nonfinite/timeout and replay controls passed. The task agent restored immutable input-pattern caching before final replay to fit default search budget, without reducing binary cases. Original17-wire archives retained."
-    },
-    "configuration_ids": [
-      "T048-C02",
-      "T048-C03"
-    ]
   }
 }

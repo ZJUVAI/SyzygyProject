@@ -1,0 +1,676 @@
+{
+  "result": {
+    "task_id": "T101",
+    "config_id": "T101-C01",
+    "validity": 1.0,
+    "combined_score": 8.8125,
+    "objective": 141,
+    "verification_status": "exact",
+    "generation_time": 135.0010523572564,
+    "verification_time": 0.3004353642463684,
+    "objective_value": 141,
+    "details": {
+      "point_count": 141,
+      "apex_distance_checks": 19740,
+      "claimed_objective_ignored": true,
+      "strict_full_domain_check": true
+    },
+    "eval_time": 135.30573166534305,
+    "seed": 76620,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 145,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 58
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t101/runs/search_gap21_20261109_gap21_repair0_retry/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "point_count": 141,
+      "method": "Sort exact squared distances from each apex; every row must increase strictly."
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 145,
+      "seed": 76620,
+      "method": "Repair a bank of near-feasible tabu candidates with CP-SAT after releasing the isosceles conflict core"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 76620,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          142,
+          142,
+          "512",
+          76620
+        ]
+      ],
+      "prior_control_summary": "tasks/t101/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 145,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 58
+    },
+    "source_sha256": {
+      "tasks/t101/baseline.py": "c6a793d91cc3200fd732c6a3928a1918231e607ed402bfbf7a8762b9fb3c0e8d",
+      "tasks/t101/check.py": "ad07484870af0c4ad5015543d6eb3a7f6c0f15ccf17144fe4a32360195673f5c",
+      "tasks/t101/evaluator.py": "3b85b23485931c271ddef2e009a99267ed827e12e177dc509965858b87b68ac5",
+      "tasks/t101/evolution.py": "b9b0e21481df926d8c4fe66b69a36919a789a998e6c4827eb6d4292ce5148b31",
+      "tasks/t101/human.py": "bf52894dce5bfb233fa4bdbe76946cb7ed15b29a9878038a66cd8d4b80a8ba01",
+      "tasks/t101/init_program.py": "3c661be68142413291881b8b5fe1d651211f161c3c29a6bc16227cab13df518d",
+      "tasks/t101/reference.py": "fe5c7d1e04ca141e2b5a4edb69aeb88567064883b85a971770a00ca664721330",
+      "tasks/t101/test_task.py": "df22903ccd6623481ba2e7ec4d3a6d2022439eb8633ecc600180e026044d761f",
+      "program.py": "f7bd8d0c201b88613d522e5cad984dc49138d4bf72485439bd067d2945c1aa52",
+      "plan.json": "69a60e0e2ec7251513fb618d2c67af03d3d167d317a00a0e7050ea6ecc40593e",
+      "search.cpp": "e08fe3d6f051de110a0b5b31f2e769966c7f36d5e97f94ed9407e59dd2e42064"
+    },
+    "warm_start_sha256": "9e5e8248beacc0e27f90a98e6be405be9b4374e05db70a327e36a2bb5aa2a6d7",
+    "replay_command": ".venv/bin/python -m mathbench replay T101 tasks/t101/data/best/result.json --config T101-C01"
+  },
+  "solution": {
+  "points": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      17
+    ],
+    [
+      0,
+      53
+    ],
+    [
+      0,
+      59
+    ],
+    [
+      0,
+      74
+    ],
+    [
+      0,
+      82
+    ],
+    [
+      0,
+      99
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      99
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      12
+    ],
+    [
+      2,
+      63
+    ],
+    [
+      2,
+      70
+    ],
+    [
+      2,
+      89
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      29
+    ],
+    [
+      3,
+      87
+    ],
+    [
+      3,
+      96
+    ],
+    [
+      4,
+      14
+    ],
+    [
+      4,
+      69
+    ],
+    [
+      5,
+      52
+    ],
+    [
+      5,
+      53
+    ],
+    [
+      5,
+      63
+    ],
+    [
+      5,
+      82
+    ],
+    [
+      5,
+      94
+    ],
+    [
+      6,
+      84
+    ],
+    [
+      8,
+      25
+    ],
+    [
+      8,
+      98
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      9,
+      82
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      96
+    ],
+    [
+      11,
+      1
+    ],
+    [
+      12,
+      5
+    ],
+    [
+      13,
+      99
+    ],
+    [
+      15,
+      28
+    ],
+    [
+      16,
+      45
+    ],
+    [
+      16,
+      64
+    ],
+    [
+      19,
+      7
+    ],
+    [
+      19,
+      64
+    ],
+    [
+      19,
+      91
+    ],
+    [
+      19,
+      98
+    ],
+    [
+      22,
+      1
+    ],
+    [
+      23,
+      91
+    ],
+    [
+      23,
+      94
+    ],
+    [
+      24,
+      2
+    ],
+    [
+      24,
+      3
+    ],
+    [
+      24,
+      62
+    ],
+    [
+      25,
+      96
+    ],
+    [
+      28,
+      7
+    ],
+    [
+      28,
+      23
+    ],
+    [
+      31,
+      6
+    ],
+    [
+      31,
+      93
+    ],
+    [
+      31,
+      97
+    ],
+    [
+      33,
+      7
+    ],
+    [
+      33,
+      23
+    ],
+    [
+      33,
+      93
+    ],
+    [
+      33,
+      98
+    ],
+    [
+      34,
+      3
+    ],
+    [
+      34,
+      4
+    ],
+    [
+      34,
+      98
+    ],
+    [
+      36,
+      16
+    ],
+    [
+      36,
+      99
+    ],
+    [
+      38,
+      1
+    ],
+    [
+      40,
+      71
+    ],
+    [
+      41,
+      7
+    ],
+    [
+      42,
+      20
+    ],
+    [
+      42,
+      82
+    ],
+    [
+      42,
+      97
+    ],
+    [
+      44,
+      85
+    ],
+    [
+      47,
+      16
+    ],
+    [
+      55,
+      87
+    ],
+    [
+      55,
+      94
+    ],
+    [
+      60,
+      26
+    ],
+    [
+      60,
+      66
+    ],
+    [
+      60,
+      96
+    ],
+    [
+      62,
+      8
+    ],
+    [
+      62,
+      97
+    ],
+    [
+      66,
+      55
+    ],
+    [
+      67,
+      16
+    ],
+    [
+      67,
+      71
+    ],
+    [
+      68,
+      4
+    ],
+    [
+      68,
+      26
+    ],
+    [
+      68,
+      89
+    ],
+    [
+      68,
+      96
+    ],
+    [
+      70,
+      0
+    ],
+    [
+      70,
+      11
+    ],
+    [
+      71,
+      17
+    ],
+    [
+      71,
+      36
+    ],
+    [
+      73,
+      98
+    ],
+    [
+      74,
+      1
+    ],
+    [
+      74,
+      80
+    ],
+    [
+      74,
+      93
+    ],
+    [
+      76,
+      1
+    ],
+    [
+      76,
+      20
+    ],
+    [
+      76,
+      97
+    ],
+    [
+      77,
+      27
+    ],
+    [
+      78,
+      3
+    ],
+    [
+      78,
+      52
+    ],
+    [
+      78,
+      94
+    ],
+    [
+      79,
+      33
+    ],
+    [
+      80,
+      31
+    ],
+    [
+      82,
+      21
+    ],
+    [
+      82,
+      91
+    ],
+    [
+      82,
+      98
+    ],
+    [
+      84,
+      29
+    ],
+    [
+      85,
+      3
+    ],
+    [
+      85,
+      62
+    ],
+    [
+      87,
+      54
+    ],
+    [
+      89,
+      0
+    ],
+    [
+      90,
+      72
+    ],
+    [
+      91,
+      53
+    ],
+    [
+      92,
+      16
+    ],
+    [
+      92,
+      54
+    ],
+    [
+      92,
+      99
+    ],
+    [
+      93,
+      1
+    ],
+    [
+      93,
+      30
+    ],
+    [
+      93,
+      77
+    ],
+    [
+      93,
+      82
+    ],
+    [
+      94,
+      2
+    ],
+    [
+      94,
+      62
+    ],
+    [
+      95,
+      59
+    ],
+    [
+      95,
+      68
+    ],
+    [
+      95,
+      90
+    ],
+    [
+      95,
+      99
+    ],
+    [
+      96,
+      17
+    ],
+    [
+      96,
+      27
+    ],
+    [
+      96,
+      90
+    ],
+    [
+      97,
+      4
+    ],
+    [
+      97,
+      19
+    ],
+    [
+      97,
+      96
+    ],
+    [
+      97,
+      97
+    ],
+    [
+      98,
+      9
+    ],
+    [
+      98,
+      59
+    ],
+    [
+      98,
+      71
+    ],
+    [
+      98,
+      94
+    ],
+    [
+      99,
+      2
+    ],
+    [
+      99,
+      11
+    ],
+    [
+      99,
+      85
+    ],
+    [
+      99,
+      86
+    ]
+  ],
+  "search_metadata": {
+    "start": 140,
+    "searched_best": 141,
+    "steps": 254696,
+    "restarts": 509,
+    "min_conflicts_at_target": 0,
+    "source_assisted": false,
+    "invalid_elite_count": 39,
+    "exact_repair_rounds": 118
+  }
+}
+
+}

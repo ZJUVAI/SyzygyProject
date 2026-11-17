@@ -1,6 +1,6 @@
 """Self-contained odd-even transposition sorting network."""
 import os
-_CONFIGS={"T048-C01":17,"T048-C02":18,"T048-C03":19}
+_CONFIGS={"T048-C01":17}
 def run_code():
     cid=os.environ.get("MATHBENCH_CONFIG_ID","T048-C01")
     try:inputs=_CONFIGS[cid]

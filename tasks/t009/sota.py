@@ -5,8 +5,6 @@ from pathlib import Path
 
 _FILES = {
     'T009-C01': 'sota_generator.json',
-    'T009-C02': 'human_generator_C02.json',
-    'T009-C03': 'human_generator_C03.json',
 }
 
 

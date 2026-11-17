@@ -14,7 +14,7 @@ The current polyominoes.org page labels the order `<= 270` and calls 54 by 55 th
 
 ## Independent seed and search
 
-An offline single-thread exact-cover search used only the fixed 11-cell shape and the 54 by 55 board dimensions. It found a separate 270-tile tiling in 477.481 seconds with seed `20261106`. The saved result is in `best/independent_cpsat_seed_270.json`. The initial program repeats this self-generated tiling twice to give a valid 540-tile seed on a 54 by 110 rectangle. The traditional search checks tile-aligned rectangular cuts and finds a 270-tile subrectangle. The evolutionary search mutates rectangle symmetries and keeps lower-count cut candidates. Neither search reads the human or reference witness.
+An offline single-thread exact-cover search used only the fixed 11-cell shape and the 54 by 55 board dimensions. It found a separate 270-tile tiling in 477.481 seconds with seed `20261106`. The saved result is in `data/search/independent_cpsat_seed_270.json`. The initial program repeats this self-generated tiling twice to give a valid 540-tile seed on a 54 by 110 rectangle. The traditional search checks tile-aligned rectangular cuts and finds a 270-tile subrectangle. The evolutionary search mutates rectangle symmetries and keeps lower-count cut candidates. Neither search reads the human or reference witness.
 
 The Reid source also lists a 47 by 99 rectangle with 423 copies. This is a weaker reported construction and does not change the highest checked feasible result of 270.
 
@@ -42,7 +42,7 @@ The shape cells, source page hash, symmetry convention, and verified public tili
 
 ## 独立起点与搜索
 
-离线单线程精确覆盖搜索只使用固定的 11 格形状与 54×55 矩形尺寸。随机种子 `20261106` 在 477.481 秒后找到另一份 270 块铺砌，保存在 `best/independent_cpsat_seed_270.json`。初始程序将这份自有铺砌复制两次，得到 54×110 矩形的 540 块有效起点。传统搜索检查与方块边界对齐的矩形切口，并找到 270 块子矩形。演化搜索改变矩形对称和切口，并保留块数较少的候选。两种搜索都不读取人类或参考见证。
+离线单线程精确覆盖搜索只使用固定的 11 格形状与 54×55 矩形尺寸。随机种子 `20261106` 在 477.481 秒后找到另一份 270 块铺砌，保存在 `data/search/independent_cpsat_seed_270.json`。初始程序将这份自有铺砌复制两次，得到 54×110 矩形的 540 块有效起点。传统搜索检查与方块边界对齐的矩形切口，并找到 270 块子矩形。演化搜索改变矩形对称和切口，并保留块数较少的候选。两种搜索都不读取人类或参考见证。
 
 Reid 来源还列出 47×99 矩形的 423 块构造。该构造较弱，不改变本配置已核实的最高可行结果 270。
 

@@ -77,6 +77,7 @@ def display(value, digits=15, quadratic_radicand=None):
 
 def collect():
     from mathbench.registry import INITIAL_TASKS, load_task, task_path
+    from mathbench.saved_result import best_record_path, read_best_record
     rows = []
     for task_id in INITIAL_TASKS:
         directory = task_path(task_id)
@@ -85,13 +86,13 @@ def collect():
         task = load_task(task_id)
         if task.get('acceptance_status') != 'accepted_by_sol':
             continue
-        public = read(directory / 'sota.json')['configurations']
-        initial_results = read(directory / 'records.json').get('initial_results', {})
+        public = read(directory / 'data/sota.json')['configurations']
+        initial_results = read(directory / 'data/records.json').get('initial_results', {})
         for config in task['configurations']:
             cid = config['id']
             initial = initial_results.get(cid)
-            own_file = directory / 'best' / cid / 'result.json'
-            own = read(own_file) if own_file.exists() else None
+            own_file = best_record_path(directory / 'data/best')
+            own = read_best_record(own_file)['result'] if own_file.is_file() else None
             record = public[cid]
             reproduced = record.get('verification', {}).get('run', {})
             reported = record.get('highest_reported', {}).get('value', record.get('public_value'))

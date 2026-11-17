@@ -9,5 +9,5 @@ from pathlib import Path
 
 
 def run_code():
-    witness_path = Path(__file__).with_name("sota_witness.json")
+    witness_path = Path(__file__).parent / "data" / "sota_witness.json"
     return {"set": json.loads(witness_path.read_text(encoding="utf-8"))}

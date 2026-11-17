@@ -3,7 +3,7 @@
 import os
 
 
-CONFIG_DIMENSIONS = {"T050-C01": 9, "T050-C02": 10, "T050-C03": 11}
+CONFIG_DIMENSIONS = {"T050-C01": 9}
 
 
 def configured_dimension():

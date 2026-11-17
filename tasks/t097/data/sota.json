@@ -1,0 +1,145 @@
+{
+  "task_id": "T097",
+  "configurations": {
+    "T097-C01": {
+      "program": "reference.py",
+      "reproduced_value": 15,
+      "public_value": 15,
+      "highest_reported": {
+        "value": 15,
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "reproduction_status": "The Shadoks viewer reports 15 pieces; exact reconstructed witness verified. The complete all-team per-instance inventory is unavailable, so this is not claimed as a global record or optimum."
+      },
+      "best_human": {
+        "value": 15,
+        "witness": "data/human/socg_fixed92_15.json",
+        "verification_status": "certified",
+        "ai_provenance": "Not disclosed in the reviewed sources."
+      },
+      "best_public": {
+        "value": 15,
+        "witness": "data/human/socg_fixed92_15.json",
+        "evidence": "Public Shadoks viewer witness; all-team per-instance ranking not available."
+      },
+      "best_reproduced": {
+        "value": 15,
+        "program": "reference.py",
+        "witness": "data/human/socg_fixed92_15.json",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_status": "certified"
+      },
+      "best_own_search": {
+        "value": 15,
+        "objective_value": 15,
+        "witness": "data/best/result.json",
+        "witness_sha256": "8c52b29fe3d3f31ec1c91d8b2d7e97e798bd1a053dbd1f0fc277d8c5b58c0a92",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "seed": 29101,
+        "verification_status": "certified",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-09",
+        "origin_type": "AI-assisted local continuation",
+        "search_metadata": {
+          "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+          "iterations": 6354,
+          "seed": 29101,
+          "planned_seconds": 180,
+          "comparison_data_read": false
+        },
+        "generation_record": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 15,
+          "verification_status": "certified",
+          "generation_time": 1.2331972494721413,
+          "verification_time": 5.954773016273975,
+          "objective_value": 15,
+          "details": {
+            "instance": "socg_fixed92",
+            "convex_polygon_count": 15,
+            "total_piece_vertices": 61,
+            "algebraic_field_degree": 1,
+            "verified_open_arrangement_cells": 124,
+            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 7.189637433737516,
+          "seed": 29101,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 15,
+          "verification_status": "certified",
+          "generation_time": 0.16453132778406143,
+          "verification_time": 1.4165723770856857,
+          "objective_value": 15,
+          "details": {
+            "instance": "socg_fixed92",
+            "convex_polygon_count": 15,
+            "total_piece_vertices": 66,
+            "algebraic_field_degree": 1,
+            "verified_open_arrangement_cells": 276,
+            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 1.5844123810529709,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "polygon_count": 15,
+          "target_area": "206848",
+          "uncovered_area": "0",
+          "method": "Independent rational recursive interior diagonals, full cover containment areas, and iterative convex-complement clipping; closedness proves pointwise coverage."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      }
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

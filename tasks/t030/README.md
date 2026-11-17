@@ -12,7 +12,7 @@ Samir Loudni 的 ID-VNS 页面提供 86 色着色。下载的见证覆盖 1000 �
 
 最优值仍未确定。Cazenave、Negrevergne 与 Sikora 的 2025 arXiv 论文在第 6.2 节表 4 的说明中明确称这些困难实例的色数未知，并列出下界 73。Held、Cook 与 Sewell 的论文也报告下界 73。本任务未独立重算这个下界。当前报告区间为 73 至 82。Hertz、Plumettaz 与 Zufferey 的 VSS-Col 论文将该图的 `χ` 标为未知、`k*` 标为 83。开放状态依据论文的明确陈述。来源检查日期为 2026-11-06。
 
-传统基线使用随机并列打破的多起点 DSATUR 贪心着色。它只读取固定图，不读取比较见证。seed 0 的 113 色输出、复算结果和运行记录保存在 `best/seed0_dsatur_*`。初始程序完全自包含，为每个顶点分配独立颜色。状态：已通过 Sol 验收（2026-11-06）。
+传统基线使用随机并列打破的多起点 DSATUR 贪心着色。它只读取固定图，不读取比较见证。seed 0 的 113 色输出、复算结果和运行记录保存在 `data/best/seed0_dsatur_*`。初始程序完全自包含，为每个顶点分配独立颜色。状态：已通过 Sol 验收（2026-11-06）。
 
 ## English
 
@@ -26,4 +26,4 @@ Samir Loudni's ID-VNS page provides an 86-coloring. The downloaded witness assig
 
 The optimum remains unknown. In their 2025 arXiv paper, Cazenave, Negrevergne, and Sikora state in the note for Section 6.2, Table 4, that the chromatic numbers of these difficult instances seem unknown. Their DSJC1000.5 row reports a lower bound of 73. Held, Cook, and Sewell also report 73. This task has not independently recomputed that lower bound. The reported interval is 73 to 82. The VSS-Col paper by Alain Hertz, Matthieu Plumettaz, and Nicolas Zufferey marks `χ` unknown and gives `k* = 83`. The open status relies on the papers' explicit statements. Sources were checked on 2026-11-06.
 
-The traditional baseline uses multi-start DSATUR greedy coloring with seeded random tie breaks. It reads the fixed graph and does not read comparison witnesses. The seed 0 result with 113 colors, exact verification, and run record are saved under `best/seed0_dsatur_*`. The initial program is self-contained and assigns a separate color to each vertex. Status: accepted by Sol on 2026-11-06.
+The traditional baseline uses multi-start DSATUR greedy coloring with seeded random tie breaks. It reads the fixed graph and does not read comparison witnesses. The seed 0 result with 113 colors, exact verification, and run record are saved under `data/best/seed0_dsatur_*`. The initial program is self-contained and assigns a separate color to each vertex. Status: accepted by Sol on 2026-11-06.

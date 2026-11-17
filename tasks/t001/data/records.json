@@ -1,0 +1,50 @@
+{
+  "best_human": {
+    "value": 0.09636233901,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "container": "unit square"
+    },
+    "url": "https://packomania.com/csq/csq26.html",
+    "provenance": "Packomania attributes the n=26 construction to reference [13], Nurmela and Östergård (1999). This is a feasible construction, not a proof of optimality.",
+    "evidence_state": "published coordinates directly exposed in the public per-configuration ASCII page"
+  },
+  "best_public": {
+    "value": 0.09636233901,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "container": "unit square"
+    },
+    "url": "https://packomania.com/csq/",
+    "evidence_state": "public record table; row is not bold, so the source does not mark it as proven optimal",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 0.096362339,
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "container": "unit square"
+    },
+    "url": "https://packomania.com/csq/txt/csq26.txt",
+    "provenance": "The public coordinate text was copied locally and translated from the centered unit square to [0,1]^2. The published decimal coordinates were retained. The common radius was reduced from 0.096362339010 to 0.09636233900 to account conservatively for coordinate rounding.",
+    "ai_provenance": "Coordinate transcription, translation, radius reduction, and exact rational verification performed for this task; the construction is attributed to Nurmela and Östergård (1999).",
+    "actual_value": 0.096362339,
+    "evidence_state": "local witness checked against exact rational boundary and pair-distance constraints"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {},
+  "initial_results": {
+    "T001-C01": {
+      "objective": "1/12",
+      "objective_value": "1/12",
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.8647915170815159
+    }
+  }
+}

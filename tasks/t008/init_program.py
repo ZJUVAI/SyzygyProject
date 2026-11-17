@@ -5,7 +5,6 @@ from itertools import combinations
 
 PARAMS = {
     "T008-C01": (24, 14, 4),
-    "T008-C02": (20, 10, 4),
 }
 
 
@@ -14,19 +13,7 @@ def run_code():
     if config_id not in PARAMS:
         raise ValueError("unsupported configuration")
     if config_id != "T008-C01":
-        v, k, t = PARAMS[config_id]
-        points = tuple(range(v))
-        blocks, covered = [], set()
-        for subset in combinations(points, t):
-            if subset in covered:
-                continue
-            extra = [x for x in points if x not in subset][:k-t]
-            block = tuple(sorted(subset + tuple(extra)))
-            blocks.append(list(block))
-            covered.update(combinations(block, t))
-        if int(os.environ.get("MATHBENCH_SEED", "0")) % 2:
-            blocks.reverse()
-        return {"blocks": blocks}
+        raise ValueError("unsupported configuration")
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     # EVOLVE-BLOCK-START
     points = tuple(range(24))

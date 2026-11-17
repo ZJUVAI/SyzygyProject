@@ -112,21 +112,7 @@ def test_runner_error_and_timeout_controls():
             _run([sys.executable, str(hang)], env, timeout=1)
 
 
-@pytest.mark.parametrize("config_index,length,hex_code", [(1,101,"1A5048216CCF18F83E910DD4C5"),(2,102,"2945A4F11CE44FF664850D182A")])
-def test_added_public_configurations(monkeypatch, config_index, length, hex_code):
-    configs=json.loads((ROOT / "tasks/t054/task.json").read_text())["configurations"]
-    config=configs[config_index]; monkeypatch.setenv("MATHBENCH_CONFIG_ID",config["id"])
-    witness=human.run_code(); replay=reference.run_code(); initial=init_program.run_code()
-    assert witness==replay and len(witness["sequence"])==length
-    bits=bin(int(hex_code,16))[2:].zfill(length)
-    assert witness["sequence"]==[1 if b=="1" else -1 for b in bits]
-    corr=_independent_correlations(witness["sequence"])
-    assert max(map(abs,corr))==5
-    assert check.validate(witness,config)["objective"]==5
-    assert check.validate(initial,config)["objective"]==length-1
-    with pytest.raises(ValueError): check.validate({"sequence":witness["sequence"][:-1]},config)
-
-@pytest.mark.parametrize("config_id,length", [("T054-C01",100),("T054-C02",101),("T054-C03",102)])
+@pytest.mark.parametrize("config_id,length", [("T054-C01",100)])
 def test_init_program_runs_as_cold_export(tmp_path, config_id, length):
     import subprocess
     import shutil

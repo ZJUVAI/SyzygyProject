@@ -32,8 +32,8 @@ Pegg 于 2017 年 7 月发布的资料给出边长 1000 的 27 块拼法。[问�
 ```sh
 .venv/bin/python -m pytest tasks/t070 -q
 .venv/bin/python -m json.tool tasks/t070/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t070/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t070/data/records.json > /dev/null
 ```
 
 测试涵盖原数据行解码、27 块人类见证、初始方案、传统和演化搜索、重叠、缺失面积、非互素边长、重复块记录、错误类型、越界、伪造分数、程序异常和超时。状态为已通过 Sol 验收（2026-11-06）。
@@ -70,8 +70,8 @@ The initial and search programs do not read `data/source/` or `data/reference/`.
 ```sh
 .venv/bin/python -m pytest tasks/t070 -q
 .venv/bin/python -m json.tool tasks/t070/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t070/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t070/data/records.json > /dev/null
 ```
 
 Tests cover source-row decoding, the 27-square human witness, the initial construction, baseline and evolution output, overlap, missing area, non-coprime sides, duplicate tile records, repeated sizes, invalid types, out-of-bounds tiles, forged scores, worker errors, and timeouts. Status is accepted by Sol on 2026-11-06.

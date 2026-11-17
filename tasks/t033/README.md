@@ -6,7 +6,7 @@ This task uses the public Gset G70 graph. It has 10,000 vertices and 9,999 undir
 
 The graph is stored once, as deterministic gzip at `data/source/G70.gz`, from [Stanford G70](https://web.stanford.edu/~yyye/yyye/Gset/G70). The gzip file has SHA-256 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`. Its decompressed bytes match the original Stanford file exactly; the original source SHA-256 is `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`. The evaluator and search code parse this one file. The candidate returns only a 10,000-element `labels` list. It must not provide a graph or a score.
 
-The 2024 LPI paper reports 9,594 on its G70 test instance and 9,595 as a calibration value. Cosm v4 (revised 2026-10-11) reports a heuristic score of 9,595. LPI reports 9,594 on its G70 test instance and 9,595 as a calibration value. No public assignment was replayed here. A paper reports numerical SDP value 9,683; this task has not certified it as an upper bound, so the 88-point difference is not a certified optimality gap. The checked sources do not prove 9,595 optimal. See `sota.json` for the evidence and its limits.
+The 2024 LPI paper reports 9,594 on its G70 test instance and 9,595 as a calibration value. Cosm v4 (revised 2026-10-11) reports a heuristic score of 9,595. LPI reports 9,594 on its G70 test instance and 9,595 as a calibration value. No public assignment was replayed here. A paper reports numerical SDP value 9,683; this task has not certified it as an upper bound, so the 88-point difference is not a certified optimality gap. The checked sources do not prove 9,595 optimal. See `data/sota.json` for the evidence and its limits.
 
 The reproduced traditional-method baseline is steepest single-vertex FLIP local search. It uses four random starts, default seed 0, and up to 10,000 flips per start. The saved witness at `data/human_g70_1flip.json` has cut 8,616 and records its actual flips per restart. This is a task-local reproduction of the published FLIP neighborhood. It is not the G70 result from the BLS paper and does not read a public witness.
 
@@ -18,7 +18,7 @@ The cold start assigns every vertex to side 0. The search baseline and evolution
 
 图仅保留一份，使用确定性 gzip 文件 `data/source/G70.gz`。来源是 [Stanford G70 实例](https://web.stanford.edu/~yyye/yyye/Gset/G70)。解压后与 Stanford 原始字节完全一致，原始文件 SHA-256 为 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`，压缩文件 SHA-256 为 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`。评测器和搜索代码都从该文件读取图。候选程序只返回含 10,000 个整数的 `labels` 列表。候选不能提供图或声明成绩。
 
-2024 年 LPI 论文在 G70 测试实例上报告 9,594，并将 9,595 列为校准值。Cosm v4（2026-10-11 修订）报告启发式分数 9,595。LPI 在 G70 测试实例上报告 9,594，并将 9,595 列为校准值。此处没有复算公开见证。论文报告的 SDP 数值为 9,683；本任务未认证它是上界，因此两数相差 88 不构成已认证的最优性差距。来源和限制见 `sota.json`。
+2024 年 LPI 论文在 G70 测试实例上报告 9,594，并将 9,595 列为校准值。Cosm v4（2026-10-11 修订）报告启发式分数 9,595。LPI 在 G70 测试实例上报告 9,594，并将 9,595 列为校准值。此处没有复算公开见证。论文报告的 SDP 数值为 9,683；本任务未认证它是上界，因此两数相差 88 不构成已认证的最优性差距。来源和限制见 `data/sota.json`。
 
 已复现的传统方法基线采用陡降单顶点 FLIP 局部搜索。它使用 4 个随机起点，默认随机种子为 0，每个起点最多翻转 10,000 次。保存于 `data/human_g70_1flip.json` 的见证割值为 8,616，并记录每次重启的实际翻转次数。这是本任务对已发表 FLIP 邻域的本地复现，不是 BLS 论文报告的 G70 成绩，也不读取公开见证。
 

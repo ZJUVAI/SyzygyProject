@@ -126,8 +126,8 @@ def test_all_five_run_code_entries_return_feasible_layouts(monkeypatch):
 
 
 def test_records_and_sota_match_recomputed_witness():
-    sota = json.loads((ROOT / "sota.json").read_text())
-    records = json.loads((ROOT / "records.json").read_text())
+    sota = json.loads((ROOT / "data/sota.json").read_text())
+    records = json.loads((ROOT / "data/records.json").read_text())
     witness = json.loads((ROOT / "data/reference/peaceable_queens_n30_131.json").read_text())
     actual = validate(witness, CONFIG)["objective"]
     entry = sota["configurations"]["T082-C01"]

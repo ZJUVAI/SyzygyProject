@@ -53,7 +53,7 @@
       "tile_count": 270,
       "solver_status_note": "The satisfaction model returned a feasible exact cover. This does not prove that 270 is the global minimum over all rectangles."
     },
-    "witness_file": "best/independent_cpsat_seed_270.json",
+    "witness_file": "data/best/independent_cpsat_seed_270.json",
     "witness_sha256": "5d194c9589c9dab166b66f85feeeca8fe6f3ac831dc3400e9e66da506a10c225",
     "replay_note": "The script has an 1800-second cap. Wall time and whether a feasible result is found can vary by machine; the saved witness is independently checked by check.py."
   },

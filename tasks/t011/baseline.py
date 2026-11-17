@@ -7,7 +7,7 @@ import time
 
 def _power():
     cid = os.environ.get("MATHBENCH_CONFIG_ID", "T011-C01")
-    powers = {"T011-C01": 5, "T011-C02": 4, "T011-C03": 6}
+    powers = {"T011-C01": 5}
     if cid not in powers:
         raise ValueError(f"unsupported configuration: {cid}")
     return powers[cid]

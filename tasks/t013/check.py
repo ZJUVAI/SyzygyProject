@@ -1,4 +1,4 @@
-"""Exact validation for staged LABS lengths 80, 100, and 120."""
+"""Exact validation for the official LABS length 100 configuration."""
 
 
 def aperiodic_autocorrelations(sequence):
@@ -13,8 +13,8 @@ def validate(solution, config, strict=False):
         raise ValueError("solution and config must be objects")
     params = config.get("parameters", config)
     length = params.get("L") if isinstance(params, dict) else None
-    if type(length) is not int or length not in (80, 100, 120):
-        raise ValueError("configuration must specify L=80, L=100, or L=120")
+    if type(length) is not int or length != 100:
+        raise ValueError("configuration must specify L=100")
     sequence = solution.get("sequence")
     if not isinstance(sequence, list) or len(sequence) != length:
         raise ValueError(f"sequence must contain exactly {length} signs")

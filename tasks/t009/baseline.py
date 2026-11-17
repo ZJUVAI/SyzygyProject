@@ -48,10 +48,8 @@ def _mutate_parity(rows, rng, max_flips=4, n=N, k=K):
 
 def run_code():
     config_id=os.environ.get('MATHBENCH_CONFIG_ID','T009-C01')
-    if config_id == 'T009-C02': n,k=80,20
-    elif config_id == 'T009-C03': n,k=100,20
-    elif config_id == 'T009-C01': n,k=N,K
-    else: raise ValueError('unsupported configuration')
+    if config_id != 'T009-C01': raise ValueError('unsupported configuration')
+    n,k=N,K
     seed=int(os.environ.get('MATHBENCH_SEED','0'))
     rng=random.Random(seed)
     current=_make_systematic(seed,n,k)
@@ -61,7 +59,7 @@ def run_code():
     budget=max(0.0, min(float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2')), 30.0))
     deadline = search_deadline()
     steps=0
-    attempts = 5 if config_id != 'T009-C01' else 60
+    attempts = 60
     steps=0
     for _attempt in search_steps(attempts):
         candidate=_mutate_parity(current, rng, n=n, k=k)

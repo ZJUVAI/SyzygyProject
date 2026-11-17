@@ -2,11 +2,11 @@
 
 The main reviewer owns shared code. A task agent edits only `tasks/<lowercase-id>/`.
 
-Required files: `task.json`, `README.md` (Chinese and English), `instruction.txt` (English model prompt), `check.py`, `evaluator.py`, `init_program.py`, `baseline.py`, `evolution.py`, `human.py`, `reference.py`, `sota.json`, `records.json`, `test_task.py`. Save comparison constructions under `data/`, `data/source/`, or `data/reference/`. Keep `best/` for the task's own search results. Reference programs must not read comparison files from `best/`.
+Required files: `task.json`, `README.md` (Chinese and English), `instruction.txt` (English model prompt), `check.py`, `evaluator.py`, `init_program.py`, `baseline.py`, `evolution.py`, `human.py`, `reference.py`, `test_task.py`, `data/sota.json`, and `data/records.json`. Save comparison constructions under `data/` and official search results in `data/best/`. Reference programs must read comparison files from `data/`.
 
 `evolution.py` must expose `run_code()` for the shared search runner. It may import the task's baseline with a task-qualified import. Test this entry directly. A checker-only helper does not satisfy this entry. The exported `init_program.py` must work without importing task modules from the source checkout. Public input files may be exported by the main reviewer's explicit whitelist; comparison witnesses and normalization records must not enter that workspace.
 
-`task.json`: `task_id`, `name`, `acceptance_status: "pending_sol_review"`, and `configurations` (list). Each config has `id` (task ID plus a consecutive C01 suffix), `parameters`, `direction` (`minimize` or `maximize`), `human_reference` (positive JSON number). Version 1.0 has 100 tasks and 139 accepted configurations. Use only the configurations assigned for implementation. A planned configuration must pass review before it enters the release registry. Do not copy an existing acceptance status to a new configuration. Each task has at most five selected configurations. T016 selects 208 steps, C01. T003 has C01/C02/C03 for 26/32/40 circles.
+`task.json` contains `task_id`, `name`, `acceptance_status`, `official_configuration`, and a `configurations` list with one released configuration. A configuration has `id`, `parameters`, `direction` (`minimize` or `maximize`), and `human_reference` (positive JSON number). The release has 100 official configurations. The T003 release uses C02 for 32 circles. A draft uses `pending_sol_review` until it passes review.
 
 The `PLAN.md` references in historical task records refer to the file in commit `942361fbd22f6abe0eefa4d18b611bc6552d3b6f`.
 
@@ -22,11 +22,11 @@ The complete validation result must stay unchanged when optional `objective`, `s
 
 The shared runner uses a fresh generation subprocess, then a separate trusted verification subprocess. Default limits: generation 300 seconds, verification 60 seconds, 4 GiB virtual memory, one numerical thread. Candidate output is capped at 16 MiB. Raw objectives are primary; compatibility score is J/H for maximize or H/J for minimize, invalid score 0. The runner is a local resource limiter, not a security container.
 
-Human baselines need public provenance and a reproduced witness. Do not invent attribution or claim a self-created weak example is the published record. `records.json` separates `best_human`, `best_public`, `best_reproduced` with dates, parameters, URLs, AI provenance, actual values and evidence state. Missing best-public witnesses do not block release; missing reproduced human baseline does. Never say world-best without specifying sources checked and snapshot date.
+Human baselines need public provenance and a reproduced witness. `data/records.json` separates `best_human`, `best_public`, `best_reproduced` with dates, parameters, URLs, AI provenance, values and evidence state. A task requires a reproduced human baseline for release. Identify source scope and date for best-result claims.
 
-Both `sota.json` and `records.json` use a `configurations` object keyed by configuration ID. Each SOTA configuration has `program: "reference.py"`, scalar `reproduced_value`, scalar `public_value` when known, and a `highest_reported` object with `value`, source, and `reproduction_status`. Keep extra details in separate objects. A weak frozen human baseline can differ from the best reported human result; record both. Recompute each parameter's construction and score.
+Both `data/sota.json` and `data/records.json` use a `configurations` object keyed by configuration ID. Each SOTA configuration has `program: "reference.py"`, scalar `reproduced_value`, scalar `public_value` when known, and a `highest_reported` object with `value`, source, and `reproduction_status`. Record the frozen human baseline and the best reported human result. Recompute each configuration's construction and score.
 
-Test valid and invalid examples, boundary constraints, ignored claimed scores, and independent score calculations. Submit actual test commands and results, source checks, and unresolved issues in `IMPLEMENTATION.md`. Your status remains pending_sol_review. The main reviewer decides acceptance.
+Test valid and invalid examples, boundary constraints, ignored claimed scores, and independent score calculations. Record test commands and results, source checks, and unresolved issues in `data/IMPLEMENTATION.md`. Your status remains pending_sol_review. The main reviewer decides acceptance.
 
 Before registration, test runner errors and timeouts through `mathbench.evaluate._run`, or use a temporary registry patch inside the test. A missing task ID in a separate process is expected until Sol admission; do not edit the shared registry or wait for a permanent registration to test these controls.
 
@@ -36,4 +36,4 @@ For an exact algebraic objective, the trusted checker may return the exact expre
 
 Search baseline amendment: defaults use fixed iteration counts and the saved random seed. `mathbench.search.search_steps` supplies this mode. Explicit `MATHBENCH_SEARCH_SECONDS` enables a wall-clock cutoff for exploration; its result can depend on machine speed. Hard runner limits apply in both modes.
 
-Saved JSON witnesses can use `.json` or `.json.gz`. Replay accepts both paths. If an old `.json` path is missing, replay looks for the corresponding `.json.gz` file. Witness hashes cover the original JSON bytes after decompression.
+The official result uses `data/best/result.json`, or `result.json.gz` for a compressed record. It contains `result`, `provenance`, and `solution`. Replay accepts the combined record or a standalone JSON witness. The recorded witness hash covers the original bytes of the embedded solution after decompression.

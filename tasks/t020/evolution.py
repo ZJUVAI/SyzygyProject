@@ -8,11 +8,7 @@ import os
 import random
 import time
 
-TARGETS = {
-    "T020-C01": 2**192 - 2**64 - 3,
-    "T020-C02": 2**221 - 5,
-    "T020-C03": 2**521 - 3,
-}
+TARGETS = {"T020-C01": 2**192 - 2**64 - 3}
 
 
 def _chain_for_widths(target, widths, prefix_override=None):
@@ -234,53 +230,8 @@ def _mersenne_chain(exponent):
     return chain
 
 
-def _mersenne_split_chain(exponent, low_exponent):
-    """Build M_(a+b) from M_a and M_b, where M_n = 2**n - 1."""
-    if not 0 < low_exponent < exponent:
-        raise ValueError("split must have two positive parts")
-    high_exponent = exponent - low_exponent
-    high = _mersenne_chain(high_exponent)
-    low = _mersenne_chain(low_exponent)
-    scaled = []
-    value = high[-1]
-    for _ in range(low_exponent):
-        value *= 2
-        scaled.append(value)
-    scaled.append(value + low[-1])
-    # Each input path has exact witnesses. The values from both paths and the
-    # scaled path can be merged in increasing order because all witnesses are
-    # smaller than their result.
-    return sorted(set(high) | set(low) | set(scaled))
-
-
-def _split_structured_candidate(cid, low_exponent):
-    if cid == "T020-C02":
-        exponent, trailing_doublings, tail = 218, 3, 3
-    elif cid == "T020-C03":
-        exponent, trailing_doublings, tail = 519, 2, 1
-    else:
-        return None
-    chain = _mersenne_split_chain(exponent, low_exponent)
-    for _ in range(trailing_doublings):
-        chain.append(chain[-1] * 2)
-    chain.append(chain[-1] + tail)
-    return chain
-
-
-def _structured_candidate(cid):
-    """Use 2**(a+b)-1 = 2**b*(2**a-1) + (2**b-1)."""
-    if cid == "T020-C03":
-        chain = _mersenne_chain(519)
-        for _ in range(2):
-            chain.append(chain[-1] * 2)
-        chain.append(chain[-1] + 1)
-        return chain
-    if cid == "T020-C02":
-        chain = _mersenne_chain(218)
-        for _ in range(3):
-            chain.append(chain[-1] * 2)
-        chain.append(chain[-1] + 3)
-        return chain
+def _structured_candidate():
+    """Construct the fixed P-192 target from Mersenne subchains."""
     # 2**192-2**64-3 = 2**65*(2**127-1) + (2**64-3),
     # and 2**64-3 = 8*(2**61-1)+5. Merge the two independently
     # constructed chains in increasing order; their addition witnesses remain.
@@ -311,70 +262,6 @@ def _structured_candidate(cid):
         merged.append(base)
     merged.append(base + small_part[-1])
     return merged
-
-
-def _near_power_search(cid, best, rng, deadline):
-    """Search new structural DAGs and merge their exact dependency choices."""
-    from tasks.t020.structured_search import (
-        binary_chain, divisors_for_target, exponent_search,
-        quotient_chain, tail_candidate,
-    )
-    bits, defect = (221, 5) if cid == "T020-C02" else (521, 3)
-    target = (1 << bits)-defect
-    minimum = defect.bit_length()
-    splits = list(range(minimum, min(bits-1, 65)))
-    splits += [bits-e for e in range(2, bits) if e & (e-1) == 0]
-    splits = sorted(set(splits))
-    rng.shuffle(splits)
-    paths = dict(_EXPONENT_PATHS)
-    archive = [best]
-    counts = {"tail_proposals": 0, "quotient_proposals": 0,
-              "ordinary_exponent_searches": 0, "dependency_merges": 0}
-    round_number = 0
-    while time.monotonic() < deadline:
-        trailing = splits[round_number % len(splits)] if round_number < len(splits) else rng.choice(splits)
-        exponent = bits-trailing
-        general = round_number % 5 == 0
-        path = exponent_search(exponent, rng, min(deadline, time.monotonic()+0.07),
-                               node_limit=14000, general=general)
-        counts["ordinary_exponent_searches"] += int(general)
-        old = paths.get(exponent)
-        if old is None or len(path) <= len(old):
-            paths[exponent] = path
-        elif rng.random() < 0.8:
-            path = old
-        proposal = tail_candidate(bits, defect, trailing, path, rng)
-        proposals = [proposal]
-        counts["tail_proposals"] += 1
-        if round_number % 3 == 0:
-            for divisor in divisors_for_target(target, rng):
-                if 1 < divisor < target:
-                    proposals.append(quotient_chain(target, divisor, paths, rng))
-                    counts["quotient_proposals"] += 1
-        for raw in proposals:
-            if time.monotonic() >= deadline:
-                break
-            candidate = _prune(raw)
-            if len(candidate) < len(best):
-                best = candidate
-            # Keep near-best alternatives. Merging them can create valid
-            # non-star witnesses that neither original dependency DAG used.
-            if len(candidate) <= len(best)+4 and candidate not in archive:
-                archive.append(candidate)
-                archive.sort(key=len)
-                if len(archive) > 20:
-                    del archive[rng.randrange(10, len(archive))]
-            if len(candidate) <= len(best)+8 and round_number % 2 == 0:
-                union = sorted(set(candidate) | set(rng.choice(archive)) | set(range(1,33)))
-                pairs = _witnesses(union)
-                counts["dependency_merges"] += 1
-                for mode in range(4):
-                    reduced = _alternate_prune(union, rng, mode, pairs)
-                    if len(reduced) < len(best):
-                        best = reduced
-                        archive.insert(0, reduced)
-        round_number += 1
-    return best, counts
 
 
 def _shared_target_search(best, rng, deadline):
@@ -480,29 +367,16 @@ def run_code():
     candidates_considered = 1
     # Search small exponent chains first. A star step with increment b lifts
     # to b doublings and one addition; all large integer steps remain exact.
-    exponents = (61, 63, 127) if cid == "T020-C01" else ((218,) if cid == "T020-C02" else (519,))
+    exponents = (61, 63, 127)
     exponent_deadline = min(deadline, time.monotonic() + min(20.0, budget * 0.25))
     for exponent in exponents:
         path = _star_exponents(exponent, exponent_deadline)
         if path is not None:
             _EXPONENT_PATHS[exponent] = path
-    structured = _prune(_structured_candidate(cid))
+    structured = _prune(_structured_candidate())
     candidates_considered += 1
     if structured[-1] == target and len(structured) < len(best):
         best = structured
-    if cid in ("T020-C02", "T020-C03"):
-        exponent = 218 if cid == "T020-C02" else 519
-        split_values = {1, 2, 3, 4, 5, 7, 8, 15, 16, 31, 32,
-                        exponent // 2, exponent // 2 + 1}
-        split_values.update(1 << k for k in range(1, exponent.bit_length() - 1))
-        for low in sorted(x for x in split_values if 0 < x < exponent):
-            if time.monotonic() >= deadline:
-                break
-            raw = _split_structured_candidate(cid, low)
-            candidate = _prune(raw)
-            candidates_considered += 1
-            if candidate[-1] == target and len(candidate) < len(best):
-                best = candidate
     # The runner may supply this task's own saved incumbent. Check it exactly;
     # the search remains valid as a cold run when no warm start is present.
     warm_path = os.environ.get("MATHBENCH_WARM_START")
@@ -511,10 +385,7 @@ def run_code():
             with open(warm_path, encoding="utf-8") as stream:
                 warm = json.load(stream)
             from tasks.t020.check import validate
-            label = os.environ.get("MATHBENCH_CONFIG_ID", "T020-C01")
-            target_text = {"T020-C01": "2^192-2^64-3", "T020-C02": "2^221-5",
-                           "T020-C03": "2^521-3"}[label]
-            validate(warm, {"id": label, "parameters": {"target": target_text}}, strict=True)
+            validate(warm, {"id": "T020-C01", "parameters": {"target": "2^192-2^64-3"}}, strict=True)
             if warm["chain"][-1] == target and len(warm["chain"]) < len(best):
                 best = warm["chain"]
                 candidates_considered += 1
@@ -533,25 +404,6 @@ def run_code():
             candidates_considered += 1
             if len(candidate) < len(best):
                 best = candidate
-    if cid == 'T020-C03':
-        # Alternative small precomputations can reuse the tail value at no
-        # extra cost. Every added integer is certified by 1+(value-1).
-        from tasks.t020.structured_search import tail_candidate
-        path = _star_exponents(518, min(deadline,time.monotonic()+0.1))
-        if path is not None:
-            augmented=sorted(set(tail_candidate(521,3,3,path))|set(range(1,33)))
-            pairs=_witnesses(augmented)
-            for mode in range(16):
-                candidate=_alternate_prune(augmented,rng,mode%4,pairs)
-                if len(candidate)<len(best):
-                    best=candidate
-    if cid in ("T020-C02", "T020-C03"):
-        best, counts = _near_power_search(cid, best, rng, deadline)
-        return {"chain": best, "search_metadata": {
-            **counts, "candidates_considered": candidates_considered + counts["tail_proposals"] + counts["quotient_proposals"],
-            "search_method": "ordinary exponent DFS, variable Mersenne tails, Euclidean quotient DAGs, merged dependency closures",
-            "addition_count": len(best)-1, "chain_entries": len(best),
-        }}
     best, counts = _shared_target_search(best, rng, deadline)
     return {'chain':best,'search_metadata':{
         **counts, 'search_method':'shared forced exponent paths, Euclidean DAGs and merged dependency closures',

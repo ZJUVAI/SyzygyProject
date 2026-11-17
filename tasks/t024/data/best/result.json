@@ -1,0 +1,455 @@
+{
+  "result": {
+    "task_id": "T024",
+    "config_id": "T024-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": 132,
+    "verification_status": "exact",
+    "generation_time": 289.89333241060376,
+    "verification_time": 0.11447557434439659,
+    "objective_value": 132,
+    "details": {
+      "vertices": 41,
+      "edges": 132,
+      "common_neighbor_pair_count": 726,
+      "maximum_common_neighbors": 1,
+      "c4_check": "all unordered vertex pairs have at most one common neighbor",
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 290.01047917455435,
+    "seed": 51806,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 38
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t024/runs/search_deepen_20261109_cycle/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "edges": 132,
+      "four_subsets_checked": 101270,
+      "four_cycles": 0
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 300,
+      "method": "Fixed density with exact incremental four-cycle penalty",
+      "seed": 51806
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 51806,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          297,
+          297,
+          "512",
+          51806
+        ]
+      ],
+      "prior_control_summary": "tasks/t024/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 38
+    },
+    "source_sha256": {
+      "tasks/t024/baseline.py": "84c36b6b6598e5a168fb395769ebeb7969aabe01191820fedc62081d072ae8bd",
+      "tasks/t024/check.py": "8d9510b35ec1453874c4bfea03f13733cb5c0d49b261faec078faee259a9c0a3",
+      "tasks/t024/evaluator.py": "0dffc8597b5098dc9643069085f08213e3b2d2b299bcec04e90db8e173208151",
+      "tasks/t024/evolution.py": "9ec9dd4c27ce3b1014e9c695040db51a5f3d29f976b6893c65578576150bc238",
+      "tasks/t024/human.py": "f8295adb52df8cda09d721568747e5cb209b8dd6ab84caa8000b6a5765d4bd3c",
+      "tasks/t024/init_program.py": "e1b9183f251cda63b01520c70a0b894dd30f4c7dbc90647f5c3d7757fcc3c3d4",
+      "tasks/t024/reference.py": "18e086c8c3d1422605955be7d43c2e60f53f765bb8b354a8c5fa3d12b106989b",
+      "tasks/t024/test_task.py": "2893c960c7845c9f14fb1aff961bb6d1674c7c23a0ad67c3912c241134218247",
+      "program.py": "24262bcd01563e766b1a68c3b01723e66b486d0bb66f16e35c71598f09b219c0",
+      "plan.json": "2597a2a6f72cfb884113a374623aabd0ea74448c9d51b700f4d45a6a0895a033",
+      "search.cpp": "c7689e696b018536d00c7156ff79370f5de5129e2d82aa9d4f8050695c26d4b2"
+    },
+    "warm_start_sha256": "05d9c42c1e39cfa1dc38ab94e92f59b93d95e2a257aa05e79b98714745b74924",
+    "replay_command": ".venv/bin/python -m mathbench replay T024 tasks/t024/data/best/result.json --config T024-C01"
+  },
+  "solution": {
+  "adjacency": [
+    [
+      11,
+      30,
+      39,
+      14,
+      26,
+      38
+    ],
+    [
+      4,
+      5,
+      34,
+      9,
+      30,
+      22
+    ],
+    [
+      7,
+      36,
+      21,
+      4,
+      13,
+      19,
+      29
+    ],
+    [
+      30,
+      32,
+      33,
+      21,
+      23
+    ],
+    [
+      1,
+      10,
+      30,
+      16,
+      2,
+      35,
+      36
+    ],
+    [
+      1,
+      28,
+      19,
+      34,
+      39,
+      15,
+      23
+    ],
+    [
+      20,
+      37,
+      19,
+      31,
+      27,
+      25,
+      30
+    ],
+    [
+      2,
+      27,
+      13,
+      9,
+      15,
+      33
+    ],
+    [
+      11,
+      31,
+      13,
+      32,
+      40,
+      22,
+      16
+    ],
+    [
+      1,
+      26,
+      22,
+      7,
+      27,
+      17,
+      18
+    ],
+    [
+      15,
+      32,
+      4,
+      18,
+      38,
+      25
+    ],
+    [
+      33,
+      0,
+      8,
+      22,
+      19,
+      35,
+      38
+    ],
+    [
+      29,
+      20,
+      33,
+      16,
+      34,
+      18,
+      14
+    ],
+    [
+      14,
+      8,
+      2,
+      7,
+      32,
+      28
+    ],
+    [
+      28,
+      0,
+      18,
+      13,
+      30,
+      12
+    ],
+    [
+      10,
+      31,
+      39,
+      5,
+      33,
+      7
+    ],
+    [
+      27,
+      39,
+      4,
+      12,
+      8
+    ],
+    [
+      29,
+      26,
+      28,
+      35,
+      9,
+      31
+    ],
+    [
+      40,
+      14,
+      19,
+      10,
+      24,
+      12,
+      9
+    ],
+    [
+      18,
+      6,
+      5,
+      11,
+      2
+    ],
+    [
+      6,
+      25,
+      26,
+      36,
+      12,
+      33
+    ],
+    [
+      24,
+      39,
+      29,
+      2,
+      22,
+      3,
+      25
+    ],
+    [
+      11,
+      25,
+      9,
+      21,
+      8,
+      1
+    ],
+    [
+      40,
+      38,
+      28,
+      27,
+      5,
+      3,
+      36
+    ],
+    [
+      21,
+      39,
+      37,
+      18,
+      35,
+      40
+    ],
+    [
+      20,
+      22,
+      28,
+      6,
+      21,
+      10
+    ],
+    [
+      36,
+      39,
+      17,
+      20,
+      9,
+      0,
+      32
+    ],
+    [
+      37,
+      38,
+      16,
+      7,
+      6,
+      23,
+      9
+    ],
+    [
+      14,
+      5,
+      35,
+      17,
+      23,
+      25,
+      13
+    ],
+    [
+      21,
+      12,
+      17,
+      38,
+      31,
+      34,
+      2
+    ],
+    [
+      3,
+      0,
+      31,
+      4,
+      1,
+      14,
+      6
+    ],
+    [
+      15,
+      6,
+      30,
+      8,
+      29,
+      40,
+      17
+    ],
+    [
+      3,
+      37,
+      10,
+      13,
+      8,
+      26,
+      34
+    ],
+    [
+      11,
+      3,
+      12,
+      35,
+      15,
+      20,
+      7
+    ],
+    [
+      1,
+      5,
+      12,
+      29,
+      37,
+      32
+    ],
+    [
+      37,
+      28,
+      17,
+      33,
+      11,
+      4,
+      24
+    ],
+    [
+      26,
+      2,
+      20,
+      23,
+      4,
+      40
+    ],
+    [
+      27,
+      35,
+      32,
+      6,
+      24,
+      34
+    ],
+    [
+      27,
+      23,
+      0,
+      29,
+      10,
+      11
+    ],
+    [
+      21,
+      15,
+      26,
+      0,
+      24,
+      16,
+      5
+    ],
+    [
+      23,
+      18,
+      8,
+      31,
+      36,
+      24
+    ]
+  ],
+  "search_metadata": {
+    "method": "Maintain exact four-cycle penalty using common-neighbor counts, and search at fixed edge count",
+    "seed": 51806
+  }
+}
+
+}

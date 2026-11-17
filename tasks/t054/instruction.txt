@@ -1,4 +1,4 @@
-Find a selected-length binary sign sequence with a low aperiodic peak sidelobe level for selected T054 configuration.
+For T054-C01, find a 100-sign binary sequence with low aperiodic peak sidelobe level.
 
 Return a JSON object with one key, `sequence`, whose value is a list of the configured length integer entries, each -1 or +1. Boolean and floating-point entries are invalid.
 

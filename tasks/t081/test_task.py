@@ -89,7 +89,7 @@ def test_all_five_entries_and_saved_baseline_are_valid(monkeypatch):
     assert values[1] == values[4]
     assert F(values[1]) > 8
     assert values[2] == values[3]
-    saved = json.loads((TASK / "best/seed-0.json").read_text())
+    saved = json.loads((TASK / "data/search/seed-0.json").read_text())
     assert check.validate(saved, CONFIG)["objective"] == values[1]
     assert saved["points"] == outputs[1]["points"]
     assert outputs[1]["search_metadata"]["reference_data_read"] is False

@@ -1,0 +1,147 @@
+{
+  "task_id": "T097",
+  "configurations": {
+    "T097-C01": {
+      "parameters": {
+        "instance": "socg_fixed92",
+        "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+        "boundary_vertices": 92,
+        "holes": 0,
+        "cover_domain": "all real convex polygons",
+        "overlap_allowed": true
+      },
+      "best_human": {
+        "value": 15,
+        "date": "2026-11-06 (exact reconstruction and verification)",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "method": "A feasible integer 15-piece cover inferred from the rounded Shadoks CG:SHOP 2023 viewer SVG.",
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "witness": "data/human/socg_fixed92_15.json",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_status": "certified",
+        "verification_method": "Exact real-algebraic vertical decomposition; the witness is rational/integer and all 276 open arrangement cells were checked.",
+        "ai_provenance": "Not disclosed in the reviewed paper or viewer. No claim of an unaided human process is made.",
+        "evidence_state": "The published viewer reports 15. Nearby integer polygons reconstructed from its rounded display form a separately verified feasible 15-piece cover; the original coordinates are not recovered uniquely. This is not a global-optimality proof."
+      },
+      "best_public": {
+        "value": 15,
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "source": "https://pageperso.lis-lab.fr/guilherme.fonseca/cgshop23view/",
+        "witness": "data/human/socg_fixed92_15.json",
+        "verification_status": "certified",
+        "reported_piece_count": 15,
+        "evidence_state": "The Shadoks viewer reports this instance with 15 polygons. Nearby integer coordinates inferred from its rounded display give one exactly verified feasible witness of the same size; the original coordinates are not uniquely recovered. The official competition ranking gives aggregate team scores, not per-instance values. The checked all-team per-instance record inventory is incomplete; 15 is not claimed to be the best result of every team."
+      },
+      "best_reproduced": {
+        "value": 15,
+        "date": "2026-11-06",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "program": "reference.py",
+        "witness": "data/human/socg_fixed92_15.json",
+        "witness_sha256": "caec071e01b13784d7b403bbb16a334d0a360f64d491d8c112c3b0e7d6e756e0",
+        "verification_status": "certified",
+        "origin_type": "Same-count reconstruction from the published Shadoks viewer",
+        "evidence_state": "The viewer SVG is inverse-transformed and rounded to nearby integer coordinates. These inferred polygons pass exact full-region validation; the display does not uniquely identify the original submitted coordinates.",
+        "review_status": "reviewed_by_sol"
+      },
+      "best_own_search": {
+        "value": 15,
+        "objective_value": 15,
+        "witness": "data/best/result.json",
+        "witness_sha256": "8c52b29fe3d3f31ec1c91d8b2d7e97e798bd1a053dbd1f0fc277d8c5b58c0a92",
+        "parameters": {
+          "instance": "socg_fixed92",
+          "instance_sha256": "573eb5e64a29369d17396fca899008702ba154865ec9ae343db173cd9aa04f38",
+          "boundary_vertices": 92,
+          "holes": 0,
+          "cover_domain": "all real convex polygons",
+          "overlap_allowed": true
+        },
+        "seed": 29101,
+        "verification_status": "certified",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-09",
+        "origin_type": "AI-assisted local continuation",
+        "search_metadata": {
+          "method": "exact visibility precomputation, randomized ear clipping and greedy clique merging",
+          "iterations": 6354,
+          "seed": 29101,
+          "planned_seconds": 180,
+          "comparison_data_read": false
+        },
+        "generation_record": {
+          "task_id": "T097",
+          "config_id": "T097-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 15,
+          "verification_status": "certified",
+          "generation_time": 1.2331972494721413,
+          "verification_time": 5.954773016273975,
+          "objective_value": 15,
+          "details": {
+            "instance": "socg_fixed92",
+            "convex_polygon_count": 15,
+            "total_piece_vertices": 61,
+            "algebraic_field_degree": 1,
+            "verified_open_arrangement_cells": 124,
+            "coverage_method": "Exact vertical decomposition of the full segment arrangement in one real algebraic number field. Every open cell is classified against the input polygon and the union of convex pieces; all sets are closed, so equality of interiors establishes equality of the closed regions.",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 7.189637433737516,
+          "seed": 29101,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "evidence_state": "Strict replay and independent Sol review passed."
+      },
+      "source_review": {
+        "snapshot_date": "2026-11-06",
+        "optimality_status": "No global proof for this fixed instance was found in the reviewed sources.",
+        "notes": "The viewer reports 15. Its CPLEX Optimal status applies to the generated candidate collection. The official challenge ranking is aggregate, and DIKU (AMW) ranks above Shadoks overall; per-instance values for all teams are not available in the checked sources. The 2026 rotten-potato paper provides an approximation algorithm, not an instance closure. The challenge restricted submitted witness coordinates to rationals; this task keeps the complete all-real MCC objective and encodes algebraic witnesses."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "initial_results": {
+    "T097-C01": {
+      "objective": 90,
+      "objective_value": 90,
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.16666666666666666
+    }
+  }
+}

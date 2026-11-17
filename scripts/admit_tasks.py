@@ -36,12 +36,14 @@ def review(task, label):
     metadata = json.loads((directory / 'task.json').read_text())
     if metadata['task_id'] != task:
         raise ValueError('Task ID does not match its directory')
+    if len(metadata['configurations']) != 1:
+        raise ValueError('Admission requires one configuration per task')
     # This change applies only to this review process. CLI release admission is separate.
     registry.INITIAL_TASKS = tuple(dict.fromkeys((*registry.INITIAL_TASKS, task)))
     # Include draft configurations only in this admission process.
     released_load_task = registry.load_task
     registry.load_task = lambda task_id, **options: metadata if task_id == task else released_load_task(task_id, **options)
-    records = json.loads((directory / 'sota.json').read_text())['configurations']
+    records = json.loads((directory / 'data/sota.json').read_text())['configurations']
     checker = importlib.import_module(f'tasks.{task.lower()}.check')
     destination = directory / 'runs' / label
     destination.mkdir(parents=True, exist_ok=False)
@@ -108,7 +110,7 @@ def review(task, label):
         str(path.relative_to(directory)): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted(directory.rglob('*'))
         if path.is_file() and not {'runs', '__pycache__', 'best'} & set(path.relative_to(directory).parts)
-        and path.name not in ('task.json', 'sota.json')}
+        and path.name not in ('task.json', 'sota.json', 'records.json', 'IMPLEMENTATION.md')}
     evidence['status'] = 'checks_passed_pending_source_review'
     save(destination / 'review.json', evidence)
     return evidence

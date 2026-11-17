@@ -4,10 +4,8 @@ import os, random
 def run_code():
     config_id=os.environ.get('MATHBENCH_CONFIG_ID','T009-C01')
     rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
-    if config_id == 'T009-C02': n,k=80,20
-    elif config_id == 'T009-C03': n,k=100,20
-    elif config_id == 'T009-C01': n,k=68,15
-    else: raise ValueError('unsupported configuration')
+    if config_id != 'T009-C01': raise ValueError('unsupported configuration')
+    n,k=68,15
     # EVOLVE-BLOCK-START
     rows=[]
     for i in range(k):

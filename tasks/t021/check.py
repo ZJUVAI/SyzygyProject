@@ -37,7 +37,7 @@ def _sqrt_bounds(q, scale):
     return Fraction(floor_scaled, scale), Fraction(floor_scaled + 1, scale)
 
 
-CONFIG_N = {"T021-C01": 32, "T021-C02": 40, "T021-C03": 50}
+CONFIG_N = {"T021-C01": 32}
 
 def validate(solution, config, strict=False):
     if not isinstance(config, dict) or config.get("id") not in CONFIG_N:

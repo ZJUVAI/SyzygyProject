@@ -16,10 +16,9 @@ def _valid(marks):
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T007-C01")
-    counts = {"T007-C01": 29, "T007-C02": 30, "T007-C03": 32}
-    if config_id not in counts:
+    if config_id != "T007-C01":
         raise ValueError(f"unknown T007 configuration: {config_id}")
-    count = counts[config_id]
+    count = 29
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
     seconds = max(.01, min(30., float(os.environ.get("MATHBENCH_SEARCH_SECONDS", "2"))))
     deadline = search_deadline()

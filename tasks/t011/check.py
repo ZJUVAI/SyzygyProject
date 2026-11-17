@@ -1,6 +1,6 @@
 """Exact checker for independent words in strong powers of C7."""
 
-CONFIG_POWER = {"T011-C01": 5, "T011-C02": 4, "T011-C03": 6}
+CONFIG_POWER = {"T011-C01": 5}
 
 
 def validate(solution, config, strict=False):

@@ -5,7 +5,6 @@ from tasks.t019.human import run_code as human
 from tasks.t019.init_program import run_code as initial
 
 CONFIG = {"id": "T019-C01", "parameters": {"k": 343}, "direction": "minimize"}
-CONFIGS = {k: {"id": cid, "parameters": {"k": k}, "direction": "minimize"} for k,cid in [(343,"T019-C01"),(1000,"T019-C02"),(3000,"T019-C03")]}
 
 
 class TaskTests(unittest.TestCase):
@@ -35,39 +34,13 @@ class TaskTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "prime 2"):
             validate({"tuple": bad}, CONFIG)
 
-    def test_new_same_parameter_public_witnesses_exact(self):
-        import json
-        from pathlib import Path
-        from unittest.mock import patch
-        for k, diameter in ((1000,7802),(3000,26606)):
-            cid=CONFIGS[k]["id"]
-            values=list(map(int,(Path(__file__).parent/"data"/f"mit_admissible_{k}_{diameter}.txt").read_text().split()))
-            self.assertEqual(len(values),k)
-            self.assertEqual(validate({"tuple":values,"objective":"tampered"},CONFIGS[k])["objective"],diameter)
-            self.assertTrue(validate({"tuple":values},CONFIGS[k])["details"]["claimed_objective_ignored"])
-            with patch.dict("os.environ",{"MATHBENCH_CONFIG_ID":cid}):
-                from tasks.t019 import human,reference
-                self.assertEqual(human.run_code()["tuple"], values)
-                self.assertEqual(reference.run_code()["tuple"], values)
-
     def test_config_parameters_match_id(self):
         with self.assertRaises(ValueError):
-            validate({"tuple":human()["tuple"]},{"id":"T019-C02","parameters":{"k":343}})
+            validate({"tuple": human()["tuple"]}, {"id": "T019-C01", "parameters": {"k": 342}})
 
-    def test_primorial_cold_seed_new_configurations(self):
-        import json, os
-        from unittest.mock import patch
-        from tasks.t019.init_program import run_code
-        for k in (1000,3000):
-            with patch.dict(os.environ,{"MATHBENCH_CONFIG_ID":CONFIGS[k]["id"]}):
-                candidate=run_code()
-            self.assertEqual(len(candidate["tuple"]),k)
-            result=validate(candidate,CONFIGS[k])
-            self.assertEqual(result["details"]["prime_count_checked"],len(__import__("tasks.t019.check",fromlist=["_primes_through"])._primes_through(k)))
-            self.assertLess(result["objective"],50000)
-            self.assertTrue(__import__("math").isfinite(float(result["objective"])))
-            if k==3000:
-                self.assertLess(len(json.dumps(candidate,separators=(",",":"))),16*1024*1024)
+    def test_unknown_configuration_is_rejected(self):
+        with self.assertRaises(ValueError):
+            validate({"tuple": human()["tuple"]}, {"id": "T019-UNKNOWN", "parameters": {"k": 343}})
 
 
 if __name__ == "__main__":

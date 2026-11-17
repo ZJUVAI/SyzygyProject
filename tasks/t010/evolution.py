@@ -8,8 +8,6 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-import numpy as np
-
 N = 17
 SEARCH_N = 16
 UNIVERSE = 1 << SEARCH_N
@@ -42,10 +40,6 @@ def _read_start():
     return words
 
 
-def _conflict_masks():
-    return [x for x in range(UNIVERSE) if x.bit_count() < 5]
-
-
 def _extend(word):
     return word | ((word.bit_count() & 1) << SEARCH_N)
 
@@ -61,76 +55,9 @@ def _puncture(words):
     return projected
 
 
-def _change_counts(counts, word, masks, delta):
-    """Update exact counts of selected words within distance five."""
-    for mask in masks:
-        counts[word ^ mask] += delta
-
-
-def _local_clique(vertices, target, deadline):
-    """Find compatible words with exact bit sets and a coloring bound.
-
-    The time limit can stop this local search. Every returned set is exact;
-    failure to find a larger set does not prove local optimality.
-    """
-    size = len(vertices)
-    adjacent = [0] * size
-    for i, a in enumerate(vertices):
-        for j in range(i):
-            if (a ^ vertices[j]).bit_count() >= 5:
-                adjacent[i] |= 1 << j
-                adjacent[j] |= 1 << i
-    best = []
-    nodes = 0
-
-    def expand(chosen, available):
-        nonlocal best, nodes
-        nodes += 1
-        if nodes % 64 == 0 and time.monotonic() >= deadline:
-            return
-        if len(chosen) > len(best):
-            best = chosen[:]
-        if len(best) >= target:
-            return
-        # Greedy coloring of the compatibility graph bounds clique size.
-        order, bounds = [], []
-        remaining, color = available, 0
-        while remaining:
-            color += 1
-            independent = remaining
-            while independent:
-                bit = independent & -independent
-                v = bit.bit_length() - 1
-                order.append(v)
-                bounds.append(color)
-                remaining ^= bit
-                independent &= ~bit & ~adjacent[v]
-        for v, bound in zip(reversed(order), reversed(bounds)):
-            if len(chosen) + bound <= len(best):
-                return
-            if time.monotonic() >= deadline or len(best) >= target:
-                return
-            expand(chosen + [v], available & adjacent[v])
-            available &= ~(1 << v)
-
-    expand([], (1 << size) - 1)
-    return [vertices[i] for i in best]
-
-
 def run_code():
     """Run the single-thread integer kernel using only the supplied start."""
     config_id=os.environ.get("MATHBENCH_CONFIG_ID", "T010-C01")
-    if config_id in ("T010-C02", "T010-C03"):
-        # The available compiled kernel is specific to the C01 puncturing
-        # scheme. For these larger instances, use the same fixed-budget
-        # add-only search as the traditional baseline.
-        try:
-            from baseline import run_code as baseline_run
-        except ModuleNotFoundError:
-            from tasks.t010.baseline import run_code as baseline_run
-        result=baseline_run()
-        result["search_method"]="configuration_safe_add_only_greedy"
-        return result
     if config_id != "T010-C01": raise ValueError("unsupported configuration")
     started = time.monotonic()
     best = _read_start()

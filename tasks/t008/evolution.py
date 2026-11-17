@@ -153,10 +153,6 @@ def _milp_repair(selected, masks, limit, deadline):
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T008-C01")
-    if config_id == "T008-C02":
-        # The C01 compiled swap kernel is parameter-specific. Keep new drafts
-        # valid and deterministic until a separately tuned kernel is reviewed.
-        return seed_cover()
     if config_id != "T008-C01":
         raise ValueError("unsupported configuration")
 

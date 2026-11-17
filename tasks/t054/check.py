@@ -1,9 +1,5 @@
 """Exact integer checker for binary aperiodic PSL configurations."""
-CONFIGS = {
-    "T054-C01": {"parameters": {"length": 100}},
-    "T054-C02": {"parameters": {"length": 101}},
-    "T054-C03": {"parameters": {"length": 102}},
-}
+CONFIGS = {"T054-C01": {"parameters": {"length": 100}}}
 CONFIG_ID = "T054-C01"
 LENGTH = 100
 ALPHABET = [-1, 1]

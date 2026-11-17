@@ -13,6 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from mathbench.replay import read_witness_bytes, witness_path as resolve_witness_path
+from mathbench.saved_result import best_record_path, read_best_record
 
 
 def read(path):
@@ -180,14 +181,12 @@ def update(checkout, initial_witnesses=None):
         folder = ROOT/'tasks'/tid.lower()
         metadata = load_task(tid)
         official, = metadata['configurations']
-        history = [config['id'] for config in load_task(tid, include_history=True)['configurations']
-                   if config['id'] != official['id']]
-        sota = read(folder/'sota.json')['configurations']
-        initial_results = read(folder/'records.json').get('initial_results', {})
+        sota = read(folder/'data/sota.json')['configurations']
+        initial_results = read(folder/'data/records.json').get('initial_results', {})
         old = previous.get(tid, {})
         existing = {c['id']: c for c in old.get('configurations', [])}
         task = dict(id=tid, number=number, **labels[tid], category=category, configurations=[],
-                    archived_configurations=history)
+                    archived_configurations=[])
         tasks.append(task)
         task_template = next((read(dist/c['asset']).get('drawing_template')
                               for c in existing.values()
@@ -200,9 +199,10 @@ def update(checkout, initial_witnesses=None):
             runs = data['runs']
             record = sota[cid]
             previous_public = data.get('sota', {}).get('run') or {}
-            best = folder/'best'/cid
-            result = read(best/'result.json')
-            provenance = read(best/'provenance.json')
+            best = best_record_path(folder/'data/best')
+            saved = read_best_record(best)
+            result = saved['result']
+            provenance = saved['provenance']
             if (provenance.get('status') not in ('reviewed_by_sol', 'accepted_by_sol')
                     or result['validity'] != 1 or result['config_id'] != cid):
                 raise ValueError(f'Unreviewed saved result: {cid}')
@@ -232,7 +232,7 @@ def update(checkout, initial_witnesses=None):
                     projection = project(tid, solution, params)
                 return score(run, program, witness=witness, visual=asset(projection))
 
-            own = construction(result, 'own', best/'solution.json')
+            own = construction(result, 'own', best)
             own.update(result=asset(result), evidence=asset(provenance))
             initial = initial_results[cid]
             if initial_witnesses and (initial_witnesses/cid).is_dir():
@@ -297,12 +297,6 @@ def update(checkout, initial_witnesses=None):
         writer=csv.DictWriter(f,fieldnames=fields,lineterminator=chr(10));writer.writeheader();writer.writerows(rows)
     configurations = {c['asset'] for task in tasks for c in task['configurations']}
     configurations.update(c['asset'] for task in archived_tasks for c in task['configurations'])
-    # Keep published historical witnesses available for replay and later reselection.
-    configurations.update(
-        f'data/configurations/{cid}.json'
-        for task in tasks for cid in task['archived_configurations']
-        if (dist/f'data/configurations/{cid}.json').is_file()
-    )
     assets = set(active_assets(index))
     for path in configurations:
         assets.update(active_assets(read(dist/path)))

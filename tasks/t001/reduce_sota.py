@@ -5,7 +5,7 @@ import json
 
 ROOT = Path(__file__).parent
 STEP = Fraction(1, 10**18)
-COUNTS = (26, 32, 50)
+COUNTS = (26,)
 
 
 def load_public(n):

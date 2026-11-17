@@ -7,7 +7,9 @@ import numpy as np
 from scipy.optimize import minimize
 
 def _n():
-    return {"T004-C01": 16, "T004-C02": 17, "T004-C03": 19}.get(os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01"))
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01") != "T004-C01":
+        raise ValueError("unknown T004 configuration")
+    return 16
 
 def _score(z):
     n = _n()

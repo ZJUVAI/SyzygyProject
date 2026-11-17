@@ -4,8 +4,6 @@ import math
 
 _CONFIGS = {
     "T001-C01": {"n": 26, "container": "unit square"},
-    "T001-C02": {"n": 32, "container": "unit square"},
-    "T001-C03": {"n": 50, "container": "unit square"},
 }
 
 

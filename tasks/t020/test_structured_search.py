@@ -8,10 +8,10 @@ import time
 import unittest
 from unittest.mock import patch
 
-from tasks.t020.check import TARGETS, validate
+from tasks.t020.check import TARGET, validate
 from tasks.t020.evolution import _prune, run_code
 from tasks.t020.structured_search import (
-    binary_chain, exponent_search, lift_exponents, quotient_chain, tail_candidate,
+    binary_chain, exponent_search, lift_exponents, quotient_chain,
 )
 
 
@@ -37,28 +37,15 @@ class StructuredSearchTests(unittest.TestCase):
             lift_exponents([1, 2, 5])
 
     def test_small_exponent_search_is_an_exact_chain(self):
-        for target in [1, 2, 15, 27, 109, 218, 519]:
+        for target in [1, 2, 15, 27, 109]:
             for general in [False, True]:
                 chain = exponent_search(target, random.Random(target),
                                         time.monotonic()+0.03, 1000, general)
                 assert_chain(self, chain, target)
 
-    def test_tail_splits_for_both_fixed_targets(self):
-        for cid, bits, defect in [('T020-C02', 221, 5), ('T020-C03', 521, 3)]:
-            config = {'id': cid, 'parameters': {'target': TARGETS[cid][0]}}
-            for trailing in [defect.bit_length(), 5, 13, 32, 64, bits-2]:
-                chain = _prune(tail_candidate(bits, defect, trailing,
-                                             binary_chain(bits-trailing)))
-                checked = validate({'chain': chain, 'claimed_score': -999}, config, strict=True)
-                self.assertEqual(checked['objective'], len(chain)-1)
-                damaged = chain.copy()
-                damaged[-1] -= 1
-                with self.assertRaises(ValueError):
-                    validate({'chain': damaged}, config, strict=True)
-
     def test_quotient_and_remainder_paths(self):
         paths = {n: binary_chain(n) for n in range(1, 100)}
-        for target in [127, 221, 509, (1 << 221)-5, (1 << 521)-3]:
+        for target in [127, 192, 509, TARGET]:
             for divisor in [2, 3, 7, 31, target//3, math.isqrt(target)]:
                 if divisor < target:
                     chain = quotient_chain(target, divisor, paths)
@@ -67,7 +54,7 @@ class StructuredSearchTests(unittest.TestCase):
 
     def test_shared_sparse_defect_proposals_have_positive_dependencies(self):
         from tasks.t020 import evolution
-        target = TARGETS['T020-C01'][1]
+        target = TARGET
         prune = evolution._prune
         def checked_prune(chain):
             assert_chain(self, chain, target)
@@ -82,15 +69,14 @@ class StructuredSearchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             path = os.path.join(folder, 'damaged.json')
             with open(path, 'w') as stream:
-                json.dump({'chain': [1, 2, 2, TARGETS['T020-C02'][1]]}, stream)
+                json.dump({'chain': [1, 2, 2, TARGET]}, stream)
             for warm in ['', path]:
-                for cid in ['T020-C02', 'T020-C03']:
-                    with patch.dict(os.environ, {'MATHBENCH_CONFIG_ID': cid,
-                                    'MATHBENCH_EVOLUTION_SECONDS': '0.1',
-                                    'MATHBENCH_WARM_START': warm, 'MATHBENCH_SEED': '20'}):
-                        solution = run_code()
-                    config = {'id': cid, 'parameters': {'target': TARGETS[cid][0]}}
-                    validate(solution, config, strict=True)
+                with patch.dict(os.environ, {'MATHBENCH_CONFIG_ID': 'T020-C01',
+                                'MATHBENCH_EVOLUTION_SECONDS': '0.1',
+                                'MATHBENCH_WARM_START': warm, 'MATHBENCH_SEED': '20'}):
+                    solution = run_code()
+                config = {'id': 'T020-C01', 'parameters': {'target': '2^192-2^64-3'}}
+                validate(solution, config, strict=True)
 
 
 if __name__ == '__main__':

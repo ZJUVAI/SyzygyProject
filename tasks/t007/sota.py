@@ -7,8 +7,6 @@ from pathlib import Path
 
 _DATA = {
     "T007-C01": ("public_29.json", None),
-    "T007-C02": ("public_30_32.json", "T007-C02"),
-    "T007-C03": ("public_30_32.json", "T007-C03"),
 }
 
 

@@ -9,25 +9,22 @@ from tasks.t003.check import validate
 ROOT = Path(__file__).parent
 
 def cfg(n):
-    return {"id": f"T003-C{'01' if n == 26 else ('02' if n == 32 else '03')}", "parameters": {"n": n}}
+    return {"id": "T003-C02", "parameters": {"n": n}}
 
 def witness(n):
     return json.loads((ROOT / "data" / f"human{n}.json").read_text())
 
-@pytest.mark.parametrize("n", [26, 32, 40])
-def test_human_witness_exact(n):
-    result = validate(witness(n), cfg(n), strict=True)
+def test_human_witness_exact():
+    result = validate(witness(32), cfg(32), strict=True)
     assert result["verification_status"] == "certified"
-    expected = {26:"125271039413/50000000000",32:"10982269511/3906250000",40:"79186752517/25000000000"}[n]
-    assert result["objective"] == expected
+    assert result["objective"] == "10982269511/3906250000"
 
-@pytest.mark.parametrize("n", [26, 32, 40])
-def test_boundary_tangent_grid_is_valid(n):
-    circles = witness(n)["circles"] if n == 40 else [{"x": f"{2*c+1}/12", "y": f"{2*r+1}/12", "r": "1/12"}
-               for r in range(6) for c in range(6)][:n]
-    assert validate({"circles": circles}, cfg(n))["objective"] == str(Fraction(n, 12) if n <= 36 else Fraction("79186752517/25000000000"))
+def test_boundary_tangent_grid_is_valid():
+    circles = [{"x": f"{2*c+1}/12", "y": f"{2*r+1}/12", "r": "1/12"}
+               for r in range(6) for c in range(6)][:32]
+    assert validate({"circles": circles}, cfg(32))["objective"] == str(Fraction(32, 12))
 
-@pytest.mark.parametrize("n", [26, 32, 40])
+@pytest.mark.parametrize("n", [32])
 def test_reject_wrong_size_and_wall_crossing(n):
     data = witness(n)
     with pytest.raises(ValueError):
@@ -36,7 +33,7 @@ def test_reject_wrong_size_and_wall_crossing(n):
     with pytest.raises(ValueError):
         validate(data, cfg(n))
 
-@pytest.mark.parametrize("n", [26, 32, 40])
+@pytest.mark.parametrize("n", [32])
 def test_claimed_objective_is_ignored(n):
     data = witness(n)
     data["objective"] = "not even a number"
@@ -45,19 +42,19 @@ def test_claimed_objective_is_ignored(n):
     assert result["objective"] != "999"
 
 def test_reject_overlap_and_invalid_numbers():
-    data = witness(26)
+    data = witness(32)
     data["circles"][1] = dict(data["circles"][0])
     with pytest.raises(ValueError):
-        validate(data, cfg(26))
-    data = witness(26)
+        validate(data, cfg(32))
+    data = witness(32)
     data["circles"][0]["r"] = True
     with pytest.raises(ValueError):
-        validate(data, cfg(26))
+        validate(data, cfg(32))
 
-@pytest.mark.parametrize("n", [26, 32, 40])
+@pytest.mark.parametrize("n", [32])
 def test_evolution_is_deterministic_and_exact(n, monkeypatch):
     from tasks.t003.evolution import run_code
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", {26:"T003-C01",32:"T003-C02",40:"T003-C03"}[n])
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T003-C02")
     monkeypatch.setenv("MATHBENCH_SEED", "19")
     monkeypatch.setenv("MATHBENCH_EVOLUTION_GENERATIONS", "2")
     monkeypatch.setenv("MATHBENCH_EVOLUTION_POPULATION", "4")
@@ -104,12 +101,12 @@ def test_evolution_analytic_jacobian_matches_finite_difference(monkeypatch):
 def test_evolution_repair_handles_near_wall_and_close_centers():
     from tasks.t003.evolution import _D, _repair
     points = [((2*c + 1) * _D // 12, (2*r + 1) * _D // 12)
-              for r in range(6) for c in range(6)][:26]
+              for r in range(6) for c in range(6)][:32]
     points[0] = (500, 500_000)
     points[1] = (1_500, 500_200)
-    repaired = _repair(points, [40_000] * 26)
+    repaired = _repair(points, [40_000] * 32)
     assert repaired is not None
-    assert validate({"circles": repaired[0]}, cfg(26), strict=True)["verification_status"] == "certified"
+    assert validate({"circles": repaired[0]}, cfg(32), strict=True)["verification_status"] == "certified"
 
 
 def test_basin_hopping_accepts_downhill_without_replacing_global_incumbent():
@@ -129,7 +126,7 @@ def test_evolution_reports_bounded_solver_calls_and_keeps_exact_seed(monkeypatch
     from fractions import Fraction
     import tasks.t003.evolution as evolution
 
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T003-C01")
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T003-C02")
     monkeypatch.setenv("MATHBENCH_SEED", "31")
     monkeypatch.setenv("MATHBENCH_EVOLUTION_GENERATIONS", "2")
     monkeypatch.setenv("MATHBENCH_EVOLUTION_POPULATION", "4")
@@ -143,17 +140,22 @@ def test_evolution_reports_bounded_solver_calls_and_keeps_exact_seed(monkeypatch
     assert search["restart_evaluations"] == 2
     assert search["evaluations"] == 4 + 8 + 2
     assert len(search["history"]) == search["generations"] + 1
-    assert Fraction(search["history"][0]["objective"]) == Fraction(13, 6)
-    assert Fraction(search["history"][-1]["objective"]) >= Fraction(13, 6)
+    assert Fraction(search["history"][0]["objective"]) == Fraction(8, 3)
+    assert Fraction(search["history"][-1]["objective"]) >= Fraction(8, 3)
 
+
+def test_reject_removed_configurations():
+    for config_id in ("T003-C01", "T003-C03"):
+        with pytest.raises(ValueError):
+            validate(witness(32), {"id": config_id})
 
 def test_reject_config_parameter_mismatch():
     with pytest.raises(ValueError):
-        validate(witness(40), {"id":"T003-C03", "parameters":{"n":26,"container":"unit square","radii":"variable"}})
+        validate(witness(32), {"id":"T003-C02", "parameters":{"n":26,"container":"unit square","radii":"variable"}})
 
 def test_claimed_score_is_never_parsed():
-    data=witness(40)
+    data=witness(32)
     data["objective"]={"arbitrary":"untrusted"}
-    result=validate(data,cfg(40),strict=True)
+    result=validate(data,cfg(32),strict=True)
     assert result["details"]["claimed_objective_ignored"] is True
-    assert result["objective"]=="79186752517/25000000000"
+    assert result["objective"]=="10982269511/3906250000"

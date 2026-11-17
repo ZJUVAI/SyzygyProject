@@ -15,30 +15,6 @@
       "direction": "minimize",
       "human_reference": 8807,
       "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T076-C02",
-      "parameters": {
-        "element_count": 16,
-        "elements": "positive integers",
-        "constraint": "all 2^16 subset sums are distinct",
-        "objective": "largest element"
-      },
-      "direction": "minimize",
-      "human_reference": 17305,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T076-C03",
-      "parameters": {
-        "element_count": 17,
-        "elements": "positive integers",
-        "constraint": "all 2^17 subset sums are distinct",
-        "objective": "largest element"
-      },
-      "direction": "minimize",
-      "human_reference": 34301,
-      "acceptance_status": "accepted_by_sol"
     }
   ],
   "acceptance_review": {
@@ -55,21 +31,5 @@
       "admission": "All five strict runs, broken subset-sum collisions, whole-return claim invariance, exact independent quantities, replay, cold export and failure controls passed."
     }
   },
-  "definition": "For a fixed element count, choose distinct positive integers with all subset sums distinct and minimize the largest element.",
-  "configuration_expansion_review": {
-    "reviewer": "Sol main agent",
-    "date": "2026-11-07",
-    "decision": "实现完成并通过Sol验收",
-    "source_review": {
-      "definition": "Minimum largest member among n distinct positive integers with all subset sums distinct. Retain15; add16 and17. No heuristic fingerprint is accepted as a certificate without exact collision resolution.",
-      "primary_source": "Sol read Lunnon 1988 Integer Sets with Distinct Subset-Sums, DOI10.1090/S0025-5718-1988-0917837-5, Table1 w^2 column and formula(1.4). Published16 and17 maxima17072 and33531. Earlier provisional references17270 and34301 are weaker and archived separately. Reviewed newer Bohman general construction, whose limiting ratio does not by itself replace finite-size records. No stronger explicit finite source or optimality proof found in checked sources.",
-      "human_baselines": "Conway-Guy recurrence yields17305 for16 and34301 for17. Same-parameter historical human methods reproduced independently of fixed best reference. Source lower bound from Dubroff-Fox-Xu binomial(n,floor(n/2)) gives12870 and24310, below the explicit constructions.",
-      "independent_method": "Sol transcribed w2 values0,4,5,6,8,16,27,49,92,168,320,613,1177,2262,4432,8696,17072,33531 and independently reconstructed sorted w[n]-w[i] sets. Direct list doubling computes all65536 and131072 sums and checks exact distinctness, separate from the formal Gray-code checker. Human, reference, seed and search outputs all matched.",
-      "admission": "All five strict programs, replay, cold export, corrupted witnesses, complete score-claim invariance and failure controls passed; original15 config preserved. Separate formal and human method scores retained."
-    },
-    "configuration_ids": [
-      "T076-C02",
-      "T076-C03"
-    ]
-  }
+  "definition": "For a fixed element count, choose distinct positive integers with all subset sums distinct and minimize the largest element."
 }

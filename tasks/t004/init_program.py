@@ -6,8 +6,9 @@ import random
 
 def run_code():
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
-    n = {"T004-C01": 16, "T004-C02": 17, "T004-C03": 19}.get(os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01"))
-    if n is None: raise ValueError("unknown T004 configuration")
+    if os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01") != "T004-C01":
+        raise ValueError("unknown T004 configuration")
+    n = 16
     points = []
     # Fibonacci directions give a deterministic, nonzero start for all seeds.
     for k in range(n):

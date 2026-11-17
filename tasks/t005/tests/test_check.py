@@ -7,7 +7,7 @@ import pytest
 
 from tasks.t005.check import validate
 from tasks.t005.human import SOLUTION
-from tasks.t005.task import run_code
+from tasks.t005.init_program import run_code
 
 
 CONFIG = {"id": "T005-C01", "parameters": {"n": 11}, "direction": "maximize", "human_reference": "1/27"}
@@ -45,14 +45,3 @@ def test_search_accepts_a_saved_rational_warm_start(tmp_path, monkeypatch):
 def test_invalid_inputs_rejected(bad):
     with pytest.raises(ValueError):
         validate(bad, CONFIG)
-
-@pytest.mark.parametrize(("n", "score", "count"), [
-    (12, "101871433411936556933637520697548102056943915772631725289/3125000000000000000000000000000000000000000000000000000000", 220),
-    (16, "7/341", 560),
-])
-def test_expansion_human_witnesses_are_exact(n, score, count):
-    from tasks.t005.human import SOLUTIONS
-    result = validate(SOLUTIONS[n], {"parameters": {"n": n}})
-    assert result["objective"] == score
-    assert result["verification_status"] == "exact"
-    assert result["details"]["triangles_checked"] == count

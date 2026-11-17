@@ -28,14 +28,6 @@ def test_start_rejects_invalid_integer_words():
     assert not evolution._valid([[0] * 17])
 
 
-def test_local_clique_returns_compatible_words():
-    import time
-    words = [0, 31, 31 << 5, 15, 30]
-    found = evolution._local_clique(words, 3, time.monotonic() + 1)
-    assert len(found) == 3
-    assert all((a ^ b).bit_count() >= 5 for i, a in enumerate(found) for b in found[i + 1:])
-
-
 def test_integer_kernel_cold_start_is_exact(monkeypatch):
     monkeypatch.delenv("MATHBENCH_WARM_START", raising=False)
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T010-C01")

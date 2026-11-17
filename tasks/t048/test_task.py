@@ -27,46 +27,6 @@ def _scalar_sort(comparators, bits):
             wires[left], wires[right] = wires[right], wires[left]
     return all(wires[i] <= wires[i + 1] for i in range(16))
 
-@pytest.mark.parametrize("inputs,size,depth,lower", [(18,77,12,68),(19,85,12,73)])
-def test_new_reference_and_batcher_human_networks(inputs,size,depth,lower,monkeypatch):
-    cid=f"T048-C0{inputs-16}"
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID",cid)
-    from tasks.t048 import reference,human
-    cfg={"id":cid,"parameters":{"inputs":inputs}}
-    ref=reference.run_code(); h=human.run_code()
-    witness=json.loads((HERE/"data/reference"/f"sorterhunter_{inputs}_{size}_{depth}.json").read_text())
-    snapshot=HERE/"data/reference/sorterhunter_sorting_networks.html"
-    assert hashlib.sha256(snapshot.read_bytes()).hexdigest()==witness["source"]["snapshot_sha256"]
-    assert ref["comparators"]==witness["comparators"]
-    checked=validate(ref,cfg,strict=True)
-    assert checked["objective"]==size
-    assert checked["details"]["binary_inputs_checked"]==1<<inputs
-    assert ref["reference_metadata"]["depth"]==depth
-    assert len(h["comparators"])=={18:90,19:98}[inputs]
-    assert validate(h,cfg)["objective"]==len(h["comparators"])
-    # Source table lower bounds concern comparator count, not depth.
-    assert lower < size
-    forged={"comparators":ref["comparators"],"objective":-1,"score":float("nan")}
-    assert validate(forged,cfg)["objective"]==size
-    for bad in (ref["comparators"][:-1], [[0,inputs]]):
-        with pytest.raises(ValueError): validate({"comparators":bad},cfg)
-
-@pytest.mark.parametrize("inputs,expected", [(18,153),(19,171)])
-def test_all_five_programs_support_new_configs(inputs,expected,monkeypatch):
-    cid=f"T048-C0{inputs-16}"
-    monkeypatch.setenv("MATHBENCH_CONFIG_ID",cid)
-    monkeypatch.setenv("MATHBENCH_SEED","7")
-    monkeypatch.setenv("MATHBENCH_SEARCH_ITERATIONS","1")
-    from tasks.t048 import init_program,baseline,human,reference,evolution
-    for module in (init_program,baseline,human,reference,evolution):
-        result=module.run_code()
-        checked=validate(result,{"id":cid,"parameters":{"inputs":inputs}})
-        assert checked["details"]["inputs"]==inputs
-        assert checked["details"]["binary_inputs_checked"]==1<<inputs
-        assert isinstance(checked["objective"],int)
-    assert validate(init_program.run_code(),{"id":cid,"parameters":{"inputs":inputs}})["objective"]==expected
-
-
 def test_reference_pins_and_independent_full_scalar_replay():
     net = json.loads(DATA.read_text())
     source = net["source"]
@@ -89,6 +49,11 @@ def test_batcher_human_method_baseline_is_exactly_valid():
     checked = validate({"comparators": net}, CONFIG)
     assert checked["objective"] == 85
     assert checked["verification_status"] == "exact"
+
+
+def test_unknown_configuration_is_rejected():
+    with pytest.raises(ValueError, match="unsupported configuration"):
+        validate(_reference_solution(), {"id": "T048-C99", "parameters": {"inputs": 17}})
 
 
 @pytest.mark.parametrize("solution", [

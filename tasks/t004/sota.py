@@ -3,11 +3,7 @@ import os
 from pathlib import Path
 
 
-_CONFIGS = {
-    "T004-C01": "16",
-    "T004-C02": "17",
-    "T004-C03": "19",
-}
+_CONFIGS = {"T004-C01": "16"}
 
 
 def run_code():

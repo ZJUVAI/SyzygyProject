@@ -14,7 +14,7 @@ MaxSAT 输入是加权合取范式。硬子句必须全部满足；目标是最�
 
 输入采用 MSE `std_wcnf` 格式：硬子句行以 `h` 开头，软子句行以正权重开头，并以 `0` 结束。
 
-官方 `ANYTIME-UW` 60 秒赛道的 BouMS 日志给出未满足软成本 62，完成文件标记 `VERIFIED`。日志索引位置和 CRC、完整 assignment 及其 SHA-256 均记录在 `sota.json`。我们从日志中提取 assignment，并独立检查全部 6150 个硬子句和 649 个软子句，得到分数 587。比赛元数据显示最优成本未知，因此该实例仍未证明最优。公开日志没有说明 BouMS 或这次运行是否使用 AI，AI 来源标记为未知。
+官方 `ANYTIME-UW` 60 秒赛道的 BouMS 日志给出未满足软成本 62，完成文件标记 `VERIFIED`。日志索引位置和 CRC、完整 assignment 及其 SHA-256 均记录在 `data/sota.json`。我们从日志中提取 assignment，并独立检查全部 6150 个硬子句和 649 个软子句，得到分数 587。比赛元数据显示最优成本未知，因此该实例仍未证明最优。公开日志没有说明 BouMS 或这次运行是否使用 AI，AI 来源标记为未知。
 
 冻结人类基线为分数 360。`human.py` 对所有硬子句运行传统 DPLL 可满足性方法，再做精确的硬约束可行单变量软分数改进。DPLL 的方法来源为 Davis、Logemann 和 Loveland 1962 年论文；SymPy 1.14.0 提供本次可重放的实现。该 360 是本地复现的方法基线，不是比赛公开纪录。初始程序也从硬子句重新运行 DPLL，不读取人类或纪录见证。
 
@@ -35,8 +35,8 @@ MaxSAT 输入是加权合取范式。硬子句必须全部满足；目标是最�
 ```sh
 .venv/bin/python -m pytest tasks/t055/test_task.py -q
 .venv/bin/python -m json.tool tasks/t055/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t055/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t055/data/records.json > /dev/null
 ```
 
 状态：已通过 Sol 验收（2026-11-06）。
@@ -59,7 +59,7 @@ The normalized source instance is stored as gzip under `data/source/`, with mtim
 
 The input uses the MSE `std_wcnf` format: hard-clause lines start with `h`; soft-clause lines start with a positive weight. Each line ends with `0`. The repository stores the input as gzip; its decompressed bytes must have SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`.
 
-The official BouMS log in the `ANYTIME-UW` 60-second track reports unsatisfied soft cost 62, and the completion file says `VERIFIED`. The log index offset and CRC, the complete assignment, and its SHA-256 are saved in `sota.json`. We extracted the assignment and independently checked all 6150 hard clauses and 649 soft clauses. The resulting score is 587. The competition metadata lists the optimum cost as unknown, so optimality is open. The official release does not state whether AI contributed to BouMS or this run; AI provenance is recorded as unknown.
+The official BouMS log in the `ANYTIME-UW` 60-second track reports unsatisfied soft cost 62, and the completion file says `VERIFIED`. The log index offset and CRC, the complete assignment, and its SHA-256 are saved in `data/sota.json`. We extracted the assignment and independently checked all 6150 hard clauses and 649 soft clauses. The resulting score is 587. The competition metadata lists the optimum cost as unknown, so optimality is open. The official release does not state whether AI contributed to BouMS or this run; AI provenance is recorded as unknown.
 
 The frozen human baseline is 360. `human.py` runs the traditional DPLL satisfiability method on the hard clauses, then performs exact single-variable soft-score improvements that preserve every hard clause. The method source is the 1962 paper by Davis, Logemann, and Loveland; SymPy 1.14.0 supplies the replayable implementation. The value 360 is a locally reproduced method baseline, not a published competition record. The initial program also runs DPLL on the hard clauses and does not read any comparison witness.
 
@@ -80,8 +80,8 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t055/test_task.py -q
 .venv/bin/python -m json.tool tasks/t055/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t055/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t055/data/records.json > /dev/null
 ```
 
 Status: accepted by Sol on 2026-11-06.

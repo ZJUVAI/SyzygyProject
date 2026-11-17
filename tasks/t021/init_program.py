@@ -3,7 +3,7 @@ import math
 import os
 import random
 
-_LENGTHS = {"T021-C01": 32, "T021-C02": 40, "T021-C03": 50}
+_LENGTHS = {"T021-C01": 32}
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T021-C01")

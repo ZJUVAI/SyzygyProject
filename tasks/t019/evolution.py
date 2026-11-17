@@ -56,8 +56,9 @@ def _coordinate_update(lo, counts, width, p, old, new):
 
 def run_code():
     cid = os.environ.get("MATHBENCH_CONFIG_ID", "T019-C01")
-    try: k = {"T019-C01":343,"T019-C02":1000,"T019-C03":3000}[cid]
-    except KeyError: raise ValueError(f"unsupported T019 configuration: {cid}") from None
+    if cid != "T019-C01":
+        raise ValueError(f"unsupported T019 configuration: {cid}")
+    k = 343
     primes = _primes(k)
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "0")))
     seconds = min(240.0, max(0.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45"))))
@@ -76,9 +77,8 @@ def run_code():
         except (OSError, ValueError, TypeError):
             pass
 
-    # Keep the accepted C01 fallback; new configs start from the finite-span
-    # self-contained seed so score conversion never sees huge integers.
-    if best is None and k == 343:
+    # Keep the accepted C01 greedy fallback.
+    if best is None:
         occupied = {p: set() for p in primes}
         values = []
         for x in range(200000):
@@ -88,9 +88,6 @@ def run_code():
                 if len(values) == k: break
         if len(values) != k: raise RuntimeError("failed to construct a feasible seed")
         best = sorted(values)
-    elif best is None:
-        from tasks.t019.init_program import run_code as cold_start
-        best = cold_start()["tuple"]
 
     missing = _missing(best, primes)
     iterations = 0

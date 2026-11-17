@@ -38,7 +38,7 @@ def test_all_five_entries_and_exact_reference_value(monkeypatch):
 def test_human_formula_and_frozen_file_match():
     saved_path = TASK / "data/reference/lewko205_n42025.json"
     saved_bytes = saved_path.read_bytes()
-    metadata = json.loads((TASK / "sota.json").read_text())
+    metadata = json.loads((TASK / "data/sota.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     assert hashlib.sha256(saved_bytes).hexdigest() == record["witness_sha256"]
     saved = json.loads(saved_bytes)

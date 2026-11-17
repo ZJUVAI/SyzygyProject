@@ -14,7 +14,7 @@ def _score(points):
 
 def run_code():
     seed, restarts, steps = int(os.environ.get('MATHBENCH_SEED', '0')), 8, 1200
-    n = {'T005-C01': 11, 'T005-C02': 12, 'T005-C03': 16}.get(os.environ.get('MATHBENCH_CONFIG_ID', 'T005-C01'), 11)
+    n = 11
     deadline = search_deadline()
     rng = random.Random(seed)
     best = None

@@ -40,7 +40,7 @@ def test_all_five_entries_and_reproduced_score(monkeypatch):
 def test_frozen_reference_matches_formula_and_hash():
     path = TASK / "data/reference/cubic_tangent_17.json"
     raw = path.read_bytes()
-    metadata = json.loads((TASK / "sota.json").read_text())
+    metadata = json.loads((TASK / "data/sota.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     assert hashlib.sha256(raw).hexdigest() == record["witness_sha256"]
     saved = json.loads(raw)

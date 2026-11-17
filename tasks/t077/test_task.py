@@ -185,8 +185,8 @@ def test_claimed_scores_do_not_change_full_validation_result():
 
 
 def test_record_schema_and_frozen_interval():
-    sota = json.loads((ROOT / "sota.json").read_text())
-    records = json.loads((ROOT / "records.json").read_text())
+    sota = json.loads((ROOT / "data/sota.json").read_text())
+    records = json.loads((ROOT / "data/records.json").read_text())
     result = validate({"set": json.loads((ROOT / "data/reference/gyarmati_hennecart_ruzsa_m7_l4_shifted.json").read_text())["set"]}, CONFIG)
     entry = sota["configurations"]["T077-C01"]
     assert entry["reproduced_value"] == result["objective"]

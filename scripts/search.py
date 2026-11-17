@@ -6,7 +6,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from mathbench.evaluate import evaluate_candidate
 from mathbench.registry import ARCHIVED_TASKS, INITIAL_TASKS, load_task, resolve_task_id
-from mathbench.replay import read_witness_bytes, replay, witness_path
+from mathbench.replay import read_witness_bytes, replay
+from mathbench.saved_result import best_record_path, read_best_record
 from scripts.audits.independent_audit import independent_quantity, broken
 
 def save(p,x):
@@ -72,7 +73,7 @@ def run():
     check=importlib.import_module(f'tasks.{task.lower()}.check')
     for config in configurations:
         cid=config['id'];cd=dest/cid;results={}
-        own_best=witness_path(src/'best'/cid/'solution.json');warm_start=None
+        own_best=best_record_path(src/'data/best');warm_start=None
         if own_best.exists():
             warm_start=cd/'warm_start.json';warm_start.parent.mkdir(parents=True,exist_ok=True);warm_start.write_bytes(read_witness_bytes(own_best))
             manifest['warm_start_sha256'][cid]=hashlib.sha256(warm_start.read_bytes()).hexdigest();save(manifest_path,manifest)
@@ -120,7 +121,7 @@ def summary():
     from fractions import Fraction
     from pathlib import Path
     ROOT=Path(__file__).resolve().parents[1];base=ROOT
-    public={cid:record.get('verification',{}) for path in (ROOT/'tasks').glob('*/sota.json') for cid,record in json.loads(path.read_text())['configurations'].items()}
+    public={cid:record.get('verification',{}) for path in (ROOT/'tasks').glob('*/data/sota.json') for cid,record in json.loads(path.read_text())['configurations'].items()}
     def number(r):
         try:return float(Fraction(str(r.get('objective_value',r.get('objective')))))
         except (ValueError,TypeError,ZeroDivisionError):return None
@@ -135,11 +136,14 @@ def summary():
             b,x,r=map(number,(baseline,best,reference))
             improved=(x<b if row['direction']=='minimize' else x>b) if b is not None and x is not None else None
             rows.append({'config_id':cid,'direction':row['direction'],'task_id':cid.split('-')[0],'status':row['status'],'baseline':b,'best':x,'raw_objective':best.get('objective'),'improved_baseline':improved,'frozen_verified_reference':r,'summary':str(p.relative_to(ROOT))})
-    for path in (ROOT/'tasks').glob('*/best/*/result.json'):
-        best=json.loads(path.read_text());cid=path.parent.name;tid=path.parents[2].name.upper()
+    for directory in (ROOT/'tasks').glob('*/data/best'):
+        path=best_record_path(directory)
+        if not path.is_file(): continue
+        record=read_best_record(path)
+        best=record['result'];cid=best['config_id'];tid=path.parents[2].name.upper()
         if cid not in official:continue
         config=official[cid]
-        provenance=json.loads((path.parent/'provenance.json').read_text())
+        provenance=record['provenance']
         numeric=best.get('objective_value',best.get('objective'))
         rows.append({'config_id':cid,'direction':config['direction'],'task_id':tid,
                      'status':provenance['status'],'baseline':None,
@@ -197,10 +201,12 @@ def audit():
             for name in ('initial','human','baseline'):
                 if row['results'][name]['validity']!=1:errors.append(name+' failed')
             results.append({'attempt':folder.name,'config_id':cid,'passed':not errors,'errors':errors})
-    for path in (ROOT/'tasks').glob('*/best/*/result.json'):
-        expected=json.loads(path.read_text());cid=path.parent.name;task=path.parents[2].name.upper()
+    for directory in (ROOT/'tasks').glob('*/data/best'):
+        path=best_record_path(directory)
+        if not path.is_file(): continue
+        expected=read_best_record(path)['result'];cid=expected['config_id'];task=path.parents[2].name.upper()
         if task not in INITIAL_TASKS and task not in ARCHIVED_TASKS:continue
-        checked=replay(task,path.parent/'solution.json',cid,strict=True)
+        checked=replay(task,path,cid,strict=True)
         passed=checked['validity']==1 and checked['objective']==expected['objective']
         results.append({'attempt':str(path.parent.relative_to(ROOT)), 'config_id':cid,
                         'passed':passed,'errors':[] if passed else ['Saved best failed exact replay']})

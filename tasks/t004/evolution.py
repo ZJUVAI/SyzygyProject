@@ -8,10 +8,9 @@ import time
 
 def _size():
     config = os.environ.get("MATHBENCH_CONFIG_ID", "T004-C01")
-    sizes = {"T004-C01": 16, "T004-C02": 17, "T004-C03": 19}
-    if config not in sizes:
+    if config != "T004-C01":
         raise ValueError("unsupported MATHBENCH_CONFIG_ID")
-    return sizes[config]
+    return 16
 
 
 def _fibonacci(n, rng, jitter=0.0):

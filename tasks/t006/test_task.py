@@ -77,29 +77,3 @@ def test_bounded_girth_checks_disconnected_components():
     long=_cycle_adjacency(11,offset=7)
     combined=[row[:] for row in short]+[row[:] for row in long[7:]]
     assert check._girth(combined,10)==7
-
-
-CONFIG_C02={'parameters':{'degree':4,'girth':9}}
-DATA_C02=json.loads((TASK_DIR/'data'/'human_graph_c02.json').read_text())
-
-def test_c02_published_graph_and_independent_score():
-    result=check.validate(DATA_C02,CONFIG_C02)
-    assert result['objective']==270
-    assert result['details']['degree']==4
-    assert result['details']['girth_lower_bound']==9
-    assert result['details']['edges']==540
-
-def test_c02_forged_claim_does_not_change_any_validation_output():
-    ordinary=check.validate(DATA_C02,CONFIG_C02)
-    forged=check.validate(dict(DATA_C02,objective=-999999),CONFIG_C02)
-    assert forged==ordinary
-    assert forged['objective']==270
-    assert forged['details']['claimed_objective_ignored']
-
-def test_c02_lps_seed_is_valid_without_reading_witness():
-    from tasks.t006.lps import build_graph
-    result=check.validate(build_graph((0,2)),CONFIG_C02)
-    assert result['details']['girth_lower_bound']==9
-
-def test_configured_degree_and_girth_are_enforced():
-    with pytest.raises(ValueError): check.validate(DATA_C02,CONFIG)

@@ -4,8 +4,7 @@ from collections import defaultdict
 from functools import reduce
 _CONFIGS={
 'T076-C01':{'element_count':15,'elements':'positive integers','constraint':'all 2^15 subset sums are distinct','objective':'largest element'},
-'T076-C02':{'element_count':16,'elements':'positive integers','constraint':'all 2^16 subset sums are distinct','objective':'largest element'},
-'T076-C03':{'element_count':17,'elements':'positive integers','constraint':'all 2^17 subset sums are distinct','objective':'largest element'},}
+}
 _POSITIVE_INTEGER_RE=re.compile(r"[1-9][0-9]*\Z")
 _HASH_MODULI=((1<<127)-1,(1<<61)-1,(1<<31)-1,(1<<19)-1,(1<<17)-1,(1<<13)-1,(1<<7)-1,31)
 if hasattr(sys,'set_int_max_str_digits'):sys.set_int_max_str_digits(0)

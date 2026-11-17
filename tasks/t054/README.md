@@ -1,4 +1,4 @@
-# T054: length-100/101/102 binary sequences with low peak sidelobes
+# T054: length-100 binary sequence with low peak sidelobes
 
 ## Definition
 
@@ -10,11 +10,11 @@ The task minimizes the peak sidelobe level `PSL = max(abs(C[k]), k=1,...,99)`. T
 
 ## Why this differs from T013
 
-T013 minimizes the energy `E=sum(C[k]^2)`. PSL and energy are not monotone transforms of each other, even at the fixed length 100, 101, or 102. Exact recalculation gives the T013 public energy witness `E=578, PSL=8`; the Nunn-Coxson PSL witness has `E=874, PSL=5`. Energy prefers the first sequence while PSL prefers the second. Thus neither task's objective order determines the other.
+T013 minimizes the energy `E=sum(C[k]^2)`. PSL and energy are not monotone transforms of each other, at the fixed length 100. Exact recalculation gives the T013 public energy witness `E=578, PSL=8`; the Nunn-Coxson PSL witness has `E=874, PSL=5`. Energy prefers the first sequence while PSL prefers the second. Thus neither task's objective order determines the other.
 
 ## Public construction and current status
 
-Nunn and Coxson's 2008 Table 2 prints a length-100/101/102 code in hexadecimal and reports PSL 5. We expand `DF490FFB1F8390A54E3CD9AAE` to 100 bits, most significant bit first, and map 1 to +1 and 0 to -1. A global sign change leaves every autocorrelation unchanged. The checker recomputes all sidelobes and obtains PSL 5.
+Nunn and Coxson's 2008 Table 2 prints a length-100 code in hexadecimal and reports PSL 5. We expand `DF490FFB1F8390A54E3CD9AAE` to 100 bits, most significant bit first, and map 1 to +1 and 0 to -1. A global sign change leaves every autocorrelation unchanged. The checker recomputes all sidelobes and obtains PSL 5.
 
 The latest checked survey is version 2 of Brest et al., posted 2026-07-28. Section 1 says exact minima are known for lengths up to 61 and at length 64. It directs readers to Nunn and Coxson for reported values at lengths 71 to 105. It describes results outside the exact range as best-known values. We therefore use N=100 as an open configuration and record PSL 5 as a feasible public construction, not a proof of optimality. The source does not provide a certified nontrivial lower bound for this exact optimum.
 
@@ -36,8 +36,8 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t054/test_task.py -q
 .venv/bin/python -m json.tool tasks/t054/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t054/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t054/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t054/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t054/data/records.json > /dev/null
 ```
 
 ## 定义
@@ -59,17 +59,3 @@ Nunn 与 Coxson 2008 年论文表 2 给出长度 100 的十六进制序列，报
 截至 2026-11-06 检查到的最新综述是 Brest 等人 v2，2026-07-28 发布。第 1 节说长度不超过 61 和长度 64 的精确最小值已知，并将 71 至 105 的报告值指向 Nunn-Coxson。综述将精确范围以外的结果称为已知最好值。因此选择 N=100 作为未解决配置，把 PSL=5 记为公开可行构造，不称全局最优。已查来源没有给出该具体最优值的非平凡认证下界。
 
 任务状态：已通过 Sol 验收（2026-11-06）。
-
-## Added open configurations
-
-T054-C02 fixes length 101 and T054-C03 fixes length 102. Nunn and Coxson (2008), Table 2, prints the complete hexadecimal witnesses and reports PSL 5 for both. The frozen source rows are recorded in `data/source/`; exact integer recomputation gives PSL 5. Brest et al. (2026 v2, §1) identifies exact minima only through length 61 and length 64 and points to Nunn–Coxson for 71–105. We treat both as open candidates, not proved optima. Both additions are accepted by Sol on 2026-11-07.
-
-### Configuration status
-
-| Configuration | Length | Public human construction | Recomputed PSL | Status |
-|---|---:|---|---:|---|
-| T054-C01 | 100 | Nunn–Coxson (2008), Table 2 | 5 | Accepted by Sol (2026-11-06) |
-| T054-C02 | 101 | Nunn–Coxson (2008), Table 2 | 5 | Accepted by Sol |
-| T054-C03 | 102 | Nunn–Coxson (2008), Table 2 | 5 | Accepted by Sol |
-
-For C02 and C03, full hexadecimal witness strings and source row excerpts are saved in `data/source/`. Exact recomputation gives PSL 5 for each. Brest et al. (2026), v2, §1 describes values above length 61 (except 64) as best-known and points to Nunn–Coxson for 71–105. The checked sources do not prove the minima for lengths 101 or 102.

@@ -118,7 +118,7 @@ def test_claimed_scores_do_not_change_recomputed_result():
 
 
 def test_public_record_is_separate_and_marked_unreproduced():
-    metadata = json.loads((ROOT / "sota.json").read_text())
+    metadata = json.loads((ROOT / "data/sota.json").read_text())
     item = metadata["configurations"]["T065-C01"]
     assert item["public_value"] == 439
     assert item["reproduced_value"] == 261

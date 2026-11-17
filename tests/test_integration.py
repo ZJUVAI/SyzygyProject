@@ -5,7 +5,8 @@ import pytest
 from mathbench.evaluate import evaluate_candidate
 from mathbench.export import export_seed
 from mathbench.registry import ROOT
-from mathbench.replay import replay
+from mathbench.replay import read_witness_bytes, replay
+from mathbench.saved_result import read_best_record, write_best_record
 
 
 @pytest.mark.parametrize('adapter,task,config', [
@@ -29,6 +30,24 @@ def test_saved_witness_replay(tmp_path):
     witness.unlink()
     assert replay('T013', packed)['objective'] == 578
     assert replay('T013', witness)['objective'] == 578
+
+
+def test_best_record_replays_and_preserves_original_bytes(tmp_path):
+    from tasks.t013.human import run_code
+    directory = tmp_path / "t013" / "data" / "best"
+    saved = directory / "result.json.gz"
+    solution = run_code()
+    raw = (json.dumps(solution, indent=2) + "\n").encode()
+    result = {"config_id": "T013-C01", "objective": 578}
+    provenance = {"seed": 0}
+    write_best_record(saved, result, provenance, raw)
+    assert read_best_record(saved) == {
+        "result": result, "provenance": provenance, "solution": solution,
+    }
+    assert read_witness_bytes(directory / "solution.json") == raw
+    previous = tmp_path / "t013" / "best" / "T013-C01" / "solution.json"
+    assert read_witness_bytes(previous) == raw
+    assert replay("T013", saved)["objective"] == 578
 
 
 def test_cold_seed_export(tmp_path):

@@ -38,8 +38,8 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t051/test_task.py -q
 .venv/bin/python -m json.tool tasks/t051/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t051/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t051/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t051/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t051/data/records.json > /dev/null
 ```
 
 ## 定义

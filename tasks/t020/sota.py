@@ -7,8 +7,6 @@ from pathlib import Path
 
 FILES = {
     "T020-C01": "human_t020.json",
-    "T020-C02": "human_t020_c02.json",
-    "T020-C03": "human_t020_c03.json",
 }
 
 

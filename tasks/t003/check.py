@@ -2,7 +2,7 @@
 from fractions import Fraction
 import math
 
-_CONFIGS = {"T003-C01": 26, "T003-C02": 32, "T003-C03": 40}
+_CONFIGS = {"T003-C02": 32}
 
 def _q(value):
     if type(value) is int:

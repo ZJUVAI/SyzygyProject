@@ -118,8 +118,8 @@ def test_claimed_scores_do_not_change_recomputed_result():
 
 
 def test_records_distinguish_reproduced_record_from_optimality():
-    sota = json.loads((ROOT / "sota.json").read_text())
-    records = json.loads((ROOT / "records.json").read_text())
+    sota = json.loads((ROOT / "data/sota.json").read_text())
+    records = json.loads((ROOT / "data/records.json").read_text())
     item = sota["configurations"]["T072-C01"]
     assert item["reproduced_value"] == item["public_value"] == 154
     assert "not a proved optimum" in item["highest_reported"]["reproduction_status"]

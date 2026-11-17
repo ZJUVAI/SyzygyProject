@@ -1,0 +1,248 @@
+{
+  "result": {
+    "task_id": "T102",
+    "config_id": "T102-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": "11/10",
+    "verification_status": "exact",
+    "generation_time": 1.5424908474087715,
+    "verification_time": 3.2084687910974026,
+    "objective_value": "11/10",
+    "details": {
+      "routes": 32768,
+      "cuts_per_route": 15
+    },
+    "eval_time": 4.752539310604334,
+    "seed": 29103,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t102/runs/search_sol1200_discrete_custom/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "discrepancy": "11/10",
+      "routing_count": 32768,
+      "method": "Exact integer edge-load vectors, combined over both routes of every demand."
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": {
+      "model": "gpt-6.1-sol",
+      "campaign": "sol1200",
+      "shard": "discrete"
+    },
+    "generation_record": {
+      "selected_stage": "second active-cut linear-programming refinement, exact snapped fractions",
+      "selected_stage_seed": 29103,
+      "selected_stage_command": "Compile search.cpp with g++ -O3 -std=c++17. Run search 29101 solution.json 240. Run active_lp.py, then active_lp2.py and active_lp3.py with OPENBLAS_NUM_THREADS=1 and OMP_NUM_THREADS=1.",
+      "search_seconds_cap_per_task": 1200,
+      "planned_custom_stage_limits": {
+        "annealing_seconds": 240,
+        "first_lp_seconds": 180,
+        "second_lp_seconds": 240,
+        "warm_annealing_seconds": 240,
+        "third_lp_seconds": 180
+      },
+      "generic_control_artifacts": "tasks/t102/runs/search_sol1200/T102-C01",
+      "generic_control_and_seed_generation_seconds": {
+        "initial": 0.1645851582288742,
+        "baseline": 1.1164827607572079,
+        "human": 0.16462500020861626,
+        "search_seed29101": 2.1007549315690994,
+        "search_seed29102": 1.6706032641232014,
+        "search_seed29103": 1.8666374906897545,
+        "search_seed29104": 1.7163709476590157,
+        "search_seed29105": 1.81703956797719
+      },
+      "search_metadata": {
+        "method": "active-cut linear programming from independent annealing witness",
+        "seed": 29103,
+        "iteration": 2693,
+        "planned_seconds": 240,
+        "comparison_data_read": false
+      },
+      "candidate_sha256": "541cb24c5127a0f48e7169f4c125d76c30721995a3d2e7e717ed81a48abbfd5d",
+      "strict_result_is_replay": true,
+      "search_log": "tasks/t102/runs/sol1200_custom/lp2.log",
+      "elapsed_note": "The result stores replay time. Custom solver limits and actual algorithm counters are recorded separately from replay timing.",
+      "worker_cpu": 110,
+      "custom_search_memory_limit_enforced": false,
+      "custom_search_threads": 1
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 29103,
+    "controls": {
+      "generic_controls": {
+        "MATHBENCH_SEARCH_SECONDS": "15.0",
+        "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+      },
+      "selected_search": {
+        "selected_stage": "second active-cut linear-programming refinement, exact snapped fractions",
+        "selected_stage_seed": 29103,
+        "selected_stage_command": "Compile search.cpp with g++ -O3 -std=c++17. Run search 29101 solution.json 240. Run active_lp.py, then active_lp2.py and active_lp3.py with OPENBLAS_NUM_THREADS=1 and OMP_NUM_THREADS=1.",
+        "search_seconds_cap_per_task": 1200,
+        "planned_custom_stage_limits": {
+          "annealing_seconds": 240,
+          "first_lp_seconds": 180,
+          "second_lp_seconds": 240,
+          "warm_annealing_seconds": 240,
+          "third_lp_seconds": 180
+        },
+        "generic_control_artifacts": "tasks/t102/runs/search_sol1200/T102-C01",
+        "generic_control_and_seed_generation_seconds": {
+          "initial": 0.1645851582288742,
+          "baseline": 1.1164827607572079,
+          "human": 0.16462500020861626,
+          "search_seed29101": 2.1007549315690994,
+          "search_seed29102": 1.6706032641232014,
+          "search_seed29103": 1.8666374906897545,
+          "search_seed29104": 1.7163709476590157,
+          "search_seed29105": 1.81703956797719
+        },
+        "search_metadata": {
+          "method": "active-cut linear programming from independent annealing witness",
+          "seed": 29103,
+          "iteration": 2693,
+          "planned_seconds": 240,
+          "comparison_data_read": false
+        },
+        "candidate_sha256": "541cb24c5127a0f48e7169f4c125d76c30721995a3d2e7e717ed81a48abbfd5d",
+        "strict_result_is_replay": true,
+        "search_log": "tasks/t102/runs/sol1200_custom/lp2.log",
+        "elapsed_note": "The result stores replay time. Custom solver limits and actual algorithm counters are recorded separately from replay timing.",
+        "worker_cpu": 110,
+        "custom_search_memory_limit_enforced": false,
+        "custom_search_threads": 1
+      }
+    },
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    },
+    "source_sha256": {
+      "tasks/t102/baseline.py": "e0d2ebb1c629edb8af5f92b489d0f61513eb2016dff2b3404bdfb214a7ce7738",
+      "tasks/t102/check.py": "e3c91412751c1dec15000a26c76909dedd1565856106560a9087f7fe76e9e6a8",
+      "tasks/t102/evaluator.py": "ec578517d18729b6cbedb63fe4a7fa143ead9c29bad4c57383810f6b3863ad7d",
+      "tasks/t102/evolution.py": "094f085e81ba480851b9a993e1625a59dcedf11f8955a976e1f484fc603dfa87",
+      "tasks/t102/human.py": "f46f226d27ff920d36908927a405c88b2eac502aea667ef78992c3287bcf0e48",
+      "tasks/t102/init_program.py": "8c2f4807684077a47a3d332a27291e433e4aaf7b9538a9b3b66967acbceeb41d",
+      "tasks/t102/reference.py": "0b127540a05b09eca29b00ed4fbffd4b5994029d993a78f220223ef2e67cc418",
+      "tasks/t102/search.py": "916a0b33556099766a8a9d5b86eda31a2b71a41251816584e2556b764e015a1f",
+      "tasks/t102/test_task.py": "d05cb767f77cc1f52ffaa9c9e49fa0b6acd6263568e5b2b2234798887cd78c26",
+      "tasks/t102/runs/sol1200_custom/search.cpp": "83cdf2dae6f8eafda2db5913a753aac37676fccf1e10614d3059769d4baa9109",
+      "tasks/t102/runs/sol1200_custom/active_lp.py": "e223711008f7f92b532988b79f130e54638a8a0d8b779f0c9f9d2e6bc5291f0e",
+      "tasks/t102/runs/sol1200_custom/active_lp2.py": "0451684d06fe6fcc54549f3de2905701b25bb0904ae4f62d8d96e6ef0c1ad25e",
+      "tasks/t102/runs/sol1200_custom/warm_search.cpp": "1122bcbbd18df27d627142f38c4a7ee2307ee8b42cb07a10689bebb302034bc1",
+      "tasks/t102/runs/sol1200_custom/solution.json": "6c34bb67a510a53f85fddf2ebc95f286e8e11835c1d908703c4deccc889c158c",
+      "tasks/t102/runs/sol1200_custom/lp_solution.json": "18bc0706154bfb5309b3b7cff3c19237fcf3924ef8381772f4e05e56ecc95582",
+      "tasks/t102/runs/sol1200_custom/lp2_solution.json": "541cb24c5127a0f48e7169f4c125d76c30721995a3d2e7e717ed81a48abbfd5d",
+      "tasks/t102/runs/sol1200_custom/active_lp3.py": "cb1e653e60392d4ce832fa4fe2c8df39d50bbfc47d388ed78a72ce56736f5da3",
+      "tasks/t102/runs/sol1200_custom/warm_start.txt": "65f709f0d778931473a156a96fda8e9bf89db8a292b753ca8c340c7272959210",
+      "tasks/t102/runs/sol1200_custom/log.txt": "a9ed67c05fe122e34c3f69c1651c8205fd0e41c2c33c56cebb924d9fccdb3c16",
+      "tasks/t102/runs/sol1200_custom/lp.log": "fd0ccc0f460dcaf1415b129670f34a5182cfcf944adebaeec7690dbff10f977d",
+      "tasks/t102/runs/sol1200_custom/lp2.log": "6e527ce8479cc599500e7f0718143f73775764da3cb2aea21992e21ece06f4dc",
+      "tasks/t102/runs/sol1200_custom/lp3.log": "c17b21b4245f28dacf6a196a691173411bc7dc4ce9e0e19a1ee7c6571af1a6c0",
+      "tasks/t102/runs/sol1200_custom/warm.log": "b298c0c16d9d1a780dc5f86c3f64cde657072ffb3f7f5ccad3d44c235949b3a6"
+    },
+    "warm_start_sha256": "e004218f67d90ace133b2b53f32e9837c501492a18fee058570bece9e8ddcac8",
+    "replay_command": ".venv/bin/python -m mathbench replay T102 tasks/t102/data/best/result.json --config T102-C01"
+  },
+  "solution": {
+  "pairs": [
+    [
+      "1/10",
+      "9/10"
+    ],
+    [
+      "3/5",
+      "0"
+    ],
+    [
+      "0",
+      "1"
+    ],
+    [
+      "0",
+      "1"
+    ],
+    [
+      "1/2",
+      "1/10"
+    ],
+    [
+      "7/10",
+      "3/10"
+    ],
+    [
+      "1/10",
+      "7/10"
+    ],
+    [
+      "7/10",
+      "3/10"
+    ],
+    [
+      "1/5",
+      "2/5"
+    ],
+    [
+      "3/5",
+      "2/5"
+    ],
+    [
+      "3/10",
+      "1/10"
+    ],
+    [
+      "3/5",
+      "2/5"
+    ],
+    [
+      "1/10",
+      "7/10"
+    ],
+    [
+      "1",
+      "0"
+    ],
+    [
+      "1/5",
+      "4/5"
+    ]
+  ],
+  "search_metadata": {
+    "method": "active-cut linear programming from independent annealing witness",
+    "seed": 29103,
+    "iteration": 2693,
+    "planned_seconds": 240,
+    "comparison_data_read": false
+  }
+}
+
+}

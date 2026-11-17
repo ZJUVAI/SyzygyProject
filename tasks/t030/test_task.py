@@ -148,8 +148,8 @@ def test_dsatur_baseline_and_evolution_entry_are_seeded_and_valid(monkeypatch):
     assert first == second
     monkeypatch.setenv("MATHBENCH_SEED", "0")
     seed_zero_result = baseline_run()
-    saved_result = json.loads((TASK_DIR / "best" / "seed0_dsatur_result.json").read_text())
-    saved_verification = json.loads((TASK_DIR / "best" / "seed0_dsatur_verification.json").read_text())
+    saved_result = json.loads((TASK_DIR / "data/search/seed0_dsatur_result.json").read_text())
+    saved_verification = json.loads((TASK_DIR / "data/search/seed0_dsatur_verification.json").read_text())
     assert seed_zero_result == saved_result
     replayed = validate(saved_result, CONFIG)
     assert replayed["objective"] == saved_verification["objective"]

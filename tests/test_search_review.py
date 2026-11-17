@@ -33,8 +33,9 @@ def test_admission_cannot_transfer_to_changed_configuration(tmp_path, monkeypatc
                     config['id']: {'configuration': config}}}
     (run / 'review.json').write_text(json.dumps(evidence))
     (directory / 'task.json').write_text(json.dumps({'configurations': [current]}))
+    (directory / 'data').mkdir()
     for name in ('sota.json', 'records.json'):
-        (directory / name).write_text('{}')
+        (directory / 'data' / name).write_text('{}')
     monkeypatch.setattr(module, 'ROOT', tmp_path)
     with pytest.raises(ValueError, match='changed after admission'):
         module.accept('EXAMPLE', 'checked', {'source': 'Reviewed original instance.'})
@@ -74,13 +75,14 @@ def test_acceptance_requires_admission_snapshot(tmp_path, monkeypatch, snapshot)
                 'configurations': {config['id']: snapshot}}
     (run / 'review.json').write_text(json.dumps(evidence))
     (directory / 'task.json').write_text(json.dumps({'configurations': [config]}))
+    (directory / 'data').mkdir()
     for name in ('sota.json', 'records.json'):
-        (directory / name).write_text('{}')
+        (directory / 'data' / name).write_text('{}')
     monkeypatch.setattr(module, 'ROOT', tmp_path)
 
     with pytest.raises(ValueError, match='Fresh admission'):
         module.accept('EXAMPLE', 'checked', {'source': 'Reviewed.'})
-    assert not (directory / 'best').exists()
+    assert not (directory / 'data/best').exists()
 
 
 @pytest.mark.parametrize('mutation', ['bytes', 'objective', 'configuration', None])

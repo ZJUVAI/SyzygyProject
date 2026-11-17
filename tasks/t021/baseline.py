@@ -26,7 +26,7 @@ def _energy(points):
 
 def run_code():
     config_id = os.environ.get("MATHBENCH_CONFIG_ID", "T021-C01")
-    lengths = {"T021-C01": 32, "T021-C02": 40, "T021-C03": 50}
+    lengths = {"T021-C01": 32}
     if config_id not in lengths: raise ValueError(f"unsupported configuration: {config_id}")
     n = lengths[config_id]
     seed = int(os.environ.get("MATHBENCH_SEED", "0"))

@@ -54,8 +54,8 @@ p_{i,j}=(i+j/2,\sqrt3 j/2),\qquad 0\le i,j<10.
 ```sh
 .venv/bin/python -m pytest tasks/t065 -q
 .venv/bin/python -m json.tool tasks/t065/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t065/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t065/data/records.json > /dev/null
 ```
 
 测试覆盖正确代数域、全部 4,950 对、点数边界、重复点、错误或可约多项式、错误隔离区间、bool/浮点/NaN/无穷坐标、伪造声明分数，以及工作进程异常和超时。独立重算三角格的 90+90+81=261。状态为已通过 Sol 验收（2026-11-06）。
@@ -102,8 +102,8 @@ Search uses fixed iteration counts by default. `MATHBENCH_SEARCH_SECONDS` enable
 ```sh
 .venv/bin/python -m pytest tasks/t065 -q
 .venv/bin/python -m json.tool tasks/t065/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t065/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t065/data/records.json > /dev/null
 ```
 
 Tests cover valid fields and all 4,950 pairs, point-count boundaries, duplicates, invalid or reducible polynomials, invalid root intervals, bool/float/NaN/infinite coordinates, forged scores, and worker errors and timeouts. An independent count verifies the grid's 90+90+81=261 pairs. Status is accepted by Sol on 2026-11-06.

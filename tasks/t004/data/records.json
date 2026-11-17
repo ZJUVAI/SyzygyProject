@@ -1,0 +1,73 @@
+{
+  "best_human": {
+    "value": {
+      "T004-C01": 0.9118367215999165
+    },
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "n": 16,
+      "space": "S2",
+      "objective": "minimum pairwise angle in radians"
+    },
+    "url": "https://spherical-codes.org/",
+    "provenance": "The human reference is the 16-point coordinate file linked by the spherical-codes.org table. The N=16 table row cites K. Schütte and B. L. van der Waerden (1951). Henry Cohn maintains the table and is not identified here as the construction's original author. The construction's maximum normalized pair cosine was independently recomputed from the downloaded coordinates.",
+    "evidence_state": "coordinate file archived and all 120 angles independently recomputed with interval-certified score"
+  },
+  "best_public": {
+    "value": {
+      "T004-C01": 0.9118367215999165
+    },
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "n": 16,
+      "space": "S2",
+      "reported_cosine": 0.612294616483
+    },
+    "url": "https://spherical-codes.org/",
+    "provenance": "The public table reports a minimum-angle cosine of 0.612294616483 for N=16. Its coordinate witness was downloaded and independently recomputed. No global-optimality claim is made.",
+    "evidence_state": "public construction reported; coordinate witness independently reproduced",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": {
+      "T004-C01": 0.9118367215999165
+    },
+    "date_reproduced": "2026-11-04",
+    "parameters": {
+      "n": 16,
+      "space": "S2",
+      "score": "minimum pairwise angular separation in radians"
+    },
+    "witness_file": "data/spherical_code_3_16.txt",
+    "provenance": "Recomputed from the public N=16 coordinates linked by spherical-codes.org. All 120 unordered pair comparisons were checked.",
+    "ai_provenance": "No AI-generated coordinates. The coordinate file was downloaded and its score recomputed for this task package.",
+    "actual_value": {
+      "T004-C01": 0.9118367215999165
+    },
+    "evidence_state": "all vectors nonzero and directions distinct; strict checker returns a conservative angle interval"
+  },
+  "historical_configuration": {
+    "id": "T004-C01",
+    "parameters": {
+      "n": 15,
+      "space": "S2"
+    },
+    "status": "replaced",
+    "reason": "The research audit found a 2026 optimality proof for the 15-point case. The benchmark uses 16 points.",
+    "historical_reported_cosine": 0.592605902925,
+    "historical_witness_sha256": "1b77ee43d73613885d3fdcfb03dc8fad2e40302ff9c9ff639559cc9b326fb805"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {},
+  "initial_results": {
+    "T004-C01": {
+      "objective": 0.7915824124681972,
+      "objective_value": 0.7915824124681972,
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.8681185937316496
+    }
+  }
+}

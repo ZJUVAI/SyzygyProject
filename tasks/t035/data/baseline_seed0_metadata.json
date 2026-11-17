@@ -5,7 +5,7 @@
   "seed": 0,
   "candidate_attempts": 250,
   "objective": 19,
-  "witness": "best/greedy-seed-0.json",
+  "witness": "data/search/greedy-seed-0.json",
   "verification_status": "exact",
   "generation_wall_seconds": 13.261466,
   "environment": {

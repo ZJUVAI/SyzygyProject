@@ -8,7 +8,6 @@ CAP_START = 8_000
 CAP_STOP = 10_000
 CAP_STEP = 25
 ELEMENT_COUNT = 15
-_CONFIGS = {"T076-C01":15,"T076-C02":16,"T076-C03":17}
 
 
 def _greedy_descending(cap, element_count):
@@ -27,17 +26,14 @@ def _greedy_descending(cap, element_count):
 
 def run_code():
     chosen = os.environ.get("MATHBENCH_CONFIG_ID", "T076-C01")
-    try: element_count = _CONFIGS[chosen]
-    except KeyError: raise ValueError(f"unsupported configuration: {chosen}") from None
+    if chosen != "T076-C01":
+        raise ValueError(f"unsupported configuration: {chosen}")
+    element_count = ELEMENT_COUNT
     try:
         seed = int(os.environ.get("MATHBENCH_SEED", "0"))
     except ValueError as exc:
         raise ValueError("MATHBENCH_SEED must be an integer") from exc
-    if element_count == 15:
-        caps = list(range(CAP_START, CAP_STOP + 1, CAP_STEP))
-    else:
-        start, stop = {16:(16000,19000),17:(32000,37000)}[element_count]
-        caps = list(range(start, stop + 1, max(1, (stop-start)//9)))
+    caps = list(range(CAP_START, CAP_STOP + 1, CAP_STEP))
     random.Random(seed).shuffle(caps)
     best = None
     completed = 0

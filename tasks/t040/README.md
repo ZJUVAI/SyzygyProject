@@ -39,11 +39,4 @@ Hoehner and Ledford solved the 9-point case in a 2026 paper. Its introduction li
 
 ## Reproduction and limits
 
-Run the checker with the saved witness using `.venv/bin/python`. The exact rational volume is the reproduced baseline. The literature's rounded reported value is stored separately in `records.json` and `sota.json`. Mutoh's weaker local candidate is retained as a historical result, not as the highest reported value. The rounded archive does not retain the original unrounded coordinates.
-
-
-## Additional sizes
-
-C02 has 13 points and C03 has 15 points. The Hardin–Sloane–Smith author table reports volumes 2.612834152060 and 2.804379381835. Its displayed decimal coordinates are saved locally. The human and fixed reference programs use exact rational stereographic points reconstructed from these archives. The checker verifies the sphere equation, distinct points, and exact supporting-plane volume. The author table treats these volumes as putative optima. The new configurations are accepted by Sol on 2026-11-07.
-
-新增 C02 为13点，C03 为15点。公开报告体积分别为2.612834152060和2.804379381835。用存档坐标重建有理球面点，再精确计算凸包体积。公开报告与精确复算分开记录。新增配置已通过 Sol 验收（2026-11-07）。
+Run the checker with the saved witness using `.venv/bin/python`. The exact rational volume is the reproduced baseline. The literature's rounded reported value is stored separately in `data/records.json` and `data/sota.json`. Mutoh's weaker local candidate is retained as a historical result, not as the highest reported value. The rounded archive does not retain the original unrounded coordinates.

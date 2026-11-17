@@ -2,7 +2,7 @@
 import os
 import itertools
 
-_POWERS = {"T011-C01": 5, "T011-C02": 4, "T011-C03": 6}
+_POWERS = {"T011-C01": 5}
 
 
 def run_code():

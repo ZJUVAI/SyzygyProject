@@ -25,13 +25,9 @@ def _accept(current, proposed, temperature, rng):
 
 
 def _count():
-    config = os.environ.get("MATHBENCH_CONFIG_ID", "T003-C01")
-    if config == "T003-C01":
-        return 26
+    config = os.environ.get("MATHBENCH_CONFIG_ID", "T003-C02")
     if config == "T003-C02":
         return 32
-    if config == "T003-C03":
-        return 40
     raise ValueError("unsupported MATHBENCH_CONFIG_ID")
 
 
@@ -153,12 +149,8 @@ def run_code():
     budget = max(1.0, min(240.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45"))))
     deadline = time.monotonic() + budget
     # Keep the canonical grid as an independent exact incumbent.
-    if n <= 36:
-        seed_points = [((2 * c + 1) * _D // 12, (2 * r + 1) * _D // 12) for r in range(6) for c in range(6)][:n]
-        seed_circles = [{"x": f"{2*c+1}/12", "y": f"{2*r+1}/12", "r": "1/12"} for r in range(6) for c in range(6)][:n]
-    else:
-        seed_points = [((2*c+1)*_D//16,(2*r+1)*_D//10) for r in range(5) for c in range(8)]
-        seed_circles = [{"x":f"{2*c+1}/16","y":f"{2*r+1}/10","r":"1/16"} for r in range(5) for c in range(8)]
+    seed_points = [((2 * c + 1) * _D // 12, (2 * r + 1) * _D // 12) for r in range(6) for c in range(6)][:n]
+    seed_circles = [{"x": f"{2*c+1}/12", "y": f"{2*r+1}/12", "r": "1/12"} for r in range(6) for c in range(6)][:n]
     seed_score = sum(Fraction(c["r"]) for c in seed_circles)
     best = (seed_score, seed_points, seed_circles)
     warm_start_path = os.environ.get("MATHBENCH_WARM_START")
@@ -171,9 +163,8 @@ def run_code():
             if len(circles) == n:
                 exact_circles = [{key: str(Fraction(circle[key])) for key in ("x", "y", "r")}
                                  for circle in circles]
-                config_id = {26:"T003-C01",32:"T003-C02",40:"T003-C03"}[n]
                 from tasks.t003.check import validate
-                validation = validate(witness, {"id": config_id}, strict=True)
+                validation = validate(witness, {"id": "T003-C02"}, strict=True)
                 score = Fraction(validation["objective"])
                 # Restore the warm start's actual layout at the finer integer
                 # grid. SLSQP then refines these centers and radii. Keep the

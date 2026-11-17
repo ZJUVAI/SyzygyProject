@@ -13,7 +13,7 @@ def _length():
 
 def _check_config_id():
     chosen = os.environ.get("MATHBENCH_CONFIG_ID", CONFIG_ID)
-    if chosen not in ("T054-C01", "T054-C02", "T054-C03"):
+    if chosen != "T054-C01":
         raise ValueError(f"unsupported configuration: {chosen}")
 
 

@@ -49,7 +49,7 @@ def audit(task_ids):
     report = {'configurations': {}}
     for tid in task_ids:
         folder = ROOT / 'tasks' / tid.lower()
-        path = folder / 'sota.json'
+        path = folder / 'data/sota.json'
         if not path.exists():
             print(tid, 'awaiting task review', flush=True)
             continue

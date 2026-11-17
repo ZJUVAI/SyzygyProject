@@ -14,11 +14,12 @@ from fractions import Fraction
 from tasks.t002.check import Q, validate
 
 
-CONFIGS = {"T002-C01": 26, "T002-C02": 29, "T002-C03": 38}
+CONFIG_ID = "T002-C01"
+N = 26
 
 
 def _seed(n):
-    cols = 5 if n == 26 else (6 if n == 29 else 7)
+    cols = 5
     return {"squares": [
         {"x": str(Fraction(2 * (i % cols) + 1, 2)),
          "y": str(Fraction(2 * (i // cols) + 1, 2)), "t": "0"}
@@ -87,7 +88,7 @@ def _optimize(n, seconds, rng, incumbent, warm_start=None):
     except ImportError:
         return incumbent, 0, "grid_fallback_scipy_unavailable"
 
-    cols = 5 if n == 26 else (6 if n == 29 else 7)
+    cols = 5
     rows = (n + cols - 1) // cols
     best = incumbent
     best_value = _numeric(_score(incumbent, n))
@@ -213,9 +214,9 @@ def _optimize(n, seconds, rng, incumbent, warm_start=None):
 def run_code():
     started = time.monotonic()
     cid = os.environ.get("MATHBENCH_CONFIG_ID", "T002-C01")
-    if cid not in CONFIGS:
+    if cid != CONFIG_ID:
         raise ValueError("unknown T002 configuration")
-    n = CONFIGS[cid]
+    n = N
     rng = random.Random(int(os.environ.get("MATHBENCH_SEED", "2002")))
     budget = max(0.0, float(os.environ.get("MATHBENCH_EVOLUTION_SECONDS", "45")))
     best = _seed(n)  # Always-valid exact fallback.

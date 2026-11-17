@@ -12,26 +12,6 @@
       },
       "direction": "maximize",
       "human_reference": 0.096362339
-    },
-    {
-      "id": "T001-C02",
-      "parameters": {
-        "n": 32,
-        "container": "unit square"
-      },
-      "direction": "maximize",
-      "human_reference": 0.087858156088,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T001-C03",
-      "parameters": {
-        "n": 50,
-        "container": "unit square"
-      },
-      "direction": "maximize",
-      "human_reference": 0.071377103765,
-      "acceptance_status": "accepted_by_sol"
     }
   ],
   "acceptance_review": {
@@ -52,26 +32,6 @@
     ],
     "limitations": [
       "公开最好值限于已查来源。未声称已证明全局最优。"
-    ]
-  },
-  "configuration_expansion_review": {
-    "reviewer": "GPT-6.1 Sol",
-    "implementation_agent": "/root/expand_t001",
-    "implementation_model": "gpt-6-luna",
-    "date": "2026-11-04",
-    "acceptance_status": "accepted_by_sol",
-    "configuration_ids": [
-      "T001-C02",
-      "T001-C03"
-    ],
-    "evidence": "PLAN.md",
-    "checks": [
-      "source and parameter review",
-      "four strict program runs per configuration",
-      "cold seed export",
-      "independent key quantity",
-      "damaged witness rejected",
-      "claimed score ignored"
     ]
   }
 }

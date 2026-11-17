@@ -53,7 +53,7 @@ def _try_delete(adj,v):
 
 
 def run_code():
-    if os.environ.get('MATHBENCH_CONFIG_ID','T006-C01') not in ('T006-C01','T006-C02'):
+    if os.environ.get('MATHBENCH_CONFIG_ID','T006-C01') != 'T006-C01':
         raise ValueError('unsupported configuration')
     rng=random.Random(int(os.environ.get('MATHBENCH_SEED','0')))
     try: budget=max(0.01,min(2.0,float(os.environ.get('MATHBENCH_SEARCH_SECONDS','2'))))
@@ -62,8 +62,6 @@ def run_code():
     # The LPS graph is a known feasible fallback. Search for a one-vertex
     # reduction by pairing the four neighbours of a deleted vertex.
     solution=build_graph((0,2))
-    config_id=os.environ.get('MATHBENCH_CONFIG_ID','T006-C01')
-    target_girth=10 if config_id=='T006-C01' else 9
     n=solution['vertices']; adj=[set() for _ in range(n)]
     for u,v in solution['edges']:
         adj[u].add(v); adj[v].add(u)
@@ -74,7 +72,7 @@ def run_code():
         if candidate is not None:
             # Exact girth and the 10-cycle are confirmed by the separate trusted checker.
             from check import validate
-            try: validate(candidate, {'parameters': {'degree':4,'girth':target_girth}})
+            try: validate(candidate, {'parameters': {'degree':4,'girth':10}})
             except ValueError: continue
             return candidate
     return solution

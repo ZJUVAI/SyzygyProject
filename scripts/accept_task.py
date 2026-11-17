@@ -18,6 +18,7 @@ from scripts.admit_tasks import REQUIRED_PROGRAMS, record_program
 from scripts.audit_sota import same_exact_value
 from scripts.review_search import objective_number
 from mathbench.replay import replay
+from mathbench.saved_result import best_record_path, read_best_record, write_best_record
 
 
 def _write(path, value):
@@ -39,17 +40,16 @@ def approve_review_statuses(value):
 
 
 
-def sync_own_records(sota_config, records_config, config, selected, result, solution, digest, review_date=None, *, generation_result=None):
+def sync_own_records(sota_config, records_config, config, selected, result, solution, digest, witness, review_date=None, *, generation_result=None):
     """Make own-result metadata refer to the artifact selected during admission."""
     review_date = review_date or datetime.now(timezone.utc).date().isoformat()
-    cid=config['id']
     for parent in (sota_config, records_config):
         for key in ('best_own_search', 'own_search_record'):
             if not isinstance(parent.get(key),dict):
                 continue
             parent[key]=dict(value=result['objective'],
                 objective_value=result.get('objective_value',result['objective']),
-                program=selected+'.py', witness=f'best/{cid}/solution.json',
+                program=selected+'.py', witness=witness,
                 witness_sha256=digest, parameters=config['parameters'],seed=0,
                 verification_status=result['verification_status'],
                 review_status='reviewed_by_sol',date_checked=review_date,
@@ -95,17 +95,18 @@ def accept(task, label, source_review, review_date=None):
     if evidence['status'] != 'checks_passed_pending_source_review':
         raise ValueError('A full successful admission run is required')
     metadata = json.loads((directory / 'task.json').read_text())
+    if len(metadata['configurations']) != 1:
+        raise ValueError('Acceptance requires one configuration per task')
     if set(evidence['configurations']) != {c['id'] for c in metadata['configurations']}:
         raise ValueError('Configuration coverage does not match the admission run')
-    pending = {config['id'] for config in metadata['configurations']
-               if config.get('acceptance_status') == 'pending_sol_review'}
-    expanding = metadata.get('acceptance_status') == 'accepted_by_sol' and bool(pending)
     for name, digest in evidence['source_sha256'].items():
         if name.endswith('.py') or Path(name).parts[0] == 'data':
             if hashlib.sha256((directory / name).read_bytes()).hexdigest() != digest:
                 raise ValueError('Construction or checker source changed: ' + name)
-    sota = json.loads((directory / 'sota.json').read_text())
-    records = json.loads((directory / 'records.json').read_text())
+    data_dir = directory / 'data'
+    sota = json.loads((data_dir / 'sota.json').read_text())
+    records = json.loads((data_dir / 'records.json').read_text())
+    official = metadata['configurations'][0]['id']
     promotions = []
     for config in metadata['configurations']:
         cid = config['id']
@@ -124,10 +125,6 @@ def accept(task, label, source_review, review_date=None):
             if checked['run']['validity'] != 1 or not all(checked[k] for k in (
                     'claimed_score_ignored', 'damaged_construction_rejected', 'strict_replay_passed')):
                 raise ValueError('A program failed admission')
-        if expanding and cid not in pending:
-            # The controls above check the old configuration after code changes.
-            # Its frozen comparison and own-search archives remain authoritative.
-            continue
         initial = programs['init_program']['run']
         records.setdefault('initial_results', {})[cid] = {
             k: initial[k] for k in ('objective', 'objective_value', 'validity',
@@ -148,14 +145,15 @@ def accept(task, label, source_review, review_date=None):
         selected = choose(names, key=lambda name: objective_number(programs[name]['run']))
         source = run / cid / ('initial' if selected == 'init_program' else selected)
         raw, replayed = _checked_witness(task, metadata, cid, source, programs[selected])
-        best = directory / 'best' / cid
+        best = best_record_path(data_dir / 'best')
         retain_incumbent = False
-        provenance_path = best / 'provenance.json'
-        if provenance_path.exists():
-            provenance = json.loads(provenance_path.read_text())
-            if provenance.get('status') in ('reviewed_by_sol', 'accepted_by_sol'):
-                incumbent = replay(task, best / 'solution.json', cid, strict=True)
-                saved_result = json.loads((best / 'result.json').read_text())
+        if best.is_file():
+            saved = read_best_record(best)
+            provenance = saved['provenance']
+            saved_result = saved['result']
+            if (provenance.get('status') in ('reviewed_by_sol', 'accepted_by_sol')
+                    and saved_result.get('config_id') == cid):
+                incumbent = replay(task, best, cid, strict=True)
                 if incumbent['validity'] != 1 or incumbent['objective'] != saved_result['objective']:
                     raise ValueError('The accepted incumbent failed replay: ' + cid)
                 candidate_value = objective_number(replayed)
@@ -163,7 +161,7 @@ def accept(task, label, source_review, review_date=None):
                 retain_incumbent = choose(candidate_value, incumbent_value) == incumbent_value
         if not retain_incumbent:
             previous = run / 'previous_best' / cid
-            if best.exists() and previous.exists():
+            if best.is_file() and previous.exists():
                 raise ValueError('Previous best backup already exists')
             solution = json.loads(raw)
             provenance = dict(status='reviewed_by_sol', reviewer='Sol main agent',
@@ -172,14 +170,14 @@ def accept(task, label, source_review, review_date=None):
                 program=selected + '.py', generation_record=programs[selected]['run'],
                 search_metadata=solution.get('search_metadata', solution.get('search', {})),
                 solution_sha256=hashlib.sha256(raw).hexdigest(),
-                replay_command=f'python -m mathbench replay {task} {best.relative_to(ROOT) / "solution.json"} --config {cid}')
+                replay_command=f'python -m mathbench replay {task} {best.relative_to(ROOT)} --config {cid}')
             promotions.append((best, previous, raw, replayed, provenance))
         archive = records.get('configurations', {}).get(cid, {})
         if isinstance(archive.get('best_reproduced'), dict):
             archive['best_reproduced']['review_status'] = 'reviewed_by_sol'
         if not retain_incumbent:
             sync_own_records(record, archive, config, selected, replayed, solution,
-                             provenance['solution_sha256'], review_date,
+                             provenance['solution_sha256'], best.relative_to(directory).as_posix(), review_date,
                              generation_result=programs[selected]['run'])
         source = archive.get('source_review', {})
         if isinstance(source, dict) and source.get('status') == 'pending_sol_review':
@@ -193,13 +191,10 @@ def accept(task, label, source_review, review_date=None):
     metadata['acceptance_status'] = 'accepted_by_sol'
     for config in metadata['configurations']:
         config['acceptance_status'] = 'accepted_by_sol'
-    review_key = 'configuration_expansion_review' if expanding else 'acceptance_review'
-    metadata[review_key] = dict(reviewer='Sol main agent', date=review_date,
+    metadata['acceptance_review'] = dict(reviewer='Sol main agent', date=review_date,
         decision='实现完成并通过Sol验收',
         source_review=source_review)
-    if expanding:
-        metadata[review_key]['configuration_ids'] = sorted(pending)
-    for name in ('README.md', 'IMPLEMENTATION.md'):
+    for name in ('README.md', 'data/IMPLEMENTATION.md'):
         path = directory / name
         if not path.is_file():
             continue
@@ -212,14 +207,12 @@ def accept(task, label, source_review, review_date=None):
     for document in (metadata, records, sota):
         approve_review_statuses(document)
     for best, previous, raw, result, provenance in promotions:
-        if best.exists():
-            previous.parent.mkdir(parents=True, exist_ok=True)
-            shutil.move(str(best), str(previous))
-        best.mkdir(parents=True)
-        (best / 'solution.json').write_bytes(raw)
-        _write(best / 'result.json', result)
-        _write(best / 'provenance.json', provenance)
-    _write(directory / 'records.json', records)
+        if best.is_file():
+            previous.mkdir(parents=True)
+            shutil.copy2(best, previous / best.name)
+        write_best_record(best, result, provenance, raw)
+    metadata['official_configuration'] = official
+    _write(data_dir / 'records.json', records)
     sota['review_status'] = 'accepted_by_sol'
     _write(directory / 'task.json', metadata)
-    _write(directory / 'sota.json', sota)
+    _write(data_dir / 'sota.json', sota)

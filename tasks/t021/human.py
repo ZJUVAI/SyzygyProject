@@ -3,7 +3,7 @@ import os
 from fractions import Fraction
 from pathlib import Path
 
-_LENGTHS = {"T021-C01": 32, "T021-C02": 40, "T021-C03": 50}
+_LENGTHS = {"T021-C01": 32}
 
 def run_code():
     cid=os.environ.get("MATHBENCH_CONFIG_ID","T021-C01")

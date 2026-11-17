@@ -5,7 +5,7 @@ import random
 
 # EVOLVE-BLOCK-START
 
-CONFIG_SIZES = {'T040-C01': 11, 'T040-C02': 13, 'T040-C03': 15}
+CONFIG_SIZES = {'T040-C01': 11}
 
 
 def configured_size():

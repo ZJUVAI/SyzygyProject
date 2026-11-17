@@ -1,0 +1,54 @@
+{
+  "source_date": "2026-11-03",
+  "best_human": {
+    "value": 623,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "marks": 29,
+      "construction": "projective plane",
+      "prime_power": 29
+    },
+    "url": "https://cube20.org/golomb/",
+    "ai_provenance": "AI reconstructed the listed ruler from cube20's public modular-ruler gaps and multiplier, then checked it exactly.",
+    "evidence_state": "public witness reconstructed; all 406 differences checked; optimality unknown"
+  },
+  "best_public": {
+    "value": 623,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "marks": 29,
+      "construction": "projective plane",
+      "prime_power": 29
+    },
+    "url": "https://cube20.org/golomb/",
+    "ai_provenance": "Published construction attributed by the public table to Atkinson and Hassenklover (1984).",
+    "evidence_state": "public data reconstructs a valid witness; best-public status reflects sources checked, not proven optimality",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 623,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "marks": 29,
+      "construction": "projective plane",
+      "prime_power": 29,
+      "multiplier": 188
+    },
+    "url": "https://cube20.org/golomb/",
+    "ai_provenance": "Reconstructed by applying multiplier 188 modulo 871 to the public projective modular ruler, sorting cyclically, and taking the 29-mark window of span 623.",
+    "evidence_state": "independently checked by exact enumeration of all 406 positive differences"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {},
+  "initial_results": {
+    "T007-C01": {
+      "objective": 1158,
+      "objective_value": 1158,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.5379965457685665
+    }
+  }
+}

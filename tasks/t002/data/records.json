@@ -1,0 +1,50 @@
+{
+  "best_human": {
+    "value": 5.621320343559642,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "unit_square_side": 1
+    },
+    "url": "https://erich-friedman.github.io/papers/squares/squares.html",
+    "provenance": "Erich Friedman, 1997, Section 3, Figure 9. The published construction family formula gives side (7+3√2)/2. The saved witness was reconstructed from that formula and the stated off-center construction.",
+    "evidence_state": "published construction reconstructed from its explicit formula and independently certified exactly"
+  },
+  "best_public": {
+    "value": 5.621320343559642,
+    "date_checked": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "unit_square_side": 1
+    },
+    "url": "https://squaremath.org/cases/26.html",
+    "evidence_state": "publicly reported and marked verified upper bound; open interval 5.545 ≤ s(26) ≤ 5.62132034355964",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 5.621320343559642,
+    "date_reproduced": "2026-11-03",
+    "parameters": {
+      "n": 26,
+      "unit_square_side": 1
+    },
+    "witness_file": "data/human_friedman_1997.json",
+    "provenance": "Reconstructed from Friedman's 1997 Section 3 formula for (a,b)=(2,3): a 3×3 block of 45-degree squares, axis-aligned frame squares selected by exact separation checks, and the added column of five squares.",
+    "ai_provenance": "Reconstructed for this benchmark from the published formula; not represented as a verbatim transcription of the diagram.",
+    "actual_value": "(7+3*sqrt(2))/2",
+    "evidence_state": "all 26 squares, exact Q(sqrt(2)) corners, all 325 pair checks, and bounding square independently certified"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {},
+  "initial_results": {
+    "T002-C01": {
+      "objective": "6",
+      "objective_value": "6",
+      "validity": 1.0,
+      "verification_status": "certified",
+      "combined_score": 0.936886723926607
+    }
+  }
+}

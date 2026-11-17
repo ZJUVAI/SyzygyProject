@@ -51,7 +51,7 @@ def find_minimum(rows):
 
 
 def main():
-    for n in (26, 32):
+    for n in (32,):
         rows = load_public(n)
         shrink = find_minimum(rows)
         circles = [{"x": str(x), "y": str(y), "r": str(r-shrink)}

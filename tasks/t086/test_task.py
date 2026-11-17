@@ -156,8 +156,8 @@ def test_all_five_programs_produce_psd_candidates(monkeypatch):
 
 
 def test_sota_and_records_track_exact_identity_score():
-    sota = json.loads((ROOT / "sota.json").read_text())
-    records = json.loads((ROOT / "records.json").read_text())
+    sota = json.loads((ROOT / "data/sota.json").read_text())
+    records = json.loads((ROOT / "data/records.json").read_text())
     result = validate(_identity_candidate(), CONFIG)
     item = sota["configurations"]["T086-C01"]
     record = records["configurations"]["T086-C01"]

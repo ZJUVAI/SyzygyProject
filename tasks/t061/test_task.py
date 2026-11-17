@@ -37,7 +37,7 @@ def test_all_five_program_entries(monkeypatch):
 
 def test_human_reference_file_and_source_hash():
     witness = TASK / "data/reference/c6_sat_100_133.json"
-    metadata = json.loads((TASK / "sota.json").read_text())
+    metadata = json.loads((TASK / "data/sota.json").read_text())
     config_record = metadata["configurations"][CONFIG_ID]
     assert hashlib.sha256(witness.read_bytes()).hexdigest() == config_record["witness_sha256"]
     saved = json.loads(witness.read_text())

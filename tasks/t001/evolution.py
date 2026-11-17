@@ -11,7 +11,7 @@ import random
 import time
 
 
-_CONFIG_N = {"T001-C01": 26, "T001-C02": 32, "T001-C03": 50}
+_CONFIG_N = {"T001-C01": 26}
 _DEN = 10**15
 
 

@@ -39,7 +39,7 @@ def test_all_five_entries_and_reproduced_public_count(monkeypatch):
 def test_frozen_public_list_matches_n10_source_and_hash():
     path = TASK / "data/reference/oeis_a000983_n10.json"
     raw = path.read_bytes()
-    metadata = json.loads((TASK / "sota.json").read_text())
+    metadata = json.loads((TASK / "data/sota.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     assert hashlib.sha256(raw).hexdigest() == record["witness_sha256"]
     source_path = TASK / "data/source/oeis_a000983.txt"

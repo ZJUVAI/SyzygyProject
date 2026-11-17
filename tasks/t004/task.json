@@ -13,28 +13,6 @@
       },
       "direction": "maximize",
       "human_reference": 0.9118367215999165
-    },
-    {
-      "id": "T004-C02",
-      "parameters": {
-        "n": 17,
-        "space": "S2",
-        "objective": "minimum pairwise angular separation in radians"
-      },
-      "direction": "maximize",
-      "human_reference": 0.8916944491515696,
-      "acceptance_status": "accepted_by_sol"
-    },
-    {
-      "id": "T004-C03",
-      "parameters": {
-        "n": 19,
-        "space": "S2",
-        "objective": "minimum pairwise angular separation in radians"
-      },
-      "direction": "maximize",
-      "human_reference": 0.8323809277763071,
-      "acceptance_status": "accepted_by_sol"
     }
   ],
   "acceptance_review": {
@@ -55,26 +33,6 @@
     ],
     "limitations": [
       "采用开放的16点配置，替换已获最优性证明的15点配置。正式成绩使用角度区间下界。"
-    ]
-  },
-  "configuration_expansion_review": {
-    "reviewer": "GPT-6.1 Sol",
-    "implementation_agent": "/root/expand_t004",
-    "implementation_model": "gpt-6-luna",
-    "date": "2026-11-04",
-    "acceptance_status": "accepted_by_sol",
-    "configuration_ids": [
-      "T004-C02",
-      "T004-C03"
-    ],
-    "evidence": "PLAN.md",
-    "checks": [
-      "source and parameter review",
-      "four strict program runs per configuration",
-      "cold seed export",
-      "independent key quantity",
-      "damaged witness rejected",
-      "claimed score ignored"
     ]
   }
 }

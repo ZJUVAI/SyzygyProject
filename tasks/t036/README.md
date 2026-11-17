@@ -8,7 +8,7 @@
 
 公开来源报告的 K28 值为 7,234，且报告下界为 7,233；这里没有取得或重放该 7,234 点集。因此 records 将公开报告和本地重建的弱基线分开记载。Abrego、Fernández-Merchant 与 Salazar 的综述指出 28、29 阶仍开放，而 27 与 30 阶已解决。2024 年离散数学论文仍将 28 阶列为未解。MathWorld 引用 Schaefer 2026 年综述第 86 页，仍称 K28 是最小未解情形，且值为 7,233 或 7,234。来源检查日期为 2026-11-06。此任务状态为已通过 Sol 验收（2026-11-06）。
 
-传统搜索从固定种子的随机整数一般位置点集开始，执行 80 次单点替换贪心搜索，只接受仍满足一般位置且交叉数不增的替换。它不读取人类或公开见证。seed 0 搜索运行 80 次并接受 16 次替换，得到 12,516 次交叉。构造、复算结果、预算和可重放命令保存在 `best/`。默认运行器预算为生成 300 秒、验证 60 秒、4 GiB 内存和一个 CPU 线程。
+传统搜索从固定种子的随机整数一般位置点集开始，执行 80 次单点替换贪心搜索，只接受仍满足一般位置且交叉数不增的替换。它不读取人类或公开见证。seed 0 搜索运行 80 次并接受 16 次替换，得到 12,516 次交叉。构造、复算结果、预算和可重放命令保存在 `data/best/`。默认运行器预算为生成 300 秒、验证 60 秒、4 GiB 内存和一个 CPU 线程。
 
 ## English
 
@@ -18,6 +18,6 @@ The weak human baseline uses the 28 points `(i, i²)` for `i=0,...,27`. Every fo
 
 Public sources report 7,234 crossings for K28 and a lower bound of 7,233. This task did not obtain or replay the 7,234-point-set witness. The records keep that report separate from the weaker locally reconstructed baseline. The survey by Abrego, Fernández-Merchant, and Salazar says that orders 28 and 29 remain open, while orders 27 and 30 are solved. A 2024 discrete mathematics paper and 2026 reference material still list order 28 as open. Sources were checked on 2026-11-06. Status: accepted by Sol on 2026-11-06.
 
-The traditional search starts from a seeded random integer point set in general position. It makes 80 greedy single-point replacement attempts. It accepts only replacements that preserve general position and do not increase the crossing count. It does not read human or public witnesses. The seed 0 run completed 80 attempts and accepted 16 replacements. It found 12,516 crossings. The construction, exact result, budget, and replay command are saved under `best/`. Default runner limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread.
+The traditional search starts from a seeded random integer point set in general position. It makes 80 greedy single-point replacement attempts. It accepts only replacements that preserve general position and do not increase the crossing count. It does not read human or public witnesses. The seed 0 run completed 80 attempts and accepted 16 replacements. It found 12,516 crossings. The construction, exact result, budget, and replay command are saved under `data/best/`. Default runner limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one CPU thread.
 
 Main source correction: the retrieved 2011 survey has Table 1, no Table 3. It supports open status, while the numeric7233–7234 interval is attributed to Bernardo M. Abrego’s first-party comment at https://oeis.org/A014540/internal . The current crossingconstants page concerns asymptotic constants and is not cited as a K28 table. FrozenH20475 is a reconstructed weak convex-position formula; reported besthuman7234 remains unverified locally.

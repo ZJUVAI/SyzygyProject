@@ -2,7 +2,7 @@
 import json,os
 from pathlib import Path
 DATA=Path(__file__).parent/"data/reference/sorterhunter_17_71_12.json"
-_FILES={"T048-C01":"sorterhunter_17_71_12.json","T048-C02":"sorterhunter_18_77_12.json","T048-C03":"sorterhunter_19_85_12.json"}
+_FILES={"T048-C01":"sorterhunter_17_71_12.json"}
 def run_code():
     cid=os.environ.get("MATHBENCH_CONFIG_ID","T048-C01")
     try:name=_FILES[cid]

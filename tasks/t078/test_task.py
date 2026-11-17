@@ -38,7 +38,7 @@ def test_all_five_entries_and_frozen_lattice_witnesses():
     assert human_solution["gram"] == reference_solution["gram"]
     assert search["search_metadata"]["trials_completed"] == 32
     assert search["search_metadata"]["reference_data_read"] is False
-    saved = json.loads((TASK / "best/seed-0.json").read_text())
+    saved = json.loads((TASK / "data/search/seed-0.json").read_text())
     assert check.validate(saved, CONFIG)["objective"] == 3072
     assert saved["gram"] == search["gram"]
     raw_source = (TASK / "data/source/lambda10.html").read_bytes()

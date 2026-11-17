@@ -1,5 +1,4 @@
 """Exact structural proposals for addition chains; no stored witness inputs."""
-import math
 import time
 
 
@@ -131,21 +130,6 @@ def append_tail(chain, tail):
     return sorted(candidates)
 
 
-def tail_candidate(bits, defect, trailing, path, rng=None):
-    """Use 2**bits-c = 2**k*M_(bits-k) + (2**k-c)."""
-    tail = (1 << trailing)-defect
-    if tail <= 0 or path[-1] != bits-trailing:
-        raise ValueError('invalid tail split')
-    chain = append_tail(lift_exponents(path, rng), tail)
-    value = (1 << path[-1])-1
-    values = set(chain)
-    for _ in range(trailing):
-        value *= 2
-        values.add(value)
-    values.add(value+tail)
-    return sorted(values)
-
-
 def quotient_chain(target, divisor, paths, rng=None):
     """Build a target through an exact Euclidean quotient/remainder DAG.
 
@@ -184,12 +168,3 @@ def quotient_chain(target, divisor, paths, rng=None):
         raise ValueError('divisor must lie between 1 and target')
     pair(target, divisor)
     return sorted(values)
-
-
-def divisors_for_target(target, rng):
-    """Choose near-power, near-square, and small quotient decompositions."""
-    bits = target.bit_length()
-    shift = rng.randrange(2, bits-1)
-    offset = rng.choice([-5, -3, -1, 0, 1, 3, 5])
-    return [(1 << shift)+offset, (target >> shift)+offset,
-            math.isqrt(target)+offset, target//rng.randrange(2, 33)]

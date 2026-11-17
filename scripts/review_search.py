@@ -13,20 +13,21 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from mathbench.registry import load_task
-from mathbench.replay import replay
+from mathbench.replay import read_witness_bytes, replay
+from mathbench.saved_result import best_record_path, read_best_record, write_best_record
 from scripts.audits.independent_audit import broken
 from scripts.search import bounded_audit, save
 
 
-def sync_promoted_witness(directory, config, solution, result, provenance):
+def sync_promoted_witness(directory, best, config, solution, result, provenance):
     """Update existing own-result entries for the promoted witness."""
     cid = config['id']
-    witness = f'best/{cid}/solution.json'
+    witness = best.relative_to(directory).as_posix()
     entry = dict(
         value=result['objective'],
         objective_value=result.get('objective_value', result['objective']),
         witness=witness,
-        witness_sha256=hashlib.sha256((directory / witness).read_bytes()).hexdigest(),
+        witness_sha256=hashlib.sha256(read_witness_bytes(best)).hexdigest(),
         parameters=config['parameters'],
         seed=result['seed'],
         verification_status=result['verification_status'],
@@ -42,7 +43,7 @@ def sync_promoted_witness(directory, config, solution, result, provenance):
     if 'program' in provenance:
         entry['program'] = provenance['program']
     for name in ('records.json', 'sota.json'):
-        path = directory / name
+        path = directory / 'data' / name
         document = json.loads(path.read_text())
         records = document.get('configurations', {}).get(cid, {})
         changed = False
@@ -190,7 +191,8 @@ def review(path, candidate_only=False):
     task = data['task_id']
     review_date = datetime.now(timezone.utc).date().isoformat()
     directory = ROOT / 'tasks' / task.lower()
-    configs = {c['id']: c for c in load_task(task, include_history=True)['configurations']}
+    task_metadata = load_task(task, include_history=True)
+    configs = {c['id']: c for c in task_metadata['configurations']}
     assert all(hashlib.sha256((path.parent / 'sources' / name).read_bytes()).hexdigest() == digest
                for name, digest in manifest['source_sha256'].items())
     count = 0
@@ -242,26 +244,24 @@ def review(path, candidate_only=False):
         if manifest.get('generation_record'):
             record['generation_record'] = manifest['generation_record']
         save(destination / 'review.json', dict(record, strict_replay=checked))
-        best = directory / 'best' / cid
-        previous = json.loads((best / 'result.json').read_text()) if (best / 'result.json').exists() else None
-        improved = previous is None or better(result, previous, configs[cid]['direction'])
+        best = best_record_path(directory / 'data/best')
+        previous = read_best_record(best)['result'] if best.is_file() else None
+        improved = (previous is None or previous.get('config_id') != cid
+                    or better(result, previous, configs[cid]['direction']))
         if improved:
             if previous is not None:
                 backup = path.parent / 'previous_best' / cid
                 if backup.exists():
                     raise ValueError('Previous best backup already exists: ' + str(backup))
-                shutil.copytree(best, backup)
-            best.mkdir(parents=True, exist_ok=True)
-            save(best / 'solution.json', solution)
-            (best / 'solution.json.gz').unlink(missing_ok=True)
-            save(best / 'result.json', result)
+                backup.mkdir(parents=True)
+                shutil.copy2(best, backup / best.name)
             record.update(classification='ai_assisted_local_continuation', seed=result['seed'],
                           controls=manifest['controls'], budget=result['budget'],
                           environment=result['environment'], source_sha256=manifest['source_sha256'],
                           warm_start_sha256=warm_hash,
-                          replay_command=f'.venv/bin/python -m mathbench replay {task} tasks/{task.lower()}/best/{cid}/solution.json --config {cid}')
-            save(best / 'provenance.json', record)
-            sync_promoted_witness(directory, configs[cid], solution, result, record)
+                          replay_command=f'.venv/bin/python -m mathbench replay {task} {best.relative_to(ROOT)} --config {cid}')
+            write_best_record(best, result, record, witness.read_bytes())
+            sync_promoted_witness(directory, best, configs[cid], solution, result, record)
         row.update(status='candidate_verified_controls_incomplete' if failed_evaluations else 'reviewed_by_sol', sol_review=str((destination / 'review.json').relative_to(ROOT)))
         count += 1
         print('REVIEWED', cid, 'PROMOTED' if improved else 'kept prior best', flush=True)
