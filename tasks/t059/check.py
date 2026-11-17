@@ -1,6 +1,6 @@
 """Exact clique checker for DIMACS C2000.9."""
 
-from tasks.t059.graph import N, RAW_SHA256, load_graph
+from tasks.t059.graph import N, PACKED_SHA256, RAW_SHA256, load_graph
 
 PARAMETERS = {"instance": "C2000.9", "vertices": 2000, "edges": 1799532}
 
@@ -37,6 +37,7 @@ def validate(solution, config, strict=False):
             "edge_count": PARAMETERS["edges"],
             "clique_edges_checked": len(vertices) * (len(vertices) - 1) // 2,
             "graph_source_sha256": RAW_SHA256,
+            "graph_input_sha256": PACKED_SHA256,
             "claimed_objective_ignored": True,
         },
     }

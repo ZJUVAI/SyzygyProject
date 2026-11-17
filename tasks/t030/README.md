@@ -4,7 +4,7 @@
 
 本任务固定 DIMACS 图 DSJC1000.5，包含 1000 个顶点和 249,826 条无向边。顶点编号为 0 至 999。候选须给每个顶点一个整数颜色，并确保每条边的端点颜色不同。目标是最小化使用的不同颜色数。评测器逐边检查构造，并从颜色列表重算不同颜色数；候选声明的分数不参与验收。
 
-候选输入 `data/instance.json` 只含实例名、顶点数和边表。其 SHA-256 为 `51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd`。固定输入由 DIMACS 格式纯文本副本生成。副本保留在 `data/source/`，来源仓库固定到 2026-09-17 的提交。原始 Rutgers 文件带 `.col.b` 后缀且采用二进制边编码；本任务使用仓库中同名标准 `p edge` 文本版本，不把二进制文件当作候选输入。
+候选输入为 `data/DSJC1000.5.bits`，采用无头部上三角位集，SHA-256 为 `ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779`。位对 `(u,v)` 的索引为 `v*(v-1)//2+u`，每字节从最低有效位开始，最后一个字节的 4 个未用高位为零。`data/graph_source.json` 保存原 DIMACS 来源、旧文件摘要及独立逐边比对记录。DIMACS 文本、Rutgers 二进制图和展开边表已删除。
 
 Olawale Titiloye 与 Alan Crispin 的 2012 年论文报告找到了 DSJC1000.5 的 82 色着色。Titiloye 作者页提供该证书；本任务下载证书后检查了全部 1000 个顶点和 249,826 条边，复算为 82 色且无冲突。证书保存在 `data/source/DSJC1000.5_K82_col.txt`，复算摘要在 `data/DSJC1000.5_K82_verification.json`。这是当前核对到的最佳公开结果。作者页还留有旧的 83 色 QA-col 证书，保存在 `data/source/DSJC1000.5_K83.txt`。
 
@@ -18,7 +18,7 @@ Samir Loudni 的 ID-VNS 页面提供 86 色着色。下载的见证覆盖 1000 �
 
 This task fixes the DIMACS DSJC1000.5 graph. It has 1,000 vertices and 249,826 undirected edges. Vertex labels are 0 through 999. A candidate assigns an integer color to every vertex. The endpoints of every edge must have different colors. The objective is to minimize the number of distinct colors. The evaluator checks every edge and counts the colors again. It ignores any score claimed by the candidate.
 
-Candidate input `data/instance.json` contains only the instance name, vertex count, and edge list. Its SHA-256 is `51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd`. The input was generated from a DIMACS-format text copy. The copy is saved in `data/source/` and pinned to a repository commit dated 2026-09-17. The original Rutgers file has a `.col.b` suffix and uses binary edge encoding. This task uses the same-named standard `p edge` text version; the binary file is not candidate input.
+Candidate input `data/DSJC1000.5.bits` is a headerless packed upper-triangle bitset. Its SHA-256 is `ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779`. Pair `(u,v)` uses index `v*(v-1)//2+u`; bits are least-significant-bit first within each byte. The four unused high bits in the last byte are zero. `data/graph_source.json` records the original DIMACS source, its old file hashes, and an independent edge-by-edge comparison. The DIMACS text, Rutgers binary graph, and expanded edge list have been removed.
 
 Titiloye and Crispin's 2012 paper reports an 82-coloring of DSJC1000.5. Titiloye's author page provides the certificate. This task checked all 1,000 vertices and 249,826 edges; the certificate has 82 distinct colors and no conflict. The certificate is saved in `data/source/DSJC1000.5_K82_col.txt`, with a replay summary in `data/DSJC1000.5_K82_verification.json`. This is the best public result found in the reviewed sources. The author page also retains an older 83-color QA-col certificate in `data/source/DSJC1000.5_K83.txt`.
 

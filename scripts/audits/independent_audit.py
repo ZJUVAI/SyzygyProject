@@ -6,6 +6,23 @@ from fractions import Fraction as F
 
 from mathbench.registry import ROOT
 
+
+def _packed_graph_bytes(path, vertex_count, edge_count):
+    data = path.read_bytes()
+    bits = vertex_count * (vertex_count - 1) // 2
+    assert len(data) == (bits + 7) // 8
+    assert bits % 8 == 0 or data[-1] < (1 << (bits % 8))
+    assert int.from_bytes(data, "little").bit_count() == edge_count
+    return data
+
+
+def _packed_has_edge(data, u, v):
+    lower, upper = sorted((u, v))
+    index = upper * (upper - 1) // 2 + lower
+    byte, bit = divmod(index, 8)
+    return bool(data[byte] & (1 << bit))
+
+
 def independent_quantity(task, s, config=None):
     if task == 'T101':
         import numpy as np
@@ -504,19 +521,15 @@ def independent_quantity(task, s, config=None):
         assert all(mask.bit_count()==4*len(rounds) for mask in opponents)
         return {'round_count':len(rounds),'distinct_pairs':sum(m.bit_count() for m in opponents)//2}
     if task == 'T059':
-        import gzip
-        vertices=s['vertices'];assert all(type(v) is int and 0<=v<2000 for v in vertices)
-        assert len(vertices)==len(set(vertices))
-        needed={tuple(sorted(pair)) for pair in itertools.combinations(vertices,2)}
-        found=set();edges=0
-        path=ROOT/'tasks/t059/data/source/C2000.9.clq.gz'
-        with gzip.open(path,'rt') as stream:
-            for line in stream:
-                if line.startswith('e '):
-                    _,a,b=line.split();pair=tuple(sorted((int(a)-1,int(b)-1)));edges+=1
-                    if pair in needed:found.add(pair)
-        assert edges==1799532 and found==needed
-        return {'clique_cardinality':len(vertices),'required_edges_found':len(found)}
+        vertices = s['vertices']
+        assert all(type(v) is int and 0 <= v < 2000 for v in vertices)
+        assert len(vertices) == len(set(vertices))
+        data = _packed_graph_bytes(ROOT / 'tasks/t059/data/source/C2000.9.bits', 2000, 1799532)
+        required = 0
+        for u, v in itertools.combinations(vertices, 2):
+            assert _packed_has_edge(data, u, v)
+            required += 1
+        return {'clique_cardinality': len(vertices), 'required_edges_found': required}
     if task == 'T057':
         path=ROOT/'tasks/t057/data/source/X-n1001-k43.vrp'
         coords={};demands={};mode=None
@@ -1012,27 +1025,18 @@ def independent_quantity(task, s, config=None):
         return {'ones': sum(sum(row) for row in matrix),
                 'column_triples_checked': checked, 'forbidden_submatrices': 0}
     if task == 'T030':
-        directory = ROOT / 'tasks/t030/data'
-        edges = set()
-        for line in (directory / 'source/DSJC1000.5.col').read_text().splitlines():
-            fields = line.split()
-            if fields and fields[0] == 'e':
-                u, v = map(lambda x: int(x)-1, fields[1:])
-                edges.add(tuple(sorted((u, v))))
-        instance = json.loads((directory / 'instance.json').read_text())
-        assert len(edges) == 249826
-        assert edges == {tuple(sorted(edge)) for edge in instance['edges']}
+        data = _packed_graph_bytes(ROOT / 'tasks/t030/data/DSJC1000.5.bits', 1000, 249826)
         groups = {}
         assert len(s['colors']) == 1000
         for vertex, color in enumerate(s['colors']):
             groups.setdefault(color, []).append(vertex)
         checked = 0
         for vertices in groups.values():
-            for pair in itertools.combinations(vertices, 2):
-                assert pair not in edges
+            for u, v in itertools.combinations(vertices, 2):
+                assert not _packed_has_edge(data, u, v)
                 checked += 1
         return {'color_count': len(groups), 'within_color_pairs_checked': checked,
-                'original_dimacs_edges_matched': len(edges)}
+                'graph_edge_count': 249826}
     if task == 'T031':
         word = s['word']
         # Test each required word by independent substring lookup, rather than

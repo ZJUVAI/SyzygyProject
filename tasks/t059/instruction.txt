@@ -2,7 +2,7 @@
 
 Maximize the number of pairwise adjacent distinct vertices in the fixed undirected graph C2000.9. The graph has 2,000 vertices indexed 0 through 1999 and 1,799,532 edges.
 
-The public input is `data/source/C2000.9.clq.gz`, a gzip-compressed DIMACS graph. Its header is `p col 2000 1799532`; each `e u v` record uses one-based endpoints. The uncompressed source hash is recorded in `records.json` and is checked by the evaluator.
+The public input is `data/source/C2000.9.bits`, a headerless packed upper-triangle bitset. For `0 <= u < v < 2000`, pair `(u,v)` uses index `v*(v-1)//2+u`; bits are least-significant-bit first within each byte. Its packed-file hash is recorded in `records.json` and is checked by the evaluator. The original DIMACS URL and checksums remain in source provenance.
 
 Return JSON with a `vertices` list of distinct zero-based vertex indices. The checker verifies all ranges, duplicate constraints, and every selected pair against the exact source graph. It ignores claimed scores.
 

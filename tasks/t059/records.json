@@ -75,11 +75,16 @@
         "original_input": "C2000.9.clq",
         "input_origin": "CMU COLOR04/DIMACS benchmark snapshot supplied for this task",
         "uncompressed_sha256": "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16",
-        "compressed_file": "data/source/C2000.9.clq.gz",
-        "compressed_sha256": "936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639",
         "uncompressed_bytes": 19602828,
         "vertices": 2000,
-        "edges": 1799532
+        "edges": 1799532,
+        "previous_compressed_file": "data/source/C2000.9.clq.gz",
+        "original_compressed_sha256": "936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639",
+        "packed_file": "data/source/C2000.9.bits",
+        "packed_sha256": "687ce2b39ee17bad81ae8ba2253b40441e270dc61c72e5e39fe58f9d404dca4d",
+        "packed_bytes": 249875,
+        "packed_encoding": "headerless upper-triangle bitset; pair (u,v), 0<=u<v<n, index v*(v-1)//2+u; least-significant bit first; canonical zero padding",
+        "source_url": "https://dimacs.rutgers.edu/Challenges/"
       },
       "own_search": {
         "program": "evolution.py",

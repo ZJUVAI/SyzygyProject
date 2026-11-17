@@ -2,47 +2,32 @@
 
 from __future__ import annotations
 
-import hashlib
-import json
 from pathlib import Path
+
+from tasks.graph_bits import load_adjacency
 
 
 _TASK_DIR = Path(__file__).parent
-_INPUT_PATH = _TASK_DIR / "data" / "instance.json"
-_INPUT_SHA256 = "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+_INPUT_PATH = _TASK_DIR / "data" / "DSJC1000.5.bits"
+_INPUT_SHA256 = "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779"
 _VERTICES = 1000
 _EDGES = 249826
 
 
 def load_graph():
-    """Load and verify the task input. It contains only the graph instance."""
-    raw = _INPUT_PATH.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != _INPUT_SHA256:
-        raise RuntimeError("trusted DSJC1000.5 input hash does not match the frozen snapshot")
-    payload = json.loads(raw)
-    if not isinstance(payload, dict) or payload.get("instance") != "DSJC1000.5":
-        raise RuntimeError("trusted input is not DSJC1000.5")
-    if payload.get("vertices") != _VERTICES:
-        raise RuntimeError("trusted graph has the wrong vertex count")
-    edges = payload.get("edges")
-    if not isinstance(edges, list) or len(edges) != _EDGES:
-        raise RuntimeError("trusted graph has the wrong edge count")
-    adjacency = [set() for _ in range(_VERTICES)]
-    seen = set()
-    for edge in edges:
-        if (not isinstance(edge, list) or len(edge) != 2
-                or any(type(v) is not int for v in edge)):
-            raise RuntimeError("trusted graph contains a malformed edge")
-        u, v = edge
-        if not (0 <= u < _VERTICES and 0 <= v < _VERTICES) or u == v:
-            raise RuntimeError("trusted graph contains an invalid endpoint")
-        key = (u, v) if u < v else (v, u)
-        if key in seen:
-            raise RuntimeError("trusted graph contains a duplicate edge")
-        seen.add(key)
-        adjacency[u].add(v)
-        adjacency[v].add(u)
-    return tuple(frozenset(neighbors) for neighbors in adjacency), tuple(edges)
+    """Load the verified packed graph and expose the task's set-based API."""
+    masks = load_adjacency(_INPUT_PATH, _VERTICES, _EDGES, _INPUT_SHA256)
+    adjacency = tuple(
+        frozenset(v for v in range(_VERTICES) if mask & (1 << v))
+        for mask in masks
+    )
+    edges = tuple(
+        (u, v)
+        for u, mask in enumerate(masks)
+        for v in range(u + 1, _VERTICES)
+        if mask & (1 << v)
+    )
+    return adjacency, edges
 
 
 def validate(solution, config, strict=False):

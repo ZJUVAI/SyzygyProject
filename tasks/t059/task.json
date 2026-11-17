@@ -34,18 +34,18 @@
     "https://arxiv.org/abs/2607.11726v1",
     "https://dimacs.rutgers.edu/Challenges/"
   ],
-  "verification": "Exact all-pairs adjacency checks against the byte-pinned DIMACS source graph. The checker accepts any clique and does not infer optimality from its size.",
+  "verification": "Exact all-pairs adjacency checks against the pinned packed upper-triangle bitset. The checker accepts any clique and does not infer optimality from its size.",
   "acceptance_review": {
     "reviewer": "Sol main agent",
-    "date": "2026-11-06",
-    "decision": "实现完成并通过Sol验收",
+    "date": "2026-11-17",
+    "decision": "二进制图输入已通过 Sol 验收",
     "source_review": {
       "definition": "固定DIMACS C2000.9，2000顶点1799532边，最大化两两邻接顶点集大小。补图独立集和点覆盖不再额外计数。",
       "primary_source": "Sol亲自读取Grosso–Locatelli–Pullan2005两页论文，先79再完整80顶点编号；逐一抄取80个零基编号，从CMU COLOR04官方下载19602828字节原始图，SHA256 aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16。独立图edge-set解码后全部3160对存在。",
       "record_and_status": "Sol亲自读取Krpan–Povh2607.11726v1（2026-07-13），明确该图精确团数未知，下界80、作者报告认证上界168。大规模core/theta计算未本地复现，不把168标作主代理独立数学证书。",
       "human_reproduction": "2005传统局部搜索发现的80点完整见证重放，reference与human80；没有将现代AI辅助图搜索结果归为该旧人类构造。",
-      "independent_math": "正式checker用逐顶点邻接bitset测试；Sol对每份构造列出所有所需顶点对，再独立扫描原始压缩DIMACS边流收集匹配，验证1799532条边与所需集合完全覆盖，未调用任务graph/check解析器。",
-      "controls": "初始1、16次传统62、256次演化71、人类/参考80。五程序、重复顶点破坏、完整声明分数不变、严格回放、仅公开压缩图冷导出、错误/非有限数/超时均通过。任务及共享检查41项通过。",
+      "independent_math": "Sol 独立解析旧 DIMACS 边表，并逐顶点比较新文件解码后的邻接位集合。1799532 条边全部相同。另由审计程序直接读取位图，复算 80 点人类构造所需的 3160 条边。",
+      "controls": "简单起点为 1，种子 0 的 16 次传统搜索为 62，人类及参考构造均为 80，保存构造严格重放为 77。重复顶点被拒绝，声明分数不影响复算。导出仅包含公开位图、简单起点、指令与公开参数。",
       "limits": "未证明80最优、未重跑原作者发现搜索或2026的192线程751GiB大规模上界计算。"
     }
   }

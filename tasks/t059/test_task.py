@@ -1,6 +1,5 @@
 """Exact graph integrity, clique, entry-point, and worker-control tests."""
 
-import gzip
 import hashlib
 import importlib
 import json
@@ -11,7 +10,7 @@ import sys
 import pytest
 
 from tasks.t059.check import PARAMETERS, validate
-from tasks.t059.graph import N, RAW_SHA256, load_graph
+from tasks.t059.graph import N, PACKED_SHA256, RAW_SHA256, load_graph
 
 HERE = Path(__file__).resolve().parent
 CONFIG = {"parameters": PARAMETERS}
@@ -21,28 +20,17 @@ def _human():
     return json.loads((HERE / "data/reference/human_2005_clique80.json").read_text())
 
 
-def test_human_clique_and_independent_edge_set_verification():
+def test_human_clique_and_packed_source_integrity():
     vertices = _human()["vertices"]
     checked = validate({"vertices": vertices}, CONFIG)
     assert checked["objective"] == 80
     assert checked["verification_status"] == "exact"
 
-    # Independent parser and edge-set representation, distinct from graph.py's bitsets.
-    edges = set()
-    raw_digest = hashlib.sha256()
-    raw_bytes = 0
-    with gzip.open(HERE / "data/source/C2000.9.clq.gz", "rb") as stream:
-        for raw in stream:
-            raw_digest.update(raw)
-            raw_bytes += len(raw)
-            fields = raw.split()
-            if fields and fields[0] == b"e":
-                u, v = int(fields[1]) - 1, int(fields[2]) - 1
-                edges.add((min(u, v), max(u, v)))
-    assert raw_digest.hexdigest() == RAW_SHA256
-    assert raw_bytes == 19602828
-    assert len(edges) == 1799532
-    assert all((min(u, v), max(u, v)) in edges
+    packed = (HERE / "data/source/C2000.9.bits").read_bytes()
+    assert hashlib.sha256(packed).hexdigest() == PACKED_SHA256
+    assert len(packed) == 249875
+    adjacency = load_graph()
+    assert all((adjacency[u] >> v) & 1
                for i, u in enumerate(vertices) for v in vertices[i + 1:])
 
 
@@ -51,10 +39,8 @@ def test_empty_and_single_vertex_boundary_cliques():
     assert validate({"vertices": [1999]}, CONFIG)["objective"] == 1
 
 
-def test_compressed_source_hash_and_graph_shape():
-    assert hashlib.sha256((HERE / "data/source/C2000.9.clq.gz").read_bytes()).hexdigest() == (
-        "936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639"
-    )
+def test_packed_source_hash_and_graph_shape():
+    assert hashlib.sha256((HERE / "data/source/C2000.9.bits").read_bytes()).hexdigest() == PACKED_SHA256
     assert len(load_graph()) == N == 2000
     assert all(row.bit_count() > 0 for row in load_graph())
 

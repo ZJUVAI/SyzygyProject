@@ -1,51 +1,19 @@
-"""Load the pinned DIMACS C2000.9 graph as Python integer bitsets."""
+"""Load the pinned C2000.9 upper-triangle bitset as adjacency integers."""
 
-import gzip
-import hashlib
 from functools import lru_cache
 from pathlib import Path
+from tasks.graph_bits import load_adjacency
 
 N = 2000
 M = 1799532
 RAW_SHA256 = "aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16"
-SOURCE = Path(__file__).resolve().parent / "data/source/C2000.9.clq.gz"
+PACKED_SHA256 = "687ce2b39ee17bad81ae8ba2253b40441e270dc61c72e5e39fe58f9d404dca4d"
+SOURCE = Path(__file__).resolve().parent / "data/source/C2000.9.bits"
 
 
 @lru_cache(maxsize=1)
 def load_graph():
-    adjacency = [0] * N
-    digest = hashlib.sha256()
-    header = None
-    edge_count = 0
-    with gzip.open(SOURCE, "rb") as stream:
-        for raw in stream:
-            digest.update(raw)
-            fields = raw.split()
-            if not fields or fields[0] == b"c":
-                continue
-            if fields[0] == b"p":
-                if len(fields) != 4 or fields[1] not in (b"edge", b"col"):
-                    raise RuntimeError("invalid DIMACS problem line")
-                header = (int(fields[2]), int(fields[3]))
-            elif fields[0] == b"e":
-                if len(fields) != 3:
-                    raise RuntimeError("invalid DIMACS edge line")
-                u, v = int(fields[1]) - 1, int(fields[2]) - 1
-                if not (0 <= u < N and 0 <= v < N) or u == v:
-                    raise RuntimeError("invalid DIMACS vertex index")
-                bit_u, bit_v = 1 << u, 1 << v
-                if adjacency[u] & bit_v:
-                    raise RuntimeError("duplicate DIMACS edge")
-                adjacency[u] |= bit_v
-                adjacency[v] |= bit_u
-                edge_count += 1
-            else:
-                raise RuntimeError("unknown DIMACS record")
-    if digest.hexdigest() != RAW_SHA256:
-        raise RuntimeError("raw graph source hash mismatch")
-    if header != (N, M) or edge_count != M:
-        raise RuntimeError("unexpected C2000.9 dimensions")
-    return tuple(adjacency)
+    return load_adjacency(SOURCE, N, M, PACKED_SHA256)
 
 
 def bit_vertices(mask):

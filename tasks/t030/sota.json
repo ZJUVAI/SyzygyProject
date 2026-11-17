@@ -7,7 +7,7 @@
         "instance": "DSJC1000.5",
         "vertices": 1000,
         "edges": 249826,
-        "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+        "input_sha256": "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779"
       },
       "direction": "minimize",
       "objective": {

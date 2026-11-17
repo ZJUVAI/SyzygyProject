@@ -37,7 +37,8 @@ def test_cold_seed_export(tmp_path):
     ('T064', 'data/source/ortho40.instance.json', 'data/reference/ortho40_19.solution.json'),
     ('T027', 'data/tai256c.dat', 'data/tai256c.sln'),
     ('T045', 'data/source/gd96a.rmf', 'data/reference/spectral_adjacent_ordering.json'),
-    ('T059', 'data/source/C2000.9.clq.gz', 'data/reference/grosso_locatelli_pullan_2005_clique80.json'),
+    ('T030', 'data/DSJC1000.5.bits', 'data/human_witness.json'),
+    ('T059', 'data/source/C2000.9.bits', 'data/reference/grosso_locatelli_pullan_2005_clique80.json'),
     ('T057', 'data/source/X-n1001-k43.vrp', 'data/reference/public_72332.sol'),
     ('T055', 'data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf', 'data/reference/mse2026_boums_60_assignment.json'),
     ('T056', 'data/source/ta41_instance.json', 'data/reference/ta41_2006_schedule.json')])

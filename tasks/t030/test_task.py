@@ -21,36 +21,26 @@ CONFIG = {
         "instance": "DSJC1000.5",
         "vertices": 1000,
         "edges": 249826,
-        "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd",
+        "input_sha256": "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779",
     },
     "direction": "minimize",
     "human_reference": 86,
 }
 
 
-def test_frozen_dimacs_text_matches_trusted_graph_json():
-    source_path = TASK_DIR / "data" / "source" / "DSJC1000.5.col"
-    raw = source_path.read_bytes()
-    assert hashlib.sha256(raw).hexdigest() == (
-        "17b395030fbab1e2a6564396c3a161dbb3248423953e6b462377a018b8f4bb6c"
-    )
-    n = m = None
-    edges = []
-    for line in raw.decode("ascii").splitlines():
-        fields = line.split()
-        if not fields or fields[0] == "c":
-            continue
-        if fields[0] == "p":
-            assert fields[1] == "edge"
-            n, m = map(int, fields[2:4])
-        elif fields[0] == "e":
-            edges.append([int(fields[1]) - 1, int(fields[2]) - 1])
-    assert (n, m, len(edges)) == (1000, 249826, 249826)
-    payload = json.loads((TASK_DIR / "data" / "instance.json").read_text())
-    assert payload == {"instance": "DSJC1000.5", "vertices": n, "edges": edges}
-    assert hashlib.sha256((TASK_DIR / "data" / "instance.json").read_bytes()).hexdigest() == (
-        CONFIG["parameters"]["input_sha256"]
-    )
+def test_packed_graph_matches_source_metadata_and_has_canonical_padding():
+    source = json.loads((TASK_DIR / "data" / "graph_source.json").read_text())
+    path = TASK_DIR / "data" / "DSJC1000.5.bits"
+    raw = path.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == CONFIG["parameters"]["input_sha256"]
+    assert source["independent_verification"]["edge_sets_equal"] is True
+    assert source["source"]["sha256"] == "17b395030fbab1e2a6564396c3a161dbb3248423953e6b462377a018b8f4bb6c"
+    assert len(raw) == 62438
+    assert raw[-1] & 0b11110000 == 0
+    adjacency, edges = load_graph()
+    assert len(adjacency) == 1000
+    assert len(edges) == 249826
+    assert sum(map(len, adjacency)) == 2 * 249826
 
 
 def test_human_witness_exactly_replays_and_claimed_score_is_ignored():
@@ -161,7 +151,15 @@ def test_dsatur_baseline_and_evolution_entry_are_seeded_and_valid(monkeypatch):
     saved_result = json.loads((TASK_DIR / "best" / "seed0_dsatur_result.json").read_text())
     saved_verification = json.loads((TASK_DIR / "best" / "seed0_dsatur_verification.json").read_text())
     assert seed_zero_result == saved_result
-    assert validate(saved_result, CONFIG) == saved_verification
+    replayed = validate(saved_result, CONFIG)
+    assert replayed["objective"] == saved_verification["objective"]
+    assert replayed["verification_status"] == saved_verification["verification_status"]
+    assert {k: v for k, v in replayed["details"].items() if k != "input_sha256"} == {
+        k: v for k, v in saved_verification["details"].items() if k != "input_sha256"
+    }
+    assert saved_verification["details"]["input_sha256"] == (
+        "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+    )
     assert validate(first, CONFIG)["objective"] == first["claimed_objective"]
     metadata = first["search_metadata"]
     assert metadata["seed"] == 31

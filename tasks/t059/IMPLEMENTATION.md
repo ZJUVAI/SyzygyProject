@@ -10,7 +10,7 @@ The empty clique is accepted with objective zero. A one-vertex clique is accepte
 
 ## Instance and source pins
 
-The input source was provided from the CMU COLOR04/DIMACS C2000.9 benchmark snapshot. It contains the DIMACS header `p col 2000 1799532`. The original file is 19,602,828 bytes. The local input is compressed at `data/source/C2000.9.clq.gz` (4.1 MiB). On load, the checker streams its uncompressed bytes, verifies SHA-256 `aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16`, checks the header and edge count, rejects self-loops or duplicate edges, and builds adjacency bitsets. The compressed file SHA-256 is `936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639`.
+The input source was provided from the CMU COLOR04/DIMACS C2000.9 benchmark snapshot. It contains the DIMACS header `p col 2000 1799532`. The original file is 19,602,828 bytes. The local input is stored at `data/source/C2000.9.bits` as one headerless packed upper-triangle bitset (249,875 bytes). Pair `(u,v)`, where `0 <= u < v < 2000`, uses index `v*(v-1)//2+u`; bits use least-significant-bit-first order within each byte. The loader verifies SHA-256 `687ce2b39ee17bad81ae8ba2253b40441e270dc61c72e5e39fe58f9d404dca4d`, canonical zero padding, and exactly 1,799,532 edges. The original DIMACS uncompressed SHA-256 `aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16` and original compressed SHA-256 `936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639` are kept as provenance.
 
 The human witness is `data/reference/human_2005_clique80.json`, SHA-256 `02eecb1280588703bd1a57b55e10c4ce46e0f5672e87c8962182dca7f472ce1c`.
 
@@ -54,9 +54,9 @@ Command:
 
 Result on 2026-11-06: `22 passed in 22.63s`.
 
-The tests check the complete human witness with an independent edge-set parser, the compressed source hash and graph dimensions, empty and singleton boundaries, invalid indices/types/duplicates, a deliberately selected nonedge, claimed-score invariance, all five `run_code()` entries, search isolation, and worker error and timeout behavior through `mathbench.evaluate._run` without task registry admission.
+The tests check the complete human witness, the packed input hash and graph dimensions, empty and singleton boundaries, invalid indices/types/duplicates, a deliberately selected nonedge, claimed-score invariance, all five `run_code()` entries, search isolation, and worker error and timeout behavior.
 
-Sol review remains pending.
+On 2026-11-17, Sol read the original DIMACS edge list independently and compared every adjacency mask with the packed input. All 1,799,532 edges matched. The initial program scored 1. The traditional search scored 62 with seed 0 and 16 iterations. The human and reference programs each scored 80. The saved search construction replayed at 77. The checker rejected duplicate vertices and ignored a changed score claim. The public export contained the packed graph and ran the initial program.
 
 ## Papers
 

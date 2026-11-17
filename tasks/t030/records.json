@@ -96,11 +96,13 @@
         "source_url": "https://raw.githubusercontent.com/dynaroars/npbench/eb5ebad7723dad15f29475329cd31047015ba368/instances/coloring/graph_color/DSJC1000.5.col",
         "source_commit": "eb5ebad7723dad15f29475329cd31047015ba368",
         "source_commit_date": "2026-09-17",
-        "source_file": "data/source/DSJC1000.5.col",
-        "source_file_sha256": "17b395030fbab1e2a6564396c3a161dbb3248423953e6b462377a018b8f4bb6c",
-        "input_file": "data/instance.json",
-        "input_file_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd",
-        "format_and_replay": "Parsed standard DIMACS p edge text; confirmed p edge 1000 249826 and 249826 unique in-range edges. The exact checker replays the 82-color public certificate and the 86-color frozen human reference."
+        "source_file": "data/graph_source.json",
+        "source_file_sha256": "1d4e422bd6441a78593b3e8ee49eeff6ec5e108af7cd2159751e1996e87b3ba5",
+        "input_file": "data/DSJC1000.5.bits",
+        "input_file_sha256": "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779",
+        "format_and_replay": "Original DIMACS text and Rutgers binary files were independently decoded and compared with the packed bitset. Both contained 1000 vertices and the same 249826 unique in-range edges. The exact checker replays the 82-color public certificate and 86-color frozen human reference.",
+        "original_dimacs_text_sha256": "17b395030fbab1e2a6564396c3a161dbb3248423953e6b462377a018b8f4bb6c",
+        "original_rutgers_binary_sha256": "4ef5f6ac499418afe4620fcd73c46df55dd83a867e5d9bd7e4fbac9655f88089"
       },
       "highest_reported": {
         "value": 82,
@@ -139,7 +141,7 @@
         "instance": "DSJC1000.5",
         "vertices": 1000,
         "edges": 249826,
-        "input_sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd"
+        "input_sha256": "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779"
       },
       "direction": "minimize",
       "best_public_reproduced": {

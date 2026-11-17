@@ -1,0 +1,42 @@
+{
+  "instance": "DSJC1000.5",
+  "vertices": 1000,
+  "edges": 249826,
+  "candidate_input": "data/DSJC1000.5.bits",
+  "candidate_input_sha256": "ec284de01b9716dc1db3fd0f851122b61ae263623c5ba2a8c7a5f48986894779",
+  "encoding": {
+    "format": "headerless upper-triangle bitset",
+    "pair_index": "v*(v-1)//2+u for 0 <= u < v < vertices",
+    "bit_order": "least significant bit first within each byte",
+    "padding": "unused high bits in final byte are zero"
+  },
+  "source": {
+    "repository": "dynaroars/npbench",
+    "commit": "eb5ebad7723dad15f29475329cd31047015ba368",
+    "commit_date": "2026-09-17",
+    "path": "instances/coloring/graph_color/DSJC1000.5.col",
+    "url": "https://raw.githubusercontent.com/dynaroars/npbench/eb5ebad7723dad15f29475329cd31047015ba368/instances/coloring/graph_color/DSJC1000.5.col",
+    "original_format": "DIMACS p edge text",
+    "sha256": "17b395030fbab1e2a6564396c3a161dbb3248423953e6b462377a018b8f4bb6c",
+    "retained_file": "data/graph_source.json"
+  },
+  "superseded_expansion": {
+    "path": "data/instance.json",
+    "sha256": "51550de59559742f72c2da8e3963edab39124cd8f334eb63cae10d9bb3f132bd",
+    "note": "Removed after exact edge-set comparison with source; contained the same graph as the DIMACS text file."
+  },
+  "independent_verification": {
+    "method": "Parsed DIMACS records, checked 1000 vertices, 249826 unique in-range edges, packed each canonical pair, then decoded all 499500 pair positions and compared edge sets.",
+    "edge_sets_equal": true,
+    "bit_count": 499500,
+    "packed_bytes": 62438,
+    "zero_padding_bits": 4
+  },
+  "additional_original_source": {
+    "repository": "Rutgers DIMACS benchmark collection",
+    "path": "DSJC1000.5.col.b",
+    "original_format": "binary adjacency rows with ASCII preamble",
+    "sha256": "4ef5f6ac499418afe4620fcd73c46df55dd83a867e5d9bd7e4fbac9655f88089",
+    "edge_set_comparison": "An independent decode compared all 499500 unordered vertex pairs with the packed bitset; zero differences."
+  }
+}
