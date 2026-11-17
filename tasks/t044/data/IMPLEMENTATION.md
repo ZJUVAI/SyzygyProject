@@ -16,7 +16,7 @@ Status: accepted by Sol on 2026-11-06.
 - `baseline.py` samples random cubic graphs with the configuration model and checks each candidate with BFS. It rejects loops, duplicate edges, disconnected graphs, and diameter above 5. It searches only this subclass of the task's graph space and reads no human/reference data.
 - `human.py` replays the AFY historical adjacency list. `reference.py` replays the Comellas 2024 Coxeter adjacency list.
 - `evolution.py` exposes the required `run_code()` entry point. `evaluator.py` wraps the shared evaluator.
-- `data/best/` stores the seed-0 search output, exact result, replay command, environment, budget, and output hash. The search returned 26 vertices after 384 attempts, with 2 accepted cubic candidates. It does not store either comparison graph.
+- `data/results.json` stores the seed-0 search output, exact result, replay command, environment, budget, and output hash. The search returned 26 vertices after 384 attempts, with 2 accepted cubic candidates. It does not store either comparison graph.
 
 ## Verification commands and results
 
@@ -25,10 +25,8 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t044/test_task.py -q
 .venv/bin/python -m json.tool tasks/t044/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t044/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t044/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t044/data/best/result.json > /dev/null
-.venv/bin/python -m json.tool tasks/t044/data/best/verification.json > /dev/null
+.venv/bin/python -m json.tool tasks/t044/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t044/data/results.json > /dev/null
 ```
 
 The task tests passed: 7 tests. They cover both order-70 source files and hashes, an independent all-source distance audit, the one-vertex seed, small boundary graphs, loops, duplicate undirected edges, endpoint and type errors, degree overflow, disconnected graphs, diameter overflow, Moore-bound input range, altered configuration, forged scores, all five `run_code()` functions, deterministic search metadata, and shared-runner candidate errors and timeout reporting.

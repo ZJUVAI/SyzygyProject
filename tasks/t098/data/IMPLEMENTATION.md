@@ -36,6 +36,6 @@ The checker uses integer arithmetic only. It rejects wrong configuration data wi
 
 Tests cover all five program entries, source reconstruction, the own saved seed, the nonconstant baseline mutation/proposal space, score-claim invariance, malformed configurations, duplicate sizes, overlap, booleans, floats, NaN, missing tiles, non-primitive and wrong-area data, a direct proper-rectangle fixture, plus runner program-error and timeout behavior through `mathbench.evaluate._run`.
 
-Commands: `.venv/bin/python -m pytest tasks/t098/test_task.py -q`; `.venv/bin/python -m json.tool tasks/t098/task.json`; `.venv/bin/python -m json.tool tasks/t098/data/sota.json`; `.venv/bin/python -m json.tool tasks/t098/data/records.json`.
+Commands: `.venv/bin/python -m pytest tasks/t098/test_task.py -q`; `.venv/bin/python -m json.tool tasks/t098/task.json`; `.venv/bin/python -m json.tool tasks/t098/data/bestknown.json`; `.venv/bin/python -m json.tool tasks/t098/data/bestknown.json`.
 
 Default runner budgets are 300 seconds generation, 60 seconds verification, 4 GiB memory, and one numerical thread. A full Sol run and independent review remain pending.

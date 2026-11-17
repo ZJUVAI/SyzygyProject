@@ -35,8 +35,7 @@ Run:
 ```sh
 .venv/bin/python -m pytest tasks/t089/test_task.py -q
 .venv/bin/python -m json.tool tasks/t089/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t089/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t089/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t089/data/bestknown.json > /dev/null
 ```
 
 Results on Python 3.13.12 in `.venv`: `17 passed in 1.72s`; all JSON checks passed. Tests cover Fourier coefficients, the human witness, a simple seed, baseline and evolution outputs, a polynomial with a later even-multiplicity contact, strict origin signs, eventual tail sign, malformed rational/boolean/non-finite data, fixed-configuration and strict configuration-type checks, forged score fields, and runner error/timeout handling.

@@ -23,7 +23,7 @@ The frozen human baseline is the weak same-parameter reconstruction
 `h1(x)=x(1-x)`; the exponent 73 and this n=146 witness are reconstructed for
 this benchmark. The thesis's n=146 table row gives only a one-sided
 reciprocal-root bound and no polynomial. The reported bound is converted to
-the raw objective in `data/sota.json`; it is not the frozen human normalization.
+the raw objective in `data/bestknown.json`; it is not the frozen human normalization.
 See [source evidence](data/source/research_evidence.md).
 
 ## Open status and sources

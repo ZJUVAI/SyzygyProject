@@ -13,13 +13,12 @@ Status: `accepted_by_sol`.
 
 `human.py` rebuilds the BCH-dual array using the primitive polynomial `x^6+x+1` for GF(64). Column `i` is labelled by the 12 binary coordinates of `(alpha^i, alpha^(3i))`; all 4096 linear forms give the rows. The checker does not rely on a claimed array family or score. It builds 63 column bitsets and checks every nonempty parity character of size 1 through 4. The 637392 exact parity counts equal 2048. Binary Fourier inversion then gives all 16 patterns on each set of four columns exactly 256 times.
 
-The standalone initializer greedily selects labels from F₂¹⁴, rejecting each label whose XOR with up to three prior labels is zero. Enumerating all 16384 linear forms gives a valid 16384-row seed with distinct rows. The traditional search independently runs the same generic selection rule in F₂¹³, yielding 8192 rows, then tests fixed seeded deletions of 16 rows. It does not import or read the BCH human/reference data. No proposal improved the 8192-row search seed. The generated best witness is stored under `data/best/`; the human/reference comparison files remain in `data/`.
+The standalone initializer greedily selects labels from F₂¹⁴, rejecting each label whose XOR with up to three prior labels is zero. Enumerating all 16384 linear forms gives a valid 16384-row seed with distinct rows. The traditional search independently runs the same generic selection rule in F₂¹³, yielding 8192 rows, then tests fixed seeded deletions of 16 rows. It does not import or read the BCH human/reference data. No proposal improved the 8192-row search seed. The generated best witness is stored under `data/results.json`; the human/reference comparison files remain in `data/`.
 
 ## Validation commands
 
 - `.venv/bin/python -m pytest tasks/t091 -q`
 - `.venv/bin/python -m json.tool tasks/t091/task.json > /dev/null`
-- `.venv/bin/python -m json.tool tasks/t091/data/sota.json > /dev/null`
-- `.venv/bin/python -m json.tool tasks/t091/data/records.json > /dev/null`
+- `.venv/bin/python -m json.tool tasks/t091/data/bestknown.json > /dev/null`
 
 The tests check the reproduced array, the distinct-row random-greedy initializer, acceptance of valid row repetitions, bit corruption, duplicate columns, malformed types and widths, the Rao/divisibility boundary, claimed-score invariance, all five `run_code()` entries, cold export, reproducibility, runner errors/timeouts, and evaluator execution with a temporary registry patch. `.venv/bin/python -m pytest tasks/t091 -q -x` passed 27 tests in 57.55 seconds. Validation used Python 3.13.12 on Linux with one numerical thread. The recorded run uses seed 0, 4098 label proposals, and 12 fixed row-deletion proposals.

@@ -50,8 +50,7 @@ Commands run with the repository `.venv`:
 ```sh
 .venv/bin/python -m pytest tasks/t049 -q
 .venv/bin/python -m json.tool tasks/t049/task.json >/dev/null
-.venv/bin/python -m json.tool tasks/t049/data/records.json >/dev/null
-.venv/bin/python -m json.tool tasks/t049/data/sota.json >/dev/null
+.venv/bin/python -m json.tool tasks/t049/data/bestknown.json >/dev/null
 ```
 
 Results:

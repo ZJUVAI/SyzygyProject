@@ -8,7 +8,7 @@ The checker enumerates every subset in Gray-code order using exact integer arith
 
 ## Human constructions and public bounds
 
-The human witness from the Conway-Guy recurrence has maximum 8,807. The verified public witness from Sharp has maximum 8,635. Both constructions are described in the [source records](data/records.json).
+The human witness from the Conway-Guy recurrence has maximum 8,807. The verified public witness from Sharp has maximum 8,635. Both constructions are described in the [source records](data/bestknown.json).
 
 ## Programs and cold start
 

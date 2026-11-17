@@ -12,7 +12,7 @@ T076-C01 fixes `n=15`. A valid construction has exactly 15 distinct positive int
 
 The human witness is generated from the Conway-Guy recurrence and the set formula in Bohman (1998), §2 and Theorem 2.1. Its maximum is 8,807. The public witness is Sharp's 15-element construction transcribed from the OEIS A276661 A-file. Its maximum is 8,635. Both witnesses are checked by enumerating all 32,768 subset sums. The source does not disclose whether AI assistance was used for the public witness.
 
-The reviewed bounds are `7060 <= a(15) <= 8635`; no exact minimum was located in the sources reviewed. The lower bound is the sum of central binomial coefficients recorded in `sota.json`. The cited bandwidth theorem was not re-proved locally.
+The reviewed bounds are `7060 <= a(15) <= 8635`; no exact minimum was located in the sources reviewed. The lower bound is the sum of central binomial coefficients recorded in `bestknown.json`. The cited bandwidth theorem was not re-proved locally.
 
 ## Search and cold start
 
@@ -20,4 +20,4 @@ The reviewed bounds are `7060 <= a(15) <= 8635`; no exact minimum was located in
 
 ## Validation
 
-Run `python -m pytest tasks/t076 -q`. Tests cover the initial, search, human, and reference entries; exact subset-sum validation; rejection of invalid constructions; ignored claim fields; large decimal inputs; repeatable search; and runner failure and timeout handling. The preserved per-run results and review evidence are in `records.json`, `sota.json`, and `best/`.
+Run `python -m pytest tasks/t076 -q`. Tests cover the initial, search, human, and reference entries; exact subset-sum validation; rejection of invalid constructions; ignored claim fields; large decimal inputs; repeatable search; and runner failure and timeout handling. The preserved per-run results and review evidence are in `bestknown.json`, and `best/`.

@@ -1,0 +1,139 @@
+{
+  "task_id": "T008",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T008-C01": {
+      "public_value": "23",
+      "public_source": {
+        "url": "https://ljcr.dmgordon.org/cover/show_cover.php?v=24&k=14&t=4",
+        "archive_url": "https://zenodo.org/records/19735294",
+        "archive_file": "coverdata.json",
+        "witness_archive_file": "covers.json",
+        "archive_version": "1.2",
+        "recorded_contributor": "Andrei Ochmat",
+        "recorded_date": "2004-07-20",
+        "history": [
+          {
+            "value": "24",
+            "contributor": "JCD article",
+            "date": "1996-11-14 17:08:00"
+          }
+        ],
+        "provenance_note": "Zenodo archive metadata reports the best known size and its improvement history. It does not provide the construction method in this record."
+      },
+      "covers_json_byte_offset": 332010995,
+      "reproduced_value": "23",
+      "program": "sota.py",
+      "witness": "data/sota_witness.json",
+      "reproduction_command": ".venv/bin/python -m mathbench evaluate T008 tasks/t008/sota.py --strict",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "checked_at": "2026-11-05",
+      "limitations": [
+        "The archive attributes the 23-block improvement to Andrei Ochmat but does not state the construction method in its metadata.",
+        "The covering repository reports a best known construction, not a proof that 23 is optimal."
+      ],
+      "verification": {
+        "task_id": "T008",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T008",
+          "config_id": "T008-C01",
+          "validity": 1.0,
+          "combined_score": 2.6956521739130435,
+          "objective": 23,
+          "verification_status": "exact",
+          "generation_time": 0.2652539797127247,
+          "verification_time": 0.2151874043047428,
+          "objective_value": 23,
+          "details": {
+            "parameters": {
+              "v": 24,
+              "k": 14,
+              "t": 4
+            },
+            "blocks": 23,
+            "covered_four_subsets": 10626,
+            "total_four_subsets": 10626,
+            "claimed_objective_mismatch": false,
+            "optimality_proved": false
+          },
+          "eval_time": 0.48527121916413307,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t008/data/sota_witness.json",
+        "independent_quantity": {
+          "blocks": 23,
+          "four_subsets": 10626
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked Zenodo v1.2 provenance, independently compared the extracted C(24,14,4) array against the saved 0-based witness, and verified all 10,626 four-subsets using bit masks. Empty coverage is rejected and forged scores are ignored.",
+        "snapshot_date": "2026-11-05"
+      }
+    }
+  },
+  "sol_review": {
+    "T008-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  },
+  "best_human": {
+    "value": 62,
+    "date_checked": "2026-11-04",
+    "parameters": {
+      "v": 24,
+      "k": 14,
+      "t": 4
+    },
+    "url": "https://arxiv.org/html/math/9502238",
+    "provenance": "Reconstruction of Gordon, Kuperberg and Patashnik (1995), sections III-IV, finite geometry and induced coverings. AG(5,2) hyperplanes restricted to 24 points, padded to 14. The deleted eight-point subset was selected by this implementation. This is a published-method baseline, not a published 62-block record.",
+    "ai_provenance": "AI implemented the published method and selected the restriction.",
+    "evidence_state": "62 blocks independently cover all 10626 four-subsets exactly"
+  },
+  "best_public": {
+    "value": 23,
+    "date_checked": "2026-11-05",
+    "parameters": {
+      "v": 24,
+      "k": 14,
+      "t": 4
+    },
+    "url": "https://ljcr.dmgordon.org/cover.html",
+    "provenance": "La Jolla repository record, corroborated by the James Yu covering project which reports best known 23 and proves a lower bound of 20.",
+    "evidence_state": "published report; optimality not proved",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 23,
+    "parameters": {
+      "v": 24,
+      "k": 14,
+      "t": 4
+    },
+    "date_reproduced": "2026-11-05",
+    "provenance": "La Jolla Covering Repository witness, archived in the Zenodo dataset v1.2; the archive records the 23-block improvement by Andrei Ochmat on 2004-07-20. Labels 1..24 were converted to 0..23 for the local evaluator.",
+    "ai_provenance": "AI retrieved and converted the archived witness; the task evaluator independently checked all blocks and four-subsets.",
+    "evidence_state": "23 saved blocks; all10626four-subsets exactly verified",
+    "witness": "data/sota_witness.json",
+    "program": "sota.py"
+  },
+  "survey_cutoff": "2026-11-05",
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "configuration-specific public or published-method construction"
+}

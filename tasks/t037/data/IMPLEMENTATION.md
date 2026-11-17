@@ -11,10 +11,10 @@ Commands and results:
 - `.venv/bin/python -m pytest tasks/t037 -q` — 15 passed.
 - `.venv/bin/python -m pytest tasks/t037 -q` after runner-control coverage — 16 passed.
 - `.venv/bin/python -m pytest tests tasks -q` — 450 passed, 32 subtests passed.
-- `.venv/bin/python -m json.tool tasks/t037/task.json`, `records.json`, and `sota.json` — passed.
+- `.venv/bin/python -m json.tool tasks/t037/task.json`, `bestknown.json` — passed.
 - Human construction replay — 40 directions, 780 exact pair checks.
 - Traditional greedy baseline replay, seed 0 — 11 directions, 121 ternary candidates checked.
 - Evolution entry replay, seed 0 and 200 iterations — 18 directions, 8 accepted additions; checker passed.
-- Own search construction and exact result are saved under `data/best/`; provenance marks Sol review and formal runner admission pending.
+- Own search construction and exact result are saved under `data/results.json`; provenance marks Sol review and formal runner admission pending.
 
-Search uses fixed seed 0 and 200 default integer-direction proposals. The baseline uses a fixed shuffled greedy pass over nonzero ternary directions modulo antipodes. Neither program reads the saved human witness. Runner defaults are generation 300 seconds, verification 60 seconds, 4 GiB and one CPU thread. Candidate directions are rational-coordinate certificates; the search space is not asserted to cover all real configurations. Task metadata records the seed and iteration count; exact replay command is recorded in `records.json`.
+Search uses fixed seed 0 and 200 default integer-direction proposals. The baseline uses a fixed shuffled greedy pass over nonzero ternary directions modulo antipodes. Neither program reads the saved human witness. Runner defaults are generation 300 seconds, verification 60 seconds, 4 GiB and one CPU thread. Candidate directions are rational-coordinate certificates; the search space is not asserted to cover all real configurations. Task metadata records the seed and iteration count; exact replay command is recorded in `bestknown.json`.

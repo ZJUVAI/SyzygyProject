@@ -44,8 +44,7 @@ Commands:
 ```sh
 .venv/bin/python -m pytest tasks/t063 -q
 .venv/bin/python -m json.tool tasks/t063/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t063/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t063/data/source/mossinghoff_degree_100_row.json > /dev/null
 .venv/bin/python -m json.tool tasks/t063/data/reference/mossinghoff_degree_100_certificate.json > /dev/null
 ```

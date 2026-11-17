@@ -1,0 +1,131 @@
+{
+  "configurations": {
+    "T095-C01": {
+      "program": "reference.py",
+      "reproduced_value": 271,
+      "public_value": 271,
+      "highest_reported": {
+        "value": 271,
+        "source": "CG:SHOP 2020 best_solutions.zip, uniform-0000500-1.solution.json",
+        "reproduction_status": "Pinned archive witness with 770 edges passes the exact checker and gives 271 bounded faces. Archive metadata does not identify the producing solver or prove optimality."
+      },
+      "source": {
+        "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+        "input_url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/instances_01.zip",
+        "checked_at": "2026-11-06"
+      },
+      "parameters": {
+        "instance": "uniform-0000500-1",
+        "point_count": 500,
+        "input_coordinates": "exact integer coordinates",
+        "partition": "straight-line planar graph; all input points are vertices; bounded faces are empty convex polygons",
+        "objective": "minimize number of internal convex faces"
+      },
+      "optimality_status": "Open: the pinned witness gives a feasible value of 271. No proof of optimality for this 500-point instance was found in checked sources through 2026-11-06.",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T095",
+          "config_id": "T095-C01",
+          "validity": 1.0,
+          "combined_score": 1.4169741697416973,
+          "objective": 271,
+          "verification_status": "exact",
+          "generation_time": 0.1647304855287075,
+          "verification_time": 0.7664335668087006,
+          "objective_value": 271,
+          "details": {
+            "point_count": 500,
+            "edge_count": 770,
+            "face_count": 271,
+            "convex_hull_vertex_count_including_collinear": 19,
+            "hull_area_twice": 1736930960,
+            "bounded_face_area_twice_sum": 1736930960,
+            "euler_edge_face_check": 271,
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.9352919720113277,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "face_count": 271,
+          "point_count": 500,
+          "edge_count": 770,
+          "method": "Exact straight-line planarity and point-on-edge checks; union-find fundamental cycle-space dimension, independent of formal geometric face walks."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "f058b9152556ea7f25132fa464dce64389dfbb65a09f9b5c9af97fab6ca5b7f0"
+      },
+      "human_reference_value": 384
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "Fixed CG:SHOP 2020 uniform-0000500-1 instance. The objective is the minimum number of empty convex faces in a straight-line partition of the convex hull using the 500 input points.",
+  "best_human": {
+    "value": 384,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "quantity": "bounded convex face count"
+    },
+    "url": "https://pagesperso.g-scop.grenoble-inp.fr/~cambazah/convexpartition/minconvex.html",
+    "ai_provenance": "Traditional method described by Eder, Held, de Lorenzo, and Palfrader (SoCG 2020, section 2.2, pages 85:2-3); the local deterministic reconstruction was implemented with AI assistance. It is not the authors' code or run.",
+    "evidence_state": "The local deterministic Delaunay-plus-convex-merge reconstruction is exactly checked and yields 384 faces. This is a reconstructed human-method baseline, not a published best result or a literal reproduction of the paper's randomized edge-removal method.",
+    "origin_type": "traditional computational baseline, locally reconstructed"
+  },
+  "best_public": {
+    "value": 271,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "quantity": "bounded convex face count"
+    },
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "ai_provenance": "The archive gives a solution and timestamp but does not identify the solver, algorithm, or AI contribution. Provenance is therefore marked undisclosed.",
+    "evidence_state": "The archived 770-edge construction is pinned locally and independently passes the exact checker with 271 bounded faces. It is a feasible result, not a proof of optimality.",
+    "origin_type": "competition archive result with undisclosed solver provenance"
+  },
+  "best_reproduced": {
+    "value": 271,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "instance": "uniform-0000500-1",
+      "point_count": 500,
+      "edge_count": 770
+    },
+    "url": "https://cgshop.ibr.cs.tu-bs.de/static/competitions/cgshop_2020/best_solutions.zip",
+    "witness": "data/reference/uniform-0000500-1.official_solution.json",
+    "ai_provenance": "The original archive does not state solver provenance. This task replays and verifies the supplied witness.",
+    "evidence_state": "Exact check confirms all 500 vertices are used, the straight-line graph is planar and connected, every bounded face is empty and convex, and face areas sum to the hull area. Euler's formula gives 770-500+1=271 faces.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "Delaunay triangulation followed by deterministic greedy convex-face merging",
+  "additional_evidence": {
+    "configurations": {
+      "T095-C01": {
+        "optimality_status": "Open in sources checked through 2026-11-06. Cambazard's project page describes optimality results up to 100 points and lower bounds up to 300 points; it does not prove optimality for this 500-point instance."
+      }
+    }
+  }
+}

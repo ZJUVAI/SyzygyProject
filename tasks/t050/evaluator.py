@@ -1,7 +1,3 @@
-"""Shared task evaluator adapter."""
+from mathbench.adapters import make_task_evaluator
 
-from mathbench.evaluate import evaluate_candidate
-
-
-def evaluate(program_path, config_id=None, **kwargs):
-    return evaluate_candidate("T050", program_path, config_id, **kwargs)
+evaluate = make_task_evaluator("T050")

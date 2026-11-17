@@ -19,8 +19,7 @@ Tests and JSON checks were run with `.venv` Python 3.13.12:
 ```sh
 .venv/bin/python -m pytest tasks/t061/test_task.py -q
 .venv/bin/python -m json.tool tasks/t061/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t061/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t061/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t061/data/bestknown.json > /dev/null
 ```
 
 The fixed-order initial program returned a valid 198-edge saturated graph in 4.82 seconds; its exact check took 1.72 seconds. The four-trial randomized greedy search completed in 8.94 seconds and returned a valid 221-edge graph. The 133-edge human witness check completed in 0.06 seconds. All are below the shared generation limit of 300 seconds and verification limit of 60 seconds.

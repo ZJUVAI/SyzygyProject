@@ -30,7 +30,7 @@ The Shadoks paper and viewer do not disclose AI-use provenance for this witness.
 - `check.py` returns the exact piece count after full feasibility validation.
 - `evaluator.py` adapts the shared runner.
 
-The saved own-search run uses seed 0, 65 sweeps (limit 200), 2,890 candidate pairs checked, and 64 successful merges. Its score is 26 pieces. It ran on Python 3.13.12, Linux x86_64, with the task budget of 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread. Its replay command and solution hash are in `data/best/manifest.json`.
+The saved own-search run uses seed 0, 65 sweeps (limit 200), 2,890 candidate pairs checked, and 64 successful merges. Its score is 26 pieces. It ran on Python 3.13.12, Linux x86_64, with the task budget of 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread. Its replay command and solution hash are in `data/results.json`.
 
 ## Validation
 

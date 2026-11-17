@@ -39,4 +39,4 @@ Hoehner and Ledford solved the 9-point case in a 2026 paper. Its introduction li
 
 ## Reproduction and limits
 
-Run the checker with the saved witness using `.venv/bin/python`. The exact rational volume is the reproduced baseline. The literature's rounded reported value is stored separately in `data/records.json` and `data/sota.json`. Mutoh's weaker local candidate is retained as a historical result, not as the highest reported value. The rounded archive does not retain the original unrounded coordinates.
+Run the checker with the saved witness using `.venv/bin/python`. The exact rational volume is the reproduced baseline. The literature's rounded reported value is stored separately in `data/bestknown.json`. Mutoh's weaker local candidate is retained as a historical result, not as the highest reported value. The rounded archive does not retain the original unrounded coordinates.

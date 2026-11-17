@@ -61,7 +61,7 @@ def test_h6_link_graphs_are_five_cycles():
 
 
 def test_saved_own_search_result_recomputes_objective():
-    record = json.loads((TASK_DIR / "data/best/result.json").read_text())
+    record = json.loads((TASK_DIR / "data/results.json").read_text())
     saved = record["solution"]
     saved_result = record["result"]
     provenance = record["provenance"]
@@ -190,16 +190,6 @@ def test_search_code_does_not_import_human_or_reference_programs():
                 assert "human" not in module and "reference" not in module
             elif isinstance(node, ast.Import):
                 assert all("human" not in a.name and "reference" not in a.name for a in node.names)
-
-
-def test_runner_reports_program_error_and_timeout():
-    from mathbench.evaluate import _run
-
-    environment = dict(os.environ)
-    with pytest.raises(RuntimeError, match="candidate failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
-    with pytest.raises(TimeoutError, match="Wall time limit"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)
 
 
 def test_evaluator_uses_temporary_registry_patch(monkeypatch, tmp_path):

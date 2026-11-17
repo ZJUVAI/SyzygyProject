@@ -39,8 +39,7 @@ Commands run:
 ```sh
 .venv/bin/python -m pytest tasks/t093/test_task.py -q
 .venv/bin/python -m json.tool tasks/t093/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t093/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t093/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t093/data/bestknown.json > /dev/null
 git diff --check -- tasks/t093
 ```
 

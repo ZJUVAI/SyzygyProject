@@ -28,7 +28,7 @@ Command:
 
 Result: 9 passed in 4.35 seconds under Python 3.13.12. Tests independently extract the matrix from the official Taillard source snapshot, check both SHA-256 values, replay the 50-job reference, validate the identity seed, reject incomplete, duplicate, out-of-range, bool, noninteger, NaN, infinite, and non-permutation payloads, ignore altered and nonfinite claimed scores, check seeded baseline and evolution reproducibility, and verify generation error and timeout handling.
 
-The reference permutation was independently recomputed as 3846. The fixed seed-0 NEH/local-search baseline returned 4078 in 2,000 iterations (about 1.40 seconds for generation in this run), then passed the exact checker. This run is saved under `data/best/` with a replay command. Full `evaluate_candidate` integration awaits the main reviewer adding T028 to shared registries.
+The reference permutation was independently recomputed as 3846. The fixed seed-0 NEH/local-search baseline returned 4078 in 2,000 iterations (about 1.40 seconds for generation in this run), then passed the exact checker. This run is saved under `data/results.json` with a replay command. Full `evaluate_candidate` integration awaits the main reviewer adding T028 to shared registries.
 
 ## Open review items
 

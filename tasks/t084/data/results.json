@@ -1,0 +1,150 @@
+{
+  "result": {
+    "task_id": "T084",
+    "config_id": "T084-C01",
+    "validity": 1.0,
+    "combined_score": 1.0226051217198862,
+    "objective": 18978,
+    "verification_status": "exact",
+    "generation_time": 3.1811846755445004,
+    "verification_time": 0.5677170045673847,
+    "objective_value": 18978,
+    "details": {
+      "cardinality": 31,
+      "order": 3,
+      "triple_sums_checked": 5456,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 3.75422390922904,
+    "seed": 7208401,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 140,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 124
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t084/runs/search_gap42_20261109_gap42_projective_retry/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "diameter": 18978,
+      "triple_sums": 5456,
+      "counting_lower_bound": 1819,
+      "method": "Newton complete-symmetric identity h3=(p1^3+3p1*p2+2p3)/6, exact sparse polynomial coefficients all equal one"
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 140,
+      "seed": 7208401,
+      "method": "Enumerate projective Singer lines over the 31-element field, all unit multipliers and all 31-point cyclic windows"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 7208401,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          137,
+          137,
+          "512",
+          7208401
+        ]
+      ],
+      "prior_control_summary": "tasks/t084/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 140,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 124
+    },
+    "source_sha256": {
+      "tasks/t084/baseline.py": "5f3937778f76cd611121b97b3eee23a746ee32dfd9e6ec457b3d1fd48ddc9c64",
+      "tasks/t084/check.py": "cc8bab78b55f7998c5df501a458fd47d5f3f238b8b9f2439d8488bad3d7aacc4",
+      "tasks/t084/evaluator.py": "81ea3ed54e173583a284240c6320137d1bd5d0d240b2c596f5312159275c4b28",
+      "tasks/t084/evolution.py": "b12ee448be6a7a3278ce7de0b8e00dd0645e95fce4241b5496dedcca28e4b39a",
+      "tasks/t084/human.py": "f49cf7f4e5bc3a7178ffda7eda740bff1cf3779562ba78ceead4b52b65a824ee",
+      "tasks/t084/init_program.py": "431df004a67bba7c228ebad56e88ff81ad86574c2468f9c5bf025a3612c5ce7f",
+      "tasks/t084/reference.py": "c2ec96e478c066361afbd5212c4413603e71700bea28d824f6c558e574351848",
+      "tasks/t084/test_task.py": "e33e2af910c81a9cf70709ff078cc4ea8acf8720d01a5f6b7d14de751afe5938",
+      "program.py": "8986889033d58ed3e89fa7d4ce44dc1247c1aff079277e99b594ea6d9568a435",
+      "plan.json": "778ea46da811250ab5e26c34dead697d7b0e6620ec0e44ada5f83988723c3aa1",
+      "search.cpp": "8078e800e7c356d51b5c3e60b1311c329ef4d719122d5176df2904b080745b4f"
+    },
+    "warm_start_sha256": "69ef8fccfe21863a474d499c5baa3e39b6b53778dabedd4a47c27f9b53f7c611",
+    "replay_command": ".venv/bin/python -m mathbench replay T084 tasks/t084/data/results.json --config T084-C01"
+  },
+  "initial_result": {
+    "objective": 288230376151711744,
+    "objective_value": 288230376151711744,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 6.733155699656379e-14
+  },
+  "solution": {
+  "elements": [
+    0,
+    382,
+    971,
+    1040,
+    1502,
+    2514,
+    2598,
+    3075,
+    3619,
+    3808,
+    4297,
+    4301,
+    6982,
+    8169,
+    8179,
+    8495,
+    9743,
+    10456,
+    12013,
+    12282,
+    13419,
+    13889,
+    13907,
+    14011,
+    15771,
+    16440,
+    16538,
+    17538,
+    18160,
+    18610,
+    18978
+  ],
+  "search_metadata": {
+    "modular_classes": 32,
+    "multipliers": 221184,
+    "diameter": 18978,
+    "theta": 1116,
+    "unit": 5805,
+    "cut": 17
+  }
+}
+
+}

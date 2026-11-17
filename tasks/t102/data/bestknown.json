@@ -1,0 +1,134 @@
+{
+  "task_id": "T102",
+  "source_checked": "2026-11-09",
+  "configurations": {
+    "T102-C01": {
+      "objective": {
+        "name": "minimum_route_discrepancy",
+        "unit": "normalized demand units",
+        "direction": "maximize",
+        "constraints": [
+          "15 ordered pairs of nonnegative rationals",
+          "u_i+v_i<=1",
+          "routes select v_i or -u_i independently",
+          "discrepancy uses cuts k=1,...,15"
+        ]
+      },
+      "program": "reference.py",
+      "reproduced_value": "47/42",
+      "public_value": "47/42",
+      "highest_reported": {
+        "value": "1.119",
+        "source": "AlphaEvolve, arXiv:2511.02864v3, §6.41 / Problem 6.61",
+        "url": "https://arxiv.org/abs/2511.02864v3",
+        "reproduction_status": "Paper reports a rounded lower bound >=1.119. The exact rationalized upstream witness separately evaluates to 47/42; this exact value is not attributed as a paper-reported value."
+      },
+      "best_reproduced": {
+        "value": "47/42",
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "Enumerate 32,768 routes and 15 cuts with exact integer arithmetic.",
+        "witness": "data/reference.json",
+        "witness_sha256": "dae860f102999d594fdf971b8d2508418e21c0f6ca2feb3d491faf35931e105e",
+        "review_status": "reviewed_by_sol"
+      },
+      "best_public": {
+        "value": "47/42",
+        "parameters": {
+          "m": 15
+        },
+        "source": "AlphaEvolve upstream experiment, pinned repository revision 8f447457957deac61e28bf1676746f0753b3b2f8",
+        "url": "https://github.com/google-deepmind/alphaevolve_repository_of_problems/tree/8f447457957deac61e28bf1676746f0753b3b2f8/experiments/ring_loading_problem",
+        "evidence_state": "Upstream floating point candidate rationalized to denominator 84 and exactly verified.",
+        "ai_provenance": "AI-assisted AlphaEvolve result.",
+        "witness": "data/reference.json",
+        "witness_sha256": "dae860f102999d594fdf971b8d2508418e21c0f6ca2feb3d491faf35931e105e",
+        "origin_type": "AI-assisted public construction"
+      },
+      "frozen_human_baseline": {
+        "value": "11/10",
+        "source": "Skutella, arXiv:1405.0789, §5, Figure 2",
+        "url": "https://arxiv.org/abs/1405.0789",
+        "witness_program": "human.py",
+        "witness": "data/human.json",
+        "witness_sha256": "3c83cabd65e773f88bdca44dbcfc829d3611a337a33d756f10ec46802bb436ec",
+        "evidence_state": "Eight published pairs divided by 10 and padded with seven zero pairs; exactly re-evaluated.",
+        "origin_type": "published human construction"
+      },
+      "optimality_status": {
+        "status": "open in sources reviewed; 47/42 is a feasible lower bound, not a proof of optimality",
+        "upper_bound": "13/10",
+        "source": "https://arxiv.org/abs/1904.02119"
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-09",
+        "run": {
+          "task_id": "T102",
+          "config_id": "T102-C01",
+          "validity": 1.0,
+          "combined_score": 1.0173160173160172,
+          "objective": "47/42",
+          "verification_status": "exact",
+          "generation_time": 0.16480670124292374,
+          "verification_time": 0.21509704738855362,
+          "objective_value": "47/42",
+          "details": {
+            "routes": 32768,
+            "cuts_per_route": 15
+          },
+          "eval_time": 0.3827318251132965,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "discrepancy": "47/42",
+          "routing_count": 32768,
+          "method": "Exact integer edge-load vectors, combined over both routes of every demand."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "best_human": {
+        "value": "11/10",
+        "source": "Skutella, §5, Figure 2",
+        "url": "https://arxiv.org/abs/1405.0789",
+        "witness": "data/human.json",
+        "witness_sha256": "3c83cabd65e773f88bdca44dbcfc829d3611a337a33d756f10ec46802bb436ec",
+        "evidence_state": "Exact checker reproduction."
+      },
+      "traditional_search": {
+        "program": "baseline.py",
+        "iterations": 16,
+        "seed": 0,
+        "algorithm": "seeded heterogeneous rational coordinate mutation with exact checker feedback",
+        "evidence_state": "implemented; local performance not claimed"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "additional_evidence": {
+    "configurations": {
+      "T102-C01": {
+        "best_public": {
+          "source": "AlphaEvolve pinned upstream witness",
+          "ai_provenance": "AI-assisted"
+        }
+      }
+    }
+  }
+}

@@ -120,14 +120,13 @@ def test_claimed_scores_do_not_change_recomputed_result():
 
 
 def test_sota_record_separates_verified_444_from_optimality_claim():
-    metadata = json.loads((ROOT / "data/sota.json").read_text())
-    record = json.loads((ROOT / "data/records.json").read_text())
+    metadata = json.loads((ROOT / "data/bestknown.json").read_text())
     item = metadata["configurations"]["T067-C01"]
     assert item["public_value"] == item["reproduced_value"] == 444
     assert item["best_human"]["value"] == 444
     assert item["best_public"]["value"] == 444
     assert item["optimality_status"]["status"].startswith("open")
-    assert record["configurations"]["T067-C01"]["frozen_human_baseline"]["value"] == 444
+    assert metadata["configurations"]["T067-C01"]["frozen_human_baseline"]["value"] == 444
 
 
 def test_runner_error_and_timeout_controls():

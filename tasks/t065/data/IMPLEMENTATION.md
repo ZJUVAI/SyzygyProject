@@ -54,8 +54,7 @@ Environment: Python 3.13.12, Linux x86_64, repository `.venv`.
 ```sh
 .venv/bin/python -m pytest tasks/t065 -q
 .venv/bin/python -m json.tool tasks/t065/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t065/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t065/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t065/data/source/source_notes.json > /dev/null
 .venv/bin/python -m json.tool tasks/t065/data/reference/triangular_grid_10x10.json > /dev/null
 ```

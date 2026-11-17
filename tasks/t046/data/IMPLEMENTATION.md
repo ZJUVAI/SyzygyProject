@@ -20,7 +20,7 @@ degree 146, with exact norm `2^-146`. The exponent is our benchmark choice,
 not a witness copied from the thesis's n=146 table row. The thesis reports
 only `>=2.346298` in its reciprocal-nth-root column for n=146, with no
 polynomial in that row. The reported value is converted to an upper bound on
-the raw norm in `sota.json` and marked as not locally certified. See
+the raw norm in `bestknown.json` and marked as not locally certified. See
 `data/source/research_evidence.md`.
 
 The traditional baseline enumerates all 74 products `h1^a h2^b` with
@@ -43,8 +43,8 @@ The human and fixed reference return exact norm
 enclosure. The cold start `x^146` has exact norm 1. The saved traditional
 search result uses `h1^58 h2^30`, with `h2=2x-1`; its exact certificate used
 38 dyadic interval splits and returned a rational enclosure of relative width
-at most `1e-10` in 13.624 seconds. JSON syntax checks passed for `task.json`, `sota.json`, and
-`records.json`. Runtime was Python 3.13.12 on Linux x86_64; the ordinary task
+at most `1e-10` in 13.624 seconds. JSON syntax checks passed for `task.json`, `bestknown.json`, and
+`bestknown.json`. Runtime was Python 3.13.12 on Linux x86_64; the ordinary task
 test command was run without claiming an additional memory cap outside the
 shared evaluator.
 

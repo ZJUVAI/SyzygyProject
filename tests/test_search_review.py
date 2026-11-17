@@ -34,8 +34,7 @@ def test_admission_cannot_transfer_to_changed_configuration(tmp_path, monkeypatc
     (run / 'review.json').write_text(json.dumps(evidence))
     (directory / 'task.json').write_text(json.dumps({'configurations': [current]}))
     (directory / 'data').mkdir()
-    for name in ('sota.json', 'records.json'):
-        (directory / 'data' / name).write_text('{}')
+    (directory / 'data/bestknown.json').write_text('{}')
     monkeypatch.setattr(module, 'ROOT', tmp_path)
     with pytest.raises(ValueError, match='changed after admission'):
         module.accept('EXAMPLE', 'checked', {'source': 'Reviewed original instance.'})
@@ -54,7 +53,7 @@ def test_candidate_only_review_still_rejects_a_failed_selected_witness(tmp_path,
     path = tmp_path / 'summary.json'
     path.write_text(json.dumps(summary))
     monkeypatch.setattr(module, 'ROOT', tmp_path)
-    monkeypatch.setattr(module, 'load_task', lambda _, *, include_history: {'configurations': [{'id': 'example'}]})
+    monkeypatch.setattr(module, 'load_task', lambda _: {'configurations': [{'id': 'example'}]})
     with pytest.raises(ValueError, match='valid construction'):
         module.review(path, candidate_only=True)
     assert json.loads(path.read_text()) == summary
@@ -76,13 +75,12 @@ def test_acceptance_requires_admission_snapshot(tmp_path, monkeypatch, snapshot)
     (run / 'review.json').write_text(json.dumps(evidence))
     (directory / 'task.json').write_text(json.dumps({'configurations': [config]}))
     (directory / 'data').mkdir()
-    for name in ('sota.json', 'records.json'):
-        (directory / 'data' / name).write_text('{}')
+    (directory / 'data/bestknown.json').write_text('{}')
     monkeypatch.setattr(module, 'ROOT', tmp_path)
 
     with pytest.raises(ValueError, match='Fresh admission'):
         module.accept('EXAMPLE', 'checked', {'source': 'Reviewed.'})
-    assert not (directory / 'data/best').exists()
+    assert not (directory / 'data/results.json').exists()
 
 
 @pytest.mark.parametrize('mutation', ['bytes', 'objective', 'configuration', None])

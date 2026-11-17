@@ -1,5 +1,3 @@
-from mathbench.evaluate import evaluate_candidate
+from mathbench.adapters import make_task_evaluator
 
-
-def evaluate(program_path, config_id=None, **kwargs):
-    return evaluate_candidate("T056", program_path, config_id, **kwargs)
+evaluate = make_task_evaluator("T056")

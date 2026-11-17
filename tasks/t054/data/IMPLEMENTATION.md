@@ -19,7 +19,7 @@ The fixed length is the same as T013-C01, but the objective is different. At len
 - `init_program.py` returns 100 positive signs, a valid seed with PSL 99.
 - `baseline.py` uses fixed-seed single-bit-flip simulated annealing. It updates every affected autocorrelation with exact integer deltas and reads no comparison data. The default is 12 restarts of 3000 proposals each.
 - `human.py` rebuilds the Nunn-Coxson hexadecimal witness. `reference.py` replays its frozen copy. Both outputs match and score PSL 5.
-- Strict runner execution of `baseline.py`, seed 0, returned PSL 9. Generation took 4.408 s and verification took 0.799 s on Python 3.13.12/Linux. The runner enforced 300 s generation, 60 s verification, 4 GiB memory, and one thread. Artifacts are in `data/best/`; `result.json` SHA-256 `96fb20387004c2c9e4cb9c52ac5f1f63742ddd1568865016e9579d01a8afae7d` and `solution.json` SHA-256 `7ad92f3d7a6e2fd542d7e342c8fd5725c5942969fb311cd7b64bffe32e6a76ef`.
+- Strict runner execution of `baseline.py`, seed 0, returned PSL 9. Generation took 4.408 s and verification took 0.799 s on Python 3.13.12/Linux. The runner enforced 300 s generation, 60 s verification, 4 GiB memory, and one thread. Artifacts are in `data/results.json`; `result.json` SHA-256 `96fb20387004c2c9e4cb9c52ac5f1f63742ddd1568865016e9579d01a8afae7d` and `solution.json` SHA-256 `7ad92f3d7a6e2fd542d7e342c8fd5725c5942969fb311cd7b64bffe32e6a76ef`.
 
 ## Tests and commands
 
@@ -30,8 +30,7 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t054/test_task.py -q
 .venv/bin/python -m json.tool tasks/t054/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t054/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t054/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t054/data/bestknown.json > /dev/null
 ```
 
 The strict baseline run used an in-process temporary configuration/path override for `evaluate_candidate`; no shared registry was changed. Generation and verification still ran in separate constrained workers.

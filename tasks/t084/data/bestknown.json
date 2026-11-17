@@ -1,0 +1,134 @@
+{
+  "task_id": "T084",
+  "configurations": {
+    "T084-C01": {
+      "program": "reference.py",
+      "reproduced_value": 19407,
+      "public_value": 19407,
+      "highest_reported": {
+        "value": 19407,
+        "source": "Martos Ojeda, Delgado Ordoñez, and Trujillo Solarte, IEEE Access 9 (2021), Table 3, Singer generalized (SG), q=31, m=31",
+        "reproduction_status": "The table entry was transcribed from the web-rendered full text and independently checked; the local transcription is not a byte-identical PDF extraction."
+      },
+      "source": {
+        "title": "B_h Sets as a Generalization of Golomb Rulers",
+        "doi": "10.1109/ACCESS.2021.3106617",
+        "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+        "web_full_text": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+        "table_location": "Table 3, near-optimal B3 sets, row SG q=31, m=31, a_m=19407",
+        "checked_at": "2026-11-06"
+      },
+      "open_status": {
+        "status": "no_optimality_proof_found_for_this_configuration",
+        "checked_at": "2026-11-06",
+        "evidence": "The 2021 paper calls the table near-optimal and reports optimal B3 sets only through cardinality 7. Searches for G3(31), the exact q=31 row, and current B3 diameter results found no later closure. This is limited to sources checked.",
+        "lower_bound": 4737,
+        "lower_bound_source": "Atkinson, Santoro, and Urrutia, Integer sets with distinct sums and differences and carrier frequency assignments for nonlinear repeaters, IEEE Transactions on Communications 34(6) (1986), DOI 10.1109/TCOM.1986.1096587; https://people.scs.carleton.ca/~santoro/Reports/DistinctSums.pdf; G3(m+1)>10m^3/57 at m=30."
+      },
+      "witness": "data/reference/public_m31_19407.json",
+      "comparison_notes": [
+        "The objective is minimum integer diameter for a B3 set of cardinality 31.",
+        "The published construction is feasible; no global optimality claim is made.",
+        "The paper does not state AI provenance. This repository's transcription and checker are benchmark work."
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T084",
+          "config_id": "T084-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 19407,
+          "verification_status": "exact",
+          "generation_time": 0.4428384155035019,
+          "verification_time": 0.4164307042956352,
+          "objective_value": 19407,
+          "details": {
+            "cardinality": 31,
+            "order": 3,
+            "triple_sums_checked": 5456,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.870038777589798,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "diameter": 19407,
+          "triple_sums": 5456,
+          "counting_lower_bound": 1819,
+          "method": "Newton complete-symmetric identity h3=(p1^3+3p1*p2+2p3)/6, exact sparse polynomial coefficients all equal one"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "best_human": 19407,
+      "best_public": 19407,
+      "best_reproduced": 19407,
+      "open_instance": true,
+      "open_evidence": "Checked through 2026-11-06. The source paper says its constructions are near-optimal and reports exact B3 optimality only through cardinality 7; no later closure for 31 was found in the checked sources.",
+      "lower_bound": 4737,
+      "lower_bound_evidence": "Cited Atkinson-Santoro-Urrutia inequality G3(m+1)>10m^3/57 with m=30; DOI 10.1109/TCOM.1986.1096587; https://people.scs.carleton.ca/~santoro/Reports/DistinctSums.pdf.",
+      "source_transcription": "Table 3 copied from web-rendered author full text. The original PDF was not archived because the publisher endpoint rejected automated retrieval.",
+      "ai_provenance": "Source construction provenance is not stated. Repository transcription and replay were generated for this benchmark."
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "The status reflects the named sources and searches checked on 2026-11-06. It is not a claim that every publication has been surveyed.",
+  "best_human": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness_url": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+    "ai_provenance": "The 2021 paper does not state whether AI assisted the construction. The local table transcription and replay were made for this benchmark.",
+    "evidence_state": "The Table 3 entry was independently checked as a feasible B3 set; optimality is not established.",
+    "origin_type": "published construction, AI provenance not stated"
+  },
+  "best_public": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness_url": "https://www.researchgate.net/publication/354084956_Bh_Sets_as_a_Generalization_of_Golomb_Rulers",
+    "ai_provenance": "Not stated by the source.",
+    "evidence_state": "Strongest same-parameter value found in the checked sources; no proof of optimality is claimed.",
+    "origin_type": "source does not state whether AI assisted the result"
+  },
+  "best_reproduced": {
+    "value": 19407,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "cardinality": 31,
+      "order": 3
+    },
+    "url": "https://doi.org/10.1109/ACCESS.2021.3106617",
+    "witness": "data/reference/public_m31_19407.json",
+    "ai_provenance": "Transcribed for this benchmark from the web-rendered Table 3 entry; not a byte-identical PDF extraction.",
+    "evidence_state": "Exact checker confirmed 31 distinct elements, all 5,456 triple sums distinct, and diameter 19,407.",
+    "verification_status": "exact"
+  },
+  "frozen_human_baseline_type": "published same-parameter construction reproduced from the author's table"
+}

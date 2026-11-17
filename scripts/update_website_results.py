@@ -132,7 +132,7 @@ def update(checkout, initial_witnesses=None):
         return name
     def asset(value):
         return asset_bytes(encoded(value))
-    from mathbench.registry import ARCHIVED_TASKS, INITIAL_TASKS, load_task
+    from mathbench.registry import INITIAL_TASKS, load_task
     from scripts.result_table import display
     from scripts.website_figures import project, grid
 
@@ -167,7 +167,6 @@ def update(checkout, initial_witnesses=None):
         raise ValueError("Catalog must cover all official tasks")
 
     previous = {task['id']: task for task in (*index['tasks'], *index.get('archived_tasks', []))}
-    archived_tasks = [previous[tid] for tid in ARCHIVED_TASKS]
     tasks = []
     for number, (tid, category) in enumerate(categories.items(), start=1):
         fields = ('name', 'description', 'metric')
@@ -181,8 +180,7 @@ def update(checkout, initial_witnesses=None):
         folder = ROOT/'tasks'/tid.lower()
         metadata = load_task(tid)
         official, = metadata['configurations']
-        sota = read(folder/'data/sota.json')['configurations']
-        initial_results = read(folder/'data/records.json').get('initial_results', {})
+        sota = read(folder/'data/bestknown.json')['configurations']
         old = previous.get(tid, {})
         existing = {c['id']: c for c in old.get('configurations', [])}
         task = dict(id=tid, number=number, **labels[tid], category=category, configurations=[],
@@ -199,7 +197,7 @@ def update(checkout, initial_witnesses=None):
             runs = data['runs']
             record = sota[cid]
             previous_public = data.get('sota', {}).get('run') or {}
-            best = best_record_path(folder/'data/best')
+            best = best_record_path(folder/'data')
             saved = read_best_record(best)
             result = saved['result']
             provenance = saved['provenance']
@@ -234,7 +232,7 @@ def update(checkout, initial_witnesses=None):
 
             own = construction(result, 'own', best)
             own.update(result=asset(result), evidence=asset(provenance))
-            initial = initial_results[cid]
+            initial = saved['initial_result']
             if initial_witnesses and (initial_witnesses/cid).is_dir():
                 initial_folder = initial_witnesses/cid
                 checked = read(initial_folder/'result.json')
@@ -249,14 +247,15 @@ def update(checkout, initial_witnesses=None):
             if previous_public.get('objective') == str(public['objective']) and previous_public.get('witness'):
                 witness_path = dist/previous_public['witness']
             else:
-                witness_name = (record['verification'].get('witness') or record.get('witness')
-                                or record.get('best_reproduced', {}).get('witness'))
+                reproduced = record.get('best_reproduced')
+                reproduced_witness = reproduced.get('witness') if isinstance(reproduced, dict) else None
+                witness_name = record['verification'].get('witness') or record.get('witness') or reproduced_witness
                 witness_path = folder/witness_name if isinstance(witness_name, str) else None
             public_run = construction(public, 'sota', witness_path)
             source = record.get('public_source') or record.get('best_public') or {}
             if isinstance(source, str):
                 source = {'source': source}
-            public_source = dict(source)
+            public_source = dict(source) if isinstance(source, dict) else {}
             reproduced = record.get('best_reproduced')
             if not public_source.get('url') and isinstance(reproduced, dict) and reproduced.get('url'):
                 public_source['url'] = reproduced['url']
@@ -280,7 +279,7 @@ def update(checkout, initial_witnesses=None):
                 'gallery_visual': public_run['visual']})
             (dist/path).write_bytes(encoded(data))
             own_records.append({'task_id':tid,'config_id':cid,**own})
-    index.update(tasks=tasks, archived_tasks=archived_tasks, version='1.0.0',
+    index.update(tasks=tasks, archived_tasks=[], version='1.0.0',
                  date=datetime.now(timezone.utc).date().isoformat(), own_result_count=len(own_records),
                  counts=dict(tasks=len(tasks), configurations=len(own_records), runs=sum(len(c['runs']) for t in tasks for c in t['configurations']),
                              categories=len({task['category']['en'] for task in tasks})))
@@ -296,7 +295,6 @@ def update(checkout, initial_witnesses=None):
     with csv_path.open('w', newline='') as f:
         writer=csv.DictWriter(f,fieldnames=fields,lineterminator=chr(10));writer.writeheader();writer.writerows(rows)
     configurations = {c['asset'] for task in tasks for c in task['configurations']}
-    configurations.update(c['asset'] for task in archived_tasks for c in task['configurations'])
     assets = set(active_assets(index))
     for path in configurations:
         assets.update(active_assets(read(dist/path)))

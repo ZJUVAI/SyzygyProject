@@ -18,7 +18,7 @@ T051-C01 maximizes the length of an unrestricted `{-1,+1}` sequence with discrep
 
 - `init_program.py` returns the valid seed `[1]`.
 - `baseline.py` uses seed 0, 24 fixed greedy extension trials, and a 5000-term cap by default. Each trial stops when neither sign preserves all new divisor-ending prefixes. It reads no human/reference data. `evolution.py` exposes the required `run_code()` and uses the same task-qualified baseline.
-- The frozen baseline run is saved under `data/best/`. It returned length 55 after 24 trials and 806 attempted extensions. Strict runner verification confirmed discrepancy 3. On Python 3.13.12/Linux, generation took 0.696 s and verification took 0.552 s. The runner enforced 300 s generation, 60 s verification, 4 GiB memory, and one thread. `result.json` SHA-256: `21fae22d065b21bdabe72a48dc19d3282a35a17e94d19ed11c7491cc4ea86649`; `solution.json.gz` decompresses to bytes with SHA-256 `219a2850619e50b1d2dc5e234893f11a222d42c3d5d61b47fcc7dd42d872c604`.
+- The frozen baseline run is saved under `data/results.json`. It returned length 55 after 24 trials and 806 attempted extensions. Strict runner verification confirmed discrepancy 3. On Python 3.13.12/Linux, generation took 0.696 s and verification took 0.552 s. The runner enforced 300 s generation, 60 s verification, 4 GiB memory, and one thread. `result.json` SHA-256: `21fae22d065b21bdabe72a48dc19d3282a35a17e94d19ed11c7491cc4ea86649`; `solution.json.gz` decompresses to bytes with SHA-256 `219a2850619e50b1d2dc5e234893f11a222d42c3d5d61b47fcc7dd42d872c604`.
 - `human.py` and `reference.py` load only their respective task-local text data. Their outputs match and both score 130000.
 - `check.py` rejects empty sequences, non-integer signs, booleans, floats, non-finite values, and signs outside `{-1,+1}`. It enforces the fixed configuration. It ignores optional objective, score, and claimed-score values and always reports `claimed_objective_ignored: true`.
 - `test_task.py` exercises all five program entries, independently recomputes the 130000-sequence discrepancy and prefix count, verifies saved text hash, tests malformed and invalid sequences, checks forged-score invariance, and tests `_run` worker errors and timeout handling without changing the shared registry.
@@ -28,15 +28,14 @@ Commands run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t051/test_task.py -q
 .venv/bin/python -m json.tool tasks/t051/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t051/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t051/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t051/data/bestknown.json > /dev/null
 ```
 
 Result: `12 passed in 3.38s`; all three JSON files parsed. A separate strict run through `evaluate_candidate` returned valid score 55 and exact verification. To avoid changing the shared registry, the in-process call supplied the T051 config and task path directly to the evaluator; the evaluator still ran generation and verification in its isolated workers.
 
 ## Remaining review points
 
-- Asset update (2026-11-17): the public reference JSON duplicate was removed after confirming it encoded the same 130000 signs as the archived source. The canonical source and saved best solution are now deterministic gzip files: `data/source/sequence_130000.txt.gz` and `data/best/result.json.gz`. Both use mtime 0 and omit the gzip filename. The decompressed source and the solution embedded in the combined record preserve their respective original bytes and SHA-256 values: source `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`; best solution `219a2850619e50b1d2dc5e234893f11a222d42c3d5d61b47fcc7dd42d872c604`. Replay, loaders, and records point to the compressed files. This asset update is **已通过 Sol 验收（2026-11-17）**; the historical task acceptance record is unchanged.
+- Asset update (2026-11-17): the public reference JSON duplicate was removed after confirming it encoded the same 130000 signs as the archived source. The canonical source and saved best solution are now deterministic gzip files: `data/source/sequence_130000.txt.gz` and `data/results.json.gz`. Both use mtime 0 and omit the gzip filename. The decompressed source and the solution embedded in the combined record preserve their respective original bytes and SHA-256 values: source `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`; best solution `219a2850619e50b1d2dc5e234893f11a222d42c3d5d61b47fcc7dd42d872c604`. Replay, loaders, and records point to the compressed files. This asset update is **已通过 Sol 验收（2026-11-17）**; the historical task acceptance record is unchanged.
 
 - This is a feasible public construction, not a finite optimality proof. The exact maximum of unrestricted discrepancy-3 sequences is not claimed known.
 - Confirm the linked notebook's attribution and provenance description. Its complete data were recovered and mathematically verified, but the original compressed archive was not reproduced byte-for-byte.

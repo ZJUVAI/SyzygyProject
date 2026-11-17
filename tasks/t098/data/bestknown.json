@@ -1,0 +1,168 @@
+{
+  "task_id": "T098",
+  "source_checked": "2026-11-06",
+  "configurations": {
+    "T098-C01": {
+      "program": "reference.py",
+      "reproduced_value": 352,
+      "public_value": 352,
+      "direction": "minimize",
+      "highest_reported": {
+        "value": 352,
+        "source": "https://www.squaring.net/sq/ss/spss/spss.html",
+        "source_location": "Order 38; Williams 2013 construction. The source catalog describes order 38 and above as incomplete.",
+        "reproduction_status": "Published construction reconstructed from the archived 38 352A Bouwkamp code; exact tiling checks passed. This is an upper bound, not a proof of optimality.",
+        "metric": "outer square side length",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://www.squaring.net/sq/ss/spss/spss.html"
+      },
+      "reproduced_witness": {
+        "value": 352,
+        "file": "data/source/williams_38_352A.bkp",
+        "sha256": "ec1858af8249dc4aba58e116f87646f31e3c240f1efdbcf030c72b4b603fcd5b",
+        "provenance": "Exact integer skyline reconstruction from the public Bouwkamp code; checker verifies order, area, containment, non-overlap, distinct sides, primitivity, and simplicity.",
+        "evidence_state": "same-parameter witness reconstructed and independently validated"
+      },
+      "open_status": {
+        "evidence": "As checked on 2026-11-06, the squaring.net catalog marks orders 38 and above incomplete. OEIS A129947 labels the 38–59 entries as upper bounds and gives 352 at order 38. The checked sources do not give a matching lower bound or an optimality proof for order 38.",
+        "primary_sources": [
+          "https://www.squaring.net/sq/ss/spss/spss.html",
+          "https://oeis.org/A129947"
+        ],
+        "source_location": "Squaring.net order 38 entry; OEIS A129947 comments and order-38 term",
+        "claim_limit": "This source review supports an open gap between a general lower bound and the 352 construction. It is not an exhaustive literature search."
+      },
+      "historical_weaker_record": {
+        "value": 4920,
+        "source": "https://www.squaring.net/sq/ss/spss/spss.html",
+        "source_location": "Brooks 1950 order-38 construction",
+        "reproduction_status": "Reported historically; not reconstructed in this task."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T098",
+          "config_id": "T098-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 352,
+          "verification_status": "exact",
+          "generation_time": 0.16510843858122826,
+          "verification_time": 0.16471637785434723,
+          "objective_value": 352,
+          "details": {
+            "order": 38,
+            "outer_side": 352,
+            "distinct_sizes": 38,
+            "primitive_gcd": 1,
+            "area_sum": 123904,
+            "proper_subrectangles_checked": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.33247578889131546,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "outer_side": 352,
+          "area_sum": 123904,
+          "order": 38,
+          "primitive_gcd": 1,
+          "cut_rectangles_checked": 9610,
+          "method": "Exact full vertical-section coverage and horizontal-length/cut certificates for every candidate rectangle; distinct sizes and primitive gcd independently checked."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "e68a881c5dffffd8d7640d45d41f86964924a00076819fc464a9737a423584aa"
+      },
+      "id": "T098-C01",
+      "parameters": {
+        "order": 38,
+        "object": "axis-aligned tiling of an integer-sided square by 38 smaller squares",
+        "perfect": "all 38 positive integer square side lengths are distinct",
+        "simple": "no proper rectangle is tiled by a subset of at least two component squares",
+        "primitive": "greatest common divisor of the 38 square side lengths is 1",
+        "objective": "minimum outer square side length over all valid tilings"
+      },
+      "best_human": {
+        "value": 352,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "order": 38
+        },
+        "url": "https://www.squaring.net/sq/ss/spss/spss.html",
+        "source_location": "Williams 2013, order-38 construction 38 352A",
+        "provenance": "Published Bouwkamp code reconstructed with exact integer skyline placement and validated.",
+        "ai_provenance": "Human-authored search result; no AI provenance reported by the cited sources.",
+        "evidence_state": "same-parameter construction and exact score reproduced; reported as an upper bound"
+      },
+      "best_public": {
+        "value": 352,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "order": 38
+        },
+        "url": "https://www.squaring.net/sq/ss/spss/spss.html",
+        "source_location": "Order 38; 38 352A Williams 2013",
+        "provenance": "Best order-38 side value located in the checked catalog; the catalog marks order 38 incomplete.",
+        "ai_provenance": "No AI provenance reported by the source.",
+        "evidence_state": "public construction verified; optimality not established"
+      },
+      "best_reproduced": {
+        "value": 352,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "order": 38
+        },
+        "witness_file": "data/source/williams_38_352A.bkp",
+        "provenance": "Bouwkamp code parsed by exact integer skyline reconstruction.",
+        "ai_provenance": "Task-local independent reproduction of a published human construction.",
+        "actual_value": 352,
+        "evidence_state": "valid primitive simple perfect order-38 squared square",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 352,
+        "parameters": {
+          "order": 38
+        },
+        "witness_file": "data/source/williams_38_352A.bkp",
+        "provenance": "Exact rebuild of the published Williams 38 352A B-code."
+      },
+      "own_search_seed": {
+        "value": 4755,
+        "witness_file": "data/search/seed_4755.json",
+        "provenance": "Generated by an independent run of the published general 3-network generator and search algorithm, using generated network prefixes and no order-38 catalogue construction.",
+        "search_record": "data/search/seed_4755.metadata.json"
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "additional_evidence": {
+    "configurations": {
+      "T098-C01": {
+        "highest_reported": {
+          "source_location": "Order 38; Williams 2013 construction",
+          "reproduction_status": "construction reconstructed and checked; no claim that 352 is optimal"
+        }
+      }
+    }
+  }
+}

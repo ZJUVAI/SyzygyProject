@@ -1,4 +1,4 @@
-"""Store one replayable record for the best result of each task."""
+"""Store the initial score and replayable best result for each task."""
 import gzip
 import json
 from pathlib import Path
@@ -11,14 +11,18 @@ _END = b'\n}\n'
 
 
 def best_record_path(directory):
-    path = Path(directory) / "result.json"
+    path = Path(directory) / "results.json"
     compressed = path.with_suffix(".json.gz")
     return compressed if not path.is_file() and compressed.is_file() else path
 
 
-def read_best_record(path):
+def read_record_bytes(path):
     contents = path.read_bytes()
-    return json.loads(gzip.decompress(contents) if path.suffix == ".gz" else contents)
+    return gzip.decompress(contents) if path.suffix == ".gz" else contents
+
+
+def read_best_record(path):
+    return json.loads(read_record_bytes(path))
 
 
 def extract_witness(contents):
@@ -30,12 +34,13 @@ def extract_witness(contents):
     return contents
 
 
-def write_best_record(path, result, provenance, witness):
+def write_best_record(path, result, provenance, witness, *, initial_result=None):
     # Embed the witness verbatim so the saved witness digest still applies.
     if not isinstance(json.loads(witness), dict):
         raise ValueError("The saved construction must be a JSON object")
     header = json.dumps(
-        {"result": result, "provenance": provenance}, ensure_ascii=False, indent=2,
+        {"result": result, "initial_result": initial_result, "provenance": provenance},
+        ensure_ascii=False, indent=2,
     ).encode("utf-8")
     contents = header[:-2] + b"," + _WITNESS + witness + _END
     if path.suffix == ".gz":

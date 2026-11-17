@@ -3,9 +3,7 @@
 import hashlib
 import importlib
 import json
-import os
 from pathlib import Path
-import sys
 
 import pytest
 
@@ -111,13 +109,3 @@ def test_search_does_not_read_human_or_reference_assets_and_seed_is_standalone()
     assert "# EVOLVE-BLOCK-START" in init_source
     assert "# EVOLVE-BLOCK-END" in init_source
     assert "tasks.t059" not in init_source
-
-
-def test_worker_error_and_timeout_controls():
-    from mathbench.evaluate import _run
-
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError):
-        _run([sys.executable, "-c", "raise SystemExit('intentional worker error')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.15)

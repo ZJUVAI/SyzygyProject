@@ -32,7 +32,10 @@ def test_pending_configurations_are_excluded_until_acceptance(tmp_path, monkeypa
 def test_release_uses_one_configuration_per_active_task():
     assert len(registry.INITIAL_TASKS) == len(set(registry.INITIAL_TASKS)) == 100
     assert {"T101", "T102"} <= set(registry.INITIAL_TASKS)
-    assert not set(registry.ARCHIVED_TASKS).intersection(registry.INITIAL_TASKS)
+    directories = {path.name.upper() for path in registry.TASKS.iterdir()
+                   if path.is_dir() and not path.name.startswith("__")}
+    assert directories == set(registry.INITIAL_TASKS)
+    assert not list(registry.TASKS.glob("*.py"))
     for task in registry.INITIAL_TASKS:
         config_id = f"{task}-C02" if task == "T003" else f"{task}-C01"
         directory = registry.task_path(task)
@@ -40,22 +43,22 @@ def test_release_uses_one_configuration_per_active_task():
         assert [c["id"] for c in manifest["configurations"]] == [config_id]
         assert not (directory / "best").exists()
         assert not (directory / "review").exists()
-        best = directory / "data/best"
+        best = directory / "data"
         path = best_record_path(best)
-        assert list(best.iterdir()) == [path]
+        assert list(best.glob("results.json*")) == [path]
         result = read_best_record(path)["result"]
         assert result["config_id"] == config_id
         assert [c["id"] for c in registry.load_task(task)["configurations"]] == [config_id]
-        for config in registry.load_task(task, include_history=True)["configurations"]:
+        for config in registry.load_task(task)["configurations"]:
             assert registry.load_config(task, config["id"]) == config
             assert config["id"] == config_id
 
 
 def test_task_programs_and_data_have_no_removed_configuration_ids():
-    for task in (*registry.INITIAL_TASKS, *registry.ARCHIVED_TASKS):
+    for task in registry.INITIAL_TASKS:
         directory = registry.task_path(task)
         config_id, = [config["id"] for config in
-                      registry.load_task(task, include_history=True)["configurations"]]
+                      registry.load_task(task)["configurations"]]
         program_ids = re.compile(rf"\b{task}-C\d+\b")
         for path in directory.glob("*.py"):
             if not path.name.startswith("test"):
@@ -76,10 +79,9 @@ def test_removed_configuration_is_not_available(task, config_id):
         registry.load_config(task, config_id)
 
 
-@pytest.mark.parametrize("task", registry.ARCHIVED_TASKS)
-def test_retired_task_requires_explicit_config(task):
-    assert registry.resolve_task_id(task.lower()) == task
-    assert not registry.load_task(task)["configurations"]
-    assert registry.load_config(task, f"{task}-C01")["id"] == f"{task}-C01"
-    with pytest.raises(ValueError, match="archived"):
-        registry.load_config(task)
+@pytest.mark.parametrize("task", ("T086", "T096"))
+def test_removed_tasks_are_unavailable(task):
+    with pytest.raises(ValueError, match="Unknown task"):
+        registry.resolve_task_id(task)
+    with pytest.raises(ValueError, match="Unknown task"):
+        registry.load_config(task, f"{task}-C01")

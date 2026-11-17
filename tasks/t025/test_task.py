@@ -1,8 +1,6 @@
 import hashlib
 import json
-import os
 from pathlib import Path
-import sys
 
 import pytest
 
@@ -98,13 +96,3 @@ def test_zero_second_search_budget_returns_valid_seed(monkeypatch):
     assert solution["search_metadata"]["iterations"] == 0
     assert len(solution["points"]) == 128
     assert validate(solution, CONFIG)["objective"] == 128
-
-
-def test_runner_reports_program_error_and_timeout():
-    from mathbench.evaluate import _run
-
-    environment = dict(os.environ)
-    with pytest.raises(RuntimeError, match="candidate failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
-    with pytest.raises(TimeoutError, match="Wall time limit"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

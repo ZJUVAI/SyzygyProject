@@ -34,17 +34,18 @@ def test_saved_witness_replay(tmp_path):
 
 def test_best_record_replays_and_preserves_original_bytes(tmp_path):
     from tasks.t013.human import run_code
-    directory = tmp_path / "t013" / "data" / "best"
-    saved = directory / "result.json.gz"
+    directory = tmp_path / "t013" / "data"
+    saved = directory / "results.json.gz"
     solution = run_code()
     raw = (json.dumps(solution, indent=2) + "\n").encode()
     result = {"config_id": "T013-C01", "objective": 578}
     provenance = {"seed": 0}
-    write_best_record(saved, result, provenance, raw)
+    initial = {"objective": 1000}
+    write_best_record(saved, result, provenance, raw, initial_result=initial)
     assert read_best_record(saved) == {
-        "result": result, "provenance": provenance, "solution": solution,
+        "result": result, "initial_result": initial, "provenance": provenance, "solution": solution,
     }
-    assert read_witness_bytes(directory / "solution.json") == raw
+    assert read_witness_bytes(directory / "best" / "solution.json") == raw
     previous = tmp_path / "t013" / "best" / "T013-C01" / "solution.json"
     assert read_witness_bytes(previous) == raw
     assert replay("T013", saved)["objective"] == 578
@@ -83,7 +84,7 @@ def test_public_input_export_excludes_comparison_assets(tmp_path, monkeypatch, t
     extra_public_files = ()
     for name in extra_public_files:
         (source / name).write_text('def run_simple_seed(): return {}\n')
-    (source / 'sota.json').write_text('{"record": 123}\n')
+    (source / 'bestknown.json').write_text('{"record": 123}\n')
     config = {'id': task + '-C01', 'parameters': {'n': 256},
               'direction': 'minimize', 'human_reference': 123}
     monkeypatch.setattr(export, 'load_config', lambda *args: config)

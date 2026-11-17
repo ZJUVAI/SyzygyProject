@@ -7,6 +7,8 @@ from fractions import Fraction
 from math import lcm
 from pathlib import Path
 
+from mathbench.exact_math import cross as _cross, on_segment as _on_segment
+
 
 CONFIG_ID = "T064-C01"
 INSTANCE_UID = "ortho_40_56a6f463"
@@ -42,10 +44,6 @@ def _instance():
     return data, points, boundary, polygon
 
 
-def _cross(a, b, c):
-    return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
-
-
 def _dot(a, b, c):
     return (b[0] - a[0]) * (c[0] - a[0]) + (b[1] - a[1]) * (c[1] - a[1])
 
@@ -53,12 +51,6 @@ def _dot(a, b, c):
 def _area2(points):
     return sum(a[0] * b[1] - b[0] * a[1]
                for a, b in zip(points, points[1:] + points[:1]))
-
-
-def _on_segment(a, b, p):
-    return (_cross(a, b, p) == 0
-            and min(a[0], b[0]) <= p[0] <= max(a[0], b[0])
-            and min(a[1], b[1]) <= p[1] <= max(a[1], b[1]))
 
 
 def _orientation(a, b, c):

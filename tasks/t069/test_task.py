@@ -49,7 +49,7 @@ def test_five_entries_and_public_tour_recompute(monkeypatch):
 
 
 def test_pinned_inputs_and_witness_hashes():
-    metadata = json.loads((TASK / "data/sota.json").read_text())
+    metadata = json.loads((TASK / "data/bestknown.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     instance = TASK / record["instance_file"]
     reference = TASK / record["witness"]

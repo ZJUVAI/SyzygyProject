@@ -19,43 +19,6 @@ from scripts.audits.independent_audit import broken
 from scripts.search import bounded_audit, save
 
 
-def sync_promoted_witness(directory, best, config, solution, result, provenance):
-    """Update existing own-result entries for the promoted witness."""
-    cid = config['id']
-    witness = best.relative_to(directory).as_posix()
-    entry = dict(
-        value=result['objective'],
-        objective_value=result.get('objective_value', result['objective']),
-        witness=witness,
-        witness_sha256=hashlib.sha256(read_witness_bytes(best)).hexdigest(),
-        parameters=config['parameters'],
-        seed=result['seed'],
-        verification_status=result['verification_status'],
-        review_status=provenance['status'],
-        date_checked=provenance['date'],
-        origin_type='AI-assisted local continuation',
-        search_metadata=solution.get('search_metadata', {}),
-        generation_record=result,
-        evidence_state='Strict replay and independent Sol review passed.',
-    )
-    if 'objective_interval' in result.get('details', {}):
-        entry['objective_interval'] = result['details']['objective_interval']
-    if 'program' in provenance:
-        entry['program'] = provenance['program']
-    for name in ('records.json', 'sota.json'):
-        path = directory / 'data' / name
-        document = json.loads(path.read_text())
-        records = document.get('configurations', {}).get(cid, {})
-        changed = False
-        for key in ('best_own_search', 'own_search_record'):
-            previous = records.get(key)
-            if isinstance(previous, dict) and previous.get('witness', previous.get('witness_file')) == witness:
-                records[key] = entry
-                changed = True
-        if changed:
-            path.write_text(json.dumps(document, ensure_ascii=False, indent=2) + '\n')
-
-
 QUANTITY_KEYS = {
     'T101': 'point_count',
     'T102': 'discrepancy',
@@ -124,7 +87,7 @@ def check_quantity(task, quantity, result):
         assert quantity['fourth_power_ratio']==result['details']['fourth_power_ratio']
         assert quantity['M2']==result['details']['sphere_average_M2']
         assert quantity['M4']==result['details']['sphere_average_M4']
-    elif task in ('T096','T094','T089','T086'):
+    elif task in ('T094','T089'):
         a,b=map(Fraction,quantity['ratio_interval'])
         lo,hi=map(Fraction,result['details']['objective_interval'])
         assert lo<=a<=b<=hi and objective_number(result)==hi
@@ -191,7 +154,7 @@ def review(path, candidate_only=False):
     task = data['task_id']
     review_date = datetime.now(timezone.utc).date().isoformat()
     directory = ROOT / 'tasks' / task.lower()
-    task_metadata = load_task(task, include_history=True)
+    task_metadata = load_task(task)
     configs = {c['id']: c for c in task_metadata['configurations']}
     assert all(hashlib.sha256((path.parent / 'sources' / name).read_bytes()).hexdigest() == digest
                for name, digest in manifest['source_sha256'].items())
@@ -244,8 +207,9 @@ def review(path, candidate_only=False):
         if manifest.get('generation_record'):
             record['generation_record'] = manifest['generation_record']
         save(destination / 'review.json', dict(record, strict_replay=checked))
-        best = best_record_path(directory / 'data/best')
-        previous = read_best_record(best)['result'] if best.is_file() else None
+        best = best_record_path(directory / 'data')
+        saved = read_best_record(best) if best.is_file() else {}
+        previous = saved.get('result')
         improved = (previous is None or previous.get('config_id') != cid
                     or better(result, previous, configs[cid]['direction']))
         if improved:
@@ -260,8 +224,8 @@ def review(path, candidate_only=False):
                           environment=result['environment'], source_sha256=manifest['source_sha256'],
                           warm_start_sha256=warm_hash,
                           replay_command=f'.venv/bin/python -m mathbench replay {task} {best.relative_to(ROOT)} --config {cid}')
-            write_best_record(best, result, record, witness.read_bytes())
-            sync_promoted_witness(directory, best, configs[cid], solution, result, record)
+            write_best_record(best, result, record, witness.read_bytes(),
+                              initial_result=saved.get('initial_result', row['results']['initial']))
         row.update(status='candidate_verified_controls_incomplete' if failed_evaluations else 'reviewed_by_sol', sol_review=str((destination / 'review.json').relative_to(ROOT)))
         count += 1
         print('REVIEWED', cid, 'PROMOTED' if improved else 'kept prior best', flush=True)

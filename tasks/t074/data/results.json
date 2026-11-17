@@ -1,0 +1,204 @@
+{
+  "result": {
+    "task_id": "T074",
+    "config_id": "T074-C01",
+    "validity": 1.0,
+    "combined_score": 1.0,
+    "objective": "2/51",
+    "verification_status": "exact",
+    "generation_time": 0.7874917350709438,
+    "verification_time": 0.9994638003408909,
+    "objective_value": "2/51",
+    "details": {
+      "point_count": 12,
+      "triangles_checked": 220,
+      "minimum_triangle_area": "1/27",
+      "convex_hull_area": "17/18",
+      "hull_vertex_count": 9,
+      "claimed_objective_ignored": true,
+      "strict": true
+    },
+    "eval_time": 1.7927951663732529,
+    "seed": 76607,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 25,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 53
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t074/runs/search_gap21_20261109_gap21_exact/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "area_ratio": "2/51",
+      "minimum_triangle_area": "1/27",
+      "hull_area": "17/18",
+      "support_edges": 9,
+      "triangles_checked": 220
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 25,
+      "seed": 76607,
+      "method": "Exact rationalization of the adjacent-size search result, without the public 12-point coordinates"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "construction_chain": {
+      "numerical_search": "tasks/t074/runs/search_gap21_20261109_gap21_orders1_retry/summary.json",
+      "seed_sources": "https://math.tejstead.com/heilbronn/convex/",
+      "seed_sizes": [
+        11,
+        13,
+        14,
+        15
+      ],
+      "public_comparison": "The exact result is affinely equivalent to the published Cantrell 12-point construction. Checked by matching rational affine coordinates over ordered triples."
+    },
+    "seed": 76607,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          22,
+          22,
+          "512",
+          76607
+        ]
+      ],
+      "prior_control_summary": "tasks/t074/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 25,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 53
+    },
+    "source_sha256": {
+      "tasks/t074/baseline.py": "7ad38ef005d2a4a2a61e9cf443e7881539bdd7f3617abeefaa89c05c397caf7b",
+      "tasks/t074/check.py": "352e6cc3a526cbfcb4106d14c8d9157d0d24ccc057356423a6749d44dbb3cbbf",
+      "tasks/t074/construction.py": "3af7bc2221264564e9e4a2f3b589f3194a9dbf07c4e5864240d43a10d1ba5054",
+      "tasks/t074/evaluator.py": "d402bc5d2fea52ceafa2eb26bdc6c931e525713d2a9500bad705ff1df5690768",
+      "tasks/t074/evolution.py": "1a96b90f736098dc3a5fbdefa3f88e3a009839cf4cdf6c5a7575e850d2eed7a7",
+      "tasks/t074/human.py": "bd57c9c5485fd277f76d21980c0775a863505775de27b5a8703e9f8cf581ecb3",
+      "tasks/t074/init_program.py": "0c7350174bc415fe22bfc2a6560c8aa2d8f30e1f63360514ed2a02f3633f5078",
+      "tasks/t074/reference.py": "860300dfd33d978c802ff07770677fe537d1adedfe674ed3fd493b0d71d9ad4d",
+      "tasks/t074/test_task.py": "f4a276ac1606c185de63f97812e825177dd5a546c28792945f17592e927b1dc1",
+      "program.py": "cb4dc0fcbde089dd1eeaa0062c428ce4a49d295efb1e146d70f74f5b72b5252b",
+      "plan.json": "34b3f7f8ab73da8f5a6a2f88c34d48f6d350fd1f9b980b4b6eb870a9287a63fe",
+      "optimize.py": "a625f57721252bb77712e4245e1fd468a362496dd3bb8edaea7eb24900f3365c"
+    },
+    "warm_start_sha256": "a84e2c4b46e0387b0c513f8bed89eefcb1b21a752786c0a778cdd7698f9f2ef0",
+    "replay_command": ".venv/bin/python -m mathbench replay T074 tasks/t074/data/results.json --config T074-C01"
+  },
+  "initial_result": {
+    "objective": "1/220",
+    "objective_value": "1/220",
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.1159090909090909
+  },
+  "solution": {
+  "points": [
+    [
+      "4/9",
+      "-2/9"
+    ],
+    [
+      "2/9",
+      "2/9"
+    ],
+    [
+      "0",
+      "0"
+    ],
+    [
+      "2/9",
+      "5/9"
+    ],
+    [
+      "7/9",
+      "-2/9"
+    ],
+    [
+      "-2/9",
+      "4/9"
+    ],
+    [
+      "1",
+      "0"
+    ],
+    [
+      "5/9",
+      "2/9"
+    ],
+    [
+      "-2/9",
+      "7/9"
+    ],
+    [
+      "0",
+      "1"
+    ],
+    [
+      "4/9",
+      "7/9"
+    ],
+    [
+      "7/9",
+      "4/9"
+    ]
+  ],
+  "search_metadata": {
+    "method": "Rational reconstruction after largest-triangle affine normalization",
+    "trials": [
+      [
+        12,
+        "2/51"
+      ],
+      [
+        24,
+        "2/51"
+      ],
+      [
+        48,
+        "2/51"
+      ],
+      [
+        100,
+        "2/51"
+      ],
+      [
+        250,
+        "2/51"
+      ],
+      [
+        1000,
+        "2/51"
+      ]
+    ]
+  }
+}
+
+}

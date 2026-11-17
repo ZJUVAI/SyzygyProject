@@ -43,9 +43,8 @@ JSON validation:
 
 ```sh
 .venv/bin/python -m json.tool tasks/t041/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t041/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t041/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t041/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t041/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t041/data/bestknown.json > /dev/null
 ```
 
 All four JSON files parse. Shared task registration is intentionally unchanged; the main reviewer must register the new task only after review. Consequently, standalone evaluator error/timeout tests add T041 to the registry tuple locally with a test monkeypatch; no shared registry was changed.

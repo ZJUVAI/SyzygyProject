@@ -154,13 +154,3 @@ def test_expression_length_limit_and_deep_parentheses_are_safe():
     with pytest.raises(ValueError, match="too long"):
         _parse("1" + " " * MAX_EXPRESSION_LENGTH)
     assert _parse("(" * 3000 + "1" + ")" * 3000) == (1, 1)
-
-
-def test_runner_reports_program_error_and_timeout():
-    from mathbench.evaluate import _run
-
-    environment = dict(os.environ)
-    with pytest.raises(RuntimeError, match="candidate failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
-    with pytest.raises(TimeoutError, match="Wall time limit"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

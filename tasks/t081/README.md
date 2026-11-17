@@ -74,7 +74,7 @@ The simple initial program returns a 4 by 3 integer grid, with exact objective
 13. The traditional baseline runs a fixed seeded simulated-annealing search
 on a rational grid with denominator 64. It changes one coordinate at a time
 and tracks the best exact ratio. It reads no human or reference data. The
-seed-0 run and exact result are saved under `data/best/`.
+seed-0 run and exact result are saved under `data/results.json`.
 
 ## Sources
 
@@ -128,7 +128,7 @@ Friedman 的[最大/最小距离页面](https://erich-friedman.github.io/packing
 
 ## 程序和搜索
 
-简单初始程序返回 4×3 整数网格，精确目标为 13。传统基线在分母为 64 的有理网格上运行固定步数的模拟退火，每次改变一个坐标，并保留精确比值最好的构造。它不读取人类或参考见证。种子 0 的结果及精确成绩保存在 `data/best/`。
+简单初始程序返回 4×3 整数网格，精确目标为 13。传统基线在分母为 64 的有理网格上运行固定步数的模拟退火，每次改变一个坐标，并保留精确比值最好的构造。它不读取人类或参考见证。种子 0 的结果及精确成绩保存在 `data/results.json`。
 
 ## 来源
 

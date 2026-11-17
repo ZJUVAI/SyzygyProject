@@ -22,7 +22,7 @@ The arXiv history for [2608.04392](https://arxiv.org/abs/2608.04392) listed only
 - `.venv/bin/python -m pytest tasks/t040/test_task.py -q` — 14 passed.
 - The tests include the human and reference entries, a valid initial construction, deterministic bounded search, full-result invariance under changed `objective`, `score`, and `claimed_score` fields, malformed size, duplicate points, non-unit points, booleans, non-finite values, invalid rational strings, a four-vertex coplanar facet, a north-pole chart point, and `mathbench.evaluate._run` program-error and timeout paths.
 - The human witness checker independently recomputes 18 support planes, 18 triangulated boundary faces, and exact volume `198893207780365769546079296068126608395399333218703055137820126205188303595151289289727146422929302157468452876518718396242714712605660095116722166715365377366230003031600792644897607640044633803089561356572370392531912813965534618945846612941731068419196618544/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787`.
-- `.venv/bin/python -m json.tool tasks/t040/task.json >/dev/null` and the same command for `records.json` and `sota.json` — passed.
+- `.venv/bin/python -m json.tool tasks/t040/task.json >/dev/null` and the same command for `bestknown.json` — passed.
 - Direct local checker runs take under 0.1 s for the large rational reference witness on the recorded environment.
 
 ## Review limits

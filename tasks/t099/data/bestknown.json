@@ -1,0 +1,145 @@
+{
+  "configurations": {
+    "T099-C01": {
+      "program": "reference.py",
+      "reproduced_value": 270,
+      "public_value": 270,
+      "highest_reported": {
+        "value": 270,
+        "source": "Polyominoes.org 11P1 page and its attributed 54x55 SVG; MIT Tiling Search data113/K12",
+        "reproduction_status": "The 270-copy 54x55 witness was decoded from the source SVG and exactly checked cell by cell. It is a feasible upper bound; the modern source labels the order <=270 and supplies no lower-bound proof."
+      },
+      "source": {
+        "url": "https://polyominoes.org/data/11P1",
+        "witness_url": "https://polyominoes.org/data/11P1/rect/55x54.svg",
+        "archive_url": "https://tilingsearch.mit.edu/HTML/data113/K12.html",
+        "checked_at": "2026-11-06"
+      },
+      "parameters": {
+        "polyomino": "11P1",
+        "tile_area": 11,
+        "congruence": "translations, rotations, and reflections allowed",
+        "region": "any axis-aligned integer rectangle",
+        "objective": "minimize number of congruent tile copies"
+      },
+      "optimality_status": "Open: 270 is a reproduced tiling upper bound. The checked current source says <=270 and smallest known rectangle; no global lower-bound proof was found.",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T099",
+          "config_id": "T099-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 270,
+          "verification_status": "exact",
+          "generation_time": 0.6996913142502308,
+          "verification_time": 2.7487871646881104,
+          "objective_value": 270,
+          "details": {
+            "tile_count": 270,
+            "rectangle": [
+              54,
+              55
+            ],
+            "area": 2970,
+            "covered_cells": 2970,
+            "orientation_group": "D4: four rotations and four reflected rotations",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 3.5090512558817863,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "tile_count": 270,
+          "rectangle": [
+            54,
+            55
+          ],
+          "covered_area": 2970,
+          "row_intervals": 1094,
+          "method": "Independent Gaussian-integer D4 transformations and complete sorted row-interval partitions; all gaps and overlaps excluded by exact integer endpoints."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "f20faec7e66bbde4b3beecf3135084a938ce327c549d78c7fc5c645bb04620bc"
+      },
+      "human_reference_value": 270
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "source_date": "2026-11-06",
+  "survey_scope_note": "Minimum number of congruent translations, rotations, and reflections of the fixed 11P1 polyomino that tile any axis-aligned rectangle.",
+  "best_human": {
+    "value": 270,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "polyomino": "11P1",
+      "tile_area": 11,
+      "rectangle": [
+        54,
+        55
+      ]
+    },
+    "url": "https://polyominoes.org/data/11P1",
+    "ai_provenance": "Published human construction. Polyominoes.org attributes its 54x55 rectangle to Michael Reid's 11-omino page; MIT Tiling Search identifies the 270-copy construction with a July 1997 Dahlke attribution via B. A. Wichmann. Local SVG extraction and certificate encoding used AI assistance.",
+    "evidence_state": "The source SVG gives 270 D4-congruent placements. Exact verification confirms that they cover the 54x55 rectangle with no overlap. This is a feasible construction, not a proved minimum.",
+    "origin_type": "published human construction, locally decoded and verified"
+  },
+  "best_public": {
+    "value": 270,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "polyomino": "11P1",
+      "tile_area": 11,
+      "rectangle": [
+        54,
+        55
+      ]
+    },
+    "url": "https://tilingsearch.mit.edu/HTML/data113/K12.html",
+    "ai_provenance": "The cited construction is attributed to a July 1997 Dahlke record in the MIT archive. No AI provenance is indicated; the primary source is a 1997 human construction.",
+    "evidence_state": "The exact public construction is replayed and verified at 270 copies. The modern polyominoes.org page labels its order <=270; no minimum-order proof was found.",
+    "origin_type": "published construction archive"
+  },
+  "best_reproduced": {
+    "value": 270,
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "polyomino": "11P1",
+      "rectangle": [
+        54,
+        55
+      ],
+      "tile_area": 11
+    },
+    "url": "https://polyominoes.org/data/11P1/rect/55x54.svg",
+    "witness": "data/reference/11P1_54x55.json",
+    "ai_provenance": "The published SVG was decoded locally with AI assistance; the witness and score were independently recomputed by the exact checker.",
+    "evidence_state": "All 270 placements are D4 copies of the 11-cell tile. Their cells are pairwise disjoint and exactly cover the 54x55 rectangle.",
+    "verification_status": "exact"
+  },
+  "additional_evidence": {
+    "configurations": {
+      "T099-C01": {
+        "optimality_status": "Open in sources checked through 2026-11-06; source gives <=270 without a lower-bound proof."
+      }
+    }
+  }
+}

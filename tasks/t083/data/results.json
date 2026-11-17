@@ -1,0 +1,302 @@
+{
+  "result": {
+    "task_id": "T083",
+    "config_id": "T083-C01",
+    "validity": 1.0,
+    "combined_score": 0.9999116103831818,
+    "objective": "[15774897029/10000000000,0]",
+    "verification_status": "certified",
+    "generation_time": 137.81287480518222,
+    "verification_time": 0.2673420235514641,
+    "objective_value": "15774897029/10000000000",
+    "details": {
+      "objective_interval": [
+        "15774897029/10000000000",
+        "15774897029/10000000000"
+      ],
+      "exact_side_coefficients": [
+        "15774897029/10000000000",
+        "0"
+      ],
+      "triangle_pairs_checked": 6,
+      "claimed_score_ignored": true,
+      "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+    },
+    "eval_time": 138.08694271743298,
+    "seed": 41113,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 150,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 48
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t083/runs/search_routes_20261109_angles_fixed/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "exact_side": "15774897029/10000000000",
+      "unit_sides_checked": 12,
+      "pairs_checked": 6,
+      "method": "SymPy algebraic expressions; exact polygon clipping and intersection area, independent of formal ordered-field separating axes"
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 150,
+      "method": "Separating-axis MILP and exact rational rounding"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 41113,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          147,
+          147,
+          "512",
+          41113
+        ]
+      ],
+      "prior_control_summary": "tasks/t083/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 150,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 48
+    },
+    "source_sha256": {
+      "tasks/t083/baseline.py": "72921a794fd6163a708c1a6fa286dbdcdb5033f29d2bb5655689de1839e93fc0",
+      "tasks/t083/check.py": "e7a07479c46d6e426b61f32e6bd869a441eab1fec005369d66b0378116aee362",
+      "tasks/t083/evaluator.py": "0673d6b219407cb931df81576939a8be77647730ca71fce351b3c569ef126a36",
+      "tasks/t083/evolution.py": "a9fbd3a77bbb7b04d800b89cba56aeba48234bf06f444da0a9ff8dc01e99c18d",
+      "tasks/t083/human.py": "0e24292efdadcdc549f626beccce2fe09f0f1b34d75ebcbde616c98ffc3bbb7e",
+      "tasks/t083/init_program.py": "96de1bd65ed923d08d72f12056f5daac54991ae7f77115363e2b51b98113dea7",
+      "tasks/t083/reference.py": "258a240b61119c9e2f0123eca70873bda65bad5728e0c419792f5e292c013f6c",
+      "tasks/t083/search_core.py": "8440b2274e459ce488044173950728164a8152bac064c75e9f146d74996ba48a",
+      "tasks/t083/test_task.py": "fee2d37a37a75dfe6f0e9d715bb337d95e80eedd1c91d0a7b059dcfa41c55367",
+      "program.py": "205ab16cdbe38e3fa4bf8f4124ce88a922c9a9b185fb14271d0777ff77de4f48",
+      "plan.json": "b0437bf8fe1efe66a2f1d2e3e0be02531e7f8f592951d09a7bcd3b133ef2566c"
+    },
+    "warm_start_sha256": "6d12e405fe5734e6f7ed5b4c601c06ae40c91f6baf337105d2a96285339b839b",
+    "replay_command": ".venv/bin/python -m mathbench replay T083 tasks/t083/data/results.json --config T083-C01",
+    "prior_result_records": {
+      "bestknown": {
+        "T083-C01": {
+          "best_own_search": {
+            "value": "[15774897029/10000000000,0]",
+            "objective_value": "15774897029/10000000000",
+            "witness": "data/results.json",
+            "witness_sha256": "c799dc65706e5d05af209820a7f54db27260321c640ff6dc63697d7a14e86485",
+            "parameters": {
+              "triangle_count": 4,
+              "triangle_side": 1,
+              "container": "axis-aligned square with lower-left corner (0,0)",
+              "pose_domain": "dense Q(sqrt(3)) translations and rational unit directions"
+            },
+            "seed": 41113,
+            "verification_status": "certified",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "method": "Sample orientation sets and solve exact separating-axis disjunctions numerically, then enlarge and verify rational output",
+              "calls": 8976
+            },
+            "generation_record": {
+              "task_id": "T083",
+              "config_id": "T083-C01",
+              "validity": 1.0,
+              "combined_score": 0.9999116103831818,
+              "objective": "[15774897029/10000000000,0]",
+              "verification_status": "certified",
+              "generation_time": 137.81287480518222,
+              "verification_time": 0.2673420235514641,
+              "objective_value": "15774897029/10000000000",
+              "details": {
+                "objective_interval": [
+                  "15774897029/10000000000",
+                  "15774897029/10000000000"
+                ],
+                "exact_side_coefficients": [
+                  "15774897029/10000000000",
+                  "0"
+                ],
+                "triangle_pairs_checked": 6,
+                "claimed_score_ignored": true,
+                "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+              },
+              "eval_time": 138.08694271743298,
+              "seed": 41113,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 150,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 48
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed.",
+            "objective_interval": [
+              "15774897029/10000000000",
+              "15774897029/10000000000"
+            ]
+          }
+        }
+      },
+      "records": {
+        "T083-C01": {
+          "best_own_search": {
+            "value": "[15774897029/10000000000,0]",
+            "objective_value": "15774897029/10000000000",
+            "witness": "data/results.json",
+            "witness_sha256": "c799dc65706e5d05af209820a7f54db27260321c640ff6dc63697d7a14e86485",
+            "parameters": {
+              "triangle_count": 4,
+              "triangle_side": 1,
+              "container": "axis-aligned square with lower-left corner (0,0)",
+              "pose_domain": "dense Q(sqrt(3)) translations and rational unit directions"
+            },
+            "seed": 41113,
+            "verification_status": "certified",
+            "review_status": "reviewed_by_sol",
+            "date_checked": "2026-11-09",
+            "origin_type": "AI-assisted local continuation",
+            "search_metadata": {
+              "method": "Sample orientation sets and solve exact separating-axis disjunctions numerically, then enlarge and verify rational output",
+              "calls": 8976
+            },
+            "generation_record": {
+              "task_id": "T083",
+              "config_id": "T083-C01",
+              "validity": 1.0,
+              "combined_score": 0.9999116103831818,
+              "objective": "[15774897029/10000000000,0]",
+              "verification_status": "certified",
+              "generation_time": 137.81287480518222,
+              "verification_time": 0.2673420235514641,
+              "objective_value": "15774897029/10000000000",
+              "details": {
+                "objective_interval": [
+                  "15774897029/10000000000",
+                  "15774897029/10000000000"
+                ],
+                "exact_side_coefficients": [
+                  "15774897029/10000000000",
+                  "0"
+                ],
+                "triangle_pairs_checked": 6,
+                "claimed_score_ignored": true,
+                "domain_note": "Exact Q(sqrt(3)) pose subset; dense in all real poses, so the infimum is unchanged."
+              },
+              "eval_time": 138.08694271743298,
+              "seed": 41113,
+              "strict": true,
+              "budget": {
+                "generation_seconds": 150,
+                "verification_seconds": 60,
+                "memory_bytes": 4294967296,
+                "threads": 1
+              },
+              "environment": {
+                "python": "3.13.12",
+                "platform": "linux",
+                "memory_limit_enforced": true,
+                "worker_cpu": 48
+              }
+            },
+            "evidence_state": "Strict replay and independent Sol review passed.",
+            "objective_interval": [
+              "15774897029/10000000000",
+              "15774897029/10000000000"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "initial_result": {
+    "objective": "[2,0]",
+    "objective_value": "2",
+    "validity": 1.0,
+    "verification_status": "certified",
+    "combined_score": 0.788675134594813
+  },
+  "solution": {
+  "side": "15774897029/10000000000",
+  "triangles": [
+    {
+      "anchor": [
+        "5774272029/10000000000",
+        "572169/10000000000"
+      ],
+      "direction": [
+        "1",
+        "0"
+      ]
+    },
+    {
+      "anchor": [
+        "15774324861/10000000000",
+        "5774272029/10000000000"
+      ],
+      "direction": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "anchor": [
+        "8001/16000",
+        "7114070823/10000000000"
+      ],
+      "direction": [
+        "8264250486833820965/16528500973667640493",
+        "14314101729672005268/16528500973667640493"
+      ]
+    },
+    {
+      "anchor": [
+        "572169/10000000000",
+        "1/16000"
+      ],
+      "direction": [
+        "1730653868210805429/1998386953371151229",
+        "999193476685575580/1998386953371151229"
+      ]
+    }
+  ],
+  "search_metadata": {
+    "method": "Sample orientation sets and solve exact separating-axis disjunctions numerically, then enlarge and verify rational output",
+    "calls": 8976
+  }
+}
+
+}

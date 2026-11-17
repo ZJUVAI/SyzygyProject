@@ -27,9 +27,8 @@ Commands run:
 ```sh
 .venv/bin/python -m pytest tasks/t045/test_task.py -q
 .venv/bin/python -m json.tool tasks/t045/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t045/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t045/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t045/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t045/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t045/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t045/data/reference/spectral_adjacent_ordering.json > /dev/null
 .venv/bin/python -m json.tool tasks/t045/data/search/seeded_rcm_adjacent_seed0.json > /dev/null
 ```

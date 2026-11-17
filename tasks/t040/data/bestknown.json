@@ -1,0 +1,155 @@
+{
+  "task_id": "T040",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T040-C01": {
+      "program": "reference.py",
+      "reproduced_value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+      "public_value": "2.354634495069",
+      "highest_reported": {
+        "value": "2.354634495069",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "reproduction_status": "The source coordinate archive was reconstructed and exactly rescored. The exact value rounds to the reported value at its 12 decimal places."
+      },
+      "human_reference": 2.3546344950686153,
+      "direction": "maximize",
+      "unit": "unit-radius cubed",
+      "source_coordinate_sha256": "5add684454391c037f97c1d1dd05374387fd3c7b3a12cf13708ebbc7808727e3",
+      "witness": "data/reference/sloane11_rational_stereographic.json",
+      "historical_weaker_candidate": {
+        "value": "2.35462915",
+        "source": {
+          "url": "https://doi.org/10.1007/978-3-540-44400-8_22",
+          "title": "The Polyhedra of Maximal Volume Inscribed in the Unit Sphere",
+          "author": "Nobuaki Mutoh",
+          "year": 2003,
+          "source_status": "weaker numerical local candidate; not the highest reported result"
+        },
+        "reproduction_status": "not reproduced from the cited Mutoh witness; retained as a historical weaker reported candidate"
+      },
+      "matches_public_value": "yes at reported decimal precision; exact reconstruction uses rounded source coordinates",
+      "reproduced_at": "2026-11-06",
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T040",
+          "config_id": "T040-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "verification_status": "exact",
+          "generation_time": 0.9913648702204227,
+          "verification_time": 0.9461091756820679,
+          "objective_value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "details": {
+            "objective_name": "convex_hull_volume",
+            "hull_method": "exact rational supporting-plane enumeration and exact coplanar-face hulls",
+            "supporting_triples_checked": 165,
+            "supporting_triples_found": 18,
+            "unique_supporting_planes": 18,
+            "triangles_after_face_triangulation": 18,
+            "input_representation": "exact Cartesian coordinates",
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.956413198262453,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "volume": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+          "centroid_pyramids": 18,
+          "audit_scope": "Saved simplicial witnesses; coplanar-face cases covered by task tests"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "parameters": {
+        "n": 11,
+        "space": "unit sphere S2 in R3",
+        "objective": "Euclidean volume of convex hull",
+        "objective_unit": "unit-radius cubed"
+      },
+      "best_human": {
+        "value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+        "reported_value": "2.354634495069",
+        "date_checked": "2026-11-06",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "provenance": "The exact value is recomputed from the source rounded decimals after rational stereographic reconstruction. It is not the original unrounded source score."
+      },
+      "best_public": {
+        "value": "2.354634495069",
+        "date_checked": "2026-11-06",
+        "source": {
+          "url": "https://neilsloane.com/maxvolumes/index.html",
+          "coordinate_url": "https://neilsloane.com/maxvolumes/dim3/maxvol.3.11.txt",
+          "title": "Maximal Volume Spherical Codes",
+          "authors": [
+            "R. H. Hardin",
+            "N. J. A. Sloane",
+            "W. D. Smith"
+          ],
+          "reported_value": "2.354634495069",
+          "summary_date": "1994-02",
+          "source_status": "putatively optimal arrangement; the source does not give a proof of global optimality"
+        },
+        "origin_type": "Human numerical construction; source attributes the page to Hardin, Sloane, and Smith and does not state AI involvement.",
+        "provenance": "The source calls these arrangements putatively optimal and reports the rounded 11-point value. This is not a global optimality proof."
+      },
+      "best_reproduced": {
+        "value": "118779943184816839559616664339014437308607224062033161125060272225275163097841521036323687229715019243792823916661403778702802342222839041162730019039274396603773443127665761189519712577749637462787969106872555917269840762300785379238512600697716038886463092585/50445172460346349448931641996860021144264476728999599176187408572976212835152631647619651442094323827977099413655298851423455071595216816503133422619261915629737015532132820244223007249160881159274735569209765278159373027141806695314634921970384094889105909787",
+        "program": "reference.py",
+        "witness_file": "data/reference/sloane11_rational_stereographic.json",
+        "source_coordinate_file": "data/maxvol.3.11.txt",
+        "source_coordinate_sha256": "5add684454391c037f97c1d1dd05374387fd3c7b3a12cf13708ebbc7808727e3",
+        "witness_sha256": "69e632317609db1f28ee4f055e1e32ced068718a81568e3a246c097314918b9a",
+        "provenance": "Exact rational stereographic reconstruction from the rounded Hardin-Sloane-Smith coordinates. The exact checker recomputes all support planes and coplanar face hulls.",
+        "ai_provenance": "No AI-generated coordinates; public source coordinates are reconstructed and rescored.",
+        "evidence_state": "Exact feasible score for reconstructed rounded coordinates; 18 support planes and 18 triangulated facets.",
+        "date_reproduced": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      },
+      "human_reference_note": "The exact reconstructed score is stored as a rational in reproduced_value. Frozen H in task.json is its positive binary64 approximation 2.3546344950686153. The public rounded value is stored separately."
+    }
+  },
+  "checked_at": "2026-11-06",
+  "snapshot_date": "2026-11-06"
+}

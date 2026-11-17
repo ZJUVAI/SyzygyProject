@@ -8,7 +8,7 @@ The exact checker uses integer square roots and the threshold comparison `4*squa
 
 ## Fixed data and current status
 
-The official Waterloo challenge page defines the 100K instance and currently lists a tour of 5,757,191, a lower bound of 5,757,084, and a gap of 107. Its March 17, 2009 log credits Yuichi Nagata's genetic algorithm and links the tour. The local input and tour are pinned by SHA-256 in `data/sota.json`.
+The official Waterloo challenge page defines the 100K instance and currently lists a tour of 5,757,191, a lower bound of 5,757,084, and a gap of 107. Its March 17, 2009 log credits Yuichi Nagata's genetic algorithm and links the tour. The local input and tour are pinned by SHA-256 in `data/bestknown.json`.
 
 Cook, Helsgaun, Hougardy and Schroeder's 2024 paper, §3.1, says that `mona-lisa100k` has not been solved to proven optimality. The selected finite instance therefore remains open in the sources checked on 2026-11-06. The reported lower bound is recorded as published; this task does not re-certify Concorde's proof file.
 
@@ -46,7 +46,7 @@ Set `MATHBENCH_CONFIG_ID=T069-C01` and run any of the five `run_code()` entries.
 
 ## 固定数据与当前状态
 
-Waterloo 官方挑战页定义该 100K 实例，并列出长度 5,757,191 的圈、下界 5,757,084 和差距 107。2009 年 3 月 17 日记录将该圈归于 Yuichi Nagata 的遗传算法，并链接旅程文件。本地实例与旅程的解压 SHA-256 保存在 `data/sota.json`。基线和固定参考程序共用 `data/human/monalisa_5757191.tour.gz`；已删除经核实顶点顺序完全相同的 JSON 副本。
+Waterloo 官方挑战页定义该 100K 实例，并列出长度 5,757,191 的圈、下界 5,757,084 和差距 107。2009 年 3 月 17 日记录将该圈归于 Yuichi Nagata 的遗传算法，并链接旅程文件。本地实例与旅程的解压 SHA-256 保存在 `data/bestknown.json`。基线和固定参考程序共用 `data/human/monalisa_5757191.tour.gz`；已删除经核实顶点顺序完全相同的 JSON 副本。
 
 Cook、Helsgaun、Hougardy 和 Schroeder 2024 年论文第 3.1 节称 `mona-lisa100k` 尚未证明最优。因此，截至 2026-11-06 检查的来源，这个固定实例仍开放。已发表下界按来源记录，本任务不重新证明 Concorde 证书。
 

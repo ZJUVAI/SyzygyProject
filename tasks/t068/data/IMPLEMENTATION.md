@@ -20,6 +20,6 @@ Validation command:
 .venv/bin/python -m pytest tasks/t068/test_task.py -q
 ```
 
-Result: 15 passed in 2.62 seconds on Python 3.13.12, Linux x86_64. JSON syntax checks passed for `task.json`, `sota.json`, `records.json`, and the saved run metadata. The tests cover all five entries, the full public and human witnesses, duplicates and invalid values, ignored claims, seeded search, and runner error/timeout behavior through `mathbench.evaluate._run`.
+Result: 15 passed in 2.62 seconds on Python 3.13.12, Linux x86_64. JSON syntax checks passed for `task.json`, `bestknown.json`, and the saved run metadata. The tests cover all five entries, the full public and human witnesses, duplicates and invalid values, ignored claims, seeded search, and runner error/timeout behavior through `mathbench.evaluate._run`.
 
 Generation and verification use the shared 300-second and 60-second limits. The checker is exact and uses no additional dependencies.

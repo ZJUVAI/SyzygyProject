@@ -34,7 +34,7 @@ Primary sources checked 2026-11-06:
 - `init_program.py` returns one customer on each route. Each individual demand is below 131, so this is valid without reading task files or importing task modules.
 - `human.py` rebuilds deterministic parallel Clarke-Wright savings routes from the public instance. It starts with one route per customer and merges route endpoints in descending savings order when capacity allows.
 - `baseline.py` runs six fixed-seed Clarke-Wright starts with randomized tie order among equal savings. It uses only the instance data, never the comparison solutions.
-- With six default trials and seed 0, the search produced a 43-route solution of cost 77170. Its replayable witness and run metadata are in `data/best/`.
+- With six default trials and seed 0, the search produced a 43-route solution of cost 77170. Its replayable witness and run metadata are in `data/results.json`.
 - `reference.py` replays the official 72332 witness. The 72355 historical witness is also saved under `data/reference/` but is not used by the reference program.
 - `evaluator.py` uses the shared runner. Default limits are 300 seconds for generation, 60 seconds for verification, 4 GiB, and one thread.
 
@@ -43,8 +43,7 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t057/test_task.py -q
 .venv/bin/python -m json.tool tasks/t057/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t057/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t057/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t057/data/bestknown.json > /dev/null
 ```
 
 ## 定义

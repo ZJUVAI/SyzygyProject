@@ -8,6 +8,8 @@ import random
 import resource
 import sys
 
+from .construction import read_construction
+
 
 def load(path):
     path = Path(path).resolve()
@@ -51,7 +53,7 @@ def main():
         if mode == "generate":
             result = module.run_code()
         else:
-            solution = json.loads(Path(os.environ["MATHBENCH_SOLUTION_PATH"]).read_text(), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Non-finite JSON")))
+            solution = read_construction(Path(os.environ["MATHBENCH_SOLUTION_PATH"]))
             result = module.validate(solution, config, strict=(strict == "1"))
     def convert(value):
         if hasattr(value, "tolist"):

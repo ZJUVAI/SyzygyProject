@@ -1,0 +1,118 @@
+{
+  "result": {
+    "task_id": "T060",
+    "config_id": "T060-C01",
+    "validity": 1.0,
+    "combined_score": 1.204724409448819,
+    "objective": 127,
+    "verification_status": "exact",
+    "verification_time": 0.781634122133255,
+    "objective_value": 127,
+    "details": {
+      "target": "2305843009213693951",
+      "expression_value": "2305843009213693951",
+      "ones_count": 127,
+      "expression_tree": true,
+      "certified_lower_bound": 116,
+      "selfridge_max_at_115": "1801135623563989452",
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 2.102518204599619,
+    "seed": 0,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    },
+    "replay_generation_time": 1.3175572454929352
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t060/runs/search_sol1200_radix/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "one_count": 127,
+      "exact_value": 2305843009213693951,
+      "strict_lower_bound": 116
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol main agent",
+    "generation_record": {
+      "search_limits": "one 50-second mixed-radix trial and three 180-second factoring trials, one thread each",
+      "compiler": "g++ -std=c++17 -O3 -Wall -Wextra",
+      "commands": [
+        "./radix 2305843009213693951 512 50",
+        "python factors.py 4096 | head -90 > factors_first90.txt",
+        "./factor_search 2305843009213693951 MAX_RADIX 180 factors_first90.txt (MAX_RADIX in 36,96,256)"
+      ],
+      "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+      "cpu_affinity": [
+        16,
+        33,
+        34,
+        35
+      ]
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 0,
+    "controls": {
+      "scope": "Targeted search. Comparison control results are reused from search_sol1200.",
+      "search_limits": "one 50-second mixed-radix trial and three 180-second factoring trials, one thread each"
+    },
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 0
+    },
+    "source_sha256": {
+      "radix.cpp": "d9f3f5cd6ce9a9663029922eb1b49bdf850d789ed99c75e6e641600b73e23614",
+      "factor_search.cpp": "7ffa74a24ebe3d1a57b5475e51f6d1726d503b118c1a2e5c2f3bf0360ee31e4b",
+      "factors.py": "76251fcab6d0022d0a8aa235b4d6a658d1a8aea82f8044f8812024d4f5351578",
+      "factors_first90.txt": "798b60b22274f5d7c826b52a10eb60ddfc05f35260eb915a88ac69a64f95cda2"
+    },
+    "warm_start_sha256": null,
+    "replay_command": ".venv/bin/python -m mathbench replay T060 tasks/t060/data/results.json --config T060-C01"
+  },
+  "initial_result": {
+    "objective": 181,
+    "objective_value": 181,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.8453038674033149
+  },
+  "solution": {
+  "expression": "(((((((1+((((((1+(1+1))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+1))*(1+1)))*(1+((((((1+(1+1))*(1+(1+1)))*(1+(1+1)))*(1+1))*(1+1))*(1+1))))*(1+((((1+(1+(1+(1+1))))*(1+(1+1)))*(1+1))*(1+1))))*(1+1))*(1+(1+1)))*(((((((((((((((((((1+((((((1+((((1+(1+1))*(1+1))*(1+1))*(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+1))*(1+1))*(1+1)))*(1+1))*(1+1))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))*(1+(1+1)))+1)*(1+((1+(1+1))*(1+1))))*(1+(1+(1+(1+1)))))*(1+1))*(1+(1+1)))*(1+(1+1)))+1)*(1+(1+1))))+1)",
+  "search_metadata": {
+    "algorithm": "Exact mixed-radix arithmetic and small-offset factorization",
+    "variant": "factor_256",
+    "search_counters": [
+      "127",
+      "25812150",
+      "89331691053",
+      "1",
+      "715103"
+    ]
+  }
+}
+
+}

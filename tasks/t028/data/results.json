@@ -1,0 +1,167 @@
+{
+  "result": {
+    "task_id": "T028",
+    "config_id": "T028-C01",
+    "validity": 1.0,
+    "combined_score": 0.9930286599535244,
+    "objective": 3873,
+    "verification_status": "exact",
+    "generation_time": 290.06557482108474,
+    "verification_time": 0.1648121289908886,
+    "objective_value": 3873,
+    "details": {
+      "instance": "Ta051",
+      "jobs": 50,
+      "machines": 20,
+      "schedule_type": "permutation",
+      "all_operations_recomputed": true,
+      "processing_times_source_sha256": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 290.23348766565323,
+    "seed": 51805,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 37
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t028/runs/search_deepen_20261109_segments/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "makespan": 3873,
+      "operations": 1000
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 300,
+      "method": "Contiguous destroy-repair with exact enumeration of short job blocks",
+      "seed": 51805
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 51805,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          297,
+          297,
+          "512",
+          51805
+        ]
+      ],
+      "prior_control_summary": "tasks/t028/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 300,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 37
+    },
+    "source_sha256": {
+      "tasks/t028/baseline.py": "b3e74be5efaae58adf82516ee7599a448b6fbcbb09bd7a3df57b31e64299430c",
+      "tasks/t028/check.py": "be5417d873ecfe7ad11b7d111d26303f15d1cacdb1fd2dc9ffd31c3ef01cd09a",
+      "tasks/t028/evaluator.py": "5865417a847ec7c9e15ba07bd9530913821e28e3cb9d5e65e020fa165ca82898",
+      "tasks/t028/evolution.py": "d49c81088d7f76a00ecda2cac42c800ec6b0ab39d453a2db3cb093f691460b67",
+      "tasks/t028/human.py": "90150f15ad4889de9d73d1b1bcf055ce0008a3bbe17bd4cae8b37d7d47372fa3",
+      "tasks/t028/init_program.py": "52f83e1200afdb23075336f3f81a24544dbce683c80e3e080a6a6547ba7c9c76",
+      "tasks/t028/reference.py": "d3b433dcb1c2bc71d3843aad58dd4ea81a34124c670b636a8411525ea6675bd6",
+      "tasks/t028/test_task.py": "997fc6c563f3e8b3a3e27ac9ea289065358a27a2fd8d45c43ac4c37c9d49c5c3",
+      "tasks/t028/data/ta051.json": "57e114d970f7af11c64a3280068ef2ee1cfc037afd312e30d0d176900df564de",
+      "program.py": "46488b76c6950c1e1508de820f7c9d809597b994af17467842d754c6e29c5c5a",
+      "plan.json": "4bafb25f2b4ef511aed195f7e5adc9b8dcbccdf5207a4ecc9db1a0291dea374b",
+      "search.cpp": "41979e8ce5883ce4d023d8b7f8e2c3a316f6bc3659b0ec906f7c5ffcb58c47f3"
+    },
+    "warm_start_sha256": "1a7d4adb6dc4d67c627dc1c969a6bab212123444f05fe1c219ae8567ad11fc6b",
+    "replay_command": ".venv/bin/python -m mathbench replay T028 tasks/t028/data/results.json --config T028-C01"
+  },
+  "initial_result": {
+    "objective": 5094,
+    "objective_value": 5094,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.7550058892815077
+  },
+  "solution": {
+  "permutation": [
+    12,
+    37,
+    20,
+    31,
+    39,
+    47,
+    15,
+    14,
+    5,
+    29,
+    11,
+    35,
+    43,
+    34,
+    17,
+    48,
+    42,
+    1,
+    24,
+    33,
+    2,
+    6,
+    30,
+    10,
+    21,
+    8,
+    28,
+    7,
+    49,
+    45,
+    22,
+    40,
+    27,
+    16,
+    23,
+    18,
+    36,
+    38,
+    46,
+    4,
+    19,
+    9,
+    13,
+    26,
+    41,
+    32,
+    44,
+    25,
+    50,
+    3
+  ],
+  "search_metadata": {
+    "method": "Fast all-position insertion with forward/backward completion, iterated destruction and reconstruction",
+    "seed": 51805
+  }
+}
+
+}

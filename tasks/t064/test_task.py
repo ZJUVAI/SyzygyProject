@@ -182,13 +182,3 @@ def test_wrong_configuration_or_instance_is_rejected():
     candidate["instance_uid"] = "other"
     with pytest.raises(ValueError, match="instance_uid"):
         validate(candidate, CONFIG)
-
-
-def test_runner_reports_program_error_and_timeout():
-    from mathbench.evaluate import _run
-
-    environment = dict(os.environ)
-    with pytest.raises(RuntimeError, match="candidate failure"):
-        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
-    with pytest.raises(TimeoutError, match="Wall time limit"):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

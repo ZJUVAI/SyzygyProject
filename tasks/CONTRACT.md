@@ -2,7 +2,7 @@
 
 The main reviewer owns shared code. A task agent edits only `tasks/<lowercase-id>/`.
 
-Required files: `task.json`, `README.md` (Chinese and English), `instruction.txt` (English model prompt), `check.py`, `evaluator.py`, `init_program.py`, `baseline.py`, `evolution.py`, `human.py`, `reference.py`, `test_task.py`, `data/sota.json`, and `data/records.json`. Save comparison constructions under `data/` and official search results in `data/best/`. Reference programs must read comparison files from `data/`.
+Required files: `task.json`, `README.md` (Chinese and English), `instruction.txt` (English model prompt), `check.py`, `evaluator.py`, `init_program.py`, `baseline.py`, `evolution.py`, `human.py`, `reference.py`, `test_task.py`, `data/bestknown.json`, and `data/results.json` (or `data/results.json.gz`). Save comparison constructions under `data/`. Reference programs must read comparison files from `data/`.
 
 `evolution.py` must expose `run_code()` for the shared search runner. It may import the task's baseline with a task-qualified import. Test this entry directly. A checker-only helper does not satisfy this entry. The exported `init_program.py` must work without importing task modules from the source checkout. Public input files may be exported by the main reviewer's explicit whitelist; comparison witnesses and normalization records must not enter that workspace.
 
@@ -22,9 +22,9 @@ The complete validation result must stay unchanged when optional `objective`, `s
 
 The shared runner uses a fresh generation subprocess, then a separate trusted verification subprocess. Default limits: generation 300 seconds, verification 60 seconds, 4 GiB virtual memory, one numerical thread. Candidate output is capped at 16 MiB. Raw objectives are primary; compatibility score is J/H for maximize or H/J for minimize, invalid score 0. The runner is a local resource limiter, not a security container.
 
-Human baselines need public provenance and a reproduced witness. `data/records.json` separates `best_human`, `best_public`, `best_reproduced` with dates, parameters, URLs, AI provenance, values and evidence state. A task requires a reproduced human baseline for release. Identify source scope and date for best-result claims.
+Human baselines need public provenance and a reproduced witness. `data/bestknown.json` separates `best_human`, `best_public`, `best_reproduced` with dates, parameters, URLs, AI provenance, values and evidence state. A task requires a reproduced human baseline for release. Identify source scope and date for best-result claims.
 
-Both `data/sota.json` and `data/records.json` use a `configurations` object keyed by configuration ID. Each SOTA configuration has `program: "reference.py"`, scalar `reproduced_value`, scalar `public_value` when known, and a `highest_reported` object with `value`, source, and `reproduction_status`. Record the frozen human baseline and the best reported human result. Recompute each configuration's construction and score.
+`data/bestknown.json` uses a `configurations` object keyed by configuration ID. Each SOTA configuration has `program: "reference.py"`, scalar `reproduced_value`, scalar `public_value` when known, and a `highest_reported` object with `value`, source, and `reproduction_status`. Record the frozen human baseline and the best reported human result. Recompute each configuration's construction and score.
 
 Test valid and invalid examples, boundary constraints, ignored claimed scores, and independent score calculations. Record test commands and results, source checks, and unresolved issues in `data/IMPLEMENTATION.md`. Your status remains pending_sol_review. The main reviewer decides acceptance.
 
@@ -36,4 +36,4 @@ For an exact algebraic objective, the trusted checker may return the exact expre
 
 Search baseline amendment: defaults use fixed iteration counts and the saved random seed. `mathbench.search.search_steps` supplies this mode. Explicit `MATHBENCH_SEARCH_SECONDS` enables a wall-clock cutoff for exploration; its result can depend on machine speed. Hard runner limits apply in both modes.
 
-The official result uses `data/best/result.json`, or `result.json.gz` for a compressed record. It contains `result`, `provenance`, and `solution`. Replay accepts the combined record or a standalone JSON witness. The recorded witness hash covers the original bytes of the embedded solution after decompression.
+The official result uses `data/results.json`, or `data/results.json.gz` for a compressed record. It contains `initial_result` for the initial score, `result` for the best score, and `provenance` and `solution` for replay. Replay accepts the combined record or a standalone JSON witness. The recorded witness hash covers the original bytes of the embedded solution after decompression.

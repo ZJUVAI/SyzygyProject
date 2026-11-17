@@ -26,7 +26,7 @@ The saved 27-placement witness has SHA-256 `237d543109959c8939d22f98e91832d3bda4
 - `reference.py` replays the saved fixed witness.
 - `evaluator.py` connects the shared runner.
 
-The initial and search programs do not read comparison data. The human and reference programs read only the task-local source row or fixed reference file. No witness is placed under `data/best/`.
+The initial and search programs do not read comparison data. The human and reference programs read only the task-local source row or fixed reference file. No witness is placed under `data/results.json`.
 
 ## Checks performed
 
@@ -37,14 +37,13 @@ Run commands:
 ```sh
 .venv/bin/python -m pytest tasks/t070 -q
 .venv/bin/python -m json.tool tasks/t070/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t070/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t070/data/bestknown.json > /dev/null
 ```
 
 Results:
 
 - `.venv/bin/python -m pytest tasks/t070 -q`: 9 passed in 1.30 seconds on the final run.
-- JSON parsing for `task.json`, `sota.json`, `records.json`, and `data/source/source_notes.json`: passed.
+- JSON parsing for `task.json`, `bestknown.json`, and `data/source/source_notes.json`: passed.
 - Python environment: CPython 3.13.12, Linux x86_64. Runner limits are 300 seconds for generation, 60 seconds for verification, 4 GiB of memory, and one thread.
 - Default traditional search replay with `MATHBENCH_CONFIG_ID=T070-C01`, seed 0, no time cutoff: all 15 divisor-based candidates checked, 0.394 seconds, exact checker score 299.
 - Default evolutionary search replay with `MATHBENCH_CONFIG_ID=T070-C01`, seed 0, no time cutoff: 60/60 generations, population 6, 0.005 seconds, exact checker score 75.

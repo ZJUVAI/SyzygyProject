@@ -60,7 +60,7 @@ def test_all_five_program_entries(monkeypatch):
 
 def test_public_witness_and_reconstruction_are_pinned():
     witness = TASK / "data/reference/hstar_50_700.json"
-    metadata = json.loads((TASK / "data/sota.json").read_text(encoding="utf-8"))
+    metadata = json.loads((TASK / "data/bestknown.json").read_text(encoding="utf-8"))
     entry = metadata["configurations"][CONFIG_ID]
     assert hashlib.sha256(witness.read_bytes()).hexdigest() == entry["witness_sha256"]
     saved = json.loads(witness.read_text(encoding="utf-8"))

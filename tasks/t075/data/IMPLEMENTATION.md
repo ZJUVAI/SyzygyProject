@@ -17,7 +17,7 @@ Status: `accepted_by_sol`.
 - `check.py` requires the exact configuration ID and parameter dictionary. It parses unordered triples, rejects duplicate edges and invalid labels, then checks all `C(36,4)=58905` four-sets. It returns the recomputed edge count and a direct double-counting upper bound of `C(36,3)/2=3570`.
 - `human.py` rebuilds the recursive H6 witness from the public template. `reference.py` reads the frozen witness from `data/reference/`.
 - `init_program.py` returns the empty hypergraph. Baseline and evolution use seeded random-order greedy additions from the empty set. These programs do not read human/reference assets.
-- A direct seed-0 baseline run tested five orders and got 1,245 edges from trial counts `[1226, 1245, 1243, 1226, 1211]`. It was exactly rechecked and saved under `data/best/`. This task-local run was invoked directly; the record states that runner memory/time limits were not installed.
+- A direct seed-0 baseline run tested five orders and got 1,245 edges from trial counts `[1226, 1245, 1243, 1226, 1211]`. It was exactly rechecked and saved under `data/results.json`. This task-local run was invoked directly; the record states that runner memory/time limits were not installed.
 
 ## Validation
 

@@ -1,0 +1,158 @@
+{
+  "task_id": "T094",
+  "source_checked": "2026-11-06",
+  "configurations": {
+    "T094-C01": {
+      "program": "reference.py",
+      "reproduced_value": "481669373744614531460135/332305777911042658732591",
+      "public_value": 1.4482,
+      "objective": "maximum vertex-pair shortest-path length divided by Euclidean chord length",
+      "direction": "minimize",
+      "highest_reported": {
+        "value": 1.4482,
+        "source": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Theorem: every regular polygon has a triangulation with dilation below 1.4482",
+        "reproduction_status": "published universal upper bound; the theorem's specific n=120 triangulation is not reconstructed",
+        "metric": "maximum shortest-path length divided by Euclidean chord length",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009"
+      },
+      "reproduced_witness": {
+        "value": "481669373744614531460135/332305777911042658732591",
+        "file": "data/source/ubc_6fan_120.json",
+        "sha256": "2db7e3a33a5a3b9c9e1b494b58e3a6cf2a2428a6d9f22a222d3a36c967ed7a2f",
+        "provenance": "Rebuilt UBC 6-fan; exact combinatorial check and rational interval distance evaluation.",
+        "evidence_state": "objective enclosed by details.objective_interval"
+      },
+      "certified_score_interval": [
+        "2890016242467687188760789/1993834667466255952395547",
+        "481669373744614531460135/332305777911042658732591"
+      ],
+      "open_status": {
+        "evidence": "Fekete, Keldenich, and Perk (2026) report optimal solutions for regular n-gons up to n=100. Their range does not include n=120. The source review on 2026-11-06 found no same-parameter proof closing the 120-gon case.",
+        "primary_source": "https://doi.org/10.20382/jocg.v17i2a1",
+        "source_location": "Abstract; regular n-gon results and computations for n=4 through 100",
+        "claim_limit": "The checked sources do not establish optimality for n=120; this is not an exhaustive literature survey."
+      },
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T094",
+          "config_id": "T094-C01",
+          "validity": 1.0,
+          "combined_score": 1.0000000000000044,
+          "objective": "481669373744614531460135/332305777911042658732591",
+          "verification_status": "certified",
+          "generation_time": 0.5446564592421055,
+          "verification_time": 3.5000081211328506,
+          "objective_value": "481669373744614531460135/332305777911042658732591",
+          "details": {
+            "objective_interval": [
+              "2890016242467687188760789/1993834667466255952395547",
+              "481669373744614531460135/332305777911042658732591"
+            ],
+            "scale": "1000000000000000000000000",
+            "vertices": 120,
+            "edges": 237,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 4.050555758178234,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "ratio_interval": [
+            "2890016242467687188760797308839830568975294941123693699438724/1993834667466255952395546817484088840317853763189687784388893",
+            "2890016242467687188760797308839830568975294941123693699438741/1993834667466255952395546817484088840317853763189687784388892"
+          ],
+          "edges": 237,
+          "method": "Cyclotomic cosine minimal polynomial, exact rational Horner and square-root chord bounds, all-pairs integer Floyd-Warshall."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "7d65c3d99f7ffe9dc3241a1583783ac1f26d7ecdfe6e1a29e23c325efb0a89b3"
+      },
+      "id": "T094-C01",
+      "parameters": {
+        "vertices": 120,
+        "polygon": "regular convex 120-gon, vertices in counterclockwise cyclic order",
+        "construction": "straight-line triangulation using polygon vertices only",
+        "objective": "minimize over triangulations the maximum, over distinct vertex pairs, of shortest-path length divided by Euclidean chord length",
+        "distance": "Euclidean chord length"
+      },
+      "best_human": {
+        "value": 1.449476373154,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": 120
+        },
+        "url": "https://www.cs.ubc.ca/labs/algorithms/tpsg/dilation.html",
+        "source_location": "6-fan construction for n divisible by 6",
+        "provenance": "The published 6-fan rule was rebuilt for n=120. The full edge set was checked, and its dilation was recomputed with rational interval bounds.",
+        "ai_provenance": "Classical human construction; no AI provenance stated by the source.",
+        "evidence_state": "same-parameter witness and certified score reproduced; score is the interval upper endpoint rounded upward"
+      },
+      "best_public": {
+        "value": 1.4482,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "vertices": "any regular polygon, including n=120"
+        },
+        "url": "https://doi.org/10.1016/j.comgeo.2019.01.009",
+        "source_location": "Theorem: dilation of vertices of any regular polygon is less than 1.4482",
+        "provenance": "Published universal upper bound on the optimum. The theorem's specific n=120 triangulation is not reconstructed here.",
+        "ai_provenance": "Human-authored 2019 paper.",
+        "evidence_state": "reported theorem bound; witness not locally reproduced"
+      },
+      "best_reproduced": {
+        "value": "481669373744614531460135/332305777911042658732591",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "vertices": 120
+        },
+        "witness_file": "data/source/ubc_6fan_120.json",
+        "provenance": "Task-local rebuild of the UBC 6-fan rule; certified with rational chord and path intervals.",
+        "ai_provenance": "Benchmark reconstruction of a published human method.",
+        "actual_value": "481669373744614531460135/332305777911042658732591",
+        "evidence_state": "valid triangulation; objective enclosed by the interval in bestknown.json",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 1.449476373154,
+        "parameters": {
+          "vertices": 120
+        },
+        "witness_file": "data/source/ubc_6fan_120.json",
+        "provenance": "Rebuilt UBC 6-fan construction; upward-rounded certified upper endpoint."
+      }
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "additional_evidence": {
+    "configurations": {
+      "T094-C01": {
+        "highest_reported": {
+          "source_location": "Universal regular-polygon upper-bound theorem",
+          "reproduction_status": "theorem bound reported; the specific 120-gon witness was not reconstructed"
+        }
+      }
+    }
+  }
+}

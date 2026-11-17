@@ -5,9 +5,7 @@ import gzip
 import hashlib
 import importlib
 import json
-import os
 from pathlib import Path
-import sys
 
 import pytest
 
@@ -153,13 +151,3 @@ def test_search_programs_have_no_comparison_asset_dependency():
         assert "tasks.t053.human" not in source
         assert "tasks.t053.reference" not in source
         assert "data/reference" not in source
-
-
-def test_worker_error_and_timeout_controls():
-    from mathbench.evaluate import _run
-
-    env = dict(os.environ)
-    with pytest.raises(RuntimeError):
-        _run([sys.executable, "-c", "raise SystemExit('intentional worker error')"], env, 5)
-    with pytest.raises(TimeoutError):
-        _run([sys.executable, "-c", "import time; time.sleep(2)"], env, 0.15)

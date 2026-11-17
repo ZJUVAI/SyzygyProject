@@ -8,6 +8,8 @@ from functools import cmp_to_key
 import json
 from pathlib import Path
 
+from mathbench.exact_math import cross as _cross, on_segment as _on_segment
+
 CONFIG_ID = "T095-C01"
 _EXPECTED = {
     "instance": "uniform-0000500-1",
@@ -48,16 +50,6 @@ def load_points():
     if len(set(out)) != len(out):
         raise ValueError("The pinned input contains duplicate point coordinates")
     return out
-
-
-def _cross(a, b, c):
-    return (b[0]-a[0])*(c[1]-a[1]) - (b[1]-a[1])*(c[0]-a[0])
-
-
-def _on_segment(a, b, p):
-    return (_cross(a, b, p) == 0
-            and min(a[0], b[0]) <= p[0] <= max(a[0], b[0])
-            and min(a[1], b[1]) <= p[1] <= max(a[1], b[1]))
 
 
 def _segments_intersect(a, b, c, d):

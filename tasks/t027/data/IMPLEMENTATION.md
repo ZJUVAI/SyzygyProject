@@ -11,7 +11,7 @@ Status: `accepted_by_sol`.
 
 ## Source and witness checks
 
-- Downloaded the versioned Debian `r-cran-qap` 0.1-1-2 matrix and solution files. Hashes are in `data/README.md` and `sota.json`.
+- Downloaded the versioned Debian `r-cran-qap` 0.1-1-2 matrix and solution files. Hashes are in `data/README.md` and `bestknown.json`.
 - Parsed dimensions and the archived one-based permutation. It is a bijection on 1..256.
 - Recomputed the objective exactly with integer arithmetic: 44,759,294; this matches the `.sln` score and QAPLIB table entry.
 - QAPLIB labels the feasible record ANT. QAPLIB history identifies T. Stützle as providing an improved tai256c solution in 1997. The archive witness is reproduced; the original search is not.

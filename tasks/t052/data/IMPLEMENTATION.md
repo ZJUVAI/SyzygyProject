@@ -26,7 +26,7 @@ Status: accepted by Sol on 2026-11-06.
 - `init_program.py` returns the 12 cyclic shifts of the identity permutation. Distinct cyclic shifts disagree in all 12 positions, so this is a valid 12-word seed.
 - `baseline.py` uses fixed-seed random greedy packing with independent restarts. `evolution.py` runs bounded randomized greedy batches and retains the largest batch. Neither reads the human or reference witness.
 - `human.py` generates the classical group construction. `reference.py` loads the task-local frozen witness. These are comparison programs, not model starting programs.
-- A replayable search run used Python `3.13.12` on Linux, seed `17`, four generations, 200 candidates per generation, with no wall-clock cutoff. The run took `0.1754 s` and produced 87 words; exact validation recomputed minimum distance 9 and checked all 3741 pairs. The result and replay command are saved in `data/best/evolution_seed17.json`. Replay:
+- A replayable search run used Python `3.13.12` on Linux, seed `17`, four generations, 200 candidates per generation, with no wall-clock cutoff. The run took `0.1754 s` and produced 87 words; exact validation recomputed minimum distance 9 and checked all 3741 pairs. The result and replay command are saved in `data/results.json.gz`. Replay:
 
   ```sh
   MATHBENCH_CONFIG_ID=T052-C01 MATHBENCH_SEED=17 MATHBENCH_SEARCH_ITERATIONS=4 T052_CANDIDATES_PER_GENERATION=200 .venv/bin/python -m tasks.t052.evolution
@@ -41,15 +41,14 @@ From the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t052/test_task.py -q
 .venv/bin/python -m json.tool tasks/t052/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t052/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t052/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t052/data/bestknown.json > /dev/null
 ```
 
 The task-local suite passed: `5 passed in 32.76s`. It checks both PGL generators, the witness hash, all 870540 reference pairs, an independent size/distance recount, an accepted 12-word construction, a deliberately broken distance-8 pair, repeated rows, invalid symbols and numeric types, score-field tampering, all five `run_code()` entries, and runner error and timeout handling through `mathbench.evaluate._run`.
 
 ## Asset update (2026-11-17)
 
-- The combined record `data/best/result.json.gz` uses deterministic gzip (`mtime=0`, no stored filename). The embedded solution retains SHA-256 `ce0013e1e51f5318e0cfcc842efb7c0d0d2543045764dd1228235b9a52535082`. The provenance replay command now uses the compressed path. Strict replay passed and recomputed 1320 codewords, minimum distance 10, and all 870540 pairs. This storage update is **已通过 Sol 验收（2026-11-17）**; the historical acceptance record is unchanged.
+- The combined record `data/results.json.gz` uses deterministic gzip (`mtime=0`, no stored filename). The embedded solution retains SHA-256 `ce0013e1e51f5318e0cfcc842efb7c0d0d2543045764dd1228235b9a52535082`. The provenance replay command now uses the compressed path. Strict replay passed and recomputed 1320 codewords, minimum distance 10, and all 870540 pairs. This storage update is **已通过 Sol 验收（2026-11-17）**; the historical acceptance record is unchanged.
 
 ## Review limits
 

@@ -11,6 +11,12 @@ import sys
 
 import sympy as sp
 
+from mathbench.exact_math import (
+    rational as _rational,
+    reduce_polynomial as _reduce_polynomial,
+    multiply_mod as _multiply_mod,
+)
+
 
 POINT_COUNT = 100
 CONFIG_ID = "T065-C01"
@@ -21,7 +27,6 @@ PARAMETERS = {
     "coordinate_domain": "real algebraic coordinates in one common number field",
 }
 _INTEGER_RE = re.compile(r"-?(?:0|[1-9][0-9]*)\Z")
-_RATIONAL_RE = re.compile(r"-?(?:0|[1-9][0-9]*)(?:/[1-9][0-9]*)?\Z")
 
 if hasattr(sys, "set_int_max_str_digits"):
     # Exact polynomial and rational inputs are bounded by the shared runner's
@@ -35,17 +40,6 @@ def _integer(value, label):
     if isinstance(value, str) and _INTEGER_RE.fullmatch(value):
         return int(value)
     raise ValueError(f"{label} must be an integer or an integer string")
-
-
-def _rational(value, label):
-    if type(value) is int:
-        return Fraction(value)
-    if not isinstance(value, str) or not _RATIONAL_RE.fullmatch(value):
-        raise ValueError(f"{label} must be an integer or rational string")
-    try:
-        return Fraction(value)
-    except (ValueError, ZeroDivisionError) as exc:
-        raise ValueError(f"{label} is not a valid rational") from exc
 
 
 def _check_config(config):
@@ -94,21 +88,6 @@ def _read_field(solution):
     return modulus, len(coefficients) - 1
 
 
-def _reduce_polynomial(coefficients, modulus):
-    degree = len(modulus) - 1
-    work = list(coefficients) or [Fraction(0)]
-    if len(work) < degree + 1:
-        work.extend([Fraction(0)] * (degree + 1 - len(work)))
-    for k in range(len(work) - 1, degree - 1, -1):
-        leading = work[k]
-        if leading:
-            offset = k - degree
-            scale = leading / modulus[degree]
-            for j, coefficient in enumerate(modulus):
-                work[offset + j] -= scale * coefficient
-    return tuple((work + [Fraction(0)] * degree)[:degree])
-
-
 def _parse_coordinates(solution, modulus, degree):
     raw_points = solution.get("points")
     if not isinstance(raw_points, (list, tuple)) or len(raw_points) != POINT_COUNT:
@@ -139,17 +118,6 @@ def _add(left, right):
 
 def _subtract(left, right):
     return tuple(a - b for a, b in zip(left, right))
-
-
-def _multiply_mod(left, right, modulus):
-    degree = len(modulus) - 1
-    work = [Fraction(0)] * (2 * degree - 1)
-    for i, a in enumerate(left):
-        if a:
-            for j, b in enumerate(right):
-                if b:
-                    work[i + j] += a * b
-    return _reduce_polynomial(work, modulus)
 
 
 def validate(solution, config, strict=False):

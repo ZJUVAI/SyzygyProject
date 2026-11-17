@@ -8,7 +8,7 @@ The pinned instance is `data/source/mona-lisa100K.tsp.gz`; its decompressed SHA-
 
 The official Waterloo challenge page currently lists this tour and the lower bound 5,757,084. Hougardy and Schroeder (2024), §3.1, state that the instance has not been solved to proven optimality. The lower bound is preserved as a published result; this task does not re-check Concorde's certificate. The official source attributes the tour to Yuichi Nagata's genetic algorithm, with no generative-AI provenance stated.
 
-The simple program uses input order. The traditional search baseline uses alternating horizontal coordinate bands and 20,000 fixed-seed local 2-opt proposals. It reads the public instance but no comparison tour. With seed 0, it returned a valid tour of length 6,856,309 after 153 accepted exchanges in 2.320 seconds. The witness is in `data/search/seed-0.json.gz`; `data/search/seed-0.metadata.json` records the seed, step count, limits, environment, exact recomputed score, and replay command. The best accepted configuration witness is `data/best/result.json.gz`. Use a gzip reader to inspect saved JSON witnesses.
+The simple program uses input order. The traditional search baseline uses alternating horizontal coordinate bands and 20,000 fixed-seed local 2-opt proposals. It reads the public instance but no comparison tour. With seed 0, it returned a valid tour of length 6,856,309 after 153 accepted exchanges in 2.320 seconds. The witness is in `data/search/seed-0.json.gz`; `data/search/seed-0.metadata.json` records the seed, step count, limits, environment, exact recomputed score, and replay command. The best accepted configuration witness is `data/results.json.gz`. Use a gzip reader to inspect saved JSON witnesses.
 
 Validation command:
 

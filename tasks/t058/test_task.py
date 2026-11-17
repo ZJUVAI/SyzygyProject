@@ -47,7 +47,7 @@ def test_all_five_program_entries(monkeypatch):
 def test_reference_file_hash_and_exact_reconstruction():
     witness = TASK / "data/reference/rtd_5_7.json"
     assert hashlib.sha256(witness.read_bytes()).hexdigest() == json.loads(
-        (TASK / "data/sota.json").read_text()
+        (TASK / "data/bestknown.json").read_text()
     )["configurations"][CONFIG_ID]["witness_sha256"]
     saved = json.loads(witness.read_text())
     assert saved["rounds"] == build_schedule()

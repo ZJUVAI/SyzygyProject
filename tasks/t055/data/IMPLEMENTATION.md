@@ -24,7 +24,7 @@ Status: accepted by Sol on 2026-11-06.
 - `evolution.py` uses a bounded population and block mutations. It checks hard feasibility exactly before accepting candidates.
 - `human.py` rebuilds the DPLL hard-SAT solution and applies feasible single-variable soft improvements.
 - `reference.py` replays the saved official BouMS assignment. No search entry reads the reference assignment.
-- A saved task-local search used Python 3.13.12, SymPy 1.14.0, Linux x86_64, seed 2026, and 32 generations. It ran 32 mutations, found no hard-feasible mutant, and kept the valid DPLL seed at score 360 / cost 289. Generation took 0.2039 seconds. The exact output, validation result, environment, and replay command are saved in `data/best/evolution_seed2026.json`.
+- A saved task-local search used Python 3.13.12, SymPy 1.14.0, Linux x86_64, seed 2026, and 32 generations. It ran 32 mutations, found no hard-feasible mutant, and kept the valid DPLL seed at score 360 / cost 289. Generation took 0.2039 seconds. The exact output, validation result, environment, and replay command are saved in `data/results.json`.
 - Replay command:
 
   ```sh
@@ -40,8 +40,7 @@ From the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t055/test_task.py -q
 .venv/bin/python -m json.tool tasks/t055/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t055/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t055/data/bestknown.json > /dev/null
 ```
 
 The task-local suite passed: `5 passed in 3.30s` on the final run. It checks the decompressed WCNF hash and clause counts, independently re-counts the 587 public score, checks the 360 DPLL baseline, rejects malformed assignments and an all-false hard-violating assignment, confirms claimed-score fields do not change the result, runs all five program entries, and tests worker errors and timeouts through `mathbench.evaluate._run`. All four task JSON files passed `python -m json.tool`.

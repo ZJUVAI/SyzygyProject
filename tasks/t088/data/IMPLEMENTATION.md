@@ -14,7 +14,7 @@ Status: `accepted_by_sol`.
 - `init_program.py` returns natural vertex order.
 - `baseline.py` and `evolution.py` run bounded seeded GRASP-style construction with insertion moves. They only read the public graph. The default is six trials and twelve shuffled vertices per local pass. The optional time cutoff is explicit.
 - `human.py` reconstructs the cited GRASP method family with three trials and eight shuffled vertices per local pass. It produces a fixed exact score of 229; it does not claim to reproduce the reported 202 ordering.
-- `reference.py` loads the frozen local reconstruction from `data/reference/`; it does not load a file from `data/best/`.
+- `reference.py` loads the frozen local reconstruction from `data/reference/`; it does not load a file from `data/results.json`.
 - The run saved at `data/search/seed-0.json` scored 221 after six trials. Its metadata records seed, runtime, settings, and exact checker output.
 - `check.py` validates the full permutation and computes all 129 prefix cut sizes with exact integer difference-array arithmetic. It ignores optional candidate score fields.
 

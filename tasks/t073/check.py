@@ -12,6 +12,12 @@ import sys
 
 import sympy as sp
 
+from mathbench.exact_math import (
+    rational as _rational,
+    reduce_polynomial as _reduce_polynomial,
+    multiply_mod as _multiply_mod,
+)
+
 
 CONFIG_ID = "T073-C01"
 DIMENSION = 3
@@ -25,7 +31,6 @@ PARAMETERS = {
     "coordinate_domain": "real algebraic coordinates in one common real algebraic number field",
 }
 _INTEGER_RE = re.compile(r"-?(?:0|[1-9][0-9]*)\Z")
-_RATIONAL_RE = re.compile(r"-?(?:0|[1-9][0-9]*)(?:/[1-9][0-9]*)?\Z")
 
 if hasattr(sys, "set_int_max_str_digits"):
     sys.set_int_max_str_digits(0)
@@ -37,17 +42,6 @@ def _integer(value, label):
     if isinstance(value, str) and _INTEGER_RE.fullmatch(value):
         return int(value)
     raise ValueError(f"{label} must be an integer or integer string")
-
-
-def _rational(value, label):
-    if type(value) is int:
-        return Fraction(value)
-    if not isinstance(value, str) or not _RATIONAL_RE.fullmatch(value):
-        raise ValueError(f"{label} must be an integer or rational string")
-    try:
-        return Fraction(value)
-    except (ValueError, ZeroDivisionError) as exc:
-        raise ValueError(f"{label} is not a valid rational") from exc
 
 
 def _check_config(config):
@@ -91,32 +85,6 @@ def _read_field(solution):
     if root_count != 1:
         raise ValueError("isolating_interval must contain exactly one real root")
     return tuple(Fraction(c) for c in coefficients), len(coefficients) - 1
-
-
-def _reduce_polynomial(coefficients, modulus):
-    degree = len(modulus) - 1
-    work = list(coefficients) or [Fraction(0)]
-    if len(work) < degree + 1:
-        work.extend([Fraction(0)] * (degree + 1 - len(work)))
-    for k in range(len(work) - 1, degree - 1, -1):
-        leading = work[k]
-        if leading:
-            offset = k - degree
-            scale = leading / modulus[degree]
-            for j, coefficient in enumerate(modulus):
-                work[offset + j] -= scale * coefficient
-    return tuple((work + [Fraction(0)] * degree)[:degree])
-
-
-def _multiply_mod(left, right, modulus):
-    degree = len(modulus) - 1
-    work = [Fraction(0)] * (2 * degree - 1)
-    for i, a in enumerate(left):
-        if a:
-            for j, b in enumerate(right):
-                if b:
-                    work[i + j] += a * b
-    return _reduce_polynomial(work, modulus)
 
 
 def _add(left, right):

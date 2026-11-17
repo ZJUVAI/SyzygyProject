@@ -49,7 +49,7 @@ def audit(task_ids):
     report = {'configurations': {}}
     for tid in task_ids:
         folder = ROOT / 'tasks' / tid.lower()
-        path = folder / 'data/sota.json'
+        path = folder / 'data/bestknown.json'
         if not path.exists():
             print(tid, 'awaiting task review', flush=True)
             continue
@@ -82,7 +82,7 @@ def audit(task_ids):
                     assert math.isclose(float(checked['objective']), quantity[key], rel_tol=1e-14)
                 else:
                     assert Fraction(str(checked['objective'])) == Fraction(str(quantity[key]))
-            elif tid in ('T096', 'T094', 'T092', 'T089', 'T086', 'T083', 'T021', 'T046', 'T063', 'T077', 'T080', 'T101', 'T102'):
+            elif tid in ('T094', 'T092', 'T089', 'T083', 'T021', 'T046', 'T063', 'T077', 'T080', 'T101', 'T102'):
                 from scripts.review_search import check_quantity
                 check_quantity(tid, quantity, result)
             elif tid == 'T004':

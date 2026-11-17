@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-`tasks/` holds task definitions and checkers. A task keeps its official configuration in `task.json`. Its `data/` directory holds inputs, source records, implementation notes, and saved results under `data/best/`. `mathbench/` holds the runner and adapters. `tests/` holds shared tests. `scripts/` holds search and audit commands. Each task stores temporary output in its ignored `runs/` directory. Do not add top-level research or report inventories.
+`tasks/` holds task definitions and checkers. A task keeps its official configuration in `task.json`. Its `data/` directory holds inputs, source records, implementation notes, and saved results in `data/results.json`. `mathbench/` holds the runner and adapters. `tests/` holds shared tests. `scripts/` holds search and audit commands. Each task stores temporary output in its ignored `runs/` directory. Do not add top-level research or report inventories.
 
 ## Development & Validation
 
@@ -23,7 +23,7 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 - 正式目录有 100 道题，每题只保留 1 个正式配置。
 - 对照 SimpleTES、DREAM-RSI 和 Google DeepMind AlphaEvolve 的数学任务。记录任务与原论文、公开仓库和固定版本的对应关系。仅因更名或参数变化不新增任务数。
 - 任务参数以各任务的 `task.json` 为准。
-- SOTA 来源和验证信息保存在各任务的 `data/sota.json`。正式配置的构造、评分和运行来源合并保存在 `data/best/result.json`。大文件可使用 `result.json.gz`。新配置须独立验收后接入。
+- 公开结果、来源和验证信息保存在各任务的 `data/bestknown.json`。初始成绩、最佳成绩及其构造和运行来源保存在 `data/results.json`。大文件可使用 `data/results.json.gz`。新配置须独立验收后接入。
 - 类别表示研究方向。任务固定数学目标与可行性规则。配置固定参数，例如正方形数量、码长或矩阵阶数。
 - 随机种子、重复运行、搜索时间和数学目标的单调变换不另算配置或任务。
 - 参数可以有无限多种取值。benchmark 只选有限个有代表性的实例。优先考虑不同规模、不同构造结构和可承担的验证成本。

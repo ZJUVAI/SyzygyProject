@@ -17,10 +17,10 @@ Status: accepted by Sol on 2026-11-06.
 - `check.py` enumerates all length-7 windows, accepts only windows that are permutations, and compares the set against all 5,040 required strings. It recomputes length and ignores declared scores.
 - `init_program.py` is self-contained. It concatenates the 5,040 permutations and returns a valid 35,280-symbol word.
 - `human.py` rebuilds the recursive 5,913-symbol Ashlock–Tillotson word. `data/reference/human_ashlock_tillotson_5913.txt` stores the generated witness.
-- `baseline.py` runs eight seeded randomized maximum-overlap greedy searches. It reads no comparison witness. Seed 0 produced a best word of length 6,240 in about 0.092 seconds on the implementation machine. The exact result, checker output, and run settings are saved in `data/best/greedy_seed0_*.json`.
-- `reference.py` reads the fixed 5,905 public attachment from `data/reference/public_5905_attachment.txt`. The 5,913 human witness is saved at `data/reference/human_ashlock_tillotson_5913.txt`. The `data/best/` directory contains only the task's own search result and its verification/provenance records. It is not imported by the initial seed or search baseline.
+- `baseline.py` runs eight seeded randomized maximum-overlap greedy searches. It reads no comparison witness. Seed 0 produced a best word of length 6,240 in about 0.092 seconds on the implementation machine. The exact result, checker output, and run settings are saved in `data/search/greedy_seed0_*.json`.
+- `reference.py` reads the fixed 5,905 public attachment from `data/reference/public_5905_attachment.txt`. The 5,913 human witness is saved at `data/reference/human_ashlock_tillotson_5913.txt`. The `data/results.json` directory contains only the task's own search result and its verification/provenance records. It is not imported by the initial seed or search baseline.
 - `evolution.py` exposes the required `run_code()` entry point.
-- The implementation-stage registry error was resolved by Sol admission. All five shared-runner entries and the complete control checks passed; see records.json.
+- The implementation-stage registry error was resolved by Sol admission. All five shared-runner entries and the complete control checks passed; see bestknown.json.
 
 ## Verification commands and results
 
@@ -29,9 +29,8 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t031/test_task.py -q
 .venv/bin/python -m json.tool tasks/t031/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t031/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t031/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t031/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t031/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t031/data/bestknown.json > /dev/null
 ```
 
 The task test suite passed (7 tests in 0.54 seconds) and covers the exact 5,905 witness, the 5,913 human-method witness, the simple seed, a repeated valid word, a missing-window word, invalid symbols and types, altered configuration, ignored scores, deterministic seeded search, and generation error/timeout reporting. The JSON formatting commands all exited successfully.

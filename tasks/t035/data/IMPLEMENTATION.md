@@ -18,7 +18,7 @@ Status: **已通过 Sol 验收（2026-11-06）** (`accepted_by_sol`).
 - Environment used for reconstruction: Python 3.13.12 on Linux x86_64. Search seed: 0. Baseline default: 250 candidate-addition attempts. Generation limit: 300 seconds. Verification limit: 60 seconds. CPU, one thread, and 4 GiB are the shared defaults.
 - Reproduction command: `.venv/bin/python -c 'from tasks.t035.human import build_points; from tasks.t035.check import validate; print(validate(build_points(), {"forbidden_convex_polygon_vertices": 7}))'`.
 - Source archive hashes are saved in `data/source_hashes.json`. The generated witness is from the formula and not digitized from a paper figure.
-- Task tests after review fixes: `.venv/bin/python -m pytest tasks/t035 -q` — 17 passed in 3.37 seconds. JSON syntax checks passed for `task.json`, `sota.json`, `records.json`, both saved witnesses, `data/source_hashes.json`, and `data/baseline_seed0_metadata.json`.
+- Task tests after review fixes: `.venv/bin/python -m pytest tasks/t035 -q` — 17 passed in 3.37 seconds. JSON syntax checks passed for `task.json`, `bestknown.json`, both saved witnesses, `data/source_hashes.json`, and `data/baseline_seed0_metadata.json`.
 
 ## Checks and limits
 

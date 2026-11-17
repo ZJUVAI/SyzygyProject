@@ -1,0 +1,227 @@
+{
+  "task_id": "T056",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T056-C01": {
+      "program": "reference.py",
+      "reproduced_value": 2006,
+      "public_value": 2006,
+      "best_human": {
+        "value": 2006,
+        "source": {
+          "title": "Parallel implementation of GES",
+          "authors": "O. V. Shylo and M. P. Pardalos",
+          "year": 2008,
+          "url": "https://www.optimizizer.com/infoUB.php?UB=2006&name=ta41&problemclass=ta",
+          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta",
+          "algorithm_source": "Parallel global equilibrium search"
+        },
+        "ai_provenance": "Not stated by the source.",
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "evidence_state": "published makespan; the listed machine sequences are downloaded and independently rechecked"
+      },
+      "best_public": {
+        "value": 2006,
+        "source": {
+          "url": "https://www.optimizizer.com/TA.php",
+          "last_update": "2026-10-18",
+          "witness_url": "https://www.optimizizer.com/solution.php?UB=2006&name=ta41&problemclass=ta"
+        },
+        "reproduction_status": "downloaded schedule independently verified against the official instance",
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "evidence_state": "published upper-bound schedule downloaded and independently checked against the official Taillard instance"
+      },
+      "best_reproduced": {
+        "value": 2006,
+        "program": "reference.py",
+        "witness": "data/reference/ta41_2006_schedule.json",
+        "reproduction_status": "exact checker recomputes makespan 2006",
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "instance": "ta41",
+          "jobs": 30,
+          "machines": 20
+        },
+        "witness_sha256": "d3760f7a46266d9da02920433f027645056704d76fb423846414ca9d275c58ed",
+        "review_status": "reviewed_by_sol"
+      },
+      "highest_reported": {
+        "value": 2006,
+        "source": {
+          "title": "Parallel implementation of GES",
+          "authors": "O. V. Shylo and M. P. Pardalos",
+          "year": 2008,
+          "url": "https://www.optimizizer.com/TA.php",
+          "snapshot_date": "2026-11-06"
+        },
+        "reproduction_status": "reported upper-bound schedule downloaded and independently verified"
+      },
+      "reported_lower_bounds": {
+        "current_page_value": 1912,
+        "source": "https://doi.org/10.2139/ssrn.4938242",
+        "2025_solver_value": 1915,
+        "2025_source": "https://arxiv.org/abs/2504.16106",
+        "2025_status": "numerical solver lower bound, not a formal proof per the authors"
+      },
+      "optimality_status": "open",
+      "verification": {
+        "task_id": "T056",
+        "status": "pending_source_review",
+        "run": {
+          "task_id": "T056",
+          "config_id": "T056-C01",
+          "validity": 1.0,
+          "combined_score": 1.6430707876370887,
+          "objective": 2006,
+          "verification_status": "exact",
+          "generation_time": 0.2156352810561657,
+          "verification_time": 0.36656878516077995,
+          "objective_value": 2006,
+          "details": {
+            "instance": "ta41",
+            "jobs": 30,
+            "machines": 20,
+            "operations": 600,
+            "makespan": 2006,
+            "critical_path_lower_bound": 1830,
+            "machine_loads": [
+              1490,
+              1685,
+              1674,
+              1830,
+              1378,
+              1709,
+              1528,
+              1530,
+              1751,
+              1588,
+              1464,
+              1675,
+              1516,
+              1483,
+              1702,
+              1151,
+              1625,
+              1633,
+              1371,
+              1496
+            ],
+            "job_loads": [
+              1077,
+              899,
+              1189,
+              1022,
+              1098,
+              827,
+              953,
+              1151,
+              985,
+              866,
+              1057,
+              1102,
+              1022,
+              987,
+              1157,
+              1092,
+              1040,
+              944,
+              1092,
+              1164,
+              1003,
+              1020,
+              839,
+              1102,
+              1232,
+              1158,
+              953,
+              1172,
+              932,
+              1144
+            ],
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.6979288049042225,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "makespan": 2006,
+          "operations_dispatched": 600
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "review_status": "accepted_by_sol",
+      "frozen_human_baseline": {
+        "value": 3296,
+        "program": "human.py",
+        "method": "Giffler-Thompson active-schedule generation with longest-processing-time priority in the conflict set",
+        "source": {
+          "title": "Algorithms for Solving Production-Scheduling Problems",
+          "authors": "B. Giffler and G. L. Thompson",
+          "year": 1960,
+          "url": "https://doi.org/10.1287/opre.8.4.487"
+        },
+        "evidence_state": "reconstructed deterministic rule; witness independently checked; not the published 2006 record"
+      },
+      "reported_bounds": {
+        "current_public_lower_bound": 1912,
+        "lower_bound_source": "https://doi.org/10.2139/ssrn.4938242",
+        "lower_bound_reproduction_status": "reported by the current Taillard bounds page; not independently reproduced as an optimality certificate",
+        "2025_cp_numerical_lower_bound": 1915,
+        "2025_cp_source": "https://arxiv.org/abs/2504.16106",
+        "2025_cp_limitation": "The paper's OPT-50000s column reports 1915 for ta41. It describes this as a numerical lower bound and warns that the solver-derived lower bounds are not formally proved because implementation error cannot be excluded.",
+        "optimality_status": "open"
+      },
+      "source_pins": {
+        "official_instance_url": "https://mistic.iict-heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/jobshop.dir/tai30_20.txt",
+        "official_snapshot_sha256": "fa6631f4411187bb1b43e4c444293227852860fa56f3ea6e14f48a294adbd3b9",
+        "normalized_instance": "data/source/ta41_instance.json",
+        "normalized_instance_sha256": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
+        "official_row_note": "ta41 is the first 30-job, 20-machine block in tai30_20.txt; its embedded historical bound fields are superseded and not used as current bounds."
+      },
+      "own_search": {
+        "program": "evolution.py",
+        "witness": "data/search/seed_0.json",
+        "objective": 2795,
+        "seed": 0,
+        "iterations": 500,
+        "search_isolation": "starts from init_program.py; no reference or human witness reads"
+      }
+    }
+  },
+  "additional_evidence": {
+    "configurations": {
+      "T056-C01": {
+        "best_human": {
+          "ai_provenance": "The cited source does not state whether AI tools were used. No AI-free claim is made."
+        },
+        "best_reproduced": {
+          "reproduction_status": "exact integer precedence graph validation; makespan recomputed as 2006"
+        }
+      }
+    }
+  }
+}

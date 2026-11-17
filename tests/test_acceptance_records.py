@@ -1,38 +1,23 @@
 """Accepted own-result records must identify the saved, replayed artifact."""
 import hashlib
 import json
-from pathlib import Path
 from mathbench.registry import INITIAL_TASKS, ROOT
 from mathbench.replay import read_witness_bytes, witness_path
 from mathbench.saved_result import best_record_path, read_best_record
 
 
-def test_own_records_match_selected_artifacts():
+def test_saved_results_cover_each_official_configuration():
     for task in INITIAL_TASKS:
-        d=ROOT/'tasks'/task.lower()
-        metadata=json.loads((d/'task.json').read_text())
-        records=json.loads((d/'data/records.json').read_text())
-        sota=json.loads((d/'data/sota.json').read_text())
-        for config in metadata['configurations']:
-            cid=config['id'];path=best_record_path(d/'data/best')
-            saved=read_best_record(path)
-            provenance=saved['provenance']
-            if provenance.get('reviewer')!='Sol main agent':continue
-            result=saved['result']
-            digest=hashlib.sha256(read_witness_bytes(path)).hexdigest()
-            for doc in (records,sota):
-                archive=doc.get('configurations',{}).get(cid,{})
-                for key in ('best_own_search','own_search_record'):
-                    entry=archive.get(key,{})
-                    if not isinstance(entry,dict):continue
-                    witness=entry.get('witness',entry.get('witness_file'))
-                    if witness != path.relative_to(d).as_posix():continue
-                    if 'witness_sha256' in entry:
-                        assert entry['witness_sha256']==digest,(task,key,'hash')
-                    if 'program' in entry and 'program' in provenance:
-                        assert entry['program']==provenance['program'],(task,key,'program')
-                    if 'value' in entry:
-                        assert str(entry['value'])==str(result['objective']),(task,key,'value')
+        directory = ROOT / 'tasks' / task.lower()
+        config, = json.loads((directory / 'task.json').read_text())['configurations']
+        path = best_record_path(directory / 'data')
+        saved = read_best_record(path)
+        assert saved['result']['config_id'] == config['id']
+        assert saved['result']['validity'] == saved['initial_result']['validity'] == 1
+        assert not (directory / 'data/best').exists()
+        digest = saved['provenance'].get('solution_sha256')
+        if digest:
+            assert hashlib.sha256(read_witness_bytes(path)).hexdigest() == digest, task
 
 
 def test_archived_witness_hashes_match_the_named_files():
@@ -52,5 +37,7 @@ def test_archived_witness_hashes_match_the_named_files():
                 inspect(item, directory, location + '/' + key)
     for task in INITIAL_TASKS:
         directory = ROOT / 'tasks' / task.lower()
-        for name in ('records.json', 'sota.json'):
-            inspect(json.loads((directory / 'data' / name).read_text()), directory, task + '/' + name)
+        public = directory / 'data/bestknown.json'
+        inspect(json.loads(public.read_text()), directory, task + '/' + public.name)
+        saved = best_record_path(directory / 'data')
+        inspect(read_best_record(saved)['provenance'], directory, task + '/' + saved.name)

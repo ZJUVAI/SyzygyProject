@@ -27,7 +27,7 @@ LPS Theorem 1.2 与 blow-up argument 给出连续密度下界。这里 `lambda=2
 - `baseline.py` 从固定随机种子的一般 700 边图开始，用贪心换边及周期扰动搜索。默认 5,000 步。
 - `evolution.py` 从独立随机图进行模拟退火换边。默认 10,000 步。两种搜索都在任意图空间中提案，不使用 `H*` 构造或比较文件。
 - `human.py` 按 LPS Definition 1.1 重建 `H*`。独立精确检查得分 1,817。
-- `reference.py` 读取冻结的 `data/reference/hstar_50_700.json`。它不读取 `data/best/`。
+- `reference.py` 读取冻结的 `data/reference/hstar_50_700.json`。它不读取 `data/results.json`。
 - 默认生成限时 300 秒，验证限时 60 秒，4 GiB 和单线程由公共运行器管理。
 
 ## 局限

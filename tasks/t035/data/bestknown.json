@@ -1,0 +1,114 @@
+{
+  "task_id": "T035",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T035-C01": {
+      "parameters": {
+        "forbidden_convex_polygon_vertices": 7
+      },
+      "direction": "maximize",
+      "objective": "number of distinct planar points in general position with no seven points in convex position",
+      "program": "reference.py",
+      "reproduced_value": 32,
+      "public_value": 32,
+      "highest_reported": {
+        "value": 32,
+        "source_url": "https://arxiv.org/abs/1602.03075v2",
+        "meaning": "constructive lower bound for ES(7); not an upper-bound proof",
+        "reproduction_status": "recursive formula reconstructed and witness independently checked exactly",
+        "source": {
+          "url": "https://arxiv.org/abs/1602.03075v2",
+          "version": "v2, 2017-07-12"
+        }
+      },
+      "best_human": {
+        "value": 32,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "source_url": "https://sziami.cs.bme.hu/~geza/erdosszekeres61.pdf",
+        "parameters": {
+          "forbidden_convex_polygon_vertices": 7
+        },
+        "source": "Erdős and Szekeres' classical 2^(n-2)-point lower-bound construction, reconstructed from its recursive definition and the integer realization in Duque, Fabila-Monroy, and Hidalgo-Toscano.",
+        "evidence_state": "The recursive formula was rebuilt locally. Its 32-point witness and score were independently checked with exact integer arithmetic. This is a reconstruction, not the authors' original coordinate file.",
+        "ai_provenance": "No AI provenance is reported for the cited mathematical construction. This task's implementation and verification are new reproductions."
+      },
+      "best_public": {
+        "value": 32,
+        "witness_url": "https://github.com/rfabila/PyDCG",
+        "evidence_state": "Published recursive construction and integer-realization method; the plotted point coordinates were not transcribed.",
+        "parameters": {
+          "forbidden_convex_polygon_vertices": 7
+        },
+        "source_url": "https://arxiv.org/abs/1602.03075v2"
+      },
+      "best_reproduced": {
+        "value": 32,
+        "witness": "data/human_witness.json",
+        "verification_status": "exact",
+        "verification_method": "Recompute all determinants for triples and perform an exact search over 4-subset convexity constraints for any seven-point subset.",
+        "date_checked": "2026-11-06",
+        "review_status": "reviewed_by_sol"
+      },
+      "search_provenance": "The published Erdős–Szekeres formula was reconstructed. This task's greedy baseline is a separate fixed-seed search and does not read this witness.",
+      "checked_at": "2026-11-06",
+      "open_status": "The task maximizes a witness size below ES(7). It does not optimize the unknown ES(7) threshold. A 2026-09-19 preprint reports 33 <= ES(7) <= 81 and states that ES(7)=33 remains a conjecture.",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T035",
+          "config_id": "T035-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 32,
+          "verification_status": "exact",
+          "generation_time": 0.16446559131145477,
+          "verification_time": 0.7655147761106491,
+          "objective_value": 32,
+          "details": {
+            "point_count": 32,
+            "general_position": true,
+            "convex_seven_gon": false,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 0.9335418194532394,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "point_count": 32,
+          "seven_subsets_checked": 3365856,
+          "convex_four_subsets": 23220,
+          "convex_seven_subsets": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "snapshot_date": "2026-11-06",
+  "additional_evidence": {
+    "configurations": {
+      "T035-C01": {
+        "best_public": {
+          "evidence_state": "The paper gives the 32-point Erdős–Szekeres construction and describes an integer-grid realization. The local witness is formula-reconstructed and exactly checked; the paper's plotted coordinate set was not digitized. This is a feasible lower bound, not an optimality proof."
+        }
+      }
+    }
+  }
+}

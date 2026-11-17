@@ -24,6 +24,6 @@ Default searches use 80 and 160 fixed candidate iterations, respectively, with s
 
 Use `.venv/bin/python -m pytest tasks/t083 -q`. Result: **29 passed**. The tests cover the exact published witness, the seed, all five `run_code()` entries, large rational strings beyond Python's default decimal parsing guard, invalid dimensions and types, non-unit edge vectors, boundary violations, overlap, ignored score fields, error/timeout runner paths, and the evaluator through a temporary configuration patch. The source image and source reconstruction provenance are included under `data/source/`.
 
-The saved own-search result is seed 0, 160 fixed evolution iterations: 123 proposals passed feasibility and no proposal beat the initial side 2. The witness and replay metadata are under `data/best/`.
+The saved own-search result is seed 0, 160 fixed evolution iterations: 123 proposals passed feasibility and no proposal beat the initial side 2. The witness and replay metadata are under `data/results.json`.
 
 No Sol review or registry admission has been performed by this task agent.

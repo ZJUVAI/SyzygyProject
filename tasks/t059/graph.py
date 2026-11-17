@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
-from tasks.graph_bits import load_adjacency
+from mathbench.graph_bits import load_adjacency
 
 N = 2000
 M = 1799532

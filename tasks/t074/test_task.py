@@ -139,12 +139,11 @@ def test_claimed_scores_do_not_change_recomputed_result():
 
 
 def test_records_keep_reported_record_and_optimality_status_distinct():
-    sota = json.loads((ROOT / "data/sota.json").read_text())
-    records = json.loads((ROOT / "data/records.json").read_text())
+    sota = json.loads((ROOT / "data/bestknown.json").read_text())
     entry = sota["configurations"]["T074-C01"]
     assert entry["public_value"] == entry["reproduced_value"] == "2/51"
     assert entry["highest_reported"]["value"] == "2/51"
-    assert records["configurations"]["T074-C01"]["optimality_status"]["status"] == "open in the sources checked"
+    assert sota["configurations"]["T074-C01"]["optimality_status"]["status"].startswith("open")
 
 
 def test_runner_error_and_timeout_paths():

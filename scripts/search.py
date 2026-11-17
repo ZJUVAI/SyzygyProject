@@ -1,11 +1,12 @@
 """Archive sequential exploratory searches without changing historical acceptance."""
 import argparse, copy, hashlib, importlib, json, os, platform, sys, multiprocessing, shlex
 from datetime import datetime, timezone
+from itertools import chain
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from mathbench.evaluate import evaluate_candidate
-from mathbench.registry import ARCHIVED_TASKS, INITIAL_TASKS, load_task, resolve_task_id
+from mathbench.registry import INITIAL_TASKS, load_task, resolve_task_id
 from mathbench.replay import read_witness_bytes, replay
 from mathbench.saved_result import best_record_path, read_best_record
 from scripts.audits.independent_audit import independent_quantity, broken
@@ -53,8 +54,6 @@ def run():
         if not hasattr(os,'sched_getaffinity') or args.cpu not in os.sched_getaffinity(0):ap.error('Requested CPU is unavailable')
         os.sched_setaffinity(0,{args.cpu})
     configurations=load_task(task)['configurations']
-    if task in ARCHIVED_TASKS:
-        ap.error('Task is archived. Use mathbench replay to check saved constructions.')
     if args.config_ids:
         if not set(args.config_ids)<={c['id'] for c in configurations}:ap.error('Unknown configuration')
         configurations=[c for c in configurations if c['id'] in args.config_ids]
@@ -62,9 +61,14 @@ def run():
     src=ROOT/'tasks'/task.lower(); program=src/'evolution.py'
     controls={'MATHBENCH_SEARCH_SECONDS':str(args.baseline_seconds),'MATHBENCH_EVOLUTION_SECONDS':str(args.seconds)};os.environ.update(controls)
     hashes={}
-    for p in source_files(src):
-        if '__pycache__' not in str(p):
-            relative=p.relative_to(ROOT);target=dest/'sources'/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(p.read_bytes());hashes[str(relative)]=hashlib.sha256(p.read_bytes()).hexdigest()
+    shared_sources = sorted((ROOT / 'mathbench').glob('*.py'))
+    for path in chain(shared_sources, source_files(src)):
+        relative = path.relative_to(ROOT)
+        target = dest / 'sources' / relative
+        contents = path.read_bytes()
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(contents)
+        hashes[str(relative)] = hashlib.sha256(contents).hexdigest()
     save(dest/'manifest.json',{'task_id':task,'started_utc':datetime.now(timezone.utc).isoformat(),'scope':'AI-assisted exploratory construction search from task seeds. This is not an isolated model benchmark. No record claim.','development_exposure':('Luna reported accidentally displaying human.py during development; no witness use reported. Exclude from isolated cold-start model comparisons.' if task=='T012' else 'Search programs must not read human, reference, or SOTA witnesses; filesystem access was not security-isolated.'),'controls':controls,'iteration_count':None,'iteration_note':'Where emitted, actual search counts are in solution metadata. Other programs use time cutoffs and do not expose iteration counts; exact replay uses the saved witness.','generation_seconds':300,'verification_seconds':60,'threads':1,'memory_bytes':4*1024**3,'memory_limit_enforced':sys.platform!='darwin','source_sha256':hashes,'python':sys.version,'platform':platform.platform(),'command':f'.venv/bin/python scripts/search.py run {task}','note':'Destination must be new for rerun. Time cutoffs depend on machine. Source snapshots include comparison programs; search does not load them. Local runner is not a security sandbox.'})
     manifest_path=dest/'manifest.json';manifest=json.loads(manifest_path.read_text())
     manifest.update(scope='AI-assisted local continuation search with optional own-best warm starts; not an isolated model comparison.',command=shlex.join(['.venv/bin/python','scripts/search.py','run',*sys.argv[1:]]),seeds=args.seeds,configuration_ids=[c['id'] for c in configurations],worker_cpu=min(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else None,warm_start_sha256={})
@@ -73,7 +77,7 @@ def run():
     check=importlib.import_module(f'tasks.{task.lower()}.check')
     for config in configurations:
         cid=config['id'];cd=dest/cid;results={}
-        own_best=best_record_path(src/'data/best');warm_start=None
+        own_best=best_record_path(src/'data');warm_start=None
         if own_best.exists():
             warm_start=cd/'warm_start.json';warm_start.parent.mkdir(parents=True,exist_ok=True);warm_start.write_bytes(read_witness_bytes(own_best))
             manifest['warm_start_sha256'][cid]=hashlib.sha256(warm_start.read_bytes()).hexdigest();save(manifest_path,manifest)
@@ -121,7 +125,7 @@ def summary():
     from fractions import Fraction
     from pathlib import Path
     ROOT=Path(__file__).resolve().parents[1];base=ROOT
-    public={cid:record.get('verification',{}) for path in (ROOT/'tasks').glob('*/data/sota.json') for cid,record in json.loads(path.read_text())['configurations'].items()}
+    public={cid:record.get('verification',{}) for path in (ROOT/'tasks').glob('*/data/bestknown.json') for cid,record in json.loads(path.read_text())['configurations'].items()}
     def number(r):
         try:return float(Fraction(str(r.get('objective_value',r.get('objective')))))
         except (ValueError,TypeError,ZeroDivisionError):return None
@@ -136,11 +140,11 @@ def summary():
             b,x,r=map(number,(baseline,best,reference))
             improved=(x<b if row['direction']=='minimize' else x>b) if b is not None and x is not None else None
             rows.append({'config_id':cid,'direction':row['direction'],'task_id':cid.split('-')[0],'status':row['status'],'baseline':b,'best':x,'raw_objective':best.get('objective'),'improved_baseline':improved,'frozen_verified_reference':r,'summary':str(p.relative_to(ROOT))})
-    for directory in (ROOT/'tasks').glob('*/data/best'):
+    for directory in (ROOT/'tasks').glob('*/data'):
         path=best_record_path(directory)
         if not path.is_file(): continue
         record=read_best_record(path)
-        best=record['result'];cid=best['config_id'];tid=path.parents[2].name.upper()
+        best=record['result'];cid=best['config_id'];tid=path.parents[1].name.upper()
         if cid not in official:continue
         config=official[cid]
         provenance=record['provenance']
@@ -186,7 +190,7 @@ def audit():
                     elif task=='T002':
                         import sympy as sp
                         assert sp.simplify(sp.sympify(q['bounding_side'])-sp.sympify(str(r['objective']).replace('sqrt2','sqrt(2)')))==0
-                    elif task in ('T096','T094','T092','T089','T086','T083','T021','T046','T063','T077','T080', 'T101', 'T102'):
+                    elif task in ('T094','T092','T089','T083','T021','T046','T063','T077','T080', 'T101', 'T102'):
                         from scripts.review_search import check_quantity
                         check_quantity(task,q,r)
                     elif task=='T004':
@@ -201,14 +205,14 @@ def audit():
             for name in ('initial','human','baseline'):
                 if row['results'][name]['validity']!=1:errors.append(name+' failed')
             results.append({'attempt':folder.name,'config_id':cid,'passed':not errors,'errors':errors})
-    for directory in (ROOT/'tasks').glob('*/data/best'):
+    for directory in (ROOT/'tasks').glob('*/data'):
         path=best_record_path(directory)
         if not path.is_file(): continue
-        expected=read_best_record(path)['result'];cid=expected['config_id'];task=path.parents[2].name.upper()
-        if task not in INITIAL_TASKS and task not in ARCHIVED_TASKS:continue
+        expected=read_best_record(path)['result'];cid=expected['config_id'];task=path.parents[1].name.upper()
+        if task not in INITIAL_TASKS:continue
         checked=replay(task,path,cid,strict=True)
         passed=checked['validity']==1 and checked['objective']==expected['objective']
-        results.append({'attempt':str(path.parent.relative_to(ROOT)), 'config_id':cid,
+        results.append({'attempt':str(path.relative_to(ROOT)), 'config_id':cid,
                         'passed':passed,'errors':[] if passed else ['Saved best failed exact replay']})
     report={'checks':results,'passed':sum(r['passed'] for r in results),'failed':sum(not r['passed'] for r in results),'note':'Failed setup attempts are preserved. Main report selects corrected runs. Numeric independent checks for T004 and T012 support the exact or interval checker; they do not replace its certificate.'}
     # Checks are printed; task-local run artifacts contain the evidence.

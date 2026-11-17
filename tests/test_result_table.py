@@ -103,9 +103,9 @@ def test_eighth_root_is_displayed_as_the_raw_norm_ratio():
     assert display('(1/256)^(1/8)')=='0.5'
     assert display('eighth_root(1/256)')=='0.5'
     assert display('(345/3344)^(1/8)')=='0.752825122156389'
-    text=markdown([dict(task_id='T086',config_id='T086-C01',direction='maximize',
+    text=markdown([dict(task_id='T087',config_id='T087-C01',direction='maximize',
         initial='(1/256)^(1/8)',search=None,best_reproduced='(345/3344)^(1/8)',best_reported=None)])
-    assert '| T086-C01 ↑ | 0.5 | — | 0.7528251221563891 | — |' in text
+    assert '| T087-C01 ↑ | 0.5 | — | 0.7528251221563891 | — |' in text
 
 
 def test_exact_square_root_sum_display():

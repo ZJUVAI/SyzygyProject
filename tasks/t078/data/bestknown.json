@@ -1,0 +1,167 @@
+{
+  "task_id": "T078",
+  "review_status": "accepted_by_sol",
+  "checked_at": "2026-11-06",
+  "configurations": {
+    "T078-C01": {
+      "program": "reference.py",
+      "reproduced_value": 768,
+      "public_value": 768,
+      "highest_reported": {
+        "value": 768,
+        "source": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "Dimension 10, DET, MINIMAL_NORM, KISSING_NUMBER, and GRAM entries",
+        "reproduction_status": "The integer Gram matrix was transcribed from the author's catalogue page and independently checked with exact rational arithmetic. Its determinant is 768, it has no nonzero integer vector of squared norm below 4, and exact ellipsoid enumeration finds 336 vectors of squared norm 4. This is a feasible published lattice, not a proof that determinant 768 is the minimum.",
+        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
+        "metric": "determinant of a 10-dimensional Gram matrix with minimum squared norm at least 4",
+        "direction": "minimize",
+        "date_checked": "2026-11-06",
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html"
+      },
+      "parameters": {
+        "dimension": 10,
+        "gram_entries": "exact rational numbers",
+        "gram_matrix": "symmetric positive definite 10x10 matrix",
+        "minimum_squared_norm": "at least 4 on nonzero integer vectors",
+        "objective": "determinant of the Gram matrix",
+        "direction": "minimize"
+      },
+      "witness": "data/human/lambda10_gram.json",
+      "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+      "source_snapshot": {
+        "file": "data/source/lambda10.html",
+        "sha256": "10a1fa86d38c92c30d4df0f95169d0fee64e3584bc7316e35b19d0c325229c1a",
+        "page_last_modified": "2014-07-18",
+        "downloaded_at": "2026-11-06"
+      },
+      "verified_short_vectors": {
+        "count": 336,
+        "witness": "data/human/lambda10_minimal_vectors.json",
+        "witness_sha256": "5499f6ee57683d10f366ce1f50a787b44e4baec94ff7169a4852ef5017144ea9",
+        "reproduction_status": "Enumerated independently with exact LDL ellipsoid bounds. Every vector has squared norm 4."
+      },
+      "optimality_status": {
+        "state": "open in sources checked on 2026-11-06; det 768 is a feasible upper bound",
+        "status_sources": [
+          "https://arxiv.org/html/2508.20719v2",
+          "https://epubs.siam.org/doi/10.1137/22M1532779"
+        ],
+        "status_note": "The 2026 Voronoi enumeration proves the dimension-9 case. The SIAM paper reports exact Hermite constants only through dimensions 1–8 and 24. Searches checked no proof closing dimension 10; the dimension-10 catalog entry gives a lattice construction, not an optimality theorem.",
+        "feasible_upper_bound": 768
+      },
+      "checked_sources": [
+        "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "https://arxiv.org/html/2508.20719v2",
+        "https://epubs.siam.org/doi/10.1137/22M1532779",
+        "https://annals.math.princeton.edu/wp-content/uploads/annals-v170-n3-p01-p.pdf"
+      ],
+      "review_status": "accepted_by_sol",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T078",
+          "config_id": "T078-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 768,
+          "verification_status": "exact",
+          "generation_time": 0.6496677994728088,
+          "verification_time": 2.0500949695706367,
+          "objective_value": 768,
+          "details": {
+            "dimension": 10,
+            "minimum_squared_norm_at_least": 4,
+            "nonzero_vectors_below_threshold": 0,
+            "ellipsoid_nodes_visited": 371,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 2.7077180482447147,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "determinant": "768",
+          "vectors_with_squared_norm_at_most4": 336,
+          "nodes": 1385,
+          "method": "independent unitriangular integer basis change, Gaussian determinant, complete exact ellipsoid enumeration"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "best_human": {
+        "value": 768,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "LAMBDA10 catalog entry: dimension 10, determinant 768, minimum norm 4, kissing number 336, and exact integer Gram matrix",
+        "provenance": "Classical laminated lattice construction reproduced from the public catalogue page.",
+        "ai_provenance": "Historical mathematical construction; no AI attribution is reported or inferred.",
+        "actual_value": 768,
+        "evidence_state": "Exact arithmetic verifies positive definiteness, determinant 768, and no nonzero integer vector below squared norm 4. Exact enumeration finds 336 shortest vectors."
+      },
+      "best_public": {
+        "value": 768,
+        "date_checked": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "url": "https://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/LAMBDA10.html",
+        "source_location": "Dimension 10 LAMBDA10 entry; determinant 768 and minimum norm 4",
+        "provenance": "The catalogue publishes the integer Gram matrix. Its exact determinant and minimum-norm constraint were independently recomputed.",
+        "ai_provenance": "Classical published lattice construction; no AI attribution is reported or inferred.",
+        "evidence_state": "Public feasible witness, reproduced exactly. Optimality is open in sources checked on 2026-11-06."
+      },
+      "best_reproduced": {
+        "value": 768,
+        "date_reproduced": "2026-11-06",
+        "parameters": {
+          "dimension": 10
+        },
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "provenance": "Transcribed from the author-hosted catalogue HTML, whose raw bytes are frozen under data/source; exact Gram checks were recomputed locally.",
+        "ai_provenance": "Not disclosed by the catalogue; no AI use is inferred.",
+        "actual_value": 768,
+        "evidence_state": "Exact rational LDL decomposition and complete ellipsoid enumeration certify feasibility and determinant.",
+        "review_status": "reviewed_by_sol"
+      },
+      "frozen_human_baseline": {
+        "value": 768,
+        "witness_file": "data/human/lambda10_gram.json",
+        "witness_sha256": "b515415581cb5044212b611d12ef3cf7cdc396b0f07d1c8cd7c605ae3750e886",
+        "provenance": "Rebuilt from the frozen official catalogue page."
+      }
+    }
+  },
+  "additional_evidence": {
+    "configurations": {
+      "T078-C01": {
+        "highest_reported": {
+          "source_location": "LAMBDA10 entry; exact published Gram matrix gives determinant 768",
+          "reproduction_status": "Published feasible construction reproduced and exactly checked. No exact dimension-10 optimum proof was found in the sources checked."
+        },
+        "optimality_status": {
+          "state": "open; dimension 10 has no exact Hermite-constant result in sources checked on 2026-11-06"
+        }
+      }
+    }
+  }
+}

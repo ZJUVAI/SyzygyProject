@@ -4,7 +4,7 @@
 
 T001-C01 固定为 26 个圆。简单初始程序使用精确网格；传统搜索使用有界的 SLSQP 多起点搜索，并用精确检查器复核改进结果。人类和参考程序只读取本任务的数据副本。
 
-来源：[Packomania 等圆记录表](https://packomania.com/csq/)。坐标来源、半径缩减和复算结果见[来源记录](data/records.json)。
+来源：[Packomania 等圆记录表](https://packomania.com/csq/)。坐标来源、半径缩减和复算结果见[来源记录](data/bestknown.json)。
 
 # T001: Equal circles in a unit square
 
@@ -12,4 +12,4 @@ Place the configured number of equal circles in the unit square and maximize the
 
 T001-C01 uses 26 circles. The simple seed uses an exact grid. The traditional baseline uses bounded SLSQP multistart search and checks every improvement with exact arithmetic. Human and reference programs read local copies only.
 
-Source: [Packomania equal-circle table](https://packomania.com/csq/). Coordinate provenance, radius reductions, attribution gaps, and reproduction results are in the [source records](data/records.json).
+Source: [Packomania equal-circle table](https://packomania.com/csq/). Coordinate provenance, radius reductions, attribution gaps, and reproduction results are in the [source records](data/bestknown.json).

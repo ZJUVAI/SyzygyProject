@@ -1,0 +1,145 @@
+{
+  "result": {
+    "task_id": "T076",
+    "config_id": "T076-C01",
+    "validity": 1.0,
+    "combined_score": 1.012764489420423,
+    "objective": 8696,
+    "verification_status": "exact",
+    "generation_time": 115.78750474750996,
+    "verification_time": 0.6676829494535923,
+    "objective_value": 8696,
+    "details": {
+      "element_count": 15,
+      "subset_sums_verified": 32768,
+      "elements_positive": true,
+      "elements_distinct": true,
+      "claimed_objective_ignored": true
+    },
+    "eval_time": 116.46760091558099,
+    "seed": 6907602,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 135,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 123
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t076/runs/search_gap39_20261109_gap39_deviations/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "largest_element": 8696,
+      "subset_sums_checked": 32768,
+      "method": "direct recursively doubled integer sum list, no modular fingerprints or Gray traversal"
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 135,
+      "seed": 6907602,
+      "method": "Branch from deterministic descending greedy decisions with controlled early deviations and exact signed-sum pruning"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 6907602,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          132,
+          132,
+          "512",
+          6907602
+        ]
+      ],
+      "prior_control_summary": "tasks/t076/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 135,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 123
+    },
+    "source_sha256": {
+      "tasks/t076/baseline.py": "110b9e53f533aed574d2f9ad1fc08f6ca02a142580d9e9419b07bbbd3db95562",
+      "tasks/t076/check.py": "b99324df9a2c49f7487d83e06c0e2498b83c68731508026aa3ea5eb2416b857a",
+      "tasks/t076/evaluator.py": "90f710769edceb71f94f615185f8cfcf1c344d20ead45fc7a9022c1aa8aa0504",
+      "tasks/t076/evolution.py": "4bc80c8cebc056f6f59c8080b1b64ee8206bf503b40e8d875148708eb9560e09",
+      "tasks/t076/human.py": "b9fc38e15a70df57c20f5effad6fab5440481a3681095c1ef6a9f112af3d8ab7",
+      "tasks/t076/init_program.py": "1bf03a937ae257ca5eddd47521b76d25cdd4a0bcae349d27ec749465ccc2d280",
+      "tasks/t076/reference.py": "2981ab74bf336a77a87e0d06c2f39dd1a7475d78f9f889e3b1b3a65cbe6c9170",
+      "tasks/t076/test_task.py": "8655744c372302130b2d08e29a004f8c327887b1ea493442d8af7bb3c1afeb86",
+      "program.py": "096c442694f168ed9d30071673e15de9fd1ddcd334f781a52ef6ff1d6a129ef4",
+      "plan.json": "9a871796a556faddba45c8cfc5082176a871e215985c48bca50f4374fbaa9c86"
+    },
+    "warm_start_sha256": "93edac5a6a6818539687e32bab2b62a6f05628bb4ef677b348a5f97f79184c21",
+    "replay_command": ".venv/bin/python -m mathbench replay T076 tasks/t076/data/results.json --config T076-C01"
+  },
+  "initial_result": {
+    "objective": 16384,
+    "objective_value": 16384,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.53753662109375
+  },
+  "solution": {
+  "elements": [
+    4264,
+    6434,
+    7519,
+    8083,
+    8376,
+    8528,
+    8604,
+    8647,
+    8669,
+    8680,
+    8688,
+    8690,
+    8691,
+    8692,
+    8696
+  ],
+  "search_metadata": {
+    "trials": 1966,
+    "nodes": 2318599,
+    "improvements": [
+      8874,
+      8872,
+      8869,
+      8865,
+      8860,
+      8854,
+      8847,
+      8835,
+      8825,
+      8814,
+      8792,
+      8761,
+      8696
+    ],
+    "reference_data_read": false
+  }
+}
+
+}

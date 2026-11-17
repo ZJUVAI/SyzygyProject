@@ -21,10 +21,9 @@ The seed is a 41-vertex star with 40 edges. The classical baseline starts from t
 ```sh
 .venv/bin/python -m pytest tasks/t024/test_task.py -q
 python3 -m json.tool tasks/t024/task.json > /dev/null
-python3 -m json.tool tasks/t024/data/sota.json > /dev/null
-python3 -m json.tool tasks/t024/data/records.json > /dev/null
+python3 -m json.tool tasks/t024/data/bestknown.json > /dev/null
 ```
 
 ## Review status and limitations
 
-Sol accepted this task on 2026-11-06 after full runner replay. See records.json. The 132-edge construction is reproduced exactly. The public table gives no optimality proof for order 41. The live web table was checked on 2026-11-06; this implementation does not establish a complete literature survey.
+Sol accepted this task on 2026-11-06 after full runner replay. See bestknown.json. The 132-edge construction is reproduced exactly. The public table gives no optimality proof for order 41. The live web table was checked on 2026-11-06; this implementation does not establish a complete literature survey.

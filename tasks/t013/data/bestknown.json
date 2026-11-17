@@ -1,0 +1,242 @@
+{
+  "task_id": "T013",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T013-C01": {
+      "public_value": "578",
+      "public_source": {
+        "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+        "title": "Merit Factor Records",
+        "record": "L=100, energy 578; marked non-exhaustive",
+        "corroborating_source": "https://arxiv.org/html/2504.00987v2",
+        "corroboration": "The paper states its L=100 result is consistent with the previously reported best-known result.",
+        "checked_at": "2026-11-05"
+      },
+      "reproduced_value": "578",
+      "program": "sota.py",
+      "witness": "data/human_labs100_record.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The record table marks this length with an asterisk; the value is not a proof of global optimality.",
+        "The checked sources do not identify the discoverer of this record."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T013",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T013",
+          "config_id": "T013-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 578,
+          "verification_status": "exact",
+          "generation_time": 0.16477009654045105,
+          "verification_time": 0.16605151444673538,
+          "objective_value": 578,
+          "details": {
+            "aperiodic_autocorrelations": [
+              1,
+              0,
+              1,
+              -4,
+              1,
+              2,
+              -1,
+              0,
+              1,
+              -4,
+              1,
+              -4,
+              -1,
+              -2,
+              -1,
+              -2,
+              -1,
+              4,
+              1,
+              6,
+              1,
+              4,
+              -1,
+              -2,
+              1,
+              2,
+              -1,
+              -4,
+              1,
+              0,
+              1,
+              4,
+              1,
+              0,
+              1,
+              4,
+              1,
+              2,
+              -1,
+              6,
+              1,
+              -2,
+              1,
+              4,
+              -1,
+              2,
+              1,
+              0,
+              1,
+              -8,
+              -1,
+              4,
+              -1,
+              -2,
+              1,
+              0,
+              -1,
+              -6,
+              -1,
+              2,
+              1,
+              -2,
+              -1,
+              0,
+              -1,
+              -4,
+              -1,
+              4,
+              -1,
+              -4,
+              -1,
+              -4,
+              1,
+              2,
+              -1,
+              -6,
+              1,
+              0,
+              -1,
+              2,
+              -1,
+              4,
+              1,
+              2,
+              1,
+              -2,
+              1,
+              4,
+              -1,
+              0,
+              -1,
+              0,
+              1,
+              -2,
+              -1,
+              0,
+              -1,
+              0,
+              -1
+            ],
+            "L": 100
+          },
+          "eval_time": 0.3340643309056759,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t013/data/human_labs100_record.json",
+        "independent_quantity": {
+          "energy": 578,
+          "lags": 99
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Sol checked the Dantus source table and Zhang et al. Table 2. The length-100 run-length encoded sequence matches the saved witness. All lag energies were independently computed with bit operations; malformed signs are rejected and forged scores ignored.",
+        "snapshot_date": "2026-11-05"
+      }
+    }
+  },
+  "sol_review": {
+    "T013-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  },
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 578,
+    "parameters": {
+      "L": 100
+    },
+    "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+    "date_checked": "2026-11-04",
+    "evidence_state": "length-100 run-length encoding reconstructed; integer energy578 verified",
+    "provenance": "Published research record table. This row does not name its individual discoverer; attribution left unknown.",
+    "optimality": "not proved; best in checked sources, not an exhaustive current-record claim",
+    "witness": "data/human_labs100_record.json"
+  },
+  "best_public": {
+    "value": 578,
+    "parameters": {
+      "L": 100
+    },
+    "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+    "date_checked": "2026-11-04",
+    "evidence_state": "length-100 run-length encoding reconstructed; integer energy578 verified",
+    "provenance": "Published research record table. This row does not name its individual discoverer; attribution left unknown.",
+    "optimality": "not proved; best in checked sources, not an exhaustive current-record claim",
+    "witness": "data/human_labs100_record.json",
+    "corroboration": "https://arxiv.org/html/2504.00987v2",
+    "survey_scope": "2025/2026 GPU paper reports matching prior best for N100; record table and author solver archive checked.",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 578,
+    "parameters": {
+      "L": 100
+    },
+    "url": "https://www2.chemistry.msu.edu/faculty/dantus/merit_factor_records.htm",
+    "date_checked": "2026-11-04",
+    "evidence_state": "length-100 run-length encoding reconstructed; integer energy578 verified",
+    "provenance": "Published research record table. This row does not name its individual discoverer; attribution left unknown.",
+    "optimality": "not proved; best in checked sources, not an exhaustive current-record claim",
+    "witness": "data/human_labs100_record.json"
+  },
+  "baseline_seed": {
+    "value": 328350,
+    "formula": "sum(j*j for j in 1..99) for the alternating sequence",
+    "provenance": "deterministic seed in init_program.py",
+    "evidence_state": "exact integer computation; not a published record"
+  },
+  "historical_human": {
+    "value": 638,
+    "parameters": {
+      "L": 100
+    },
+    "authors": [
+      "Burkhard Militzer",
+      "Michele Zamparelli",
+      "Dieter Beule"
+    ],
+    "year": 1996,
+    "url": "https://militzer.berkeley.edu/sequences.html",
+    "evidence_state": "historical published witness transcribed and exactly reproduced",
+    "optimality": "feasible historical incumbent; not claimed current best or globally optimal",
+    "witness": "data/human_labs100.json"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {}
+}

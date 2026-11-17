@@ -34,8 +34,7 @@ Commands:
 ```sh
 .venv/bin/python -m pytest tasks/t072 -q
 .venv/bin/python -m json.tool tasks/t072/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t072/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t072/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t072/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t072/data/source/source_notes.json > /dev/null
 ```
 

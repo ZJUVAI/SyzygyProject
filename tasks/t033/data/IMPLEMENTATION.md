@@ -26,6 +26,6 @@ Status: accepted by Sol on 2026-11-06.
 
 ## Limitations
 
-- The reported 9,595 value has no witness replayed here. The external comparison witness is in `data/human_g70_1flip.json`; `data/best/` is reserved for own-search results. The saved local FLIP witness scores 8,616 and is the frozen human baseline.
+- The reported 9,595 value has no witness replayed here. The external comparison witness is in `data/human_g70_1flip.json`; `data/results.json` is reserved for own-search results. The saved local FLIP witness scores 8,616 and is the frozen human baseline.
 - The G1 configuration was removed after a 2026 paper reported a Gurobi value matching its listed known optimum. G70 is selected because the checked literature reports 9,595 as a heuristic lower bound and no certificate was found.
 - The reviewed-source search does not prove that no G70 certificate exists elsewhere.

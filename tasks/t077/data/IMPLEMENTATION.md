@@ -49,8 +49,7 @@ Commands:
 ```sh
 .venv/bin/python -m pytest tasks/t077 -q
 .venv/bin/python -m json.tool tasks/t077/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t077/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t077/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t077/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t077/data/source/source_notes.json > /dev/null
 .venv/bin/python -m json.tool tasks/t077/data/source/t012_order_reversal_examples.json > /dev/null
 ```

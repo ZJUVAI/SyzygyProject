@@ -20,7 +20,7 @@ include = ["mathbench*", "tasks*"]
 exclude = ["*.runs", "*.runs.*", "*.__pycache__", "*.__pycache__.*"]
 
 [tool.setuptools.package-data]
-"*" = ["*.json", "*.md", "*.txt", "*.cpp", "*.h", "*.hpp", "data/*", "data/source/*", "data/reference/*", "data/human/*", "data/best/*"]
+"*" = ["*.json", "*.md", "*.txt", "*.cpp", "*.h", "*.hpp", "data/*", "data/source/*", "data/reference/*", "data/human/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "tasks"]

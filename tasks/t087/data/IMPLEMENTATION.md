@@ -33,8 +33,7 @@ On Python 3.13.12/Linux, run:
 ```sh
 .venv/bin/python -m pytest tasks/t087/test_task.py -q
 .venv/bin/python -m json.tool tasks/t087/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t087/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t087/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t087/data/bestknown.json > /dev/null
 git diff --check -- tasks/t087
 ```
 

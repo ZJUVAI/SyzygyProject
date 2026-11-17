@@ -33,9 +33,8 @@ Commands run:
 ```sh
 .venv/bin/python -m pytest tasks/t043/test_task.py -q
 .venv/bin/python -m json.tool tasks/t043/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t043/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t043/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t043/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t043/data/bestknown.json > /dev/null
+.venv/bin/python -m json.tool tasks/t043/data/bestknown.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/data/source/heinlein_2019_appendix_c.json > /dev/null
 .venv/bin/python -m json.tool tasks/t043/data/search/randomized_greedy_seed0.json > /dev/null
 ```

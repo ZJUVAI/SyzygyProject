@@ -18,10 +18,10 @@ def test_worker_round_trip(tmp_path):
     config.write_text(json.dumps({"id": "example", "parameters": {"size": 3}}))
     env = dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1", PYTHONPATH=str(ROOT))
     common = [str(config), str(output), "0", "1", str(4 * 1024**3), "5"]
-    _run([sys.executable, "-m", "mathbench.worker", "generate", str(ROOT / "tasks/_template/init_program.py"), *common], env, 10)
+    _run([sys.executable, "-m", "mathbench.worker", "generate", str(ROOT / "tests/fixtures/runner_example.py"), *common], env, 10)
     assert json.loads(output.read_text()) == {"values": [1, 2, 3]}
     env["MATHBENCH_SOLUTION_PATH"] = str(output)
-    _run([sys.executable, "-m", "mathbench.worker", "check", str(ROOT / "tasks/_template/check.py"), str(config), str(checked), "0", "1", str(4 * 1024**3), "5"], env, 10)
+    _run([sys.executable, "-m", "mathbench.worker", "check", str(ROOT / "tests/fixtures/runner_example.py"), str(config), str(checked), "0", "1", str(4 * 1024**3), "5"], env, 10)
     assert json.loads(checked.read_text()) == {"objective": 6, "verification_status": "exact"}
 
 
@@ -56,3 +56,11 @@ def test_linux_limits_include_address_space(monkeypatch):
     monkeypatch.delattr(worker.os, 'sched_getaffinity', raising=False)
     worker.set_limits(4096, 5)
     assert (worker.resource.RLIMIT_AS, (4096, 4096)) in calls
+
+
+def test_runner_reports_program_error_and_timeout():
+    environment = dict(os.environ)
+    with pytest.raises(RuntimeError, match="candidate failure"):
+        _run([sys.executable, "-c", "raise RuntimeError('candidate failure')"], environment, 2)
+    with pytest.raises(TimeoutError, match="Wall time limit"):
+        _run([sys.executable, "-c", "import time; time.sleep(2)"], environment, 0.1)

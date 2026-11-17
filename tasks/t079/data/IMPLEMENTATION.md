@@ -17,7 +17,7 @@ Status: `accepted_by_sol`.
 - `init_program.py` is standalone and has no task-package import. It places every line through the origin. This covers the full space and gives a valid simple starting construction of 29,791 points.
 - `baseline.py` and `evolution.py` start from that same simple anchor assignment. They run a seeded randomized greedy coordinate search. Each candidate anchor is scored by an exact occupancy-count update. The search code does not load or import human, reference, or public comparison witnesses.
 - `human.py` generates the classical quadratic-residue line witnesses from the published formula. `reference.py` reconstructs the Station's published 8,289-point line system. Neither of these is read by the search programs.
-- The saved task-local evolution result is seed 0, eight full sweeps and 127,104 evaluated anchors. It has 15,534 points. It was generated and checked through the shared runner with 300-second generation, 60-second verification, 4 GiB memory and one thread. The combined record `data/best/result.json.gz` contains the result, environment, witness hash, and replay command.
+- The saved task-local evolution result is seed 0, eight full sweeps and 127,104 evaluated anchors. It has 15,534 points. It was generated and checked through the shared runner with 300-second generation, 60-second verification, 4 GiB memory and one thread. The combined record `data/results.json.gz` contains the result, environment, witness hash, and replay command.
 
 ## Validation
 

@@ -58,7 +58,7 @@ def test_all_five_program_entries_and_reference_witness(monkeypatch):
 
 
 def test_public_reference_reuses_archived_source_witness():
-    sota = json.loads((ROOT / "tasks/t051/data/sota.json").read_text())
+    sota = json.loads((ROOT / "tasks/t051/data/bestknown.json").read_text())
     verification = sota["configurations"]["T051-C01"]["verification"]
     witness = ROOT / "tasks/t051" / verification["witness"]
     assert witness == ROOT / "tasks/t051/data/source/sequence_130000.txt.gz"

@@ -140,12 +140,11 @@ def test_claimed_scores_do_not_change_recomputed_result():
 
 
 def test_record_separates_reproduced_27_from_optimality():
-    sota = json.loads((ROOT / "data/sota.json").read_text())
-    records = json.loads((ROOT / "data/records.json").read_text())
+    sota = json.loads((ROOT / "data/bestknown.json").read_text())
     item = sota["configurations"]["T070-C01"]
     assert item["public_value"] == item["reproduced_value"] == 27
     assert item["optimality_status"]["status"].startswith("open")
-    assert records["configurations"]["T070-C01"]["frozen_human_baseline"]["value"] == 27
+    assert sota["configurations"]["T070-C01"]["frozen_human_baseline"]["value"] == 27
 
 
 def test_runner_error_and_timeout_controls():

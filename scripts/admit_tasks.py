@@ -43,7 +43,7 @@ def review(task, label):
     # Include draft configurations only in this admission process.
     released_load_task = registry.load_task
     registry.load_task = lambda task_id, **options: metadata if task_id == task else released_load_task(task_id, **options)
-    records = json.loads((directory / 'data/sota.json').read_text())['configurations']
+    records = json.loads((directory / 'data/bestknown.json').read_text())['configurations']
     checker = importlib.import_module(f'tasks.{task.lower()}.check')
     destination = directory / 'runs' / label
     destination.mkdir(parents=True, exist_ok=False)
@@ -110,7 +110,7 @@ def review(task, label):
         str(path.relative_to(directory)): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted(directory.rglob('*'))
         if path.is_file() and not {'runs', '__pycache__', 'best'} & set(path.relative_to(directory).parts)
-        and path.name not in ('task.json', 'sota.json', 'records.json', 'IMPLEMENTATION.md')}
+        and path.name not in ('task.json', 'bestknown.json', 'results.json', 'results.json.gz', 'IMPLEMENTATION.md')}
     evidence['status'] = 'checks_passed_pending_source_review'
     save(destination / 'review.json', evidence)
     return evidence

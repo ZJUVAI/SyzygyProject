@@ -32,7 +32,7 @@ Environment: repository `.venv/bin/python` (Python 3.13); seed 0; default fixed 
 
 - `.venv/bin/python -m pytest tasks/t080 -q` — 9 passed.
 - Ran `init_program`, `baseline`, `evolution`, `human`, and `reference`; all returned valid output. The simple seed and both search methods returned 3-element sets; human and reference returned the 462-element witness.
-- Validated `task.json`, `sota.json`, `records.json`, and both source JSON files with `python -m json.tool` — passed.
+- Validated `task.json`, `bestknown.json`, and both source JSON files with `python -m json.tool` — passed.
 - `git diff --check -- tasks/t080` — passed.
 
 Task-local tests cover formula counts and strict inequality, human/reference replay, all five entry points, ranking reversals, boundaries, invalid inputs, declared-score tampering, record consistency, and runner error/timeout paths. Full upstream model comparisons have not been run.

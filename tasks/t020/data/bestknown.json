@@ -1,0 +1,125 @@
+{
+  "task_id": "T020",
+  "review_status": "passed_sol",
+  "configurations": {
+    "T020-C01": {
+      "public_value": "202",
+      "public_source": {
+        "url": "https://additionchains.com/LargeChains.html",
+        "title": "Short Addition Chains for Cryptographic Exponents",
+        "updated": "2026-11-02",
+        "entry": "NIST P-192 field inversion, 2^192-2^64-3; downloadable chain P-192_field_inverse_202.txt",
+        "classification": "best known listed on the source page; not a proof of optimality"
+      },
+      "reproduced_value": "202",
+      "program": "sota.py",
+      "witness": "data/human_t020.json",
+      "matches_public_best": true,
+      "comparison_tolerance": "0",
+      "limitations": [
+        "The source reports a best-known construction, not a proof of minimum length."
+      ],
+      "checked_at": "2026-11-05",
+      "verification": {
+        "task_id": "T020",
+        "status": "reproduced",
+        "run": {
+          "task_id": "T020",
+          "config_id": "T020-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 202,
+          "verification_status": "exact",
+          "generation_time": 0.16457249969244003,
+          "verification_time": 0.16471166908740997,
+          "objective_value": 202,
+          "details": {
+            "target": "6277101735386680763835789423207666416083908700390324961277",
+            "chain_entries": 203,
+            "configuration_id": "T020-C01",
+            "strictly_increasing": true,
+            "all_steps_verified": true
+          },
+          "eval_time": 0.33225079253315926,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.2",
+            "platform": "linux",
+            "worker_cpu": 0
+          }
+        },
+        "witness": "tasks/t020/data/human_t020.json",
+        "independent_quantity": {
+          "additions": 202,
+          "target": "6277101735386680763835789423207666416083908700390324961277"
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "source_review": "Reviewed additionchains.com/LargeChains.html updated 2026-11-02. Exact target and all chain additions independently verified; source describes best known to that page, not proven optimal.",
+        "snapshot_date": "2026-11-05"
+      },
+      "sol_light_report_recheck": {
+        "checked_at": "2026-11-06",
+        "source": "https://additionchains.com/LargeChains.html",
+        "same_parameters": true,
+        "reported_value": "202"
+      }
+    }
+  },
+  "sol_review": {
+    "T020-C01": {
+      "status": "reproduced",
+      "reviewer": "Sol main agent",
+      "date": "2026-11-05"
+    }
+  },
+  "snapshot_date": "2026-11-04",
+  "best_human": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "authors": [
+      "Neill Clift"
+    ],
+    "year": 2026,
+    "url": "https://additionchains.com/LargeChains.html",
+    "evidence_state": "downloaded public one-integer-per-line witness; all 203 entries and 202 additions independently replayed with exact integers",
+    "optimality": "construction only; source states none of listed lengths is proved optimal",
+    "witness": "data/human_t020.json"
+  },
+  "best_public": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "url": "https://additionchains.com/LargeChains.html",
+    "evidence_state": "page updated 2026-11-02; exact P-192 row says previous 203, new length 202; linked witness downloaded and reproduced",
+    "optimality": "not proved; page says none of the listed lengths is proved optimal",
+    "origin_type": "unknown unless attribution is stated in source/provenance"
+  },
+  "best_reproduced": {
+    "value": 202,
+    "parameters": {
+      "target": "2^192-2^64-3"
+    },
+    "provenance": "task-local exact copy of P-192_field_inverse_202.txt linked by Clift's page",
+    "evidence_state": "independently checked start, strict increase, each sum-of-two-earlier-terms relation, endpoint, and length with Python integers",
+    "witness": "data/human_t020.json"
+  },
+  "baseline_seed": {
+    "provenance": "binary expansion chain generated from the fixed integer target",
+    "evidence_state": "checker verifies all steps; no human/reference files read"
+  },
+  "implementation_review_date": "2026-11-04",
+  "survey_scope_note": "Best public means the strongest same-parameter result in the cited checked sources. This is not a claim that every public source has been surveyed. Unmatched parameters are listed separately.",
+  "frozen_human_baseline_type": "published human witness or explicit construction formula",
+  "configuration_records": {}
+}

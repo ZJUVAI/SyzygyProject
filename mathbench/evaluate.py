@@ -3,48 +3,14 @@ import json
 import math
 import os
 from pathlib import Path
-import signal
-import subprocess
 import sys
 import tempfile
 import time
-from fractions import Fraction
 
+from .construction import read_construction
+from .process import run_process as _run
 from .registry import ROOT, load_config, task_path
-
-
-def _finite_data(value):
-    pending = [value]
-    while pending:
-        item = pending.pop()
-        if isinstance(item, float) and not math.isfinite(item):
-            raise ValueError("Non-finite construction data")
-        if isinstance(item, dict):
-            pending.extend(item.values())
-        elif isinstance(item, list):
-            pending.extend(item)
-
-
-def _run(args, env, timeout):
-    with tempfile.TemporaryFile() as errors:
-        proc = subprocess.Popen(args, cwd=ROOT, env=env, stdin=subprocess.DEVNULL,
-                                stdout=subprocess.DEVNULL, stderr=errors, start_new_session=True)
-        try:
-            proc.wait(timeout=timeout)
-        except subprocess.TimeoutExpired:
-            os.killpg(proc.pid, signal.SIGKILL)
-            proc.wait()
-            raise TimeoutError("Wall time limit exceeded")
-        finally:
-            # Stop descendants even when the immediate child has exited.
-            try:
-                os.killpg(proc.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-        if proc.returncode:
-            errors.seek(0)
-            message = errors.read(8192).decode(errors="replace")
-            raise RuntimeError(message[-3000:] or "Worker failed")
+from .scoring import score_result
 
 
 def evaluate_candidate(task_id, program_path, config_id=None, *, strict=False, seed=0,
@@ -81,33 +47,14 @@ def evaluate_candidate(task_id, program_path, config_id=None, *, strict=False, s
             result["generation_time"] = time.monotonic() - phase_start
             if solution_file.stat().st_size > 16 * 1024**2:
                 raise ValueError("Construction exceeds 16 MiB")
-            # Decode here too. Reject non-finite numbers before trusted verification.
-            solution = json.loads(solution_file.read_text(), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Non-finite JSON")))
-            _finite_data(solution)
+            solution = read_construction(solution_file)
             phase = "verification"
             phase_start = time.monotonic()
             env["MATHBENCH_SOLUTION_PATH"] = str(solution_file)
             _run(command("check", task_path(task_id) / "check.py", checked_file, verification_timeout), env, verification_timeout)
             result["verification_time"] = time.monotonic() - phase_start
             checked = json.loads(checked_file.read_text())
-            objective = checked["objective"]
-            numeric = checked.get("objective_value", objective)
-            score_value = float(Fraction(numeric)) if isinstance(numeric, str) else float(numeric)
-            if not math.isfinite(score_value) or score_value < 0:
-                raise ValueError("Objective must be finite and nonnegative")
-            reference = float(config["human_reference"])
-            if not math.isfinite(reference) or reference <= 0:
-                raise ValueError("Positive frozen human reference required")
-            score = score_value / reference if config["direction"] == "maximize" else reference / score_value
-            if not math.isfinite(score):
-                raise ValueError("Non-finite score")
-            certification = checked.get("verification_status", "numeric")
-            if certification not in ("exact", "certified", "numeric"):
-                raise ValueError("Unknown verification status")
-            if strict and certification not in ("exact", "certified"):
-                raise ValueError("Strict verification requires a certificate")
-            result.update(validity=1.0, combined_score=score, objective=objective, objective_value=numeric,
-                          verification_status=certification, details=checked.get("details", {}))
+            result.update(score_result(checked, config, strict))
             if output_dir is not None:
                 saved = Path(output_dir)
                 saved.mkdir(parents=True, exist_ok=True)

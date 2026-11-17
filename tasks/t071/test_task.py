@@ -40,7 +40,7 @@ def test_all_five_entries_and_exact_vt_witness(monkeypatch):
 
 
 def test_reference_hash_and_vt_checksum_formula():
-    metadata = json.loads((TASK / "data/sota.json").read_text())
+    metadata = json.loads((TASK / "data/bestknown.json").read_text())
     record = metadata["configurations"][CONFIG_ID]
     reference_path = TASK / record["witness"]
     human_path = TASK / "data/human/vt16_3856.json"

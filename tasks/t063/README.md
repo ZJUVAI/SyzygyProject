@@ -46,8 +46,7 @@ Chervonyi、Gukov、Luong 的 arXiv:2610.30277v1（2026-10-21）报告：对 91 
 ```sh
 .venv/bin/python -m pytest tasks/t063 -q
 .venv/bin/python -m json.tool tasks/t063/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t063/data/bestknown.json > /dev/null
 ```
 
 测试验证起点和公开根证书，破坏系数、破坏根盘、重复根盘、bool/浮点/NaN 系数、边界次数、伪造分数不变性，以及工作进程异常和超时。独立关键量包括 100 个根圆盘、两两分离检查数 `4950`、精确不可约性、区间相对宽度与源文件哈希。基准仍需 Sol 独立复核。
@@ -92,8 +91,7 @@ Run:
 ```sh
 .venv/bin/python -m pytest tasks/t063 -q
 .venv/bin/python -m json.tool tasks/t063/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t063/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t063/data/bestknown.json > /dev/null
 ```
 
 Tests cover valid and damaged polynomials, damaged and duplicate disks, bool/float/NaN coefficients, degree boundaries, ignored claimed scores, and worker errors and timeouts. Independent quantities include all 100 certified disks, 4,950 pairwise separation checks, exact irreducibility, interval width, and the pinned source hash. Sol review is pending.

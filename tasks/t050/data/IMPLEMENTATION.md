@@ -30,18 +30,17 @@ Run from the repository root:
 ```sh
 .venv/bin/python -m pytest tasks/t050/test_task.py -q
 .venv/bin/python -m json.tool tasks/t050/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t050/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t050/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t050/data/bestknown.json > /dev/null
 ```
 
 The task-local suite passes: 5 tests. It checks both source witnesses, independently counts the 191 path edges, scans every nonconsecutive pair, checks boundary and malformed inputs, confirms forged score fields do not change validation, runs all five program entries, and tests runner error and timeout handling through `_run`.
 
-The shared runner was exercised in-process with only its task lookup temporarily pointed at this unregistered task. Strict evaluation of `evolution.py` saved a 117-edge search result to `data/best/`. It used seed 0 and 32 generations. On Python 3.13.12/Linux, generation took 2.03 s and verification took 0.50 s; the runner limits were 300 s generation, 60 s verification, 4 GiB and one thread. A separate strict run of `baseline.py` with seed 1 and 32 restarts returned 103 edges (6.28 s generation, 3.50 s verification). The shared task registry was not changed.
+The shared runner was exercised in-process with only its task lookup temporarily pointed at this unregistered task. Strict evaluation of `evolution.py` saved a 117-edge search result to `data/results.json`. It used seed 0 and 32 generations. On Python 3.13.12/Linux, generation took 2.03 s and verification took 0.50 s; the runner limits were 300 s generation, 60 s verification, 4 GiB and one thread. A separate strict run of `baseline.py` with seed 1 and 32 restarts returned 103 edges (6.28 s generation, 3.50 s verification). The shared task registry was not changed.
 
 ## Limits and Sol review points
 
 - The 191-edge public construction is a lower bound. No upper bound for `a(9)` is known in the checked current sources.
 - The authors disclose project-level LLM assistance, but do not attribute it to the exact 191-edge witness or the run that found it.
 - The reported 131 symmetry classes are sampled results, not a completeness certificate.
-- The saved `data/best/` result is only this task's own seeded search output. The Wynn and Orland witnesses remain under `data/reference/` as external comparisons.
+- The saved `data/results.json` result is only this task's own seeded search output. The Wynn and Orland witnesses remain under `data/reference/` as external comparisons.
 - Sol should independently replay the 190-edge human and 191-edge public witnesses, check a deliberately broken induced path, recompute the edge count and confirm that forged score fields do not change validation.

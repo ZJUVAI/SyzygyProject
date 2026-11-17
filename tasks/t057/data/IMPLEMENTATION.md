@@ -18,11 +18,10 @@ The following checks were run with the repository `.venv` Python (3.13.12):
 ```sh
 .venv/bin/python -m pytest tasks/t057/test_task.py -q
 .venv/bin/python -m json.tool tasks/t057/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t057/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t057/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t057/data/bestknown.json > /dev/null
 ```
 
-The official current witness has 43 routes, covers all 1000 customers once, has maximum load 131, and scores 72332. The historical witness has the same feasibility facts and scores 72355. The reconstructed deterministic Clarke-Wright human-method baseline uses 43 routes and scores 77398. Six fixed-seed search trials produced a 43-route solution of 77170. Its witness, exact verification, seed, completed iteration count, runtime, and environment are saved under `data/best/`. All objectives were recomputed by the exact integer checker.
+The official current witness has 43 routes, covers all 1000 customers once, has maximum load 131, and scores 72332. The historical witness has the same feasibility facts and scores 72355. The reconstructed deterministic Clarke-Wright human-method baseline uses 43 routes and scores 77398. Six fixed-seed search trials produced a 43-route solution of 77170. Its witness, exact verification, seed, completed iteration count, runtime, and environment are saved under `data/results.json`. All objectives were recomputed by the exact integer checker.
 
 Tests cover all five `run_code()` entries, a 1000-route simple seed, both official witnesses, the saved human-method construction, exact edge rounding, an unrestricted 44-route construction, duplicate/missing/out-of-range/bool/float/NaN/depot IDs, empty routes, capacity violation, claims that must not affect validation, and runner error and timeout handling using `mathbench.evaluate._run` directly. This does not require permanent task registration.
 

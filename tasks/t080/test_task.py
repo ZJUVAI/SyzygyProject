@@ -183,14 +183,13 @@ def test_claimed_score_fields_do_not_change_validation_result():
 
 
 def test_sota_records_and_frozen_interval():
-    sota = json.loads((ROOT / "data/sota.json").read_text())
-    records = json.loads((ROOT / "data/records.json").read_text())
+    sota = json.loads((ROOT / "data/bestknown.json").read_text())
     item = sota["configurations"]["T080-C01"]
     reference = json.loads((ROOT / "data/reference/gyarmati_hennecart_ruzsa_m6_l5.json").read_text())
     result = validate({"set": reference["set"]}, CONFIG)
     assert item["reproduced_value"] == result["objective"]
     assert item["best_reproduced"]["objective_interval"] == result["details"]["objective_interval"]
-    assert records["configurations"]["T080-C01"]["frozen_human_baseline"]["value"] == result["objective"]
+    assert sota["configurations"]["T080-C01"]["frozen_human_baseline"]["value"] == result["objective"]
 
 
 def test_runner_error_and_timeout_paths():

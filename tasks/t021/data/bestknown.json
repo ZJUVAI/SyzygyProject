@@ -1,0 +1,181 @@
+{
+  "task_id": "T021",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T021-C01": {
+      "public_value": "412.2612746",
+      "human_reference": 412.2612746505293,
+      "unit": "unit-charge, unit-radius Coulomb energy",
+      "direction": "minimize",
+      "public_metric": "sum over unordered pairs of reciprocal Euclidean distances",
+      "public_source": {
+        "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+        "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz",
+        "title": "Global Minima for the Thomson Problem",
+        "reported_value": "412.2612746",
+        "reported_decimal_places": 7,
+        "point_group": "I_h",
+        "source_status": "lowest located candidate; no proof of global optimality stated"
+      },
+      "highest_reported": {
+        "value": "412.2612746",
+        "source": {
+          "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+          "title": "Global Minima for the Thomson Problem",
+          "doi": "10.1103/PhysRevB.74.212101"
+        },
+        "status": "same-parameter candidate in checked sources; global optimality not proved"
+      },
+      "source_asset_sha256": "967ce3e92de2ab459a28d473cb80a501c6efb2c8dd274a66ab9634e7fd44456c",
+      "reproduced_value": "4122612746505293102359059093/10000000000000000000000000",
+      "reproduced_value_interval": [
+        "4122612746505293102359058597/10000000000000000000000000",
+        "4122612746505293102359059093/10000000000000000000000000"
+      ],
+      "program": "reference.py",
+      "matches_public_best": "not asserted; the source value is rounded and the decimal coordinates are rationalized onto the sphere",
+      "limitations": [
+        "The published coordinate file has finite decimal precision. human.py interprets each decimal as an exact rational, then maps it to an exact unit-sphere point by stereographic projection. This slightly changes the geometry.",
+        "The reproduced score is the checker's conservative upper bound for the rationalized witness, not the source's rounded value.",
+        "The CCD table records a numerical candidate and does not prove global optimality.",
+        "The latest author discussion dated 2026-10-27 says N=32 will need a new idea for a proof: https://www.vals.ai/blogs/thomson-exposition.",
+        "The matching AlphaEvolve problem is repository problem 33 at fixed commit 8f447457957deac61e28bf1676746f0753b3b2f8 and paper section 6.18. No AlphaEvolve score is carried over; same-parameter cross-run verification remains outstanding."
+      ],
+      "checked_at": "2026-11-06",
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-07",
+        "run": {
+          "task_id": "T021",
+          "config_id": "T021-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": "4122612746505293102359059093/10000000000000000000000000",
+          "verification_status": "certified",
+          "generation_time": 0.11417177692055702,
+          "verification_time": 0.16431688889861107,
+          "objective_value": "4122612746505293102359059093/10000000000000000000000000",
+          "details": {
+            "objective_interval": [
+              "4122612746505293102359058597/10000000000000000000000000",
+              "4122612746505293102359059093/10000000000000000000000000"
+            ],
+            "point_count": 32,
+            "pairs_checked": 496,
+            "coordinate_model": "exact rational stereographic projection",
+            "sqrt_bound_scale": "10000000000000000000000000",
+            "energy_bound_scale": "1000000000000000000000000000000",
+            "claimed_score_ignored": true
+          },
+          "eval_time": 0.281089223921299,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "energy_interval": [
+            "41226127465052931023590588506754257669/100000000000000000000000000000000000",
+            "8245225493010586204718117701350851633/20000000000000000000000000000000000"
+          ],
+          "pairs": 496,
+          "minimum_squared_distance": "68957043525439690228643976234025360/167904908538042646367432018085297321",
+          "unit_sphere_equations_exact": true
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "witness": "data/reference/public_c01.json",
+        "witness_sha256": "b145238401b715b4a103bf3786e0caafe082daf4415be3c249c07fa247fe85aa"
+      },
+      "review_status": "accepted_by_sol",
+      "witness": "data/ccd_32.xyz"
+    }
+  },
+  "best_human": {
+    "value": {
+      "T021-C01": 412.2612746
+    },
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "n": 32,
+      "space": "S2",
+      "objective": "sum of reciprocal Euclidean distances"
+    },
+    "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+    "provenance": "The Cambridge Cluster Database lists the N=32 Ih structure and links to the archived xyz coordinate file. The database identifies this as a lowest structure found, without a proof of global optimality.",
+    "evidence_state": "source coordinates archived; rational sphere reconstruction and energy bounds independently reproduced by Sol"
+  },
+  "best_public": {
+    "value": {
+      "T021-C01": 412.2612746
+    },
+    "date_checked": "2026-11-06",
+    "parameters": {
+      "n": 32,
+      "space": "S2"
+    },
+    "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+    "coordinate_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz",
+    "ai_provenance": "not stated by source",
+    "provenance": "The source reports a lowest located structure, not a global-optimality proof. Its printed energy is rounded and is not used as the task's reproduced score.",
+    "evidence_state": "source energy is a rounded decimal; original coordinate archive is saved under data/",
+    "origin_type": "human or traditional computational result; original authoring process not specified"
+  },
+  "best_reproduced": {
+    "value": {
+      "T021-C01": "4122612746505293102359059093/10000000000000000000000000"
+    },
+    "date_reproduced": "2026-11-06",
+    "parameters": {
+      "n": 32,
+      "space": "S2",
+      "objective": "sum of reciprocal Euclidean distances"
+    },
+    "witness_file": "data/ccd_32.xyz",
+    "provenance": "Exact rational stereographic reconstruction from the archived CCD coordinate decimals. The archived file SHA-256 is 967ce3e92de2ab459a28d473cb80a501c6efb2c8dd274a66ab9634e7fd44456c. The database row cites Wales and Ulker, Physical Review B 74, 212101 (2006), DOI 10.1103/PhysRevB.74.212101.",
+    "ai_provenance": "No AI-generated coordinates; the public archive is used.",
+    "evidence_state": "certified interval and independent all-pair recomputation accepted by Sol on 2026-11-06"
+  },
+  "highest_reported": {
+    "value": "412.2612746",
+    "source": {
+      "url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+      "coordinates_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/xyz/32.xyz",
+      "title": "Global Minima for the Thomson Problem",
+      "doi": "10.1103/PhysRevB.74.212101",
+      "status": "same-parameter reported candidate; source does not prove optimality"
+    },
+    "status": "highest numeric record among checked same-parameter source entries; broader source coverage is not claimed"
+  },
+  "benchmark_mapping": {
+    "AlphaEvolve": {
+      "repository": "https://github.com/google-deepmind/alphaevolve_repository_of_problems",
+      "fixed_commit": "8f447457957deac61e28bf1676746f0753b3b2f8",
+      "problem_path": "problems/33.html",
+      "notebook_path": "experiments/thomson_problem/thomson_problem.ipynb",
+      "paper": "https://arxiv.org/abs/2511.02864v1",
+      "paper_section": "6.18",
+      "parameter_match": "Section 6.18 lists N=32 among the generalization-mode evaluation parameters. The fixed notebook separately contains explicit saved witnesses at N=282,292,306. No upstream N=32 score or witness is imported.",
+      "fixed_version_note": "Upstream code and prompt must be replayed separately before reporting a result comparison."
+    }
+  },
+  "snapshot_date": "2026-11-06",
+  "source_snapshot": {
+    "table_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
+    "snapshot_file": "data/ccd_thomson_table.html.gz",
+    "table_sha256": "5466173175b10a81d19e20763dffa64589f3ce5b92b09e827de14eb1fbb583e2",
+    "paper": "Wales and Ulker, Phys. Rev. B 74, 212101 (2006), DOI 10.1103/PhysRevB.74.212101",
+    "table_sha256_scope": "SHA-256 of decompressed original HTML bytes; unchanged by gzip storage"
+  }
+}

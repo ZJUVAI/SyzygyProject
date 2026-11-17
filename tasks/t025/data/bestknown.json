@@ -1,0 +1,195 @@
+{
+  "task_id": "T025",
+  "snapshot_date": "2026-11-06",
+  "configurations": {
+    "T025-C01": {
+      "parameters": {
+        "dimension": 7,
+        "field_order": 3
+      },
+      "direction": "maximize",
+      "objective": "cardinality of a subset of F_3^7 with no three distinct points summing to zero",
+      "best_human": {
+        "value": 236,
+        "resulting_bound": "r_3(7) >= 236",
+        "date_checked": "2026-11-06",
+        "source": "Calderbank and Fishburn (1994); construction reproduced in Edel and Bierbrauer (2001), Table 2 and Theorem 5.",
+        "url": "https://doi.org/10.1007/BF01388452",
+        "construction_source_url": "https://doi.org/10.1023/A:1011216716700",
+        "witness_url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "witness": "data/edel_bierbrauer_248_projective_matrix.txt",
+        "evidence_state": "Published construction, rebuilt from public coordinates and exactly verified."
+      },
+      "best_public": {
+        "value": 236,
+        "date_checked": "2026-11-06",
+        "url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "witness_url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "evidence_state": "The affine part of the public projective matrix has 236 points. Leaps in Bounds also has a checked transcription submitted on 2026-11-05; the local replay here uses Edel's author page."
+      },
+      "best_reproduced": {
+        "value": 236,
+        "date_checked": "2026-11-06",
+        "witness": "data/human_witness.json",
+        "program": "human.py",
+        "verification_status": "exact",
+        "verification_method": "Check all distinct pairs against the complete point set using modular arithmetic.",
+        "claimed_score_ignored": true
+      },
+      "public_value": 236,
+      "public_source": {
+        "url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+        "title": "Yves Edel, A 248 cap in PG(7,3)",
+        "claim": "The last check-matrix row has 236 ones, which define the affine slice after dropping that coordinate.",
+        "checked_at": "2026-11-06"
+      },
+      "reproduced_value": 236,
+      "program": "human.py",
+      "witness": "data/human_witness.json",
+      "matches_public_best": true,
+      "highest_reported": {
+        "value": 236,
+        "source": {
+          "url": "https://doi.org/10.1023/A:1011216716700",
+          "title": "Edel and Bierbrauer, Large caps in small spaces",
+          "claim": "Table 2 and Theorem 5 give the 236-cap in AG(7,3)."
+        },
+        "reproduction_status": "reproduced"
+      },
+      "same_parameter_bounds": [
+        {
+          "value": 288,
+          "meaning": "maximum cap size is at most 288; not a construction",
+          "authors": [
+            "Henry Robert Thackeray"
+          ],
+          "version": "arXiv:2206.09804, submitted 2022-06-20",
+          "url": "https://arxiv.org/abs/2206.09804",
+          "evidence_state": "Theorem: there are no 289-cap 7-flats. Exact maximum remains open."
+        }
+      ],
+      "verification": {
+        "status": "reviewed_by_sol",
+        "reviewer": "Sol main agent",
+        "date": "2026-11-06",
+        "run": {
+          "task_id": "T025",
+          "config_id": "T025-C01",
+          "validity": 1.0,
+          "combined_score": 1.0,
+          "objective": 236,
+          "verification_status": "exact",
+          "generation_time": 0.4497612193226814,
+          "verification_time": 0.5179061554372311,
+          "objective_value": 236,
+          "details": {
+            "dimension": 7,
+            "field_order": 3,
+            "point_count": 236,
+            "distinct_points": true,
+            "all_distinct_pairs_checked": true,
+            "claimed_objective_ignored": true
+          },
+          "eval_time": 1.0023250617086887,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "points": 236,
+          "triples_checked": 2162940,
+          "affine_lines": 0
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true
+      },
+      "checked_at": "2026-11-06",
+      "review_status": "accepted_by_sol"
+    }
+  },
+  "review_status": "accepted_by_sol",
+  "configuration_id": "T025-C01",
+  "best_human": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "source": "Calderbank and Fishburn, Maximal three-independent subsets of {0,1,2}^n, Designs, Codes and Cryptography 4 (1994), 203-211; reproduced and described by Edel and Bierbrauer (2001).",
+    "source_url": "https://doi.org/10.1007/BF01388452",
+    "construction_source": "Yves Edel and Jürgen Bierbrauer, Large caps in small spaces, Designs, Codes and Cryptography 23 (2001), 197-212, Table 2 and Theorem 5.",
+    "construction_source_url": "https://doi.org/10.1023/A:1011216716700",
+    "date_checked": "2026-11-06",
+    "evidence_state": "Published human construction. The same-parameter points were rebuilt from the authors' public projective matrix and checked exactly.",
+    "ai_provenance": "AI downloaded and parsed the public matrix page; no claim is made about who first found the individual matrix."
+  },
+  "best_public": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+    "witness_url": "https://www.yvesedel.de/Matritzen/CAPs/Matrizen/(248,7,3).html",
+    "evidence_state": "The page gives the 8 by 248 check matrix of a projective cap. Its last coordinate is 1 in 236 columns; dropping that coordinate gives the affine witness. The construction is also described in Edel and Bierbrauer (2001), Theorem 5.",
+    "date_checked": "2026-11-06",
+    "origin_type": "Published construction; Calderbank and Fishburn are credited for the first 236-cap."
+  },
+  "best_reproduced": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "witness": "data/human_witness.json",
+    "source_matrix": "data/edel_bierbrauer_248_projective_matrix.txt",
+    "source_matrix_sha256": "0e3ad612ca8ee9259290f4748af505cf6184c2107e77859d3ae6117fe24545eb",
+    "witness_sha256": "40e588a2a8b17cacb2443a60bd9cfd1c94ded78fdfdde13adee4d74af59c9159",
+    "verification_status": "exact",
+    "verification_method": "Rebuilt all columns whose eighth coordinate is 1, dropped that coordinate, then checked every distinct point pair with exact arithmetic modulo 3. No pair has a third point in the set.",
+    "date_reproduced": "2026-11-06"
+  },
+  "highest_reported": {
+    "value": 236,
+    "parameters": {
+      "dimension": 7,
+      "field_order": 3
+    },
+    "source": "Edel and Bierbrauer (2001), Table 2 and Theorem 5; they credit Calderbank and Fishburn (1994) with the original construction.",
+    "url": "https://doi.org/10.1023/A:1011216716700",
+    "evidence_state": "Same-parameter construction reproduced from the authors' public matrix."
+  },
+  "unmatched_parameter_records": [],
+  "bounds": {
+    "lower_bound": 236,
+    "lower_bound_url": "https://doi.org/10.1007/BF01388452",
+    "upper_bound": 288,
+    "upper_bound_url": "https://arxiv.org/abs/2206.09804",
+    "upper_bound_reason": "Thackeray proves that no 289-cap exists in AG(7,3).",
+    "status": "open interval [236, 288]"
+  },
+  "survey_scope_note": "Checked Edel and Bierbrauer's primary construction and matrix page, Calderbank and Fishburn's publication record, Thackeray's dimension-seven upper-bound paper, and current cap-set record pages on 2026-11-06. This is not a complete literature survey.",
+  "ai_assisted_records": [],
+  "source_unattributed_records": [],
+  "admission_source_review": {
+    "human_source": "Sol downloaded the author matrix page and independently matched all 8 rows of 248 symbols against the archived text. The last row selects 236 affine columns.",
+    "construction": "Calderbank–Fishburn 1994, reproduced by Edel–Bierbrauer 2001; the archived first-party matrix yields the same cardinality.",
+    "upper_bound": "Sol read arXiv:2206.09804v1 (2022-06-20), whose abstract explicitly rules out 289-cap 7-flats.",
+    "open_interval": [
+      236,
+      288
+    ],
+    "independent_verification": "All 2162940 triples of the 236-point reference were checked separately from the pair-completion task checker. No affine line was found."
+  }
+}

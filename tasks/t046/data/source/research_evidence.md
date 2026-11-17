@@ -1,4 +1,4 @@
-# T096 source and status evidence
+# T046 source and status evidence
 
 Checked on 2026-11-06. This note records the finite-degree sources checked for
 the fixed configuration `degree_at_most=146` on `[0,1]`.

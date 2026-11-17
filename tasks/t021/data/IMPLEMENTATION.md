@@ -7,8 +7,7 @@ Status: **已通过 Sol 验收（2026-11-06）**.
 ```sh
 .venv/bin/python -m pytest tasks/t021/test_task.py -q
 .venv/bin/python -m json.tool tasks/t021/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t021/data/records.json > /dev/null
-.venv/bin/python -m json.tool tasks/t021/data/sota.json > /dev/null
+.venv/bin/python -m json.tool tasks/t021/data/bestknown.json > /dev/null
 ```
 
 Run the saved human construction through the shared evaluator with the project
@@ -57,7 +56,7 @@ three task metadata files. The human witness returned the certified interval
 `[4122612746505293102359058597/10000000000000000000000000,
 4122612746505293102359059093/10000000000000000000000000]`, which is
 approximately `[412.2612746505293102359058597,
-412.2612746505293102359059093]`. Sol review passed. See records.json.
+412.2612746505293102359059093]`. Sol review passed. See bestknown.json.
 
 Sol repeated the checks and accepted this configuration on 2026-11-06.
-See records.json for independent energy intervals and runner evidence.
+See bestknown.json for independent energy intervals and runner evidence.

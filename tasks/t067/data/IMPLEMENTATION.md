@@ -25,7 +25,7 @@ The Brouwer table checked on 2026-11-06 lists 444 for (A(17,4,5)) without an opt
 - `reference.py` replays the same fixed witness.
 - `evaluator.py` uses the shared evaluation interface.
 
-The search programs do not load `data/source/` or `data/reference/`. The reference programs load only the task-local reference witness. No comparison witness is saved under `data/best/`.
+The search programs do not load `data/source/` or `data/reference/`. The reference programs load only the task-local reference witness. No comparison witness is saved under `data/results.json`.
 
 ## Checks performed
 
@@ -36,14 +36,13 @@ Run commands:
 ```sh
 .venv/bin/python -m pytest tasks/t067 -q
 .venv/bin/python -m json.tool tasks/t067/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t067/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t067/data/bestknown.json > /dev/null
 ```
 
 Results:
 
 - `.venv/bin/python -m pytest tasks/t067 -q`: 8 passed in 2.40 seconds.
-- JSON parsing for `task.json`, `sota.json`, `records.json`, and `data/source/source_notes.json`: passed.
+- JSON parsing for `task.json`, `bestknown.json`, and `data/source/source_notes.json`: passed.
 - Python environment: CPython 3.13.12, Linux x86_64. The runner limits generation to 300 seconds, verification to 60 seconds, memory to 4 GiB, and one thread.
 - Default traditional search replay with `MATHBENCH_CONFIG_ID=T067-C01`, seed 0, no time cutoff: 8/8 restarts, 0.476 seconds, exact checker score 308.
 - Default evolutionary search replay with `MATHBENCH_CONFIG_ID=T067-C01`, seed 0, no time cutoff: 60/60 generations, population 6, 3.895 seconds, exact checker score 312.

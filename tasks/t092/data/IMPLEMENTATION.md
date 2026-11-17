@@ -11,17 +11,16 @@ Status: `accepted_by_sol`.
 
 ## Exact construction and score
 
-`human.py` rebuilds `Re((x+i y)^20)`. Its harmonicity follows from the opposite x and y second derivatives; the checker also verifies every rational Laplacian coefficient. The checker uses 231 rational monomial coefficients, computes P² and P⁴ exactly, and integrates each monomial using exact normalized sphere moments. It derives M2 `137438953472/1412926920405` and M4 `37778931862957161709568/725673658950019191115935`. The resulting exact objective is `fourth_root(58188232951867590/10575651537777253)` with the rational interval saved in `records.json`.
+`human.py` rebuilds `Re((x+i y)^20)`. Its harmonicity follows from the opposite x and y second derivatives; the checker also verifies every rational Laplacian coefficient. The checker uses 231 rational monomial coefficients, computes P² and P⁴ exactly, and integrates each monomial using exact normalized sphere moments. It derives M2 `137438953472/1412926920405` and M4 `37778931862957161709568/725673658950019191115935`. The resulting exact objective is `fourth_root(58188232951867590/10575651537777253)` with the rational interval saved in `bestknown.json`.
 
 The real coefficient space is finite-dimensional and is the kernel of a rational matrix. Rational vectors span a dense subset of its real kernel. The objective is continuous on nonzero polynomials and invariant under nonzero scaling, so this formal rational domain has the same supremum. No degree, coefficient, or denominator cap is imposed.
 
-The initial program builds the homogenized Legendre zonal harmonic P20(z). Search uses a three-axis rational zonal-harmonic basis and sampled sphere points for feedback only. The trusted checker recomputes exact moments for the final construction. Human and reference data remain under `data/`; the task's own best remains under `data/best/`.
+The initial program builds the homogenized Legendre zonal harmonic P20(z). Search uses a three-axis rational zonal-harmonic basis and sampled sphere points for feedback only. The trusted checker recomputes exact moments for the final construction. Human and reference data remain under `data/`; the task's own best remains under `data/results.json`.
 
 ## Validation commands
 
 - `.venv/bin/python -m pytest tasks/t092 -q`
 - `.venv/bin/python -m json.tool tasks/t092/task.json > /dev/null`
-- `.venv/bin/python -m json.tool tasks/t092/data/sota.json > /dev/null`
-- `.venv/bin/python -m json.tool tasks/t092/data/records.json > /dev/null`
+- `.venv/bin/python -m json.tool tasks/t092/data/bestknown.json > /dev/null`
 
 Tests cover exact human moments, harmonic and nonharmonic examples, zero and malformed inputs, huge rational coefficients, claimed-score invariance, scale invariance, all five `run_code()` entries, cold-start isolation, deterministic search, runner errors/timeouts, and evaluator execution with a temporary registry patch. Use Python 3.13.12 and one numerical thread. The recorded run uses seed 0 and 16 fixed proposals.

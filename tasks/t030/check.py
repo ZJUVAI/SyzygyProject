@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tasks.graph_bits import load_adjacency
+from mathbench.graph_bits import load_adjacency
 
 
 _TASK_DIR = Path(__file__).parent

@@ -21,7 +21,7 @@ Status: **已通过 Sol 验收（2026-11-06） / accepted by Sol on 2026-11-06**
 
 Command: `.venv/bin/python -m pytest tasks/t034/test_task.py -q` — 9 passed in 5.19 seconds. The suite checks the full 3703 witness with an independent AP enumeration, a deliberately broken step-1 example, a broken step-2 example, score tampering, booleans, non-integers, NaN, infinity, bounds, seed, repeatability, timeout, and candidate errors. The checker rejects malformed color arrays and any monochromatic 7-term progression. Repeated color labels are valid by design.
 
-Seed-0 traditional search produced length 241 after 20,000 permitted placements and 190 restarts. Its checker result was exact; a separate enumeration checked 4,720 progressions. Runtime was Python 3.13.12 on Linux, one thread. The saved task-owned result is in `data/best/`; replay with `MATHBENCH_SEED=0` and `baseline.py`. The required shared evaluator run is pending temporary admission by the main reviewer because T034 is not yet in the runner registry.
+Seed-0 traditional search produced length 241 after 20,000 permitted placements and 190 restarts. Its checker result was exact; a separate enumeration checked 4,720 progressions. Runtime was Python 3.13.12 on Linux, one thread. The saved task-owned result is in `data/results.json`; replay with `MATHBENCH_SEED=0` and `baseline.py`. The required shared evaluator run is pending temporary admission by the main reviewer because T034 is not yet in the runner registry.
 
 ## Review limits
 

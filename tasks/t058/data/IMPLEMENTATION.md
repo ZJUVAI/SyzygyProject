@@ -15,11 +15,10 @@ Commands run with repository `.venv` Python 3.13.12:
 ```sh
 .venv/bin/python -m pytest tasks/t058/test_task.py -q
 .venv/bin/python -m json.tool tasks/t058/task.json > /dev/null
-.venv/bin/python -m json.tool tasks/t058/data/sota.json > /dev/null
-.venv/bin/python -m json.tool tasks/t058/data/records.json > /dev/null
+.venv/bin/python -m json.tool tasks/t058/data/bestknown.json > /dev/null
 ```
 
-The default randomized greedy baseline used seed 0, eight restarts, and 5000 random partitions per attempted added round. It checked 40008 partitions in 0.84 seconds and retained its valid one-round starting schedule. The run result, construction, and exact validation are saved under `data/best/`. This search baseline is weaker than the published 7-round construction. It reads no reference data.
+The default randomized greedy baseline used seed 0, eight restarts, and 5000 random partitions per attempted added round. It checked 40008 partitions in 0.84 seconds and retained its valid one-round starting schedule. The run result, construction, and exact validation are saved under `data/results.json`. This search baseline is weaker than the published 7-round construction. It reads no reference data.
 
 Tests cover the five program entries, the one-round simple construction, the human and fixed reference constructions, exact pair counting, invalid group counts, duplicate/missing/out-of-range/bool/float/NaN IDs, repeated pairs, the eight-round counting bound, forged score fields, deterministic search, and runner error and timeout behavior through `mathbench.evaluate._run` without task registration.
 

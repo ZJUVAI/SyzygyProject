@@ -1,0 +1,161 @@
+{
+  "result": {
+    "task_id": "T042",
+    "config_id": "T042-C01",
+    "validity": 1.0,
+    "combined_score": 1.34375,
+    "objective": 43,
+    "verification_status": "exact",
+    "generation_time": 114.52458892762661,
+    "verification_time": 0.7744579613208771,
+    "objective_value": 43,
+    "details": {
+      "N": 212,
+      "selected_size": 43,
+      "midpoint_pairs_checked": 903,
+      "claimed_score_ignored": true,
+      "strict_full_domain_check": true
+    },
+    "eval_time": 115.31333028152585,
+    "seed": 6404201,
+    "strict": true,
+    "budget": {
+      "generation_seconds": 135,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 44
+    }
+  },
+  "provenance": {
+    "reviewer": "Sol main agent",
+    "status": "reviewed_by_sol",
+    "date": "2026-11-09",
+    "source_summary": "tasks/t042/runs/search_gap32_20261109_gap32_tabu/summary.json",
+    "source_hashes_verified": true,
+    "independent_quantity": {
+      "cardinality": 43,
+      "endpoint_pairs_checked": 903
+    },
+    "claimed_score_ignored": true,
+    "damaged_construction_rejected": true,
+    "initial_baseline_human_valid": true,
+    "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+    "search_agent": "GPT-6.1 Sol",
+    "generation_record": {
+      "scope": "AI-assisted construction search",
+      "limit": 135,
+      "seed": 6404201,
+      "method": "Fixed-cardinality progression-conflict tabu search with integer increment tables and exact repair"
+    },
+    "classification": "ai_assisted_local_continuation",
+    "seed": 6404201,
+    "controls": {
+      "trials": [
+        [
+          "warm",
+          132,
+          132,
+          "512",
+          6404201
+        ]
+      ],
+      "prior_control_summary": "tasks/t042/runs/search_sol1200/summary.json"
+    },
+    "budget": {
+      "generation_seconds": 135,
+      "verification_seconds": 60,
+      "memory_bytes": 4294967296,
+      "threads": 1
+    },
+    "environment": {
+      "python": "3.13.12",
+      "platform": "linux",
+      "memory_limit_enforced": true,
+      "worker_cpu": 44
+    },
+    "source_sha256": {
+      "tasks/t042/baseline.py": "22862a864cc30fd95f05577c9074eae79cae6b5a96b72c646baa4a5501cc04d7",
+      "tasks/t042/check.py": "b7326d44333912f5701fec9c18a517b4e92033034d87c4cb6de5eca5afcf957c",
+      "tasks/t042/evaluator.py": "2a4e29abb14c49d584d7c491c10432f0aa9997db9f69a05bf75c5ed3034aa9a1",
+      "tasks/t042/evolution.py": "014211f1e7f866147e4fa1235957078fa9d971f00bf06ebfb383e29d41e1e804",
+      "tasks/t042/human.py": "0f3dea46d4902eb9e0e4a82ff02413be3aa7bd957daf8b31025c8e251170c807",
+      "tasks/t042/init_program.py": "df45690d43fd6ce1743ba343bba574c41e22716f610b177a14173dda35ca963e",
+      "tasks/t042/reference.py": "0c6897869499e87fe9422d4c9ca4e0ea642970a3dd8a58aabf43ff128b38843e",
+      "tasks/t042/test_task.py": "7e05cd51c64382cb1ab105668fe64f1f17d634b6ae1d8b5303fcd92a0c44ab9e",
+      "program.py": "6b3a22871212a8fe3155bab2da1a50d03f232a1a3411877b6bfec3c03655de9e",
+      "plan.json": "f7f1d249c5c33e9776031b1458d829cdec91b278b637c15932b9ddf8a8a76302",
+      "search.cpp": "4dae707a866850fbefe256569df0a86887c0840b26b99a44b9f66fd1af938261"
+    },
+    "warm_start_sha256": "0a7c8dd1e094c70d0b185446cda20b344dd339c5e74769f0a0d463fa4e300607",
+    "replay_command": ".venv/bin/python -m mathbench replay T042 tasks/t042/data/results.json --config T042-C01"
+  },
+  "initial_result": {
+    "objective": 1,
+    "objective_value": 1,
+    "validity": 1.0,
+    "verification_status": "exact",
+    "combined_score": 0.03125
+  },
+  "solution": {
+  "elements": [
+    1,
+    3,
+    6,
+    7,
+    10,
+    16,
+    18,
+    23,
+    24,
+    27,
+    34,
+    46,
+    49,
+    55,
+    57,
+    63,
+    66,
+    70,
+    72,
+    73,
+    79,
+    84,
+    93,
+    127,
+    132,
+    146,
+    147,
+    149,
+    154,
+    156,
+    164,
+    173,
+    177,
+    178,
+    186,
+    187,
+    189,
+    193,
+    203,
+    204,
+    206,
+    211,
+    212
+  ],
+  "search_metadata": {
+    "native": "15136971 13600 2",
+    "elite_count": 1,
+    "repairs": {
+      "INFEASIBLE": 265,
+      "UNKNOWN": 4
+    }
+  }
+}
+
+}

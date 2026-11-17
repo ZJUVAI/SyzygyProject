@@ -1,0 +1,162 @@
+{
+  "task_id": "T101",
+  "review_status": "accepted_by_sol",
+  "configurations": {
+    "T101-C01": {
+      "objective": {
+        "name": "point_count",
+        "unit": "grid points",
+        "direction": "maximize",
+        "constraints": [
+          "each point is an integer pair (x,y) with 0 <= x,y < 100",
+          "points are distinct",
+          "for each three distinct points, all three squared side lengths are pairwise different, including degenerate collinear triples"
+        ]
+      },
+      "program": "reference.py",
+      "public_value": 164,
+      "reproduced_value": 164,
+      "highest_reported": {
+        "value": 164,
+        "source": "Georgiev, Gomez-Serrano, Tao, Wagner, Mathematical exploration and discovery at scale, arXiv:2511.02864, Appendix 'Subsets of the grid with no isosceles triangles', construction sol_100.",
+        "url": "https://arxiv.org/abs/2511.02864",
+        "reproduction_status": "Coordinates extracted from the linked official AlphaEvolve problem notebook at repository commit 8f447457957deac61e28bf1676746f0753b3b2f8; independently validated with exact integer squared-distance checks. The task agents cannot reproduce the discovery process."
+      },
+      "best_human": {
+        "value": 16,
+        "parameters": {
+          "grid_size": 100
+        },
+        "source": "Odlyzko and Stanley, 'Some curious sequences constructed with the greedy algorithm', ternary no-three-term-arithmetic-progression construction; restricted to four ternary digits and embedded on one grid row.",
+        "url": "https://math.mit.edu/~rstan/papers/od.pdf",
+        "witness_program": "human.py",
+        "evidence_state": "Formula replayed and checked exactly. This is a weak human-method baseline, not a claim about the best human result.",
+        "origin_type": "published classical construction",
+        "witness": "data/reference/odlyzko_stanley_n100_16.json",
+        "witness_sha256": "1a723d3c6556edfbbd4a949b3b7e3772d339676f6bcb8c7f08fe01df5b1a71c7"
+      },
+      "best_public": {
+        "value": 164,
+        "parameters": {
+          "grid_size": 100
+        },
+        "source": "AlphaEvolve construction reported in arXiv:2511.02864; source repository problem 59 and notebook.",
+        "url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/59.html",
+        "evidence_state": "Witness extracted from the pinned source revision and independently checked exactly.",
+        "ai_provenance": "The construction is attributed to AlphaEvolve. The source paper reports human hints to the system. This is an AI-assisted result, not a human-only construction.",
+        "witness": "data/reference/alphaevolve_n100_164.json",
+        "witness_sha256": "d9aedb326481ea234afc32b8925b365c32bac2e2b2284f71262a04f7d2eb8aba",
+        "origin_type": "AI-assisted public construction"
+      },
+      "best_reproduced": {
+        "value": 164,
+        "parameters": {
+          "grid_size": 100
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "verification_method": "For each selected point, compute its exact squared distances to all other selected points and require these values to be distinct.",
+        "witness": "data/reference/alphaevolve_n100_164.json",
+        "ai_provenance": "Reproduction confirms the witness and score. It does not establish discovery provenance.",
+        "review_status": "reviewed_by_sol"
+      },
+      "compatibility_score": {
+        "frozen_formula": "J/H",
+        "H": 16,
+        "note": "H is the weak, independently reconstructed classical human-method baseline."
+      },
+      "optimality_status": {
+        "status": "open in sources reviewed; 164 is a lower bound, not a proof of optimality",
+        "source_statement": "The AlphaEvolve paper says the 100 by 100 construction is believed not to be optimal.",
+        "review_scope": "The cited paper, official problem page, and public source notebook/repository snapshot were checked. This is not an exhaustive literature search."
+      },
+      "verification": {
+        "status": "reviewed_by_sol",
+        "run": {
+          "task_id": "T101",
+          "config_id": "T101-C01",
+          "validity": 1.0,
+          "combined_score": 10.25,
+          "objective": 164,
+          "verification_status": "exact",
+          "generation_time": 0.16460046917200089,
+          "verification_time": 0.16491197794675827,
+          "objective_value": 164,
+          "details": {
+            "point_count": 164,
+            "apex_distance_checks": 26732,
+            "claimed_objective_ignored": true,
+            "strict_full_domain_check": true
+          },
+          "eval_time": 0.33357740566134453,
+          "seed": 0,
+          "strict": true,
+          "budget": {
+            "generation_seconds": 300,
+            "verification_seconds": 60,
+            "memory_bytes": 4294967296,
+            "threads": 1
+          },
+          "environment": {
+            "python": "3.13.12",
+            "platform": "linux",
+            "memory_limit_enforced": true,
+            "worker_cpu": 0
+          }
+        },
+        "independent_quantity": {
+          "point_count": 164,
+          "method": "Sort exact squared distances from each apex; every row must increase strictly."
+        },
+        "broken_construction_rejected": true,
+        "claimed_score_ignored": true,
+        "reviewer": "Sol main agent",
+        "date": "2026-11-09"
+      },
+      "baseline_program": "baseline.py",
+      "baseline_value": 112,
+      "baseline_seed": 0,
+      "review_status": "accepted_by_sol",
+      "other_public_result": {
+        "value": 160,
+        "parameters": {
+          "grid_size": 100
+        },
+        "source": "PatternBoost, arXiv:2411.00566",
+        "url": "https://arxiv.org/abs/2411.00566",
+        "evidence_state": "Reported construction; not separately reproduced in this task.",
+        "ai_provenance": "AI-assisted construction method.",
+        "origin_type": "AI-assisted public construction"
+      },
+      "traditional_search": {
+        "value": 112,
+        "parameters": {
+          "grid_size": 100
+        },
+        "program": "baseline.py",
+        "seed": 0,
+        "algorithm": "seeded randomized greedy insertion, 4 restarts",
+        "evidence_state": "Reproduced locally and exactly checked; not a public record."
+      },
+      "source_review_date": "2026-11-09",
+      "source_review_scope": "AlphaEvolve paper, official problem page, and linked source notebook at repository commit 8f447457957deac61e28bf1676746f0753b3b2f8; a 2026-10 public issue was checked for later n=100 claims."
+    }
+  },
+  "additional_evidence": {
+    "configurations": {
+      "T101-C01": {
+        "best_human": {
+          "source": "Odlyzko-Stanley ternary no-three-term-progression construction, restricted to four digits and embedded on one row.",
+          "evidence_state": "Formula replayed and checker verified; weak baseline, not asserted to be the best human result."
+        },
+        "best_public": {
+          "source": "AlphaEvolve, arXiv:2511.02864, official problem 59 notebook construction sol_100.",
+          "url": "https://arxiv.org/abs/2511.02864",
+          "evidence_state": "Source witness extracted and exactly reproduced.",
+          "ai_provenance": "AI-assisted AlphaEvolve result, guided by human hints."
+        },
+        "optimality_status": "No optimality proof found in the checked sources; the AlphaEvolve paper states that 164 is likely not optimal."
+      }
+    }
+  }
+}

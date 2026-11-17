@@ -2,7 +2,7 @@ import hashlib
 
 import pytest
 
-from tasks.graph_bits import load_adjacency
+from mathbench.graph_bits import load_adjacency
 
 
 def test_packed_adjacency_across_byte_boundary(tmp_path):
