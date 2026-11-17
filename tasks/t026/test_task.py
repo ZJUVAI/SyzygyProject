@@ -101,15 +101,12 @@ def test_pinned_certificate_matches_upstream_checksum():
     assert public_source["checksum_file_sha256"] == checksum_digest
 
 
-def test_saved_human_source_and_transcription_hashes():
+def test_saved_human_transcription_hash():
     manifest = json.loads((ROOT / "source_hashes.json").read_text())
     human_source = manifest["fredricksen_sweet_2000"]
-    for relative_path, expected in [
-        (human_source["local_file"], human_source["sha256"]),
-        ("data/fredricksen_sweet_536_halfsets.json", human_source["transcribed_witness_sha256"]),
-    ]:
-        actual = hashlib.sha256((ROOT / relative_path).read_bytes()).hexdigest()
-        assert actual == expected
+    witness = ROOT / "data/fredricksen_sweet_536_halfsets.json"
+    actual = hashlib.sha256(witness.read_bytes()).hexdigest()
+    assert actual == human_source["transcribed_witness_sha256"]
 
 
 def test_runner_reports_candidate_error_and_generation_timeout(monkeypatch, tmp_path):

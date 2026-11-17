@@ -12,7 +12,7 @@ The empty clique is accepted with objective zero. A one-vertex clique is accepte
 
 The input source was provided from the CMU COLOR04/DIMACS C2000.9 benchmark snapshot. It contains the DIMACS header `p col 2000 1799532`. The original file is 19,602,828 bytes. The local input is compressed at `data/source/C2000.9.clq.gz` (4.1 MiB). On load, the checker streams its uncompressed bytes, verifies SHA-256 `aa4b1d7df7f9c1afbf8c9f35fcf5bdfc6370fd27db5c9f3fd5409dfd0d164f16`, checks the header and edge count, rejects self-loops or duplicate edges, and builds adjacency bitsets. The compressed file SHA-256 is `936ec5806f6e58fbe1f28a87f018cd064dece5eae8ab29013040d47857fd1639`.
 
-The human witness is `data/reference/human_2005_clique80.json`, SHA-256 `02eecb1280588703bd1a57b55e10c4ce46e0f5672e87c8962182dca7f472ce1c`. The source paper PDF is saved under `data/source/grosso_locatelli_pullan_2005.pdf`, SHA-256 `cc3897591e2aeadd21303d8fc1ac135923376c17e611a7257b8c6bf0ef92cc72`.
+The human witness is `data/reference/human_2005_clique80.json`, SHA-256 `02eecb1280588703bd1a57b55e10c4ce46e0f5672e87c8962182dca7f472ce1c`.
 
 ## Public lower and upper results
 
@@ -57,3 +57,7 @@ Result on 2026-11-06: `22 passed in 22.63s`.
 The tests check the complete human witness with an independent edge-set parser, the compressed source hash and graph dimensions, empty and singleton boundaries, invalid indices/types/duplicates, a deliberately selected nonedge, claimed-score invariance, all five `run_code()` entries, search isolation, and worker error and timeout behavior through `mathbench.evaluate._run` without task registry admission.
 
 Sol review remains pending.
+
+## Papers
+
+- [Short Communication: Larger Cliques for a DIMACS Test](https://optimization-online.org/wp-content/uploads/2005/02/1054.pdf)

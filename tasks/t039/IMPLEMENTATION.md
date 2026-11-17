@@ -4,7 +4,7 @@
 
 Configuration `T039-C01` implements an `(n,k)=(7,5)` difference triangle set: seven rows, six distinct nonnegative integer marks per row. The exact checker evaluates the 105 positive within-row differences and minimizes the largest row span. Shared marks in separate rows are allowed.
 
-The published 112 construction, its pinned repository archive, and Shearer's lower-bound paper are stored in `data/` with source SHA-256 values. `human.py` and `reference.py` replay the published witness. `init_program.py` provides a self-contained powers-of-three seed. `baseline.py` starts from that seed and runs 100 seeded greedy attempts without reading comparison data. `evolution.py` exports the shared search entry point.
+The published 112 construction and its pinned repository archive are stored in `data/` with SHA-256 values. `human.py` and `reference.py` replay the published witness. `init_program.py` provides a self-contained powers-of-three seed. `baseline.py` starts from that seed and runs 100 seeded greedy attempts without reading comparison data. `evolution.py` exports the shared search entry point.
 
 ## Evidence and source limits
 
@@ -27,3 +27,7 @@ JSON validation: `python3 -m json.tool` was run on `task.json`, `records.json`, 
 ## Status
 
 **Pending Sol review.** Sol should independently recheck the primary article's table and appendix, replay the human/reference witness, inspect the simple seed and traditional search, and run an independent legal and deliberately invalid case before admission.
+
+## Papers
+
+- [Improved LP Lower Bounds for Difference Triangle Sets](https://doi.org/10.37236/1463)

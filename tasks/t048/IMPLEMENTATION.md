@@ -30,4 +30,8 @@ All five programs select by `MATHBENCH_CONFIG_ID`. New configurations are marked
 
 ## Test coverage
 
-Tests exhaustively verify the C01 public and human witnesses, and each C02/C03 human and public network. Tests check comparator counts, depth metadata, invalid wire pairs, malformed and empty networks, forged score fields, configuration mismatch, and all five program entry points. An independent scalar replay of all `2^17` C01 inputs and the pinned source/PDF hashes remain in place.
+Tests exhaustively verify the C01 public and human witnesses, and each C02/C03 human and public network. Tests check comparator counts, depth metadata, invalid wire pairs, malformed and empty networks, forged score fields, configuration mismatch, and all five program entry points. The tests replay all `2^17` C01 inputs with an independent scalar implementation and check the SHA-256 of the pinned SorterHunter table.
+
+## Papers
+
+- [Using Symmetry and Evolutionary Search to Minimize Sorting Networks](https://www.jmlr.org/papers/v14/valsalam13a.html)

@@ -4,7 +4,7 @@ Status: `accepted_by_sol`.
 
 ## Sources and open status
 
-- Carlet, Kiss, and Nagy, *Simplicity conditions for binary orthogonal arrays*, DOI [10.1007/s10623-022-01105-4](https://doi.org/10.1007/s10623-022-01105-4). The local PDF is `data/source/carlet_kiss_nagy_2023.pdf`, downloaded from the authors' publication copy. SHA-256: `77f9cc38166c80b07cae8777730ecf0281c2dff065a2676b77aa6c7f9f2870`.
+- [Simplicity conditions for binary orthogonal arrays](https://doi.org/10.1007/s10623-022-01105-4)
 - Remark 5 states that duals of double-error-correcting BCH codes provide the relevant binary orthogonal arrays. The local human/reference witness has 4096 rows.
 - Proposition 10 and Remark 11 state a shortened Kerdock construction of 2048 rows at 63 columns, strength 4, and explicitly state that optimality is unknown. The paper's Rao bound is 2017 rows; divisibility by 16 strengthens it to 2032.
 - Searches through 2026-11-06 for `F*(63,2,4)`, `F*(2^m-1,2,4)`, and `OA(2048,63,2,4)` found no later proof closing this 16-row gap. Sloane's orthogonal array directory was also checked.

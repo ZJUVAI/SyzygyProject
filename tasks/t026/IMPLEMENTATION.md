@@ -30,3 +30,7 @@ Independent recorded calculations used a separate nested loop over all pairs `x<
 ## Remaining review work
 
 Sol must independently compare the 536 transcription with the source paper, replay both external constructions, inspect the cold-start program and traditional search, and verify that claimed scores do not affect recomputation. No mathematical optimality claim is made.
+
+## Papers
+
+- [Symmetric Sum-Free Partitions and Lower Bounds for Schur Numbers](https://doi.org/10.37236/1510)

@@ -30,10 +30,8 @@
     },
     {
       "title": "DeepMind, Mathematical exploration and discovery at scale, Section 6.35",
-      "url": "https://arxiv.org/abs/2511.02864",
+      "url": "https://arxiv.org/abs/2511.02864v1",
       "version": "v1, 2025-11",
-      "sha256": "1944e56460842129c3f6148c15ade453d0ac6900751b70e69b54afefd2284c02",
-      "local_pdf": "data/source/deepmind_2511.02864v1.pdf",
       "result": "AlphaEvolve reports a search result of 4 for n=17. This is not an upper bound and does not match the later public construction.",
       "status": "AI search result; no optimality claim"
     },
@@ -48,8 +46,6 @@
       "title": "Erdős and Graham, On packing squares with equal squares",
       "url": "https://doi.org/10.1016/0097-3165(75)90099-0",
       "version": "Journal of Combinatorial Theory A 19 (1975), 119–123",
-      "sha256": "247d216a1125a0138a41af9742e633e6b6504c7d1edd1c5524d36521a8ba6738",
-      "local_pdf": "data/erdos_graham_1975.pdf",
       "scope": "historical source for equal-square grid methods; the task's exact 17-square witness is reconstructed and not attributed to the paper"
     }
   ],

@@ -35,8 +35,6 @@
         "provenance": "AI-assisted multi-agent Station discovery. The paper discloses use of agents from multiple model families, and says GPT-5.5 operating outside the Station assisted formal verification. The formula is given in Section 6.1 and supported by a first-party verification notebook.",
         "witness": "data/reference/station_p31_8289.json",
         "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
-        "source_pdf": "data/source/station_2608.23691v2.pdf",
-        "source_pdf_sha256": "b13619c1b9b6fbc47a086a7fe4ee188beb7d484c5a9c0b2515b1257522e9043f",
         "first_party_verification_revision": "a4ae9192fa75b7ffc6909ed018a712510062378b",
         "first_party_verification_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07",
         "evidence_state": "The published p=3 mod 4 formula gives 8,289 at p=31. The line witnesses were reconstructed and exactly checked here.",

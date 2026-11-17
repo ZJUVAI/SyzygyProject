@@ -69,10 +69,6 @@
         "sorterhunter_table_snapshot": {
           "path": "data/reference/sorterhunter_sorting_networks.html",
           "sha256": "fb08a5cd90a460607586be0f753fa19baedc1e5fe1c7d4247efc1923e6dfd0f6"
-        },
-        "valsalam_miikkulainen_2013_pdf": {
-          "path": "data/reference/valsalam_miikkulainen_2013.pdf",
-          "sha256": "59522734f52c0b4927e80eba4971a49ba6cc756ea5d072e382af57648544df3e"
         }
       },
       "verification": {

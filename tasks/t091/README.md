@@ -21,7 +21,7 @@ N\ge 1+\binom{63}{1}+\binom{63}{2}=2017.
 
 Carlet、Kiss、Nagy 的论文 Remark 5 给出双纠错 BCH 码对偶构造的正交阵。取 \(m=6\) 并删去一列，可重建 4096 行、63 列、强度 4 的正交阵。本任务以这个公式作为人类基线和固定参考，并对全部条件重新计算。论文 Proposition 10 与 Remark 11 给出 Kerdock 构造的 2048 行同参上界；作者明确说最优性尚未确定。本地续搜用模 4 迹码重建了 2048 行构造。独立复算检查了每组四列中 16 种模式的出现次数。
 
-- Carlet, Kiss, Nagy, *Simplicity conditions for binary orthogonal arrays*, DOI [10.1007/s10623-022-01105-4](https://doi.org/10.1007/s10623-022-01105-4)。论文副本在 `data/source/`。
+- [Simplicity conditions for binary orthogonal arrays](https://doi.org/10.1007/s10623-022-01105-4)
 - Sloane 的 orthogonal array directory：[neilsloane.com/oadir](https://neilsloane.com/oadir/index.html)。
 
 2026-11-06 检索未发现 63 列同参最优性证明。公开 2048 构造与 2032 下界之间仍有 16 行缺口。

@@ -11,11 +11,15 @@ original numerical search certificate is separate and reports
 closed-form construction.
 
 The upstream repository is MIT licensed. `LICENSE` is retained with the copied
-constructor. `deepmind_2511.02864v1.pdf` is the source checked for AlphaEvolve
-§6.35. `original_grid17_human_asset.json` is the exact downloaded human-method
+constructor. `original_grid17_human_asset.json` is the exact downloaded human-method
 asset from the research archive; `data/human_grid_witness.json` is the task's
 converted, independently checked witness.
 
 The task-local checker does not import the upstream checker. It rebuilds the
 closed-form witness, then uses exact rational corner containment and its own
 separating-axis tests over all 136 square pairs.
+
+## Papers
+
+- [Mathematical exploration and discovery at scale (v1)](https://arxiv.org/abs/2511.02864v1)
+- [On packing squares with equal squares](https://doi.org/10.1016/0097-3165(75)90099-0)

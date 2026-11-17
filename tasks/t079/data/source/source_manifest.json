@@ -7,10 +7,8 @@
       "authors": ["Boris Bukh", "Ting-Wei Chao"],
       "year": 2021,
       "version": "arXiv:2108.00074v2",
-      "url": "https://arxiv.org/abs/2108.00074",
+      "url": "https://arxiv.org/abs/2108.00074v2",
       "location": "Section 4, especially the odd-q almost-Kakeya construction and completion by a horizontal hyperplane",
-      "archived_file": "bukh_chao_2108.00074v2.pdf",
-      "sha256": "b0b2a3c979d8ce5a8a9662a30383780a75984c71730c68e5cadb1f9ba9a0b48a",
       "notes": "The paper gives a finite lower-bound inequality but does not prove the finite minimum for q=31."
     },
     {
@@ -25,8 +23,6 @@
       "provenance": "The paper discloses a multi-agent AI discovery process and external GPT-5.5 assistance for Lean formalization.",
       "first_party_verification": "https://dualverse.ai/station/math/finite-field-kakeya/",
       "verification_bundle": "https://github.com/dualverse-ai/station_data_v2/blob/main/artifacts/finite_kakeya/verification.ipynb",
-      "source_pdf": "station_2608.23691v2.pdf",
-      "source_pdf_sha256": "b13619c1b9b6fbc47a086a7fe4ee188beb7d484c5a9c0b2515b1257522e9043f",
       "verification_bundle_revision": "a4ae9192fa75b7ffc6909ed018a712510062378b",
       "verification_bundle_file": "station_finite_kakeya_verification.ipynb",
       "verification_bundle_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07"
@@ -38,8 +34,6 @@
       "url": "https://arxiv.org/html/2511.02864v3",
       "location": "Problem 6.1",
       "reported_value_at_p31": 8290,
-      "archived_file": "alphaevolve_2511.02864v3.pdf",
-      "sha256": "77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2",
       "numerical_value_source": "https://zerothesis.com/challenges/kakeya-fp3?tab=brief",
       "provenance_limit": "The secondary public record list attributes 8,290 to AlphaEvolve. The exact p=31 value was not located in the inspected primary paper or official notebook, so the value remains an unreproduced report.",
       "reproduction_status": "Not reproduced in this task; the primary 8,289 construction above is stronger."

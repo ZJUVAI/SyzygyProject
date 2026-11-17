@@ -28,3 +28,9 @@ Run:
 ```
 
 The suite checks the 993-direction count, the exact human and public/reproduced constructions, the full-space boundary seed, malformed and duplicate inputs, configuration checks, ignored claimed scores, all five program entries, search reproducibility and isolation, a clean-export initializer, evaluator integration with a temporary registry patch, and runner error and timeout paths. The complete local run returned `30 passed in 12.20s`.
+
+## Papers
+
+- [Sharp density bounds on the finite field Kakeya problem (v2)](https://arxiv.org/abs/2108.00074v2)
+- [Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment (v2)](https://arxiv.org/abs/2608.23691v2)
+- [Mathematical exploration and discovery at scale (v3)](https://arxiv.org/abs/2511.02864v3)

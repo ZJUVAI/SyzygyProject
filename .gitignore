@@ -13,6 +13,9 @@ core.*
 *.pem
 .DS_Store
 
+# Paper copies
+*.[Pp][Dd][Ff]
+
 # Local historical archives
 reports/
 research/

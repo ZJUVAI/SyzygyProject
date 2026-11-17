@@ -70,13 +70,9 @@ def test_all_five_programs_support_new_configs(inputs,expected,monkeypatch):
 def test_reference_pins_and_independent_full_scalar_replay():
     net = json.loads(DATA.read_text())
     source = net["source"]
-    for relative, expected in [
-        ("data/reference/sorterhunter_sorting_networks.html", source["snapshot_sha256"]),
-        ("data/reference/valsalam_miikkulainen_2013.pdf",
-         "59522734f52c0b4927e80eba4971a49ba6cc756ea5d072e382af57648544df3e"),
-    ]:
-        digest = hashlib.sha256((HERE / relative).read_bytes()).hexdigest()
-        assert digest == expected
+    snapshot = HERE / "data/reference/sorterhunter_sorting_networks.html"
+    digest = hashlib.sha256(snapshot.read_bytes()).hexdigest()
+    assert digest == source["snapshot_sha256"]
     assert len(net["comparators"]) == net["size"] == 71
     assert len(net["layers"]) == net["depth"] == 12
     assert [pair for layer in net["layers"] for pair in layer] == net["comparators"]
