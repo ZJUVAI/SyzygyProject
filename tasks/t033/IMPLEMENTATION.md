@@ -5,7 +5,7 @@ Status: accepted by Sol on 2026-11-06.
 ## Source and configuration review
 
 - The selected configuration is Gset G70: 10,000 vertices, 9,999 undirected edges, all with weight +1.
-- The byte-exact Stanford file is archived at `data/source/G70`. Its SHA-256 is `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`.
+- The Stanford source is retained once as deterministic gzip at `data/source/G70.gz` (compressed SHA-256 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`). Decompression reproduces the byte-exact 117,744-byte original (SHA-256 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`). The duplicate normalized `data/instance.json` was removed; checker and search readers parse the compressed source.
 - The normalized zero-based edge-list SHA-256 is `76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085`. The checker verifies this pinned hash when it loads the graph.
 - Goudet, Goëffon, and Hao report 9,594 on the G70 test instance and 9,595 as a calibration value in their 2024 LPI paper. The paper-specific assignment was not obtained.
 - Cosm v4 (revised 2026-10-11) reports a heuristic G70 score of 9,595. Its abstract distinguishes this as best-known from the certified optima it reports for G81, G72, and G77. AI-assistance disclosure is unknown.

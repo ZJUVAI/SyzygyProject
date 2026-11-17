@@ -253,6 +253,7 @@ def review(path, candidate_only=False):
                 shutil.copytree(best, backup)
             best.mkdir(parents=True, exist_ok=True)
             save(best / 'solution.json', solution)
+            (best / 'solution.json.gz').unlink(missing_ok=True)
             save(best / 'result.json', result)
             record.update(classification='ai_assisted_local_continuation', seed=result['seed'],
                           controls=manifest['controls'], budget=result['budget'],

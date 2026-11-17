@@ -2,38 +2,38 @@
 
 import json
 import hashlib
+import gzip
 from pathlib import Path
 
 
-_INSTANCE = json.loads((Path(__file__).parent / "data" / "instance.json").read_text())
-_SOURCE_PATH = Path(__file__).parent / "data" / "source" / "G70"
+_SOURCE_PATH = Path(__file__).parent / "data" / "source" / "G70.gz"
 _SOURCE_BYTES = _SOURCE_PATH.read_bytes()
+_GRAPH_BYTES = gzip.decompress(_SOURCE_BYTES)
 _SOURCE_SHA256 = "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061"
+_COMPRESSED_SHA256 = "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b"
 _NORMALIZED_SHA256 = "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085"
+_SOURCE_LINES = _GRAPH_BYTES.decode("ascii").splitlines()
+_SOURCE_HEADER = [int(value) for value in _SOURCE_LINES[0].split()]
+_N, _M = _SOURCE_HEADER
+_EDGES = [[int(value) - 1 for value in line.split()[:2]] +
+          [int(line.split()[2])] for line in _SOURCE_LINES[1:]]
+_INSTANCE = {"instance_id": "Gset-G70", "n": _N, "m": _M,
+             "edges": _EDGES, "source_sha256": _SOURCE_SHA256}
 _NORMALIZED = json.dumps(
     {key: _INSTANCE[key] for key in ("instance_id", "n", "m", "edges")},
     separators=(",", ":"), ensure_ascii=True).encode()
-if (_INSTANCE.get("source_sha256") != _SOURCE_SHA256
-        or hashlib.sha256(_SOURCE_BYTES).hexdigest() != _SOURCE_SHA256
+if (hashlib.sha256(_SOURCE_BYTES).hexdigest() != _COMPRESSED_SHA256
+        or hashlib.sha256(_GRAPH_BYTES).hexdigest() != _SOURCE_SHA256
         or hashlib.sha256(_NORMALIZED).hexdigest() != _NORMALIZED_SHA256
-        or _INSTANCE.get("normalized_graph_sha256") != _NORMALIZED_SHA256):
+        or (_N, _M) != (10000, 9999)
+        or any(weight != 1 for _, _, weight in _EDGES)):
     raise RuntimeError("pinned Gset graph input hash mismatch")
-_SOURCE_LINES = _SOURCE_BYTES.decode("ascii").splitlines()
-_SOURCE_HEADER = [int(value) for value in _SOURCE_LINES[0].split()]
-_SOURCE_EDGES = [[int(value) - 1 for value in line.split()[:2]] +
-                 [int(line.split()[2])] for line in _SOURCE_LINES[1:]]
-if (_SOURCE_HEADER != [_INSTANCE["n"], _INSTANCE["m"]]
-        or len(_SOURCE_EDGES) != _INSTANCE["m"]
-        or _SOURCE_EDGES != _INSTANCE["edges"]):
-    raise RuntimeError("archived Stanford G70 does not match normalized graph")
-_N = _INSTANCE["n"]
-_EDGES = _INSTANCE["edges"]
 _PARAMETERS = {
     "instance": _INSTANCE["instance_id"],
     "n": _N,
     "m": _INSTANCE["m"],
     "weights": "all +1",
-    "graph_sha256": _INSTANCE["source_sha256"],
+    "graph_sha256": _SOURCE_SHA256,
     "normalized_graph_sha256": _NORMALIZED_SHA256,
 }
 

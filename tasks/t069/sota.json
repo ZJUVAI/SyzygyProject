@@ -21,7 +21,7 @@
         "tour": "one Hamiltonian cycle through all cities",
         "objective": "sum of integer edge lengths, including return edge"
       },
-      "instance_file": "data/source/mona-lisa100K.tsp",
+      "instance_file": "data/source/mona-lisa100K.tsp.gz",
       "instance_sha256": "532fefbfb9ad66cc2550bece766fa069acaa8e34ee511ac1949ae101da4d70ad",
       "known_lower_bound": {
         "value": 5757084,
@@ -90,10 +90,11 @@
         },
         "broken_construction_rejected": true,
         "claimed_score_ignored": true,
-        "witness": "data/reference/public_c01.json",
-        "witness_sha256": "e9f5bc338725dbaf3512189b7ec39b7028dc9dbd2dfa8d88dc38b72513c4bab2"
+        "witness": "data/human/monalisa_5757191.tour.gz",
+        "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88",
+        "retired_json_witness_sha256": "e9f5bc338725dbaf3512189b7ec39b7028dc9dbd2dfa8d88dc38b72513c4bab2"
       },
-      "witness": "data/human/monalisa_5757191.tour",
+      "witness": "data/human/monalisa_5757191.tour.gz",
       "witness_sha256": "d8a98a936d01b0317ff63a43646fbbbfa74bf6ee954a9449ad659128e579eb88"
     }
   }

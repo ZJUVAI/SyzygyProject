@@ -1,3 +1,4 @@
+import gzip
 import json
 from pathlib import Path
 import pytest
@@ -23,6 +24,11 @@ def test_saved_witness_replay(tmp_path):
     from tasks.t013.human import run_code
     witness=tmp_path/'solution.json';witness.write_text(json.dumps(run_code()))
     assert replay('T013',witness)['objective']==578
+    packed = witness.with_suffix('.json.gz')
+    packed.write_bytes(gzip.compress(witness.read_bytes(), mtime=0))
+    witness.unlink()
+    assert replay('T013', packed)['objective'] == 578
+    assert replay('T013', witness)['objective'] == 578
 
 
 def test_cold_seed_export(tmp_path):
@@ -33,14 +39,15 @@ def test_cold_seed_export(tmp_path):
 
 
 @pytest.mark.parametrize('task,public_input,comparison', [
-    ('T069', 'data/source/mona-lisa100K.tsp', 'data/reference/monalisa_5757191.tour'),
+    ('T069', 'data/source/mona-lisa100K.tsp.gz', 'data/human/monalisa_5757191.tour.gz'),
     ('T064', 'data/source/ortho40.instance.json', 'data/reference/ortho40_19.solution.json'),
-    ('T027', 'data/tai256c.dat', 'data/tai256c.sln'),
+    ('T027', 'data/tai256c.dat.gz', 'data/tai256c.sln'),
+    ('T033', 'data/source/G70.gz', 'data/human/human_g70_1flip.json'),
     ('T045', 'data/source/gd96a.rmf', 'data/reference/spectral_adjacent_ordering.json'),
     ('T030', 'data/DSJC1000.5.bits', 'data/human_witness.json'),
     ('T059', 'data/source/C2000.9.bits', 'data/reference/grosso_locatelli_pullan_2005_clique80.json'),
     ('T057', 'data/source/X-n1001-k43.vrp', 'data/reference/public_72332.sol'),
-    ('T055', 'data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf', 'data/reference/mse2026_boums_60_assignment.json'),
+    ('T055', 'data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz', 'data/reference/mse2026_boums_60_assignment.json'),
     ('T056', 'data/source/ta41_instance.json', 'data/reference/ta41_2006_schedule.json')])
 def test_public_input_export_excludes_comparison_assets(tmp_path, monkeypatch, task, public_input, comparison):
     from mathbench import export

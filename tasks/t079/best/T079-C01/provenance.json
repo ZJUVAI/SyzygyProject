@@ -63,5 +63,5 @@
     "search.cpp": "18055095720c4600c943b49c20a1e2c4d9215b1b7a1709522af31594e0bef21d"
   },
   "warm_start_sha256": "adda80d741cf4e886eb0b9c0223e852d65801388661cb6265260a1314dc216bf",
-  "replay_command": ".venv/bin/python -m mathbench replay T079 tasks/t079/best/T079-C01/solution.json --config T079-C01"
+  "replay_command": ".venv/bin/python -m mathbench replay T079 tasks/t079/best/T079-C01/solution.json.gz --config T079-C01"
 }

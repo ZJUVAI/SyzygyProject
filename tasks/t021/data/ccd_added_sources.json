@@ -2,7 +2,7 @@
   "task_id": "T021",
   "source": "Cambridge Cluster Database, Global Minima for the Thomson Problem",
   "table_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
-  "table_snapshot": "ccd_thomson_table.html",
+  "table_snapshot": "ccd_thomson_table.html.gz",
   "table_snapshot_sha256": "5466173175b10a81d19e20763dffa64589f3ce5b92b09e827de14eb1fbb583e2",
   "rows": {
     "40": {
@@ -23,5 +23,6 @@
       "table_text": "50 | 1055.1823147 | D_6d | xyz/50.xyz",
       "interpretation": "database numerical candidate and rounded reference; not proof of global optimality"
     }
-  }
+  },
+  "table_snapshot_sha256_scope": "SHA-256 of decompressed original HTML bytes; unchanged by gzip storage"
 }

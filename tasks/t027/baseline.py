@@ -2,6 +2,7 @@
 import os
 import random
 import math
+import gzip
 from pathlib import Path
 from mathbench.search import search_steps
 
@@ -15,7 +16,8 @@ def initial_permutation():
 
 
 def _load_matrices():
-    raw = (Path(__file__).parent / "data" / "tai256c.dat").read_text(encoding="ascii").split()
+    with gzip.open(Path(__file__).parent / "data" / "tai256c.dat.gz", "rt", encoding="ascii") as stream:
+        raw = stream.read().split()
     values = [int(x) for x in raw]
     if len(values) != 1 + 2 * N * N or values[0] != N:
         raise ValueError("bad tai256c matrix data")

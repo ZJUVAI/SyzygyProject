@@ -1,6 +1,6 @@
 Find a high-value maximum cut for the fixed graph Gset G70.
 
-Input data is available in `data/instance.json`. It contains 10,000 vertices and 9,999 undirected edges. Each edge has integer weight +1. The graph source-file SHA-256 is 0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061.
+The exact Stanford G70 source is available as deterministic gzip at `data/source/G70.gz`. The evaluator reads this file directly. It contains 10,000 vertices and 9,999 undirected edges. Each edge has integer weight +1. The uncompressed original source SHA-256 is 0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061.
 
 Return a JSON object with a `labels` field. It must be a list of exactly 10,000 integers. Each entry must be 0 or 1 and gives the side for the vertex with the same zero-based index. The evaluator sums the weights of edges whose endpoint labels differ. It ignores any score claimed by the candidate.
 

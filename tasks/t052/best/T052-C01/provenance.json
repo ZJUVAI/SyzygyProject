@@ -57,5 +57,13 @@
     "plan.json": "b472d9ee8dd2a3b86bcf4e4c218321af1c63a6c31e38ec35a291dff8fd5972c8"
   },
   "warm_start_sha256": "f6a1a12905b883d6cf672da252afbfc299c4ca3ea87076a3417085165adf7362",
-  "replay_command": ".venv/bin/python -m mathbench replay T052 tasks/t052/best/T052-C01/solution.json --config T052-C01"
+  "replay_command": ".venv/bin/python -m mathbench replay T052 tasks/t052/best/T052-C01/solution.json.gz --config T052-C01",
+  "best_solution_sha256": "ce0013e1e51f5318e0cfcc842efb7c0d0d2543045764dd1228235b9a52535082",
+  "asset_update": {
+    "date": "2026-11-17",
+    "status": "待 Sol 验收",
+    "compression": "Deterministic gzip with mtime=0 and no stored filename.",
+    "decompressed_sha256": "ce0013e1e51f5318e0cfcc842efb7c0d0d2543045764dd1228235b9a52535082",
+    "replay": "Strict replay supports the compressed witness; the historical acceptance record is unchanged."
+  }
 }

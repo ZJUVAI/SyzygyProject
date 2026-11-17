@@ -38,7 +38,7 @@
         "evidence": "The v2 PDF states that target lower bound 44,200,000 was obtained with a 1.25% gap (PDF p. 3; Table 4 on p. 18). The v2 abstract still describes the earlier 1.48% gap.",
         "checked_at": "2026-11-06"
       },
-      "matrix": "data/tai256c.dat",
+      "matrix": "data/tai256c.dat.gz",
       "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
       "comparison_tolerance": "0",
       "limitations": [

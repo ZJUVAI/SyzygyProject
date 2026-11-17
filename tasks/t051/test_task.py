@@ -1,4 +1,5 @@
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
@@ -49,10 +50,20 @@ def test_all_five_program_entries_and_reference_witness(monkeypatch):
     assert validated["objective"] == 130000
     assert validated["details"]["homogeneous_progression_prefixes_checked"] == prefix_count
     assert validated["details"]["discrepancy"] == maximum
-    witness = ROOT / "tasks/t051/data/source/sequence_130000.txt"
-    assert hashlib.sha256(witness.read_bytes()).hexdigest() == (
+    witness = ROOT / "tasks/t051/data/source/sequence_130000.txt.gz"
+    source_bytes = gzip.decompress(witness.read_bytes())
+    assert hashlib.sha256(source_bytes).hexdigest() == (
         "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
     )
+
+
+def test_public_reference_reuses_archived_source_witness():
+    sota = json.loads((ROOT / "tasks/t051/sota.json").read_text())
+    verification = sota["configurations"]["T051-C01"]["verification"]
+    witness = ROOT / "tasks/t051" / verification["witness"]
+    assert witness == ROOT / "tasks/t051/data/source/sequence_130000.txt.gz"
+    assert hashlib.sha256(gzip.decompress(witness.read_bytes())).hexdigest() == verification["witness_sha256"]
+    assert not (ROOT / "tasks/t051/data/reference/public_c01.json").exists()
 
 
 @pytest.mark.parametrize("sequence", [[], [0], [2], [1.0], [float("nan")], [True], ["+"], None])

@@ -109,9 +109,11 @@
       "input": {
         "source_url": "https://web.stanford.edu/~yyye/yyye/Gset/G70",
         "sha256": "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061",
-        "file": "data/instance.json",
+        "file": "data/source/G70.gz",
         "normalized_graph_sha256": "76223a8eea98e77f0c1769f49c42a7d202fa5d62a47c872ed7b9d179d0f23085",
-        "source_file": "data/source/G70"
+        "source_file": "data/source/G70.gz",
+        "compressed_sha256": "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b",
+        "encoding": "gzip; decompresses to the exact Stanford source bytes"
       },
       "program_record": {
         "entrypoint": "run_code()",
@@ -188,8 +190,8 @@
         "broken_construction_rejected": true,
         "claimed_score_ignored": true
       },
-      "review_status": "accepted_by_sol"
+      "review_status": "pending_sol_review"
     }
   },
-  "review_status": "accepted_by_sol"
+  "review_status": "pending_sol_review"
 }

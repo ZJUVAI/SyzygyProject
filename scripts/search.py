@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from mathbench.evaluate import evaluate_candidate
 from mathbench.registry import ARCHIVED_TASKS, INITIAL_TASKS, load_task, resolve_task_id
-from mathbench.replay import replay
+from mathbench.replay import read_witness_bytes, replay, witness_path
 from scripts.audits.independent_audit import independent_quantity, broken
 
 def save(p,x):
@@ -72,9 +72,9 @@ def run():
     check=importlib.import_module(f'tasks.{task.lower()}.check')
     for config in configurations:
         cid=config['id'];cd=dest/cid;results={}
-        own_best=src/'best'/cid/'solution.json';warm_start=None
+        own_best=witness_path(src/'best'/cid/'solution.json');warm_start=None
         if own_best.exists():
-            warm_start=cd/'warm_start.json';warm_start.parent.mkdir(parents=True,exist_ok=True);warm_start.write_bytes(own_best.read_bytes())
+            warm_start=cd/'warm_start.json';warm_start.parent.mkdir(parents=True,exist_ok=True);warm_start.write_bytes(read_witness_bytes(own_best))
             manifest['warm_start_sha256'][cid]=hashlib.sha256(warm_start.read_bytes()).hexdigest();save(manifest_path,manifest)
         searches=[(f'search_seed{seed}','evolution.py',seed) for seed in args.seeds]
         for name,file,seed in [('initial','init_program.py',0),('baseline','baseline.py',0),('human','human.py',0),*searches]:

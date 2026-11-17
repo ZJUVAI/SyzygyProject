@@ -45,7 +45,7 @@
           "objective": "minimum_factor"
         },
         "program": "reference.py",
-        "witness": "data/reference/human_T100000_T33330.json",
+        "witness": "data/reference/human_T100000_T33330.json.gz",
         "actual_value": 33330,
         "reproduction_status": "exactly rechecked; all factors positive; exactly 100000 factors; product exactly 100000!",
         "review_status": "reviewed_by_sol"

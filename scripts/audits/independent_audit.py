@@ -1,4 +1,5 @@
 """Main-review cross-checks, separate from task checker implementations."""
+import gzip
 import itertools
 import json
 import math
@@ -291,7 +292,8 @@ def independent_quantity(task, s, config=None):
         assert area==1000000 and math.gcd(*sides)==1
         return {'square_count':len(squares),'total_area':area,'gcd':1,'method':'independent pairwise exact rectangle separation plus full area'}
     if task == 'T069':
-        rows=(ROOT/'tasks/t069/data/source/mona-lisa100K.tsp').read_text().split('NODE_COORD_SECTION',1)[1].split('EOF',1)[0].splitlines()
+        with gzip.open(ROOT / 'tasks/t069/data/source/mona-lisa100K.tsp.gz', 'rt', encoding='ascii') as stream:
+            rows = stream.read().split('NODE_COORD_SECTION', 1)[1].split('EOF', 1)[0].splitlines()
         points={}
         for row in rows:
             if row.strip():
@@ -558,8 +560,8 @@ def independent_quantity(task, s, config=None):
     if task == 'T055':
         assignment=s['assignment'];assert len(assignment)==1630 and all(type(v) is bool for v in assignment)
         bits=sum(v<<i for i,v in enumerate(assignment));hard=0;soft=0;cost=0
-        path=ROOT/'tasks/t055/data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf'
-        for line in path.read_text().splitlines():
+        path=ROOT/'tasks/t055/data/source/b4794d123e18a908924d3d33cdeeae3b.wcnf.gz'
+        for line in gzip.decompress(path.read_bytes()).decode().splitlines():
             fields=line.split()
             if not fields or fields[0].startswith(('c','p','%')):continue
             assert fields[-1]=='0';positive=negative=0
@@ -1002,7 +1004,8 @@ def independent_quantity(task, s, config=None):
                 checked += 1
         return {'prefix_length': len(colors), 'arithmetic_progressions_checked': checked}
     if task == 'T033':
-        raw = (ROOT / 'tasks/t033/data/source/G70').read_text().splitlines()
+        with gzip.open(ROOT / 'tasks/t033/data/source/G70.gz', 'rt', encoding='ascii') as stream:
+            raw = stream.read().splitlines()
         n, m = map(int, raw[0].split())
         assert (n, m) == (10000, 9999)
         edges = [tuple(map(int, line.split())) for line in raw[1:] if line.strip()]
@@ -1078,8 +1081,8 @@ def independent_quantity(task, s, config=None):
         return {'rank_terms': len(terms), 'basis_pairs': 81,
                 'output_coefficients_checked': checked}
     if task == 'T027':
-        values = list(map(int, (ROOT /
-            'tasks/t027/data/tai256c.dat').read_text().split()))
+        with gzip.open(ROOT / 'tasks/t027/data/tai256c.dat.gz', 'rt', encoding='ascii') as stream:
+            values = list(map(int, stream.read().split()))
         n = values[0]
         assert n == 256 and len(values) == 1+2*n*n
         a, b = values[1:1+n*n], values[1+n*n:]

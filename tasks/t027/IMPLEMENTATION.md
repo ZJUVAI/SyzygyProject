@@ -4,7 +4,7 @@ Status: `accepted_by_sol`.
 
 ## Implemented
 
-- Fixed QAPLIB `tai256c`, `n=256`, with SHA-256-pinned integer matrices.
+- Fixed QAPLIB `tai256c`, `n=256`, with gzip-compressed matrices. The pinned SHA-256 is checked against the exact decompressed source bytes.
 - Exact permutation checker; it validates all indices and recomputes the integer objective over 65,536 terms.
 - Self-contained identity seed, bounded randomized first-improvement pair-swap baseline, evolution entry point, public-witness replay, and task interface wrapper.
 - Bilingual task README, model instruction, records, and configuration-level SOTA record.

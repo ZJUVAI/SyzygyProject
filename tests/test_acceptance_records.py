@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 from mathbench.registry import INITIAL_TASKS, ROOT
+from mathbench.replay import read_witness_bytes, witness_path
 
 
 def test_own_records_match_selected_artifacts():
@@ -17,14 +18,14 @@ def test_own_records_match_selected_artifacts():
             provenance=json.loads((folder/'provenance.json').read_text())
             if provenance.get('reviewer')!='Sol main agent':continue
             result=json.loads((folder/'result.json').read_text())
-            digest=hashlib.sha256((folder/'solution.json').read_bytes()).hexdigest()
+            digest=hashlib.sha256(read_witness_bytes(folder/'solution.json')).hexdigest()
             for doc in (records,sota):
                 archive=doc.get('configurations',{}).get(cid,{})
                 for key in ('best_own_search','own_search_record'):
                     entry=archive.get(key,{})
                     if not isinstance(entry,dict):continue
                     witness=entry.get('witness',entry.get('witness_file'))
-                    if witness!=f'best/{cid}/solution.json':continue
+                    if witness not in (f'best/{cid}/solution.json', f'best/{cid}/solution.json.gz'):continue
                     if 'witness_sha256' in entry:
                         assert entry['witness_sha256']==digest,(task,key,'hash')
                     if 'program' in entry and 'program' in provenance:
@@ -43,8 +44,8 @@ def test_archived_witness_hashes_match_the_named_files():
             if isinstance(digest, str):
                 for key in ('saved_witness', 'witness_file', 'witness', 'file'):
                     name = value.get(key)
-                    if isinstance(name, str) and (directory / name).is_file():
-                        assert hashlib.sha256((directory / name).read_bytes()).hexdigest() == digest, location
+                    if isinstance(name, str) and witness_path(directory / name).is_file():
+                        assert hashlib.sha256(read_witness_bytes(directory / name)).hexdigest() == digest, location
                         break
             for key, item in value.items():
                 inspect(item, directory, location + '/' + key)

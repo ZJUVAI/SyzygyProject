@@ -1,17 +1,18 @@
 import json
+import gzip
+import hashlib
 from pathlib import Path
 
 import pytest
 
-from tasks.t033.check import validate
+from tasks.t033.check import validate, _EDGES as GRAPH_EDGES
 from tasks.t033.human import run_code as human_run
 from tasks.t033.reference import run_code as reference_run
 
 
 TASK = json.loads((Path(__file__).parent / "task.json").read_text())
 CONFIG = TASK["configurations"][0]
-GRAPH = json.loads((Path(__file__).parent / "data" / "instance.json").read_text())
-N = GRAPH["n"]
+N = 10000
 
 
 def test_all_same_side_is_valid_and_exact():
@@ -24,16 +25,27 @@ def test_one_vertex_cut_equals_its_degree():
     labels = [0] * N
     labels[0] = 1
     result = validate({"labels": labels}, CONFIG)
-    degree = sum(weight for u, v, weight in GRAPH["edges"] if u == 0 or v == 0)
+    degree = sum(weight for u, v, weight in GRAPH_EDGES if u == 0 or v == 0)
     assert result["objective"] == degree
 
 
 def test_pinned_graph_has_expected_edges_without_duplicates():
-    edges = GRAPH["edges"]
+    edges = GRAPH_EDGES
     pairs = [(min(u, v), max(u, v)) for u, v, _ in edges]
-    assert (GRAPH["n"], len(edges)) == (10000, 9999)
+    assert (N, len(edges)) == (10000, 9999)
     assert all(u != v and w == 1 for u, v, w in edges)
     assert len(set(pairs)) == len(edges)
+
+
+def test_compressed_source_decompresses_to_pinned_original():
+    source = Path(__file__).parent / "data" / "source" / "G70.gz"
+    compressed = source.read_bytes()
+    original = gzip.decompress(compressed)
+    assert hashlib.sha256(compressed).hexdigest() == (
+        "2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b")
+    assert hashlib.sha256(original).hexdigest() == (
+        "0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061")
+    assert len(original) == 117744
 
 
 def test_human_baseline_witness_replays(monkeypatch):

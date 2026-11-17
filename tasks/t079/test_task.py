@@ -2,6 +2,8 @@
 
 import ast
 import copy
+import gzip
+import hashlib
 import json
 import os
 import subprocess
@@ -24,6 +26,10 @@ CONFIG = {
 }
 
 
+def read_compressed_json(path):
+    return json.loads(gzip.decompress(path.read_bytes()))
+
+
 def test_canonical_projective_directions_are_complete_and_unique():
     assert len(CANONICAL_DIRECTIONS) == (31**3 - 1) // (31 - 1) == 993
     assert len(set(CANONICAL_DIRECTIONS)) == 993
@@ -41,7 +47,7 @@ def test_traditional_human_construction_exactly_recomputes_8641():
 
 def test_published_station_formula_rebuilds_and_exactly_checks_8289():
     witness = reference_run()
-    saved = json.loads((TASK_DIR / "data/reference/station_p31_8289.json").read_text())
+    saved = read_compressed_json(TASK_DIR / "data/reference/station_p31_8289.json.gz")
     result = validate(witness, CONFIG, strict=True)
     assert witness == saved
     assert result["objective"] == 8289
@@ -50,9 +56,23 @@ def test_published_station_formula_rebuilds_and_exactly_checks_8289():
 
 
 def test_saved_human_witness_matches_human_program():
-    saved = json.loads((TASK_DIR / "data/human/quadratic_residue_q31.json").read_text())
+    saved = read_compressed_json(TASK_DIR / "data/human/quadratic_residue_q31.json.gz")
     assert saved == human_run()
     assert validate(saved, CONFIG)["objective"] == 8641
+
+
+def test_compressed_assets_preserve_original_hashes_and_are_deterministic():
+    expected = {
+        "data/human/quadratic_residue_q31.json.gz": "9dace1a7172e476a83ae038b92d59273ef3958054517ef85865f152264093b1e",
+        "data/reference/station_p31_8289.json.gz": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
+        "data/source/station_finite_kakeya_verification.ipynb.gz": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07",
+    }
+    for relative, digest in expected.items():
+        packed = (TASK_DIR / relative).read_bytes()
+        raw = gzip.decompress(packed)
+        assert hashlib.sha256(raw).hexdigest() == digest
+        assert packed[3] == 0
+        assert packed[4:8] == bytes(4)
 
 
 def test_all_lines_through_origin_is_valid_full_space_boundary():

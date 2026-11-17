@@ -1,6 +1,7 @@
 """Exact task-local checks for partial MaxSAT configuration T055-C01."""
 
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
@@ -18,7 +19,8 @@ CONFIG = {"parameters": PARAMETERS}
 def test_pinned_instance_and_public_assignment_are_exact():
     from tasks.t055.reference import run_code
 
-    assert hashlib.sha256(instance_path().read_bytes()).hexdigest() == INSTANCE_SHA256
+    assert hashlib.sha256(gzip.decompress(instance_path().read_bytes())).hexdigest() == INSTANCE_SHA256
+    assert instance_path().name.endswith(".wcnf.gz")
     assert len(HARD) == 6150
     assert len(SOFT) == 649
     assert all(weight == 1 and len(clause) == 1 for weight, clause in SOFT)

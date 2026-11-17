@@ -2,11 +2,12 @@
 
 from pathlib import Path
 import hashlib
+import gzip
 
 NVAR = 1630
 HARD_COUNT = 6150
 SOFT_COUNT = 649
-INSTANCE_NAME = "b4794d123e18a908924d3d33cdeeae3b.wcnf"
+INSTANCE_NAME = "b4794d123e18a908924d3d33cdeeae3b.wcnf.gz"
 INSTANCE_SHA256 = "cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195"
 
 
@@ -16,11 +17,13 @@ def instance_path():
 
 def load_formula(path=None):
     source_path = Path(path) if path else instance_path()
-    if hashlib.sha256(source_path.read_bytes()).hexdigest() != INSTANCE_SHA256:
+    # Pin the uncompressed bytes so storage compression cannot change semantics.
+    contents = gzip.decompress(source_path.read_bytes())
+    if hashlib.sha256(contents).hexdigest() != INSTANCE_SHA256:
         raise ValueError("WCNF source hash does not match the pinned instance")
     hard = []
     soft = []
-    for raw_line in source_path.read_text().splitlines():
+    for raw_line in contents.decode("utf-8").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("c") or line.startswith("%"):
             continue

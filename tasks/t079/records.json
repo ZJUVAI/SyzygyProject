@@ -17,7 +17,7 @@
         "method": "Quadratic-residue almost-Kakeya construction plus the full t=0 plane.",
         "source": "Bukh and Chao, Sharp density bounds on the finite field Kakeya problem, Section 4",
         "url": "https://arxiv.org/abs/2108.00074",
-        "witness": "data/human/quadratic_residue_q31.json",
+        "witness": "data/human/quadratic_residue_q31.json.gz",
         "evidence_state": "The explicit line origins are generated from the classical construction. Exact validation checks all 993 directions and recomputes the 8,641-point union.",
         "ai_provenance": "Traditional published mathematical construction; no AI provenance claimed."
       },
@@ -29,7 +29,7 @@
           "dimension": 3
         },
         "source": "https://arxiv.org/html/2608.23691v2",
-        "witness": "data/reference/station_p31_8289.json",
+        "witness": "data/reference/station_p31_8289.json.gz",
         "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
         "evidence_state": "The paper gives the exact formula for p=3 mod 4. The p=31 line witnesses are reconstructed here and exactly checked.",
         "ai_provenance": "Disclosed AI-assisted multi-agent Station discovery; paper reports external GPT-5.5 assistance for formal verification.",
@@ -43,7 +43,7 @@
           "dimension": 3
         },
         "program": "reference.py",
-        "witness": "data/reference/station_p31_8289.json",
+        "witness": "data/reference/station_p31_8289.json.gz",
         "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
         "evidence_state": "Exact checker recomputes the union of 993 lines and returns 8,289.",
         "origin_type": "published AI-assisted family, locally specialized and exactly checked",
@@ -69,7 +69,7 @@
       "best_own_search": {
         "value": 8288,
         "objective_value": 8288,
-        "witness": "best/T079-C01/solution.json",
+        "witness": "best/T079-C01/solution.json.gz",
         "witness_sha256": "b262f252bd350c678568e5a0d79d1fe48993a5d6a3380cb15f7d994ecdb94b6e",
         "parameters": {
           "field_order": 31,

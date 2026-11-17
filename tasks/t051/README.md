@@ -14,6 +14,8 @@ The initial program returns `[1]`, a valid one-term sequence. `baseline.py` exte
 
 Konev and Lisitsa's SAT paper reports an unrestricted C=3 sequence of length 130000. The first 127600 terms are completely multiplicative. Their paper and data page do not prove that 130000 is longest. We recovered a complete sign sequence from a public notebook in a Wolfram Community discussion about the problem, then checked every progression prefix locally. The discussion refers to the Konev-Lisitsa report and data page. The saved text is a reconstruction from that public notebook; we do not claim byte identity with the original compressed author download. The source text contains 130000 signs and has SHA-256 `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`.
 
+The recovered text is stored as deterministic gzip at `data/source/sequence_130000.txt.gz`. Decompression gives the original sign text; its SHA-256 remains `024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2`.
+
 The exact maximum 1160 for C=2 is a different cap. The exact maximum 127645 for completely multiplicative C=3 sequences is a restricted problem. Neither resolves the unrestricted C=3 maximum. Tao's theorem rules out an infinite sequence with bounded discrepancy, but it gives no exact finite maximum. The 2026 Princeton thesis we checked treats the solved C=2 range and does not close the unrestricted C=3 case. We therefore record 130000 as a verified lower bound and leave the finite maximum open.
 
 Primary sources:
@@ -28,6 +30,7 @@ Primary sources:
 - `check.py` independently recalculates validity and length. Optional score fields do not affect its result.
 - `init_program.py` is a short valid seed. `baseline.py` and `evolution.py` do not read comparison data.
 - `human.py` replays the recovered human construction. `reference.py` replays the frozen public comparison.
+- Both programs use the same recovered 130000-sign witness. The redundant JSON copy was removed; SOTA verification now points to the archived source text and its SHA-256.
 - `evaluator.py` uses the shared evaluator. Generation budget is 300 seconds; verification budget is 60 seconds; default memory is 4 GiB and one thread.
 
 Run from the repository root:

@@ -5,7 +5,7 @@ Status: accepted by Sol on 2026-11-06.
 ## Definition and fixed instance
 
 - `T055-C01` is partial MaxSAT: assign 1630 Boolean variables, satisfy all 6150 hard clauses, and maximize the weight of satisfied soft clauses. The 649 soft clauses all have unit weight, so the objective ranges from 0 to 649.
-- The selected normalized WCNF has SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. `maxsat.py` checks the hash before parsing. The parser verifies exactly 6150 `h` clauses and 649 weighted soft clauses, then checks every literal is in `[-1630,1630] \ {0}`.
+- The selected normalized WCNF (stored losslessly as `.wcnf.gz`) has SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. `maxsat.py` decompresses the file and checks the original-byte hash before parsing. The parser verifies exactly 6150 `h` clauses and 649 weighted soft clauses, then checks every literal is in `[-1630,1630] \ {0}`.
 - The benchmark is `b4794d123e18a908924d3d33cdeeae3b`, family `inconsistency-measurement`, submitted in 2023, submitter unknown. The complete MSE 2026 benchmark collection is Zenodo record 21283148 (version 2026, published 2026-07-09). The official evaluation dataset is Zenodo record 21358014, v1, published 2026-07-14.
 
 ## Public result and human baseline
@@ -19,7 +19,7 @@ Status: accepted by Sol on 2026-11-06.
 
 ## Programs and search result
 
-- `init_program.py` is standalone and reads only the public WCNF. It runs DPLL on the hard clauses and returns a feasible assignment. It imports no task module.
+- `init_program.py` is standalone and reads only the public `.wcnf.gz` input. It runs DPLL on the hard clauses and returns a feasible assignment. It imports no task module.
 - `baseline.py` uses a fixed-seed random block-flip search. It keeps candidates only when every hard clause remains satisfied.
 - `evolution.py` uses a bounded population and block mutations. It checks hard feasibility exactly before accepting candidates.
 - `human.py` rebuilds the DPLL hard-SAT solution and applies feasible single-variable soft improvements.
@@ -44,7 +44,7 @@ From the repository root:
 .venv/bin/python -m json.tool tasks/t055/records.json > /dev/null
 ```
 
-The task-local suite passed: `5 passed in 3.30s` on the final run. It checks the WCNF hash and clause counts, independently re-counts the 587 public score, checks the 360 DPLL baseline, rejects malformed assignments and an all-false hard-violating assignment, confirms claimed-score fields do not change the result, runs all five program entries, and tests worker errors and timeouts through `mathbench.evaluate._run`. All four task JSON files passed `python -m json.tool`.
+The task-local suite passed: `5 passed in 3.30s` on the final run. It checks the decompressed WCNF hash and clause counts, independently re-counts the 587 public score, checks the 360 DPLL baseline, rejects malformed assignments and an all-false hard-violating assignment, confirms claimed-score fields do not change the result, runs all five program entries, and tests worker errors and timeouts through `mathbench.evaluate._run`. All four task JSON files passed `python -m json.tool`.
 
 ## Review limits
 

@@ -4,7 +4,7 @@
 
 This task uses the public Gset G70 graph. It has 10,000 vertices and 9,999 undirected edges. Each edge has weight +1. A construction assigns each vertex to side 0 or side 1. The score is the number of edges whose endpoints have different sides. The evaluator reads the fixed graph and recomputes the integer score.
 
-The graph is stored in `data/instance.json`. The byte-exact source is archived at `data/source/G70`, from [Stanford G70](https://web.stanford.edu/~yyye/yyye/Gset/G70), with SHA-256 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`. The candidate returns only a 10,000-element `labels` list. It must not provide a graph or a score.
+The graph is stored once, as deterministic gzip at `data/source/G70.gz`, from [Stanford G70](https://web.stanford.edu/~yyye/yyye/Gset/G70). The gzip file has SHA-256 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`. Its decompressed bytes match the original Stanford file exactly; the original source SHA-256 is `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`. The evaluator and search code parse this one file. The candidate returns only a 10,000-element `labels` list. It must not provide a graph or a score.
 
 The 2024 LPI paper reports 9,594 on its G70 test instance and 9,595 as a calibration value. Cosm v4 (revised 2026-10-11) reports a heuristic score of 9,595. LPI reports 9,594 on its G70 test instance and 9,595 as a calibration value. No public assignment was replayed here. A paper reports numerical SDP value 9,683; this task has not certified it as an upper bound, so the 88-point difference is not a certified optimality gap. The checked sources do not prove 9,595 optimal. See `sota.json` for the evidence and its limits.
 
@@ -16,7 +16,7 @@ The cold start assigns every vertex to side 0. The search baseline and evolution
 
 本任务使用公开的 Gset G70 图。图有 10,000 个顶点和 9,999 条无向边。每条边的权重为 +1。构造须把每个顶点分到 0 或 1 侧。目标是最大化两端位于不同侧的边权和。评测器从固定图读取边，并精确重算整数成绩。
 
-图保存在 `data/instance.json`。来源是 [Stanford G70 实例](https://web.stanford.edu/~yyye/yyye/Gset/G70)。原始文件的 SHA-256 为 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`。候选程序只返回含 10,000 个整数的 `labels` 列表。候选不能提供图或声明成绩。
+图仅保留一份，使用确定性 gzip 文件 `data/source/G70.gz`。来源是 [Stanford G70 实例](https://web.stanford.edu/~yyye/yyye/Gset/G70)。解压后与 Stanford 原始字节完全一致，原始文件 SHA-256 为 `0d965a2ff1444cc71d7740824b5b3a5e09fc1843cbf6d90691b52d5221987061`，压缩文件 SHA-256 为 `2ac5858ad553ad05de6864db8a60f18253aa8aad305fb43f7656eb4008692c9b`。评测器和搜索代码都从该文件读取图。候选程序只返回含 10,000 个整数的 `labels` 列表。候选不能提供图或声明成绩。
 
 2024 年 LPI 论文在 G70 测试实例上报告 9,594，并将 9,595 列为校准值。Cosm v4（2026-10-11 修订）报告启发式分数 9,595。LPI 在 G70 测试实例上报告 9,594，并将 9,595 列为校准值。此处没有复算公开见证。论文报告的 SDP 数值为 9,683；本任务未认证它是上界，因此两数相差 88 不构成已认证的最优性差距。来源和限制见 `sota.json`。
 

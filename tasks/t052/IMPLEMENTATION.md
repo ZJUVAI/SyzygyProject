@@ -47,6 +47,10 @@ From the repository root:
 
 The task-local suite passed: `5 passed in 32.76s`. It checks both PGL generators, the witness hash, all 870540 reference pairs, an independent size/distance recount, an accepted 12-word construction, a deliberately broken distance-8 pair, repeated rows, invalid symbols and numeric types, score-field tampering, all five `run_code()` entries, and runner error and timeout handling through `mathbench.evaluate._run`.
 
+## Asset update (2026-11-17)
+
+- `best/T052-C01/solution.json` is stored as `best/T052-C01/solution.json.gz` using deterministic gzip (`mtime=0`, no stored filename). The decompressed bytes retain SHA-256 `ce0013e1e51f5318e0cfcc842efb7c0d0d2543045764dd1228235b9a52535082`. The provenance replay command now uses the compressed path. Strict replay passed and recomputed 1320 codewords, minimum distance 10, and all 870540 pairs. This storage update is **已通过 Sol 验收（2026-11-17）**; the historical acceptance record is unchanged.
+
 ## Review limits
 
 - The construction is an exact lower-bound witness, not an optimality proof.

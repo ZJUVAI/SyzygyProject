@@ -115,9 +115,10 @@
   },
   "source_snapshot": {
     "table_url": "https://www-wales.ch.cam.ac.uk/~wales/CCD/Thomson/table.html",
-    "snapshot_file": "data/ccd_thomson_table.html",
+    "snapshot_file": "data/ccd_thomson_table.html.gz",
     "table_sha256": "5466173175b10a81d19e20763dffa64589f3ce5b92b09e827de14eb1fbb583e2",
-    "paper": "Wales and Ulker, Phys. Rev. B 74, 212101 (2006), DOI 10.1103/PhysRevB.74.212101"
+    "paper": "Wales and Ulker, Phys. Rev. B 74, 212101 (2006), DOI 10.1103/PhysRevB.74.212101",
+    "table_sha256_scope": "SHA-256 of decompressed original HTML bytes; unchanged by gzip storage"
   },
   "configuration_expansion_review": {
     "status": "accepted_by_sol",

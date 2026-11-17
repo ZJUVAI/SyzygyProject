@@ -10,7 +10,7 @@
       "parameters": {
         "instance": "QAPLIB tai256c",
         "n": 256,
-        "matrix_file": "data/tai256c.dat",
+        "matrix_file": "data/tai256c.dat.gz",
         "matrix_sha256": "e7d72083d49f4768e5a15a02ee33fde038a794e7407e5e485c3c110f1509fafd",
         "permutation_convention": "zero-based location assigned to each zero-based facility",
         "objective": "sum_{i=0}^{255} sum_{j=0}^{255} A[i,j] * B[p[i],p[j]]",

@@ -20,7 +20,7 @@ The primary paper is [Alexeev et al., Decomposing a factorial into large factors
 
 The frozen human reference is `33330`. `human.py` reconstructs the upstream Sutherland greedy algorithm for a threshold of 33330. It first builds a subfactorization with 100008 factors, each at least 33330. This satisfies the paper's relaxed formulation: a subfactorization of cardinality at least N can be converted to exactly N factors of the full factorial. The code keeps 100000 factors and distributes all leftover prime powers across those factors. This restores the exact product without lowering any factor.
 
-The resulting witness is saved at `data/reference/human_T100000_T33330.json`, SHA-256 `6f3e45225c731021ebf20281ab66c53aa601d5160927ace684547403a4d36cbb`. It has exactly 100000 positive factors, minimum 33330, and product exactly `100000!`. A separate test factors every output factor with an independently built smallest-prime-factor table, then compares each prime's total exponent against Legendre's formula for `100000!`.
+The resulting witness is saved as deterministic gzip at `data/reference/human_T100000_T33330.json.gz`. Decompression gives the exact JSON bytes (SHA-256 `7f9b3e684eba7a13b1b71ee1476accde55d359e2d319dd680a4ff251a73f94b8`). It has exactly 100000 positive factors, minimum 33330, and product exactly `100000!`. A separate test factors every output factor with an independently built smallest-prime-factor table, then compares each prime's total exponent against Legendre's formula for `100000!`.
 
 The source comment attributes the method to Andrew Sutherland's Maple code and credits Adam Wagner for help with its Python conversion. The paper describes its use of linear/integer programming and computational methods. These sources do not state whether AI tools were used; no AI-free claim is made.
 
@@ -36,7 +36,9 @@ All five programs expose `run_code()` and read `MATHBENCH_CONFIG_ID` and `MATHBE
 | `reference.py` | Replay saved exact human-method witness | 33330 | direct replay |
 | `evolution.py` | Random receiver selection with exact prime transfers from the simple seed | 158 | 256 iterations; 256 accepted transfers; 157 best improvements |
 
-The baseline and evolution entries do not read or import the human or public comparison witness. Their prime-transfer operations preserve the product exactly. Each resulting construction is then checked by the trusted evaluator. The evolution result is saved at `best/seed_0.json`, with seed, fixed iterations, platform, Python version, one-thread setting, exact result, and replay command. The reference witness remains under `data/reference/`.
+The baseline and evolution entries do not read or import the human or public comparison witness. Their prime-transfer operations preserve the product exactly. Each resulting construction is then checked by the trusted evaluator. The evolution result is saved at `best/seed_0.json.gz`, with seed, fixed iterations, platform, Python version, one-thread setting, exact result, and replay command. The T053-C01 best solution and the seed result have different constructions and remain separate. The reference witness remains under `data/reference/`.
+
+Large JSON assets use gzip with a zero timestamp and no embedded filename. The compressed files preserve their exact original JSON bytes when decompressed. The human witness, seed result, and best solution are distinct assets; none was deduplicated.
 
 Reproduce the saved search result with:
 

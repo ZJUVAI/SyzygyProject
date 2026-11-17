@@ -20,7 +20,7 @@
         },
         "source": "Bukh and Chao, Sharp density bounds on the finite field Kakeya problem, 2021, Section 4; https://arxiv.org/abs/2108.00074",
         "provenance": "Traditional quadratic-residue construction: the odd-field almost-Kakeya set of size 31*((31+1)/2)^2, united with the full plane t=0.",
-        "witness": "data/human/quadratic_residue_q31.json",
+        "witness": "data/human/quadratic_residue_q31.json.gz",
         "evidence_state": "Reconstructed from the formula and exact-checked over all 993 directions; the union has 8,641 points.",
         "ai_provenance": "This is the pre-AI traditional construction cited in the source."
       },
@@ -33,7 +33,7 @@
         "source": "https://arxiv.org/html/2608.23691v2",
         "date_checked": "2026-11-06",
         "provenance": "AI-assisted multi-agent Station discovery. The paper discloses use of agents from multiple model families, and says GPT-5.5 operating outside the Station assisted formal verification. The formula is given in Section 6.1 and supported by a first-party verification notebook.",
-        "witness": "data/reference/station_p31_8289.json",
+        "witness": "data/reference/station_p31_8289.json.gz",
         "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
         "first_party_verification_revision": "a4ae9192fa75b7ffc6909ed018a712510062378b",
         "first_party_verification_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07",
@@ -50,7 +50,7 @@
         "program": "reference.py",
         "verification_status": "exact",
         "verification_method": "Generate the 993 explicit lines from the published formula; the checker reconstructs all 30,783 line points modulo 31 and counts the exact union.",
-        "witness": "data/reference/station_p31_8289.json",
+        "witness": "data/reference/station_p31_8289.json.gz",
         "witness_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
         "origin_type": "local specialization and exact reproduction of a published AI-assisted construction"
       },
@@ -64,7 +64,7 @@
       "best_own_search": {
         "value": 8288,
         "objective_value": 8288,
-        "witness": "best/T079-C01/solution.json",
+        "witness": "best/T079-C01/solution.json.gz",
         "witness_sha256": "b262f252bd350c678568e5a0d79d1fe48993a5d6a3380cb15f7d994ecdb94b6e",
         "parameters": {
           "field_order": 31,

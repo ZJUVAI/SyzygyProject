@@ -1,5 +1,6 @@
 """Exact checker for QAPLIB tai256c permutations."""
 from functools import lru_cache
+import gzip
 import hashlib
 from pathlib import Path
 
@@ -10,16 +11,19 @@ CONFIG_ID = "T027-C01"
 
 def load_instance():
     """Load the pinned QAPLIB file, rejecting changed or malformed data."""
-    path = Path(__file__).parent / "data" / "tai256c.dat"
-    raw = path.read_bytes()
+    path = Path(__file__).parent / "data" / "tai256c.dat.gz"
+    try:
+        raw = gzip.decompress(path.read_bytes())
+    except (OSError, EOFError) as exc:
+        raise ValueError("tai256c.dat.gz is not a valid gzip asset") from exc
     if hashlib.sha256(raw).hexdigest() != INSTANCE_SHA256:
-        raise ValueError("tai256c.dat does not match the pinned SHA-256")
+        raise ValueError("decompressed tai256c.dat does not match the pinned SHA-256")
     try:
         values = [int(token) for token in raw.decode("ascii").split()]
     except (UnicodeDecodeError, ValueError) as exc:
-        raise ValueError("tai256c.dat must contain ASCII integers") from exc
+        raise ValueError("decompressed tai256c.dat must contain ASCII integers") from exc
     if len(values) != 1 + 2 * N * N or values[0] != N:
-        raise ValueError("tai256c.dat has an unexpected dimension or value count")
+        raise ValueError("decompressed tai256c.dat has an unexpected dimension or value count")
     split = 1 + N * N
     a = tuple(tuple(values[1 + i * N:1 + (i + 1) * N]) for i in range(N))
     b = tuple(tuple(values[split + i * N:split + (i + 1) * N]) for i in range(N))

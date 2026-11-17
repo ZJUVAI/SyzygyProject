@@ -12,7 +12,9 @@ The official Waterloo challenge page defines the 100K instance and currently lis
 
 Cook, Helsgaun, Hougardy and Schroeder's 2024 paper, §3.1, says that `mona-lisa100k` has not been solved to proven optimality. The selected finite instance therefore remains open in the sources checked on 2026-11-06. The reported lower bound is recorded as published; this task does not re-certify Concorde's proof file.
 
-The same-parameter public Nagata tour is the human-method and fixed reference witness. `human.py` and `reference.py` read separate frozen copies. The source attributes the tour to a genetic algorithm, not generative AI. T069 is an unconstrained Hamiltonian cycle problem. It has no vehicle capacity or route-count constraint; T057 is a separate CVRP model.
+The same-parameter public Nagata tour is the human-method and fixed reference witness. Both entries read the same frozen gzip-compressed tour at `data/human/monalisa_5757191.tour.gz`; the duplicate JSON copy was removed after confirming its ordered 100,000 vertices match. The source attributes the tour to a genetic algorithm, not generative AI. T069 is an unconstrained Hamiltonian cycle problem. It has no vehicle capacity or route-count constraint; T057 is a separate CVRP model.
+
+The coordinate file is `data/source/mona-lisa100K.tsp.gz`. The saved search and best task witnesses are also gzip-compressed. Read these files with a gzip reader. Compression is lossless; the SHA-256 values in the records refer to the decompressed original bytes.
 
 ## Search entries
 
@@ -38,13 +40,13 @@ Set `MATHBENCH_CONFIG_ID=T069-C01` and run any of the five `run_code()` entries.
 
 ## 定义
 
-固定使用 `mona-lisa100K` 的 100,000 个整数坐标城市。输出一个闭合 Hamilton 圈。每个城市恰好出现一次，最后一个城市连接回第一个城市。最小化 100,000 条 TSPLIB `EUC_2D` 边权之和。对坐标差 `(dx,dy)`，边权是 `sqrt(dx*dx+dy*dy)` 四舍五入到最近整数。
+固定使用 `mona-lisa100K` 的 100,000 个整数坐标城市。输出一个闭合 Hamilton 圈。每个城市恰好出现一次，最后一个城市连接回第一个城市。最小化 100,000 条 TSPLIB `EUC_2D` 边权之和。对坐标差 `(dx,dy)`，边权是 `sqrt(dx*dx+dy*dy)` 四舍五入到最近整数。坐标、旅程和保存的构造都使用 gzip 无损压缩；读取时使用 gzip reader。记录中的 SHA-256 对应解压后的原始内容。
 
 精确检查器用整数平方根和阈值 `4*squared >= (2*floor_sqrt+1)^2` 判断舍入结果。它检查全排列，并重算包括回边在内的每条边。目标值不使用浮点距离和。
 
 ## 固定数据与当前状态
 
-Waterloo 官方挑战页定义该 100K 实例，并列出长度 5,757,191 的圈、下界 5,757,084 和差距 107。2009 年 3 月 17 日记录将该圈归于 Yuichi Nagata 的遗传算法，并链接旅程文件。本地实例与旅程的 SHA-256 保存在 `sota.json`。
+Waterloo 官方挑战页定义该 100K 实例，并列出长度 5,757,191 的圈、下界 5,757,084 和差距 107。2009 年 3 月 17 日记录将该圈归于 Yuichi Nagata 的遗传算法，并链接旅程文件。本地实例与旅程的解压 SHA-256 保存在 `sota.json`。基线和固定参考程序共用 `data/human/monalisa_5757191.tour.gz`；已删除经核实顶点顺序完全相同的 JSON 副本。
 
 Cook、Helsgaun、Hougardy 和 Schroeder 2024 年论文第 3.1 节称 `mona-lisa100k` 尚未证明最优。因此，截至 2026-11-06 检查的来源，这个固定实例仍开放。已发表下界按来源记录，本任务不重新证明 Concorde 证书。
 

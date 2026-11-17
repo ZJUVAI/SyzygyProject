@@ -5,16 +5,17 @@ modules or comparison witnesses.
 """
 
 import os
+import gzip
 from pathlib import Path
 
 
-INSTANCE = Path(__file__).parent / "data" / "source" / "b4794d123e18a908924d3d33cdeeae3b.wcnf"
+INSTANCE = Path(__file__).parent / "data" / "source" / "b4794d123e18a908924d3d33cdeeae3b.wcnf.gz"
 VARIABLES = 1630
 
 
 def _hard_clauses():
     clauses = []
-    for raw_line in INSTANCE.read_text().splitlines():
+    for raw_line in gzip.decompress(INSTANCE.read_bytes()).decode("utf-8").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("c") or line.startswith("%"):
             continue

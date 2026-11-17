@@ -6,11 +6,11 @@ MaxSAT 输入是加权合取范式。硬子句必须全部满足；目标是最�
 
 配置 `T055-C01` 固定 MSE 2026 实例 `b4794d123e18a908924d3d33cdeeae3b`，属于 `inconsistency-measurement`。它有 1630 个变量、6150 个硬子句和 649 个权重为 1 的软单位子句。输出是按变量 `1,...,1630` 排列的布尔数组。目标分数为满足软子句权重，最大值 649。官方以未满足软权重报告成本；成本 62 对应本任务分数 587。
 
-`check.py` 从固定 WCNF 精确检查所有硬、软子句。它拒绝违反硬子句的赋值，并重新计算软权重；不使用候选自报分数。
+`check.py` 解压固定 `.wcnf.gz` 输入，并精确检查所有硬、软子句。它拒绝违反硬子句的赋值，并重新计算软权重；不使用候选自报分数。
 
 ## 来源与记录
 
-原始规范化实例保存在 `data/source/`，SHA-256 为 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`。实例元数据来自 MSE 2026 完整基准集 Zenodo 记录 21283148。比赛结果和解算器日志来自 MSE 2026 Zenodo 记录 21358014（v1，2026-07-14）。
+规范化实例以 gzip 保存在 `data/source/`。gzip 的 mtime 为 0，且不含原始文件名。解压后的原始输入 SHA-256 为 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`。实例元数据来自 MSE 2026 完整基准集 Zenodo 记录 21283148。比赛结果和解算器日志来自 MSE 2026 Zenodo 记录 21358014（v1，2026-07-14）。
 
 输入采用 MSE `std_wcnf` 格式：硬子句行以 `h` 开头，软子句行以正权重开头，并以 `0` 结束。
 
@@ -20,7 +20,7 @@ MaxSAT 输入是加权合取范式。硬子句必须全部满足；目标是最�
 
 ## 程序与搜索
 
-- `init_program.py` 独立解析公开 WCNF，只对硬子句运行 DPLL，产生有效起点。
+- `init_program.py` 独立解析公开 `.wcnf.gz` 输入，只对硬子句运行 DPLL，产生有效起点。
 - `baseline.py` 从硬可行赋值开始，按固定种子做随机块翻转，只保留硬可行解并更新最好软分数。
 - `evolution.py` 从硬可行赋值建立小型种群，做有界块变异并精确过滤硬约束。
 - `human.py` 重建传统 DPLL 硬可行赋值并做单变量贪心改进。
@@ -51,13 +51,13 @@ A MaxSAT input is a weighted conjunctive normal form. Every hard clause must be 
 
 Configuration `T055-C01` fixes the MSE 2026 instance `b4794d123e18a908924d3d33cdeeae3b` from the `inconsistency-measurement` family. It has 1630 variables, 6150 hard clauses, and 649 soft unit clauses of weight 1. The output is a Boolean array ordered by variables `1,...,1630`. The score is the satisfied soft weight, with maximum 649. The official benchmark reports unsatisfied soft cost; cost 62 corresponds to our score 587.
 
-`check.py` reads the fixed WCNF and checks every hard and soft clause exactly. It rejects assignments that violate a hard clause and recomputes the soft weight. It ignores any score claimed by the candidate.
+`check.py` reads the fixed `.wcnf.gz` input and checks every hard and soft clause exactly. It rejects assignments that violate a hard clause and recomputes the soft weight. It ignores any score claimed by the candidate.
 
 ## Sources and results
 
-The normalized source instance is saved under `data/source/`. Its SHA-256 is `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. Instance metadata comes from the MSE 2026 complete benchmark collection, Zenodo record 21283148. Competition results and solver logs come from MSE 2026 Zenodo record 21358014, v1, published 2026-07-14.
+The normalized source instance is stored as gzip under `data/source/`, with mtime 0 and no embedded filename. The decompressed input SHA-256 is `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`. Instance metadata comes from the MSE 2026 complete benchmark collection, Zenodo record 21283148. Competition results and solver logs come from MSE 2026 Zenodo record 21358014, v1, published 2026-07-14.
 
-The input uses the MSE `std_wcnf` format: hard-clause lines start with `h`; soft-clause lines start with a positive weight. Each line ends with `0`.
+The input uses the MSE `std_wcnf` format: hard-clause lines start with `h`; soft-clause lines start with a positive weight. Each line ends with `0`. The repository stores the input as gzip; its decompressed bytes must have SHA-256 `cd81f483b6cc3d05e9760274eee7697d9cc0f0a5a7146d3c6887af687d149195`.
 
 The official BouMS log in the `ANYTIME-UW` 60-second track reports unsatisfied soft cost 62, and the completion file says `VERIFIED`. The log index offset and CRC, the complete assignment, and its SHA-256 are saved in `sota.json`. We extracted the assignment and independently checked all 6150 hard clauses and 649 soft clauses. The resulting score is 587. The competition metadata lists the optimum cost as unknown, so optimality is open. The official release does not state whether AI contributed to BouMS or this run; AI provenance is recorded as unknown.
 
@@ -65,7 +65,7 @@ The frozen human baseline is 360. `human.py` runs the traditional DPLL satisfiab
 
 ## Programs and search
 
-- `init_program.py` parses the public WCNF on its own and runs DPLL on the hard clauses to make a valid starting assignment.
+- `init_program.py` parses the public `.wcnf.gz` input on its own and runs DPLL on the hard clauses to make a valid starting assignment.
 - `baseline.py` starts from a hard-feasible assignment and applies fixed-seed random block flips. It keeps only hard-feasible assignments and retains the best soft score.
 - `evolution.py` builds a small population from a hard-feasible assignment, mutates bounded blocks, and filters each candidate against every hard clause.
 - `human.py` rebuilds a traditional DPLL assignment and applies greedy single-variable improvements.

@@ -1,4 +1,5 @@
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
@@ -52,10 +53,12 @@ def test_pinned_inputs_and_witness_hashes():
     record = metadata["configurations"][CONFIG_ID]
     instance = TASK / record["instance_file"]
     reference = TASK / record["witness"]
-    assert hashlib.sha256(instance.read_bytes()).hexdigest() == INSTANCE_SHA256
-    assert hashlib.sha256(instance.read_bytes()).hexdigest() == record["instance_sha256"]
-    assert hashlib.sha256(reference.read_bytes()).hexdigest() == record["witness_sha256"]
-    assert hashlib.sha256(reference.read_bytes()).hexdigest() == TOUR_SHA256
+    instance_raw = gzip.decompress(instance.read_bytes())
+    reference_raw = gzip.decompress(reference.read_bytes())
+    assert hashlib.sha256(instance_raw).hexdigest() == INSTANCE_SHA256
+    assert hashlib.sha256(instance_raw).hexdigest() == record["instance_sha256"]
+    assert hashlib.sha256(reference_raw).hexdigest() == record["witness_sha256"]
+    assert hashlib.sha256(reference_raw).hexdigest() == TOUR_SHA256
     assert len(load_points()) == 100_000
 
 

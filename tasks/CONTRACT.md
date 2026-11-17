@@ -35,3 +35,5 @@ Use `.venv/bin/python` (Python 3.13 with pytest and science libraries) for valid
 For an exact algebraic objective, the trusted checker may return the exact expression in `objective` and a rational string in `objective_value` for numeric feedback. This must be a conservative bound (upper for minimize, lower for maximize). Include a rigorously established `details.objective_interval`; the candidate's own numeric claims remain ignored. T002 implements this for Q(sqrt(2)) with integer-square-root bounds.
 
 Search baseline amendment: defaults use fixed iteration counts and the saved random seed. `mathbench.search.search_steps` supplies this mode. Explicit `MATHBENCH_SEARCH_SECONDS` enables a wall-clock cutoff for exploration; its result can depend on machine speed. Hard runner limits apply in both modes.
+
+Saved JSON witnesses can use `.json` or `.json.gz`. Replay accepts both paths. If an old `.json` path is missing, replay looks for the corresponding `.json.gz` file. Witness hashes cover the original JSON bytes after decompression.

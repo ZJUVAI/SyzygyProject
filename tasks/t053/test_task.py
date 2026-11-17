@@ -1,6 +1,7 @@
 """Exact mathematical, source, entry-point, and worker tests for T053."""
 
 import ast
+import gzip
 import hashlib
 import importlib
 import json
@@ -18,7 +19,8 @@ CONFIG = {"parameters": PARAMETERS}
 
 
 def _reference_solution():
-    return {"factors": json.loads(DATA.read_text(encoding="utf-8"))["factors"]}
+    with gzip.open(DATA, "rt", encoding="utf-8") as stream:
+        return {"factors": json.load(stream)["factors"]}
 
 
 def _independent_spf(limit):
@@ -73,7 +75,8 @@ def test_human_program_reconstructs_saved_reference():
     from tasks.t053.human import run_code
 
     generated = run_code()
-    saved = json.loads(DATA.read_text(encoding="utf-8"))
+    with gzip.open(DATA, "rt", encoding="utf-8") as stream:
+        saved = json.load(stream)
     assert generated["factors"] == saved["factors"]
     assert generated["method_metadata"]["factors_before_restoring_residual"] == 100008
 

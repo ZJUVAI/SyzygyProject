@@ -24,7 +24,7 @@
       "first_party_verification": "https://dualverse.ai/station/math/finite-field-kakeya/",
       "verification_bundle": "https://github.com/dualverse-ai/station_data_v2/blob/main/artifacts/finite_kakeya/verification.ipynb",
       "verification_bundle_revision": "a4ae9192fa75b7ffc6909ed018a712510062378b",
-      "verification_bundle_file": "station_finite_kakeya_verification.ipynb",
+      "verification_bundle_file": "station_finite_kakeya_verification.ipynb.gz",
       "verification_bundle_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07"
     },
     {
@@ -42,5 +42,24 @@
   "excluded_claim": {
     "value": 8288,
     "reason": "Found only in a non-primary current online table; no construction or primary source for this value was located by the 2026-11-06 cutoff. It is not treated as a reliable result."
+  },
+  "compression": {
+    "format": "gzip",
+    "parameters": "mtime=0, empty filename, compression level 9",
+    "integrity": "SHA-256 fields for compressed inputs refer to the decompressed original bytes; loaders must decompress before parsing.",
+    "assets": {
+      "data/human/quadratic_residue_q31.json.gz": {
+        "uncompressed_sha256": "9dace1a7172e476a83ae038b92d59273ef3958054517ef85865f152264093b1e",
+        "compressed_sha256": "f21ab61a2029f0ab3167b67883f59925541e447bd315a37b64282759d6190d88"
+      },
+      "data/reference/station_p31_8289.json.gz": {
+        "uncompressed_sha256": "16e3d35f456e658e870c23bc56c21af0c420b412bbc65c5717b1e9e0c3189916",
+        "compressed_sha256": "1ed9945741ce1d20d56824719fe5a72a9cdccb22908c6fe5eeb288c83a825b17"
+      },
+      "data/source/station_finite_kakeya_verification.ipynb.gz": {
+        "uncompressed_sha256": "b1d1013fe25ab210555725f0bfcb52c5ab89885c3035ca24bab65d47bc847c07",
+        "compressed_sha256": "c00a540bff0a11e4451f8884e98a8408282fab3f94d57fc867282036f2ceaafa"
+      }
+    }
   }
 }

@@ -23,7 +23,7 @@
   "classification": "ai_assisted_local_continuation",
   "source_assistance": {
     "source": "https://cgi.csc.liv.ac.uk/~konev/edp/",
-    "archived_witness": "tasks/t051/data/source/sequence_130000.txt",
+    "archived_witness": "tasks/t051/data/source/sequence_130000.txt.gz",
     "public_witness_length": 130000,
     "preserved_prefix_length": 124502
   },
@@ -67,5 +67,5 @@
     "sequence_130000.txt": "024af56550adebd499df5c4e857453f518655e7e175af6e8d8a017e047f754c2"
   },
   "warm_start_sha256": "fc592aedf358111fa17793298c4ce642209a38b3da49fa82e134f426f639ee78",
-  "replay_command": ".venv/bin/python -m mathbench replay T051 tasks/t051/best/T051-C01/solution.json --config T051-C01"
+  "replay_command": ".venv/bin/python -m mathbench replay T051 tasks/t051/best/T051-C01/solution.json.gz --config T051-C01"
 }

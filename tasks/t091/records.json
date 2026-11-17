@@ -60,7 +60,7 @@
         "value": 8192,
         "objective_value": 8192,
         "program": "baseline.py",
-        "witness": "data/search_history/oa8192.json",
+        "witness": "data/search_history/oa8192.json.gz",
         "witness_sha256": "3d410c4003e174ffa0c9eebd80c1df6592a6220c3ffc398e090b2d96c15a945a",
         "parameters": {
           "columns": 63,

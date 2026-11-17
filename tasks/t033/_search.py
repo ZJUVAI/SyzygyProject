@@ -2,12 +2,16 @@
 
 import json
 import random
+import gzip
 from pathlib import Path
 
 
-_DATA = json.loads((Path(__file__).parent / "data" / "instance.json").read_text())
-_N = _DATA["n"]
-_EDGES = _DATA["edges"]
+_LINES = gzip.decompress((Path(__file__).parent / "data" / "source" / "G70.gz").read_bytes()).decode("ascii").splitlines()
+_N, _M = (int(value) for value in _LINES[0].split())
+_EDGES = [[int(parts[0]) - 1, int(parts[1]) - 1, int(parts[2])]
+          for parts in (line.split() for line in _LINES[1:])]
+if len(_EDGES) != _M:
+    raise RuntimeError("pinned G70 source has the wrong edge count")
 _ADJ = [[] for _ in range(_N)]
 for _u, _v, _w in _EDGES:
     _ADJ[_u].append((_v, _w))

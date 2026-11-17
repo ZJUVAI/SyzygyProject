@@ -2,6 +2,7 @@
 import argparse
 import csv
 import hashlib
+import importlib
 import json
 from datetime import datetime, timezone
 from fractions import Fraction
@@ -11,6 +12,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from mathbench.replay import read_witness_bytes, witness_path as resolve_witness_path
 
 
 def read(path):
@@ -208,11 +210,20 @@ def update(checkout, initial_witnesses=None):
             template = data.get('drawing_template') or task_template
 
             def construction(run, program, witness_path):
-                if not witness_path or not witness_path.is_file():
+                if witness_path is None or not resolve_witness_path(witness_path).is_file():
                     raise ValueError(f'{cid}: missing {program} witness')
-                raw = witness_path.read_bytes()
+                source_assets = {
+                    'T051': folder / 'data/source/sequence_130000.txt.gz',
+                    'T069': folder / 'data/human/monalisa_5757191.tour.gz',
+                }
+                if program == 'sota' and witness_path == source_assets.get(tid):
+                    reference = importlib.import_module(f'tasks.{tid.lower()}.reference')
+                    solution = reference.run_code()
+                    raw = encoded(solution)
+                else:
+                    raw = read_witness_bytes(witness_path)
+                    solution = json.loads(raw)
                 witness = asset_bytes(raw, 'jsonraw')
-                solution = json.loads(raw)
                 if tid == 'T011' and len(solution['words'][0]) != 3:
                     projection = grid(solution['words'], 'Independent-set words', '独立集的元组', categorical=True)
                 elif template:

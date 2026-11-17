@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 import hashlib
+import gzip
 from pathlib import Path
 import math
 
@@ -53,8 +54,9 @@ def _parse_tsplib(raw):
 
 @lru_cache(maxsize=1)
 def load_points():
-    path = Path(__file__).parent / "data/source/mona-lisa100K.tsp"
-    raw = path.read_bytes()
+    path = Path(__file__).parent / "data/source/mona-lisa100K.tsp.gz"
+    with gzip.open(path, "rb") as stream:
+        raw = stream.read()
     if hashlib.sha256(raw).hexdigest() != INSTANCE_SHA256:
         raise ValueError("TSP instance does not match pinned SHA-256")
     return _parse_tsplib(raw)
