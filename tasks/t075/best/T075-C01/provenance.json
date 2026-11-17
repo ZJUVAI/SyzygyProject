@@ -1,69 +1,65 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t075/runs/search_routes_20261109_structured/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "edge_count": 2220,
+    "link_graphs_checked": 36,
+    "double_counting_upper_bound": 3570,
+    "method": "all vertex links triangle-free, independent of formal four-set loads"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T075",
-    "config_id": "T075-C01",
-    "validity": 1.0,
-    "combined_score": 0.5612612612612613,
-    "objective": 1246,
-    "verification_status": "exact",
-    "generation_time": 3.0005540661513805,
-    "verification_time": 0.5178768746554852,
-    "objective_value": 1246,
-    "details": {
-      "vertex_count": 36,
-      "uniformity": 3,
-      "edge_count": 1246,
-      "four_vertex_sets_checked": 58905,
-      "maximum_triples_on_any_four_set": 2,
-      "double_counting_upper_bound": 3570,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 3.5517377592623234,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 70,
+    "method": "Deterministic algebraic construction or exact template enumeration; sources of known formulas are recorded separately."
   },
-  "search_metadata": {
-    "algorithm": "seeded random-priority greedy edge addition",
-    "seed": 0,
-    "iterations": 8,
-    "iteration_limit": 8,
-    "trial_edge_counts": [
-      1231,
-      1216,
-      1230,
-      1236,
-      1232,
-      1246,
-      1236,
-      1237
+  "classification": "ai_assisted_local_continuation",
+  "seed": 41113,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        67,
+        67,
+        "512",
+        41113
+      ]
     ],
-    "best_edge_count": 1246,
-    "comparison_data_read": false,
-    "budget": {
-      "mode": "fixed_iterations",
-      "requested_iterations": 8,
-      "actual_iterations": 8,
-      "requested_wall_clock_seconds": null
-    }
+    "prior_control_summary": "tasks/t075/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "1da98fa5d4d5cfba31355950f598f57219d6b58f23d9e18ef4c54510e5c54608",
-  "replay_command": "python -m mathbench replay T075 tasks/t075/best/T075-C01/solution.json --config T075-C01"
+  "budget": {
+    "generation_seconds": 70,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 28
+  },
+  "source_sha256": {
+    "tasks/t075/baseline.py": "b58c4941deaace2c155cbf2cc9cb7401c7056e6dd9d3c8416ad8bfab0e1a5e32",
+    "tasks/t075/check.py": "7174e69c219c17c38a2fa6da4d82276b4bc27943e0406493faf043ca69222762",
+    "tasks/t075/construction.py": "776c13484f844cb5669153abc51df9fec663592325e7e6c1dfa8e333c1ec8bb7",
+    "tasks/t075/evaluator.py": "b279f99be6041d1d23d888f177789bd96921d4af4a91391091083efdaa72b3f7",
+    "tasks/t075/evolution.py": "c9d9a0ffe7ae629dca465f7c0141837ed28451cd5d6b00396d5263b2bf3e75b1",
+    "tasks/t075/greedy.py": "819ff8412cff14582e111d438a2146d5862f350ff65eed29651f43e6e4437b97",
+    "tasks/t075/human.py": "cb8549e5a4601bd026d75ce95ad746de5ddb24b7e304ca759bb6746c0bfddfd3",
+    "tasks/t075/init_program.py": "4b81f022aa4c72f7024f8443e7f00c99b18dc2f33dd40aecb947a209a11cd0d9",
+    "tasks/t075/reference.py": "d94810a09cc771ab2281684c10df79b43095a902f9090a67495e1d2352f50b4d",
+    "tasks/t075/test_task.py": "1e26a5de31f020ff0f715681bdedec36fad6ac6e44601ea0e1f7761d2886cf94",
+    "program.py": "f82dc6b05bd759f3e1479689b03ff0e93d8211a0b448ea16b8b7c6462db626cd",
+    "plan.json": "b472d9ee8dd2a3b86bcf4e4c218321af1c63a6c31e38ec35a291dff8fd5972c8"
+  },
+  "warm_start_sha256": "1da98fa5d4d5cfba31355950f598f57219d6b58f23d9e18ef4c54510e5c54608",
+  "replay_command": ".venv/bin/python -m mathbench replay T075 tasks/t075/best/T075-C01/solution.json --config T075-C01"
 }

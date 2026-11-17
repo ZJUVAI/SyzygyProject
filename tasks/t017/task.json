@@ -2,6 +2,7 @@
   "task_id": "T017",
   "name": "Erdős minimum overlap, 51 steps",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T017-C01",
   "configurations": [
     {
       "id": "T017-C01",

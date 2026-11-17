@@ -3,6 +3,7 @@
   "candidate_id": "van-der-waerden-2-7",
   "name": "Two-color van der Waerden lower-bound coloring for 7-term progressions",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T034-C01",
   "configurations": [
     {
       "id": "T034-C01",

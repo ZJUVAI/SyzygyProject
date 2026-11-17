@@ -1,60 +1,64 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t044/runs/search_gap10_20261109_gap10_coxeter/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "order": 70,
+    "floyd_warshall_diameter": 5,
+    "edge_count": 105,
+    "maximum_degree": 3
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T044",
-    "config_id": "T044-C01",
-    "validity": 1.0,
-    "combined_score": 0.37142857142857144,
-    "objective": 26,
-    "verification_status": "exact",
-    "generation_time": 0.7953221201896667,
-    "verification_time": 2.043650683015585,
-    "objective_value": 26,
-    "details": {
-      "order": 26,
-      "edge_count": 39,
-      "maximum_degree": 3,
-      "diameter": 5,
-      "all_source_distances_checked": 676,
-      "claimed_score_ignored": true,
-      "strict_full_graph_check": true,
-      "moore_bound": 94
-    },
-    "eval_time": 2.849256742745638,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 90,
+    "seed": 70102,
+    "method": "Search cyclically equivariant perfect matchings of the Coxeter edge subdivision"
   },
-  "search_metadata": {
-    "algorithm": "seeded configuration-model sampling of simple cubic graphs; exact BFS rejects disconnected graphs and diameter above 5",
-    "configuration_id": "T044-C01",
-    "seed": 0,
-    "attempts": 384,
-    "attempt_limit": 384,
-    "accepted_candidates": 2,
-    "wall_clock_cutoff_seconds": null,
-    "comparison_data_read": false,
-    "budget": {
-      "attempt_limit": 384,
-      "wall_clock_cutoff_seconds": null
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 70102,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        87,
+        87,
+        "512",
+        70102
+      ]
+    ],
+    "prior_control_summary": "tasks/t044/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "274d198cc1273a3f6b5277213380f4478d7ee5944575bc2c52ec6097de2cad6e",
-  "replay_command": "python -m mathbench replay T044 tasks/t044/best/T044-C01/solution.json --config T044-C01"
+  "budget": {
+    "generation_seconds": 90,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 34
+  },
+  "source_sha256": {
+    "tasks/t044/baseline.py": "0860048950a2e923967fb7cdc6b440ecca50a483355e47f45ecd5b6b0097873c",
+    "tasks/t044/check.py": "f726f860e23f9f67b47a90d8b5a9ad128da53cdfa79bf8d77205f4cba74af507",
+    "tasks/t044/evaluator.py": "7a4f8a20fd3f204575686c97847717bf87d80aef02551c8a5912d02397eb47ac",
+    "tasks/t044/evolution.py": "76a2e21ca45337fae9c4a593805465989d49f592ddd8dd3b8ac20673faf347b5",
+    "tasks/t044/human.py": "75dd77d5175514da7ea47395bac2d1a6e9756e7f849b888e5d0930e3187aa61c",
+    "tasks/t044/init_program.py": "d8495b503d3aee6340ea6ccaa5996b7db27a45d68d53e3b6f4fad3b1f71f91d8",
+    "tasks/t044/reference.py": "c5c51e0ccfeaa08532feacc6259f81b1f61139972faa3d249f22fe0640e11619",
+    "tasks/t044/test_task.py": "3c4205fd854eccc7caf6e054f9a21c544b72277de5a6e138a5df2cbb8c9d6e9b",
+    "program.py": "6798244ca5818ec191ae1cc894629c097643f8c5be2fc1fa83e352d5f6009571",
+    "plan.json": "07582cfd5e5353b59ae3cb39dcf7031edcca821422fe88b900c49e4ca8d9f833"
+  },
+  "warm_start_sha256": "99cf0a276229f52d064dc551a94503e9a3b084656850a8480744fda660982292",
+  "replay_command": ".venv/bin/python -m mathbench replay T044 tasks/t044/best/T044-C01/solution.json --config T044-C01"
 }

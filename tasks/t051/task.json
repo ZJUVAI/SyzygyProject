@@ -2,6 +2,7 @@
   "task_id": "T051",
   "name": "Longest unrestricted sequence of discrepancy at most 3",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T051-C01",
   "configurations": [
     {
       "id": "T051-C01",

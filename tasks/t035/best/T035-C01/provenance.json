@@ -1,43 +1,64 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
-  "generation_record": {
-    "task_id": "T035",
-    "config_id": "T035-C01",
-    "validity": 1.0,
-    "combined_score": 0.59375,
-    "objective": 19,
-    "verification_status": "exact",
-    "generation_time": 13.38838517293334,
-    "verification_time": 0.21471663936972618,
-    "objective_value": 19,
-    "details": {
-      "point_count": 19,
-      "general_position": true,
-      "convex_seven_gon": false,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 13.606158830225468,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t035/runs/search_gap8_20261109_gap8_layers/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "point_count": 32,
+    "seven_subsets_checked": 3365856,
+    "convex_four_subsets": 23220,
+    "convex_seven_subsets": 0
   },
-  "search_metadata": {},
-  "solution_sha256": "e367bd04b91db5db411db54eb7d0ebb98a7d86fc1ae33534bfb5e166f2f13139",
-  "replay_command": "python -m mathbench replay T035 tasks/t035/best/T035-C01/solution.json --config T035-C01"
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
+  "generation_record": {
+    "scope": "AI-assisted construction search",
+    "limit": 90,
+    "seed": 68103,
+    "method": "Erdos-Szekeres cup-cap recursion with integer slope separation and concave layer offsets"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 68103,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        87,
+        87,
+        "512",
+        68103
+      ]
+    ],
+    "prior_control_summary": "tasks/t035/runs/search_sol1200/summary.json"
+  },
+  "budget": {
+    "generation_seconds": 90,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 34
+  },
+  "source_sha256": {
+    "tasks/t035/baseline.py": "ad55c66ca274952140b408a1f9f0f2a81197fefab4c466f2e0459539ee5570b9",
+    "tasks/t035/check.py": "3220d045c9a5d5e1fc543fb8f955d77bea1bcf1af339cdd29ebd2db3629e0a74",
+    "tasks/t035/evaluator.py": "7cb69cbff08feac2181786c15feb3d792fb8d03a075365b7394a9bbcb422299f",
+    "tasks/t035/evolution.py": "52017fe56e38c515b9b2c585f78254595b1b43e36716b7637c697daaa7c4a9a0",
+    "tasks/t035/human.py": "f126341b41a19752d588d6e6cb708caf4df8e0b797ae9925f2388a3a0a29b9e8",
+    "tasks/t035/init_program.py": "fa7b9e63eb9f3c58f87367611a6101c7194b819e029f1706da956ec288fb1c56",
+    "tasks/t035/reference.py": "607c98fbbd8713e53a210969b545b0024b5a7be827da815751e44721ec5e234d",
+    "tasks/t035/test_task.py": "ac0c550cd7d1a16b5ace039553f255f0fe868cde6d08c685ce49823146349c91",
+    "program.py": "04d4480677ac15d470b15e05555b1a82716c0349536f4a06a4becef07dae007e",
+    "plan.json": "c632751f417308e596826d8de9f3321b70dd1a87460383467c48c0982b77763b"
+  },
+  "warm_start_sha256": "b347e76770ee0d2550d8ba6706186fc2acf99a4b213a0cb889fed9e3a319e80d",
+  "replay_command": ".venv/bin/python -m mathbench replay T035 tasks/t035/best/T035-C01/solution.json --config T035-C01"
 }

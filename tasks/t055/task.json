@@ -16,6 +16,7 @@
     "The objective is the sum of weights of satisfied soft clauses.",
     "The 649 soft clauses each have weight 1, so the maximum possible objective is 649."
   ],
+  "official_configuration": "T055-C01",
   "configurations": [
     {
       "id": "T055-C01",

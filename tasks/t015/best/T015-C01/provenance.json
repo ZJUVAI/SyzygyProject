@@ -2,24 +2,21 @@
   "reviewer": "Sol main agent",
   "status": "reviewed_by_sol",
   "date": "2026-11-06",
+  "source_summary": "tasks/t015/runs/search_wide2/summary.json",
   "source_hashes_verified": true,
   "independent_quantity": {
-    "exact_objective": "18009806284982901355212166903378540500617160123/20251451259389692452287000000000000000000000000",
+    "exact_objective": "9004903142434899089354008191863134721113335567/10125725629626171100220873806891560666696010958",
     "convolution_entries": 39
   },
   "claimed_score_ignored": true,
   "damaged_construction_rejected": true,
   "initial_baseline_human_valid": true,
   "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-  "search_agent": {
-    "model": "gpt-6-astra",
-    "reasoning_effort": "high"
-  },
   "classification": "ai_assisted_local_continuation",
-  "seed": 60402,
+  "seed": 22002,
   "controls": {
-    "MATHBENCH_SEARCH_SECONDS": "1.0",
-    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+    "MATHBENCH_SEARCH_SECONDS": "4.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "45.0"
   },
   "budget": {
     "generation_seconds": 300,
@@ -31,7 +28,7 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 88
+    "worker_cpu": 33
   },
   "source_sha256": {
     "tasks/t015/baseline.py": "51dd35ceef1f9135f83251bc94796492c89ce6d2a4689d0e53a422a7d114a934",
@@ -44,14 +41,6 @@
     "tasks/t015/sota.py": "bab382f55ab0a74852f293ce5faa70a08b2503ab7691442d5db43cc21e76790b",
     "tasks/t015/test_task.py": "16e9c84f8146aad176eb4e1bcc40255a08a5ce224d37ab932ca3d9a2c5c40938"
   },
-  "warm_start_sha256": "1180d0d1551c41bbf1e553894e4ba23ca744087c4cf6381ca560be3ed7ffe452",
-  "replay_command": "python -m mathbench replay T015 tasks/t015/best/T015-C01/solution.json --config T015-C01",
-  "independent_continuous_integrals": {
-    "method": "Exact rational integration of each linear segment, with zero endpoints. Unit-width input bins are permitted by scale and translation invariance.",
-    "steps": 20,
-    "L1": "1",
-    "L2_squared": "18009806284982901355212166903378540500617160123/500000000000000000000000000000000000000000000000",
-    "Linf": "20251451259389692452287/500000000000000000000000",
-    "objective": "18009806284982901355212166903378540500617160123/20251451259389692452287000000000000000000000000"
-  }
+  "warm_start_sha256": "202c143c9dfd11348e909631f9a58d83680d0f2514c6ed25aa56975b5bde6cee",
+  "replay_command": ".venv/bin/python -m mathbench replay T015 tasks/t015/best/T015-C01/solution.json --config T015-C01"
 }

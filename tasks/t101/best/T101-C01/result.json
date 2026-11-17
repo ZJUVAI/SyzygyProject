@@ -1,0 +1,32 @@
+{
+  "task_id": "T101",
+  "config_id": "T101-C01",
+  "validity": 1.0,
+  "combined_score": 8.8125,
+  "objective": 141,
+  "verification_status": "exact",
+  "generation_time": 135.0010523572564,
+  "verification_time": 0.3004353642463684,
+  "objective_value": 141,
+  "details": {
+    "point_count": 141,
+    "apex_distance_checks": 19740,
+    "claimed_objective_ignored": true,
+    "strict_full_domain_check": true
+  },
+  "eval_time": 135.30573166534305,
+  "seed": 76620,
+  "strict": true,
+  "budget": {
+    "generation_seconds": 145,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 58
+  }
+}

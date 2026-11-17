@@ -3,6 +3,7 @@
   "candidate_id": "graph-coloring",
   "name": "DIMACS DSJC1000.5 vertex coloring",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T030-C01",
   "configurations": [
     {
       "id": "T030-C01",

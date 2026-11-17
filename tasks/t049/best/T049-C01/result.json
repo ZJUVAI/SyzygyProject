@@ -2,26 +2,26 @@
   "task_id": "T049",
   "config_id": "T049-C01",
   "validity": 1.0,
-  "combined_score": 0.6938775510204082,
-  "objective": 49,
+  "combined_score": 1.0,
+  "objective": 34,
   "verification_status": "exact",
-  "generation_time": 1.2471571750938892,
-  "verification_time": 2.400658458471298,
-  "objective_value": 49,
+  "generation_time": 0.21464480459690094,
+  "verification_time": 0.5152486152946949,
+  "objective_value": 34,
   "details": {
     "point_count": 91,
     "unordered_pair_count": 4095,
-    "distinct_positive_distances": 49,
-    "coordinate_field_degree": 1,
+    "distinct_positive_distances": 34,
+    "coordinate_field_degree": 2,
     "minimal_polynomial_irreducible": true,
     "real_root_isolated_by_sturm_count": 1,
     "claimed_objective_ignored": true
   },
-  "eval_time": 3.653519358485937,
-  "seed": 0,
+  "eval_time": 0.7330699935555458,
+  "seed": 41113,
   "strict": true,
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 65,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -30,6 +30,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 34
   }
 }

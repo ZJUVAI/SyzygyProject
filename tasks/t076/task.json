@@ -2,6 +2,7 @@
   "task_id": "T076",
   "name": "Minimum largest element of n-element sum-distinct sets",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T076-C01",
   "configurations": [
     {
       "id": "T076-C01",

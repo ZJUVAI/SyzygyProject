@@ -2,6 +2,7 @@
   "task_id": "T089",
   "name": "one-dimensional sign uncertainty for polynomial Gaussians",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T089-C01",
   "configurations": [
     {
       "id": "T089-C01",

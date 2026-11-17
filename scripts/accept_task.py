@@ -76,7 +76,7 @@ def _checked_witness(task, metadata, cid, source, checked):
         path.write_bytes(raw)
         with (patch.object(registry, 'INITIAL_TASKS', admitted_tasks),
               patch.object(registry, 'load_task',
-                           lambda tid: metadata if tid == task else load_task(tid))):
+                           lambda tid, **options: metadata if tid == task else load_task(tid, **options))):
             result = replay(task, path, cid, strict=True)
     if (result['validity'] != 1 or result.get('task_id') != task
             or result.get('config_id') != cid

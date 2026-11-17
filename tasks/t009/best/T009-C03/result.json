@@ -2,12 +2,12 @@
   "task_id": "T009",
   "config_id": "T009-C03",
   "validity": 1.0,
-  "combined_score": 0.7647058823529411,
-  "objective": 26,
+  "combined_score": 0.8235294117647058,
+  "objective": 28,
   "verification_status": "exact",
-  "generation_time": 5.371859695762396,
-  "verification_time": 0.31498824805021286,
-  "objective_value": 26,
+  "generation_time": 16.554946806281805,
+  "verification_time": 2.417934637516737,
+  "objective_value": 28,
   "details": {
     "parameters": {
       "n": 100,
@@ -18,8 +18,8 @@
     "codewords_checked": 1048575,
     "claimed_objective_ignored": true
   },
-  "eval_time": 5.689784616231918,
-  "seed": 0,
+  "eval_time": 18.976318512111902,
+  "seed": 46,
   "strict": true,
   "budget": {
     "generation_seconds": 300,

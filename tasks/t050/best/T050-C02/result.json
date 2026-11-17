@@ -2,20 +2,20 @@
   "task_id": "T050",
   "config_id": "T050-C02",
   "validity": 1.0,
-  "combined_score": 1.0628272251308901,
-  "objective": 203,
+  "combined_score": 1.0890052356020943,
+  "objective": 208,
   "verification_status": "exact",
-  "generation_time": 0.2145427167415619,
-  "verification_time": 0.11445678398013115,
-  "objective_value": 203,
+  "generation_time": 0.21472133323550224,
+  "verification_time": 0.11443581059575081,
+  "objective_value": 208,
   "details": {
     "dimension": 10,
-    "vertices_checked": 204,
-    "nonconsecutive_pairs_checked": 20503,
+    "vertices_checked": 209,
+    "nonconsecutive_pairs_checked": 21528,
     "claimed_objective_ignored": true
   },
-  "eval_time": 0.33137084171175957,
-  "seed": 0,
+  "eval_time": 0.3337903209030628,
+  "seed": 22002,
   "strict": true,
   "budget": {
     "generation_seconds": 300,
@@ -27,6 +27,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 32
   }
 }

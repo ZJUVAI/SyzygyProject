@@ -2,6 +2,7 @@
   "task_id": "T068",
   "name": "Minimum binary radius-one covering code of length 10",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T068-C01",
   "configurations": [
     {
       "id": "T068-C01",

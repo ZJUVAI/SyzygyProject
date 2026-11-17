@@ -2,6 +2,7 @@
   "task_id": "T011",
   "name": "Independent sets in strong powers of C7",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T011-C01",
   "configurations": [
     {
       "id": "T011-C01",

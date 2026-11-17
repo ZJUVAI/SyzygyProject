@@ -72,6 +72,17 @@ def _sympy_poly(coefficients):
                               for c in reversed(coefficients)], gens=x)
 
 
+def positive_root_intervals(poly, eps):
+    """Isolate positive roots, with a modular proof of squarefreeness when possible."""
+    integer_poly = poly.clear_denoms(convert=True)[1].primitive()[1]
+    for prime in (101, 103, 107):
+        reduced = integer_poly.set_modulus(prime)
+        # Preserve the degree so any repeated factor over Q also survives reduction.
+        if reduced.degree() == poly.degree() and reduced.gcd(reduced.diff()).degree() == 0:
+            return [(interval, 1) for interval in integer_poly.intervals(eps=eps, inf=0, sqf=True)]
+    return integer_poly.intervals(eps=eps, inf=0)
+
+
 def _sign_on_interval(poly, left, right):
     if left == right:
         raise ValueError("Root isolating intervals cannot have empty gaps")
@@ -90,7 +101,7 @@ def _last_negative_root(coefficients):
         raise ValueError("The polynomial must be positive for all sufficiently large t")
 
     poly = _sympy_poly(coefficients)
-    root_intervals = poly.intervals(eps=_ROOT_EPS)
+    root_intervals = positive_root_intervals(poly, _ROOT_EPS)
     positive = []
     for (left, right), _multiplicity in root_intervals:
         lo = Fraction(int(left.p), int(left.q))
@@ -194,7 +205,7 @@ def validate(solution, config, strict=False):
     if q[0] >= 0:
         raise ValueError("fhat(0)=q(0) must be strictly negative")
     p_root = _last_negative_root(p)
-    q_root = _last_negative_root(q)
+    q_root = p_root if p == q else _last_negative_root(q)
     lower, upper = _score_interval(p_root, q_root)
     expression = (
         f"sqrt(root_p*root_q)/pi; root_p in [{p_root[0]},{p_root[1]}], "

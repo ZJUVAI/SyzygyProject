@@ -17,6 +17,7 @@
     "Processing times are positive integers; operations are non-preemptive.",
     "The directed graph formed by job precedence and machine order must be acyclic."
   ],
+  "official_configuration": "T056-C01",
   "configurations": [
     {
       "id": "T056-C01",

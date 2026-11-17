@@ -2,6 +2,7 @@
   "task_id": "T032",
   "name": "Zarankiewicz number z(14,19;3,3)",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T032-C01",
   "configurations": [
     {
       "id": "T032-C01",

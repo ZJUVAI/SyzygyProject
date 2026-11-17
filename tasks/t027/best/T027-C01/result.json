@@ -2,12 +2,12 @@
   "task_id": "T027",
   "config_id": "T027-C01",
   "validity": 1.0,
-  "combined_score": 0.9877863891922989,
-  "objective": 45312726,
+  "combined_score": 0.9896685902271383,
+  "objective": 45226548,
   "verification_status": "exact",
-  "generation_time": 1.9184882938861847,
-  "verification_time": 0.2657657787203789,
-  "objective_value": 45312726,
+  "generation_time": 1.0157013051211834,
+  "verification_time": 0.1647832840681076,
+  "objective_value": 45226548,
   "details": {
     "instance": "tai256c",
     "n": 256,
@@ -16,8 +16,8 @@
     "objective_terms": 65536,
     "claimed_score_ignored": true
   },
-  "eval_time": 2.189255051314831,
-  "seed": 0,
+  "eval_time": 1.183178760111332,
+  "seed": 1107,
   "strict": true,
   "budget": {
     "generation_seconds": 300,
@@ -29,6 +29,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 44
   }
 }

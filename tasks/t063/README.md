@@ -22,6 +22,8 @@ M(P)=|a_{100}|\prod_{P(z)=0}\max(1,|z|)
 
 ### 来源和公开纪录
 
+本题用系数的最大公约数定义本原。Mossinghoff 等人的文献把可写成 \(f(x^k)\)、\(k>1\) 的多项式排除在本原类之外。在本题规则下，Lehmer 多项式的 \(x\mapsto x^{10}\) 代换通过精确验证，测度约为 `1.176280818`。下列数值用于历史对照。[术语定义见论文第 1720 页](https://citeseerx.ist.psu.edu/document?doi=e1b6e654954366e5155f40237433cd11c60e039f&repid=rep1&type=pdf)
+
 Mossinghoff 的固定仓库提交 `7e3798516710370a758e16eb5de6bccbee98bb6a` 中，`BestByDegree_200.txt` 的恰 100 次一行给出报告值 `1.247365098370`、`v=8` 和 51 个互反系数。`data/source/mossinghoff_degree_100_row.json` 保存该原始行及仓库固定版本。`data/reference/mossinghoff_degree_100_certificate.json` 保存展开的多项式和 100 个有理根圆盘。当前精确复核的保守测度上界约为 `1.2473650983705`。
 
 Chervonyi、Gukov、Luong 的 arXiv:2610.30277v1（2026-10-21）报告：对 91 个已有文献数据匹配 85 个，仅在次数 178、188、190、202、242、250 报告严格改进；次数 100 不在改进列表中。论文介绍整体人机协作流程，但未把 100 次这一旧记录归因于该流程。来源没有证明次数 100 的最优性；论文也指出逐次数最优性证明仅覆盖到次数 54。此处把 Mossinghoff 项作为已复现的历史人类方法/公开对照，并披露其逐项搜索过程未详述。
@@ -65,6 +67,8 @@ over primitive, irreducible, non-cyclotomic polynomials of **exact degree 100**.
 The only configuration is `T063-C01`, degree 100. A candidate contains 101 integer coefficients in ascending order and 100 rational complex disks. The checker proves primitiveness and irreducibility exactly. It certifies one root in each disk with Rouché's theorem, checks that all disks are pairwise disjoint, and bounds the complete root product with rational arithmetic. It returns the upper endpoint as the minimization objective. The relative width of the certified interval must be at most `1e-10`. Floating-point roots may propose disk centers, but they never determine the score. Rational disk precision has no fixed ceiling; the common runner applies the 16-MiB output, 4-GiB memory, and 60-second verification limits.
 
 ### Sources and public result
+
+This task defines primitiveness by the greatest common divisor of the coefficients. Mossinghoff and coauthors exclude polynomials of the form \(f(x^k)\) for \(k>1\) from their primitive class. Substitution of \(x^{10}\) into Lehmer's polynomial passes the task's exact checks and gives a measure of about `1.176280818`. The values below are historical comparisons. [Definition on page 1720](https://citeseerx.ist.psu.edu/document?doi=e1b6e654954366e5155f40237433cd11c60e039f&repid=rep1&type=pdf)
 
 The degree-100 row in `BestByDegree_200.txt` at Mossinghoff's pinned repository commit `7e3798516710370a758e16eb5de6bccbee98bb6a` reports `1.247365098370`, `v=8`, and 51 reciprocal coefficients. The source row and pin are recorded in `data/source/mossinghoff_degree_100_row.json`. The expanded polynomial and its 100 rational root disks are in `data/reference/mossinghoff_degree_100_certificate.json`. The current exact certificate gives a conservative upper bound near `1.2473650983705`.
 

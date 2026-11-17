@@ -7,6 +7,32 @@ from fractions import Fraction as F
 from mathbench.registry import ROOT
 
 def independent_quantity(task, s, config=None):
+    if task == 'T101':
+        import numpy as np
+        points = s['points']
+        n = config['parameters']['grid_size']
+        assert all(len(p) == 2 and all(type(v) is int and 0 <= v < n for v in p)
+                   for p in points)
+        coordinates = np.array(points, dtype=np.int64).reshape(-1, 2)
+        delta = coordinates[:, None, :] - coordinates[None, :, :]
+        squared = np.sort((delta * delta).sum(axis=2), axis=1)
+        assert np.all(np.diff(squared, axis=1) > 0)
+        return {'point_count': len(points), 'method': 'Sort exact squared distances from each apex; every row must increase strictly.'}
+    if task == 'T102':
+        pairs = [tuple(map(F, pair)) for pair in s['pairs']]
+        m = config['parameters']['m']
+        assert len(pairs) == m and all(0 <= u and 0 <= v and u + v <= 1 for u, v in pairs)
+        scale = math.lcm(*(x.denominator for pair in pairs for x in pair))
+        # A demand contributes opposite signed loads to the two ring paths.
+        loads = [(0,) * m]
+        for i, (u, v) in enumerate(pairs):
+            choices = [tuple(int(scale * z) * (1 if i < k else -1) for k in range(1, m + 1))
+                       for z in (-u, v)]
+            loads = [tuple(a + b for a, b in zip(load, choice))
+                     for load in loads for choice in choices]
+        value = F(min(max(map(abs, load)) for load in loads), scale)
+        return {'discrepancy': str(value), 'routing_count': len(loads),
+                'method': 'Exact integer edge-load vectors, combined over both routes of every demand.'}
     if task == 'T099':
         from scripts.audits.polyomino_rectangle_audit import audit
         return audit(s)
@@ -285,29 +311,52 @@ def independent_quantity(task, s, config=None):
         from scripts.audits.orchard_audit import audit
         return audit(s)
     if task == 'T065':
-        # Saved-run audit for rational seeds and reconstructed triangular-lattice patches.
-        # Formal validation accepts arbitrary real algebraic coordinate fields.
+        # Reduce saved lattice constructions to rational quadratic forms.
+        polynomial=s['minimal_polynomial']
+        if polynomial==[-3,0,1] or (len(polynomial)==5 and polynomial!=[64,0,-28,0,1]):
+            if polynomial==[-3,0,1]:
+                q=1
+                points=[(F(p['x'][0]),F(p['y'][1])) for p in s['points']]
+                assert all(len(p['x'])==1 and len(p['y'])==2 and F(p['y'][0])==0 for p in s['points'])
+            else:
+                q=-polynomial[2]//2-3
+                assert q>0 and q!=3 and polynomial==[(q-3)**2,0,-2*(q+3),0,1]
+                points=[]
+                for point in s['points']:
+                    x0,x1,x2,x3=map(F,point['x']);y0,y1,y2=map(F,point['y'])
+                    assert x0==x2==y1==0 and x1==-(3*q+3)*x3 and y0==-(q+3)*y2
+                    # alpha=sqrt(q)+sqrt(3) gives x=u*sqrt(q), y=v*sqrt(3*q).
+                    points.append(((6-2*q)*x3,2*y2))
+            assert len(points)==len(set(points))==100
+            count=sum(q*((x-u)**2+3*(y-v)**2)==1 for (x,y),(u,v) in itertools.combinations(points,2))
+            return {'unit_pairs':count,'unordered_pairs_checked':4950,'method':'Independent triangular-lattice rational quadratic form'}
         points=[]
-        if s['minimal_polynomial']==[0,1]:
+        if polynomial==[0,1]:
             for point in s['points']:
                 assert len(point['x'])==len(point['y'])==1
-                points.append((F(point['x'][0]),F(point['y'][0]),F(0)))
-        else:
-            assert s['minimal_polynomial']==[64,0,-28,0,1]
-            assert list(map(F,s['isolating_interval']))==[F(5),F(51,10)]
-            # alpha=sqrt(3)+sqrt(11); alpha^3-20alpha=16sqrt(3).
-            for point in s['points']:
-                x=list(map(F,point['x']));y=list(map(F,point['y']))
-                assert len(x)==len(y)==4 and x[1:]==[0,0,0]
-                assert y[0]==y[2]==0 and y[1]==-20*y[3]
-                points.append((x[0],F(0),16*y[3]))
+                points.append((F(point['x'][0]),F(point['y'][0])))
+            assert len(points)==len(set(points))==100
+            count=sum((x-u)**2+(y-v)**2==1 for (x,y),(u,v) in itertools.combinations(points,2))
+            return {'unit_pairs':count,'unordered_pairs_checked':4950,'method':'independent rational distance expansion'}
+
+        assert polynomial==[64,0,-28,0,1]
+        assert list(map(F,s['isolating_interval']))==[F(5),F(51,10)]
+        # Convert x to a+b*sqrt(33) and y to c*sqrt(3)+d*sqrt(11).
+        for point in s['points']:
+            x=list(map(F,point['x']))
+            y=list(map(F,point['y']))
+            assert 1<=len(x)<=4 and 1<=len(y)<=4
+            x0,x1,x2,x3=(x+[F(0)]*4)[:4]
+            y0,y1,y2,y3=(y+[F(0)]*4)[:4]
+            assert x1==x3==y0==y2==0
+            points.append((x0+14*x2,2*x2,y1+36*y3,y1+20*y3))
         assert len(points)==len(set(points))==100
         count=0
-        for (x,y,z),(a,b,c) in itertools.combinations(points,2):
-            dx=x-a;dy=y-b;dz=z-c
-            # Coordinates (x,y+z*sqrt(3)): irrational coefficient must vanish.
-            if dx*dx+dy*dy+3*dz*dz==1 and 2*dy*dz==0:count+=1
-        return {'unit_pairs':count,'unordered_pairs_checked':4950,'method':'independent Q(sqrt(3)) norm expansion for saved witnesses'}
+        for first,second in itertools.combinations(points,2):
+            a,b,c,d=(u-v for u,v in zip(first,second))
+            if a*a+33*b*b+3*c*c+11*d*d==1 and a*b+c*d==0:
+                count+=1
+        return {'unit_pairs':count,'unordered_pairs_checked':4950,'method':'independent expansion of the rational and sqrt(33) distance coefficients'}
     if task == 'T064':
         from scripts.audits.nonobtuse_audit import audit
         return audit(s)
@@ -327,21 +376,38 @@ def independent_quantity(task, s, config=None):
             prime=-coefficients[0]
             assert all(prime%d for d in range(2,math.isqrt(prime)+1))
             return {'mahler_interval':[str(prime),str(prime)],'method':'Eisenstein binomial with all roots of modulus p^(1/100)'}
-        # Independent modular degree obstruction: mod 2 factors have degrees 50,50;
-        # mod 13 factors have degrees 12,88. No nontrivial rational factor degree fits both.
         import sympy as sp
-        x=sp.Symbol('x');possible=set(range(101));modular_degrees={}
-        for prime in (2,13):
-            modular=sp.Poly.from_list(list(reversed(coefficients)),x,modulus=prime)
+        x=sp.Symbol('x')
+        base = coefficients[::10]
+        lifted = base == [1, 1, 0, -1, -1, -1, -1, -1, 0, 1, 1] and not any(
+            coefficient for degree, coefficient in enumerate(coefficients) if degree % 10
+        )
+        audited = base if lifted else coefficients
+        total_degree = len(audited) - 1
+        possible=set(range(total_degree + 1));modular_degrees={}
+        for prime in ((2, 3) if lifted else (2, 13)):
+            modular=sp.Poly.from_list(list(reversed(audited)),x,modulus=prime)
             factors=modular.factor_list()[1];degrees=[]
             for factor,multiplicity in factors:degrees.extend([factor.degree()]*multiplicity)
             sums={0}
             for degree in degrees:sums|={v+degree for v in tuple(sums)}
             possible&=sums;modular_degrees[str(prime)]=degrees
-        assert possible=={0,100}
+        assert possible == {0, total_degree}
+        power_obstructions = {}
+        if lifted:
+            # A simple root lifts to Q_p. A unit power in Q_p reduces to a
+            # power in F_p. Capelli's criterion then gives irreducibility of
+            # X^10-alpha over Q(alpha), and hence of the composed polynomial.
+            polynomial = sp.Poly.from_list(list(reversed(base)), x)
+            for exponent, prime, root in ((2, 23, 17), (5, 71, 8)):
+                assert (prime - 1) % exponent == 0
+                assert polynomial.eval(root) % prime == 0
+                assert polynomial.diff().eval(root) % prime != 0
+                residue = pow(root, (prime - 1) // exponent, prime)
+                assert residue != 1
+                power_obstructions[str(exponent)] = [prime, root, residue]
         # Separate exact root enclosure: interpolation matrix and column Gershgorin.
-        # This audits saved database witnesses; the formal checker accepts general certificates.
-        D=10**24;radius=F(1,10**20);centers=[]
+        D=10**24;radius=F(1,10**(22 if lifted else 20));centers=[]
         for disk in s['root_disks']:
             a,b=F(disk['center_real']),F(disk['center_imag'])
             assert (a*D).denominator==(b*D).denominator==1
@@ -366,7 +432,10 @@ def independent_quantity(task, s, config=None):
             hi=lo if norm*norm==a*a+b*b else F(norm+1,D)
             lower*=max(F(1),lo-radius);upper*=max(F(1),hi+radius)
         assert lower>1
-        return {'mahler_interval':[str(lower),str(upper)],'method':'exact interpolation matrix, 100 disjoint Gershgorin disks','irreducibility_modular_degrees':modular_degrees}
+        result = {'mahler_interval':[str(lower),str(upper)],'method':'exact interpolation matrix, 100 disjoint Gershgorin disks','irreducibility_modular_degrees':modular_degrees}
+        if lifted:
+            result['irreducibility_power_obstructions'] = power_obstructions
+        return result
     if task == 'T061':
         from collections import defaultdict
         edges={tuple(sorted(e)) for e in s['edges']}
@@ -633,6 +702,7 @@ def independent_quantity(task, s, config=None):
         coefficients = list(map(F,s['coefficients']))
         while len(coefficients)>1 and coefficients[-1]==0: coefficients.pop()
         assert len(coefficients)<=147 and any(coefficients)
+        original = coefficients
         def divide(poly,root):
             if len(poly)==1: return None
             quotient = [F()]*(len(poly)-1)
@@ -647,7 +717,24 @@ def independent_quantity(task, s, config=None):
                 coefficients=quotient
                 exponent+=1
             powers.append(exponent)
-        assert len(coefficients)==1, 'Saved-run audit supports the verified three-factor family only'
+        if len(coefficients)!=1:
+            import sympy as sp
+            x = sp.Symbol('x')
+            polynomial = sp.Poly.from_list(list(reversed(original)), x, domain=sp.ZZ)
+            derivative = polynomial.diff()
+            intervals = derivative.sqf_part().intervals(inf=0, sup=1, eps=sp.Rational(1, 10**140))
+            slope = sum(i*abs(c) for i,c in enumerate(original))
+            lower = upper = max(abs(original[0]), abs(sum(original)))
+            for (a,b), _ in intervals:
+                midpoint = (a+b)/2
+                value = abs(F(polynomial.eval(midpoint)))
+                lower = max(lower, value)
+                upper = max(upper, value+slope*F(b-a)/2)
+            scale = 10**90
+            lower = F(math.floor(lower*scale), scale)
+            upper = F(math.ceil(upper*scale), scale)
+            return {'supnorm_interval':[str(lower),str(upper)], 'critical_intervals':len(intervals),
+                    'audit_scope':'Exact derivative root isolation and rational Lipschitz enclosures'}
         a,c,b=powers
         multiplier=abs(coefficients[0])/2**b
         if b==0:
@@ -1209,7 +1296,9 @@ def independent_quantity(task, s, config=None):
 
 def broken(task, solution):
     s=json.loads(json.dumps(solution))
-    if task=='T099': s['placements'][0]['x']=s['width']
+    if task=='T101': s['points']=[[0, 0], [0, 0]]
+    elif task=='T102': s['pairs'][0]=[1, 1]
+    elif task=='T099': s['placements'][0]['x']=s['width']
     elif task=='T100': s['edges'].append(list(s['edges'][0]))
     elif task=='T098': s['squares'][0][0]=s['side']
     elif task=='T096':

@@ -1,56 +1,64 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t043/runs/search_gap14_20261109_gap14_singer/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "code_size": 329,
+    "distinct_two_spaces": 2303,
+    "ambient_two_spaces": 2667,
+    "counting_upper_bound": 381
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T043",
-    "config_id": "T043-C01",
-    "validity": 1.0,
-    "combined_score": 0.6906906906906907,
-    "objective": 230,
-    "verification_status": "exact",
-    "generation_time": 3.7967361137270927,
-    "verification_time": 0.9989944361150265,
-    "objective_value": 230,
-    "details": {
-      "codewords_checked": 230,
-      "pairs_checked": 26335,
-      "minimum_subspace_distance": 4,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 4.8047163374722,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 145,
+    "seed": 74104,
+    "method": "Use multiplicative group orbits to assemble structured 286-plane bases and optimize each extension"
   },
-  "search_metadata": {
-    "algorithm": "seeded randomized greedy packing of enumerated 3-spaces by 2-space supports",
-    "seed": 0,
-    "iterations_requested": 12,
-    "iterations_run": 12,
-    "best_pass": 5,
-    "candidate_subspaces_enumerated": 11811,
-    "line_supports": 2667,
-    "generation_seconds": 2.890214778482914,
-    "budget": {
-      "mode": "fixed_iterations unless MATHBENCH_SEARCH_SECONDS is set",
-      "runner_generation_limit_seconds": 300
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 74104,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        142,
+        142,
+        "512",
+        74104
+      ]
+    ],
+    "prior_control_summary": "tasks/t043/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "a2632249d23633476e01a81132e397543d24eeb35fe41c9bbaa85c555fa2ef0e",
-  "replay_command": "python -m mathbench replay T043 tasks/t043/best/T043-C01/solution.json --config T043-C01"
+  "budget": {
+    "generation_seconds": 145,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 68
+  },
+  "source_sha256": {
+    "tasks/t043/baseline.py": "261e9ec64176b953641cc30ba704e4a06087e4c0122c7c0d8c45036459cdc9dc",
+    "tasks/t043/check.py": "f4c3f4c4ea3101edaf9bd740c22650c1a31774033f4ee0e907299af688d32787",
+    "tasks/t043/evaluator.py": "5e745e2a735eaee5abc9ab2cbab5be47e170b55cce52452e283f5c7b279f2dc6",
+    "tasks/t043/evolution.py": "7dcf5aa03596fdfb7f634b4a8e0f59541d7194c5323e3868af3efef6db1dd0b4",
+    "tasks/t043/human.py": "91406119c70acd2ac31a50fba5abd450879f7cf5a74829381d57700fdf2631ef",
+    "tasks/t043/init_program.py": "1c07b0762ac25e621b14892fe1807addd2fe4c48d0d6bac764ca311b124d3d5b",
+    "tasks/t043/reference.py": "4f1e6c8bb0a4d9830967b326c9f4998ed476debd72bbf413742993a9175e5bf1",
+    "tasks/t043/test_task.py": "40de43ca5d6c4a2704b275ba3e256f95206912032925967bdc6926c68c5c21cb",
+    "program.py": "e7e73c10afbd60c9b01460f9982ef04b249be002e7c4ffd4cf3b2c7141836ab3",
+    "plan.json": "d5216f472dfec4c22f9c14c2e9e1268442b7e72ef42f0c2829c0b4814089b2ca"
+  },
+  "warm_start_sha256": "d79f99d0b8d9ab040e2904284bdd12aa4d32c86947e73a2ef7d2ea0772cafe09",
+  "replay_command": ".venv/bin/python -m mathbench replay T043 tasks/t043/best/T043-C01/solution.json --config T043-C01"
 }

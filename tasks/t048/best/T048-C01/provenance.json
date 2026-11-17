@@ -1,59 +1,72 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t048/runs/search_gap22_20261109_gap22_restrict/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "comparator_count": 72,
+    "binary_words_simulated": 131072,
+    "arithmetic": "exact uint32 conditional swaps"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T048",
-    "config_id": "T048-C01",
-    "validity": 1.0,
-    "combined_score": 0.6746031746031746,
-    "objective": 126,
-    "verification_status": "exact",
-    "generation_time": 1.9953299351036549,
-    "verification_time": 0.9521392174065113,
-    "objective_value": 126,
-    "details": {
-      "inputs": 17,
-      "comparators_checked": 126,
-      "binary_inputs_checked": 131072,
-      "asap_depth": 20,
-      "zero_one_principle": true,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 2.9543930403888226,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 85,
+    "seed": 76700,
+    "method": "Restrict fixed published 18/19-wire networks by extremal sentinels; compare 16-wire insertion and remove redundant comparators"
   },
-  "search_metadata": {
-    "algorithm": "seeded deletion, replacement, and order-swap mutations from the self-contained odd-even transposition seed; every candidate exact-checked",
-    "seed": 0,
-    "initial_size": 136,
-    "iterations_requested": 256,
-    "iterations_run": 256,
-    "accepted_mutations": 32,
-    "best_improvements": 10,
-    "objective_recomputed": 126,
-    "generation_seconds": 1.4571860544383526,
-    "budget": {
-      "runner_generation_seconds": 300,
-      "runner_verification_seconds": 60
-    }
+  "classification": "ai_assisted_local_continuation",
+  "source_assistance": {
+    "table": "https://bertdobbelaere.github.io/sorting_networks.html#N18L77D12",
+    "network": "N18L77D12",
+    "repository_commit": "8ba90df607cbdc339409e0b173b5a2ffd60fc911",
+    "restriction": "Fix input wire 0 to the minimum value, remove its five comparators, and renumber active wires."
   },
-  "solution_sha256": "146706e7088f30e8409d534f313675a4079b361ccdb853c76fb378256445554a",
-  "replay_command": "python -m mathbench replay T048 tasks/t048/best/T048-C01/solution.json --config T048-C01"
+  "seed": 76700,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        82,
+        82,
+        "512",
+        76700
+      ]
+    ],
+    "prior_control_summary": "tasks/t048/runs/search_sol1200/summary.json"
+  },
+  "budget": {
+    "generation_seconds": 85,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 48
+  },
+  "source_sha256": {
+    "tasks/t048/baseline.py": "c77b911283c0ba56e38296523a0d0d662089d4ca5a60ac4b19f25ffdcdc10235",
+    "tasks/t048/check.py": "4206c318e27987e881be240385e51d7a093a9a2fb8a53775587b0359a19dcb7e",
+    "tasks/t048/evaluator.py": "f886c592beb52dc447a046fb9f31046afa3e9e1c5de17c60dd779f06856c2ae4",
+    "tasks/t048/evolution.py": "776447f6e0fef136827eb15f0ca195147304df19f220f89a2fabf012a4ee66c5",
+    "tasks/t048/human.py": "13967e9fe4678cbd48ce5b1aa57d71dc256f2202c132c31bc48a5f7a0f20ecbb",
+    "tasks/t048/init_program.py": "c6ffef862b479752ee9e980ee175c129f80916d00681adb122e103b75044351f",
+    "tasks/t048/reference.py": "95586f141bab7c9b0e95e25f1861978116fd320de33730d8cdb41bc0080462da",
+    "tasks/t048/test_task.py": "01bdc2d88a4aaa609546c98407fb0028d5680ccb113cf9fe7a3170ac41e5bdd2",
+    "program.py": "008d2ed0de4af5cb25467356e9f30cc1263da33567b16826e90aee05c10f9350",
+    "sorterhunter_18_77_12.json": "6372c48044ef214461d7eff14719127088c5d88a7698f828d8f320e9bca7b10f",
+    "sorterhunter_19_85_12.json": "31ca85d650b914015306c629a3e574b7cf60b48d47b365fbc8ebf2fbe92d5966",
+    "plan.json": "076be1d15e769161386dc2692d9aced735b292d1d7cce3626a6c25d706c4352b",
+    "n16.html": "f51ca63a68496b0635087240d87fc48feeff15a5228a48b39a1f6691089c27be"
+  },
+  "warm_start_sha256": "d9c23832b2e5f4f09b4ee1019e46fb6eedcca684aac0c761a98548ea4a0e5fff",
+  "replay_command": ".venv/bin/python -m mathbench replay T048 tasks/t048/best/T048-C01/solution.json --config T048-C01"
 }

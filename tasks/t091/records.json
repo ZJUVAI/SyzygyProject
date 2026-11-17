@@ -34,10 +34,11 @@
         },
         "method": "Shortened Kerdock-code construction; Carlet, Kiss, and Nagy state this gives 2^(2m-1) rows for 2^m-1 columns when m is even, including m=6.",
         "source": "https://doi.org/10.1007/s10623-022-01105-4, Proposition 10 and Remark 11.",
-        "witness": null,
-        "evidence_state": "Same-parameter 2048-row construction reported in the primary source. Its explicit rows were not reconstructed in this task.",
+        "witness": "best/T091-C01/solution.json",
+        "evidence_state": "Exact local reconstruction of the published method. Direct counts verify every pattern in all four-column projections.",
         "ai_provenance": "The source predates current AI-assisted records and does not state AI involvement.",
-        "optimality": "The source states that optimality is not known. Rao and divisibility give lower bound 2032, leaving a 16-row gap."
+        "optimality": "The source states that optimality is not known. Rao and divisibility give lower bound 2032, leaving a 16-row gap.",
+        "witness_sha256": "e9c67de435d5b953a7d722fc7b41a0f95927653aa430b8f0c5701d3cbdd3340a"
       },
       "best_reproduced": {
         "value": 4096,
@@ -55,11 +56,11 @@
         "origin_type": "Local rebuild of the traditional BCH-dual construction.",
         "review_status": "reviewed_by_sol"
       },
-      "best_own_search": {
+      "prior_own_search": {
         "value": 8192,
         "objective_value": 8192,
         "program": "baseline.py",
-        "witness": "best/T091-C01/solution.json",
+        "witness": "data/search_history/oa8192.json",
         "witness_sha256": "3d410c4003e174ffa0c9eebd80c1df6592a6220c3ffc398e090b2d96c15a945a",
         "parameters": {
           "columns": 63,
@@ -120,6 +121,23 @@
           }
         },
         "evidence_state": "Strict replay and independent Sol review passed; see records.json."
+      },
+      "best_own_search": {
+        "value": 2048,
+        "objective_value": 2048,
+        "witness": "best/T091-C01/solution.json",
+        "witness_sha256": "e9c67de435d5b953a7d722fc7b41a0f95927653aa430b8f0c5701d3cbdd3340a",
+        "parameters": {
+          "columns": 63,
+          "levels": 2,
+          "strength": 4,
+          "row_repetition": "allowed"
+        },
+        "seed": 66101,
+        "verification_status": "exact",
+        "review_status": "reviewed_by_sol",
+        "date_checked": "2026-11-09",
+        "origin_type": "Local reconstruction of the published Kerdock method using a Z4 trace code."
       },
       "source_review": {
         "snapshot_date": "2026-11-06",

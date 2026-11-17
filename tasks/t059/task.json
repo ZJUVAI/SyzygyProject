@@ -15,6 +15,7 @@
     "No vertex appears more than once.",
     "Every pair of selected vertices is adjacent in the pinned C2000.9 graph."
   ],
+  "official_configuration": "T059-C01",
   "configurations": [
     {
       "id": "T059-C01",

@@ -3,6 +3,7 @@
   "candidate_id": "rational-matrix-multiplication-rank",
   "name": "3x3 matrix multiplication tensor rank over Q",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T029-C01",
   "configurations": [
     {
       "id": "T029-C01",

@@ -82,7 +82,7 @@ def audit(task_ids):
                     assert math.isclose(float(checked['objective']), quantity[key], rel_tol=1e-14)
                 else:
                     assert Fraction(str(checked['objective'])) == Fraction(str(quantity[key]))
-            elif tid in ('T096', 'T094', 'T092', 'T089', 'T086', 'T083', 'T021', 'T046', 'T063', 'T077', 'T080'):
+            elif tid in ('T096', 'T094', 'T092', 'T089', 'T086', 'T083', 'T021', 'T046', 'T063', 'T077', 'T080', 'T101', 'T102'):
                 from scripts.review_search import check_quantity
                 check_quantity(tid, quantity, result)
             elif tid == 'T004':

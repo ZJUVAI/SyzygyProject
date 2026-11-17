@@ -18,6 +18,7 @@
     "The denominator is the mean over the 4! ordered tuples containing every index once.",
     "The denominator must be positive so the ratio is defined."
   ],
+  "official_configuration": "T086-C01",
   "configurations": [
     {
       "id": "T086-C01",

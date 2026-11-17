@@ -40,7 +40,7 @@ def review(task, label):
     registry.INITIAL_TASKS = tuple(dict.fromkeys((*registry.INITIAL_TASKS, task)))
     # Include draft configurations only in this admission process.
     released_load_task = registry.load_task
-    registry.load_task = lambda task_id: metadata if task_id == task else released_load_task(task_id)
+    registry.load_task = lambda task_id, **options: metadata if task_id == task else released_load_task(task_id, **options)
     records = json.loads((directory / 'sota.json').read_text())['configurations']
     checker = importlib.import_module(f'tasks.{task.lower()}.check')
     destination = directory / 'runs' / label

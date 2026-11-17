@@ -2,6 +2,7 @@
   "task_id": "T023",
   "name": "Binary strength-four covering array",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T023-C01",
   "configurations": [
     {
       "id": "T023-C01",

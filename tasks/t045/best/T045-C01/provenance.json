@@ -1,55 +1,66 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-10",
+  "source_summary": "tasks/t045/runs/search_gap105_20261110_gap105_links/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "linear_arrangement_cost": 96273,
+    "prefix_cuts_checked": 1096,
+    "original_edges_checked": 1676
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T045",
-    "config_id": "T045-C01",
-    "validity": 1.0,
-    "combined_score": 0.6710615418876603,
-    "objective": 220029,
-    "verification_status": "exact",
-    "generation_time": 1.9263078682124615,
-    "verification_time": 0.5170565247535706,
-    "objective_value": 220029,
-    "details": {
-      "graph": "gd96a",
-      "vertices": 1096,
-      "edges_checked": 1676,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 2.4821836724877357,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 105,
+    "seed": 13504501,
+    "method": "Select variable-width interval pairs by their cross-interval edge counts"
   },
-  "search_metadata": {
-    "algorithm": "randomized RCM incumbent and simulated annealing with vertex-swap neighborhood",
-    "seed": 0,
-    "iterations_requested": 100000,
-    "iterations_run": 100000,
-    "accepted_moves": 55653,
-    "objective_recomputed": 220029,
-    "generation_seconds": 1.2013510800898075,
-    "budget": {
-      "fixed_iteration_limit": 100000,
-      "runner_generation_seconds": 300
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 13504501,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        102,
+        102,
+        "512",
+        13504501
+      ]
+    ],
+    "prior_control_summary": "tasks/t045/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "ce15d574afb661897d81eeb5d5f9141c5dcf494e37a1daa8a927a74d13ccbd39",
-  "replay_command": "python -m mathbench replay T045 tasks/t045/best/T045-C01/solution.json --config T045-C01"
+  "budget": {
+    "generation_seconds": 105,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 124
+  },
+  "source_sha256": {
+    "tasks/t045/baseline.py": "ecf52691f7551c6353b394a27c0326df82239defea0b34e285f161f313717f3d",
+    "tasks/t045/check.py": "3902e356f654be2abcecfdebec798e74f5739efeb12dc149cba03de4213c87be",
+    "tasks/t045/evaluator.py": "a51c9ffe4bc6f33cc6e86d540d8d03ea7bc0b713880fe2973da11e2ac439a1ab",
+    "tasks/t045/evolution.py": "535ebb80a0b377df6a11138bbc7abfc026e1d1a673a1868c0ff51f1bd330501b",
+    "tasks/t045/graph.py": "82344b26fbfc226e9e51bb8acec957a88fab10a297ec1c84823abb95848965ef",
+    "tasks/t045/human.py": "6a40fd185b3000a7602486265c7c12f0982ee46f197be722dc0ea010b33c65e2",
+    "tasks/t045/init_program.py": "845a01225e52f89d757cbafd4d2ac6d859b891244eb406d3cb1f441b7fe222cc",
+    "tasks/t045/reference.py": "f54f6df26b4186a46c73e946e75ad1c77bab01e10b89918bf95e6429bdd1559e",
+    "tasks/t045/test_task.py": "24bfde45026e4a63b0c1e2bc2847c1929192239b9669728311c45f2591a56a6a",
+    "tasks/t045/data/source/gd96a.rmf": "a3f6f97b8c084f41b6312a02544d71b293bfb8e809f627e4c5e7a04495061f4c",
+    "program.py": "02ab2c7cd17d277e3618aaba034be2d3fa67379b695042365c1066b7aaa34e57",
+    "plan.json": "d549af58a3b5cc37e6877acc5de5a4794d48098f20c7abdc9cf38923fb699317",
+    "search.cpp": "765cf1a1d05ee83f8a7c0032ee94724fb9f2824ac57b48b3cd16dcb5ed850a76"
+  },
+  "warm_start_sha256": "4f64f477f95506dffcdae425d8087236326cdb88ad8668a87943d12e0e9ba7b9",
+  "replay_command": ".venv/bin/python -m mathbench replay T045 tasks/t045/best/T045-C01/solution.json --config T045-C01"
 }

@@ -2,6 +2,7 @@
   "task_id": "T008",
   "name": "Covering numbers C(v,k,t)",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T008-C01",
   "configurations": [
     {
       "id": "T008-C01",

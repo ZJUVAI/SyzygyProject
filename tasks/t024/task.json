@@ -2,6 +2,7 @@
   "task_id": "T024",
   "name": "C4-free graph extremal number at order 41",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T024-C01",
   "configurations": [
     {
       "id": "T024-C01",

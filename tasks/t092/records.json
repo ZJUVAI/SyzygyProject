@@ -64,52 +64,53 @@
         "review_status": "reviewed_by_sol"
       },
       "best_own_search": {
-        "value": "fourth_root(110454177718974202624521/32011788636198713755049)",
-        "objective_value": "1362912741141099729/1000000000000000000",
-        "program": "init_program.py",
+        "value": "fourth_root(58188232951867590/10575651537777253)",
+        "objective_value": "382888231240325373/250000000000000000",
         "witness": "best/T092-C01/solution.json",
-        "witness_sha256": "f2537667ec3118cd2268006753a51623676a56716913e9d8ceb44863e04829f2",
+        "witness_sha256": "b191c0b594f451aac946bbff80b8ae83352135c5fd40d2b9471fd088c63077e1",
         "parameters": {
           "degree": 20,
           "domain": "real spherical harmonics on S^2",
           "coefficient_domain": "rational dense subspace",
           "objective": "normalized L4/L2 ratio"
         },
-        "seed": 0,
+        "seed": 41113,
         "verification_status": "certified",
         "review_status": "reviewed_by_sol",
-        "date_checked": "2026-11-06",
-        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
-        "search_metadata": {},
+        "date_checked": "2026-11-09",
+        "origin_type": "AI-assisted local continuation",
+        "search_metadata": {
+          "method": "Expand the real part of (x+iy)^20; highest-weight harmonic formula"
+        },
         "generation_record": {
           "task_id": "T092",
           "config_id": "T092-C01",
           "validity": 1.0,
-          "combined_score": 0.8898894180725347,
-          "objective": "fourth_root(110454177718974202624521/32011788636198713755049)",
+          "combined_score": 1.000000000000001,
+          "objective": "fourth_root(58188232951867590/10575651537777253)",
           "verification_status": "certified",
-          "generation_time": 0.42804452031850815,
-          "verification_time": 0.999307669699192,
-          "objective_value": "1362912741141099729/1000000000000000000",
+          "generation_time": 0.1644834242761135,
+          "verification_time": 0.16451111435890198,
+          "objective_value": "382888231240325373/250000000000000000",
           "details": {
             "degree": 20,
             "monomial_count": 231,
             "harmonic_laplacian_residual_terms": 0,
-            "sphere_average_M2": "1/41",
-            "sphere_average_M4": "2694004334609126893281/1312483334084147263957009",
-            "fourth_power_ratio": "110454177718974202624521/32011788636198713755049",
+            "sphere_average_M2": "137438953472/1412926920405",
+            "sphere_average_M4": "37778931862957161709568/725673658950019191115935",
+            "fourth_power_ratio": "58188232951867590/10575651537777253",
             "objective_interval": [
-              "1362912741141099729/1000000000000000000",
-              "136291274114109973/100000000000000000"
+              "382888231240325373/250000000000000000",
+              "1531552924961301493/1000000000000000000"
             ],
             "moment_method": "Exact rational monomial moments on the unit sphere: odd powers integrate to zero, and E[x^(2a)y^(2b)z^(2c)]=(2a-1)!!(2b-1)!!(2c-1)!!/(2(a+b+c)+1)!!.",
             "claimed_score_ignored": true
           },
-          "eval_time": 1.4352668598294258,
-          "seed": 0,
+          "eval_time": 0.3319881744682789,
+          "seed": 41113,
           "strict": true,
           "budget": {
-            "generation_seconds": 300,
+            "generation_seconds": 60,
             "verification_seconds": 60,
             "memory_bytes": 4294967296,
             "threads": 1
@@ -118,10 +119,14 @@
             "python": "3.13.12",
             "platform": "linux",
             "memory_limit_enforced": true,
-            "worker_cpu": 0
+            "worker_cpu": 52
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
+        "evidence_state": "Strict replay and independent Sol review passed.",
+        "objective_interval": [
+          "382888231240325373/250000000000000000",
+          "1531552924961301493/1000000000000000000"
+        ]
       },
       "source_review": {
         "snapshot_date": "2026-11-06",

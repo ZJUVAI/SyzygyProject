@@ -2,6 +2,7 @@
   "task_id": "T087",
   "name": "480-step minimum autocorrelation ratio",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T087-C01",
   "configurations": [
     {
       "id": "T087-C01",

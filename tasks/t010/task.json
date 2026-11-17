@@ -2,6 +2,7 @@
   "task_id": "T010",
   "name": "Maximum size of a binary code A(n,d)",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T010-C01",
   "configurations": [
     {
       "id": "T010-C01",

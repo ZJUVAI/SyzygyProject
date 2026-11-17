@@ -17,6 +17,7 @@
     "Each line is {origin + t*direction : t in F_31} for one origin in F_31^3.",
     "All 31 points on every represented line belong to the candidate union. The objective is the exact number of distinct points in that union."
   ],
+  "official_configuration": "T079-C01",
   "configurations": [
     {
       "id": "T079-C01",

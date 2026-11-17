@@ -2,6 +2,7 @@
   "task_id": "T057",
   "name": "Capacitated vehicle routing on X-n1001-k43",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T057-C01",
   "configurations": [
     {
       "id": "T057-C01",

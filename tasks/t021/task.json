@@ -2,6 +2,7 @@
   "task_id": "T021",
   "name": "Thomson problem: charges on the unit sphere",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T021-C01",
   "configurations": [
     {
       "id": "T021-C01",

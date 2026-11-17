@@ -2,6 +2,7 @@
   "task_id": "T016",
   "name": "Signed step-function autoconvolution extremum, 208 steps",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T016-C01",
   "configurations": [
     {
       "id": "T016-C01",

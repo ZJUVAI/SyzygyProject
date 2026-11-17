@@ -3,6 +3,7 @@
   "candidate_id": "max3-term-apfree-integer-subset",
   "name": "Largest 3-AP-free subset of [1, 212]",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T042-C01",
   "configurations": [
     {
       "id": "T042-C01",

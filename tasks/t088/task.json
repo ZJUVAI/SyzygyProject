@@ -2,6 +2,7 @@
   "task_id": "T088",
   "name": "Cutwidth minimization for the arc130 graph",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T088-C01",
   "configurations": [
     {
       "id": "T088-C01",

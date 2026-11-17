@@ -2,6 +2,7 @@
   "task_id": "T071",
   "name": "Maximum binary single-deletion-correcting code at length 16",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T071-C01",
   "configurations": [
     {
       "id": "T071-C01",

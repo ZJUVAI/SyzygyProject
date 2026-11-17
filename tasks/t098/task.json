@@ -2,6 +2,7 @@
   "task_id": "T098",
   "name": "Minimum side of a primitive simple perfect squared square of order 38",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T098-C01",
   "configurations": [
     {
       "id": "T098-C01",

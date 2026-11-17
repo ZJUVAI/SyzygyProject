@@ -1,0 +1,76 @@
+{
+  "task_id": "T101",
+  "configurations": {
+    "T101-C01": {
+      "best_human": {
+        "value": 16,
+        "parameters": {
+          "grid_size": 100
+        },
+        "source": "Odlyzko-Stanley ternary no-three-term-progression construction, restricted to four digits and embedded on one row.",
+        "url": "https://math.mit.edu/~rstan/papers/od.pdf",
+        "evidence_state": "Formula replayed and checker verified; weak baseline, not asserted to be the best human result.",
+        "origin_type": "published classical construction",
+        "witness": "data/reference/odlyzko_stanley_n100_16.json",
+        "witness_sha256": "1a723d3c6556edfbbd4a949b3b7e3772d339676f6bcb8c7f08fe01df5b1a71c7"
+      },
+      "best_public": {
+        "value": 164,
+        "parameters": {
+          "grid_size": 100
+        },
+        "source": "AlphaEvolve, arXiv:2511.02864, official problem 59 notebook construction sol_100.",
+        "url": "https://arxiv.org/abs/2511.02864",
+        "evidence_state": "Source witness extracted and exactly reproduced.",
+        "ai_provenance": "AI-assisted AlphaEvolve result, guided by human hints.",
+        "witness": "data/reference/alphaevolve_n100_164.json",
+        "witness_sha256": "d9aedb326481ea234afc32b8925b365c32bac2e2b2284f71262a04f7d2eb8aba",
+        "origin_type": "AI-assisted public construction"
+      },
+      "best_reproduced": {
+        "value": 164,
+        "parameters": {
+          "grid_size": 100
+        },
+        "program": "reference.py",
+        "verification_status": "exact",
+        "witness": "data/reference/alphaevolve_n100_164.json",
+        "review_status": "reviewed_by_sol"
+      },
+      "other_public_result": {
+        "value": 160,
+        "parameters": {
+          "grid_size": 100
+        },
+        "source": "PatternBoost, arXiv:2411.00566",
+        "url": "https://arxiv.org/abs/2411.00566",
+        "evidence_state": "Reported construction; not separately reproduced in this task.",
+        "ai_provenance": "AI-assisted construction method.",
+        "origin_type": "AI-assisted public construction"
+      },
+      "optimality_status": "No optimality proof found in the checked sources; the AlphaEvolve paper states that 164 is likely not optimal.",
+      "traditional_search": {
+        "value": 112,
+        "parameters": {
+          "grid_size": 100
+        },
+        "program": "baseline.py",
+        "seed": 0,
+        "algorithm": "seeded randomized greedy insertion, 4 restarts",
+        "evidence_state": "Reproduced locally and exactly checked; not a public record."
+      },
+      "source_review_date": "2026-11-09",
+      "source_review_scope": "AlphaEvolve paper, official problem page, and linked source notebook at repository commit 8f447457957deac61e28bf1676746f0753b3b2f8; a 2026-10 public issue was checked for later n=100 claims."
+    }
+  },
+  "initial_results": {
+    "T101-C01": {
+      "objective": 2,
+      "objective_value": 2,
+      "validity": 1.0,
+      "verification_status": "exact",
+      "combined_score": 0.125
+    }
+  },
+  "review_status": "accepted_by_sol"
+}

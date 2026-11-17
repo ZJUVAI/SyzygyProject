@@ -3,6 +3,7 @@
   "candidate_id": "kissing-number-5d",
   "name": "Five-dimensional kissing number",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T037-C01",
   "configurations": [
     {
       "id": "T037-C01",

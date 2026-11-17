@@ -1,29 +1,47 @@
 {
   "reviewer": "Sol main agent",
   "status": "reviewed_by_sol",
-  "date": "2026-11-06",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t006/runs/search_gap18_20261109_gap18_solve/summary.json",
   "source_hashes_verified": true,
   "independent_quantity": {
-    "order": 1120,
+    "order": 320,
     "networkx_girth": 10
   },
   "claimed_score_ignored": true,
   "damaged_construction_rejected": true,
   "initial_baseline_human_valid": true,
   "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-  "search_agent": {
-    "model": "gpt-6-astra",
-    "reasoning_effort": "high",
-    "group": "discrete_retry"
+  "search_agent": "GPT-6.1 Sol",
+  "generation_record": {
+    "scope": "AI-assisted construction search",
+    "limit": 145,
+    "seed": 76302,
+    "method": "Eight-vertex topology from Fig. 4(e); cyclic labels and dihedral reflection flags searched, exact mod-four rotation CSP; no reference edge list read"
   },
   "classification": "ai_assisted_local_continuation",
-  "seed": 201,
+  "public_graph_comparison": {
+    "source": "https://arxiv.org/abs/2511.07247v2",
+    "source_figure": "4(e)",
+    "result": "Isomorphic to the published 320-vertex graph",
+    "method": "Compared nauty canonical certificates after generation",
+    "tool": "pynauty 2.8.8.1"
+  },
+  "seed": 76302,
   "controls": {
-    "MATHBENCH_SEARCH_SECONDS": "1.0",
-    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+    "trials": [
+      [
+        "warm",
+        142,
+        142,
+        "512",
+        76302
+      ]
+    ],
+    "prior_control_summary": "tasks/t006/runs/search_1200_bespoke/summary.json"
   },
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 145,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -32,21 +50,24 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 8
+    "worker_cpu": 62
   },
   "source_sha256": {
-    "tasks/t006/baseline.py": "ed310d01d9de61b8c8de2f6d3df9c12fd7344da1962471dc92a839f563b65de1",
-    "tasks/t006/check.py": "848314f9ab02336bc42a77bb2a6c62ceaf4b13821e47bb91f82db188b19ab63c",
+    "tasks/t006/baseline.py": "58d22aa74cde3f40c7b68b02750c58452a436471b82188dd854012d7819ee56e",
+    "tasks/t006/check.py": "f9dafcbf1a7a52eac32d0a019a2d8fb93bc3c02cae668cf8597f293a1ca30b7b",
     "tasks/t006/evaluator.py": "b8bda3311986d47aa2b02ad03e84acfc6cf3dd9295b25189f6511f199a88546e",
-    "tasks/t006/evolution.py": "74bc97cbe799488c04ce82333b36692a5fcdff1d4378985bdb4511f3362986f0",
-    "tasks/t006/human.py": "67aea4f1d8b949c1727320b20dd2596084e3f98a65be23930aeca7e093a878d6",
-    "tasks/t006/init_program.py": "4f2f109e6e01655884c95f47bebf40bd6475bf8d15c411f1c6da64e6d0a7b6e3",
+    "tasks/t006/evolution.py": "2bfc91cc38595dc61ad6f8cc373b0c3552e56fc57daba88782ab14589c987be9",
+    "tasks/t006/human.py": "b65ce1d15a5bce1fea75c8f41dae0885175c672643a748f81017114966005d89",
+    "tasks/t006/init_program.py": "55b7284b3c498ec13770c681d0954c1cd513535eabb86b0e08e0bf4cdab1245a",
     "tasks/t006/lps.py": "11eebb4991907d88b1c0f0dbc26298b1f4dbd284452f92e92063b67c855ca8a7",
-    "tasks/t006/reference.py": "9d17c55b23e9f4254a11aae7bd48df141e45999a8e505f82626f111e5d2bb868",
-    "tasks/t006/sota.py": "3cb353dcb30a11b76094fc5bf8ca3522126b8ab35e117b07079b264ff31ab487",
-    "tasks/t006/test_task.py": "a58cec290c9fb9e49c2cad0bef5cfd094e92b685d5a9157cbeea0a758c3b3996",
-    "tasks/t006/voltage_search.cpp": "375bc95a76e0361eddc0179a08874f214eeeb864aa169b13c75d2515ffdc5364"
+    "tasks/t006/reference.py": "d156e856dda6170debdc5d0b8d0290fbfb1a670d15dc78aae37f8d6c209b0e35",
+    "tasks/t006/sota.py": "14e5dabc8941b579736c1f64711c53f8e651beb1764e6204f7d4cd85cbce2efd",
+    "tasks/t006/test_task.py": "bc65766ae43ff3224e713804ec2bd8184e4f136bac2c92dbb8deecf3e2bcc870",
+    "tasks/t006/voltage_search.cpp": "375bc95a76e0361eddc0179a08874f214eeeb864aa169b13c75d2515ffdc5364",
+    "program.py": "1a2ebccba11aca550f3c643a70c9baf3baf83c2704c53dab4fe02fdb51a3eb62",
+    "plan.json": "f499a02afb1985d17ce94a8df0f4ec1274144c000d1826158f65572c846f7a27",
+    "voltage.py": "435af02946881358a1fb66c67b6b30559ffc64ac82bdbd192084f9f791b3de88"
   },
-  "warm_start_sha256": "5e50160097bbc50ebb5ba7ac6ca8907102fa9b6f5e47a5c68bb6b1f931df8565",
-  "replay_command": "python -m mathbench replay T006 tasks/t006/best/T006-C01/solution.json --config T006-C01"
+  "warm_start_sha256": "9a474197f9cb324dce9977e664a653deed979ed2b48f3ba4b49204db71ef0da6",
+  "replay_command": ".venv/bin/python -m mathbench replay T006 tasks/t006/best/T006-C01/solution.json --config T006-C01"
 }

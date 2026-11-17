@@ -2,23 +2,23 @@
   "task_id": "T043",
   "config_id": "T043-C01",
   "validity": 1.0,
-  "combined_score": 0.6906906906906907,
-  "objective": 230,
+  "combined_score": 0.987987987987988,
+  "objective": 329,
   "verification_status": "exact",
-  "generation_time": 3.7967361137270927,
-  "verification_time": 0.9989944361150265,
-  "objective_value": 230,
+  "generation_time": 16.86974385008216,
+  "verification_time": 0.5982544422149658,
+  "objective_value": 329,
   "details": {
-    "codewords_checked": 230,
-    "pairs_checked": 26335,
+    "codewords_checked": 329,
+    "pairs_checked": 53956,
     "minimum_subspace_distance": 4,
     "claimed_objective_ignored": true
   },
-  "eval_time": 4.8047163374722,
-  "seed": 0,
+  "eval_time": 17.47522919252515,
+  "seed": 74104,
   "strict": true,
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 145,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -27,6 +27,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 68
   }
 }

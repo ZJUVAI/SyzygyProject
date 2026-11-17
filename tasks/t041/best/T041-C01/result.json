@@ -2,12 +2,12 @@
   "task_id": "T041",
   "config_id": "T041-C01",
   "validity": 1.0,
-  "combined_score": 1.0,
-  "objective": "4",
+  "combined_score": 1.0000323911133076,
+  "objective": "400012956445323/100000000000000",
   "verification_status": "exact",
-  "generation_time": 0.796369407325983,
-  "verification_time": 0.9019546993076801,
-  "objective_value": "4",
+  "generation_time": 0.11459967494010925,
+  "verification_time": 0.16486559808254242,
+  "objective_value": "400012956445323/100000000000000",
   "details": {
     "square_count": 17,
     "pairs_checked": 136,
@@ -18,7 +18,7 @@
     "claimed_objective_ignored": true,
     "strict": true
   },
-  "eval_time": 1.706310924142599,
+  "eval_time": 0.28055594116449356,
   "seed": 0,
   "strict": true,
   "budget": {

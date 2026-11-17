@@ -2,6 +2,7 @@
   "task_id": "T039",
   "name": "Difference triangle sets with seven rows and six marks per row",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T039-C01",
   "configurations": [
     {
       "id": "T039-C01",

@@ -52,7 +52,7 @@
           "location": "t=4, v=2; k=20, N=39; Hadamard (Colbourn-Keri) postoptimization NCK",
           "evidence_state": "reported, witness not reproduced"
         },
-        "reproduction_status": "reported construction only"
+        "reproduction_status": "An exact local 39-row array was generated with Paley construction and randomized postoptimization. The source table reports the same row count."
       },
       "bounds": {
         "lower_bound": 32,

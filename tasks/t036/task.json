@@ -3,6 +3,7 @@
   "candidate_id": "rectilinear-crossing-number",
   "name": "Rectilinear crossing number of K28",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T036-C01",
   "configurations": [
     {
       "id": "T036-C01",

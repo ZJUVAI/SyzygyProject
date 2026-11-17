@@ -2,6 +2,7 @@
   "task_id": "T094",
   "name": "Minimum dilation triangulation of the regular 120-gon",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T094-C01",
   "configurations": [
     {
       "id": "T094-C01",

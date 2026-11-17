@@ -1,0 +1,14 @@
+{
+  "title": "Mathematical exploration and discovery at scale",
+  "authors": ["Georgiev", "Gomez-Serrano", "Tao", "Wagner"],
+  "arxiv": "https://arxiv.org/abs/2511.02864",
+  "problem_page": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/59.html",
+  "repository": "https://github.com/google-deepmind/alphaevolve_repository_of_problems",
+  "repository_commit": "8f447457957deac61e28bf1676746f0753b3b2f8",
+  "notebook": "experiments/subsets_of_the_grid_with_no_isosceles_triangles/subsets_of_the_grid_with_no_isosceles_triangles.ipynb",
+  "notebook_variable": "sol_100",
+  "recorded_value": 164,
+  "coordinate_convention": "zero-based integer pairs in [0,99]^2",
+  "witness_file": "../reference/alphaevolve_n100_164.json",
+  "witness_sha256": "d9aedb326481ea234afc32b8925b365c32bac2e2b2284f71262a04f7d2eb8aba"
+}

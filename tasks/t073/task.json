@@ -2,6 +2,7 @@
   "task_id": "T073",
   "name": "Minimum equal-weight spherical 5-design on S^3",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T073-C01",
   "configurations": [
     {
       "id": "T073-C01",

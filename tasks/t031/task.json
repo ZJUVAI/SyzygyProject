@@ -3,6 +3,7 @@
   "candidate_id": "shortest-superpermutation",
   "name": "Shortest superpermutation on seven symbols",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T031-C01",
   "configurations": [
     {
       "id": "T031-C01",

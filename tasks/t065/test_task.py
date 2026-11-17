@@ -37,6 +37,25 @@ def test_human_and_reference_grid_is_exact():
     assert checked["details"]["coordinate_field_degree"] == 4
 
 
+def test_independent_audit_handles_both_moser_radicals():
+    from scripts.audits.independent_audit import independent_quantity
+
+    # omega_1*omega_3 has unit norm and uses both radicals in its y coordinate.
+    witness = {
+        "minimal_polynomial": [64, 0, -28, 0, 1],
+        "isolating_interval": ["5", "51/10"],
+        "points": [
+            {"x": ["0"], "y": ["0"]},
+            {"x": ["1", "0", "-1/24"], "y": ["0", "-1/3", "0", "1/48"]},
+            *({"x": [str(4*i)], "y": ["0"]} for i in range(1, 99)),
+        ],
+    }
+    assert validate(witness, CONFIG, strict=True)["objective"] == 1
+    result = independent_quantity("T065", witness)
+    assert result["unit_pairs"] == 1
+    assert result["unordered_pairs_checked"] == 4950
+
+
 def test_all_five_entries_return_valid_candidates(monkeypatch):
     monkeypatch.setenv("MATHBENCH_CONFIG_ID", "T065-C01")
     monkeypatch.setenv("MATHBENCH_SEED", "0")

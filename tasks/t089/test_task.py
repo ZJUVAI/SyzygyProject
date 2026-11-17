@@ -5,10 +5,11 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
+import sympy as sp
 
 from mathbench.evaluate import _run
 from tasks.t089.baseline import run_code as baseline_run_code
-from tasks.t089.check import _fourier_polynomial, _last_negative_root, validate
+from tasks.t089.check import _fourier_polynomial, _last_negative_root, positive_root_intervals, validate
 from tasks.t089.evolution import run_code as evolution_run_code
 from tasks.t089.human import run_code as human_run_code
 from tasks.t089.init_program import run_code as init_run_code
@@ -33,6 +34,13 @@ def test_even_contact_is_not_mistaken_for_the_last_sign_change():
     assert _last_negative_root([Fraction(-3), Fraction(7), Fraction(-5), Fraction(1)]) == (
         Fraction(3), Fraction(3)
     )
+
+
+def test_modular_degree_drop_does_not_hide_a_repeated_root():
+    t = sp.Symbol("t")
+    polynomial = sp.Poly((101*t - 1)**2 * (t - 3), t)
+    intervals = positive_root_intervals(polynomial, sp.Rational(1, 10**30))
+    assert intervals == [((sp.Rational(1, 101), sp.Rational(1, 101)), 2), ((3, 3), 1)]
 
 
 def test_simple_start_baseline_and_evolution_are_valid():

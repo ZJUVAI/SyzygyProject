@@ -3,6 +3,7 @@
   "candidate_id": "maximum-order-subcubic-diameter-five-graph",
   "name": "Largest graph with maximum degree 3 and diameter at most 5",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T044-C01",
   "configurations": [
     {
       "id": "T044-C01",

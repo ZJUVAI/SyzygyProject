@@ -3,6 +3,7 @@
   "candidate_id": "minimum-integer-difference-basis",
   "name": "Minimum difference basis for [1, 6166]",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T047-C01",
   "configurations": [
     {
       "id": "T047-C01",

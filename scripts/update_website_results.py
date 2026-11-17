@@ -3,6 +3,7 @@ import argparse
 import csv
 import hashlib
 import json
+from datetime import datetime, timezone
 from fractions import Fraction
 from itertools import combinations
 from pathlib import Path
@@ -128,7 +129,7 @@ def update(checkout, initial_witnesses=None):
         return name
     def asset(value):
         return asset_bytes(encoded(value))
-    from mathbench.registry import INITIAL_TASKS, load_task
+    from mathbench.registry import ARCHIVED_TASKS, INITIAL_TASKS, load_task
     from scripts.result_table import display
     from scripts.website_figures import project, grid
 
@@ -144,23 +145,47 @@ def update(checkout, initial_witnesses=None):
             **assets,
         }
 
-    def labels(value):
-        return dict(en=value, zh=value)
+    def bilingual(labels):
+        return set(labels) == {'en', 'zh'} and all(
+            isinstance(label, str) and label.strip() for label in labels.values()
+        )
 
-    previous = {task['id']: task for task in index['tasks']}
+    catalog = read(checkout/'catalog.json')
+    labels = catalog['tasks']
+    categories = {}
+    for group in catalog['groups']:
+        if not bilingual(group['name']) or not group['tasks']:
+            raise ValueError(f"Incomplete catalog group: {group}")
+        for tid in group['tasks']:
+            if tid in categories:
+                raise ValueError(f"Duplicate catalog task: {tid}")
+            categories[tid] = group['name']
+    if set(categories) != set(INITIAL_TASKS) or set(labels) != set(INITIAL_TASKS):
+        raise ValueError("Catalog must cover all official tasks")
+
+    previous = {task['id']: task for task in (*index['tasks'], *index.get('archived_tasks', []))}
+    archived_tasks = [previous[tid] for tid in ARCHIVED_TASKS]
     tasks = []
-    for tid in INITIAL_TASKS:
+    for number, (tid, category) in enumerate(categories.items(), start=1):
+        fields = ('name', 'description', 'metric')
+        if 'detail' in labels[tid]:
+            fields += ('detail',)
+        for field in fields:
+            if not bilingual(labels[tid].get(field, {})):
+                raise ValueError(f"{tid}: missing bilingual {field}")
+        if 'benchmark_note' in labels[tid] and not bilingual(labels[tid]['benchmark_note']):
+            raise ValueError(f"{tid}: missing bilingual benchmark note")
         folder = ROOT/'tasks'/tid.lower()
         metadata = load_task(tid)
+        official, = metadata['configurations']
+        history = [config['id'] for config in load_task(tid, include_history=True)['configurations']
+                   if config['id'] != official['id']]
         sota = read(folder/'sota.json')['configurations']
         initial_results = read(folder/'records.json').get('initial_results', {})
         old = previous.get(tid, {})
         existing = {c['id']: c for c in old.get('configurations', [])}
-        category = metadata.get('category', 'Other constructions').replace('_', ' ')
-        task = {**old, 'id': tid, 'name': old.get('name', labels(metadata['name'])),
-                'description': old.get('description', labels('')),
-                'metric': old.get('metric', labels('')),
-                'category': old.get('category', labels(category)), 'configurations': []}
+        task = dict(id=tid, number=number, **labels[tid], category=category, configurations=[],
+                    archived_configurations=history)
         tasks.append(task)
         task_template = next((read(dist/c['asset']).get('drawing_template')
                               for c in existing.values()
@@ -199,7 +224,7 @@ def update(checkout, initial_witnesses=None):
             own = construction(result, 'own', best/'solution.json')
             own.update(result=asset(result), evidence=asset(provenance))
             initial = initial_results[cid]
-            if initial_witnesses:
+            if initial_witnesses and (initial_witnesses/cid).is_dir():
                 initial_folder = initial_witnesses/cid
                 checked = read(initial_folder/'result.json')
                 if checked['validity'] != 1 or checked['objective'] != initial['objective']:
@@ -244,7 +269,8 @@ def update(checkout, initial_witnesses=None):
                 'gallery_visual': public_run['visual']})
             (dist/path).write_bytes(encoded(data))
             own_records.append({'task_id':tid,'config_id':cid,**own})
-    index.update(tasks=tasks, version='1.0.0', date='2026-11-07', own_result_count=len(own_records),
+    index.update(tasks=tasks, archived_tasks=archived_tasks, version='1.0.0',
+                 date=datetime.now(timezone.utc).date().isoformat(), own_result_count=len(own_records),
                  counts=dict(tasks=len(tasks), configurations=len(own_records), runs=sum(len(c['runs']) for t in tasks for c in t['configurations']),
                              categories=len({task['category']['en'] for task in tasks})))
     (dist/'data/index.json').write_bytes(encoded(index))
@@ -259,6 +285,13 @@ def update(checkout, initial_witnesses=None):
     with csv_path.open('w', newline='') as f:
         writer=csv.DictWriter(f,fieldnames=fields,lineterminator=chr(10));writer.writeheader();writer.writerows(rows)
     configurations = {c['asset'] for task in tasks for c in task['configurations']}
+    configurations.update(c['asset'] for task in archived_tasks for c in task['configurations'])
+    # Keep published historical witnesses available for replay and later reselection.
+    configurations.update(
+        f'data/configurations/{cid}.json'
+        for task in tasks for cid in task['archived_configurations']
+        if (dist/f'data/configurations/{cid}.json').is_file()
+    )
     assets = set(active_assets(index))
     for path in configurations:
         assets.update(active_assets(read(dist/path)))
@@ -275,6 +308,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--checkout',type=Path,default=ROOT/'website')
     parser.add_argument('--initial-witnesses', type=Path,
-                        help='Directory containing a checked initial result and solution for each config')
+                        help='Directory with checked initial results and solutions for new or updated configs')
     args = parser.parse_args()
     update(args.checkout, args.initial_witnesses)

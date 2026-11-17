@@ -2,6 +2,7 @@
   "task_id": "T090",
   "name": "Minimum periodic autocorrelation energy for binary sequences of length 64",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T090-C01",
   "configurations": [
     {
       "id": "T090-C01",

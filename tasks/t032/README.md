@@ -8,6 +8,8 @@
 
 本任务重放公开矩阵，不声称复现原搜索。原始随机种子为 7，但 kick 次数未记录。较早的 AI 辅助结果 121 单独保留，不替代 126。当前验收状态：已通过 Sol 验收（2026-11-06）。
 
+Korea Superintelligence Labs 的预印本表 1 报告同参数下界 128，并称其构造已通过 Lean 检查。仓库的冻结公开复现值仍为 126。 [预印本](https://ideosphere.ai/papers/zarankiewicz-v1.pdf)
+
 ## English
 
 Given a 14 by 19 binary matrix, maximize its number of ones. Every choice of three rows and three columns must contain at least one zero. The fixed configuration is T032-C01. The checker recounts all ones and checks all 364 row triples.
@@ -15,3 +17,5 @@ Given a 14 by 19 binary matrix, maximize its number of ones. Every choice of thr
 The primary source is Saurabh, [Five improved lower bounds for Zarankiewicz numbers](https://arxiv.org/html/2608.26603v1), version 1, dated 2026-08-27. Table 1 gives a lower bound of 126 and an upper bound of 135 for this cell. Appendix A gives a matrix with 126 ones. The paper attributes the construction to classical kicked-greedy search and states that it used no language model or learned component. NOVA autonomously selected the cell, ran the search, and packaged the results. We record this as a traditional computational construction with autonomous orchestration, not as a manually discovered construction.
 
 This task replays the published matrix. It does not claim to reproduce the search. The original random seed was 7, but the kick count was not recorded. An earlier AI-assisted result of 121 is listed separately. Status: accepted by Sol on 2026-11-06.
+
+Table 1 of the Korea Superintelligence Labs preprint reports a lower bound of 128 for the same parameters. The preprint reports a Lean check of its construction. The frozen local public replay gives 126. [Preprint](https://ideosphere.ai/papers/zarankiewicz-v1.pdf)

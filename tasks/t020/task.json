@@ -2,6 +2,7 @@
   "task_id": "T020",
   "name": "Shortest addition chain for the P-192 inversion exponent",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T020-C01",
   "configurations": [
     {
       "id": "T020-C01",

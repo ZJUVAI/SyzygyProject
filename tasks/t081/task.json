@@ -2,6 +2,7 @@
   "task_id": "T081",
   "name": "Minimum squared max-to-min pair-distance ratio for 12 planar points",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T081-C01",
   "configurations": [
     {
       "id": "T081-C01",

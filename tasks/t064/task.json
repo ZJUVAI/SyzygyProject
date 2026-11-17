@@ -3,6 +3,7 @@
   "name": "Minimum non-obtuse triangulation of ortho40",
   "candidate_id": "minimum-nonobtuse-triangulation",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T064-C01",
   "configurations": [
     {
       "id": "T064-C01",

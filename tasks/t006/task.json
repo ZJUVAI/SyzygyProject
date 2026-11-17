@@ -2,6 +2,7 @@
   "task_id": "T006",
   "name": "cage order",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T006-C01",
   "configurations": [
     {
       "id": "T006-C01",

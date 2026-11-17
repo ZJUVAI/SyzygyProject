@@ -2,12 +2,11 @@
   "task_id": "T053",
   "config_id": "T053-C01",
   "validity": 1.0,
-  "combined_score": 0.0047404740474047405,
-  "objective": 158,
+  "combined_score": 1.0094509450945095,
+  "objective": 33645,
   "verification_status": "exact",
-  "generation_time": 7.652971867471933,
-  "verification_time": 1.174466010183096,
-  "objective_value": 158,
+  "verification_time": 0.4660443104803562,
+  "objective_value": 33645,
   "details": {
     "n": 100000,
     "factor_count": 100000,
@@ -15,8 +14,8 @@
     "product_check": "exact balanced product tree",
     "claimed_objective_ignored": true
   },
-  "eval_time": 8.927463717758656,
-  "seed": 0,
+  "eval_time": 0.8070112392306328,
+  "seed": 29105,
   "strict": true,
   "budget": {
     "generation_seconds": 300,
@@ -29,5 +28,6 @@
     "platform": "linux",
     "memory_limit_enforced": true,
     "worker_cpu": 0
-  }
+  },
+  "replay_generation_time": 0.31519790366292
 }

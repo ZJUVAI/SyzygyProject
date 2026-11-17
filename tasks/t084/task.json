@@ -2,6 +2,7 @@
   "task_id": "T084",
   "name": "31-element integer B3 set minimum diameter",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T084-C01",
   "configurations": [
     {
       "id": "T084-C01",

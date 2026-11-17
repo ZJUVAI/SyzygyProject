@@ -17,6 +17,7 @@
     "The polynomial is noncyclotomic; the checker establishes Mahler measure greater than 1.",
     "The 100 submitted rational root disks are pairwise disjoint and each contains exactly one root, certified with exact rational arithmetic."
   ],
+  "official_configuration": "T063-C01",
   "configurations": [
     {
       "id": "T063-C01",

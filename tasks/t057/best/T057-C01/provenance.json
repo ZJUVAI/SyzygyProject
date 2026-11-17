@@ -1,90 +1,71 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
-  "generation_record": {
-    "task_id": "T057",
-    "config_id": "T057-C01",
-    "validity": 1.0,
-    "combined_score": 1.0029545160036284,
-    "objective": 77170,
-    "verification_status": "exact",
-    "generation_time": 19.03109474852681,
-    "verification_time": 1.814321868121624,
-    "objective_value": 77170,
-    "details": {
-      "instance": "X-n1001-k43",
-      "customer_count": 1000,
-      "route_count": 43,
-      "route_count_unrestricted": true,
-      "capacity": 131,
-      "route_loads": [
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        128,
-        130,
-        131,
-        131,
-        60,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        130,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131,
-        131
-      ],
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 20.850922469049692,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t057/runs/search_gap28_20261109_gap28_pyvrpwide/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "route_cost": 73077,
+    "routes": 43,
+    "maximum_load": 131
   },
-  "search_metadata": {},
-  "solution_sha256": "461e7c1c199330fa1dd133587bc9722f91dfb21304700a88e5993690b7d008ea",
-  "replay_command": "python -m mathbench replay T057 tasks/t057/best/T057-C01/solution.json --config T057-C01"
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "PyVRP 0.14.1 continuation with a larger neighborhood and stronger perturbations, using only the saved HGS and PyVRP search lineage.",
+  "search_agent": "GPT-6.1 Sol",
+  "generation_record": {
+    "scope": "AI-assisted construction search",
+    "limit": 165,
+    "seed": 6405704,
+    "method": "Continue PyVRP from 73392 with 85 neighbors and stronger perturbations",
+    "classification": "upstream_solver_continuation",
+    "upstream": "https://github.com/PyVRP/PyVRP/tree/v0.14.1"
+  },
+  "classification": "upstream_solver_continuation",
+  "seed": 6405704,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        162,
+        162,
+        "512",
+        6405704
+      ]
+    ],
+    "prior_control_summary": "tasks/t057/runs/search_sol1200/summary.json"
+  },
+  "budget": {
+    "generation_seconds": 165,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 34
+  },
+  "source_sha256": {
+    "tasks/t057/baseline.py": "681cf1389aa858b6ca885c0a40cac8d897bbb7e30e24ba0f7a2f4fc226ced12e",
+    "tasks/t057/check.py": "a6519b7099a1e4007aec183d6f1eae668db9d499e093df534c690fe87ebd02db",
+    "tasks/t057/evaluator.py": "0f724937d668fc14f72b8e109ca32d057e1c3b824ce1259660a74ae41da67cb9",
+    "tasks/t057/evolution.py": "6c9d4c01ab4305492cb8a59e311b6362f775f6083db57de401639ffb02bb3c76",
+    "tasks/t057/heuristics.py": "5612927bf869ddec8a52f1aaa7c2b38e7b7ac6b1c3e1efeba9f8960526d88d7a",
+    "tasks/t057/human.py": "32e5c5a0ca913bced214d7fb90f118c12bc6114b168c51314e238e189870ae65",
+    "tasks/t057/init_program.py": "3ca78fe6ffd872b1bf40c9f77617924ab185b55b302e289c516c2f884e05505c",
+    "tasks/t057/instance.py": "eec00ff5124df49c25fca97ef133d6f0d14afbe006fee052b25575382eb171be",
+    "tasks/t057/io.py": "e20f6c853f6fa8a9ee66648b5588169ab26f7f28dfc7d945bcddfb7061cf5617",
+    "tasks/t057/reference.py": "aeca10079387932a5ddb863069527e7af0fe94cef76036f404f5e51060c28234",
+    "tasks/t057/test_task.py": "189e04d5037f252087e5cc610066744f1b3f3439056a23e3fd23dc317a993991",
+    "program.py": "d184cd317b97b5dfc7ee4be702fb16c2b8a3612f75a61bbf805222999e600d04",
+    "pyvrp_vendor.tar.gz": "e5b776a62c90e6c37d1119c410e0a6d143002b93342cb46a58b2b5293a16b362",
+    "plan.json": "c732a8f8a73cbb23ccf32bd66fb8fb1bcc2feeeb8e5ff4823753b7fa6c715ceb",
+    "instance.vrp": "97c950e592d8a63d4f81669f1fda9762de2a79e4a213f9e7401c699a754dc492"
+  },
+  "warm_start_sha256": "f57aa422118a88a77a92d6d458e49e6ccc38671c9186a4cfb172ca752fa75932",
+  "replay_command": ".venv/bin/python -m mathbench replay T057 tasks/t057/best/T057-C01/solution.json --config T057-C01",
+  "starting_cost": 73392
 }

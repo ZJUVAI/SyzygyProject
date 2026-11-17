@@ -1,58 +1,124 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t036/runs/search_sol1200_crossing/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "crossings": 7237,
+    "quadruples_checked": 20475
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol main agent",
+  "native_kernel": {
+    "method": "Exact single-point crossing deltas with annealing",
+    "compiler": "g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "build": [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-o",
+      "anneal",
+      "anneal.cpp"
+    ],
+    "commands": [
+      [
+        "taskset",
+        "-c",
+        "7",
+        "./anneal",
+        "29101",
+        "210000",
+        "warm_start.txt",
+        "points_29101.txt"
+      ],
+      [
+        "taskset",
+        "-c",
+        "8",
+        "./anneal",
+        "29102",
+        "210000",
+        "warm_start.txt",
+        "points_29102.txt"
+      ],
+      [
+        "taskset",
+        "-c",
+        "9",
+        "./anneal",
+        "29103",
+        "210000",
+        "warm_start.txt",
+        "points_29103.txt"
+      ],
+      [
+        "taskset",
+        "-c",
+        "10",
+        "./anneal",
+        "29104",
+        "210000",
+        "warm_start.txt",
+        "points_29104.txt"
+      ],
+      [
+        "taskset",
+        "-c",
+        "11",
+        "./anneal",
+        "29105",
+        "210000",
+        "warm_start.txt",
+        "points_29105.txt"
+      ]
+    ],
+    "threads_per_seed": 1,
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31"
+  },
   "generation_record": {
-    "task_id": "T036",
-    "config_id": "T036-C01",
-    "validity": 1.0,
-    "combined_score": 1.6359060402684564,
-    "objective": 12516,
-    "verification_status": "exact",
-    "generation_time": 4.271468535065651,
-    "verification_time": 0.1647644378244877,
-    "objective_value": 12516,
-    "details": {
-      "vertices": 28,
-      "general_position_triples_checked": 3276,
-      "disjoint_edge_pairings_checked": 61425,
-      "crossings_recomputed": 12516,
-      "claimed_objective_ignored": true,
-      "claimed_score_ignored": true
-    },
-    "eval_time": 4.439024355262518,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "search_budget_seconds": 1050,
+    "verification_limits": "standard mathbench replay",
+    "search_limits": "one pinned CPU per seed, no explicit address-space limit",
+    "search_input": "prior own witness and fixed problem input"
   },
-  "search_metadata": {
-    "algorithm": "seeded random general-position integer initialization with greedy single-point replacement",
-    "configuration_id": "T036-C01",
-    "seed": 0,
-    "iterations": 80,
-    "iteration_limit": 80,
-    "accepted_moves": 16,
-    "wall_clock_cutoff_seconds": null,
-    "reference_data_read": false,
-    "budget": {
-      "iteration_limit": 80,
-      "wall_clock_cutoff_seconds": null
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 29101,
+  "controls": {
+    "search_seconds_per_seed": 210,
+    "max_total_seconds": 1050,
+    "seeds": [
+      29101,
+      29102,
+      29103,
+      29104,
+      29105
+    ]
   },
-  "solution_sha256": "5adb22e8d745e07871f610cbef0a24d770968ed41d4a2d7c9b2bbe4066fa5a49",
-  "replay_command": "python -m mathbench replay T036 tasks/t036/best/T036-C01/solution.json --config T036-C01"
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0,
+    "search_cpu_affinity": [
+      7
+    ]
+  },
+  "source_sha256": {
+    "anneal.cpp": "68e2f19a3b1a765de306b67086cdce5db999a25a996c99636cd944d214a8600b",
+    "warm_start.txt": "8eaa66c413b6aa2ff0b0e61f42e93ac18d7d7d4a66ac3b60b3de4bbafd5297ee"
+  },
+  "warm_start_sha256": "d95516aa3a8070a07fd386c050befba9737140087ac1c08d5994c767a8ccccb5",
+  "replay_command": ".venv/bin/python -m mathbench replay T036 tasks/t036/best/T036-C01/solution.json --config T036-C01"
 }

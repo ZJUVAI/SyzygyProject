@@ -18,6 +18,7 @@
     "Every point of the target disk must lie in at least one covering disk.",
     "The rational-coordinate and rational-radius domain has the same supremum as the unrestricted real domain: contract all centers and the target disk by a rational factor below 1 to create coverage slack, approximate the centers by rationals, and choose a rational target radius approaching the original radius."
   ],
+  "official_configuration": "T085-C01",
   "configurations": [
     {
       "id": "T085-C01",

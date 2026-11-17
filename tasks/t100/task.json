@@ -2,6 +2,7 @@
   "task_id": "T100",
   "name": "Minimum triangles in a 50-vertex graph with 700 edges",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T100-C01",
   "configurations": [
     {
       "id": "T100-C01",

@@ -2,6 +2,7 @@
   "task_id": "T015",
   "name": "Second autocorrelation inequality (AC2), 20 nonnegative steps",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T015-C01",
   "configurations": [
     {
       "id": "T015-C01",

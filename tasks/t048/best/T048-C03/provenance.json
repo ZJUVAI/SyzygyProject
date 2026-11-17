@@ -1,59 +1,51 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-07",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
-  "generation_record": {
-    "task_id": "T048",
-    "config_id": "T048-C03",
-    "validity": 1.0,
-    "combined_score": 0.5868263473053892,
-    "objective": 167,
-    "verification_status": "exact",
-    "generation_time": 6.1288072019815445,
-    "verification_time": 4.171113979071379,
-    "objective_value": 167,
-    "details": {
-      "inputs": 19,
-      "comparators_checked": 167,
-      "binary_inputs_checked": 524288,
-      "asap_depth": 23,
-      "zero_one_principle": true,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 10.302542451769114,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_summary": "tasks/t048/runs/search_luna_round2/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "comparator_count": 163,
+    "binary_words_simulated": 524288,
+    "arithmetic": "exact uint32 conditional swaps"
   },
-  "search_metadata": {
-    "algorithm": "seeded deletion, replacement, and order-swap mutations from the self-contained odd-even transposition seed; every candidate exact-checked",
-    "seed": 0,
-    "initial_size": 171,
-    "iterations_requested": 256,
-    "iterations_run": 256,
-    "accepted_mutations": 28,
-    "best_improvements": 4,
-    "objective_recomputed": 167,
-    "generation_seconds": 5.852836403995752,
-    "budget": {
-      "runner_generation_seconds": 300,
-      "runner_verification_seconds": 60
-    }
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-luna",
+    "campaign": "round2",
+    "shard": "B"
   },
-  "solution_sha256": "ccb1a1b4e8eb1213c74e26a4affc3ab20cf805d40bed10959b2c50e6c8fb0be9",
-  "replay_command": "python -m mathbench replay T048 tasks/t048/best/T048-C03/solution.json --config T048-C03"
+  "classification": "ai_assisted_local_continuation",
+  "seed": 84102,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "5.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "100.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 48
+  },
+  "source_sha256": {
+    "tasks/t048/baseline.py": "c77b911283c0ba56e38296523a0d0d662089d4ca5a60ac4b19f25ffdcdc10235",
+    "tasks/t048/check.py": "4206c318e27987e881be240385e51d7a093a9a2fb8a53775587b0359a19dcb7e",
+    "tasks/t048/evaluator.py": "f886c592beb52dc447a046fb9f31046afa3e9e1c5de17c60dd779f06856c2ae4",
+    "tasks/t048/evolution.py": "776447f6e0fef136827eb15f0ca195147304df19f220f89a2fabf012a4ee66c5",
+    "tasks/t048/human.py": "13967e9fe4678cbd48ce5b1aa57d71dc256f2202c132c31bc48a5f7a0f20ecbb",
+    "tasks/t048/init_program.py": "c6ffef862b479752ee9e980ee175c129f80916d00681adb122e103b75044351f",
+    "tasks/t048/reference.py": "95586f141bab7c9b0e95e25f1861978116fd320de33730d8cdb41bc0080462da",
+    "tasks/t048/test_task.py": "01bdc2d88a4aaa609546c98407fb0028d5680ccb113cf9fe7a3170ac41e5bdd2"
+  },
+  "warm_start_sha256": "80ea5423219e8ba1d05ab488baa6a463b6c6b117e032622161a1afa09475ff5c",
+  "replay_command": ".venv/bin/python -m mathbench replay T048 tasks/t048/best/T048-C03/solution.json --config T048-C03"
 }

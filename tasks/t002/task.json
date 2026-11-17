@@ -2,6 +2,7 @@
   "task_id": "T002",
   "name": "Packing unit squares in a square",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T002-C01",
   "configurations": [
     {
       "id": "T002-C01",

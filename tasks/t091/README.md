@@ -19,7 +19,7 @@ N\ge 1+\binom{63}{1}+\binom{63}{2}=2017.
 模型起点使用 F₂¹⁴ 上的通用随机贪心法选择 63 个标签，再枚举全部 16384 个线性形式，得到 16384 行且互异的有效阵列。它不读取 BCH 对照。传统搜索独立在 F₂¹³ 上运行相同的通用选择规则，得到 8192 行，并执行固定次数的 16 行删除尝试。
 
 
-Carlet、Kiss、Nagy 的论文 Remark 5 给出双纠错 BCH 码对偶构造的正交阵。取 \(m=6\) 并删去一列，可重建 4096 行、63 列、强度 4 的正交阵。本任务以这个公式作为人类基线和固定参考，并对全部条件重新计算。论文 Proposition 10 与 Remark 11 给出 Kerdock 构造的 2048 行同参上界；作者明确说最优性尚未确定。该公开见证未在本任务中重建，因此区分为未复现纪录。
+Carlet、Kiss、Nagy 的论文 Remark 5 给出双纠错 BCH 码对偶构造的正交阵。取 \(m=6\) 并删去一列，可重建 4096 行、63 列、强度 4 的正交阵。本任务以这个公式作为人类基线和固定参考，并对全部条件重新计算。论文 Proposition 10 与 Remark 11 给出 Kerdock 构造的 2048 行同参上界；作者明确说最优性尚未确定。本地续搜用模 4 迹码重建了 2048 行构造。独立复算检查了每组四列中 16 种模式的出现次数。
 
 - Carlet, Kiss, Nagy, *Simplicity conditions for binary orthogonal arrays*, DOI [10.1007/s10623-022-01105-4](https://doi.org/10.1007/s10623-022-01105-4)。论文副本在 `data/source/`。
 - Sloane 的 orthogonal array directory：[neilsloane.com/oadir](https://neilsloane.com/oadir/index.html)。
@@ -38,4 +38,4 @@ The checker packs every column into an N-bit integer and checks all nonempty par
 
 The standalone initializer uses a generic random-greedy set of 63 labels in F₂¹⁴ and enumerates all linear forms, producing 16384 distinct rows. The traditional search independently builds an F₂¹³ seed with 8192 rows and tries fixed 16-row deletions. Neither program reads the BCH witness.
 
-The human baseline rebuilds a 4096-row OA from the dual of a double-error-correcting BCH code, as described by Carlet, Kiss, and Nagy. Their paper also reports a 2048-row Kerdock construction and states that optimality is unknown. We do not claim to reproduce that stronger public witness.
+The human baseline rebuilds a 4096-row OA from the dual of a double-error-correcting BCH code, as described by Carlet, Kiss, and Nagy. Their paper also reports a 2048-row Kerdock construction and states that optimality is unknown. The local search rebuilt the 2048-row construction with a trace code over integers modulo 4. An independent check counted all 16 patterns in each four-column projection.

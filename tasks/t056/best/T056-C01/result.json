@@ -2,18 +2,18 @@
   "task_id": "T056",
   "config_id": "T056-C01",
   "validity": 1.0,
-  "combined_score": 1.1792486583184258,
-  "objective": 2795,
+  "combined_score": 1.5853775853775853,
+  "objective": 2079,
   "verification_status": "exact",
-  "generation_time": 2.4807545952498913,
-  "verification_time": 0.4163428321480751,
-  "objective_value": 2795,
+  "generation_time": 182.88819616660476,
+  "verification_time": 1.7330120354890823,
+  "objective_value": 2079,
   "details": {
     "instance": "ta41",
     "jobs": 30,
     "machines": 20,
     "operations": 600,
-    "makespan": 2795,
+    "makespan": 2079,
     "critical_path_lower_bound": 1830,
     "machine_loads": [
       1490,
@@ -71,11 +71,11 @@
     ],
     "claimed_objective_ignored": true
   },
-  "eval_time": 2.902985882014036,
-  "seed": 0,
+  "eval_time": 184.62564165890217,
+  "seed": 70106,
   "strict": true,
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 190,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -84,6 +84,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 36
   }
 }

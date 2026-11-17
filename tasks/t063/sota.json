@@ -8,7 +8,7 @@
       "highest_reported": {
         "value": 1.24736509837,
         "source": "Mossinghoff, Mahler Measure Database, BestByDegree_200.txt, exact-degree 100 row; the 2026 human-AI paper reports matching 85 of 91 literature entries and strict improvements at degrees 178, 188, 190, 202, 242, and 250, with no degree-100 improvement listed.",
-        "reproduction_status": "The published coefficient row is reconstructed and certified here. The listed decimal is the source's rounded value; the independent exact certificate gives a conservative upper endpoint of 1.2473650983705... ."
+        "reproduction_status": "The published coefficient row is reconstructed and certified here. Its conservative upper endpoint is about 1.2473650983705. The source literature excludes power substitutions from its primitive class. The task uses coefficient content and accepts such substitutions."
       },
       "best_human": {
         "value": 1.24736509837,
@@ -66,10 +66,10 @@
         "evidence_state": "The published historical human record is reconstructed and its conservative certified upper endpoint is rounded upward in the frozen comparison value."
       },
       "optimality_status": {
-        "status": "open; a degree-100 construction with certified Mahler measure below 1.247365098371 is not known in the sources checked",
+        "status": "open for the task class; the certified Lehmer power substitution gives an upper bound near 1.176280818",
         "source_survey_date": "2026-11-06",
         "evidence": "Mossinghoff's database reports the degree-100 value. Chervonyi, Gukov, and Luong (arXiv:2610.30277v1, 2026-10-21) state that their dataset matches 85 of 91 published literature entries and lists strict improvements only at degrees 178, 188, 190, 202, 242, and 250. Their paper states that degree-wise minima have been proved only through degree 54.",
-        "limitations": "A published or reproduced construction is an upper bound for the degree-100 minimum, not a proof of optimality."
+        "limitations": "The task accepts power substitutions. Mossinghoff, Pinner, and Vaaler exclude them from their primitive class. The source value and the task upper bound describe different classes."
       },
       "source_pins": {
         "mossinghoff_database": {

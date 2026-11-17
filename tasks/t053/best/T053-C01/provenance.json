@@ -1,58 +1,65 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t053/runs/search_sol1200_balance/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "minimum_factor": 33645,
+    "factor_count": 100000,
+    "prime_exponents_checked": 9592
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol main agent",
   "generation_record": {
-    "task_id": "T053",
-    "config_id": "T053-C01",
-    "validity": 1.0,
-    "combined_score": 0.0047404740474047405,
-    "objective": 158,
-    "verification_status": "exact",
-    "generation_time": 7.652971867471933,
-    "verification_time": 1.174466010183096,
-    "objective_value": 158,
-    "details": {
-      "n": 100000,
-      "factor_count": 100000,
-      "product_equals_factorial": true,
-      "product_check": "exact balanced product tree",
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 8.927463717758656,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "search_limits": "Planned aggregate 1200-second search budget exceeded. Three stalled MIP processes were stopped externally. The selected construction is an exploratory result.",
+    "budget_compliance": "exceeded",
+    "stopped_attempts_log": "tasks/t053/runs/search_sol1200_balance/terminated_searches.log",
+    "selected_search_elapsed_seconds": 53.12704258039594,
+    "commands": [
+      "./balance THRESHOLD 0 factors_THRESHOLD_0.txt",
+      "python milp.py THRESHOLD 195 solution_THRESHOLD.json (thresholds 33650,33340,32500)",
+      "python round_lp.py THRESHOLD 105 lp_solution_THRESHOLD.json (thresholds 33450,33340,32500)",
+      "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=. PRODUCT_LIMIT=180000 RELEASE=-1 PERTURB=3 taskset -c 45 .venv/bin/python tasks/t053/runs/search_sol1200_balance/focused_lp.py 33645 55 tasks/t053/runs/search_sol1200_balance/focused_solution_33645_2.json"
+    ],
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.31",
+    "cpu_affinity": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ]
   },
-  "search_metadata": {
-    "algorithm": "seeded random receiver selection with prime-factor transfers from the initial 1..N factorization; product is preserved exactly",
-    "seed": 0,
-    "initial_objective": 1,
-    "iterations_requested": 256,
-    "iterations_run": 256,
-    "accepted_transfers": 256,
-    "best_improvements": 157,
-    "objective_recomputed": 158,
-    "generation_seconds": 6.3265383169054985,
-    "budget": {
-      "runner_generation_seconds": 300,
-      "runner_verification_seconds": 60
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 29105,
+  "controls": {
+    "scope": "Targeted search. Comparison control results are reused from search_sol1200.",
+    "search_limits": "Planned aggregate 1200-second search budget exceeded. Three stalled MIP processes were stopped externally. The selected construction is an exploratory result."
   },
-  "solution_sha256": "970e0d1e1371c263a1c61431a1a47aed49e78b7eec92122ee5ae5d75d3df3cbc",
-  "replay_command": "python -m mathbench replay T053 tasks/t053/best/T053-C01/solution.json --config T053-C01"
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  },
+  "source_sha256": {
+    "balance.cpp": "5b03ec1696c566bbab13cdb84fb93e768280974641dc3345fe08d4ba11887371",
+    "milp.py": "758f3a408a56332fb0e404e632d8f04ae91589839fbdee03cd878b8a33acaa70",
+    "round_lp.py": "f9843dcde55640a77fe43e5eafa4f2eba4015a7ca7bd7410527feb1dcf2d4eac",
+    "repair_lp.py": "09787cf632b3e33ca952650ead2e80b4f88a5ad40d7e958f538d04da56fa82f5",
+    "focused_lp.py": "b7f11c3f7cb8129d4088c9b36e8759f5b1fd450265da0dbdc3db337c21e50de8"
+  },
+  "warm_start_sha256": null,
+  "replay_command": ".venv/bin/python -m mathbench replay T053 tasks/t053/best/T053-C01/solution.json --config T053-C01"
 }

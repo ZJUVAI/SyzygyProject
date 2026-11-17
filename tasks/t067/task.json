@@ -16,6 +16,7 @@
     "Codewords are distinct.",
     "Every unordered pair of codewords has Hamming distance at least 4."
   ],
+  "official_configuration": "T067-C01",
   "configurations": [
     {
       "id": "T067-C01",

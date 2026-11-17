@@ -16,6 +16,7 @@
     "The network sorts every input sequence in a totally ordered domain.",
     "By the zero-one principle, the checker exhaustively tests all 2^inputs binary input sequences."
   ],
+  "official_configuration": "T048-C01",
   "configurations": [
     {
       "id": "T048-C01",

@@ -2,6 +2,7 @@
   "task_id": "T013",
   "name": "Low autocorrelation binary sequence energy, length 100",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T013-C01",
   "configurations": [
     {
       "id": "T013-C01",

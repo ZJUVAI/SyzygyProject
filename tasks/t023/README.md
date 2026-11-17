@@ -8,6 +8,8 @@
 
 [Colbourn 2024 年 11 月表](https://www.data2intelligence.de/ColbournTables/t4v2.html)记录了同参数 39 行构造，来源标记为 Hadamard 构造加 NCK 后优化。表格未附该见证。本任务将 39 记为已报告的公开上界，将 65 记为已下载并可复算的人类基线。
 
+本地续搜从 40 行 Paley 构造出发，随机重填可变单元格并删去一行。所得 [39 行构造](best/T023-C01/solution.json) 已精确复算。
+
 下界为 32。任意 20 列数组删去 7 列后仍须覆盖强度 4 的所有模式，因此得到一个 13 列覆盖数组。Izquierdo-Marquez 与 Torres-Jimenez 在 [论文](https://arxiv.org/abs/1711.10040) 中证明 `CAN(4,13,2)=32`。因此当前区间为 `32 <= CAN(4,20,2) <= 39`。所引论文没有证明 20 列实例最优。本任务状态为“已通过 Sol 验收（2026-11-06）”。
 
 ## English
@@ -17,5 +19,7 @@ The configuration has strength `t=4`, 20 columns, and the binary alphabet `{0,1}
 [NIST's IPOG-F table](https://math.nist.gov/coveringarrays/ipof/tables/table.4.2.html) provides a 65-row array for these parameters. In the source file, `-` marks an unspecified value. `human.py` completes each such entry as 0, then the exact checker verifies the completed binary array. The archived witness is `data/nist_ca_t4_v2_k20.txt`.
 
 The [November 2024 Colbourn table](https://www.data2intelligence.de/ColbournTables/t4v2.html) reports a 39-row construction for the same parameters. Its source is listed as a Hadamard construction with NCK postoptimization. The table does not include this witness. This task records 39 as a reported public upper bound and 65 as the downloaded, reproducible human baseline.
+
+A local search started from a 40-row Paley array. It reassigned cells at random while preserving coverage and removed one row. Exact checks passed for the [39-row array](best/T023-C01/solution.json).
 
 The lower bound is 32. Deleting seven columns from any 20-column array still gives a strength-four covering array, now with 13 columns. Izquierdo-Marquez and Torres-Jimenez prove `CAN(4,13,2)=32` in their [paper](https://arxiv.org/abs/1711.10040). Therefore, the current interval is `32 <= CAN(4,20,2) <= 39`. The cited paper does not prove that the 20-column instance is optimal. Status: accepted by Sol on 2026-11-06.

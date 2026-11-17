@@ -1,10 +1,11 @@
 {
   "reviewer": "Sol main agent",
   "status": "reviewed_by_sol",
-  "date": "2026-11-06",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t017/runs/search_sol1200/summary.json",
   "source_hashes_verified": true,
   "independent_quantity": {
-    "maximum_overlap": "2428559752384987355540077/6375000000000000000000000",
+    "maximum_overlap": "404728543591802780127357/1062500000000000000000000",
     "integral": "1",
     "knots_including_zero_exterior": 103
   },
@@ -12,14 +13,10 @@
   "damaged_construction_rejected": true,
   "initial_baseline_human_valid": true,
   "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-  "search_agent": {
-    "model": "gpt-6-astra",
-    "reasoning_effort": "high"
-  },
   "classification": "ai_assisted_local_continuation",
-  "seed": 60204,
+  "seed": 81110,
   "controls": {
-    "MATHBENCH_SEARCH_SECONDS": "1.0",
+    "MATHBENCH_SEARCH_SECONDS": "15.0",
     "MATHBENCH_EVOLUTION_SECONDS": "240.0"
   },
   "budget": {
@@ -32,7 +29,7 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 79
+    "worker_cpu": 117
   },
   "source_sha256": {
     "tasks/t017/baseline.py": "053e85178d61c41eeb3e862bfa84260dfe991d8e1a8d1ca4812a75c0877fafd7",
@@ -45,6 +42,6 @@
     "tasks/t017/sota.py": "679be54698e6ae1b8b679474f5b04234fb47978d04f634a6d1a5afc06887f17f",
     "tasks/t017/test_task.py": "825614c4855576cbca6b5eac2807695bc739b933a40e5bd227e8a76ecb45268e"
   },
-  "warm_start_sha256": "e246cb217a8afa130caa0d89fa0d56ab4047330f860937e4bf9da8f53ec6332c",
-  "replay_command": "python -m mathbench replay T017 tasks/t017/best/T017-C01/solution.json --config T017-C01"
+  "warm_start_sha256": "9823e6fd1990779f9215f34f6147170f707bfd60b5fea37890616460d83ee606",
+  "replay_command": ".venv/bin/python -m mathbench replay T017 tasks/t017/best/T017-C01/solution.json --config T017-C01"
 }

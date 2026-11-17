@@ -2,6 +2,7 @@
   "task_id": "T066",
   "name": "Maximum number of exactly-three-point lines among 17 planar points",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T066-C01",
   "configurations": [
     {
       "id": "T066-C01",

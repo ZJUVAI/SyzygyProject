@@ -2,6 +2,7 @@
   "task_id": "T014",
   "name": "Nonnegative convolution extremum, 208 steps",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T014-C01",
   "configurations": [
     {
       "id": "T014-C01",

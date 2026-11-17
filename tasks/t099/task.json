@@ -2,6 +2,7 @@
   "task_id": "T099",
   "name": "minimum order of the P1 11-omino",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T099-C01",
   "configurations": [
     {
       "id": "T099-C01",

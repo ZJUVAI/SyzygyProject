@@ -64,11 +64,10 @@
         "note": "The primary Station paper's 8,289 construction is smaller and is reproduced here."
       },
       "best_own_search": {
-        "value": 15534,
-        "objective_value": 15534,
-        "program": "evolution.py",
+        "value": 8288,
+        "objective_value": 8288,
         "witness": "best/T079-C01/solution.json",
-        "witness_sha256": "5cbd2771c7d9c2e01de6064917cb6ad9dbc8eb4f1d04dca81eaf48ba7e90ec82",
+        "witness_sha256": "b262f252bd350c678568e5a0d79d1fe48993a5d6a3380cb15f7d994ecdb94b6e",
         "parameters": {
           "field_order": 31,
           "dimension": 3,
@@ -76,49 +75,39 @@
           "construction": "one affine line in each projective direction",
           "objective": "cardinality of the union of the represented lines"
         },
-        "seed": 0,
+        "seed": 41126,
         "verification_status": "exact",
         "review_status": "reviewed_by_sol",
-        "date_checked": "2026-11-06",
-        "origin_type": "Task-local construction from the simple seed; comparison assets were not read.",
+        "date_checked": "2026-11-09",
+        "origin_type": "AI-assisted local continuation",
         "search_metadata": {
-          "algorithm": "seeded randomized greedy anchor replacement with exact marginal union counts",
-          "seed": 0,
-          "requested_sweeps": 8,
-          "completed_sweeps": 8,
-          "samples_per_line": 16,
-          "candidate_anchors_evaluated": 127104,
-          "accepted_replacements": 1772,
-          "comparison_data_read": false,
-          "budget": {
-            "mode": "fixed iterations",
-            "requested_wall_clock_seconds": null
-          }
+          "method": "Enumerate rational-intercept families informed by the published construction, optimize exceptional lines exactly",
+          "seed": 41126
         },
         "generation_record": {
           "task_id": "T079",
           "config_id": "T079-C01",
           "validity": 1.0,
-          "combined_score": 0.5562636796704004,
-          "objective": 15534,
+          "combined_score": 1.0425916988416988,
+          "objective": 8288,
           "verification_status": "exact",
-          "generation_time": 9.79223944991827,
-          "verification_time": 0.5956560261547565,
-          "objective_value": 15534,
+          "generation_time": 3.1715388037264347,
+          "verification_time": 0.21555836126208305,
+          "objective_value": 8288,
           "details": {
             "field_order": 31,
             "dimension": 3,
             "projective_directions_checked": 993,
             "line_points_generated": 30783,
-            "union_cardinality": 15534,
+            "union_cardinality": 8288,
             "full_space_cardinality": 29791,
             "claimed_objective_ignored": true
           },
-          "eval_time": 10.408493369817734,
-          "seed": 0,
+          "eval_time": 3.3946613781154156,
+          "seed": 41126,
           "strict": true,
           "budget": {
-            "generation_seconds": 300,
+            "generation_seconds": 125,
             "verification_seconds": 60,
             "memory_bytes": 4294967296,
             "threads": 1
@@ -127,10 +116,10 @@
             "python": "3.13.12",
             "platform": "linux",
             "memory_limit_enforced": true,
-            "worker_cpu": 0
+            "worker_cpu": 47
           }
         },
-        "evidence_state": "Strict replay and independent Sol review passed; see records.json."
+        "evidence_state": "Strict replay and independent Sol review passed."
       },
       "lower_bound": {
         "value": 7694,

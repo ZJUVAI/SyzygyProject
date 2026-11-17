@@ -2,6 +2,7 @@
   "task_id": "T018",
   "name": "Maximum determinant of sign matrices",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T018-C01",
   "configurations": [
     {
       "id": "T018-C01",

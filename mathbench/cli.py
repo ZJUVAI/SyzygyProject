@@ -39,7 +39,8 @@ def main():
         for task in INITIAL_TASKS:
             try:
                 record = load_task(task)
-                print(task, record.get("name", ""), record.get("acceptance_status", "pending_sol_review"))
+                print(task, record.get("name", ""), record.get("official_configuration", ""),
+                      record.get("acceptance_status", "pending_sol_review"))
             except FileNotFoundError:
                 print(task, "not_implemented")
     elif args.command == "export-seed":

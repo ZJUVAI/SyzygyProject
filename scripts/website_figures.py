@@ -19,7 +19,14 @@ def grid(rows, en, zh, *, categorical=False):
 
 
 def series(values, en, zh, *, bars=False):
-    values = list(map(num, values))
+    exact = list(map(Fraction, values))
+    try:
+        values = list(map(float, exact))
+    except OverflowError:
+        scale = max(map(abs, exact))
+        values = [float(value / scale) for value in exact]
+        en += ' · scaled by maximum magnitude'
+        zh += ' · 按最大绝对值缩放'
     if len(values) > 2048:
         step = (len(values)+399)//400
         spans = [(min(values[i:i+step]),max(values[i:i+step]))
@@ -112,6 +119,13 @@ def instance(task):
 
 
 def project(task_id, w, params):
+    if task_id == 'T101':
+        last = params['grid_size'] - 1
+        return layout('Selected grid points', '选中的网格点', points=w['points'],
+                      outline=[[0, 0], [last, 0], [last, last], [0, last]])
+    if task_id == 'T102':
+        return grid(w['pairs'], 'Demand splits · clockwise and counterclockwise',
+                    '需求拆分 · 顺时针和逆时针')
     t = int(task_id[1:])
     if t in (21, 40):
         points = [sphere_point(tuple(map(num,p))) for p in w.get('stereographic', w.get('points'))]

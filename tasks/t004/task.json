@@ -2,6 +2,7 @@
   "task_id": "T004",
   "name": "Tammes problem: 16 points on S²",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T004-C01",
   "configurations": [
     {
       "id": "T004-C01",

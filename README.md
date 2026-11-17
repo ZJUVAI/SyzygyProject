@@ -1,6 +1,6 @@
 # SyzygyProject v1.0
 
-正式数学构造 benchmark 包含 100 个任务、139 个配置。入选名单和筛选依据见 [PLAN.md](PLAN.md#正式目录筛选100题)。
+正式数学构造 benchmark 包含 100 道题、100 个正式配置。入选名单和筛选依据见 [PLAN.md](PLAN.md#正式目录筛选100题)。
 
 - `tasks/`：任务定义、搜索程序、独立验证器和必要的基线见证。
 - `mathbench/`：公共运行器和评测接口。
@@ -20,7 +20,11 @@ python -m pip install -r requirements-lock.txt
 
 ## 任务编号
 
-正式任务编号为 `T001`–`T100`。每题的配置从 `C01` 开始。运行 `python -m mathbench list` 查看任务。
+正式目录有 100 道题，编号范围为 `T001`–`T102`。T086 和 T096 已归档。每题只运行一个正式配置。T003 使用 `C02`，其余任务使用 `C01`。另外 41 个历史配置可按原编号复算。运行 `python -m mathbench list` 查看任务及正式配置。以下命令复算历史配置 T003-C01。
+
+```sh
+python -m mathbench replay T003 tasks/t003/best/T003-C01/solution.json --config T003-C01
+```
 
 ## 搜索
 

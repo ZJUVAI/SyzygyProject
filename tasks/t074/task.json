@@ -18,6 +18,7 @@
     "The denominator is the area of the convex hull of the 12 points; the hull has positive area.",
     "There is no fixed square, triangle, or other container."
   ],
+  "official_configuration": "T074-C01",
   "configurations": [
     {
       "id": "T074-C01",

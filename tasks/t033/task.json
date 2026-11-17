@@ -3,6 +3,7 @@
   "candidate_id": "maximum-cut",
   "name": "Gset G70 maximum cut",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T033-C01",
   "configurations": [
     {
       "id": "T033-C01",

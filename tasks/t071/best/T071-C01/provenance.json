@@ -1,54 +1,62 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t071/runs/search_routes_20261109_structured/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "code_size": 3856,
+    "distinct_outputs": 32768,
+    "method": "independent string slicing at each deletion index, with per-word duplicates removed"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T071",
-    "config_id": "T071-C01",
-    "validity": 1.0,
-    "combined_score": 0.5033713692946058,
-    "objective": 1941,
-    "verification_status": "exact",
-    "generation_time": 1.6469864286482334,
-    "verification_time": 0.5169058926403522,
-    "objective_value": 1941,
-    "details": {
-      "length": 16,
-      "alphabet_size": 65536,
-      "codeword_count": 1941,
-      "distinct_deletion_outputs": 15787,
-      "possible_deletion_outputs": 32768,
-      "pairwise_disjoint_deletion_outputs": true,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 2.702037863433361,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 70,
+    "method": "Deterministic algebraic construction or exact template enumeration; sources of known formulas are recorded separately."
   },
-  "search_metadata": {
-    "algorithm": "random-order greedy selection of an independent set in the deletion-conflict graph",
-    "seed": 0,
-    "trial_limit": 2,
-    "trials_completed": 2,
-    "candidate_visits": 131072,
-    "reference_data_read": false,
-    "search_seconds_cutoff": null
+  "classification": "ai_assisted_local_continuation",
+  "seed": 41113,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        67,
+        67,
+        "512",
+        41113
+      ]
+    ],
+    "prior_control_summary": "tasks/t071/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "8f3b209d779e952a1c197dd3c3530c1f10d266ca04c8e36502ff3e47849bd9ce",
-  "replay_command": "python -m mathbench replay T071 tasks/t071/best/T071-C01/solution.json --config T071-C01"
+  "budget": {
+    "generation_seconds": 70,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 27
+  },
+  "source_sha256": {
+    "tasks/t071/baseline.py": "b9aa42331b81da1eb6e011981f5c20fdfb68235c83e28c58e5b30e82afd83dfe",
+    "tasks/t071/check.py": "ee2f0077c8773ebd1e3e15eb87e11cecf00635a9d75c71dc150ae3c9fd45d0e8",
+    "tasks/t071/evaluator.py": "f5eff29ef6d15bde918afbe6b2ea3d073b23405e36fe5ee5bb9647eaa14c18fa",
+    "tasks/t071/evolution.py": "fb9f26ab186e057899f0f1fbfe0a1aa934fb7461dcf8349907f3d8a132ef21de",
+    "tasks/t071/human.py": "386d99061308a076e96baca601b1e3890f45c326c2a7475514ad9b49159b6524",
+    "tasks/t071/init_program.py": "35dc1109b1d54b84bd4f2d3ce826d8e5bcbe97e8bfd0c3a49cf4d62adb980061",
+    "tasks/t071/reference.py": "c17944d448358a5035216073680821886b9cadbc42310145b9505cf78a13b54b",
+    "tasks/t071/test_task.py": "3fd6136002e6b54f74b9538c13e91967b6740f965eaa01d3aa4e32ae630e1267",
+    "program.py": "f82dc6b05bd759f3e1479689b03ff0e93d8211a0b448ea16b8b7c6462db626cd",
+    "plan.json": "b472d9ee8dd2a3b86bcf4e4c218321af1c63a6c31e38ec35a291dff8fd5972c8"
+  },
+  "warm_start_sha256": "7fb5441ea92bbaaf891276604af06b98ddd5c7bff5db284c084e332ee7bd50c7",
+  "replay_command": ".venv/bin/python -m mathbench replay T071 tasks/t071/best/T071-C01/solution.json --config T071-C01"
 }

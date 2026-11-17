@@ -2,6 +2,7 @@
   "task_id": "T078",
   "name": "Minimum determinant of a 10-dimensional lattice Gram matrix with minimum squared norm 4",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T078-C01",
   "configurations": [
     {
       "id": "T078-C01",

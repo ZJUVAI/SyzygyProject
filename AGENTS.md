@@ -20,7 +20,7 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 
 ### 范围与配置
 
-- 首批范围为 20 个任务。每个任务选 1–5 个配置，不要求数量相同。
+- 正式目录有 100 道题，每题选 1 个正式配置。其余已验收配置保留为历史记录。
 - 对照 SimpleTES、DREAM-RSI 和 Google DeepMind AlphaEvolve 的数学任务。记录任务与原论文、公开仓库和固定版本的对应关系。仅因更名或参数变化不新增任务数。
 - 任务参数以各任务的 `task.json` 为准。计划和研究结论只更新 `PLAN.md`。
 - SOTA 来源和验证信息保存在各任务的 `sota.json`。自己的最佳见证保存在 `best/`。新配置须独立验收后接入。
@@ -71,7 +71,7 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 - 每个配置至少独立复算一个关键量，运行一个合法样例和一个故意破坏的样例，并检查篡改声明分数不能改变重算结果。
 - 定义或证明有缺口时保持未完成。不得放宽验证条件绕过问题。
 - 区分“已选配置”“待实现”“待 Sol 验收”“已通过 Sol 验收”。原研究中的“通过选型”不等于实现完成。
-- 新配置只有完成上述交付和验收后，才能加入正式运行目录及验收数量。新增配置不得继承旧配置的通过状态。
+- 替换正式配置前，须完成上述交付和验收。新配置不得继承旧配置的通过状态。
 
 ## Content Style & Naming
 

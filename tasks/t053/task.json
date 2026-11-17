@@ -16,6 +16,7 @@
     "The product of all factors is exactly 100000!.",
     "The objective is the smallest factor, not the ratio of largest to smallest factors."
   ],
+  "official_configuration": "T053-C01",
   "configurations": [
     {
       "id": "T053-C01",

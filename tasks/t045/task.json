@@ -16,6 +16,7 @@
     "Every vertex ID occurs exactly once.",
     "The objective is the sum of absolute position differences over all 1,676 undirected edges in gd96a."
   ],
+  "official_configuration": "T045-C01",
   "configurations": [
     {
       "id": "T045-C01",

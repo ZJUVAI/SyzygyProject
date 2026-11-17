@@ -3,6 +3,7 @@
   "name": "Quadratic assignment on QAPLIB tai256c",
   "acceptance_status": "accepted_by_sol",
   "candidate_id": "quadratic-assignment",
+  "official_configuration": "T027-C01",
   "configurations": [
     {
       "id": "T027-C01",

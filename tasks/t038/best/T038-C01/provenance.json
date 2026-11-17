@@ -1,44 +1,64 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
-  "generation_record": {
-    "task_id": "T038",
-    "config_id": "T038-C01",
-    "validity": 1.0,
-    "combined_score": 0.4,
-    "objective": 2,
-    "verification_status": "exact",
-    "generation_time": 0.1646171398460865,
-    "verification_time": 0.16471130400896072,
-    "objective_value": 2,
-    "details": {
-      "order": 12,
-      "squares_checked": 2,
-      "orthogonal_pairs_checked": 1,
-      "ordered_pairs_per_square_pair": 144,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 0.33200015500187874,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t038/runs/search_gap7_20261109_gap7_all_cliques/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "square_count": 5,
+    "orthogonal_array_rows": 144,
+    "two_column_projections_checked": 21
   },
-  "search_metadata": {},
-  "solution_sha256": "1e003694fb4e3ced17666377abf96611e5cedb62cabfa90e04f282988c74e481",
-  "replay_command": "python -m mathbench replay T038 tasks/t038/best/T038-C01/solution.json --config T038-C01"
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
+  "generation_record": {
+    "scope": "AI-assisted construction search",
+    "limit": 120,
+    "seed": 67106,
+    "method": "Enumerate every five-square family in the normalized group construction and check for a common transversal"
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 67106,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        117,
+        117,
+        "512",
+        67106
+      ]
+    ],
+    "prior_control_summary": "tasks/t038/runs/search_sol1200/summary.json"
+  },
+  "budget": {
+    "generation_seconds": 120,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 34
+  },
+  "source_sha256": {
+    "tasks/t038/baseline.py": "6f0e328004a6c291d5e58eeefe9eeac64c6c3a538a1a68436055e5f60ceab9da",
+    "tasks/t038/check.py": "ec82f22d271fdd81d51db3f30d90f4c0859ff254cb9376a7da570fcbdb0be4b1",
+    "tasks/t038/evaluator.py": "a36ef6fca1b945e5e8b390abc47b032b0278c082fa170e4c0df48eb4b3692ef3",
+    "tasks/t038/evolution.py": "3671d6a6e8d3a6e15acb5d0898a78b880e47d730dc710d88c7cb77101ff83b5f",
+    "tasks/t038/human.py": "02821c8a01ed2f4850327c823f9d6cde93acd31a6f7a1d1a394e5e5501d33e4f",
+    "tasks/t038/init_program.py": "9223ec0136bb89304b1a93347edaaaa55144603459d7d6dae489c01ef63e9c42",
+    "tasks/t038/reference.py": "3970c35f221e7878a57870926efd01a8b0b08c09ca30ab3e5d0f3852f085a9a0",
+    "tasks/t038/test_task.py": "9f5f7faa1e41452ae84de3299eb78ceb5f4835a441638117cd8a1447f9acd4f9",
+    "program.py": "3daafb679839cf4caace61d9d1ee609fa9eb8d80fc50db1363d0e036405edf94",
+    "plan.json": "54d79094b787ec44c887beb55036115358219e88ddab3a21d9899b95386b17ba",
+    "search.cpp": "84f5843aafff74a946d09999c760a7fe0062a8f75d6d0f6620b56c706c6c92e3"
+  },
+  "warm_start_sha256": "1e003694fb4e3ced17666377abf96611e5cedb62cabfa90e04f282988c74e481",
+  "replay_command": ".venv/bin/python -m mathbench replay T038 tasks/t038/best/T038-C01/solution.json --config T038-C01"
 }

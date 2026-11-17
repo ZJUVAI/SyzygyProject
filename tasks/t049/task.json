@@ -2,6 +2,7 @@
   "task_id": "T049",
   "name": "Minimum distinct distances among 91 planar points",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T049-C01",
   "configurations": [
     {
       "id": "T049-C01",

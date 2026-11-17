@@ -2,6 +2,7 @@
   "task_id": "T025",
   "name": "Maximum cap set in F_3^n",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T025-C01",
   "configurations": [
     {
       "id": "T025-C01",

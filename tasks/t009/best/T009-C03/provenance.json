@@ -1,51 +1,49 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-07",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
-  "generation_record": {
-    "task_id": "T009",
-    "config_id": "T009-C03",
-    "validity": 1.0,
-    "combined_score": 0.7647058823529411,
-    "objective": 26,
-    "verification_status": "exact",
-    "generation_time": 5.371859695762396,
-    "verification_time": 0.31498824805021286,
-    "objective_value": 26,
-    "details": {
-      "parameters": {
-        "n": 100,
-        "k": 20,
-        "q": 2
-      },
-      "rank": 20,
-      "codewords_checked": 1048575,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 5.689784616231918,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_summary": "tasks/t009/runs/search_luna_sweep/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "codewords": 1048576,
+    "minimum_distance": 28
   },
-  "search_metadata": {
-    "algorithm": "simulated annealing over systematic parity matrices",
-    "iterations": 10,
-    "seed": 0
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "classification": "ai_assisted_local_continuation",
+  "seed": 46,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "3.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "8.0"
   },
-  "solution_sha256": "001d9f490a901c70c14dd696a1729c335e5f1a606f9fdbe805f36c12061f95b4",
-  "replay_command": "python -m mathbench replay T009 tasks/t009/best/T009-C03/solution.json --config T009-C03"
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 0
+  },
+  "source_sha256": {
+    "tasks/t009/baseline.py": "777032326768bdf8b26a0e6a16cb6cd7f8694b57f1446cba71f96b3531e44ecc",
+    "tasks/t009/check.py": "141851c895bee52ad400ba5d8eaa41541f7337dd00f8be2312eddbf26840fdb4",
+    "tasks/t009/evaluator.py": "af21bf871cb3e059f7e8b2466e8d6df23d9363b5eeb9ca7ab2d35f5317b44769",
+    "tasks/t009/evolution.py": "cbdbdcea710a77c1493d5b7e3ecca2d02b50ffadc5f90bb7adfc7ce3b59507f7",
+    "tasks/t009/human.py": "c7c100117c1489da7259ccf0ff7b27906d676f0c3a7a68f7aa5b5985e6cbb34a",
+    "tasks/t009/init_program.py": "d08e9fbeafe1942457342c767c21ae6430af4f8f660408cba72bbb060bcad509",
+    "tasks/t009/qc.py": "aa331a801c23c8005fc13147e1bd760a20a9c043cfe79f02c85d771301cdbaa7",
+    "tasks/t009/reference.py": "01a9883fbe6a3a3f799d03a69678f6495ee614da73fef2de53f1551e9068522a",
+    "tasks/t009/sota.py": "3e749cce91cd55b1b60766049cf14bcd8931768a09ae518e6e2c933bfd7aec19",
+    "tasks/t009/test_configurations.py": "a9213d9f389e1a6d169474414899031e806c3f25f8b27b818fad0f1966d45a1f",
+    "tasks/t009/test_evolution_structured.py": "e99c15fe39a17d90c6283eea74377624bcddaeae8c02fe79a127a394b29e8240",
+    "tasks/t009/test_task.py": "8b8f0ce68294d4d32fde6fa16abc00676ef877bf1a60a5372c05f1f95c1a1bde"
+  },
+  "warm_start_sha256": "001d9f490a901c70c14dd696a1729c335e5f1a606f9fdbe805f36c12061f95b4",
+  "replay_command": ".venv/bin/python -m mathbench replay T009 tasks/t009/best/T009-C03/solution.json --config T009-C03"
 }

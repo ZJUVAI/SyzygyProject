@@ -2,12 +2,12 @@
   "task_id": "T029",
   "config_id": "T029-C01",
   "validity": 1.0,
-  "combined_score": 0.8846153846153846,
-  "objective": 26,
+  "combined_score": 1.0,
+  "objective": 23,
   "verification_status": "exact",
-  "generation_time": 0.21493526175618172,
-  "verification_time": 0.21512143313884735,
-  "objective_value": 26,
+  "generation_time": 4.672645017504692,
+  "verification_time": 0.21505263447761536,
+  "objective_value": 23,
   "details": {
     "matrix_order": 3,
     "field": "Q",
@@ -17,11 +17,11 @@
     "claimed_objective_ignored": true,
     "max_terms_is_resource_cap_not_an_optimality_bound": true
   },
-  "eval_time": 0.4347046725451946,
-  "seed": 0,
+  "eval_time": 4.891033072024584,
+  "seed": 75103,
   "strict": true,
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 45,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -30,6 +30,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 67
   }
 }

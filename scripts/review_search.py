@@ -1,6 +1,7 @@
 """Run main-review arithmetic checks and retain stronger saved witnesses."""
 import argparse
 import copy
+from datetime import datetime, timezone
 from fractions import Fraction
 import hashlib
 import importlib
@@ -16,7 +17,47 @@ from mathbench.replay import replay
 from scripts.audits.independent_audit import broken
 from scripts.search import bounded_audit, save
 
+
+def sync_promoted_witness(directory, config, solution, result, provenance):
+    """Update existing own-result entries for the promoted witness."""
+    cid = config['id']
+    witness = f'best/{cid}/solution.json'
+    entry = dict(
+        value=result['objective'],
+        objective_value=result.get('objective_value', result['objective']),
+        witness=witness,
+        witness_sha256=hashlib.sha256((directory / witness).read_bytes()).hexdigest(),
+        parameters=config['parameters'],
+        seed=result['seed'],
+        verification_status=result['verification_status'],
+        review_status=provenance['status'],
+        date_checked=provenance['date'],
+        origin_type='AI-assisted local continuation',
+        search_metadata=solution.get('search_metadata', {}),
+        generation_record=result,
+        evidence_state='Strict replay and independent Sol review passed.',
+    )
+    if 'objective_interval' in result.get('details', {}):
+        entry['objective_interval'] = result['details']['objective_interval']
+    if 'program' in provenance:
+        entry['program'] = provenance['program']
+    for name in ('records.json', 'sota.json'):
+        path = directory / name
+        document = json.loads(path.read_text())
+        records = document.get('configurations', {}).get(cid, {})
+        changed = False
+        for key in ('best_own_search', 'own_search_record'):
+            previous = records.get(key)
+            if isinstance(previous, dict) and previous.get('witness', previous.get('witness_file')) == witness:
+                records[key] = entry
+                changed = True
+        if changed:
+            path.write_text(json.dumps(document, ensure_ascii=False, indent=2) + '\n')
+
+
 QUANTITY_KEYS = {
+    'T101': 'point_count',
+    'T102': 'discrepancy',
     'T099':'tile_count','T100':'triangle_count','T098':'outer_side','T095':'face_count','T097':'polygon_count','T093':'packed_value','T091':'row_count','T090':'energy','T088':'cutwidth','T087':'minimum_autocorrelation_ratio','T085':'radius','T084':'diameter','T082':'army_size','T081':'distance_ratio','T079':'union_cardinality','T078':'determinant','T075':'edge_count','T076':'largest_element','T074':'area_ratio','T073':'point_count','T072':'max_size','T071':'code_size','T070':'square_count','T069':'tour_cost','T068':'code_size','T067':'code_size',
     'T066':'three_point_lines',
     'T065':'unit_pairs',
@@ -106,9 +147,13 @@ def check_quantity(task, quantity, result):
         assert Fraction(result['objective'])==hi
         assert hi-lo<=lo*Fraction(1,10**10)
     elif task == 'T046':
-        exact = Fraction(quantity['exact_supnorm'])
         lo,hi = map(Fraction,result['details']['objective_interval'])
-        assert lo <= exact <= hi
+        if 'exact_supnorm' in quantity:
+            a = b = Fraction(quantity['exact_supnorm'])
+        else:
+            a, b = map(Fraction, quantity['supnorm_interval'])
+        assert max(lo, a) <= min(hi, b)
+        assert b-a <= hi*Fraction(1,10**10)
         assert Fraction(result['objective']) == hi
         assert hi-lo <= hi*Fraction(1,10**10)
     elif task == 'T021':
@@ -143,8 +188,9 @@ def review(path, candidate_only=False):
     if not expected or len(data['configurations']) != len(expected):
         return 0
     task = data['task_id']
+    review_date = datetime.now(timezone.utc).date().isoformat()
     directory = ROOT / 'tasks' / task.lower()
-    configs = {c['id']: c for c in load_task(task)['configurations']}
+    configs = {c['id']: c for c in load_task(task, include_history=True)['configurations']}
     assert all(hashlib.sha256((path.parent / 'sources' / name).read_bytes()).hexdigest() == digest
                for name, digest in manifest['source_sha256'].items())
     count = 0
@@ -164,7 +210,7 @@ def review(path, candidate_only=False):
         objective_number(result)  # A failed selected construction can never pass this review.
         witness = path.parent / cid / row['best'] / 'solution.json'
         solution = json.loads(witness.read_text())
-        destination = directory / 'runs' / 'sol_optimize_review_20261106' / cid / path.parent.name
+        destination = directory / 'runs' / f'sol_optimize_review_{review_date.replace("-", "")}' / cid / path.parent.name
         checked = replay(task, witness, cid, strict=True, output_dir=destination / 'replay')
         assert checked['validity'] == 1 and checked['objective'] == result['objective'], checked
         checker = importlib.import_module(f'tasks.{task.lower()}.check')
@@ -180,7 +226,7 @@ def review(path, candidate_only=False):
             raise AssertionError('Damaged construction accepted: ' + cid)
         quantity = bounded_audit(task, solution, dict(configs[cid], id='search-check'))
         check_quantity(task, quantity, result)
-        record = dict(reviewer='Sol main agent', status='reviewed_by_sol', date='2026-11-06',
+        record = dict(reviewer='Sol main agent', status='reviewed_by_sol', date=review_date,
                       source_summary=str(path.relative_to(ROOT)), source_hashes_verified=True,
                       independent_quantity=quantity, claimed_score_ignored=True,
                       damaged_construction_rejected=True,
@@ -214,6 +260,7 @@ def review(path, candidate_only=False):
                           warm_start_sha256=warm_hash,
                           replay_command=f'.venv/bin/python -m mathbench replay {task} tasks/{task.lower()}/best/{cid}/solution.json --config {cid}')
             save(best / 'provenance.json', record)
+            sync_promoted_witness(directory, configs[cid], solution, result, record)
         row.update(status='candidate_verified_controls_incomplete' if failed_evaluations else 'reviewed_by_sol', sol_review=str((destination / 'review.json').relative_to(ROOT)))
         count += 1
         print('REVIEWED', cid, 'PROMOTED' if improved else 'kept prior best', flush=True)

@@ -1,25 +1,21 @@
 {
   "reviewer": "Sol main agent",
   "status": "reviewed_by_sol",
-  "date": "2026-11-06",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t016/runs/search_sol1200/summary.json",
   "source_hashes_verified": true,
   "independent_quantity": {
-    "exact_objective": "2279206761619860631/1562500000000000000",
+    "exact_objective": "2279002134693099127/1562500000000000000",
     "convolution_entries": 415
   },
   "claimed_score_ignored": true,
   "damaged_construction_rejected": true,
   "initial_baseline_human_valid": true,
   "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-  "search_agent": {
-    "model": "gpt-6.1-sol",
-    "reasoning_effort": "low",
-    "group": "convolutions"
-  },
   "classification": "ai_assisted_local_continuation",
-  "seed": 16,
+  "seed": 81110,
   "controls": {
-    "MATHBENCH_SEARCH_SECONDS": "30.0",
+    "MATHBENCH_SEARCH_SECONDS": "15.0",
     "MATHBENCH_EVOLUTION_SECONDS": "240.0"
   },
   "budget": {
@@ -32,7 +28,7 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 90
+    "worker_cpu": 116
   },
   "source_sha256": {
     "tasks/t016/baseline.py": "42acc10a6d5c2a6e5feff23b0db9f3bcd81b7ab95e313f5294b37096e7f73bfe",
@@ -46,6 +42,6 @@
     "tasks/t016/test_task.py": "67f0cda6613a636d332dbd90c8beab0b529dc639e91b959b78a715dca69669e2",
     "tasks/t016/research/local_experiment/project_reconstruct.py": "c5fb32b3f28a29a7364ffb8b0ffc5782349ece776f85fbdc3982cde6d2308bae"
   },
-  "warm_start_sha256": "c5467c975f6221d4f0f8f5a2b99e123dd31b03449ba550ea11d0161bcb4ae661",
-  "replay_command": "python -m mathbench replay T016 tasks/t016/best/T016-C01/solution.json --config T016-C01"
+  "warm_start_sha256": "42cb767d7ae6b59e6ab50a9ff9a376ce81ba458044c5c95af71f9f252a82d568",
+  "replay_command": ".venv/bin/python -m mathbench replay T016 tasks/t016/best/T016-C01/solution.json --config T016-C01"
 }

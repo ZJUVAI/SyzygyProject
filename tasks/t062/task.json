@@ -2,6 +2,7 @@
   "task_id": "T062",
   "name": "Largest square-difference-free subset of [42025]",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T062-C01",
   "configurations": [
     {
       "id": "T062-C01",

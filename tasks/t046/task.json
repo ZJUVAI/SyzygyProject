@@ -2,6 +2,7 @@
   "task_id": "T046",
   "name": "Integer Chebyshev polynomial on [0,1]",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T046-C01",
   "configurations": [
     {
       "id": "T046-C01",

@@ -1,58 +1,63 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t047/runs/search_gap11_20261109_gap11_lift_counts/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "difference_basis_size": 128,
+    "required_translations_checked": 6166,
+    "span": 6742
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T047",
-    "config_id": "T047-C01",
-    "validity": 1.0,
-    "combined_score": 0.6752136752136753,
-    "objective": 234,
-    "verification_status": "exact",
-    "generation_time": 7.646617114543915,
-    "verification_time": 2.352769959717989,
-    "objective_value": 234,
-    "details": {
-      "N": 6166,
-      "basis_size": 234,
-      "covered_distances": 6166,
-      "pair_checks_until_full_coverage": 23701,
-      "ambient_group": "integers_under_subtraction; differences larger than N are allowed",
-      "claimed_objective_ignored": true,
-      "strict_full_interval_check": true
-    },
-    "eval_time": 11.02531761303544,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 120,
+    "seed": 71104,
+    "method": "Enumerate Singer lifts with exact incremental counts for redundant-mark deletion"
   },
-  "search_metadata": {
-    "algorithm": "seeded randomized greedy set cover over integer differences; each step samples candidate marks and includes an anchor-plus-smallest-missing-distance point to guarantee progress",
-    "configuration_id": "T047-C01",
-    "seed": 0,
-    "restart_limit": 6,
-    "random_candidates_per_step": 32,
-    "max_additions_per_restart": 320,
-    "completed_restarts": 6,
-    "total_additions": 1434,
-    "wall_clock_cutoff_seconds": null,
-    "comparison_data_read": false,
-    "fallback": "all marks 0..6166 if no restart completed"
+  "classification": "ai_assisted_local_continuation",
+  "seed": 71104,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        117,
+        117,
+        "512",
+        71104
+      ]
+    ],
+    "prior_control_summary": "tasks/t047/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "25908723a6d38579333c2c84f8d3af4a65a7105371073e4cc4398e10ab38da7b",
-  "replay_command": "python -m mathbench replay T047 tasks/t047/best/T047-C01/solution.json --config T047-C01"
+  "budget": {
+    "generation_seconds": 120,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 36
+  },
+  "source_sha256": {
+    "tasks/t047/baseline.py": "342f93f084ec1ec31f762e12eb8fbdcc470fdb93c7a44459da047a4bb54e4b6d",
+    "tasks/t047/check.py": "386faf1accca3005d8081b2172be05799fa23f09f21431345c9e733e7aeeff93",
+    "tasks/t047/evaluator.py": "29453a9bc9833e1b2c8f09e5ba765040baeed967ebc8d12f74ba7fde2d3dbece",
+    "tasks/t047/evolution.py": "72820fe361dfcc3558050616efa0068d7864cd42700ad842d3ac4bb7eedf88bc",
+    "tasks/t047/human.py": "d2f2774edeb7c0bd6c1d7a28939e8e99624519594ead5188b352427823e1784f",
+    "tasks/t047/init_program.py": "6e07e3a9967836d407138d87a150e30ca9aabbc3e4a1b6d3eccaddb57884068c",
+    "tasks/t047/reference.py": "7979c24d8ab080fefaaeb358fb7e3b1e89e4089303e3f41e6698f866caef3861",
+    "tasks/t047/test_task.py": "e21ba7d2225bcd4b8796d3a59e75660eedd32d59a1563c79a0d734d7929f36a4",
+    "program.py": "91b0364fa3a8bb50f64ec4e101d1304f92187a5a66573eb0ff9a087ed6b5d529",
+    "plan.json": "c46cef5cd5c4c46a7d07ab7e3f0ec046311e76a8e252a835cf46671a7355e4b9"
+  },
+  "warm_start_sha256": "991cbcabf47d12da603b94e2a4a1e6be5825e8b1f8d228d06b0f5e869c2ba9da",
+  "replay_command": ".venv/bin/python -m mathbench replay T047 tasks/t047/best/T047-C01/solution.json --config T047-C01"
 }

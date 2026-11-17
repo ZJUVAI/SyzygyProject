@@ -2,6 +2,7 @@
   "task_id": "T093",
   "name": "Maximum value polygon packing for random_cf2_74ae2d30_50",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T093-C01",
   "configurations": [
     {
       "id": "T093-C01",

@@ -1,54 +1,52 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-07",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
-  "generation_record": {
-    "task_id": "T050",
-    "config_id": "T050-C03",
-    "validity": 1.0,
-    "combined_score": 1.8958333333333333,
-    "objective": 364,
-    "verification_status": "exact",
-    "generation_time": 0.3650376498699188,
-    "verification_time": 0.11444210633635521,
-    "objective_value": 364,
-    "details": {
-      "dimension": 11,
-      "vertices_checked": 365,
-      "nonconsecutive_pairs_checked": 66066,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 0.4821995459496975,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-06",
+  "source_summary": "tasks/t050/runs/search_luna_marathon/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "induced_path_edges": 394,
+    "neighbor_memberships_checked": 4345,
+    "crossing_edges": 3557,
+    "analytic_edge_upper_bound": 1125
   },
-  "search_metadata": {
-    "algorithm": "seeded population endpoint truncation and greedy regrowth",
-    "seed": 0,
-    "iterations_requested": 96,
-    "iterations_run": 96,
-    "objective_recomputed": 364,
-    "generation_seconds": 0.12244382873177528,
-    "budget": {
-      "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
-      "runner_generation_seconds": 300
-    }
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": {
+    "model": "gpt-6-luna",
+    "campaign": "marathon",
+    "shard": "B"
   },
-  "solution_sha256": "c70ce86dc916a2abe92c77872ae4808c125489e93feace59b34475c7aab01d6f",
-  "replay_command": "python -m mathbench replay T050 tasks/t050/best/T050-C03/solution.json --config T050-C03"
+  "classification": "ai_assisted_local_continuation",
+  "seed": 71202,
+  "controls": {
+    "MATHBENCH_SEARCH_SECONDS": "4.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "75.0"
+  },
+  "budget": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 34
+  },
+  "source_sha256": {
+    "tasks/t050/baseline.py": "95e964abe08580492c818629c8c9d08aab68faa47e91246c2ca72a40ab42b3e7",
+    "tasks/t050/check.py": "aae12adf89157749a7cb7cbcd278dea3e3cd0ec8052573d4049a0e5bc8cc7912",
+    "tasks/t050/evaluator.py": "33c16acb5d05c1d37cf3a341f5d545cc4279ff15af695fee72b6451e498dd042",
+    "tasks/t050/evolution.py": "2e6bd9eced12f2a3185e604374c0974c26f401490bd4d774f483aa1ea2fa8a90",
+    "tasks/t050/human.py": "ddb52154e8f11a2c26aeed95a6231e06874b7e3aff157baaac6d2da0bd960339",
+    "tasks/t050/init_program.py": "853dd5298411d8a55d00288e8bb8a69c6b9dfb856d72aa72ddadccded3733d99",
+    "tasks/t050/reference.py": "a23739cd8a3407e65bce99c169f3ef493edbf18bb99fb8a4b1c7a28f8aac6008",
+    "tasks/t050/test_task.py": "4a44526b2393b089ebb6f241ad674cb3dc32591a938748c38ee3d17ad9ef54ca"
+  },
+  "warm_start_sha256": "edc5e2f0c3149e3492601d5ac9861a594abc57d83b5ca52de8f8a6c99cae548d",
+  "replay_command": ".venv/bin/python -m mathbench replay T050 tasks/t050/best/T050-C03/solution.json --config T050-C03"
 }

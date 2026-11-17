@@ -1,0 +1,16 @@
+{
+  "human": {
+    "file": "human.json",
+    "sha256_file": "human.sha256",
+    "source": "Skutella, arXiv:1405.0789, §5, Figure 2",
+    "verified_value": "11/10"
+  },
+  "ai_assisted": {
+    "file": "reference.json",
+    "sha256_file": "reference.sha256",
+    "upstream_commit": "8f447457957deac61e28bf1676746f0753b3b2f8",
+    "upstream_path": "experiments/ring_loading_problem/ring_loading_problem.ipynb",
+    "paper": "AlphaEvolve, arXiv:2511.02864v3, §6.41 / Problem 6.61",
+    "verified_value": "47/42"
+  }
+}

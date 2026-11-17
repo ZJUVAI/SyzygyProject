@@ -6,7 +6,9 @@ import sympy as sp
 def audit(solution):
     r=sp.sqrt(3)
     def number(v):
-        return sp.Rational(v[0])+sp.Rational(v[1])*r
+        if isinstance(v, (list, tuple)):
+            return sp.Rational(v[0])+sp.Rational(v[1])*r
+        return sp.Rational(v)
     L=number(solution['side']);assert L>0
     triangles=[]
     for record in solution['triangles']:

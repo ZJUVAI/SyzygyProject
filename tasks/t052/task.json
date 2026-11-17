@@ -16,6 +16,7 @@
     "The Hamming distance between every pair of distinct codewords is at least 9.",
     "The objective is the number of codewords."
   ],
+  "official_configuration": "T052-C01",
   "configurations": [
     {
       "id": "T052-C01",

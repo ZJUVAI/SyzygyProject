@@ -1,66 +1,64 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t082/runs/search_routes_20261109_native/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "army_size": 131,
+    "finite_upper_bound": 225,
+    "method": "disjoint occupied line labels in each of four queen directions; independent of pairwise attacks"
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T082",
-    "config_id": "T082-C01",
-    "validity": 1.0,
-    "combined_score": 0.44274809160305345,
-    "objective": 58,
-    "verification_status": "exact",
-    "generation_time": 0.9880991689860821,
-    "verification_time": 0.3665984533727169,
-    "objective_value": 58,
-    "details": {
-      "board_size": 30,
-      "army_size_each_color": 58,
-      "total_queens": 116,
-      "cross_color_pairs_checked": 3364,
-      "cross_color_attacking_pairs": 0,
-      "cross_color_square_overlap": false,
-      "occupied_rows": {
-        "white": 17,
-        "black": 13,
-        "disjoint": true
-      },
-      "occupied_columns": {
-        "white": 15,
-        "black": 15,
-        "disjoint": true
-      },
-      "proven_upper_bound": 225,
-      "claimed_objective_ignored": true,
-      "strict": true
-    },
-    "eval_time": 1.367559790611267,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 280,
+    "method": "Native single-thread alternative search with exact integer deltas"
   },
-  "search_metadata": {
-    "algorithm": "elitist evolutionary search over feasible layouts with pair removal and randomized valid pair extension",
-    "seed": 0,
-    "generations_requested": 30,
-    "generations_run": 30,
-    "population_size": 4,
-    "generation_seconds": 0.6642911620438099,
-    "budget": "fixed generations unless MATHBENCH_SEARCH_SECONDS sets a wall-clock cutoff; runner cap 300 seconds"
+  "classification": "ai_assisted_local_continuation",
+  "seed": 41113,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        277,
+        277,
+        "512",
+        41113
+      ]
+    ],
+    "prior_control_summary": "tasks/t082/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "3d6326606f895554b89fdfbb105a1098285c0de29a0f87fb589e55b86f0974e5",
-  "replay_command": "python -m mathbench replay T082 tasks/t082/best/T082-C01/solution.json --config T082-C01"
+  "budget": {
+    "generation_seconds": 280,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 37
+  },
+  "source_sha256": {
+    "tasks/t082/baseline.py": "484b704725bb123399d56ed19f65837c7615d9b7cce1573827ba65b2f8aabbba",
+    "tasks/t082/check.py": "7e0d1fd8bc0007848ffddb82193cf88755a7003de8d4f3e2bda7c358cbea176d",
+    "tasks/t082/construction.py": "4a8374514339f59d8f905771aa51cac5e759bee9e099beaba206e8560991b901",
+    "tasks/t082/evaluator.py": "fb63b4d2006857101ab4d904fe8ae2748c99d92819380a32cb44b9cb1e0c3462",
+    "tasks/t082/evolution.py": "39dedca48218c8c28e9aa9bcb4bf0ad1ac508e7bf55a97672d591fec44d6d273",
+    "tasks/t082/human.py": "1280512835169d05207e7d83b930d24f563c624b2348fe7c9b92147a3dfd64ae",
+    "tasks/t082/init_program.py": "cc3988a00ecf9454dd354b22858bec7737221ac180881647431710b75285d52d",
+    "tasks/t082/reference.py": "769e6194d55d385c1856919453ae9df87886abf1425c539ac5fc25ffe771106d",
+    "tasks/t082/test_task.py": "95a6c48e81f91746aa031f61cf37248b1d4399b61ff7011544dde16132ccecc8",
+    "program.py": "12e45b068ac192df61c887f71d23eb4c8f3705ec39e577d8c7dccfe04f099e11",
+    "plan.json": "c16bc92b221b3b3dfc49df246156afaab730d36ff9f5465e7a87763f11f6f169",
+    "search.cpp": "bcc3c386258ebdc0e68f569c4e9af81064aed3432d1eed56ac694f8e5a39bba9"
+  },
+  "warm_start_sha256": "ed619d34013f0afb961bd275024fc0845fb293f7f78f868ca1b7a40cc55d8e7a",
+  "replay_command": ".venv/bin/python -m mathbench replay T082 tasks/t082/best/T082-C01/solution.json --config T082-C01"
 }

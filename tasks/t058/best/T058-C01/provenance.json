@@ -1,49 +1,61 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "init_program.py",
-  "generation_record": {
-    "task_id": "T058",
-    "config_id": "T058-C01",
-    "validity": 1.0,
-    "combined_score": 0.14285714285714285,
-    "objective": 1,
-    "verification_status": "exact",
-    "generation_time": 1.5486374646425247,
-    "verification_time": 0.6811528652906418,
-    "objective_value": 1,
-    "details": {
-      "players": 35,
-      "groups_per_round": 7,
-      "players_per_group": 5,
-      "round_count": 1,
-      "distinct_pairs_used": 70,
-      "pair_count_upper_bound": 8,
-      "pairs_per_round": [
-        70
-      ],
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 2.237609300762415,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t058/runs/search_routes_20261109_structured/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "round_count": 7,
+    "distinct_pairs": 490
   },
-  "search_metadata": {},
-  "solution_sha256": "63d244faf3c9b9fc393be36dbd142403e1682060af3587f8d10577dee17cd5e7",
-  "replay_command": "python -m mathbench replay T058 tasks/t058/best/T058-C01/solution.json --config T058-C01"
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
+  "generation_record": {
+    "scope": "AI-assisted construction search",
+    "limit": 70,
+    "method": "Deterministic algebraic construction or exact template enumeration; sources of known formulas are recorded separately."
+  },
+  "classification": "ai_assisted_local_continuation",
+  "seed": 41113,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        67,
+        67,
+        "512",
+        41113
+      ]
+    ],
+    "prior_control_summary": "tasks/t058/runs/search_sol1200/summary.json"
+  },
+  "budget": {
+    "generation_seconds": 70,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 26
+  },
+  "source_sha256": {
+    "tasks/t058/baseline.py": "231b3bb0201f933d5db6769c8a7e9a9f4dc3b20e1929c0a5a979683ac7103e49",
+    "tasks/t058/check.py": "2135c471c0148a1cd61d131471341e22817e7298ff48d0e97867fa8584806e94",
+    "tasks/t058/evaluator.py": "e768ee27492897a54a84245891f8cbea37ffabfbc8d4de137bcc050bb6c1a2ba",
+    "tasks/t058/evolution.py": "7bb471c3aa42652b54568b4bd01b963ba0668bb87379db9670969573f7cf4299",
+    "tasks/t058/human.py": "f32d6dd03a97d71b966c928f9f49ad8a022d96654548966d5114cb4935ab5d39",
+    "tasks/t058/init_program.py": "9158aefff968976ef573045079dacb03e3b7702b243ce7aa374f0112a4628e0d",
+    "tasks/t058/reference.py": "eba72ebe665a628c30e9dc1aa381aab8293f8d985b37cdc82b2616a5967b67c4",
+    "tasks/t058/test_task.py": "156596a3679af152bed2233ea23c6811ad970ec91c51b57d782a44a7f2812afe",
+    "program.py": "f82dc6b05bd759f3e1479689b03ff0e93d8211a0b448ea16b8b7c6462db626cd",
+    "plan.json": "b472d9ee8dd2a3b86bcf4e4c218321af1c63a6c31e38ec35a291dff8fd5972c8"
+  },
+  "warm_start_sha256": "31902e7b899ed1894a58339d4fb1269b978df5e0a8f94b83fa33b652e93fadc3",
+  "replay_command": ".venv/bin/python -m mathbench replay T058 tasks/t058/best/T058-C01/solution.json --config T058-C01"
 }

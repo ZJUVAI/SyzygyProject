@@ -2,6 +2,7 @@
   "task_id": "T007",
   "name": "29-mark Golomb ruler length",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T007-C01",
   "configurations": [
     {
       "id": "T007-C01",

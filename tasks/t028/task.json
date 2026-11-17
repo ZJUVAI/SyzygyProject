@@ -3,6 +3,7 @@
   "candidate_id": "permutation-flow-shop",
   "name": "Taillard permutation flow shop Ta051",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T028-C01",
   "configurations": [
     {
       "id": "T028-C01",

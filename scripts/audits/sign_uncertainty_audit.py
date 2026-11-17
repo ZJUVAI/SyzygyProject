@@ -4,21 +4,42 @@ from math import isqrt
 import sympy as sp
 
 
+def _fourier_by_differentiation(poly):
+    """Apply the Gaussian differential operator by Horner evaluation."""
+    denominator, integer_poly = poly.clear_denoms(convert=True)
+    leading, *remaining = map(int, integer_poly.all_coeffs())
+    coefficients = [leading]
+    dyadic = 1
+    for constant in remaining:
+        updated = [0] * (len(coefficients) + 1)
+        for degree, value in enumerate(coefficients):
+            updated[degree] += (4 * degree + 1) * value
+            updated[degree + 1] -= 2 * value
+            if degree:
+                updated[degree - 1] -= degree * (2 * degree - 1) * value
+        dyadic *= 2
+        updated[0] += constant * dyadic
+        coefficients = updated
+    return sp.Poly.from_list(
+        [sp.Rational(value, denominator * dyadic) for value in reversed(coefficients)],
+        gens=poly.gen,
+    )
+
+
 def audit(s):
+    from tasks.t089.check import positive_root_intervals
     p=list(map(F,s['coefficients']));t=sp.Symbol('u')
-    P=sp.Poly(sum(sp.Rational(v.numerator,v.denominator)*t**i for i,v in enumerate(p)),t)
-    q=sp.Poly(0,t);mode=sp.Poly(1,t)
-    for v in p:
-        q+=sp.Rational(v.numerator,v.denominator)*mode
-        mode=sp.Poly((sp.Rational(1,2)-t)*mode.as_expr()+(2*t-sp.Rational(1,2))*mode.diff().as_expr()-t*mode.diff().diff().as_expr(),t)
+    P=sp.Poly.from_list([sp.Rational(v.numerator,v.denominator) for v in reversed(p)],gens=t)
+    q=_fourier_by_differentiation(P)
     assert P.eval(0)<0 and q.eval(0)<0 and P.LC()>0 and q.LC()>0
     def last_odd(poly):
         roots=[]
-        for (lo,hi),mult in poly.intervals(eps=sp.Rational(1,10**55)):
+        for (lo,hi),mult in positive_root_intervals(poly, sp.Rational(1,10**55)):
             if mult%2 and lo>0:roots.append((F(int(lo.p),int(lo.q)),F(int(hi.p),int(hi.q)) ))
         assert roots
         return max(roots,key=lambda x:x[0])
-    a,b=last_odd(P),last_odd(q)
+    a=last_odd(P)
+    b=a if q==P else last_odd(q)
     def atan(q,n):
         v=sum((F((-1)**k,(2*k+1)*q**(2*k+1)) for k in range(n)),F(0))
         w=v+F((-1)**n,(2*n+1)*q**(2*n+1))

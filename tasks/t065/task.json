@@ -17,6 +17,7 @@
     "A pair counts exactly when the squared Euclidean distance is exactly 1 in the selected real embedding.",
     "Every unordered point pair is checked with exact arithmetic; no floating-point tolerance is used."
   ],
+  "official_configuration": "T065-C01",
   "configurations": [
     {
       "id": "T065-C01",

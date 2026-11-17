@@ -17,6 +17,7 @@
     "A-A={a-b : a,b in A}; every ordered pair, including diagonal pairs, is included before duplicate values are removed.",
     "The objective is ln(|A-A|)/ln(|A+A|), using natural logarithms."
   ],
+  "official_configuration": "T077-C01",
   "configurations": [
     {
       "id": "T077-C01",

@@ -2,14 +2,14 @@
   "task_id": "T070",
   "config_id": "T070-C01",
   "validity": 1.0,
-  "combined_score": 0.36,
-  "objective": 75,
+  "combined_score": 0.9642857142857143,
+  "objective": 28,
   "verification_status": "exact",
-  "generation_time": 0.5165248364210129,
-  "verification_time": 0.8817660249769688,
-  "objective_value": 75,
+  "generation_time": 1.0391724854707718,
+  "verification_time": 0.30921562388539314,
+  "objective_value": 28,
   "details": {
-    "square_count": 75,
+    "square_count": 28,
     "outer_side": 1000,
     "total_tile_area": 1000000,
     "covered_area": 1000000,
@@ -18,11 +18,11 @@
     "claimed_objective_ignored": true,
     "strict": true
   },
-  "eval_time": 1.4095800258219242,
-  "seed": 0,
+  "eval_time": 1.353835504502058,
+  "seed": 76802,
   "strict": true,
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 30,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -31,6 +31,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 51
   }
 }

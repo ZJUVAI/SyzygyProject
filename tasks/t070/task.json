@@ -19,6 +19,7 @@
     "The greatest common divisor of all tile side lengths is 1.",
     "Compound or sub-quilt arrangements are allowed."
   ],
+  "official_configuration": "T070-C01",
   "configurations": [
     {
       "id": "T070-C01",

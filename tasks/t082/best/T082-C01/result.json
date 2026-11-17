@@ -2,38 +2,38 @@
   "task_id": "T082",
   "config_id": "T082-C01",
   "validity": 1.0,
-  "combined_score": 0.44274809160305345,
-  "objective": 58,
+  "combined_score": 1.0,
+  "objective": 131,
   "verification_status": "exact",
-  "generation_time": 0.9880991689860821,
-  "verification_time": 0.3665984533727169,
-  "objective_value": 58,
+  "generation_time": 270.88949528709054,
+  "verification_time": 0.1645871102809906,
+  "objective_value": 131,
   "details": {
     "board_size": 30,
-    "army_size_each_color": 58,
-    "total_queens": 116,
-    "cross_color_pairs_checked": 3364,
+    "army_size_each_color": 131,
+    "total_queens": 262,
+    "cross_color_pairs_checked": 17161,
     "cross_color_attacking_pairs": 0,
     "cross_color_square_overlap": false,
     "occupied_rows": {
-      "white": 17,
-      "black": 13,
+      "white": 15,
+      "black": 15,
       "disjoint": true
     },
     "occupied_columns": {
-      "white": 15,
-      "black": 15,
+      "white": 16,
+      "black": 14,
       "disjoint": true
     },
     "proven_upper_bound": 225,
     "claimed_objective_ignored": true,
     "strict": true
   },
-  "eval_time": 1.367559790611267,
-  "seed": 0,
+  "eval_time": 271.0579394213855,
+  "seed": 41113,
   "strict": true,
   "budget": {
-    "generation_seconds": 300,
+    "generation_seconds": 280,
     "verification_seconds": 60,
     "memory_bytes": 4294967296,
     "threads": 1
@@ -42,6 +42,6 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 0
+    "worker_cpu": 37
   }
 }

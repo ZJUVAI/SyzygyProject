@@ -17,6 +17,7 @@
     "The mathematical domain includes arbitrary real coordinates. The output format encodes all algebraic coordinates in one real algebraic number field. For this rational input, any finite real-coordinate cover has an algebraic-coordinate witness of the same size: cover feasibility is a first-order formula over the reals with rational coefficients, and the real algebraic numbers form a real closure of Q. Every finite algebraic tuple lies in a simple number field.",
     "No coordinate, denominator, field-degree, polygon-count, or vertex-count cap is imposed. The runner's output and time limits remain in force."
   ],
+  "official_configuration": "T097-C01",
   "configurations": [
     {
       "id": "T097-C01",

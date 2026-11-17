@@ -2,6 +2,7 @@
   "task_id": "T022",
   "name": "Ramsey R(5,5) lower-bound graph",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T022-C01",
   "configurations": [
     {
       "id": "T022-C01",

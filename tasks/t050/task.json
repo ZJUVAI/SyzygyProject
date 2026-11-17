@@ -17,6 +17,7 @@
     "Every nonconsecutive pair differs in at least two bits.",
     "The objective is the number of consecutive edges, len(vertices)-1."
   ],
+  "official_configuration": "T050-C01",
   "configurations": [
     {
       "id": "T050-C01",

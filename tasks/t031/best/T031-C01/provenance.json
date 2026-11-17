@@ -1,57 +1,65 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t031/runs/search_gap28_20261109_gap28_cycles_retry/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "string_length": 5908,
+    "required_substrings_checked": 5040
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Reconstructed Williams\u2013Egan cycle-cover construction; directed reconnection search retained its 5908-character output.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T031",
-    "config_id": "T031-C01",
-    "validity": 1.0,
-    "combined_score": 0.9475961538461538,
-    "objective": 6240,
-    "verification_status": "exact",
-    "generation_time": 0.26479119807481766,
-    "verification_time": 0.16465960070490837,
-    "objective_value": 6240,
-    "details": {
-      "symbols": 7,
-      "required_permutations": 5040,
-      "distinct_permutations_found": 5040,
-      "windows_checked": 6234,
-      "claimed_score_ignored": true,
-      "containment": "contiguous_substring"
-    },
-    "eval_time": 0.4327433817088604,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 185,
+    "seed": 6403102,
+    "method": "Generate a Williams-Egan cycle cover, then search directed three-cut reconnections and neutral rotations",
+    "classification": "source_assisted_continuation",
+    "construction_source": "https://gregegan.net/SCIENCE/Superpermutations/Superpermutations.html"
   },
-  "search_metadata": {
-    "algorithm": "seeded randomized maximum-overlap greedy path through all permutations",
-    "configuration_id": "T031-C01",
-    "seed": 0,
-    "iterations": 8,
-    "iteration_limit": 8,
-    "wall_clock_cutoff_seconds": null,
-    "reference_data_read": false,
-    "budget": {
-      "iteration_limit": 8,
-      "wall_clock_cutoff_seconds": null
-    }
+  "classification": "source_assisted_reconstruction",
+  "seed": 6403102,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        182,
+        182,
+        "512",
+        6403102
+      ]
+    ],
+    "prior_control_summary": "tasks/t031/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "b5c31ff86e0216367e69e48ad278476118a389903afbdd1e7e04f12f84d9127b",
-  "replay_command": "python -m mathbench replay T031 tasks/t031/best/T031-C01/solution.json --config T031-C01"
+  "budget": {
+    "generation_seconds": 185,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 42
+  },
+  "source_sha256": {
+    "tasks/t031/baseline.py": "9b65d3e261e2ddef03bde56ef8d7f2d1977f2dfafaf33341ef32d231af8ef502",
+    "tasks/t031/check.py": "f47cc343e8f31defb4d631c061387fd96e236a48fcf4b48b9d7a762210fba43f",
+    "tasks/t031/evaluator.py": "730ee5cba482580c6808d89a7ee86d928b4035528df03bd0a7a35fc555afdafd",
+    "tasks/t031/evolution.py": "2c13d67f52cbf2bd95f9098577f154cb2dc0bf67e5cafaa90248f0e32f63bbcf",
+    "tasks/t031/human.py": "b712004e9f70b14772313c2ba67ecbf7b57c8e4217a4d7742518cd87969d32a4",
+    "tasks/t031/init_program.py": "473ca7966cd206b720e7c58404de8a126cc3a4e3c26713eb212f956068b596db",
+    "tasks/t031/reference.py": "5d4cb9a130543ebf6db43541cb46f33ae9ac459f0c4456345a7fadc937efbb7b",
+    "tasks/t031/test_task.py": "e26b8ae317a470cc2cbf69f48e161d462b6440fe8f66e420ca8f3bb17dca1e70",
+    "program.py": "d8db38359d563b64f7176f879e77a7c9c333b8b879715378e798162bb0ab3a36",
+    "plan.json": "a2b6bfdfe43e0a57322477b32775fd71f91e09cf5fc9f7dc080be12e01428836",
+    "search.cpp": "708bd174b3c66ffe3e92fdb4c968c0749db6a84d7da57306683a269332e309c3"
+  },
+  "warm_start_sha256": "b4881c2666c6659a42427c53cc69390b43cf318f8a0a0210edbde3b30d57d882",
+  "replay_command": ".venv/bin/python -m mathbench replay T031 tasks/t031/best/T031-C01/solution.json --config T031-C01"
 }

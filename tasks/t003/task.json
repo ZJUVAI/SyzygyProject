@@ -2,6 +2,7 @@
   "task_id": "T003",
   "name": "Unequal-circle packing in the unit square",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T003-C02",
   "configurations": [
     {
       "id": "T003-C01",

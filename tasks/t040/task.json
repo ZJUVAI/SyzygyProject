@@ -2,6 +2,7 @@
   "task_id": "T040",
   "name": "Maximum volume of a polytope inscribed in S²",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T040-C01",
   "configurations": [
     {
       "id": "T040-C01",

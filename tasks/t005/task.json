@@ -2,6 +2,7 @@
   "task_id": "T005",
   "name": "Heilbronn triangles",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T005-C01",
   "configurations": [
     {
       "id": "T005-C01",

@@ -17,13 +17,13 @@
       "reproduced_value": 126,
       "public_value": 126,
       "highest_reported": {
-        "value": 126,
-        "source_url": "https://arxiv.org/html/2608.26603v1",
-        "meaning": "explicit feasible lower-bound witness; no optimality claim",
-        "reproduction_status": "explicit matrix reproduced exactly",
+        "value": 128,
+        "source_url": "https://ideosphere.ai/papers/zarankiewicz-v1.pdf",
+        "meaning": "reported feasible lower bound for 14 rows and 19 columns",
+        "reproduction_status": "The preprint reports a Lean-checked witness. The local frozen public replay uses the earlier 126-one matrix.",
         "source": {
-          "url": "https://arxiv.org/html/2608.26603v1",
-          "version": "v1,2026-08-27"
+          "url": "https://ideosphere.ai/papers/zarankiewicz-v1.pdf",
+          "version": "v1, 2026-08-30 source snapshot, Table 1"
         }
       },
       "best_human": {
@@ -33,9 +33,9 @@
         "source_url": "https://arxiv.org/html/2608.26603v1"
       },
       "best_public": {
-        "value": 126,
-        "witness_url": "https://arxiv.org/src/2608.26603",
-        "evidence_state": "Published lower bound; not an upper-bound proof."
+        "value": 128,
+        "witness_url": "https://ideosphere.ai/papers/zarankiewicz#stated-results",
+        "evidence_state": "Preprint reports a Lean-checked construction. Human review is open."
       },
       "best_reproduced": {
         "value": 126,
@@ -43,8 +43,8 @@
         "verification_status": "exact"
       },
       "search_provenance": "Classical kicked-greedy construction, original seed 7; kick count not recorded. This task replays the explicit matrix and does not claim to reproduce the search.",
-      "checked_at": "2026-11-06",
-      "open_status": "Open interval in the source table: 126 <= z(14,19;3,3) <= 135.",
+      "checked_at": "2026-11-09",
+      "open_status": "Reported lower bound 128. The earlier source gives upper bound 135.",
       "verification": {
         "status": "reviewed_by_sol",
         "reviewer": "Sol main agent",

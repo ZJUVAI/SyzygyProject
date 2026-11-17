@@ -17,6 +17,7 @@
     "No white queen attacks a black queen along a row, column, or diagonal.",
     "Queens of the same color may attack each other."
   ],
+  "official_configuration": "T082-C01",
   "configurations": [
     {
       "id": "T082-C01",

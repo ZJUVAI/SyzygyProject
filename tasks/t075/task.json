@@ -2,6 +2,7 @@
   "task_id": "T075",
   "name": "Maximum K4-minus-free 3-uniform hypergraph",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T075-C01",
   "configurations": [
     {
       "id": "T075-C01",

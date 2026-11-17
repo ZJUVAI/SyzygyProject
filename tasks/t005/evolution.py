@@ -125,7 +125,12 @@ def run_code():
     # to reach other orientation classes. Exact scores decide every incumbent.
     scales = (0.025, 0.08, 0.18, 0.35)
     restart = 0
-    chain = np.asarray(incumbent, dtype=float)
+
+    def numeric_incumbent():
+        return np.asarray([[float(Fraction(value)) for value in point]
+                           for point in incumbent], dtype=float)
+
+    chain = numeric_incumbent()
     chain_score = float(incumbent_score)
     downhill_accepts = 0
     def numeric_score(points):
@@ -134,7 +139,7 @@ def run_code():
                                    -(b[:,1]-a[:,1])*(c[:,0]-a[:,0]))))/2
     while time.monotonic() < deadline:
         if restart % 8 < 7:
-            base = chain.copy() if restart % 8 else np.asarray(incumbent, dtype=float)
+            base = chain.copy() if restart % 8 else numeric_incumbent()
             scale = scales[(restart // 4) % len(scales)]
             if restart % 8 == 6:
                 # Replace one point with the best of sampled locations. The

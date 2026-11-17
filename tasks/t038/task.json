@@ -15,6 +15,7 @@
     "Each row and each column contains every integer from 0 through 11 exactly once.",
     "For each pair of distinct input squares, all 144 ordered symbol pairs occur exactly once."
   ],
+  "official_configuration": "T038-C01",
   "configurations": [
     {
       "id": "T038-C01",

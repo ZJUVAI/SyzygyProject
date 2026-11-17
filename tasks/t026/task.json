@@ -2,6 +2,7 @@
   "task_id": "T026",
   "name": "Schur number lower-bound coloring with six colors",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T026-C01",
   "configurations": [
     {
       "id": "T026-C01",

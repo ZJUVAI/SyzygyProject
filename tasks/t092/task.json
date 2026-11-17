@@ -17,6 +17,7 @@
     "The objective uses uniform probability measure on S2; M2=average |P|^2 and M4=average |P|^4.",
     "No coefficient magnitude or denominator cap is imposed."
   ],
+  "official_configuration": "T092-C01",
   "configurations": [
     {
       "id": "T092-C01",

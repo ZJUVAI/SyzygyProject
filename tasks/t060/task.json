@@ -3,6 +3,7 @@
   "name": "Integer complexity of the Mersenne prime 2^61-1",
   "candidate_id": "integer-complexity-m61",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T060-C01",
   "configurations": [
     {
       "id": "T060-C01",

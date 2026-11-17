@@ -16,6 +16,7 @@
     "All 32 elements are distinct.",
     "A+A contains a+b for all ordered choices a,b in A; AA contains ab for all ordered choices a,b in A."
   ],
+  "official_configuration": "T072-C01",
   "configurations": [
     {
       "id": "T072-C01",

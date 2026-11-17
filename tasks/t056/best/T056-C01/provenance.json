@@ -1,111 +1,64 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "baseline.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t056/runs/search_gap10_20261109_gap10_cp/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "makespan": 2079,
+    "operations_dispatched": 600
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T056",
-    "config_id": "T056-C01",
-    "validity": 1.0,
-    "combined_score": 1.1792486583184258,
-    "objective": 2795,
-    "verification_status": "exact",
-    "generation_time": 2.4807545952498913,
-    "verification_time": 0.4163428321480751,
-    "objective_value": 2795,
-    "details": {
-      "instance": "ta41",
-      "jobs": 30,
-      "machines": 20,
-      "operations": 600,
-      "makespan": 2795,
-      "critical_path_lower_bound": 1830,
-      "machine_loads": [
-        1490,
-        1685,
-        1674,
-        1830,
-        1378,
-        1709,
-        1528,
-        1530,
-        1751,
-        1588,
-        1464,
-        1675,
-        1516,
-        1483,
-        1702,
-        1151,
-        1625,
-        1633,
-        1371,
-        1496
-      ],
-      "job_loads": [
-        1077,
-        899,
-        1189,
-        1022,
-        1098,
-        827,
-        953,
-        1151,
-        985,
-        866,
-        1057,
-        1102,
-        1022,
-        987,
-        1157,
-        1092,
-        1040,
-        944,
-        1092,
-        1164,
-        1003,
-        1020,
-        839,
-        1102,
-        1232,
-        1158,
-        953,
-        1172,
-        932,
-        1144
-      ],
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 2.902985882014036,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 190,
+    "seed": 70106,
+    "method": "OR-Tools 9.15.6755 CP-SAT large neighborhoods with pinned integer ta41 input"
   },
-  "search_metadata": {
-    "algorithm": "multi-start Giffler-Thompson active-schedule generator with seeded random conflict-set choices",
-    "seed": 0,
-    "iterations_requested": 32,
-    "iterations_run": 32,
-    "candidates_checked": 32,
-    "objective_recomputed": 2795,
-    "budget": {
-      "mode": "fixed iterations; runner generation timeout 300 seconds",
-      "runner_generation_seconds": 300
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 70106,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        187,
+        187,
+        "512",
+        70106
+      ]
+    ],
+    "prior_control_summary": "tasks/t056/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "51580f0973ac19642a3ece0f445cb76a89a8b8881f00e556339831d13d25f8bc",
-  "replay_command": "python -m mathbench replay T056 tasks/t056/best/T056-C01/solution.json --config T056-C01"
+  "budget": {
+    "generation_seconds": 190,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 36
+  },
+  "source_sha256": {
+    "tasks/t056/baseline.py": "f6fcc5cbf1eaae217ba8c598d01e5e21a853254e28994e5b22041e6e278b30b7",
+    "tasks/t056/check.py": "1332a5eb725c891876238e55f1d209cf3da595bcb2025565577bf1cc2c717951",
+    "tasks/t056/dispatch.py": "2fc72caaacfa2663def098800d51cab0622b694bf447c55ee41e735072df7ae1",
+    "tasks/t056/evaluator.py": "19f61e49bfaaca89c5c541d7dd9c02e85dd3f537ebc72869857b1932035941ca",
+    "tasks/t056/evolution.py": "baaeb223be49404ffb4ad291b8aa92b6fffaf9ee6a4b4e5a7215f20a6dfc050a",
+    "tasks/t056/human.py": "1362fdc993a034fdc70ed4c6a5ce30d9155c57fe3e3673e05b52ac53c6a5cde5",
+    "tasks/t056/init_program.py": "e3ea44388e8913ca83e50909c12b9896526f9a325ea7dec1803fb4f3f8f57633",
+    "tasks/t056/reference.py": "cd843c552ca0d419034f0cd722c13a606537edb9fde454081b128a98aeafa488",
+    "tasks/t056/test_task.py": "382a453fce793f248811025238adb33ce0a806158ba589890bcd98fe5f26d777",
+    "tasks/t056/data/source/ta41_instance.json": "1857bd6845eca1147b5593e2011ae4c5da24ff8749d26f603fbf909a68087ce6",
+    "program.py": "c839efa9d6c25c46d2254e944a07d340050f1d403c9da527b1830bab6bcb522c",
+    "plan.json": "06fed86ccef0b63c858bcd6adabdc566546b3ceccfe3a2c070be031baf8e0220"
+  },
+  "warm_start_sha256": "bb6f435ced81bb99bc5a44a3d32606ebec3bb3f7f139c7604c692b450060f3e3",
+  "replay_command": ".venv/bin/python -m mathbench replay T056 tasks/t056/best/T056-C01/solution.json --config T056-C01"
 }

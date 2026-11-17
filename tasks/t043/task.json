@@ -15,6 +15,7 @@
     "For distinct U,V, d_S(U,V)=2*3-2*dim(U intersection V) is at least 4.",
     "Equivalently, two distinct codewords intersect in dimension at most 1."
   ],
+  "official_configuration": "T043-C01",
   "configurations": [
     {
       "id": "T043-C01",

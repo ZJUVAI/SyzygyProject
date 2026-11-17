@@ -2,6 +2,7 @@
   "task_id": "T054",
   "name": "Minimum aperiodic peak sidelobe level, binary sequences",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T054-C01",
   "configurations": [
     {
       "id": "T054-C01",

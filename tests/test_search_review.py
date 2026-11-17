@@ -53,7 +53,7 @@ def test_candidate_only_review_still_rejects_a_failed_selected_witness(tmp_path,
     path = tmp_path / 'summary.json'
     path.write_text(json.dumps(summary))
     monkeypatch.setattr(module, 'ROOT', tmp_path)
-    monkeypatch.setattr(module, 'load_task', lambda _: {'configurations': [{'id': 'example'}]})
+    monkeypatch.setattr(module, 'load_task', lambda _, *, include_history: {'configurations': [{'id': 'example'}]})
     with pytest.raises(ValueError, match='valid construction'):
         module.review(path, candidate_only=True)
     assert json.loads(path.read_text()) == summary

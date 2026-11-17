@@ -2,21 +2,26 @@
   "reviewer": "Sol main agent",
   "status": "reviewed_by_sol",
   "date": "2026-11-06",
+  "source_summary": "tasks/t005/runs/search_luna_round2_T005_C03/summary.json",
   "source_hashes_verified": true,
   "independent_quantity": {
-    "minimum_triangle_area": "32457837955091569462100940792353/2000000000000000000000000000000000",
+    "minimum_triangle_area": "35257210542353680882102592089847/2000000000000000000000000000000000",
     "triangles": 560
   },
   "claimed_score_ignored": true,
   "damaged_construction_rejected": true,
   "initial_baseline_human_valid": true,
   "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
-  "search_agent": "gpt-6-astra/high",
+  "search_agent": {
+    "model": "gpt-6-luna",
+    "campaign": "round2",
+    "shard": "A"
+  },
   "classification": "ai_assisted_local_continuation",
-  "seed": 9062010,
+  "seed": 84001,
   "controls": {
-    "MATHBENCH_SEARCH_SECONDS": "1.0",
-    "MATHBENCH_EVOLUTION_SECONDS": "240.0"
+    "MATHBENCH_SEARCH_SECONDS": "5.0",
+    "MATHBENCH_EVOLUTION_SECONDS": "100.0"
   },
   "budget": {
     "generation_seconds": 300,
@@ -28,7 +33,7 @@
     "python": "3.13.12",
     "platform": "linux",
     "memory_limit_enforced": true,
-    "worker_cpu": 39
+    "worker_cpu": 35
   },
   "source_sha256": {
     "tasks/t005/__init__.py": "e2e36d371a8f008c1362d5091fcf7044ef3c93797dbe7a4b14ca17c9a2afc5ed",
@@ -44,6 +49,6 @@
     "tasks/t005/test_task.py": "6d0674a5d90ad506eddc82f0a30d3267effcb9e042fca0db13f1af3b74b6efc8",
     "tasks/t005/tests/test_check.py": "415818875ba8ce984e7a87f68a5d00d22370f0c1e5f4dc8e42ac817d13f39cc3"
   },
-  "warm_start_sha256": "7d2e2c75f98d2302d5d9e1c443ca078e5f293df7ac18c136897e232b94a9ddd9",
-  "replay_command": "python -m mathbench replay T005 tasks/t005/best/T005-C03/solution.json --config T005-C03"
+  "warm_start_sha256": "84dd4965323aa411d49c5f432c8c88260eef07f4b8ead212857a8febe86bce0c",
+  "replay_command": ".venv/bin/python -m mathbench replay T005 tasks/t005/best/T005-C03/solution.json --config T005-C03"
 }

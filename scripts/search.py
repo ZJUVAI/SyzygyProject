@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from mathbench.evaluate import evaluate_candidate
-from mathbench.registry import INITIAL_TASKS, load_task, resolve_task_id
+from mathbench.registry import ARCHIVED_TASKS, INITIAL_TASKS, load_task, resolve_task_id
 from mathbench.replay import replay
 from scripts.audits.independent_audit import independent_quantity, broken
 
@@ -52,6 +52,8 @@ def run():
         if not hasattr(os,'sched_getaffinity') or args.cpu not in os.sched_getaffinity(0):ap.error('Requested CPU is unavailable')
         os.sched_setaffinity(0,{args.cpu})
     configurations=load_task(task)['configurations']
+    if task in ARCHIVED_TASKS:
+        ap.error('Task is archived. Use mathbench replay to check saved constructions.')
     if args.config_ids:
         if not set(args.config_ids)<={c['id'] for c in configurations}:ap.error('Unknown configuration')
         configurations=[c for c in configurations if c['id'] in args.config_ids]
@@ -104,6 +106,14 @@ def run():
 
 
 
+def search_summaries(root, task='*'):
+    """Read summaries from this runner, alongside other task experiments."""
+    for path in sorted(root.glob(f'tasks/{task}/runs/*/summary.json')):
+        data = json.loads(path.read_text())
+        if 'task_id' in data and isinstance(data.get('configurations'), list):
+            yield path, data
+
+
 def summary():
     """Summarize saved exploratory searches with frozen public comparisons."""
     import json
@@ -114,18 +124,21 @@ def summary():
     def number(r):
         try:return float(Fraction(str(r.get('objective_value',r.get('objective')))))
         except (ValueError,TypeError,ZeroDivisionError):return None
+    official = {c["id"]: c for task in INITIAL_TASKS for c in load_task(task)["configurations"]}
     rows=[]
-    for p in sorted(base.glob('tasks/*/runs/*/summary.json')):
-        for row in json.loads(p.read_text())['configurations']:
-            cid=row['config_id'];results=row['results'];key=row.get('best');best=results.get(key,{})
+    for p, data in search_summaries(base):
+        for row in data['configurations']:
+            cid=row['config_id']
+            if cid not in official:continue
+            results=row['results'];key=row.get('best');best=results.get(key,{})
             baseline=results.get('baseline',{});reference=public.get(cid,{}).get('run',{})
             b,x,r=map(number,(baseline,best,reference))
             improved=(x<b if row['direction']=='minimize' else x>b) if b is not None and x is not None else None
             rows.append({'config_id':cid,'direction':row['direction'],'task_id':cid.split('-')[0],'status':row['status'],'baseline':b,'best':x,'raw_objective':best.get('objective'),'improved_baseline':improved,'frozen_verified_reference':r,'summary':str(p.relative_to(ROOT))})
     for path in (ROOT/'tasks').glob('*/best/*/result.json'):
         best=json.loads(path.read_text());cid=path.parent.name;tid=path.parents[2].name.upper()
-        if tid not in INITIAL_TASKS:continue
-        config=next(c for c in load_task(tid)['configurations'] if c['id']==cid)
+        if cid not in official:continue
+        config=official[cid]
         provenance=json.loads((path.parent/'provenance.json').read_text())
         numeric=best.get('objective_value',best.get('objective'))
         rows.append({'config_id':cid,'direction':config['direction'],'task_id':tid,
@@ -152,8 +165,8 @@ def audit():
     ROOT=Path(__file__).resolve().parents[1];base=ROOT
     keys={'T099':'tile_count','T100':'triangle_count','T098':'outer_side','T095':'face_count','T097':'polygon_count','T093':'packed_value','T091':'row_count','T090':'energy','T088':'cutwidth','T087':'minimum_autocorrelation_ratio','T085':'radius','T084':'diameter','T082':'army_size','T081':'distance_ratio','T079':'union_cardinality','T078':'determinant','T075':'edge_count','T076':'largest_element','T074':'area_ratio','T073':'point_count','T072':'max_size','T071':'code_size','T070':'square_count','T069':'tour_cost','T068':'code_size','T067':'code_size','T066':'three_point_lines','T065':'unit_pairs','T064':'steiner_count','T062':'cardinality','T061':'edge_count','T060':'one_count','T058':'round_count','T059':'clique_cardinality','T057':'route_cost','T055':'satisfied_soft_weight','T056':'makespan','T054':'peak_sidelobe','T053':'minimum_factor','T051':'sequence_length','T052':'code_size','T050':'induced_path_edges','T049':'distance_count','T048':'comparator_count','T047':'difference_basis_size','T045':'linear_arrangement_cost','T044':'order','T043':'code_size','T042':'cardinality','T041':'sum_sides','T040':'volume','T039':'scope','T038':'square_count','T035':'point_count','T036':'crossings','T037':'direction_count','T034':'prefix_length','T032':'ones','T033':'cut_weight','T031':'string_length','T030':'color_count','T028':'makespan','T029':'rank_terms','T027':'quadratic_cost','T026':'prefix_length','T025':'points','T024':'edges','T022':'vertices','T023':'rows','T001':'radius','T003':'sum_radii','T005':'minimum_triangle_area','T006':'order','T007':'span','T008':'blocks','T009':'minimum_distance','T010':'codewords','T011':'independent_words','T013':'energy','T014':'exact_objective','T015':'exact_objective','T016':'exact_objective','T017':'maximum_overlap','T018':'absolute_determinant','T019':'diameter','T020':'additions'}
     results=[]
-    for p in sorted(base.glob('tasks/*/runs/*/summary.json')):
-        d=json.loads(p.read_text());task=d['task_id'];folder=p.parent
+    for p, d in search_summaries(base):
+        task=d['task_id'];folder=p.parent
         manifest=json.loads((folder/'manifest.json').read_text())
         hashes_ok=all(hashlib.sha256((folder/'sources'/name).read_bytes()).hexdigest()==value for name,value in manifest['source_sha256'].items())
         for row in d['configurations']:
@@ -169,7 +182,7 @@ def audit():
                     elif task=='T002':
                         import sympy as sp
                         assert sp.simplify(sp.sympify(q['bounding_side'])-sp.sympify(str(r['objective']).replace('sqrt2','sqrt(2)')))==0
-                    elif task in ('T096','T094','T092','T089','T086','T083','T021','T046','T063','T077','T080'):
+                    elif task in ('T096','T094','T092','T089','T086','T083','T021','T046','T063','T077','T080', 'T101', 'T102'):
                         from scripts.review_search import check_quantity
                         check_quantity(task,q,r)
                     elif task=='T004':
@@ -186,7 +199,7 @@ def audit():
             results.append({'attempt':folder.name,'config_id':cid,'passed':not errors,'errors':errors})
     for path in (ROOT/'tasks').glob('*/best/*/result.json'):
         expected=json.loads(path.read_text());cid=path.parent.name;task=path.parents[2].name.upper()
-        if task not in INITIAL_TASKS:continue
+        if task not in INITIAL_TASKS and task not in ARCHIVED_TASKS:continue
         checked=replay(task,path.parent/'solution.json',cid,strict=True)
         passed=checked['validity']==1 and checked['objective']==expected['objective']
         results.append({'attempt':str(path.parent.relative_to(ROOT)), 'config_id':cid,
@@ -214,8 +227,7 @@ def resume():
     for task in resume_order():
         expected={c['id'] for c in load_task(task)['configurations']}
         completed=set()
-        for path in (ROOT/'tasks'/task.lower()/'runs').glob('*/summary.json'):
-            data=json.loads(path.read_text())
+        for _, data in search_summaries(ROOT, task.lower()):
             completed.update(r['config_id'] for r in data['configurations'] if r.get('status') in ('reviewed_by_sol','checks_passed_pending_review'))
         if expected<=completed:
             print(task,'checks already completed; skip',flush=True);continue

@@ -2,6 +2,7 @@
   "task_id": "T061",
   "name": "Minimum-edge C6-saturated graph on 100 vertices",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T061-C01",
   "configurations": [
     {
       "id": "T061-C01",

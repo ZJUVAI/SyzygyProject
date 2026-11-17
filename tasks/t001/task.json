@@ -2,6 +2,7 @@
   "task_id": "T001",
   "name": "Equal circles in a unit square",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T001-C01",
   "configurations": [
     {
       "id": "T001-C01",

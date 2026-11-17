@@ -17,6 +17,7 @@
     "Triangle interiors are pairwise disjoint; boundary contact is allowed.",
     "The formal pose domain uses translations in Q(sqrt(3)) and rational unit edge directions. This domain is dense in all real translations and rotations, so it has the same infimum as the unrestricted pose problem. It need not represent every real pose exactly."
   ],
+  "official_configuration": "T083-C01",
   "configurations": [
     {
       "id": "T083-C01",

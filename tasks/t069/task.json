@@ -2,6 +2,7 @@
   "task_id": "T069",
   "name": "Mona Lisa 100K Euclidean traveling salesman tour",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T069-C01",
   "configurations": [
     {
       "id": "T069-C01",

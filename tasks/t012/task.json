@@ -2,6 +2,7 @@
   "task_id": "T012",
   "name": "Sum-difference I: normalized logarithmic ratio",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T012-C01",
   "configurations": [
     {
       "id": "T012-C01",

@@ -1,5 +1,7 @@
 from fractions import Fraction
 from itertools import combinations
+import json
+from types import SimpleNamespace
 
 import pytest
 
@@ -20,6 +22,20 @@ def test_goldberg_witness_exact_score():
 
 def test_seed_is_valid_and_positive():
     assert Fraction(validate(run_code(), CONFIG)["objective"]) > 0
+
+
+def test_search_accepts_a_saved_rational_warm_start(tmp_path, monkeypatch):
+    from tasks.t005 import evolution
+
+    witness = tmp_path / "warm_start.json"
+    witness.write_text(json.dumps(SOLUTION))
+    monkeypatch.setenv("MATHBENCH_CONFIG_ID", CONFIG["id"])
+    monkeypatch.setenv("MATHBENCH_WARM_START", str(witness))
+    monkeypatch.setenv("MATHBENCH_EVOLUTION_SECONDS", "1")
+    times = iter([0, 0, 2])  # Enter the first restart, then stop before optimization.
+    monkeypatch.setattr(evolution, "time", SimpleNamespace(monotonic=lambda: next(times)))
+
+    assert validate(evolution.run_code(), CONFIG)["objective"] == "1/27"
 
 
 @pytest.mark.parametrize("bad", [

@@ -1,1 +1,39 @@
-{"elements": [4334, 6591, 7711, 8281, 8566, 8714, 8791, 8831, 8851, 8862, 8868, 8871, 8873, 8874, 8875], "search_metadata": {"algorithm": "greedy descending scan with exact subset-sum bitset, over a seeded fixed cap grid", "seed": 0, "cap_start": 8000, "cap_stop": 10000, "cap_step": 25, "cap_trials_completed": 81, "reference_data_read": false}}
+{
+  "elements": [
+    4264,
+    6434,
+    7519,
+    8083,
+    8376,
+    8528,
+    8604,
+    8647,
+    8669,
+    8680,
+    8688,
+    8690,
+    8691,
+    8692,
+    8696
+  ],
+  "search_metadata": {
+    "trials": 1966,
+    "nodes": 2318599,
+    "improvements": [
+      8874,
+      8872,
+      8869,
+      8865,
+      8860,
+      8854,
+      8847,
+      8835,
+      8825,
+      8814,
+      8792,
+      8761,
+      8696
+    ],
+    "reference_data_read": false
+  }
+}

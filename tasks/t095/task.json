@@ -2,6 +2,7 @@
   "task_id": "T095",
   "name": "minimum convex partition of a fixed planar point set",
   "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T095-C01",
   "configurations": [
     {
       "id": "T095-C01",

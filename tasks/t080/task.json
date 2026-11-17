@@ -18,6 +18,7 @@
     "Require the strict inequality d<q, where q=2 max(U)+1.",
     "Maximize 1+ln(d/s)/ln(q)."
   ],
+  "official_configuration": "T080-C01",
   "configurations": [
     {
       "id": "T080-C01",

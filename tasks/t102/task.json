@@ -1,0 +1,59 @@
+{
+  "task_id": "T102",
+  "name": "Ring loading maximum minimum route discrepancy",
+  "acceptance_status": "accepted_by_sol",
+  "official_configuration": "T102-C01",
+  "configurations": [
+    {
+      "id": "T102-C01",
+      "parameters": {
+        "m": 15
+      },
+      "direction": "maximize",
+      "human_reference": 1.1,
+      "public_reference": "47/42",
+      "acceptance_status": "accepted_by_sol"
+    }
+  ],
+  "category": "combinatorial_optimization",
+  "definition": "For a ring with 15 demands, choose nonnegative rational pairs (u_i,v_i) with u_i+v_i<=1. A route independently chooses z_i=v_i or z_i=-u_i. For every route and each one-based cut k=1,...,15, compare the sums on the two sides: |sum_{i<=k} z_i - sum_{i>k} z_i|. Maximize the minimum route discrepancy.",
+  "objective": {
+    "name": "minimum_route_discrepancy",
+    "unit": "normalized demand units",
+    "direction": "maximize"
+  },
+  "constraints": [
+    "Exactly 15 ordered pairs.",
+    "Each u_i and v_i is a nonnegative rational number.",
+    "For every i, u_i+v_i<=1.",
+    "A route selects exactly one of v_i and -u_i for each i.",
+    "For each route, discrepancy is max over one-based cuts k=1,...,15 of |sum_{i<=k} z_i - sum_{i>k} z_i|."
+  ],
+  "sources": [
+    "https://arxiv.org/abs/1405.0789",
+    "https://arxiv.org/abs/2511.02864v3",
+    "https://arxiv.org/abs/1904.02119",
+    "https://github.com/google-deepmind/alphaevolve_repository_of_problems/tree/8f447457957deac61e28bf1676746f0753b3b2f8/experiments/ring_loading_problem"
+  ],
+  "verification": "Parse every pair as an exact rational and verify feasibility. Enumerate all 2^15 routes and all 15 cuts using the one-based formula |sum_{i<=k} z_i - sum_{i>k} z_i|, with integer arithmetic after common-denominator scaling. Return the exact rational minimum discrepancy. Candidate score declarations are ignored.",
+  "resource_limits": {
+    "generation_seconds": 300,
+    "verification_seconds": 60,
+    "memory_gib": 4,
+    "threads": 1
+  },
+  "solution_format": {
+    "pairs": "list of 15 [u,v] rational pairs; integers or rational strings"
+  },
+  "acceptance_review": {
+    "reviewer": "Sol main agent",
+    "date": "2026-11-09",
+    "decision": "实现完成并通过Sol验收",
+    "source_review": {
+      "definition": "AlphaEvolve v3 Problem 6.61, fixed m=15. Choose nonnegative rational pairs summing to at most one, minimize the maximum absolute split imbalance over all routes, and maximize that minimum over pairs. All one-based cuts 1 through 15 are included.",
+      "sources": "Pinned notebook at 8f447457957deac61e28bf1676746f0753b3b2f8 supplies the 15 pairs. Round to denominator 84 and independently verify feasibility and 47/42. The paper reports a lower bound of 1.119. Däubel’s 13/10 general upper bound does not settle m=15.",
+      "human_baseline": "Skutella Figure 2 was transcribed from the red and green arrows. Divide the eight pairs by ten and append seven zero pairs. The original terminal imbalance stays among the cuts, so padding preserves the objective 11/10.",
+      "independent_check": "Sum independent signed integer edge-load vectors over every one of the 32768 choices. The minimum infinity norm is 94/84 for the public witness. Admission checked legal and malformed pairs, score tampering, strict replay, search and error controls."
+    }
+  }
+}

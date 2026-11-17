@@ -1,57 +1,61 @@
 {
-  "status": "reviewed_by_sol",
   "reviewer": "Sol main agent",
-  "date": "2026-11-06",
-  "seed": 0,
-  "origin": "Task-local construction from the simple seed; comparison witnesses were not read.",
-  "program": "evolution.py",
+  "status": "reviewed_by_sol",
+  "date": "2026-11-09",
+  "source_summary": "tasks/t052/runs/search_routes_20261109_structured/summary.json",
+  "source_hashes_verified": true,
+  "independent_quantity": {
+    "code_size": 1320,
+    "minimum_distance": 10
+  },
+  "claimed_score_ignored": true,
+  "damaged_construction_rejected": true,
+  "initial_baseline_human_valid": true,
+  "scope": "Own-construction continuation; not an isolated model comparison or a public record claim.",
+  "search_agent": "GPT-6.1 Sol",
   "generation_record": {
-    "task_id": "T052",
-    "config_id": "T052-C01",
-    "validity": 1.0,
-    "combined_score": 0.10909090909090909,
-    "objective": 144,
-    "verification_status": "exact",
-    "generation_time": 2.2008268423378468,
-    "verification_time": 0.41780050098896027,
-    "objective_value": 144,
-    "details": {
-      "length": 12,
-      "minimum_distance_required": 9,
-      "minimum_distance_observed": 9,
-      "codewords_checked": 144,
-      "pairs_checked": 10296,
-      "claimed_objective_ignored": true
-    },
-    "eval_time": 2.6274998001754284,
-    "seed": 0,
-    "strict": true,
-    "budget": {
-      "generation_seconds": 300,
-      "verification_seconds": 60,
-      "memory_bytes": 4294967296,
-      "threads": 1
-    },
-    "environment": {
-      "python": "3.13.12",
-      "platform": "linux",
-      "memory_limit_enforced": true,
-      "worker_cpu": 0
-    }
+    "scope": "AI-assisted construction search",
+    "limit": 70,
+    "method": "Deterministic algebraic construction or exact template enumeration; sources of known formulas are recorded separately."
   },
-  "search_metadata": {
-    "algorithm": "seeded multi-start greedy packing; best valid batch retained",
-    "seed": 0,
-    "iterations_requested": 32,
-    "iterations_run": 32,
-    "candidates_per_generation": 750,
-    "objective_recomputed": 144,
-    "generation_seconds": 1.7405026517808437,
-    "budget": {
-      "mode": "fixed iterations unless MATHBENCH_SEARCH_SECONDS is set",
-      "runner_generation_seconds": 300
-    }
+  "classification": "ai_assisted_local_continuation",
+  "seed": 41113,
+  "controls": {
+    "trials": [
+      [
+        "warm",
+        67,
+        67,
+        "512",
+        41113
+      ]
+    ],
+    "prior_control_summary": "tasks/t052/runs/search_sol1200/summary.json"
   },
-  "solution_sha256": "c2c312f087eb4e791f0bde9d790c68bf1103a9585da6184a2d1103bd8f465f3c",
-  "replay_command": "python -m mathbench replay T052 tasks/t052/best/T052-C01/solution.json --config T052-C01"
+  "budget": {
+    "generation_seconds": 70,
+    "verification_seconds": 60,
+    "memory_bytes": 4294967296,
+    "threads": 1
+  },
+  "environment": {
+    "python": "3.13.12",
+    "platform": "linux",
+    "memory_limit_enforced": true,
+    "worker_cpu": 29
+  },
+  "source_sha256": {
+    "tasks/t052/baseline.py": "35dbf4057a4dda586938d1a4b6e3b88d777b95588a0a3ca6acd0ecc69894ff1c",
+    "tasks/t052/check.py": "4c9befc19a5d37325548e6f4a5b77b92c7c54322b0fbdf6c69a8d7c902c1c872",
+    "tasks/t052/evaluator.py": "ce8bc1e64ce5d281bbb2c07394f023113b6544914034a3d1f1ee99b1b18f3767",
+    "tasks/t052/evolution.py": "9e5acbdd1d0f9d4b38ba0086460c42b06a59f0bae4561782ab913d20695cc908",
+    "tasks/t052/human.py": "ddf2462dff6c745480ca4b3c4e158bb455251173f6006bef0867847359c88d9a",
+    "tasks/t052/init_program.py": "5938c072fd6a594df5bae80ba1a9d7dac2b5f9278bdfcaf49cb8cdc247fb144f",
+    "tasks/t052/reference.py": "6d4f16437ced156fec5aaa4ff3854ff1f96ba5c033fc2bfa59750f1012c3db13",
+    "tasks/t052/test_task.py": "20b9c65061b0d18b423fa792c40da8ac687bc0a34d7f5912ccb4a0ac7e45ad3a",
+    "program.py": "f82dc6b05bd759f3e1479689b03ff0e93d8211a0b448ea16b8b7c6462db626cd",
+    "plan.json": "b472d9ee8dd2a3b86bcf4e4c218321af1c63a6c31e38ec35a291dff8fd5972c8"
+  },
+  "warm_start_sha256": "f6a1a12905b883d6cf672da252afbfc299c4ca3ea87076a3417085165adf7362",
+  "replay_command": ".venv/bin/python -m mathbench replay T052 tasks/t052/best/T052-C01/solution.json --config T052-C01"
 }
