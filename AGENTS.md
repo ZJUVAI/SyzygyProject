@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-`tasks/` holds task definitions, checkers, sources, SOTA records, and saved best witnesses. `mathbench/` holds the runner and adapters. `tests/` holds shared tests. `scripts/` holds search and audit commands. `PLAN.md` is the only planning and research-summary document. Each task stores temporary output in its ignored `runs/` directory. Do not add top-level research or report inventories.
+`tasks/` holds task definitions, checkers, sources, SOTA records, and saved best witnesses. `mathbench/` holds the runner and adapters. `tests/` holds shared tests. `scripts/` holds search and audit commands. Each task stores temporary output in its ignored `runs/` directory. Do not add top-level research or report inventories.
 
 ## Development & Validation
 
@@ -22,7 +22,7 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 
 - 正式目录有 100 道题，每题选 1 个正式配置。其余已验收配置保留为历史记录。
 - 对照 SimpleTES、DREAM-RSI 和 Google DeepMind AlphaEvolve 的数学任务。记录任务与原论文、公开仓库和固定版本的对应关系。仅因更名或参数变化不新增任务数。
-- 任务参数以各任务的 `task.json` 为准。计划和研究结论只更新 `PLAN.md`。
+- 任务参数以各任务的 `task.json` 为准。
 - SOTA 来源和验证信息保存在各任务的 `sota.json`。自己的最佳见证保存在 `best/`。新配置须独立验收后接入。
 - 类别表示研究方向。任务固定数学目标与可行性规则。配置固定参数，例如正方形数量、码长或矩阵阶数。
 - 随机种子、重复运行、搜索时间和数学目标的单调变换不另算配置或任务。
@@ -75,11 +75,11 @@ Replace the path with each modified JSON file. Review Markdown rendering and che
 
 ## Content Style & Naming
 
-Use descriptive Markdown headings and concise explanations. Follow existing subject-based filenames, lowercase snake_case for multiword filenames and JSON keys, and stable kebab-case candidate IDs such as `graph-cage`. Preserve existing JSON structure and two-space indentation. Keep task metadata and PLAN.md consistent; cite primary sources and identify exact parameters, objective direction, verification costs, and uncertainties.
+Use descriptive Markdown headings and concise explanations. Follow existing subject-based filenames, lowercase snake_case for multiword filenames and JSON keys, and stable kebab-case candidate IDs such as `graph-cage`. Preserve existing JSON structure and two-space indentation. Keep task metadata consistent. Cite primary sources and identify exact parameters, objective direction, verification costs, and uncertainties.
 
 ## Research & Testing Guidelines
 
-Apply the criteria in `PLAN.md`: distinguish feasible constructions from proofs of optimality, and distinguish verified baselines from unverified literature claims. Do not present sampling or floating-point checks as mathematical certificates. When adding a baseline, record its provenance and whether its witness and score have been independently verified. Preserve the distinction between accepted, conditional, and rejected candidates.
+Distinguish feasible constructions from proofs of optimality, and distinguish verified baselines from unverified literature claims. Do not present sampling or floating-point checks as mathematical certificates. When adding a baseline, record its provenance and whether its witness and score have been independently verified. Preserve the distinction between accepted, conditional, and rejected candidates.
 
 ## Commits & Pull Requests
 
