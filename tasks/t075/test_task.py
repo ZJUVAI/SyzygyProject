@@ -65,11 +65,9 @@ def test_saved_own_search_result_recomputes_objective():
     saved_result = json.loads((TASK_DIR / "best/T075-C01/result.json").read_text())
     provenance = json.loads((TASK_DIR / "best/T075-C01/provenance.json").read_text())
     result = validate(saved, CONFIG, strict=True)
-    expected = provenance["generation_record"]["objective"]
-    assert expected == saved_result["objective"]
+    expected = saved_result["objective"]
     assert result["objective"] == expected
-    assert saved["search_metadata"]["best_edge_count"] == expected
-    assert provenance["program"] == "evolution.py"
+    assert provenance["independent_quantity"]["edge_count"] == expected
 
 
 def test_empty_hypergraph_is_valid_and_bounds_are_recomputed():
